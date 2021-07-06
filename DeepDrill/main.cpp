@@ -1,14 +1,31 @@
+// -----------------------------------------------------------------------------
+// This file is part of DeepDrill
 //
-//  main.cpp
-//  DeepDrill
+// A Mandelbrot generator based on perturbation and series approximation
 //
-//  Created by Dirk Hoffmann on 06.07.21.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
 //
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
+#include "config.h"
+#include "Application.h"
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main(int argc, char *argv[])
+{
+    std::vector<string> args;
+
+    for (int i = 1; i < argc; i++) {
+        args.push_back(string(argv[i]));
+    }
+    
+    if (args.empty()) {
+        std::cout << "Syntax: " << string(argv[0]) << " config1.ini [config2.ini ...]";
+        std::cout << std::endl;
+        return 1;
+    }
+    
+    dd::Application().main(args);
 }
