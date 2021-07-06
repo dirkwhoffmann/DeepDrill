@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "config.h"
 #include <cmath>
 #include "gmpxx.h"
 

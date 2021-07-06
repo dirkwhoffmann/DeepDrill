@@ -12,6 +12,7 @@
 #pragma once
 #ifdef __cplusplus
 
+#include "config.h"
 #include "StandardComplex.h"
 #include "ExtendedDouble.h"
 #include "PrecisionComplex.h"

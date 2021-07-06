@@ -10,8 +10,8 @@
 // -----------------------------------------------------------------------------
 
 #pragma once
-#ifdef __cplusplus
 
+#include "config.h"
 #include <ostream>
 
 namespace dd {
@@ -146,5 +146,3 @@ struct StandardComplex {
 };
 
 }
-
-#endif

@@ -9,7 +9,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
 #include "ProgressIndicator.h"
 #include <iostream>
 #include <iomanip>

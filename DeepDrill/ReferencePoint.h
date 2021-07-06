@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "config.h"
 #include "Types.h"
 #include "DrillMap.h"
 #include "Options.h"
