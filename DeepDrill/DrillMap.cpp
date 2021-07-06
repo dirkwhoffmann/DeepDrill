@@ -86,7 +86,7 @@ DrillMap::save(const string &name, u32 *data) {
     cmd += " " + rawFile + " " + tiffFile;
     
     // std::cout << "Executing " << cmd << std::endl;
-    if (int error = system(cmd.c_str())) {
+    if (system(cmd.c_str()) != 0) {
         std::cout << "Failed to execute " << cmd << std::endl;
     }
 }
