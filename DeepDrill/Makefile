@@ -2,6 +2,10 @@ EXEC = deepdrill
 SUBDIRS = Utilities
 MYCC = g++ -std=c++17 -O3 -Wfatal-errors
 
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Darwin)
+
 MYFLAGS = \
 -Wall \
 -I $(CURDIR) \
@@ -13,6 +17,20 @@ MYFLAGS = \
 MYLPATH = \
 -L /usr/local/Cellar/gmp/6.2.1/lib \
 -L /usr/local/Cellar/boost/1.76.0/lib
+
+else
+
+MYFLAGS = \
+-Wall \
+-I $(CURDIR) \
+-I $(CURDIR)/Utilities \
+-I $(CURDIR)/xdms \
+-I /usr/local/include
+
+MYLPATH = \
+-L /usr/local/lib
+
+endif
 
 export MYCC MYFLAGS
 

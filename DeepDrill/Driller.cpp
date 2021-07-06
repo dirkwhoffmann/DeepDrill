@@ -42,7 +42,7 @@ void Driller::drill() {
     for (isize round = 1; round <= opt.maxRounds; round++) {
 
         // Exit if enough pixels have been computed
-        if (remaining.size() <= allowedBadPixels) break;
+        if ((isize)remaining.size() <= allowedBadPixels) break;
         
         std::cout << std::endl << "Round " << round << ": ";
         std::cout << remaining.size() << " points" << std::endl << std::endl;

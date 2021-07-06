@@ -18,7 +18,7 @@ namespace dd {
 class Application {
     
     // App parameters from config files
-    std::map<string, string> keys;
+    // std::map<string, string> keys;
     
     
     //

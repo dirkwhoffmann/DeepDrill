@@ -263,6 +263,7 @@
 		50CF8E502694848800887FFC /* DeepDrill */ = {
 			isa = PBXGroup;
 			children = (
+				50BEC6F7269486A900CCDFA8 /* Makefile */,
 				50BEC70B269486B400CCDFA8 /* Utilities */,
 				50BEC700269486AA00CCDFA8 /* Application.cpp */,
 				50BEC6F5269486A900CCDFA8 /* Application.h */,
@@ -275,7 +276,6 @@
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F4269486A900CCDFA8 /* DrillMap.cpp */,
 				50BEC6F9269486A900CCDFA8 /* DrillMap.h */,
-				50BEC6F7269486A900CCDFA8 /* Makefile */,
 				50BEC6FA269486A900CCDFA8 /* Options.cpp */,
 				50BEC6FD269486A900CCDFA8 /* Options.h */,
 				50BEC6FE269486AA00CCDFA8 /* Palette.cpp */,
@@ -483,10 +483,15 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				CODE_SIGN_ENTITLEMENTS = Ressources/DeepDrill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/boost/1.76.0/include/,
 					/usr/local/Cellar/gmp/6.2.1/include/,
@@ -508,10 +513,15 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				CODE_SIGN_ENTITLEMENTS = Ressources/DeepDrill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/boost/1.76.0/include/,
 					/usr/local/Cellar/gmp/6.2.1/include/,

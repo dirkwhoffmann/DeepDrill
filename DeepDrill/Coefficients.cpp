@@ -24,30 +24,30 @@ Coefficients::operator [] (const isize &index) const
 }
 
 void
-Coefficients::compute(ReferencePoint &ref, isize num, isize depth)
+Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
 {
-    assert(num >= 2 && num <= 64);
+    assert(numCoeff >= 2 && numCoeff <= 64);
 
-    this->num = num;
-    this->iterations = depth;
+    num = numCoeff;
+    iterations = depth;
     auto limit = std::min(depth, (isize)ref.xn.size());
 
     ProgressIndicator progress("Computing coefficients", limit);
     
     if (coeff) delete [] coeff;
-    coeff = new ExtendedComplex[num * depth] {};
+    coeff = new ExtendedComplex[numCoeff * depth] {};
     (*this)[0][0] = ExtendedComplex(1, 0);
 
     // Based on the formulas from:
     // https://fractalwiki.org/wiki/Series_approximation
         
-    for (int i = 1; i < limit; i++) {
+    for (isize i = 1; i < limit; i++) {
         
-        assert(i < ref.xn.size());
+        assert(i < (isize)ref.xn.size());
         (*this)[i][0] = (*this)[i-1][0] * ref.xn[i-1].extended * (double)2 + ExtendedComplex(1.0, 0.0);
         (*this)[i][0].reduce();
         
-        for (isize j = 1; j < num; j++) {
+        for (isize j = 1; j < numCoeff; j++) {
             
             (*this)[i][j] = (*this)[i-1][j] * ref.xn[i-1].extended * (double)2;
             for (isize l = 0; l < j; l++) {

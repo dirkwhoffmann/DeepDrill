@@ -42,20 +42,20 @@ void
 DrillMap::saveGlitchImage(const vector<Coord> &glitches, isize round)
 {
     // Allocate image date
-    u32 *image = new u32[opt.width * opt.height] {};
+    u32 *data = new u32[opt.width * opt.height] {};
                          
     // Colorize glitched pixels
-    for (auto &it : glitches) image[it.y * opt.width + it.x] = 0xFF;
+    for (auto &it : glitches) data[it.y * opt.width + it.x] = 0xFF;
     
     // Assemble the file names
     string name = "glitch_" + std::to_string(round);
 
     // Save the image
-    save(name, image);
+    save(name, data);
 }
 
 void
-DrillMap::save(const string &name, u32 *image) {
+DrillMap::save(const string &name, u32 *data) {
  
     std::ofstream os;
         
@@ -71,7 +71,7 @@ DrillMap::save(const string &name, u32 *image) {
 
         for (int x = 0; x < opt.width; x++) {
             
-            char *cptr = (char *)(image + y * opt.width + x);
+            char *cptr = (char *)(data + y * opt.width + x);
             os.write(cptr + 0, 1);
             os.write(cptr + 1, 1);
             os.write(cptr + 2, 1);
