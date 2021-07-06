@@ -66,6 +66,10 @@ Options::initialize(map <string,string> &keys)
         if (auto value = lookupKey(keys, key, "50")) {
             maxRounds = stod(*value);
         }
+        key = "perturbation.accuracy";
+        if (auto value = lookupKey(keys, key, "0.999")) {
+            accuracy = stod(*value);
+        }
         key = "approximation.coefficients";
         if (auto value = lookupKey(keys, key, "5")) {
             numCoefficients = stoi(*value);

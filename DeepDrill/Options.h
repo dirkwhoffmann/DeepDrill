@@ -66,6 +66,9 @@ public:
     // Maximum number of rounds
     isize maxRounds;
     
+    // Fraction of pixels that need to be computed
+    double accuracy;
+    
     
     //
     // Series approximation parameters

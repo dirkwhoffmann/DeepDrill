@@ -24,14 +24,13 @@ Driller::Driller(const Options &options) : opt(options)
 
 void Driller::drill() {
 
+    Clock stopWatch;
     vector<Coord> remaining;
     vector<Coord> glitches;
-
-    Clock stopWatch;
     
     // Determine the number of tolerated glitched pixels
-    isize allowedBadPixels = opt.width * opt.height * badPixels;
-    
+    isize allowedBadPixels = opt.width * opt.height * (1.0 - opt.accuracy);
+        
     // Collect all pixel coordinates to be drilled at
     for (isize y = 0; y < opt.height; y++) {
         for (isize x = 0; x < opt.width; x++) {
@@ -88,12 +87,20 @@ void Driller::drill() {
         // Drill the remaining pixels
         drill(remaining, glitches);
         remaining = glitches;
+        
+        if (opt.verbose) {
+            
+            std::cout << std::endl;
+            std::cout << RALIGN << "Glitches: ";
+            std::cout << glitches.size() << std::endl;
+            std::cout << std::endl;
+        }
     }
     
     auto elapsed = stopWatch.stop();
     map.saveImage();
 
-    std::cout << std::endl << "Total time: " << elapsed.asString() << std::endl;
+    std::cout << std::endl << "Total time: " << elapsed << std::endl;
 }
 
 ReferencePoint
