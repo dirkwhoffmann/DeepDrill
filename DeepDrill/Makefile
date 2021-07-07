@@ -11,12 +11,10 @@ MYFLAGS = \
 -I $(CURDIR) \
 -I $(CURDIR)/Utilities \
 -I $(CURDIR)/xdms \
--I /usr/local/Cellar/gmp/6.2.1/include \
--I /usr/local/Cellar/boost/1.76.0/include
+-I /usr/local/Cellar/gmp/6.2.1/include
 
 MYLPATH = \
--L /usr/local/Cellar/gmp/6.2.1/lib \
--L /usr/local/Cellar/boost/1.76.0/lib
+-L /usr/local/Cellar/gmp/6.2.1/lib
 
 else
 
