@@ -47,7 +47,10 @@ ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const
     auto dxc = opt.pixelDelta * dx;
     auto dyc = opt.pixelDelta * dy;
      
-    return ExtendedComplex(dxc, dyc);
+    auto result = ExtendedComplex(dxc, dyc);
+    result.reduce();
+    
+    return result;
 }
 
 void

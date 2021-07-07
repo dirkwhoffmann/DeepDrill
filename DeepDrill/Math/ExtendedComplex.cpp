@@ -17,7 +17,6 @@ ExtendedComplex::ExtendedComplex(const StandardComplex &m)
 {
     mantissa = m;
     exponent = 0;
-    reduce();
 }
 
 ExtendedComplex::ExtendedComplex(const ExtendedDouble &re, const ExtendedDouble &im)
@@ -49,15 +48,12 @@ ExtendedComplex::ExtendedComplex(const ExtendedDouble &re, const ExtendedDouble 
         mantissa = StandardComplex { mantissa1, ldexp(mantissa2, exp) };
         exponent = exp1;
     }
-    
-    reduce();
 }
 
 ExtendedComplex::ExtendedComplex(const double &re, const double &im)
 {
     mantissa = StandardComplex { re, im };
     exponent = 0;
-    reduce();
 }
 
 ExtendedComplex::ExtendedComplex(const mpf_class &re, const mpf_class &im)

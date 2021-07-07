@@ -175,7 +175,8 @@ Driller::drillProbePoint(Coord &probe)
                 
         auto approx = coeff.evaluate(probe, d0, iteration);
         auto error = (approx - dn).norm() / dn.norm();
-
+        error.reduce();
+        
         if (error > 1e-12) {
             return iteration < 4 ? 0 : iteration - 4;
         }

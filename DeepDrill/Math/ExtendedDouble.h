@@ -103,7 +103,6 @@ struct ExtendedDouble {
             exponent = other.exponent;
             mantissa += other.mantissa;
         }
-        reduce();
         return *this;
     }
 
@@ -118,7 +117,6 @@ struct ExtendedDouble {
             exponent = other.exponent;
             mantissa -= other.mantissa;
         }
-        reduce();
         return *this;
     }
     
@@ -126,14 +124,12 @@ struct ExtendedDouble {
         
         mantissa *= other.mantissa;
         exponent += other.exponent;
-        reduce();
         return *this;
     }
 
     inline ExtendedDouble &operator*=(double scale) {
     
         mantissa *= scale;
-        reduce();
         return *this;
     }
 
@@ -141,7 +137,6 @@ struct ExtendedDouble {
         
         mantissa /= other.mantissa;
         exponent -= other.exponent;
-        reduce();
         return *this;
     }
 
@@ -183,7 +178,6 @@ struct ExtendedDouble {
     inline ExtendedDouble reciprocal() const {
 
         ExtendedDouble result = ExtendedDouble { 1.0 / mantissa, -exponent };
-        result.reduce();
         return result;
     }
 
@@ -225,12 +219,16 @@ struct ExtendedDouble {
 
     inline bool operator<(double other) {
 
+        assert(isReduced());
+
         ExtendedDouble tmp(other);
         tmp.reduce();
         return *this < tmp;
     }
 
     inline bool operator>(double other) {
+
+        assert(isReduced());
 
         ExtendedDouble tmp(other);
         tmp.reduce();

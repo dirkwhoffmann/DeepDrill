@@ -149,7 +149,6 @@ struct ExtendedComplex {
         mantissa.re *= other.mantissa;
         mantissa.im *= other.mantissa;
         exponent += other.exponent;
-        reduce();
         return *this;
     }
 
