@@ -12,8 +12,8 @@
 #pragma once
 
 #include "config.h"
-#include <cmath>
 #include "gmpxx.h"
+#include <cmath>
 
 namespace dd {
 
@@ -28,7 +28,7 @@ struct ExtendedDouble {
     //
     
     constexpr ExtendedDouble() : mantissa(0), exponent(0) { }
-    constexpr ExtendedDouble(const double m, const long e) : mantissa(m), exponent(e) { }
+    constexpr ExtendedDouble(double m, long e) : mantissa(m), exponent(e) { }
     ExtendedDouble(double m);
     ExtendedDouble(const mpf_class &value);
     
@@ -82,6 +82,8 @@ struct ExtendedDouble {
     inline bool operator==(const ExtendedDouble &other) const {
         
         assert(isReduced());
+        assert(other.isReduced());
+        
         return mantissa == other.mantissa && exponent == other.exponent;
     }
     
@@ -192,8 +194,8 @@ struct ExtendedDouble {
     
     inline bool operator<(ExtendedDouble &other) {
 
-        reduce();
-        other.reduce();
+        assert(isReduced());
+        assert(other.isReduced());
 
         if (mantissa == 0.0 && other.mantissa < 0.0) {
             return false;
@@ -224,12 +226,14 @@ struct ExtendedDouble {
     inline bool operator<(double other) {
 
         ExtendedDouble tmp(other);
+        tmp.reduce();
         return *this < tmp;
     }
 
     inline bool operator>(double other) {
-        
+
         ExtendedDouble tmp(other);
+        tmp.reduce();
         return *this > tmp;
     }
 

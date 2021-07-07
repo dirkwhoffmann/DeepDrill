@@ -27,11 +27,7 @@ Coord::translate(const Options &opt) const
     // Compute the pixel delta to the center
     auto dx = opt.mpfPixelDelta * (x - c.x);
     auto dy = opt.mpfPixelDelta * (y - c.y);
-    
-    // Compute the delta location on the complex plain
-//    auto dxc = opt.mpfPixelDelta * dx;
-//    auto dyc = opt.mpfPixelDelta * dy;
-    
+        
     return opt.center + PrecisionComplex(dx, dy);
 }
 
