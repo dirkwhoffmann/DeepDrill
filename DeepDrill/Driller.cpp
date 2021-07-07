@@ -111,7 +111,7 @@ Driller::pickReference(const vector<Coord> &glitches)
 
     } else {
         
-        auto index = rand() & glitches.size();
+        auto index = rand() % glitches.size();
         return ReferencePoint(opt, glitches[index]);
     }
 }
@@ -199,6 +199,12 @@ Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
 void
 Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 {
+    // Check if this point is the reference point
+    if (point == ref.coord) {
+        map.setPixel(ref, palette);
+        return;
+    }
+        
     ExtendedComplex d0 = ref.deltaLocation(opt, point);
     ExtendedComplex dn;
     isize iteration = ref.skipped;
@@ -214,7 +220,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
-        
+            
     // Enter the main loop
     while (++iteration < limit) {
         
@@ -223,19 +229,19 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         dn.reduce();
         
         double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
-        
+
         // Perform the glitch check
-        if (norm < ref.xn[iteration].tolerance) break;
+        if (norm < ref.xn[iteration].tolerance) {
+            break;
+        }
         
         // Perform the escape check
         if (norm >= 256) {
-
-            int index = (int)((iteration - log2(log2(norm))) * 5);
-            map.setPixel(point, palette.colorize(index));
+            map.setPixel(point, palette, iteration, norm);
             return;
         }
     }
-    
+        
     if (limit == opt.depth) {
 
         // This point belongs to the Mandelbrot set

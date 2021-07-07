@@ -15,6 +15,8 @@
 #include "Types.h"
 #include "Coord.h"
 #include "Options.h"
+#include "Palette.h"
+#include "ReferencePoint.h"
 
 namespace dd {
 
@@ -46,7 +48,8 @@ public:
 public:
     
     void setPixel(Coord c, u32 color) { image[c.y * opt.width + c.x] = color; }
-    void setPixel(isize x, isize y, u32 color) { image[y * opt.width + x] = color; }
+    void setPixel(Coord c, const Palette &palette, isize it, double norm);
+    void setPixel(const ReferencePoint &ref, const Palette &palette);
 
         
     //

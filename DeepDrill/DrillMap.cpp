@@ -11,7 +11,7 @@
 
 #include "DrillMap.h"
 #include "ProgressIndicator.h"
-#include "ReferencePoint.h"
+// #include "ReferencePoint.h"
 #include <fstream>
 #include <iostream>
 
@@ -29,6 +29,23 @@ DrillMap::DrillMap(const Options &options) : opt(options)
 DrillMap::~DrillMap()
 {
     if (image) delete [] image;
+}
+
+void
+DrillMap::setPixel(Coord c, const Palette &palette, isize it, double norm)
+{
+    isize index = (isize)((it - log2(log2(norm))) * 5);
+    setPixel(c, palette.colorize(index));
+}
+
+void
+DrillMap::setPixel(const ReferencePoint &ref, const Palette &palette)
+{
+    if (ref.escaped) {
+        setPixel(ref.coord, 0);
+    } else {
+        setPixel(ref.coord, palette, ref.xn.size(), ref.norm);
+    }
 }
 
 void

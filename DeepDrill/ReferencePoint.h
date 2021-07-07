@@ -13,7 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
-#include "DrillMap.h"
+#include "Coord.h"
 #include "Options.h"
 
 namespace dd {
@@ -31,6 +31,7 @@ struct ReferenceIteration {
     
     // Glitch tolerance for this iteration
     double tolerance;
+        
     
     //
     // Initializing
@@ -53,6 +54,12 @@ struct ReferencePoint {
     // The first iteration where series approximation fails
     isize skipped = 0;
         
+    // Indicates if the reference point has escaped
+    bool escaped = false;
+    
+    // Norm at escape time
+    double norm;
+
     
     //
     // Methods

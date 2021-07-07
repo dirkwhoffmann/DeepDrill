@@ -66,7 +66,8 @@ ReferencePoint::drill(const Options &opt)
         xn.push_back(ReferenceIteration(z, opt.glitchTolerance));
         
         // Perform the escape check
-        if (StandardComplex(z).norm() > 1e256) {
+        if (norm = StandardComplex(z).norm(); norm > 256) {
+            escaped = true;
             break;
         }
         

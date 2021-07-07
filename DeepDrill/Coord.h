@@ -27,7 +27,7 @@ struct Coord {
     Coord(isize nx, isize ny) : x((i16)nx), y((i16)ny) { };
     Coord(double nx, double ny) : x((i16)nx), y((i16)ny) { };
 
-    bool operator==(const Coord &other) { return x == other.x && y == other.y; }
+    bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
     
     static Coord center(const Options &opt);
     
