@@ -59,7 +59,7 @@ Options::initialize(map <string,string> &keys)
         }
         key = "perturbation.tolerance";
         if (auto value = lookupKey(keys, key, "1e-6")) {
-            glitchTolerance = stod(*value);
+            perturbationTolerance = stod(*value);
         }
         key = "perturbation.maxrounds";
         if (auto value = lookupKey(keys, key, "50")) {
@@ -73,6 +73,11 @@ Options::initialize(map <string,string> &keys)
         if (auto value = lookupKey(keys, key, "5")) {
             numCoefficients = stoi(*value);
         }
+        key = "approximation.tolerance";
+        if (auto value = lookupKey(keys, key, "1e-12")) {
+            approximationTolerance = stod(*value);
+        }
+
         key = "debug.verbose";
         if (auto value = lookupKey(keys, key, "0")) {
             verbose = stoi(*value);
@@ -113,8 +118,8 @@ Options::initialize(map <string,string> &keys)
         std::cout << height << std::endl;
         std::cout << std::right << std::setw(align) << "Rotate: ";
         std::cout << rotate << std::endl;
-        std::cout << std::right << std::setw(align) << "Glitch tolerance: ";
-        std::cout << glitchTolerance << std::endl;
+        std::cout << std::right << std::setw(align) << "Perturbation tolerance: ";
+        std::cout << perturbationTolerance << std::endl;
         std::cout << std::right << std::setw(align) << "Max rounds: ";
         std::cout << maxRounds << std::endl;
         std::cout << std::right << std::setw(align) << "Coefficients: ";

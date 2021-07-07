@@ -162,6 +162,7 @@ Driller::drillProbePoint(Coord &probe)
     ExtendedComplex dn = d0;
             
     isize iteration = 0;
+    auto tolerance = ExtendedDouble(opt.approximationTolerance);
     
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
@@ -177,7 +178,7 @@ Driller::drillProbePoint(Coord &probe)
         auto error = (approx - dn).norm() / dn.norm();
         error.reduce();
         
-        if (error > 1e-12) {
+        if (error > tolerance) {
             return iteration < 4 ? 0 : iteration - 4;
         }
     }

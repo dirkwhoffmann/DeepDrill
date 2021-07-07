@@ -62,7 +62,7 @@ public:
     //
 
     // Tolerance used for glitch detection
-    double glitchTolerance;
+    double perturbationTolerance;
 
     // Maximum number of rounds
     isize maxRounds;
@@ -78,6 +78,14 @@ public:
     // Number of coefficients used in series approximation
     isize numCoefficients;
         
+    // Tolerance used for glitch detection
+    double approximationTolerance;
+
+    
+    //
+    // Debug parameters
+    //
+    
     // Debug output level
     isize verbose;
     

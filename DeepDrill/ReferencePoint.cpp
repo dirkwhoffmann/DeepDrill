@@ -59,14 +59,14 @@ ReferencePoint::drill(const Options &opt)
     ProgressIndicator progress("Computing reference orbit", opt.depth);
 
     PrecisionComplex z = location;
-    xn.push_back(ReferenceIteration(z, opt.glitchTolerance));
+    xn.push_back(ReferenceIteration(z, opt.perturbationTolerance));
         
     for (isize i = 1; i < opt.depth; i++) {
         
         z *= z;
         z += location;
         
-        xn.push_back(ReferenceIteration(z, opt.glitchTolerance));
+        xn.push_back(ReferenceIteration(z, opt.perturbationTolerance));
         
         // Perform the escape check
         if (norm = StandardComplex(z).norm(); norm > 256) {

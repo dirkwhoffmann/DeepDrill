@@ -17,6 +17,7 @@ ExtendedDouble::ExtendedDouble(double m)
 {
     mantissa = m;
     exponent = 0;
+    reduce();
 }
 
 ExtendedDouble::ExtendedDouble(const mpf_class &value)
