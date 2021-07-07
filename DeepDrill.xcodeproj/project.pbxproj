@@ -508,14 +508,8 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/boost/1.76.0/include/,
-					/usr/local/Cellar/gmp/6.2.1/include/,
-				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/gmp/6.2.1/lib/,
-					/usr/local/Cellar/boost/1.76.0/lib/,
-				);
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/gmp/6.2.1/include/;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/gmp/6.2.1/lib/;
 				OTHER_LDFLAGS = (
 					"-lgmp",
 					"-lgmpxx",
@@ -538,14 +532,8 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/boost/1.76.0/include/,
-					/usr/local/Cellar/gmp/6.2.1/include/,
-				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/gmp/6.2.1/lib/,
-					/usr/local/Cellar/boost/1.76.0/lib/,
-				);
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/gmp/6.2.1/include/;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/gmp/6.2.1/lib/;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lgmp",

@@ -18,7 +18,18 @@ namespace dd {
 
 class Parser {
     
-//    static void parse();
+public:
+    
+    static void parse(const string &path, std::map<string, string> &keys);
+    static void parse(std::ifstream &stream, std::map<string, string> &keys);
+    static void parse(std::stringstream &stream, std::map<string, string> &keys);
+
+private:
+    
+    static void ltrim(string &s);
+    static void rtrim(string &s);
+    static void trim(string &s);
+    static void tolower(string &s);
 };
 
 }

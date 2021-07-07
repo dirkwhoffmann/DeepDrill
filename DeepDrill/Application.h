@@ -17,25 +17,14 @@
 namespace dd {
 
 class Application {
-    
-    // App parameters from config files
-    // std::map<string, string> keys;
-    
-    
-    //
-    // Running the app
-    //
-    
+        
 public:
         
     // Main entry point
     int main(std::vector <string> &args);
     
 private:
-    
-    // Extracts all keys from a config file
-    void readConfigFile(string path, std::map <string,string> &keys) throws;
-    
+        
     // Setup the GMP library
     void setupGmp(std::map <string,string> &keys);
 };
