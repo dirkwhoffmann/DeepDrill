@@ -9,8 +9,8 @@ ifeq ($(UNAME), Darwin)
 MYFLAGS = \
 -Wall \
 -I $(CURDIR) \
+-I $(CURDIR)/Math \
 -I $(CURDIR)/Utilities \
--I $(CURDIR)/xdms \
 -I /usr/local/Cellar/gmp/6.2.1/include
 
 MYLPATH = \
@@ -21,8 +21,8 @@ else
 MYFLAGS = \
 -Wall \
 -I $(CURDIR) \
+-I $(CURDIR)/Math \
 -I $(CURDIR)/Utilities \
--I $(CURDIR)/xdms \
 -I /usr/local/include
 
 MYLPATH = \
