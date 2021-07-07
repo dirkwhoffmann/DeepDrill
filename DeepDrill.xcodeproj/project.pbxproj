@@ -42,6 +42,7 @@
 		500655E626957C8400982789 /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		500655E726957C8400982789 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500655EA26957CF500982789 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		500655EC2695AACB00982789 /* ice.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice.ini; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EE269486A800CCDFA8 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				50BEC7572694874E00CCDFA8 /* vulcano.ini */,
+				500655EC2695AACB00982789 /* ice.ini */,
 			);
 			path = Palettes;
 			sourceTree = "<group>";
