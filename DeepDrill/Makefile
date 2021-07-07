@@ -1,5 +1,5 @@
 EXEC = deepdrill
-SUBDIRS = Utilities
+SUBDIRS = Utilities Math
 MYCC = g++ -std=c++17 -O3 -Wfatal-errors
 
 UNAME := $(shell uname)
