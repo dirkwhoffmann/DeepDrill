@@ -51,7 +51,7 @@ DrillMap::setPixel(const ReferencePoint &ref, const Palette &palette)
 void
 DrillMap::saveImage()
 {
-    save(opt.exportPath + "/" + opt.exportName, image);
+    save(opt.path + opt.name, image);
 }
 
 void

@@ -161,6 +161,13 @@
 			path = Math;
 			sourceTree = "<group>";
 		};
+		501023372696D19400AC61A8 /* Output */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Output;
+			sourceTree = "<group>";
+		};
 		50BEC70B269486B400CCDFA8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +266,7 @@
 			children = (
 				50CF8E502694848800887FFC /* DeepDrill */,
 				50BEC7292694870100CCDFA8 /* Examples */,
+				501023372696D19400AC61A8 /* Output */,
 				50BEC7582694875D00CCDFA8 /* Ressources */,
 				50BEC7562694873C00CCDFA8 /* Palettes */,
 				50BEC721269486D900CCDFA8 /* Profiles */,

@@ -76,9 +76,8 @@ Parser::parse(std::stringstream &stream, std::map<string, string> &keys)
             trim(key);
             trim(value);
             
-            // Convert to lower case
+            // Convert the key to lower case
             tolower(key);
-            tolower(value);
             
             // Add the key-value pair
             keys[section + "." + key] = value;

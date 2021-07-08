@@ -31,14 +31,15 @@ struct Coord {
     
     static Coord center(const Options &opt);
     
+    
     //
-    // Converting
+    // Converting locations
     //
     
     // Translates the coordinate to it's location on the complex plane
     PrecisionComplex translate(const Options &opt) const;
 
-    
+
     //
     // Computing
     //

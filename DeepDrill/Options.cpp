@@ -25,6 +25,18 @@ Options::initialize(map <string,string> &keys)
 
     try {
         
+        key = "main.name";
+        if (auto value = lookupKey(keys, key)) {
+            name = *value;
+        }
+        key = "main.format";
+        if (auto value = lookupKey(keys, key, "tiff")) {
+            format = *value;
+        }
+        key = "main.path";
+        if (auto value = lookupKey(keys, key, "")) {
+            path = *value;
+        }
         key = "location.real";
         if (auto value = lookupKey(keys, key)) {
             real = mpf_class(*value);
@@ -77,19 +89,9 @@ Options::initialize(map <string,string> &keys)
         if (auto value = lookupKey(keys, key, "1e-12")) {
             approximationTolerance = stod(*value);
         }
-
         key = "debug.verbose";
         if (auto value = lookupKey(keys, key, "0")) {
             verbose = stoi(*value);
-        }
-        key = "export.path";
-        auto current = std::filesystem::current_path().string();
-        if (auto value = lookupKey(keys, key, current)) {
-            exportPath = *value;
-        }
-        key = "export.name";
-        if (auto value = lookupKey(keys, key)) {
-            exportName = *value;
         }
 
     } catch(const MissingKeyException &e) {
@@ -104,6 +106,12 @@ Options::initialize(map <string,string> &keys)
         
         static int align = 30;
         
+        std::cout << std::right << std::setw(align) << "Name: ";
+        std::cout << name << std::endl;
+        std::cout << std::right << std::setw(align) << "Format: ";
+        std::cout << format << std::endl;
+        std::cout << std::right << std::setw(align) << "Path: ";
+        std::cout << path << std::endl;
         std::cout << std::right << std::setw(align) << "Real: ";
         std::cout << real << std::endl;
         std::cout << std::right << std::setw(align) << "Imag: ";
@@ -126,10 +134,6 @@ Options::initialize(map <string,string> &keys)
         std::cout << numCoefficients << std::endl;
         std::cout << std::right << std::setw(align) << "Rotate: ";
         std::cout << rotate << std::endl;
-        std::cout << std::right << std::setw(align) << "Export path: ";
-        std::cout << exportPath << std::endl;
-        std::cout << std::right << std::setw(align) << "Export name: ";
-        std::cout << exportName << std::endl << std::endl;
 
         std::cout << std::right << std::setw(align) << "Center: ";
         std::cout << center << std::endl;
@@ -163,9 +167,22 @@ Options::lookupKey(const map <string,string> &keys, const string &key, const str
 void
 Options::deriveVariables()
 {
+    // Compute the center coordinate
     center = PrecisionComplex(real, imag);
+
+    // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / zoom / height;
     pixelDelta = mpfPixelDelta;
+    
+    // Prepend the path with the current directory if necessary
+    if (path == "" || path.front() != '/') {
+        
+        auto current = std::filesystem::current_path().string();
+        path = current + "/" + path;
+    }
+    
+    // Add '/' to the path if it is missing
+    if (path.back() != '/') path += "/";
 }
 
 }

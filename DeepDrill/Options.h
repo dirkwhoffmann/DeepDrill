@@ -26,6 +26,10 @@ struct InvalidValueException : std::runtime_error {
 class Options {
 
 public:
+
+    string name;
+    string format;
+    string path;
     
     //
     // Location parameters
@@ -89,14 +93,6 @@ public:
     // Debug output level
     isize verbose;
     
-    
-    //
-    // File names
-    //
-    
-    string exportPath;
-    string exportName;
-
     
     //
     // Derived values
