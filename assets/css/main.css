@@ -9,8 +9,8 @@
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
-pre, a, abbr, acronym, address, big, cite,
-code, del, dfn, em, img, ins, kbd, q, s, samp,
+code pre, a, abbr, acronym, address, big, cite,
+del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var, b,
 u, i, center, dl, dt, dd, ol, ul, li, fieldset,
 form, label, legend, table, caption, tbody,
@@ -24,6 +24,15 @@ section, summary, time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;}
+
+p {
+	text-align: justify;
+}
+
+pre { 
+	padding: 8pt;
+	background-color: #EEEEEE;
+}
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -2178,7 +2187,7 @@ input, select, textarea {
 		}
 
 	ul {
-		list-style: disc;
+		list-style: none;
 		padding-left: 1em;
 	}
 
