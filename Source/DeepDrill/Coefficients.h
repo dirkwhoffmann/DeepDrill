@@ -12,7 +12,7 @@
 #pragma once
 
 #include "config.h"
-#include "Types.h"
+#include "MathTypes.h"
 #include "ReferencePoint.h"
 
 namespace dd {

@@ -11,6 +11,8 @@
 		50102340269D9FB500AC61A8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5010233F269D9FB500AC61A8 /* main.cpp */; };
 		50102346269DBEF000AC61A8 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
 		50102349269DC4F500AC61A8 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
+		5010234C269DDE9C00AC61A8 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5010234B269DDE9C00AC61A8 /* Makefile */; };
+		5010234E269DE0FB00AC61A8 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5010234D269DE0FB00AC61A8 /* Makefile */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC703269486AA00CCDFA8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F4269486A900CCDFA8 /* DrillMap.cpp */; };
@@ -60,6 +62,9 @@
 		50102345269DBEF000AC61A8 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		50102347269DC4F500AC61A8 /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
 		50102348269DC4F500AC61A8 /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
+		5010234B269DDE9C00AC61A8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5010234D269DE0FB00AC61A8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5010234F269DE2FE00AC61A8 /* MathTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathTypes.h; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EE269486A800CCDFA8 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
@@ -169,7 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				500655EA26957CF500982789 /* Makefile */,
-				50BEC70F269486C100CCDFA8 /* Types.h */,
+				5010234F269DE2FE00AC61A8 /* MathTypes.h */,
 				50BEC713269486C100CCDFA8 /* ExtendedComplex.h */,
 				50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */,
 				50BEC711269486C100CCDFA8 /* ExtendedDouble.h */,
@@ -192,15 +197,29 @@
 		5010233E269D9FB500AC61A8 /* DDImage */ = {
 			isa = PBXGroup;
 			children = (
+				5010234D269DE0FB00AC61A8 /* Makefile */,
 				5010233F269D9FB500AC61A8 /* main.cpp */,
 			);
 			path = DDImage;
 			sourceTree = "<group>";
 		};
-		50BEC70B269486B400CCDFA8 /* Utilities */ = {
+		5010234A269DDE6D00AC61A8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				5010234B269DDE9C00AC61A8 /* Makefile */,
+				50BEC6F3269486A900CCDFA8 /* config.h */,
+				50BEC70B269486B400CCDFA8 /* Commons */,
+				50CF8E502694848800887FFC /* DeepDrill */,
+				5010233E269D9FB500AC61A8 /* DDImage */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		50BEC70B269486B400CCDFA8 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
 				50BEC70E269486C100CCDFA8 /* Makefile */,
+				50BEC70F269486C100CCDFA8 /* Types.h */,
 				50BEC70D269486C100CCDFA8 /* Chrono.h */,
 				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
 				500655E726957C8400982789 /* Parser.h */,
@@ -210,7 +229,7 @@
 				50102348269DC4F500AC61A8 /* IO.h */,
 				50102347269DC4F500AC61A8 /* IO.cpp */,
 			);
-			path = Utilities;
+			path = Commons;
 			sourceTree = "<group>";
 		};
 		50BEC721269486D900CCDFA8 /* Profiles */ = {
@@ -296,9 +315,7 @@
 		50CF8E452694848800887FFC = {
 			isa = PBXGroup;
 			children = (
-				50BEC70B269486B400CCDFA8 /* Utilities */,
-				50CF8E502694848800887FFC /* DeepDrill */,
-				5010233E269D9FB500AC61A8 /* DDImage */,
+				5010234A269DDE6D00AC61A8 /* Source */,
 				50BEC7292694870100CCDFA8 /* Locations */,
 				50BEC721269486D900CCDFA8 /* Profiles */,
 				501023372696D19400AC61A8 /* Output */,
@@ -322,7 +339,6 @@
 			children = (
 				50BEC6F7269486A900CCDFA8 /* Makefile */,
 				500655E926957CBF00982789 /* Math */,
-				50BEC6F3269486A900CCDFA8 /* config.h */,
 				50CF8E512694848800887FFC /* main.cpp */,
 				50BEC6F5269486A900CCDFA8 /* Application.h */,
 				50BEC700269486AA00CCDFA8 /* Application.cpp */,
@@ -435,11 +451,13 @@
 				50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */,
 				50BEC70A269486AA00CCDFA8 /* Application.cpp in Sources */,
 				50BEC71B269486C200CCDFA8 /* ExtendedDouble.cpp in Sources */,
+				5010234C269DDE9C00AC61A8 /* Makefile in Sources */,
 				50BEC720269486C200CCDFA8 /* PrecisionComplex.cpp in Sources */,
 				500655E826957C8400982789 /* Parser.cpp in Sources */,
 				50102349269DC4F500AC61A8 /* IO.cpp in Sources */,
 				50BEC708269486AA00CCDFA8 /* Palette.cpp in Sources */,
 				50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */,
+				5010234E269DE0FB00AC61A8 /* Makefile in Sources */,
 				50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */,
 				50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */,
 				50CF8E522694848800887FFC /* main.cpp in Sources */,

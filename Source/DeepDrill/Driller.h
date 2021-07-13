@@ -12,7 +12,7 @@
 #pragma once
 
 #include "config.h"
-#include "Types.h"
+#include "MathTypes.h"
 #include "Coefficients.h"
 #include "Coord.h"
 #include "DrillMap.h"

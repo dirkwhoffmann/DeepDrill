@@ -1,37 +1,5 @@
-EXEC = deepdrill
 SUBDIRS = Math
-MYCC = g++ -std=c++17 -O3 -Wfatal-errors
-
-UNAME := $(shell uname)
-
-ifeq ($(UNAME), Darwin)
-
-MYFLAGS = \
--Wall \
--I $(CURDIR) \
--I $(CURDIR)/Math \
--I $(CURDIR)/../Utilities \
--I /usr/local/Cellar/gmp/6.2.1/include
-
-MYLPATH = \
--L /usr/local/Cellar/gmp/6.2.1/lib
-
-else
-
-MYFLAGS = \
--Wall \
--I $(CURDIR) \
--I $(CURDIR)/Math \
--I $(CURDIR)/Utilities \
--I /usr/local/include
-
-MYLPATH = \
--L /usr/local/lib
-
-endif
-
-export MYCC MYFLAGS
-
+MYFLAGS = -I$(CURDIR) -I$(CURDIR)/Math -I$(CURDIR)/.. -I$(CURDIR)/../Commons
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
 
@@ -62,4 +30,4 @@ clean:
 
 bin:
 	@echo "Linking"
-	@g++ -pthread -o $(EXEC) *.o */*.o $(MYLPATH) -lgmpxx -lgmp
+	@g++ -pthread -o deepdrill ../Commons/*.o *.o */*.o $(MYLPATH) -lgmpxx -lgmp

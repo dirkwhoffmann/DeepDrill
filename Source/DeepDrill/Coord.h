@@ -12,8 +12,9 @@
 #pragma once
 
 #include "config.h"
-#include "Types.h"
+#include "MathTypes.h"
 #include "Options.h"
+#include "PrecisionComplex.h"
 
 namespace dd {
 

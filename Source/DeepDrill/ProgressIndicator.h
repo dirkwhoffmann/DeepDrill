@@ -1,5 +1,6 @@
 // -----------------------------------------------------------------------------
 // This file is part of DeepDrill
+//
 // A Mandelbrot generator based on perturbation and series approximation
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
@@ -11,33 +12,40 @@
 #pragma once
 
 #include "config.h"
-#include "Types.h"
-#include "Options.h"
+#include "MathTypes.h"
+#include "Chrono.h"
 
 namespace dd {
 
-class Palette {
-  
-    // Configuration options
-    const Options &opt;
+class ProgressIndicator {
+        
+    // Pprogress
+    isize progress;
+    isize progressMax;
     
-    // The color table
-    vector <u32> colors;
+    // Printed dots
+    isize dots;
+    isize dotsMax;
+    
+    // Stop watch
+    Clock clock;
     
     
     //
-    // Initialization
+    // Methods
     //
-
+    
 public:
     
-    Palette(const Options &options);
-            
-    // Initializes the color table
-    void init(string values);
+    ProgressIndicator(const string &description, isize max = 100);
+    ~ProgressIndicator();
+
+    void step(isize delta = 1);
+
+private:
     
-    // Translates an iteration count into a color
-    u32 colorize(isize depth) const;
+    void init(const string &description, isize max = 100);
+    void done(const string &info = "");
 };
 
 }

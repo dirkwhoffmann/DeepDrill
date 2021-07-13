@@ -10,7 +10,6 @@
 // -----------------------------------------------------------------------------
 
 #pragma once
-#ifdef __cplusplus
 
 #include "config.h"
 #include "StandardComplex.h"
@@ -230,5 +229,3 @@ struct ExtendedComplex {
 };
 
 }
-
-#endif
