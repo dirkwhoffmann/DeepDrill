@@ -10,6 +10,8 @@
 // -----------------------------------------------------------------------------
 
 #include "Types.h"
+#include "ExtendedComplex.h"
+#include <iostream>
 
 namespace dd {
 

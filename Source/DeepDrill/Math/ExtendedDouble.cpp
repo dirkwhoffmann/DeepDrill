@@ -10,6 +10,8 @@
 // -----------------------------------------------------------------------------
 
 #include "Types.h"
+#include "ExtendedDouble.h"
+#include <iostream>
 
 namespace dd {
 

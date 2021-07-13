@@ -1,3 +1,4 @@
+MYFLAGS = -I$(CURDIR) -I$(CURDIR)/../.. -I$(CURDIR)/../../Commons
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
 

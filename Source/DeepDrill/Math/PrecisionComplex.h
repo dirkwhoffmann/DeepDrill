@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "gmpxx.h"
+#include "StandardComplex.h"
 
 namespace dd {
 
