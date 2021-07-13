@@ -1,5 +1,5 @@
 EXEC = deepdrill
-SUBDIRS = Utilities Math
+SUBDIRS = Math
 MYCC = g++ -std=c++17 -O3 -Wfatal-errors
 
 UNAME := $(shell uname)
@@ -10,7 +10,7 @@ MYFLAGS = \
 -Wall \
 -I $(CURDIR) \
 -I $(CURDIR)/Math \
--I $(CURDIR)/Utilities \
+-I $(CURDIR)/../Utilities \
 -I /usr/local/Cellar/gmp/6.2.1/include
 
 MYLPATH = \
