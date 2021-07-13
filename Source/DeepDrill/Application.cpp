@@ -9,6 +9,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "Application.h"
 #include "Driller.h"
 #include "IO.h"

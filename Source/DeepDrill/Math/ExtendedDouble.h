@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "config.h"
 #include "gmpxx.h"
 #include <cmath>
 
@@ -79,13 +78,7 @@ struct ExtendedDouble {
     // Comparing
     //
     
-    inline bool operator==(const ExtendedDouble &other) const {
-        
-        assert(isReduced());
-        assert(other.isReduced());
-        
-        return mantissa == other.mantissa && exponent == other.exponent;
-    }
+    inline bool operator==(const ExtendedDouble &other) const;
     
     
     //

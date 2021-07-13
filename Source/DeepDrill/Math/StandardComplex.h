@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "config.h"
 #include <StandardComplex.h>
 #include <ostream>
 

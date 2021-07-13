@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "config.h"
 #include "MathTypes.h"
 #include "Coord.h"
 #include "Options.h"

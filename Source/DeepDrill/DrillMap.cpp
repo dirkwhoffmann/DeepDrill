@@ -9,9 +9,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "DrillMap.h"
 #include "ProgressIndicator.h"
-// #include "ReferencePoint.h"
 #include <fstream>
 #include <iostream>
 

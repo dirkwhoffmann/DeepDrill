@@ -9,6 +9,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "IO.h"
 #include <assert.h>
 #include <vector>

@@ -9,6 +9,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "Types.h"
 #include "ExtendedDouble.h"
 #include <iostream>
@@ -32,6 +33,15 @@ ExtendedDouble::operator=(const mpf_class &other)
 {
     mantissa = mpf_get_d_2exp(&exponent, other.get_mpf_t());
     return *this;
+}
+
+bool
+ExtendedDouble::operator==(const ExtendedDouble &other)
+{
+    assert(isReduced());
+    assert(other.isReduced());
+    
+    return mantissa == other.mantissa && exponent == other.exponent;
 }
 
 std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value)

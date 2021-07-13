@@ -9,6 +9,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "Types.h"
 #include "PrecisionComplex.h"
 #include "StandardComplex.h"
