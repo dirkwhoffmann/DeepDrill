@@ -85,13 +85,7 @@ Parser::parse(std::stringstream &stream, std::map<string, string> &keys)
         }
         
         throw std::runtime_error("Syntax error in line " + std::to_string(line));
-    }
-    
-    /*
-    for (auto &it : keys) {
-        std::cout << "|" << it.first << "| = |" << it.second << "|" << std::endl;
-    }
-    */
+    }    
 }
 
 void

@@ -93,55 +93,54 @@
 		50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtendedComplex.cpp; sourceTree = "<group>"; };
 		50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrecisionComplex.cpp; sourceTree = "<group>"; };
 		50BEC722269486E500CCDFA8 /* config.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.prf; sourceTree = "<group>"; };
-		50BEC723269486E500CCDFA8 /* medium.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = medium.ini; sourceTree = "<group>"; };
-		50BEC724269486E600CCDFA8 /* low.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = low.ini; sourceTree = "<group>"; };
-		50BEC725269486E600CCDFA8 /* debug.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.ini; sourceTree = "<group>"; };
-		50BEC726269486E600CCDFA8 /* ultra.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = ultra.ini; sourceTree = "<group>"; };
-		50BEC727269486E600CCDFA8 /* high.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = high.ini; sourceTree = "<group>"; };
-		50BEC728269486E600CCDFA8 /* thumbnail.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = thumbnail.ini; sourceTree = "<group>"; };
-		50BEC72A2694872900CCDFA8 /* golden_spider.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = golden_spider.ini; sourceTree = "<group>"; };
-		50BEC72B2694872900CCDFA8 /* peanuts.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = peanuts.ini; sourceTree = "<group>"; };
-		50BEC72C2694872900CCDFA8 /* safari.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = safari.ini; sourceTree = "<group>"; };
-		50BEC72D2694872900CCDFA8 /* dragon.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dragon.ini; sourceTree = "<group>"; };
-		50BEC72E2694872900CCDFA8 /* seahorse.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = seahorse.ini; sourceTree = "<group>"; };
-		50BEC72F2694872900CCDFA8 /* spider.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spider.ini; sourceTree = "<group>"; };
-		50BEC7302694872900CCDFA8 /* wfs.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs.ini; sourceTree = "<group>"; };
-		50BEC7312694872900CCDFA8 /* flake.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flake.ini; sourceTree = "<group>"; };
-		50BEC7322694872A00CCDFA8 /* glitch_test_5.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_5.ini; sourceTree = "<group>"; };
-		50BEC7332694872A00CCDFA8 /* super_dense.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = super_dense.ini; sourceTree = "<group>"; };
-		50BEC7342694872A00CCDFA8 /* triangle.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle.ini; sourceTree = "<group>"; };
-		50BEC7352694872A00CCDFA8 /* x.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = x.ini; sourceTree = "<group>"; };
-		50BEC7362694872A00CCDFA8 /* glitch_test_3.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_3.ini; sourceTree = "<group>"; };
-		50BEC7372694872A00CCDFA8 /* long.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = long.ini; sourceTree = "<group>"; };
-		50BEC7382694872A00CCDFA8 /* glitch_test_1.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_1.ini; sourceTree = "<group>"; };
-		50BEC7392694872A00CCDFA8 /* evolution_trees.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = evolution_trees.ini; sourceTree = "<group>"; };
-		50BEC73A2694872A00CCDFA8 /* glitch_test_6.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_6.ini; sourceTree = "<group>"; };
-		50BEC73B2694872A00CCDFA8 /* opus.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus.ini; sourceTree = "<group>"; };
-		50BEC73C2694872B00CCDFA8 /* wfs4.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs4.ini; sourceTree = "<group>"; };
-		50BEC73D2694872B00CCDFA8 /* threads_colour.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = threads_colour.ini; sourceTree = "<group>"; };
-		50BEC73E2694872B00CCDFA8 /* wfs2.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs2.ini; sourceTree = "<group>"; };
+		50BEC723269486E500CCDFA8 /* medium.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = medium.prf; sourceTree = "<group>"; };
+		50BEC724269486E600CCDFA8 /* low.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = low.prf; sourceTree = "<group>"; };
+		50BEC726269486E600CCDFA8 /* ultra.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ultra.prf; sourceTree = "<group>"; };
+		50BEC727269486E600CCDFA8 /* high.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = high.prf; sourceTree = "<group>"; };
+		50BEC728269486E600CCDFA8 /* thumbnail.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = thumbnail.prf; sourceTree = "<group>"; };
+		50BEC72A2694872900CCDFA8 /* golden_spider.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = golden_spider.loc; sourceTree = "<group>"; };
+		50BEC72B2694872900CCDFA8 /* peanuts.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = peanuts.loc; sourceTree = "<group>"; };
+		50BEC72C2694872900CCDFA8 /* safari.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = safari.loc; sourceTree = "<group>"; };
+		50BEC72D2694872900CCDFA8 /* dragon.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dragon.loc; sourceTree = "<group>"; };
+		50BEC72E2694872900CCDFA8 /* seahorse.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = seahorse.loc; sourceTree = "<group>"; };
+		50BEC72F2694872900CCDFA8 /* spider.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spider.loc; sourceTree = "<group>"; };
+		50BEC7302694872900CCDFA8 /* wfs.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs.loc; sourceTree = "<group>"; };
+		50BEC7312694872900CCDFA8 /* flake.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flake.loc; sourceTree = "<group>"; };
+		50BEC7322694872A00CCDFA8 /* glitch_test_5.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_5.loc; sourceTree = "<group>"; };
+		50BEC7332694872A00CCDFA8 /* super_dense.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = super_dense.loc; sourceTree = "<group>"; };
+		50BEC7342694872A00CCDFA8 /* triangle.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle.loc; sourceTree = "<group>"; };
+		50BEC7352694872A00CCDFA8 /* x.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = x.loc; sourceTree = "<group>"; };
+		50BEC7362694872A00CCDFA8 /* glitch_test_3.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_3.loc; sourceTree = "<group>"; };
+		50BEC7372694872A00CCDFA8 /* long.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = long.loc; sourceTree = "<group>"; };
+		50BEC7382694872A00CCDFA8 /* glitch_test_1.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_1.loc; sourceTree = "<group>"; };
+		50BEC7392694872A00CCDFA8 /* evolution_trees.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = evolution_trees.loc; sourceTree = "<group>"; };
+		50BEC73A2694872A00CCDFA8 /* glitch_test_6.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_6.loc; sourceTree = "<group>"; };
+		50BEC73B2694872A00CCDFA8 /* opus.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus.loc; sourceTree = "<group>"; };
+		50BEC73C2694872B00CCDFA8 /* wfs4.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs4.loc; sourceTree = "<group>"; };
+		50BEC73D2694872B00CCDFA8 /* threads_colour.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = threads_colour.loc; sourceTree = "<group>"; };
+		50BEC73E2694872B00CCDFA8 /* wfs2.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs2.loc; sourceTree = "<group>"; };
 		50BEC73F2694872B00CCDFA8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		50BEC7402694872B00CCDFA8 /* olbaid2.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid2.ini; sourceTree = "<group>"; };
-		50BEC7412694872B00CCDFA8 /* olbaid4.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid4.ini; sourceTree = "<group>"; };
-		50BEC7422694872B00CCDFA8 /* olbaid5.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid5.ini; sourceTree = "<group>"; };
-		50BEC7432694872B00CCDFA8 /* olbaid3.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid3.ini; sourceTree = "<group>"; };
-		50BEC7442694872B00CCDFA8 /* e10000.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e10000.ini; sourceTree = "<group>"; };
-		50BEC7452694872B00CCDFA8 /* e52465.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e52465.ini; sourceTree = "<group>"; };
-		50BEC7462694872C00CCDFA8 /* glitch_test_4.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_4.ini; sourceTree = "<group>"; };
-		50BEC7472694872C00CCDFA8 /* 11_dimensions.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 11_dimensions.ini; sourceTree = "<group>"; };
-		50BEC7482694872C00CCDFA8 /* dinosaur_fossils.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dinosaur_fossils.ini; sourceTree = "<group>"; };
-		50BEC7492694872C00CCDFA8 /* opus2.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus2.ini; sourceTree = "<group>"; };
-		50BEC74A2694872C00CCDFA8 /* wfs_mb.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs_mb.ini; sourceTree = "<group>"; };
-		50BEC74B2694872C00CCDFA8 /* e22522.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e22522.ini; sourceTree = "<group>"; };
-		50BEC74C2694872C00CCDFA8 /* orion.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orion.ini; sourceTree = "<group>"; };
-		50BEC74D2694872C00CCDFA8 /* infinity.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = infinity.ini; sourceTree = "<group>"; };
-		50BEC74E2694872C00CCDFA8 /* dragon_detail.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dragon_detail.ini; sourceTree = "<group>"; };
-		50BEC74F2694872C00CCDFA8 /* floral_fantasy.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = floral_fantasy.ini; sourceTree = "<group>"; };
-		50BEC7502694872D00CCDFA8 /* olbaid1.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid1.ini; sourceTree = "<group>"; };
-		50BEC7512694872D00CCDFA8 /* lya.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lya.ini; sourceTree = "<group>"; };
-		50BEC7522694872D00CCDFA8 /* glitch_test_2.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_2.ini; sourceTree = "<group>"; };
-		50BEC7532694872D00CCDFA8 /* hard.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard.ini; sourceTree = "<group>"; };
-		50BEC7542694872D00CCDFA8 /* 1e14.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1e14.ini; sourceTree = "<group>"; };
+		50BEC7402694872B00CCDFA8 /* olbaid2.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid2.loc; sourceTree = "<group>"; };
+		50BEC7412694872B00CCDFA8 /* olbaid4.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid4.loc; sourceTree = "<group>"; };
+		50BEC7422694872B00CCDFA8 /* olbaid5.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid5.loc; sourceTree = "<group>"; };
+		50BEC7432694872B00CCDFA8 /* olbaid3.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid3.loc; sourceTree = "<group>"; };
+		50BEC7442694872B00CCDFA8 /* e10000.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e10000.loc; sourceTree = "<group>"; };
+		50BEC7452694872B00CCDFA8 /* e52465.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e52465.loc; sourceTree = "<group>"; };
+		50BEC7462694872C00CCDFA8 /* glitch_test_4.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_4.loc; sourceTree = "<group>"; };
+		50BEC7472694872C00CCDFA8 /* 11_dimensions.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 11_dimensions.loc; sourceTree = "<group>"; };
+		50BEC7482694872C00CCDFA8 /* dinosaur_fossils.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dinosaur_fossils.loc; sourceTree = "<group>"; };
+		50BEC7492694872C00CCDFA8 /* opus2.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus2.loc; sourceTree = "<group>"; };
+		50BEC74A2694872C00CCDFA8 /* wfs_mb.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wfs_mb.loc; sourceTree = "<group>"; };
+		50BEC74B2694872C00CCDFA8 /* e22522.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e22522.loc; sourceTree = "<group>"; };
+		50BEC74C2694872C00CCDFA8 /* orion.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orion.loc; sourceTree = "<group>"; };
+		50BEC74D2694872C00CCDFA8 /* infinity.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = infinity.loc; sourceTree = "<group>"; };
+		50BEC74E2694872C00CCDFA8 /* dragon_detail.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dragon_detail.loc; sourceTree = "<group>"; };
+		50BEC74F2694872C00CCDFA8 /* floral_fantasy.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = floral_fantasy.loc; sourceTree = "<group>"; };
+		50BEC7502694872D00CCDFA8 /* olbaid1.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olbaid1.loc; sourceTree = "<group>"; };
+		50BEC7512694872D00CCDFA8 /* lya.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lya.loc; sourceTree = "<group>"; };
+		50BEC7522694872D00CCDFA8 /* glitch_test_2.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_2.loc; sourceTree = "<group>"; };
+		50BEC7532694872D00CCDFA8 /* hard.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard.loc; sourceTree = "<group>"; };
+		50BEC7542694872D00CCDFA8 /* 1e14.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1e14.loc; sourceTree = "<group>"; };
 		50BEC7572694874E00CCDFA8 /* vulcano.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = vulcano.ini; sourceTree = "<group>"; };
 		50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepDrill.entitlements; sourceTree = "<group>"; };
 		50CF8E4E2694848800887FFC /* DeepDrill */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepDrill; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,12 +217,11 @@
 			isa = PBXGroup;
 			children = (
 				50BEC722269486E500CCDFA8 /* config.prf */,
-				50BEC725269486E600CCDFA8 /* debug.ini */,
-				50BEC727269486E600CCDFA8 /* high.ini */,
-				50BEC724269486E600CCDFA8 /* low.ini */,
-				50BEC723269486E500CCDFA8 /* medium.ini */,
-				50BEC728269486E600CCDFA8 /* thumbnail.ini */,
-				50BEC726269486E600CCDFA8 /* ultra.ini */,
+				50BEC727269486E600CCDFA8 /* high.prf */,
+				50BEC724269486E600CCDFA8 /* low.prf */,
+				50BEC723269486E500CCDFA8 /* medium.prf */,
+				50BEC728269486E600CCDFA8 /* thumbnail.prf */,
+				50BEC726269486E600CCDFA8 /* ultra.prf */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -232,48 +230,48 @@
 			isa = PBXGroup;
 			children = (
 				50BEC73F2694872B00CCDFA8 /* Makefile */,
-				50BEC7542694872D00CCDFA8 /* 1e14.ini */,
-				50BEC7472694872C00CCDFA8 /* 11_dimensions.ini */,
-				50BEC7482694872C00CCDFA8 /* dinosaur_fossils.ini */,
-				50BEC74E2694872C00CCDFA8 /* dragon_detail.ini */,
-				50BEC72D2694872900CCDFA8 /* dragon.ini */,
-				50BEC7442694872B00CCDFA8 /* e10000.ini */,
-				50BEC74B2694872C00CCDFA8 /* e22522.ini */,
-				50BEC7452694872B00CCDFA8 /* e52465.ini */,
-				50BEC7392694872A00CCDFA8 /* evolution_trees.ini */,
-				50BEC7312694872900CCDFA8 /* flake.ini */,
-				50BEC74F2694872C00CCDFA8 /* floral_fantasy.ini */,
-				50BEC7382694872A00CCDFA8 /* glitch_test_1.ini */,
-				50BEC7522694872D00CCDFA8 /* glitch_test_2.ini */,
-				50BEC7362694872A00CCDFA8 /* glitch_test_3.ini */,
-				50BEC7462694872C00CCDFA8 /* glitch_test_4.ini */,
-				50BEC7322694872A00CCDFA8 /* glitch_test_5.ini */,
-				50BEC73A2694872A00CCDFA8 /* glitch_test_6.ini */,
-				50BEC72A2694872900CCDFA8 /* golden_spider.ini */,
-				50BEC7532694872D00CCDFA8 /* hard.ini */,
-				50BEC74D2694872C00CCDFA8 /* infinity.ini */,
-				50BEC7372694872A00CCDFA8 /* long.ini */,
-				50BEC7512694872D00CCDFA8 /* lya.ini */,
-				50BEC7502694872D00CCDFA8 /* olbaid1.ini */,
-				50BEC7402694872B00CCDFA8 /* olbaid2.ini */,
-				50BEC7432694872B00CCDFA8 /* olbaid3.ini */,
-				50BEC7412694872B00CCDFA8 /* olbaid4.ini */,
-				50BEC7422694872B00CCDFA8 /* olbaid5.ini */,
-				50BEC73B2694872A00CCDFA8 /* opus.ini */,
-				50BEC7492694872C00CCDFA8 /* opus2.ini */,
-				50BEC74C2694872C00CCDFA8 /* orion.ini */,
-				50BEC72B2694872900CCDFA8 /* peanuts.ini */,
-				50BEC72C2694872900CCDFA8 /* safari.ini */,
-				50BEC72E2694872900CCDFA8 /* seahorse.ini */,
-				50BEC72F2694872900CCDFA8 /* spider.ini */,
-				50BEC7332694872A00CCDFA8 /* super_dense.ini */,
-				50BEC73D2694872B00CCDFA8 /* threads_colour.ini */,
-				50BEC7342694872A00CCDFA8 /* triangle.ini */,
-				50BEC74A2694872C00CCDFA8 /* wfs_mb.ini */,
-				50BEC7302694872900CCDFA8 /* wfs.ini */,
-				50BEC73E2694872B00CCDFA8 /* wfs2.ini */,
-				50BEC73C2694872B00CCDFA8 /* wfs4.ini */,
-				50BEC7352694872A00CCDFA8 /* x.ini */,
+				50BEC7542694872D00CCDFA8 /* 1e14.loc */,
+				50BEC7472694872C00CCDFA8 /* 11_dimensions.loc */,
+				50BEC7482694872C00CCDFA8 /* dinosaur_fossils.loc */,
+				50BEC74E2694872C00CCDFA8 /* dragon_detail.loc */,
+				50BEC72D2694872900CCDFA8 /* dragon.loc */,
+				50BEC7442694872B00CCDFA8 /* e10000.loc */,
+				50BEC74B2694872C00CCDFA8 /* e22522.loc */,
+				50BEC7452694872B00CCDFA8 /* e52465.loc */,
+				50BEC7392694872A00CCDFA8 /* evolution_trees.loc */,
+				50BEC7312694872900CCDFA8 /* flake.loc */,
+				50BEC74F2694872C00CCDFA8 /* floral_fantasy.loc */,
+				50BEC7382694872A00CCDFA8 /* glitch_test_1.loc */,
+				50BEC7522694872D00CCDFA8 /* glitch_test_2.loc */,
+				50BEC7362694872A00CCDFA8 /* glitch_test_3.loc */,
+				50BEC7462694872C00CCDFA8 /* glitch_test_4.loc */,
+				50BEC7322694872A00CCDFA8 /* glitch_test_5.loc */,
+				50BEC73A2694872A00CCDFA8 /* glitch_test_6.loc */,
+				50BEC72A2694872900CCDFA8 /* golden_spider.loc */,
+				50BEC7532694872D00CCDFA8 /* hard.loc */,
+				50BEC74D2694872C00CCDFA8 /* infinity.loc */,
+				50BEC7372694872A00CCDFA8 /* long.loc */,
+				50BEC7512694872D00CCDFA8 /* lya.loc */,
+				50BEC7502694872D00CCDFA8 /* olbaid1.loc */,
+				50BEC7402694872B00CCDFA8 /* olbaid2.loc */,
+				50BEC7432694872B00CCDFA8 /* olbaid3.loc */,
+				50BEC7412694872B00CCDFA8 /* olbaid4.loc */,
+				50BEC7422694872B00CCDFA8 /* olbaid5.loc */,
+				50BEC73B2694872A00CCDFA8 /* opus.loc */,
+				50BEC7492694872C00CCDFA8 /* opus2.loc */,
+				50BEC74C2694872C00CCDFA8 /* orion.loc */,
+				50BEC72B2694872900CCDFA8 /* peanuts.loc */,
+				50BEC72C2694872900CCDFA8 /* safari.loc */,
+				50BEC72E2694872900CCDFA8 /* seahorse.loc */,
+				50BEC72F2694872900CCDFA8 /* spider.loc */,
+				50BEC7332694872A00CCDFA8 /* super_dense.loc */,
+				50BEC73D2694872B00CCDFA8 /* threads_colour.loc */,
+				50BEC7342694872A00CCDFA8 /* triangle.loc */,
+				50BEC74A2694872C00CCDFA8 /* wfs_mb.loc */,
+				50BEC7302694872900CCDFA8 /* wfs.loc */,
+				50BEC73E2694872B00CCDFA8 /* wfs2.loc */,
+				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
+				50BEC7352694872A00CCDFA8 /* x.loc */,
 			);
 			path = Locations;
 			sourceTree = "<group>";
@@ -302,10 +300,10 @@
 				50CF8E502694848800887FFC /* DeepDrill */,
 				5010233E269D9FB500AC61A8 /* DDImage */,
 				50BEC7292694870100CCDFA8 /* Locations */,
+				50BEC721269486D900CCDFA8 /* Profiles */,
 				501023372696D19400AC61A8 /* Output */,
 				50BEC7582694875D00CCDFA8 /* Ressources */,
 				50BEC7562694873C00CCDFA8 /* Palettes */,
-				50BEC721269486D900CCDFA8 /* Profiles */,
 				50CF8E4F2694848800887FFC /* Products */,
 			);
 			sourceTree = "<group>";

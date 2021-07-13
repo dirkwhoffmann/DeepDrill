@@ -1,0 +1,11 @@
+[image]
+width = 480
+height = 270
+rotate = 0
+ 
+[perturbation]
+tolerance = 1e-6
+maxrounds = 10
+
+[approximation]
+coefficients = 5
