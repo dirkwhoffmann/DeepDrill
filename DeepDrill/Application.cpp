@@ -10,46 +10,96 @@
 // -----------------------------------------------------------------------------
 
 #include "Application.h"
+#include "Driller.h"
+#include "IO.h"
 #include "Options.h"
 #include "Parser.h"
-#include "UnitTester.h"
 #include <iostream>
 
 namespace dd {
 
-int
+void
 Application::main(std::vector <string> &args)
 {
     map<string,string> keys;
+    string option = "";
     
     std::cout << "Deep Drill " << VER_MAJOR << "." << VER_MINOR;
     std::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
     std::cout << std::endl << std::endl;
         
-    // Run a self-test
-    if (!releaseBuild) UnitTester().run();
-    
-    try {
+    // Display a syntax descriptions if no arguments are given
+    if (args.empty()) throw dd::SyntaxError();
         
-        // Read all config files
-        for (auto &arg: args) Parser::parse(arg, keys);
-        
-        // Setup the GMP library
-        setupGmp(keys);
-        
-        // Parse all options
-        Options options(keys);
-        
-        // Create a driller
-        Driller driller(options);
-        driller.drill();
+    // Parse command line arguments
+    while (!args.empty()) {
                 
-    } catch (std::exception &e) {
-        std::cout << e.what() << std::endl;
-        return 1;
+        auto arg = args.front();
+
+        if (isOption(arg)) { parseOption(args, keys); continue; }
+        if (isProfile(arg)) { parseProfile(args, keys); continue; }
+
+        throw dd::SyntaxError();
+    }
+
+    // Check for mandatory keys
+    if (auto it = keys.find("mapfile"); it == keys.end()) throw SyntaxError();
+    
+    // Setup the GMP library
+    setupGmp(keys);
+
+    // Parse all options
+    Options options(keys);
+    
+    // Create a driller
+    Driller driller(options);
+    driller.drill();
+}
+
+bool
+Application::isOption(const string &s)
+{
+    if (s[0] != '-') return false;
+        
+    if (s == "-o") return true;
+    if (s == "-v") return true;
+        
+    return false;
+}
+
+bool
+Application::isProfile(const string &s)
+{
+    return extractSuffix(s) == "prf";
+}
+
+void
+Application::parseOption(vector <string> &args, map<string,string> &keys)
+{
+    if (args.front() == "-v") {
+
+        args.erase(args.begin());
+        keys["verbose"] = "1";
+        return;
     }
     
-    return 0;
+    if (args.front() == "-o") {
+        
+        args.erase(args.begin());
+        if (args.empty()) throw Exception("Option -o has no argument");
+        keys["mapfile"] = args.front();
+        args.erase(args.begin());
+        return;
+    }
+    
+    throw Exception("Unknown option: " + args.front());
+}
+
+void
+Application::parseProfile(vector <string> &args, map<string,string> &keys)
+{
+    Parser::parse(args.front(), keys);
+    args.erase(args.begin());
 }
 
 void

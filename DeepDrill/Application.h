@@ -12,7 +12,8 @@
 #pragma once
 
 #include "config.h"
-#include "Driller.h"
+#include "Types.h"
+#include "Exception.h"
 
 namespace dd {
 
@@ -21,11 +22,17 @@ class Application {
 public:
         
     // Main entry point
-    int main(std::vector <string> &args);
+    void main(std::vector <string> &args) throws;
     
 private:
-        
-    // Setup the GMP library
+    
+    // Helper methods for parsing command line arguments
+    bool isOption(const string &s);
+    bool isProfile(const string &s);
+    void parseOption(vector <string> &args, map<string,string> &keys) throws;
+    void parseProfile(vector <string> &args, map<string,string> &keys) throws;
+
+    // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);
 };
 

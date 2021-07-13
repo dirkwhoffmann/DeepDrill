@@ -24,15 +24,27 @@ Options::initialize(map <string,string> &keys)
     string key;
 
     try {
-        
+
+        key = "mapfile";
+        if (auto value = lookupKey(keys, key)) {
+            mapfile = *value;
+        }
+        key = "verbose";
+        if (auto value = lookupKey(keys, key, "0")) {
+            verbose = stoi(*value);
+        }
+
+        // DEPRECATED
         key = "main.name";
         if (auto value = lookupKey(keys, key)) {
             name = *value;
         }
+        // DEPRECATED
         key = "main.format";
         if (auto value = lookupKey(keys, key, "tiff")) {
             format = *value;
         }
+        // DEPRECATED
         key = "main.path";
         if (auto value = lookupKey(keys, key, "")) {
             path = *value;
@@ -88,10 +100,6 @@ Options::initialize(map <string,string> &keys)
         key = "approximation.tolerance";
         if (auto value = lookupKey(keys, key, "1e-12")) {
             approximationTolerance = stod(*value);
-        }
-        key = "debug.verbose";
-        if (auto value = lookupKey(keys, key, "0")) {
-            verbose = stoi(*value);
         }
 
     } catch(const MissingKeyException &e) {

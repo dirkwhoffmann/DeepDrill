@@ -19,12 +19,22 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++) {
         args.push_back(string(argv[i]));
     }
+        
+    try {
+
+        dd::Application().main(args);
+
+    } catch (dd::SyntaxError &e) {
+        
+        std::cout << "Syntax: " << string(argv[0]);
+        std::cout << " -o <mapfile.map> [-v] [ <profile.prf> ... ]" << std::endl;
+        return 1;
     
-    if (args.empty()) {
-        std::cout << "Syntax: " << string(argv[0]) << " config1.ini [config2.ini ...]";
-        std::cout << std::endl;
+    } catch (std::exception &e) {
+        
+        std::cout << e.what() << std::endl;
         return 1;
     }
     
-    dd::Application().main(args);
+    return 0;
 }
