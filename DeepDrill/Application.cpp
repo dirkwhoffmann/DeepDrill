@@ -31,7 +31,7 @@ Application::main(std::vector <string> &args)
     // Display a syntax descriptions if no arguments are given
     if (args.empty()) throw dd::SyntaxError();
         
-    // Parse command line arguments
+    // Parse all command line arguments
     while (!args.empty()) {
                 
         auto arg = args.front();
@@ -42,8 +42,8 @@ Application::main(std::vector <string> &args)
         throw dd::SyntaxError();
     }
 
-    // Check for mandatory keys
-    if (auto it = keys.find("mapfile"); it == keys.end()) throw SyntaxError();
+    // Read the location file
+    readLocationFile(keys);
     
     // Setup the GMP library
     setupGmp(keys);
@@ -100,6 +100,20 @@ Application::parseProfile(vector <string> &args, map<string,string> &keys)
 {
     Parser::parse(args.front(), keys);
     args.erase(args.begin());
+}
+
+void
+Application::readLocationFile(map<string,string> &keys)
+{
+    // Lookup the mapfile
+    auto it = keys.find("mapfile");
+    if (it == keys.end()) throw SyntaxError();
+    
+    // Assemble the path of the location file
+    auto path = stripSuffix(it->second) + ".loc";
+    
+    // Read the file
+    Parser::parse(path, keys);
 }
 
 void

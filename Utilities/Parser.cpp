@@ -21,7 +21,7 @@ Parser::parse(const string &path, std::map<string, string> &keys)
     auto fs = std::ifstream(path);
     
     if (!fs.is_open()) {
-        throw std::runtime_error("Error: File " + path + " not found.");
+        throw std::runtime_error("Error: Failed to open file " + path);
     }
  
     try { parse(fs, keys); } catch (std::runtime_error &e) {

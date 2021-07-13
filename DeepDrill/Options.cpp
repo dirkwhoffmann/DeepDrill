@@ -27,7 +27,7 @@ Options::initialize(map <string,string> &keys)
 
         key = "mapfile";
         if (auto value = lookupKey(keys, key)) {
-            mapfile = *value;
+            mapFile = *value;
         }
         key = "verbose";
         if (auto value = lookupKey(keys, key, "0")) {

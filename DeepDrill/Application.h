@@ -32,6 +32,9 @@ private:
     void parseOption(vector <string> &args, map<string,string> &keys) throws;
     void parseProfile(vector <string> &args, map<string,string> &keys) throws;
 
+    // Reads in the location file
+    void readLocationFile(map<string,string> &keys) throws;
+
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);
 };
