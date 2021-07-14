@@ -28,6 +28,9 @@ void Driller::drill() {
     vector<Coord> remaining;
     vector<Coord> glitches;
     
+    // Allcoate the drill map
+    mapFile.resize(opt.width, opt.height);
+    
     // Determine the number of tolerated glitched pixels
     isize allowedBadPixels = opt.width * opt.height * (1.0 - opt.accuracy);
         
@@ -99,6 +102,7 @@ void Driller::drill() {
     
     auto elapsed = stopWatch.stop();
     map.saveImage();
+    mapFile.save(opt.mapFile); 
 
     std::cout << std::endl << "Total time: " << elapsed << std::endl;
 }
@@ -203,11 +207,14 @@ void
 Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 {
     // Check if this point is the reference point
+    /*
     if (point == ref.coord) {
         map.setPixel(ref, palette);
+        mapFile.set(ref.coord.x, ref.coord.y, MapEntry { TODO });
         return;
     }
-        
+    */
+    
     ExtendedComplex d0 = ref.deltaLocation(opt, point);
     ExtendedComplex dn;
     isize iteration = ref.skipped;
@@ -241,6 +248,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         // Perform the escape check
         if (norm >= 256) {
             map.setPixel(point, palette, iteration, norm);
+            mapFile.set(point.x, point.y, MapEntry { (u32)iteration, (float)log(norm) });
             return;
         }
     }
@@ -249,7 +257,8 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
         // This point belongs to the Mandelbrot set
         map.setPixel(point, 0);
-        
+        mapFile.set(point.x, point.y, MapEntry { 0, 0 });
+
     } else {
 
         // This point is a glitch point

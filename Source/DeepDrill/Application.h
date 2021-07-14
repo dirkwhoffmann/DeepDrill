@@ -27,11 +27,11 @@ private:
     
     // Helper methods for parsing command line arguments
     void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;
-
     void parseVerbose(vector <string> &args, map<string,string> &keys) throws;
     void parseProfile(vector <string> &args, map<string,string> &keys) throws;
     void parseOutFile(vector <string> &args, map<string,string> &keys) throws;
     void parseInFile(vector <string> &args, map<string,string> &keys) throws;
+    string pop(vector <string> &args) throws;
     
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);

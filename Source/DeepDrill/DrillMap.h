@@ -26,6 +26,9 @@ public:
     // Configuration options
     const Options &opt;
     
+    // Drill data
+    ExtendedDouble iteration;
+    
     // Image data
     u32 *image = nullptr;
 

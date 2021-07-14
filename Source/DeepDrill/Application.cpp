@@ -52,13 +52,19 @@ Application::parseArguments(std::vector <string> &args, map<string,string> &keys
                 
         auto arg = args.front();
         
-        if (arg == "-v") { parseVerbose(args, keys); continue; }
-        if (arg == "-p") { parseProfile(args, keys); continue; }
-        if (arg == "-o") { parseOutFile(args, keys); continue; }
-        if (arg[0] == '-') throw Exception("Unknown option: " + arg);
+        if (arg[0] == '-') {
+            
+            pop(args);
+            if (arg == "-v") { parseVerbose(args, keys); continue; }
+            if (arg == "-p") { parseProfile(args, keys); continue; }
+            if (arg == "-o") { parseOutFile(args, keys); continue; }
+            throw Exception("Unknown option: " + arg);
+        }
+        
+        if (hasLocationFile) throw SyntaxError();
+        hasLocationFile = true;
         
         parseInFile(args, keys);
-        hasLocationFile = true;
     }
     
     if (!hasLocationFile) throw SyntaxError();
@@ -67,51 +73,42 @@ Application::parseArguments(std::vector <string> &args, map<string,string> &keys
 void
 Application::parseVerbose(vector <string> &args, map<string,string> &keys)
 {
-    args.erase(args.begin());
     keys["verbose"] = "1";
 }
 
 void
 Application::parseProfile(vector <string> &args, map<string,string> &keys)
 {
-    if (args.size() < 2) throw SyntaxError();
-
-    args.erase(args.begin());
-    auto path = args.front();
-    auto suffix = extractSuffix(path);
-    args.erase(args.begin());
-
-    if (suffix != "prf") throw SyntaxError();
+    auto path = pop(args);
+    if (extractSuffix(path) != "prf") throw SyntaxError();
     Parser::parse(path, keys);
 }
 
 void
 Application::parseOutFile(vector <string> &args, map<string,string> &keys)
 {
-    if (args.size() < 2) throw SyntaxError();
-    
-    args.erase(args.begin());
-    auto path = args.front();
-    auto suffix = extractSuffix(path);
-    args.erase(args.begin());
-
-    if (suffix != "map") throw SyntaxError();
-    keys["mapfile"] = args.front();
+    auto path = pop(args);
+    if (extractSuffix(path) != "map") throw SyntaxError();
+    keys["mapfile"] = path;
 }
 
 void
 Application::parseInFile(vector <string> &args, map<string,string> &keys)
 {
-    static bool hasLocationFile = false;
-    if (hasLocationFile) throw SyntaxError();
-    hasLocationFile = true;
-
-    auto path = args.front();
-    auto suffix = extractSuffix(path);
-    args.erase(args.begin());
-
-    if (suffix != "loc") throw SyntaxError();
+    auto path = pop(args);
+    if (extractSuffix(path) != "loc") throw SyntaxError();
     Parser::parse(path, keys);
+}
+
+string
+Application::pop(vector <string> &args)
+{
+    if (args.empty()) throw SyntaxError();
+    
+    auto result = args.front();
+    args.erase(args.begin());
+    
+    return result;
 }
 
 void

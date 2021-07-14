@@ -15,6 +15,7 @@
 #include "Coefficients.h"
 #include "Coord.h"
 #include "DrillMap.h"
+#include "MapFile.h"
 #include "Options.h"
 #include "Palette.h"
 #include "ReferencePoint.h"
@@ -34,7 +35,10 @@ class Driller {
 
     // The part of the Mandelbrot set to be computed
     DrillMap map = DrillMap(opt);
-        
+    
+    // The drill map (drill result)
+    MapFile mapFile;
+    
     // The color palette
     Palette palette = Palette(opt);
 

@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "IO.h"
-#include <assert.h>
 #include <vector>
 #include <fstream>
 #include <algorithm>
