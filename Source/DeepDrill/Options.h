@@ -26,13 +26,8 @@ class Options {
 
 public:
 
-    // string locationFile;
     string mapFile;
-    
-    string name; // DEPRECATED
-    string format; // DEPRECATED
-    string path; // DEPRECATED
-    
+        
     //
     // Location parameters
     //

@@ -36,7 +36,7 @@ ExtendedDouble::operator=(const mpf_class &other)
 }
 
 bool
-ExtendedDouble::operator==(const ExtendedDouble &other)
+ExtendedDouble::operator==(const ExtendedDouble &other) const
 {
     assert(isReduced());
     assert(other.isReduced());

@@ -26,14 +26,13 @@ public:
 private:
     
     // Helper methods for parsing command line arguments
-    bool isOption(const string &s);
-    bool isProfile(const string &s);
-    void parseOption(vector <string> &args, map<string,string> &keys) throws;
+    void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;
+
+    void parseVerbose(vector <string> &args, map<string,string> &keys) throws;
     void parseProfile(vector <string> &args, map<string,string> &keys) throws;
-
-    // Reads in the location file
-    void readLocationFile(map<string,string> &keys) throws;
-
+    void parseOutFile(vector <string> &args, map<string,string> &keys) throws;
+    void parseInFile(vector <string> &args, map<string,string> &keys) throws;
+    
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);
 };

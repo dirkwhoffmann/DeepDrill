@@ -28,24 +28,10 @@ Application::main(std::vector <string> &args)
     std::cout << "Deep Drill " << VER_MAJOR << "." << VER_MINOR;
     std::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
     std::cout << std::endl << std::endl;
-        
-    // Display a syntax descriptions if no arguments are given
-    if (args.empty()) throw dd::SyntaxError();
-        
-    // Parse all command line arguments
-    while (!args.empty()) {
                 
-        auto arg = args.front();
-
-        if (isOption(arg)) { parseOption(args, keys); continue; }
-        if (isProfile(arg)) { parseProfile(args, keys); continue; }
-
-        throw dd::SyntaxError();
-    }
-
-    // Read the location file
-    readLocationFile(keys);
-    
+    // Parse all command line arguments
+    parseArguments(args, keys);
+        
     // Setup the GMP library
     setupGmp(keys);
 
@@ -57,63 +43,74 @@ Application::main(std::vector <string> &args)
     driller.drill();
 }
 
-bool
-Application::isOption(const string &s)
+void
+Application::parseArguments(std::vector <string> &args, map<string,string> &keys)
 {
-    if (s[0] != '-') return false;
+    bool hasLocationFile = false;
         
-    if (s == "-o") return true;
-    if (s == "-v") return true;
+    while (!args.empty()) {
+                
+        auto arg = args.front();
         
-    return false;
-}
-
-bool
-Application::isProfile(const string &s)
-{
-    return extractSuffix(s) == "prf";
+        if (arg == "-v") { parseVerbose(args, keys); continue; }
+        if (arg == "-p") { parseProfile(args, keys); continue; }
+        if (arg == "-o") { parseOutFile(args, keys); continue; }
+        if (arg[0] == '-') throw Exception("Unknown option: " + arg);
+        
+        parseInFile(args, keys);
+        hasLocationFile = true;
+    }
+    
+    if (!hasLocationFile) throw SyntaxError();
 }
 
 void
-Application::parseOption(vector <string> &args, map<string,string> &keys)
+Application::parseVerbose(vector <string> &args, map<string,string> &keys)
 {
-    if (args.front() == "-v") {
-
-        args.erase(args.begin());
-        keys["verbose"] = "1";
-        return;
-    }
-    
-    if (args.front() == "-o") {
-        
-        args.erase(args.begin());
-        if (args.empty()) throw Exception("Option -o has no argument");
-        keys["mapfile"] = args.front();
-        args.erase(args.begin());
-        return;
-    }
-    
-    throw Exception("Unknown option: " + args.front());
+    args.erase(args.begin());
+    keys["verbose"] = "1";
 }
 
 void
 Application::parseProfile(vector <string> &args, map<string,string> &keys)
 {
-    Parser::parse(args.front(), keys);
+    if (args.size() < 2) throw SyntaxError();
+
     args.erase(args.begin());
+    auto path = args.front();
+    auto suffix = extractSuffix(path);
+    args.erase(args.begin());
+
+    if (suffix != "prf") throw SyntaxError();
+    Parser::parse(path, keys);
 }
 
 void
-Application::readLocationFile(map<string,string> &keys)
+Application::parseOutFile(vector <string> &args, map<string,string> &keys)
 {
-    // Lookup the mapfile
-    auto it = keys.find("mapfile");
-    if (it == keys.end()) throw SyntaxError();
+    if (args.size() < 2) throw SyntaxError();
     
-    // Assemble the path of the location file
-    auto path = stripSuffix(it->second) + ".loc";
-    
-    // Read the file
+    args.erase(args.begin());
+    auto path = args.front();
+    auto suffix = extractSuffix(path);
+    args.erase(args.begin());
+
+    if (suffix != "map") throw SyntaxError();
+    keys["mapfile"] = args.front();
+}
+
+void
+Application::parseInFile(vector <string> &args, map<string,string> &keys)
+{
+    static bool hasLocationFile = false;
+    if (hasLocationFile) throw SyntaxError();
+    hasLocationFile = true;
+
+    auto path = args.front();
+    auto suffix = extractSuffix(path);
+    args.erase(args.begin());
+
+    if (suffix != "loc") throw SyntaxError();
     Parser::parse(path, keys);
 }
 

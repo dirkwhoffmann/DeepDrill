@@ -51,7 +51,7 @@ DrillMap::setPixel(const ReferencePoint &ref, const Palette &palette)
 void
 DrillMap::saveImage()
 {
-    save(opt.path + opt.name, image);
+    std::cout << " REPLACE BY saveMap" << std::endl;
 }
 
 void

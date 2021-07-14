@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
     } catch (dd::SyntaxError &e) {
         
         std::cout << "Syntax: " << string(argv[0]);
-        std::cout << " -o <mapfile.map> [-v] [ <profile.prf> ... ]" << std::endl;
+        std::cout << " [-v] [-p <profile.prf>] [-o <mapfile.map>] <location.loc>";
+        std::cout << std::endl;
         return 1;
     
     } catch (std::exception &e) {

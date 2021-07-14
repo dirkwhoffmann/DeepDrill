@@ -34,22 +34,6 @@ Options::initialize(map <string,string> &keys)
         if (auto value = lookupKey(keys, key, "0")) {
             verbose = stoi(*value);
         }
-
-        // DEPRECATED
-        key = "main.name";
-        if (auto value = lookupKey(keys, key)) {
-            name = *value;
-        }
-        // DEPRECATED
-        key = "main.format";
-        if (auto value = lookupKey(keys, key, "tiff")) {
-            format = *value;
-        }
-        // DEPRECATED
-        key = "main.path";
-        if (auto value = lookupKey(keys, key, "")) {
-            path = *value;
-        }
         key = "location.real";
         if (auto value = lookupKey(keys, key)) {
             real = mpf_class(*value);
@@ -115,12 +99,8 @@ Options::initialize(map <string,string> &keys)
         
         static int align = 30;
         
-        std::cout << std::right << std::setw(align) << "Name: ";
-        std::cout << name << std::endl;
-        std::cout << std::right << std::setw(align) << "Format: ";
-        std::cout << format << std::endl;
-        std::cout << std::right << std::setw(align) << "Path: ";
-        std::cout << path << std::endl;
+        std::cout << std::right << std::setw(align) << "Map file: ";
+        std::cout << mapFile << std::endl;
         std::cout << std::right << std::setw(align) << "Real: ";
         std::cout << real << std::endl;
         std::cout << std::right << std::setw(align) << "Imag: ";
@@ -184,14 +164,11 @@ Options::deriveVariables()
     pixelDelta = mpfPixelDelta;
     
     // Prepend the path with the current directory if necessary
-    if (path == "" || path.front() != '/') {
+    if (mapFile == "" || mapFile.front() != '/') {
         
         auto current = std::filesystem::current_path().string();
-        path = current + "/" + path;
-    }
-    
-    // Add '/' to the path if it is missing
-    if (path.back() != '/') path += "/";
+        mapFile = current + "/" + mapFile;
+    }    
 }
 
 }
