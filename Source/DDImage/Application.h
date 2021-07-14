@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "MathTypes.h"
+#include "Types.h"
 #include "Exception.h"
 
 namespace dd {
@@ -28,11 +28,9 @@ private:
     // Helper methods for parsing command line arguments
     void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;
     void parseOption(vector <string> &args, map<string,string> &keys) throws;
-    void parseLocationFile(vector <string> &args, map<string,string> &keys) throws;
-    string pop(vector <string> &args) throws;
-    
-    // Sets up the GMP library
-    void setupGmp(std::map <string,string> &keys);
+    void parseMapFile(vector <string> &args, map<string,string> &keys) throws;
+    string pop(vector <string> &args) throws;    
 };
 
 }
+

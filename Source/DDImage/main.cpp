@@ -1,14 +1,41 @@
+// -----------------------------------------------------------------------------
+// This file is part of DeepDrill
 //
-//  main.cpp
-//  DDImage
+// A Mandelbrot generator based on perturbation and series approximation
 //
-//  Created by Dirk Hoffmann on 13.07.21.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
 //
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
+#include "Application.h"
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+int main(int argc, char *argv[])
+{
+    std::vector<string> args;
+
+    for (int i = 1; i < argc; i++) {
+        args.push_back(string(argv[i]));
+    }
+        
+    try {
+
+        dd::Application().main(args);
+
+    } catch (dd::SyntaxError &e) {
+        
+        std::cout << "Syntax: " << string(argv[0]);
+        std::cout << " [-v] [-p <profile.prf>] [-o <image.tiff>] <mapfile.map>";
+        std::cout << std::endl;
+        return 1;
+    
+    } catch (std::exception &e) {
+        
+        std::cout << e.what() << std::endl;
+        return 1;
+    }
+    
     return 0;
 }

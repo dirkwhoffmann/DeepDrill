@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "Application.h"
-#include "Driller.h"
 #include "IO.h"
 #include "Options.h"
 #include "Parser.h"
@@ -25,28 +24,25 @@ Application::main(std::vector <string> &args)
     map<string,string> keys;
     string option = "";
     
-    std::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
+    std::cout << "DeepDrill Colorizer" << VER_MAJOR << "." << VER_MINOR;
     std::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
     std::cout << std::endl << std::endl;
                 
     // Parse all command line arguments
     parseArguments(args, keys);
         
-    // Setup the GMP library
-    setupGmp(keys);
-
     // Parse all options
-    Options options(keys);
+    // Options options(keys);
     
-    // Create a driller
-    Driller driller(options);
-    driller.drill();
+    // Create a colorizer
+    // Colorizer colorizer(options);
+    // colorizer.drill();
 }
 
 void
 Application::parseArguments(std::vector <string> &args, map<string,string> &keys)
 {
-    bool hasLocationFile = false;
+    bool hasMapFile = false;
         
     while (!args.empty()) {
                 
@@ -54,13 +50,13 @@ Application::parseArguments(std::vector <string> &args, map<string,string> &keys
         if (args.front()[0] == '-') { parseOption(args, keys); continue; }
 
         // If not, it must be a location file
-        if (hasLocationFile) throw SyntaxError();
-        hasLocationFile = true;
+        if (hasMapFile) throw dd::SyntaxError();
+        hasMapFile = true;
         
-        parseLocationFile(args, keys);
+        parseMapFile(args, keys);
     }
     
-    if (!hasLocationFile) throw SyntaxError();
+    if (!hasMapFile) throw dd::SyntaxError();
 }
 
 void
@@ -76,55 +72,38 @@ Application::parseOption(vector <string> &args, map<string,string> &keys)
     if (arg == "-p") {
         
         auto path = pop(args);
-        if (extractSuffix(path) != "prf") throw SyntaxError();
+        if (extractSuffix(path) != "prf") throw dd::SyntaxError();
         Parser::parse(path, keys);
         return;
     }
     if (arg == "-o") {
         
         auto path = pop(args);
-        if (extractSuffix(path) != "map") throw SyntaxError();
-        keys["mapfile"] = path;
+        if (extractSuffix(path) != "tiff") throw dd::SyntaxError();
+        keys["imgfile"] = path;
         return;
     }
 
-    throw Exception("Unknown option: " + arg);
+    throw dd::Exception("Unknown option: " + arg);
 }
 
 void
-Application::parseLocationFile(vector <string> &args, map<string,string> &keys)
+Application::parseMapFile(vector <string> &args, map<string,string> &keys)
 {
     auto path = pop(args);
-    if (extractSuffix(path) != "loc") throw SyntaxError();
-    Parser::parse(path, keys);
+    if (extractSuffix(path) != "map") throw dd::SyntaxError();
+    keys["mapfile"] = path;
 }
 
 string
 Application::pop(vector <string> &args)
 {
-    if (args.empty()) throw SyntaxError();
+    if (args.empty()) throw dd::SyntaxError();
     
     auto result = args.front();
     args.erase(args.begin());
     
     return result;
-}
-
-void
-Application::setupGmp(std::map <string,string> &keys)
-{
-    long exponent = 0;
-    
-    // Peek the zoom factor
-    if (auto it = keys.find("location.zoom"); it != keys.end()) {
-        
-        try {
-            auto zoom = mpf_class(it->second);
-            mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
-        } catch (...) { }
-        
-        mpf_set_default_prec(exponent + 64);
-    }
 }
 
 }
