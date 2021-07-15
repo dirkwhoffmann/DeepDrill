@@ -23,7 +23,7 @@ struct MapEntry {
     float lognorm;
 };
 
-class MapFile {
+class DrillMap {
   
 public:
     
@@ -35,9 +35,9 @@ public:
 
 public:
     
-    MapFile() { };
-    MapFile(isize w, isize h);
-    MapFile(const string &path) throws;
+    DrillMap() { };
+    DrillMap(isize w, isize h);
+    DrillMap(const string &path) throws;
     
     void load(const string &path) throws;
     void resize(isize w, isize h);

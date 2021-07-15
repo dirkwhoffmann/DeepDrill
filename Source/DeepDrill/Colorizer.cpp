@@ -13,12 +13,12 @@
 #include "Colorizer.h"
 #include "Coord.h"
 #include "IO.h"
-#include "MapFile.h"
+#include "DrillMap.h"
 #include <iostream>
 
 namespace dd {
 
-Colorizer::Colorizer(const Options &o, const MapFile &m) : opt(o), map(m)
+Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 {
     palette.init(opt.palette);
     

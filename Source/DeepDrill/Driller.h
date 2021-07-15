@@ -14,7 +14,7 @@
 #include "MathTypes.h"
 #include "Coefficients.h"
 #include "Coord.h"
-#include "MapFile.h"
+#include "DrillMap.h"
 #include "Options.h"
 #include "Palette.h"
 #include "ReferencePoint.h"
@@ -36,7 +36,7 @@ class Driller {
     // DrillMap map = DrillMap(opt);
     
     // The drill map (drill result)
-    MapFile mapFile;
+    DrillMap mapFile;
     
     // The color palette
     Palette palette = Palette(opt);

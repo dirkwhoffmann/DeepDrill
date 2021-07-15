@@ -14,7 +14,7 @@
 #include "MathTypes.h"
 #include "Options.h"
 #include "Palette.h"
-#include "MapFile.h"
+#include "DrillMap.h"
 
 namespace dd {
 
@@ -24,7 +24,7 @@ class Colorizer {
     const Options &opt;
     
     // The associated map file
-    const MapFile &map;
+    const DrillMap &map;
     
     // The image data
     u32 *image = nullptr;
@@ -39,7 +39,7 @@ class Colorizer {
 
 public:
 
-    Colorizer(const Options &options, const MapFile &map);
+    Colorizer(const Options &options, const DrillMap &map);
     ~Colorizer();
     
     

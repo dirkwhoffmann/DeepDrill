@@ -10,22 +10,22 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "MapFile.h"
+#include "DrillMap.h"
 
 namespace dd {
 
-MapFile::MapFile(isize w, isize h)
+DrillMap::DrillMap(isize w, isize h)
 {
     resize(w, h);
 }
 
-MapFile::MapFile(const string &path)
+DrillMap::DrillMap(const string &path)
 {
     load(path);
 }
 
 void
-MapFile::load(const string &path)
+DrillMap::load(const string &path)
 {
     printf("MapFile::load(%s)\n", path.c_str());
     
@@ -53,7 +53,7 @@ MapFile::load(const string &path)
 }
 
 void
-MapFile::resize(isize w, isize h)
+DrillMap::resize(isize w, isize h)
 {
     assert(w <= 3840);
     assert(h <= 2160);
@@ -66,21 +66,21 @@ MapFile::resize(isize w, isize h)
 }
 
 const MapEntry &
-MapFile::get(isize w, isize h) const
+DrillMap::get(isize w, isize h) const
 {
     assert(data != nullptr && w < width && h < height);
     return data[h * width + w];
 }
 
 void
-MapFile::set(isize w, isize h, const MapEntry &entry)
+DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
     assert(data != nullptr && w < width && h < height);
     data[h * width + w] = entry;
 }
 
 void
-MapFile::save(const string &path)
+DrillMap::save(const string &path)
 {
     printf("MapFile::save(%s)\n", path.c_str());
 
@@ -90,7 +90,7 @@ MapFile::save(const string &path)
 }
 
 void
-MapFile::save(std::ostream &os)
+DrillMap::save(std::ostream &os)
 {
     // Write header
     os << width;
