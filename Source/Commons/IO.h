@@ -15,6 +15,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <istream>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <sys/stat.h>

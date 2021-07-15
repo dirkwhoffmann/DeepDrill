@@ -11,8 +11,8 @@
 
 #include "config.h"
 #include "Chrono.h"
+#include "IO.h"
 #include <sstream>
-#include <iomanip>
 
 #ifdef __MACH__
 #include <mach/mach_time.h>
