@@ -1,21 +1,14 @@
-SUBDIRS = Math
 MYFLAGS = -I$(CURDIR) -I$(CURDIR)/Math -I$(CURDIR)/.. -I$(CURDIR)/../Commons
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
 
-.PHONY: all prebuild subdirs clean bin
+.PHONY: all prebuild clean bin
 
-all: prebuild subdirs $(OBJ) bin
+all: prebuild $(OBJ) bin
 	@echo > /dev/null
 	
 prebuild:
 	@echo "Entering ${CURDIR}"
-		
-subdirs:
-	@for dir in $(SUBDIRS); do \
-		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir; \
-	done
 
 clean:
 	@echo "Cleaning up $(CURDIR)"

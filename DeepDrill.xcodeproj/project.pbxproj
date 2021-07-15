@@ -44,14 +44,12 @@
 /* Begin PBXFileReference section */
 		500655E626957C8400982789 /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		500655E726957C8400982789 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
-		500655EA26957CF500982789 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		500655EC2695AACB00982789 /* ice.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice.prf; sourceTree = "<group>"; };
 		50102344269DBEF000AC61A8 /* Exception.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Exception.cpp; sourceTree = "<group>"; };
 		50102345269DBEF000AC61A8 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		50102347269DC4F500AC61A8 /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
 		50102348269DC4F500AC61A8 /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
 		5010234B269DDE9C00AC61A8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		5010234F269DE2FE00AC61A8 /* MathTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathTypes.h; sourceTree = "<group>"; };
 		50102350269EC70200AC61A8 /* DrillMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DrillMap.cpp; sourceTree = "<group>"; };
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
@@ -155,23 +153,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		500655E926957CBF00982789 /* Math */ = {
-			isa = PBXGroup;
-			children = (
-				500655EA26957CF500982789 /* Makefile */,
-				5010234F269DE2FE00AC61A8 /* MathTypes.h */,
-				50BEC713269486C100CCDFA8 /* ExtendedComplex.h */,
-				50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */,
-				50BEC711269486C100CCDFA8 /* ExtendedDouble.h */,
-				50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */,
-				50BEC712269486C100CCDFA8 /* PrecisionComplex.h */,
-				50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */,
-				50BEC717269486C200CCDFA8 /* StandardComplex.h */,
-				50BEC716269486C200CCDFA8 /* StandardComplex.cpp */,
-			);
-			path = Math;
-			sourceTree = "<group>";
-		};
 		501023372696D19400AC61A8 /* Output */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +185,14 @@
 				50102344269DBEF000AC61A8 /* Exception.cpp */,
 				50102348269DC4F500AC61A8 /* IO.h */,
 				50102347269DC4F500AC61A8 /* IO.cpp */,
+				50BEC713269486C100CCDFA8 /* ExtendedComplex.h */,
+				50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */,
+				50BEC711269486C100CCDFA8 /* ExtendedDouble.h */,
+				50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */,
+				50BEC712269486C100CCDFA8 /* PrecisionComplex.h */,
+				50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */,
+				50BEC717269486C200CCDFA8 /* StandardComplex.h */,
+				50BEC716269486C200CCDFA8 /* StandardComplex.cpp */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -313,7 +302,6 @@
 			isa = PBXGroup;
 			children = (
 				50BEC6F7269486A900CCDFA8 /* Makefile */,
-				500655E926957CBF00982789 /* Math */,
 				50CF8E512694848800887FFC /* main.cpp */,
 				50BEC6F5269486A900CCDFA8 /* Application.h */,
 				50BEC700269486AA00CCDFA8 /* Application.cpp */,

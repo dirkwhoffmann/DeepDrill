@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include "StandardComplex.h"
+#include "ExtendedComplex.h"
+#include "PrecisionComplex.h"
 #include "Chrono.h"
 #include "Exception.h"
 #include "IO.h"
