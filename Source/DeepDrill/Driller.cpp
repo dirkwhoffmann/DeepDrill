@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "Driller.h"
+#include "Colorizer.h"
 #include "ProgressIndicator.h"
 #include <iostream>
 #include <iomanip>
@@ -22,7 +23,36 @@ Driller::Driller(const Options &options) : opt(options)
     palette.init(opt.palette);
 }
 
-void Driller::drill() {
+void
+Driller::launch()
+{
+    std::cout << "mapFileIn" << opt.mapFileIn << std::endl;
+    std::cout << "mapFileOut" << opt.mapFileOut << std::endl;
+    std::cout << "tifFileOut" << opt.tifFileOut << std::endl;
+
+    // Is the input a map file? If yes, load it from disk
+    if (opt.mapFileIn != "") mapFile.load(opt.mapFileIn);
+    
+    // If not, compute the drill map
+    if (opt.mapFileIn == "") drill();
+    
+    // Are we supposed to save the map file?
+    if (opt.mapFileOut != "") mapFile.save(opt.mapFileOut);
+    
+    // Are we suppoed to create an image file?
+    if (opt.tifFileOut != "") {
+
+        // Run the colorizer
+        Colorizer colorizer(opt, mapFile);
+        colorizer.colorize();
+        colorizer.save(opt.tifFileOut);
+    }
+}
+
+void
+Driller::drill()
+{
+    printf("MapFile::drill()\n");
 
     Clock stopWatch;
     vector<Coord> remaining;
@@ -102,7 +132,6 @@ void Driller::drill() {
     
     auto elapsed = stopWatch.stop();
     map.saveImage();
-    mapFile.save(opt.mapFile); 
 
     std::cout << std::endl << "Total time: " << elapsed << std::endl;
 }

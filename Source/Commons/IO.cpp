@@ -96,6 +96,15 @@ bool isAbsolutePath(const string &path)
     return !path.empty() && path.front() == '/';
 }
 
+string makeAbsolutePath(const string &path)
+{
+    if (isAbsolutePath(path)) {
+        return path;
+    } else {
+        return appendPath(std::filesystem::current_path().string(), path);
+    }
+}
+
 bool fileExists(const string &path)
 {
     return getSizeOfFile(path) >= 0;

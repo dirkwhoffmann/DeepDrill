@@ -21,6 +21,14 @@ MapFile::MapFile(isize w, isize h)
 
 MapFile::MapFile(const string &path)
 {
+    load(path);
+}
+
+void
+MapFile::load(const string &path)
+{
+    printf("MapFile::load(%s)\n", path.c_str());
+    
     std::ifstream os(path.c_str());
     if (!os.is_open()) throw Exception("Failed to open file " + path);
 
@@ -58,7 +66,7 @@ MapFile::resize(isize w, isize h)
 }
 
 const MapEntry &
-MapFile::get(isize w, isize h)
+MapFile::get(isize w, isize h) const
 {
     assert(data != nullptr && w < width && h < height);
     return data[h * width + w];
@@ -74,6 +82,8 @@ MapFile::set(isize w, isize h, const MapEntry &entry)
 void
 MapFile::save(const string &path)
 {
+    printf("MapFile::save(%s)\n", path.c_str());
+
     std::ofstream os(path.c_str());
     if (!os.is_open()) throw Exception("Failed to open file " + path);
     save(os);

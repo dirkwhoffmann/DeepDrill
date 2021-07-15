@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Application.h"
+#include "IO.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -25,12 +26,16 @@ int main(int argc, char *argv[])
         dd::Application().main(args);
 
     } catch (dd::SyntaxError &e) {
-        
-        std::cout << "Syntax: " << string(argv[0]);
-        std::cout << " [-v] [-p <profile.prf>] [-o <mapfile.map>] <location.loc>";
+                
+        std::cout << "Syntax: " << dd::extractName(string(argv[0]));
+        std::cout << " [-v] [-p <profile>] -o <output> <input>";
         std::cout << std::endl;
+        
+        if (!e.description.empty()) {
+            std::cout << e.what() << std::endl;
+        }
         return 1;
-    
+
     } catch (std::exception &e) {
         
         std::cout << e.what() << std::endl;

@@ -80,11 +80,14 @@ public:
     
 public:
     
-    // Computes the Mandelbrot image (main entry point)
-    void drill();
+    // Main entry point
+    void launch();
             
 private:
     
+    // Computes the drill map
+    void drill();
+
     // Drills a collection of points or a single point
     void drill(const vector<Coord> &remaining, vector<Coord> &glitchPoints);
     void drill(const Coord &point, vector<Coord> &glitchPoints);

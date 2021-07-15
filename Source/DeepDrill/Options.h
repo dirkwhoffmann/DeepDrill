@@ -26,8 +26,10 @@ class Options {
 
 public:
 
-    string mapFile;
-        
+    string mapFileIn;
+    string mapFileOut;
+    string tifFileOut;
+    
     //
     // Location parameters
     //

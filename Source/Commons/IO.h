@@ -44,6 +44,7 @@ string appendPath(const string &path, const string &path2);
 
 // Checks if a string starts with '/'
 bool isAbsolutePath(const string &path);
+string makeAbsolutePath(const string &path);
 
 
 //

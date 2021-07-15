@@ -18,6 +18,11 @@ namespace dd {
 
 class Application {
         
+    // Pre-parsed command line arguments
+    std::vector <string> profiles;
+    std::vector <string> inputs;
+    std::vector <string> outputs;
+
 public:
         
     // Main entry point
@@ -28,9 +33,14 @@ private:
     // Helper methods for parsing command line arguments
     void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;
     void parseOption(vector <string> &args, map<string,string> &keys) throws;
-    void parseLocationFile(vector <string> &args, map<string,string> &keys) throws;
     string pop(vector <string> &args) throws;
-    
+
+    void checkArguments(map<string,string> &keys) throws;
+
+    void readInputs(map<string,string> &keys) throws;
+    void readOutputs(map<string,string> &keys) throws;
+    void readProfiles(map<string,string> &keys) throws;
+            
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);
 };

@@ -26,9 +26,17 @@ Options::initialize(map <string,string> &keys)
 
     try {
 
-        key = "mapfile";
-        if (auto value = lookupKey(keys, key)) {
-            mapFile = *value;
+        key = "mapfilein";
+        if (auto value = lookupKey(keys, key, "")) {
+            mapFileIn = *value;
+        }
+        key = "mapfileout";
+        if (auto value = lookupKey(keys, key, "")) {
+            mapFileIn = *value;
+        }
+        key = "tiff";
+        if (auto value = lookupKey(keys, key, "")) {
+            tifFileOut = *value;
         }
         key = "verbose";
         if (auto value = lookupKey(keys, key, "0")) {
@@ -100,7 +108,7 @@ Options::initialize(map <string,string> &keys)
         static int align = 30;
         
         std::cout << std::right << std::setw(align) << "Map file: ";
-        std::cout << mapFile << std::endl;
+        std::cout << mapFileIn << std::endl;
         std::cout << std::right << std::setw(align) << "Real: ";
         std::cout << real << std::endl;
         std::cout << std::right << std::setw(align) << "Imag: ";
@@ -139,7 +147,7 @@ Options::lookupKey(const map <string,string> &keys, const string &key)
     if (auto it = keys.find(key); it != keys.end()) {
         return &it->second;
     } else {
-        throw MissingKeyException("Error: Key " + key + " is missing");
+        throw MissingKeyException("Error: Missing key '" + key + "'");
     }
 }
 
@@ -161,14 +169,7 @@ Options::deriveVariables()
 
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / zoom / height;
-    pixelDelta = mpfPixelDelta;
-    
-    // Prepend the path with the current directory if necessary
-    if (mapFile == "" || mapFile.front() != '/') {
-        
-        auto current = std::filesystem::current_path().string();
-        mapFile = current + "/" + mapFile;
-    }    
+    pixelDelta = mpfPixelDelta;    
 }
 
 }

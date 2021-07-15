@@ -25,6 +25,8 @@ struct MapEntry {
 
 class MapFile {
   
+public:
+    
     isize width = 0;
     isize height = 0;
     double logBailout = 0;
@@ -37,9 +39,10 @@ public:
     MapFile(isize w, isize h);
     MapFile(const string &path) throws;
     
+    void load(const string &path) throws;
     void resize(isize w, isize h);
-    
-    const MapEntry &get(isize w, isize h);
+
+    const MapEntry &get(isize w, isize h) const;
     void set(isize w, isize h, const MapEntry &entry);
     
     void save(const string &path); 

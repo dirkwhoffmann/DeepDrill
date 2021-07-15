@@ -24,13 +24,17 @@ Application::main(std::vector <string> &args)
 {
     map<string,string> keys;
     string option = "";
+                    
+    // Parse all command line arguments
+    parseArguments(args, keys);
+
+    readInputs(keys);
+    readOutputs(keys);
+    readProfiles(keys);
     
     std::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
     std::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
     std::cout << std::endl << std::endl;
-                
-    // Parse all command line arguments
-    parseArguments(args, keys);
         
     // Setup the GMP library
     setupGmp(keys);
@@ -40,27 +44,26 @@ Application::main(std::vector <string> &args)
     
     // Create a driller
     Driller driller(options);
-    driller.drill();
+    driller.launch();
 }
 
 void
 Application::parseArguments(std::vector <string> &args, map<string,string> &keys)
 {
-    bool hasLocationFile = false;
-        
+    if (args.empty()) throw SyntaxError();
+    
     while (!args.empty()) {
-                
-        // Is the argument an option?
-        if (args.front()[0] == '-') { parseOption(args, keys); continue; }
-
-        // If not, it must be a location file
-        if (hasLocationFile) throw SyntaxError();
-        hasLocationFile = true;
         
-        parseLocationFile(args, keys);
+        if (args.front()[0] == '-') {
+            
+            parseOption(args, keys);
+            continue;
+        }
+
+        inputs.push_back(makeAbsolutePath(pop(args)));
     }
     
-    if (!hasLocationFile) throw SyntaxError();
+    checkArguments(keys);
 }
 
 void
@@ -68,46 +71,151 @@ Application::parseOption(vector <string> &args, map<string,string> &keys)
 {
     auto arg = pop(args);
 
-    if (arg == "-v") {
+    if (arg == "-v" || arg == "-verbose") {
         
         keys["verbose"] = "1";
         return;
     }
-    if (arg == "-p") {
+    if (arg == "-m" || arg == "-make") {
         
-        auto path = pop(args);
-        if (extractSuffix(path) != "prf") throw SyntaxError();
-        Parser::parse(path, keys);
+        keys["make"] = "1";
         return;
     }
-    if (arg == "-o") {
+    if (arg == "-p" || arg == "-profile") {
         
-        auto path = pop(args);
-        if (extractSuffix(path) != "map") throw SyntaxError();
-        keys["mapfile"] = path;
+        profiles.push_back(pop(args));
+        return;
+    }
+    if (arg == "-o" || arg == "-output") {
+
+        outputs.push_back(pop(args));
         return;
     }
 
-    throw Exception("Unknown option: " + arg);
-}
-
-void
-Application::parseLocationFile(vector <string> &args, map<string,string> &keys)
-{
-    auto path = pop(args);
-    if (extractSuffix(path) != "loc") throw SyntaxError();
-    Parser::parse(path, keys);
+    throw SyntaxError("Unknown option: " + arg);
 }
 
 string
 Application::pop(vector <string> &args)
 {
-    if (args.empty()) throw SyntaxError();
+    if (args.empty()) throw SyntaxError("Missing argument");
     
     auto result = args.front();
     args.erase(args.begin());
     
     return result;
+}
+
+void
+Application::checkArguments(map<string,string> &keys)
+{
+    // The user needs to specify a single input
+    if (inputs.size() < 1) throw SyntaxError("No input file is given");
+    if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
+    
+    // The user needs to specify a single output
+    if (outputs.size() < 1) throw SyntaxError("No output file is given");
+    if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
+
+    auto in = inputs.front();
+    auto out = outputs.front();
+    auto inSuffix = extractSuffix(in);
+    auto outSuffix = extractSuffix(out);
+
+    // All profiles must be files of type ".prf"
+    for (auto &it : profiles) {
+        if (extractSuffix(it) != "prf") {
+            throw SyntaxError(it + " is not a profile (.prf)");
+        }
+    }
+    
+    if (keys.find("make") != keys.end()) {
+        
+        // The input files must be a location files
+        if (inSuffix != "loc") {
+            throw SyntaxError(in + " is not a location file (.loc)");
+        }
+
+        // The output must be an empty directory
+        if (!isDirectory(out)) {
+            throw SyntaxError("The output file must be a directory");
+        }
+        if (numDirectoryItems(out) > 0) {
+            throw SyntaxError("The output directory must be empty");
+        }
+        
+    } else {
+                
+        // The input file must be a location file or a map file
+        if (inSuffix != "loc" && outSuffix != "map") {
+            throw SyntaxError(inputs.front() +
+                              ": Invalid format. Expected .loc or .map");
+        }
+        
+        // The output file must be a map file or an image file
+        if (outSuffix != "map" && outSuffix != "tiff") {
+            throw SyntaxError(outputs.front() +
+                              ": Invalid format. Expected .map or .tiff");
+        }
+    }
+}
+
+void
+Application::readInputs(map<string,string> &keys)
+{
+    auto path = inputs.front();
+    auto suffix = extractSuffix(path);
+
+    if (suffix == "map") {
+        
+        keys["mapfilein"] = path;
+        return;
+    }
+    if (suffix == "loc") {
+        
+        Parser::parse(path, keys);
+        return;
+    }
+    if (isDirectory(path)) {
+        
+        keys["projectdir"] = path;
+        return;
+    }
+
+    throw SyntaxError(path + ": Invalid input format");
+}
+
+void
+Application::readOutputs(map<string,string> &keys)
+{
+    auto path = outputs.front();
+    auto suffix = extractSuffix(path);
+
+    if (suffix == "map") {
+        
+        keys["mapfileout"] = path;
+        return;
+    }
+    if (suffix == "tiff" || suffix == "tif") {
+        
+        keys["tiff"] = path;
+        return;
+    }
+    if (isDirectory(path)) {
+        
+        keys["outdir"] = path;
+        return;
+    }
+
+    throw SyntaxError(path + ": Invalid output format");
+}
+
+void
+Application::readProfiles(map<string,string> &keys)
+{
+    for (auto &path: profiles) {
+        Parser::parse(path, keys);
+    }
 }
 
 void
