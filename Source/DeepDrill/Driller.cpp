@@ -11,10 +11,10 @@
 
 #include "config.h"
 #include "Driller.h"
+
 #include "Colorizer.h"
+#include "Options.h"
 #include "ProgressIndicator.h"
-#include <iostream>
-#include <iomanip>
 
 namespace dd {
 

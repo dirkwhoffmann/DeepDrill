@@ -11,8 +11,6 @@
 
 #include "config.h"
 #include "ProgressIndicator.h"
-#include <iostream>
-#include <iomanip>
 
 namespace dd {
 

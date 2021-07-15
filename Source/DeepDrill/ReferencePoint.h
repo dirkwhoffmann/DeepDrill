@@ -13,7 +13,7 @@
 
 #include "Commons.h"
 #include "Coord.h"
-#include "Options.h"
+// #include "Options.h"
 
 namespace dd {
 
@@ -65,7 +65,7 @@ struct ReferencePoint {
     //
     
     ReferencePoint() { }
-    ReferencePoint(const Options &opt, Coord c);
+    ReferencePoint(const class Options &opt, Coord c);
         
     // Returns the relative location of a given pixel
     ExtendedComplex deltaLocation(const Options &opt, const Coord &coord) const;

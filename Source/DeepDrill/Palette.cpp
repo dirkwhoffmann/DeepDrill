@@ -12,6 +12,8 @@
 #include "config.h"
 #include "Palette.h"
 
+#include "Options.h"
+
 namespace dd {
 
 Palette::Palette(const Options &options) : opt(options)

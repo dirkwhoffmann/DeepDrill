@@ -12,19 +12,17 @@
 #pragma once
 
 #include "Commons.h"
-#include "Options.h"
 #include "Palette.h"
-#include "DrillMap.h"
 
 namespace dd {
 
 class Colorizer {
 
     // Configuration options
-    const Options &opt;
+    const class Options &opt;
     
     // The associated map file
-    const DrillMap &map;
+    const class DrillMap &map;
     
     // The image data
     u32 *image = nullptr;

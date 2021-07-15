@@ -11,14 +11,13 @@
 #pragma once
 
 #include "Commons.h"
-#include "Options.h"
 
 namespace dd {
 
 class Palette {
   
     // Configuration options
-    const Options &opt;
+    const class Options &opt;
     
     // The color table
     vector <u32> colors;

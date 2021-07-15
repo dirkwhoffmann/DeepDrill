@@ -15,8 +15,6 @@
 #include "Coefficients.h"
 #include "Coord.h"
 #include "DrillMap.h"
-#include "Options.h"
-#include "Palette.h"
 #include "ReferencePoint.h"
 #include <random>
 
@@ -27,7 +25,7 @@ class Driller {
     friend class Application;
     
     // Configuration options
-    const Options &opt;
+    const class Options &opt;
     
     // The associated map file
     DrillMap &map;

@@ -12,8 +12,6 @@
 #pragma once
 
 #include "Commons.h"
-#include "Options.h"
-#include "PrecisionComplex.h"
 
 namespace dd {
 
@@ -29,7 +27,7 @@ struct Coord {
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
     
-    static Coord center(const Options &opt);
+    static Coord center(const class Options &opt);
     
     
     //

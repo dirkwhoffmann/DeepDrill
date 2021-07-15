@@ -11,10 +11,10 @@
 
 #include "config.h"
 #include "Colorizer.h"
+
 #include "Coord.h"
-#include "IO.h"
 #include "DrillMap.h"
-#include <iostream>
+#include "Options.h"
 
 namespace dd {
 
