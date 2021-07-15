@@ -180,28 +180,9 @@ struct ExtendedDouble {
     //
     
     bool operator<(ExtendedDouble &other);
-    inline bool operator>(ExtendedDouble &other) {
-
-        return other < *this;
-    }
-
-    inline bool operator<(double other) {
-
-        assert(isReduced());
-
-        ExtendedDouble tmp(other);
-        tmp.reduce();
-        return *this < tmp;
-    }
-
-    inline bool operator>(double other) {
-
-        assert(isReduced());
-
-        ExtendedDouble tmp(other);
-        tmp.reduce();
-        return *this > tmp;
-    }
+    bool operator>(ExtendedDouble &other);
+    bool operator<(double other);
+    bool operator>(double other);
 
     
     //

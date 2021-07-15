@@ -45,8 +45,8 @@ ExtendedDouble::operator==(const ExtendedDouble &other) const
 }
 
 bool
-ExtendedDouble::operator<(ExtendedDouble &other) {
-
+ExtendedDouble::operator<(ExtendedDouble &other)
+{
     assert(isReduced());
     assert(other.isReduced());
 
@@ -69,6 +69,32 @@ ExtendedDouble::operator<(ExtendedDouble &other) {
      } else {
          return false;
      }
+}
+
+bool
+ExtendedDouble::operator>(ExtendedDouble &other)
+{
+    return other < *this;
+}
+
+bool
+ExtendedDouble::operator<(double other)
+{
+    assert(isReduced());
+
+    ExtendedDouble tmp(other);
+    tmp.reduce();
+    return *this < tmp;
+}
+
+bool
+ExtendedDouble::operator>(double other)
+{
+    assert(isReduced());
+
+    ExtendedDouble tmp(other);
+    tmp.reduce();
+    return *this > tmp;
 }
 
 std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value)
