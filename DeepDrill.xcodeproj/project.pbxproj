@@ -179,13 +179,6 @@
 			path = Output;
 			sourceTree = "<group>";
 		};
-		5010233E269D9FB500AC61A8 /* DDImage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DDImage;
-			sourceTree = "<group>";
-		};
 		5010234A269DDE6D00AC61A8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +186,6 @@
 				50BEC6F3269486A900CCDFA8 /* config.h */,
 				50BEC70B269486B400CCDFA8 /* Commons */,
 				50CF8E502694848800887FFC /* DeepDrill */,
-				5010233E269D9FB500AC61A8 /* DDImage */,
 			);
 			path = Source;
 			sourceTree = "<group>";
