@@ -207,8 +207,6 @@
 				50102344269DBEF000AC61A8 /* Exception.cpp */,
 				50102348269DC4F500AC61A8 /* IO.h */,
 				50102347269DC4F500AC61A8 /* IO.cpp */,
-				50102351269EC70200AC61A8 /* DrillMap.h */,
-				50102350269EC70200AC61A8 /* DrillMap.cpp */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -328,6 +326,8 @@
 				50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */,
 				50BEC6F8269486A900CCDFA8 /* Coord.h */,
 				50BEC6F6269486A900CCDFA8 /* Coord.cpp */,
+				50102351269EC70200AC61A8 /* DrillMap.h */,
+				50102350269EC70200AC61A8 /* DrillMap.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
 				50EB497226A00C2A0019078C /* Colorizer.h */,
