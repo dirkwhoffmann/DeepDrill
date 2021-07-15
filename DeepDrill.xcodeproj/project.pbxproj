@@ -13,7 +13,6 @@
 		50102352269EC70200AC61A8 /* MapFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* MapFile.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
-		50BEC703269486AA00CCDFA8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F4269486A900CCDFA8 /* DrillMap.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 		50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
 		50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
@@ -61,12 +60,10 @@
 		50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressIndicator.h; sourceTree = "<group>"; };
 		50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coefficients.cpp; sourceTree = "<group>"; };
 		50BEC6F3269486A900CCDFA8 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		50BEC6F4269486A900CCDFA8 /* DrillMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrillMap.cpp; sourceTree = "<group>"; };
 		50BEC6F5269486A900CCDFA8 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
 		50BEC6F6269486A900CCDFA8 /* Coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coord.cpp; sourceTree = "<group>"; };
 		50BEC6F7269486A900CCDFA8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		50BEC6F8269486A900CCDFA8 /* Coord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coord.h; sourceTree = "<group>"; };
-		50BEC6F9269486A900CCDFA8 /* DrillMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		50BEC6FA269486A900CCDFA8 /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressIndicator.cpp; sourceTree = "<group>"; };
 		50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferencePoint.h; sourceTree = "<group>"; };
@@ -331,8 +328,6 @@
 				50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */,
 				50BEC6F8269486A900CCDFA8 /* Coord.h */,
 				50BEC6F6269486A900CCDFA8 /* Coord.cpp */,
-				50BEC6F9269486A900CCDFA8 /* DrillMap.h */,
-				50BEC6F4269486A900CCDFA8 /* DrillMap.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
 				50EB497226A00C2A0019078C /* Colorizer.h */,
@@ -420,7 +415,6 @@
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
-				50BEC703269486AA00CCDFA8 /* DrillMap.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */,
 				50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */,
 			);

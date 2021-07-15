@@ -18,11 +18,13 @@ namespace dd {
 
 class Application {
         
-    // Pre-parsed command line arguments
+    // Extracted command line arguments
     std::vector <string> profiles;
     std::vector <string> inputs;
     std::vector <string> outputs;
-
+    
+    // The drill map
+    
 public:
         
     // Main entry point

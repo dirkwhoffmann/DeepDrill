@@ -131,7 +131,7 @@ Driller::drill()
     }
     
     auto elapsed = stopWatch.stop();
-    map.saveImage();
+    // map.saveImage();
 
     std::cout << std::endl << "Total time: " << elapsed << std::endl;
 }
@@ -276,7 +276,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         
         // Perform the escape check
         if (norm >= 256) {
-            map.setPixel(point, palette, iteration, norm);
+            // map.setPixel(point, palette, iteration, norm);
             mapFile.set(point.x, point.y, MapEntry { (u32)iteration, (float)log(norm) });
             return;
         }
@@ -285,7 +285,6 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     if (limit == opt.depth) {
 
         // This point belongs to the Mandelbrot set
-        map.setPixel(point, 0);
         mapFile.set(point.x, point.y, MapEntry { 0, 0 });
 
     } else {

@@ -14,7 +14,6 @@
 #include "MathTypes.h"
 #include "Coefficients.h"
 #include "Coord.h"
-#include "DrillMap.h"
 #include "MapFile.h"
 #include "Options.h"
 #include "Palette.h"
@@ -34,7 +33,7 @@ class Driller {
     bool stop = false;
 
     // The part of the Mandelbrot set to be computed
-    DrillMap map = DrillMap(opt);
+    // DrillMap map = DrillMap(opt);
     
     // The drill map (drill result)
     MapFile mapFile;
