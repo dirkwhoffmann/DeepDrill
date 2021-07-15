@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "Colorizer.h"
-
 #include "Coord.h"
 #include "DrillMap.h"
 #include "Options.h"
@@ -55,6 +54,9 @@ Colorizer::save(const string &path)
 {    
     std::ofstream os;
     
+    isize width = map.width;
+    isize height = map.height;
+    
     // Assemble the target file names
     string rawFile = stripSuffix(path) + ".raw";
     string tifFile = path;
@@ -68,11 +70,11 @@ Colorizer::save(const string &path)
     os.open(rawFile.c_str());
     
     // Dump texture
-    for (int y = 0; y < opt.height; y++) {
+    for (int y = 0; y < height; y++) {
         
-        for (int x = 0; x < opt.width; x++) {
+        for (int x = 0; x < width; x++) {
             
-            char *cptr = (char *)(image + y * map.width + x);
+            char *cptr = (char *)(image + y * width + x);
             os.write(cptr + 0, 1);
             os.write(cptr + 1, 1);
             os.write(cptr + 2, 1);
@@ -83,10 +85,12 @@ Colorizer::save(const string &path)
     // Convert raw data into a TIFF file
     string cmd = "/usr/local/bin/raw2tiff";
     cmd += " -p rgb -b 3";
-    cmd += " -w " + std::to_string(opt.width);
-    cmd += " -l " + std::to_string(opt.height);
+    cmd += " -w " + std::to_string(width);
+    cmd += " -l " + std::to_string(height);
     cmd += " " + rawFile + " " + tifFile;
     
+    std::cout << "Executing " << cmd << std::endl;
+
     // std::cout << "Executing " << cmd << std::endl;
     if (system(cmd.c_str()) != 0) {
         std::cout << "Failed to execute " << cmd << std::endl;

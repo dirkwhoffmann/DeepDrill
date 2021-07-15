@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "Palette.h"
-
 #include "Options.h"
 
 namespace dd {

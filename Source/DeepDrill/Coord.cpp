@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "Coord.h"
-
 #include "Options.h"
 
 namespace dd {

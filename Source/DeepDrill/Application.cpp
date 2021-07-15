@@ -13,11 +13,8 @@
 #include "Application.h"
 #include "Colorizer.h"
 #include "Driller.h"
-#include "IO.h"
 #include "Options.h"
 #include "Maker.h"
-#include "Parser.h"
-#include <iostream>
 
 namespace dd {
 
@@ -44,11 +41,9 @@ Application::main(std::vector <string> &args)
     // Parse all options
     Options opt(keys);
 
-    /*
     std::cout << "mapFileIn" << opt.mapFileIn << std::endl;
     std::cout << "mapFileOut" << opt.mapFileOut << std::endl;
     std::cout << "tifFileOut" << opt.tifFileOut << std::endl;
-    */
     
     // Is the input a map file? If yes, load it from disk
     if (opt.mapFileIn != "") drillMap.load(opt.mapFileIn);
@@ -115,7 +110,7 @@ Application::parseOption(vector <string> &args, map<string,string> &keys)
     }
     if (arg == "-o" || arg == "-output") {
 
-        outputs.push_back(pop(args));
+        outputs.push_back(makeAbsolutePath(pop(args)));
         return;
     }
 
@@ -174,7 +169,7 @@ Application::checkArguments(map<string,string> &keys)
     } else {
                 
         // The input file must be a location file or a map file
-        if (inSuffix != "loc" && outSuffix != "map") {
+        if (inSuffix != "loc" && inSuffix != "map") {
             throw SyntaxError(inputs.front() +
                               ": Invalid format. Expected .loc or .map");
         }

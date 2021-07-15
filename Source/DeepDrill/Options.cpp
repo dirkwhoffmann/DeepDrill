@@ -11,9 +11,6 @@
 
 #include "config.h"
 #include "Options.h"
-#include <exception>
-#include <iomanip>
-#include <iostream>
 
 namespace dd {
 
@@ -31,7 +28,7 @@ Options::initialize(map <string,string> &keys)
         }
         key = "mapfileout";
         if (auto value = lookupKey(keys, key, "")) {
-            mapFileIn = *value;
+            mapFileOut = *value;
         }
         key = "tiff";
         if (auto value = lookupKey(keys, key, "")) {
@@ -42,27 +39,27 @@ Options::initialize(map <string,string> &keys)
             verbose = stoi(*value);
         }
         key = "location.real";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "0.0")) {
             real = mpf_class(*value);
         }
         key = "location.imag";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "0.0")) {
             imag = mpf_class(*value);
         }
         key = "location.zoom";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "1")) {
             zoom = mpf_class(*value);
         }
         key = "location.depth";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "500")) {
             depth = stoi(*value);
         }
         key = "image.width";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "640")) {
             width = stoi(*value);
         }
         key = "image.height";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "320")) {
             height = stoi(*value);
         }
         key = "image.rotate";

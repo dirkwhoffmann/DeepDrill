@@ -27,14 +27,17 @@ DrillMap::DrillMap(const string &path)
 void
 DrillMap::load(const string &path)
 {
-    std::ifstream os(path.c_str());
+    std::ifstream os(path.c_str(), std::ios::binary);
     if (!os.is_open()) throw Exception("Failed to open file " + path);
 
     // Read header
-    os >> width;
-    os >> height;
-    os >> logBailout;
-
+    os.read((char *)&width, sizeof(width));
+    os.read((char *)&height, sizeof(height));
+    os.read((char *)&logBailout, sizeof(logBailout));
+    
+    // Adjust the map size
+    resize(width, height);
+    
     // Write data
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -42,8 +45,8 @@ DrillMap::load(const string &path)
             u32 iteration;
             float lognorm;
             
-            os >> iteration;
-            os >> lognorm;
+            os.read((char *)&iteration, sizeof(iteration));
+            os.read((char *)&lognorm, sizeof(lognorm));
 
             set(x, y, MapEntry { iteration, lognorm });
         }
@@ -80,8 +83,10 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
 void
 DrillMap::save(const string &path)
 {
-    std::ofstream os(path.c_str());
-    if (!os.is_open()) throw Exception("Failed to open file " + path);
+    printf("DrillMap::save(%s)\n", path.c_str());
+    
+    std::ofstream os(path.c_str(), std::ios::binary);
+    if (!os.is_open()) throw Exception("Failed to write file " + path);
     save(os);
 }
 
@@ -89,17 +94,19 @@ void
 DrillMap::save(std::ostream &os)
 {
     // Write header
-    os << width;
-    os << height;
-    os << logBailout;
+    os.write((char *)&width, sizeof(width));
+    os.write((char *)&height, sizeof(height));
+    os.write((char *)&logBailout, sizeof(logBailout));
+
+    printf("save: width = %zd height = %zd\n", width, height);
 
     // Write data
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             
             auto item = get(x,y);
-            os << item.iteration;
-            os << item.lognorm;
+            os.write((char *)&item.iteration, sizeof(item.iteration));
+            os.write((char *)&item.lognorm, sizeof(item.lognorm));
         }
     }
 }

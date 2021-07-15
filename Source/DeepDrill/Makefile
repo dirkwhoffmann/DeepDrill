@@ -23,4 +23,4 @@ clean:
 
 bin:
 	@echo "Linking"
-	@g++ -pthread -o deepdrill ../Commons/*.o *.o */*.o $(MYLPATH) -lgmpxx -lgmp
+	@g++ -pthread -o deepdrill ../Commons/*.o *.o $(MYLPATH) -lgmpxx -lgmp

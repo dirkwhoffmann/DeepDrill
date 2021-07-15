@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "ReferencePoint.h"
-
 #include "Options.h"
 #include "ProgressIndicator.h"
 

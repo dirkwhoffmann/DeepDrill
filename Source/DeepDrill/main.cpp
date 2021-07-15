@@ -10,8 +10,6 @@
 // -----------------------------------------------------------------------------
 
 #include "Application.h"
-#include "IO.h"
-#include <iostream>
 
 int main(int argc, char *argv[])
 {

@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "Coefficients.h"
-
 #include "ProgressIndicator.h"
 
 namespace dd {
