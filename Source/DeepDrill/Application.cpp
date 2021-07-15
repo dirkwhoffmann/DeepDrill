@@ -15,6 +15,7 @@
 #include "Driller.h"
 #include "IO.h"
 #include "Options.h"
+#include "Maker.h"
 #include "Parser.h"
 #include <iostream>
 
