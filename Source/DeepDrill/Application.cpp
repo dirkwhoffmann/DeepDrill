@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "Application.h"
+#include "Colorizer.h"
 #include "Driller.h"
 #include "IO.h"
 #include "Options.h"
@@ -40,11 +41,34 @@ Application::main(std::vector <string> &args)
     setupGmp(keys);
 
     // Parse all options
-    Options options(keys);
+    Options opt(keys);
+
+    std::cout << "mapFileIn" << opt.mapFileIn << std::endl;
+    std::cout << "mapFileOut" << opt.mapFileOut << std::endl;
+    std::cout << "tifFileOut" << opt.tifFileOut << std::endl;
+
+    // Is the input a map file? If yes, load it from disk
+    if (opt.mapFileIn != "") drillMap.load(opt.mapFileIn);
     
-    // Create a driller
-    Driller driller(options);
-    driller.launch();
+    // If not, compute the drill map
+    if (opt.mapFileIn == "") {
+        
+        // Run the driller
+        Driller driller(opt, drillMap);
+        driller.drill();
+    }
+    
+    // Are we supposed to save the map file?
+    if (opt.mapFileOut != "") drillMap.save(opt.mapFileOut);
+    
+    // Are we suppoed to create an image file?
+    if (opt.tifFileOut != "") {
+
+        // Run the colorizer
+        Colorizer colorizer(opt, drillMap);
+        colorizer.colorize();
+        colorizer.save(opt.tifFileOut);
+    }
 }
 
 void

@@ -1,4 +1,4 @@
-/// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // This file is part of DeepDrill
 //
 // A Mandelbrot generator based on perturbation and series approximation

@@ -29,14 +29,11 @@ class Driller {
     // Configuration options
     const Options &opt;
     
+    // The associated map file
+    DrillMap &map;
+
     // Stop flag for interrupting the computation
     bool stop = false;
-
-    // The part of the Mandelbrot set to be computed
-    // DrillMap map = DrillMap(opt);
-    
-    // The drill map (drill result)
-    DrillMap mapFile;
     
     // The color palette
     Palette palette = Palette(opt);
@@ -70,7 +67,7 @@ class Driller {
 
 public:
 
-    Driller(const Options &options);
+    Driller(const Options &options, DrillMap &map);
     
     
     //

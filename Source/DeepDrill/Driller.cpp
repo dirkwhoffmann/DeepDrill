@@ -18,7 +18,7 @@
 
 namespace dd {
 
-Driller::Driller(const Options &options) : opt(options)
+Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
 {
     palette.init(opt.palette);
 }
@@ -26,6 +26,7 @@ Driller::Driller(const Options &options) : opt(options)
 void
 Driller::launch()
 {
+    /*
     std::cout << "mapFileIn" << opt.mapFileIn << std::endl;
     std::cout << "mapFileOut" << opt.mapFileOut << std::endl;
     std::cout << "tifFileOut" << opt.tifFileOut << std::endl;
@@ -47,6 +48,7 @@ Driller::launch()
         colorizer.colorize();
         colorizer.save(opt.tifFileOut);
     }
+    */
 }
 
 void
@@ -59,7 +61,7 @@ Driller::drill()
     vector<Coord> glitches;
     
     // Allcoate the drill map
-    mapFile.resize(opt.width, opt.height);
+    map.resize(opt.width, opt.height);
     
     // Determine the number of tolerated glitched pixels
     isize allowedBadPixels = opt.width * opt.height * (1.0 - opt.accuracy);
@@ -277,7 +279,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         // Perform the escape check
         if (norm >= 256) {
             // map.setPixel(point, palette, iteration, norm);
-            mapFile.set(point.x, point.y, MapEntry { (u32)iteration, (float)log(norm) });
+            map.set(point.x, point.y, MapEntry { (u32)iteration, (float)log(norm) });
             return;
         }
     }
@@ -285,7 +287,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     if (limit == opt.depth) {
 
         // This point belongs to the Mandelbrot set
-        mapFile.set(point.x, point.y, MapEntry { 0, 0 });
+        map.set(point.x, point.y, MapEntry { 0, 0 });
 
     } else {
 

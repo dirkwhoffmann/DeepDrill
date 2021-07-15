@@ -12,7 +12,7 @@
 #pragma once
 
 #include "MathTypes.h"
-#include "Exception.h"
+#include "DrillMap.h"
 
 namespace dd {
 
@@ -24,6 +24,7 @@ class Application {
     std::vector <string> outputs;
     
     // The drill map
+    DrillMap drillMap;
     
 public:
         
