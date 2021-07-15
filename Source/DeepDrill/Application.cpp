@@ -43,10 +43,12 @@ Application::main(std::vector <string> &args)
     // Parse all options
     Options opt(keys);
 
+    /*
     std::cout << "mapFileIn" << opt.mapFileIn << std::endl;
     std::cout << "mapFileOut" << opt.mapFileOut << std::endl;
     std::cout << "tifFileOut" << opt.tifFileOut << std::endl;
-
+    */
+    
     // Is the input a map file? If yes, load it from disk
     if (opt.mapFileIn != "") drillMap.load(opt.mapFileIn);
     

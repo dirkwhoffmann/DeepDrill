@@ -59,9 +59,11 @@ Colorizer::save(const string &path)
     string rawFile = stripSuffix(path) + ".raw";
     string tifFile = path;
     
+    /*
     std::cout << "rawFile: " << rawFile << std::endl;
     std::cout << "tifFile: " << tifFile << std::endl;
-
+    */
+    
     // Open an output stream
     os.open(rawFile.c_str());
     
