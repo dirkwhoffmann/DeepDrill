@@ -35,9 +35,6 @@ class Driller {
     // Stop flag for interrupting the computation
     bool stop = false;
     
-    // The color palette
-    Palette palette = Palette(opt);
-
     
     //
     // Perturbation parameters
@@ -73,16 +70,13 @@ public:
     //
     // Computing the Mandelbrot set
     //
-    
+                
 public:
-    
-    // Main entry point
-    void launch();
-            
-private:
     
     // Computes the drill map
     void drill();
+
+private:
 
     // Drills a collection of points or a single point
     void drill(const vector<Coord> &remaining, vector<Coord> &glitchPoints);

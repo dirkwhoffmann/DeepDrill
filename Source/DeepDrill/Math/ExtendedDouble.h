@@ -179,32 +179,7 @@ struct ExtendedDouble {
     // Comparing
     //
     
-    inline bool operator<(ExtendedDouble &other) {
-
-        assert(isReduced());
-        assert(other.isReduced());
-
-        if (mantissa == 0.0 && other.mantissa < 0.0) {
-            return false;
-         } if (mantissa == 0.0 && other.mantissa > 0.0) {
-             return true;
-         } else if (other.mantissa == 0.0 && mantissa < 0.0) {
-             return true;
-         } else if (other.mantissa == 0.0 && mantissa > 0.0) {
-             return false;
-         } else if (exponent < other.exponent) {
-             return true;
-         } else if (exponent > other.exponent) {
-             return false;
-         } else if (mantissa == other.mantissa) {
-             return false;
-         } else if (mantissa < other.mantissa) {
-             return true;
-         } else {
-             return false;
-         }
-    }
-    
+    bool operator<(ExtendedDouble &other);
     inline bool operator>(ExtendedDouble &other) {
 
         return other < *this;

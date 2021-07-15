@@ -27,8 +27,6 @@ DrillMap::DrillMap(const string &path)
 void
 DrillMap::load(const string &path)
 {
-    printf("MapFile::load(%s)\n", path.c_str());
-    
     std::ifstream os(path.c_str());
     if (!os.is_open()) throw Exception("Failed to open file " + path);
 
@@ -82,8 +80,6 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
 void
 DrillMap::save(const string &path)
 {
-    printf("MapFile::save(%s)\n", path.c_str());
-
     std::ofstream os(path.c_str());
     if (!os.is_open()) throw Exception("Failed to open file " + path);
     save(os);

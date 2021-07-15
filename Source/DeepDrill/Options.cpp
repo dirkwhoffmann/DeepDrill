@@ -12,7 +12,6 @@
 #include "config.h"
 #include "Options.h"
 #include <exception>
-#include <filesystem>
 #include <iomanip>
 #include <iostream>
 

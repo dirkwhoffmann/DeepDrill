@@ -44,6 +44,33 @@ ExtendedDouble::operator==(const ExtendedDouble &other) const
     return mantissa == other.mantissa && exponent == other.exponent;
 }
 
+bool
+ExtendedDouble::operator<(ExtendedDouble &other) {
+
+    assert(isReduced());
+    assert(other.isReduced());
+
+    if (mantissa == 0.0 && other.mantissa < 0.0) {
+        return false;
+     } if (mantissa == 0.0 && other.mantissa > 0.0) {
+         return true;
+     } else if (other.mantissa == 0.0 && mantissa < 0.0) {
+         return true;
+     } else if (other.mantissa == 0.0 && mantissa > 0.0) {
+         return false;
+     } else if (exponent < other.exponent) {
+         return true;
+     } else if (exponent > other.exponent) {
+         return false;
+     } else if (mantissa == other.mantissa) {
+         return false;
+     } else if (mantissa < other.mantissa) {
+         return true;
+     } else {
+         return false;
+     }
+}
+
 std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value)
 {
     return os << value.mantissa << "*2^" << value.exponent;

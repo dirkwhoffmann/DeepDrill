@@ -34,8 +34,6 @@ Colorizer::~Colorizer()
 void
 Colorizer::colorize()
 {
-    printf("Colorizer::colorize()\n");
-    
     for (isize y = 0; y < map.height; y++) {
         for (isize x = 0; x < map.width; x++) {
             colorize(Coord(x,y));
@@ -54,9 +52,7 @@ Colorizer::colorize(Coord c)
 
 void
 Colorizer::save(const string &path)
-{
-    printf("Colorizer::save(%s)\n", path.c_str());
-    
+{    
     std::ofstream os;
     
     // Assemble the target file names

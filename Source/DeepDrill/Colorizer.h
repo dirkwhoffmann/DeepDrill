@@ -48,7 +48,7 @@ public:
     //
 
     void colorize();
-    void colorize(class Coord c);
+    void colorize(struct Coord c);
 
     
     //
