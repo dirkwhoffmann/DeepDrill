@@ -8,16 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		500655E826957C8400982789 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
-		50102340269D9FB500AC61A8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5010233F269D9FB500AC61A8 /* main.cpp */; };
 		50102346269DBEF000AC61A8 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
 		50102349269DC4F500AC61A8 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		50102352269EC70200AC61A8 /* MapFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* MapFile.cpp */; };
-		5053CA1F269F30EB004D0F67 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5053CA19269F2C34004D0F67 /* Application.cpp */; };
-		5053CA20269F30EE004D0F67 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5053CA1C269F2C4C004D0F67 /* Options.cpp */; };
-		5053CA22269F319B004D0F67 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
-		5053CA23269F319E004D0F67 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
-		5053CA24269F31A0004D0F67 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
-		5053CA25269F31A3004D0F67 /* MapFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* MapFile.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC703269486AA00CCDFA8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F4269486A900CCDFA8 /* DrillMap.cpp */; };
@@ -37,15 +30,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5010233B269D9FB500AC61A8 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		50CF8E4C2694848800887FFC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -62,21 +46,14 @@
 		500655E726957C8400982789 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500655EA26957CF500982789 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		500655EC2695AACB00982789 /* ice.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice.prf; sourceTree = "<group>"; };
-		5010233D269D9FB500AC61A8 /* DDImage */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DDImage; sourceTree = BUILT_PRODUCTS_DIR; };
-		5010233F269D9FB500AC61A8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		50102344269DBEF000AC61A8 /* Exception.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Exception.cpp; sourceTree = "<group>"; };
 		50102345269DBEF000AC61A8 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		50102347269DC4F500AC61A8 /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
 		50102348269DC4F500AC61A8 /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
 		5010234B269DDE9C00AC61A8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		5010234D269DE0FB00AC61A8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		5010234F269DE2FE00AC61A8 /* MathTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathTypes.h; sourceTree = "<group>"; };
 		50102350269EC70200AC61A8 /* MapFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapFile.cpp; sourceTree = "<group>"; };
 		50102351269EC70200AC61A8 /* MapFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapFile.h; sourceTree = "<group>"; };
-		5053CA19269F2C34004D0F67 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
-		5053CA1A269F2C34004D0F67 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
-		5053CA1C269F2C4C004D0F67 /* Options.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
-		5053CA1D269F2C4C004D0F67 /* Options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EE269486A800CCDFA8 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
@@ -167,13 +144,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5010233A269D9FB500AC61A8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50CF8E4B2694848800887FFC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,12 +181,6 @@
 		5010233E269D9FB500AC61A8 /* DDImage */ = {
 			isa = PBXGroup;
 			children = (
-				5010234D269DE0FB00AC61A8 /* Makefile */,
-				5010233F269D9FB500AC61A8 /* main.cpp */,
-				5053CA1A269F2C34004D0F67 /* Application.h */,
-				5053CA19269F2C34004D0F67 /* Application.cpp */,
-				5053CA1D269F2C4C004D0F67 /* Options.h */,
-				5053CA1C269F2C4C004D0F67 /* Options.cpp */,
 			);
 			path = DDImage;
 			sourceTree = "<group>";
@@ -349,7 +313,6 @@
 			isa = PBXGroup;
 			children = (
 				50CF8E4E2694848800887FFC /* DeepDrill */,
-				5010233D269D9FB500AC61A8 /* DDImage */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -387,23 +350,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5010233C269D9FB500AC61A8 /* DDImage */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50102341269D9FB500AC61A8 /* Build configuration list for PBXNativeTarget "DDImage" */;
-			buildPhases = (
-				50102339269D9FB500AC61A8 /* Sources */,
-				5010233A269D9FB500AC61A8 /* Frameworks */,
-				5010233B269D9FB500AC61A8 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DDImage;
-			productName = DDImage;
-			productReference = 5010233D269D9FB500AC61A8 /* DDImage */;
-			productType = "com.apple.product-type.tool";
-		};
 		50CF8E4D2694848800887FFC /* DeepDrill */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50CF8E552694848800887FFC /* Build configuration list for PBXNativeTarget "DeepDrill" */;
@@ -429,9 +375,6 @@
 			attributes = {
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
-					5010233C269D9FB500AC61A8 = {
-						CreatedOnToolsVersion = 12.5.1;
-					};
 					50CF8E4D2694848800887FFC = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -451,26 +394,11 @@
 			projectRoot = "";
 			targets = (
 				50CF8E4D2694848800887FFC /* DeepDrill */,
-				5010233C269D9FB500AC61A8 /* DDImage */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		50102339269D9FB500AC61A8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5053CA22269F319B004D0F67 /* Chrono.cpp in Sources */,
-				5053CA24269F31A0004D0F67 /* IO.cpp in Sources */,
-				5053CA1F269F30EB004D0F67 /* Application.cpp in Sources */,
-				50102340269D9FB500AC61A8 /* main.cpp in Sources */,
-				5053CA23269F319E004D0F67 /* Parser.cpp in Sources */,
-				5053CA20269F30EE004D0F67 /* Options.cpp in Sources */,
-				5053CA25269F31A3004D0F67 /* MapFile.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50CF8E4A2694848800887FFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -501,28 +429,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		50102342269D9FB500AC61A8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3NG65ZLYW7;
-				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		50102343269D9FB500AC61A8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3NG65ZLYW7;
-				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		50CF8E532694848800887FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -686,15 +592,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		50102341269D9FB500AC61A8 /* Build configuration list for PBXNativeTarget "DDImage" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50102342269D9FB500AC61A8 /* Debug */,
-				50102343269D9FB500AC61A8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		50CF8E492694848800887FFC /* Build configuration list for PBXProject "DeepDrill" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -1,4 +1,4 @@
-SUBDIRS = Commons DeepDrill DDImage
+SUBDIRS = Commons DeepDrill
 MYCC = g++ -std=c++17 -O3 -Wall -Wfatal-errors
 
 UNAME := $(shell uname)
