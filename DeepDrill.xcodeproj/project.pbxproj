@@ -222,7 +222,7 @@
 			path = util;
 			sourceTree = "<group>";
 		};
-		50BEC721269486D900CCDFA8 /* Profiles2 */ = {
+		50BEC721269486D900CCDFA8 /* profiles */ = {
 			isa = PBXGroup;
 			children = (
 				50BEC722269486E500CCDFA8 /* config.prf */,
@@ -232,10 +232,10 @@
 				50BEC728269486E600CCDFA8 /* thumbnail.prf */,
 				50BEC726269486E600CCDFA8 /* ultra.prf */,
 			);
-			path = Profiles2;
+			path = profiles;
 			sourceTree = "<group>";
 		};
-		50BEC7292694870100CCDFA8 /* Locations2 */ = {
+		50BEC7292694870100CCDFA8 /* locations */ = {
 			isa = PBXGroup;
 			children = (
 				50BEC73F2694872B00CCDFA8 /* Makefile */,
@@ -282,16 +282,16 @@
 				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
 			);
-			path = Locations2;
+			path = locations;
 			sourceTree = "<group>";
 		};
-		50BEC7562694873C00CCDFA8 /* Palettes2 */ = {
+		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
 				50BEC7572694874E00CCDFA8 /* vulcano.prf */,
 				500655EC2695AACB00982789 /* ice.prf */,
 			);
-			path = Palettes2;
+			path = palettes;
 			sourceTree = "<group>";
 		};
 		50CBBF0326A16E8D00EAF4F7 /* bin */ = {
@@ -306,9 +306,9 @@
 			children = (
 				50CBBF0326A16E8D00EAF4F7 /* bin */,
 				5010234A269DDE6D00AC61A8 /* src */,
-				50BEC7292694870100CCDFA8 /* Locations2 */,
-				50BEC721269486D900CCDFA8 /* Profiles2 */,
-				50BEC7562694873C00CCDFA8 /* Palettes2 */,
+				50BEC7292694870100CCDFA8 /* locations */,
+				50BEC721269486D900CCDFA8 /* profiles */,
+				50BEC7562694873C00CCDFA8 /* palettes */,
 				50CF8E4F2694848800887FFC /* Products */,
 			);
 			sourceTree = "<group>";
