@@ -139,7 +139,7 @@
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
 		50EB497526A067850019078C /* Maker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maker.h; sourceTree = "<group>"; };
-		50EB497726A069780019078C /* Commons2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons2.h; sourceTree = "<group>"; };
+		50EB497726A069780019078C /* commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commons.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +158,7 @@
 			children = (
 				5010234B269DDE9C00AC61A8 /* Makefile */,
 				50BEC6F3269486A900CCDFA8 /* config.h */,
+				50EB497726A069780019078C /* commons.h */,
 				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				50BEC70B269486B400CCDFA8 /* util */,
 				5030F11026A1B92C009A53B3 /* math */,
@@ -209,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				50BEC70E269486C100CCDFA8 /* Makefile */,
-				50EB497726A069780019078C /* Commons2.h */,
 				50BEC70F269486C100CCDFA8 /* Types.h */,
 				50BEC70D269486C100CCDFA8 /* Chrono.h */,
 				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
