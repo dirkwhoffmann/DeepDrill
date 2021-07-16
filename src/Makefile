@@ -24,7 +24,7 @@ export MYCC MYINC I_GMP L_GMP
 
 .PHONY: all prebuild subdirs clean
 
-all: prebuild subdirs
+all: prebuild subdirs $(OBJ) deepdrill
 	@echo > /dev/null
 	
 prebuild:
@@ -36,9 +36,15 @@ subdirs:
 		$(MAKE) -C $$dir; \
 	done
 
+%.o: %.cpp $(DEPS)
+	@echo "Compiling $<"
+	@$(MYCC) $(MYINC) -c -o $@ $<
+
 deepdrill: $(OBJ) $(UTILOBJ) $(MATHOBJ)
 	@echo "Linking"
 	@g++ -pthread -o deepdrill */*.o *.o $(MYLPATH) -lgmpxx -lgmp
+	@echo "Installing"
+	@mv deepdrill ../bin
 
 clean:
 	@echo "Cleaning up $(CURDIR)"
