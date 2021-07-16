@@ -153,13 +153,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		501023372696D19400AC61A8 /* Output */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Output;
-			sourceTree = "<group>";
-		};
 		5010234A269DDE6D00AC61A8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,7 +276,6 @@
 				5010234A269DDE6D00AC61A8 /* Source */,
 				50BEC7292694870100CCDFA8 /* Locations */,
 				50BEC721269486D900CCDFA8 /* Profiles */,
-				501023372696D19400AC61A8 /* Output */,
 				50BEC7582694875D00CCDFA8 /* Ressources */,
 				50BEC7562694873C00CCDFA8 /* Palettes */,
 				50CF8E4F2694848800887FFC /* Products */,
