@@ -153,15 +153,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5010234A269DDE6D00AC61A8 /* Source */ = {
+		5010234A269DDE6D00AC61A8 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				5010234B269DDE9C00AC61A8 /* Makefile */,
 				50BEC6F3269486A900CCDFA8 /* config.h */,
+				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				50BEC70B269486B400CCDFA8 /* Commons */,
 				50CF8E502694848800887FFC /* DeepDrill */,
 			);
-			path = Source;
+			path = src;
 			sourceTree = "<group>";
 		};
 		50BEC70B269486B400CCDFA8 /* Commons */ = {
@@ -265,15 +266,22 @@
 		50BEC7582694875D00CCDFA8 /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
-				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 			);
 			path = Ressources;
+			sourceTree = "<group>";
+		};
+		50CBBF0326A16E8D00EAF4F7 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = bin;
 			sourceTree = "<group>";
 		};
 		50CF8E452694848800887FFC = {
 			isa = PBXGroup;
 			children = (
-				5010234A269DDE6D00AC61A8 /* Source */,
+				50CBBF0326A16E8D00EAF4F7 /* bin */,
+				5010234A269DDE6D00AC61A8 /* src */,
 				50BEC7292694870100CCDFA8 /* Locations */,
 				50BEC721269486D900CCDFA8 /* Profiles */,
 				50BEC7582694875D00CCDFA8 /* Ressources */,
@@ -520,7 +528,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
-				CODE_SIGN_ENTITLEMENTS = Ressources/DeepDrill.entitlements;
+				CODE_SIGN_ENTITLEMENTS = src/DeepDrill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -544,7 +552,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
-				CODE_SIGN_ENTITLEMENTS = Ressources/DeepDrill.entitlements;
+				CODE_SIGN_ENTITLEMENTS = src/DeepDrill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
