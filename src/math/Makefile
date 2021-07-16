@@ -1,8 +1,7 @@
-MYFLAGS = -I$(CURDIR) -I$(CURDIR)/Math -I$(CURDIR)/.. -I$(CURDIR)/../Commons
+.PHONY: all clean
+
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
-
-.PHONY: all clean
 
 all: $(OBJ)
 	@echo > /dev/null
@@ -13,4 +12,4 @@ clean:
 
 %.o: %.cpp $(DEPS)
 	@echo "Compiling $<"
-	@$(MYCC) $(MYFLAGS) -c -o $@ $<
+	@$(MYCC) $(MYINC) -c -o $@ $<

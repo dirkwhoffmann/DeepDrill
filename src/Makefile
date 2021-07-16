@@ -1,5 +1,14 @@
-SUBDIRS = Commons DeepDrill
-MYCC = g++ -std=c++17 -O3 -Wall -Wfatal-errors
+SUBDIRS = util math
+MYINC = -I$(CURDIR) -I$(CURDIR)/math -I$(CURDIR)/util
+MYCC = g++ $(MYINC) -std=c++17 -O3 -Wall -Wfatal-errors
+
+SRC=$(wildcard *.cpp)
+MATHSRC=$(wildcard math/*.cpp)
+UTILSRC=$(wildcard math/*.cpp)
+
+OBJ=$(SRC:.cpp=.o)
+MATHOBJ=$(MATHSRC:.cpp=.o)
+UTILOBJ=$(UTILSRC:.cpp=.o)
 
 UNAME := $(shell uname)
 
@@ -11,7 +20,7 @@ I_GMP = -I /usr/local/include
 L_GMP = -L /usr/local/lib
 endif
 
-export MYCC I_GMP L_GMP
+export MYCC MYINC I_GMP L_GMP
 
 .PHONY: all prebuild subdirs clean
 
@@ -26,6 +35,10 @@ subdirs:
 		echo "Entering ${CURDIR}/$$dir"; \
 		$(MAKE) -C $$dir; \
 	done
+
+deepdrill: $(OBJ) $(UTILOBJ) $(MATHOBJ)
+	@echo "Linking"
+	@g++ -pthread -o deepdrill */*.o *.o $(MYLPATH) -lgmpxx -lgmp
 
 clean:
 	@echo "Cleaning up $(CURDIR)"
