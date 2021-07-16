@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "Commons.h"
+#include "commons.h"
 #include "Palette.h"
 
 namespace dd {

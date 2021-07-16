@@ -11,9 +11,8 @@
 
 #pragma once
 
-#include "Commons.h"
+#include "commons.h"
 #include "Coord.h"
-// #include "Options.h"
 
 namespace dd {
 

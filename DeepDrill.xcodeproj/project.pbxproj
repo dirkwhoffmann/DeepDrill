@@ -185,7 +185,6 @@
 				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
 				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
-				50CF8E502694848800887FFC /* DeepDrill */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -328,13 +327,6 @@
 				50CF8E4E2694848800887FFC /* DeepDrill */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		50CF8E502694848800887FFC /* DeepDrill */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DeepDrill;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
