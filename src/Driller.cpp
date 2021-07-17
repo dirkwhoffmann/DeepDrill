@@ -30,6 +30,26 @@ Driller::drill()
     vector<Coord> remaining;
     vector<Coord> glitches;
     
+    if (opt.verbose) {
+        
+        log::cout << log::vspace;
+        log::cout << log::ralign("Center: ");
+        log::cout << opt.center << log::endl;
+        log::cout << log::ralign("Magnification: ");
+        log::cout << opt.zoom << log::endl;
+        log::cout << log::ralign("Pixel delta: ");
+        log::cout << opt.mpfPixelDelta << log::endl;
+        log::cout << log::ralign("Maximum drill depth: ");
+        log::cout << opt.depth << log::endl;
+        log::cout << log::ralign("GMP Precision: ");
+        log::cout << mpf_get_default_prec() << " Bit" << log::endl;
+        log::cout << log::ralign("Perturbation tolerance: ");
+        log::cout << opt.perturbationTolerance << log::endl;
+        log::cout << log::ralign("Max rounds: ");
+        log::cout << opt.maxRounds << log::endl;
+        log::cout << log::vspace;
+    }
+    
     // Allcoate the drill map
     map.resize(opt.width, opt.height);
     
@@ -99,9 +119,7 @@ Driller::drill()
             log::cout << log::ralign("Glitches: ");
             log::cout << glitches.size() << log::endl;
             log::cout << log::vspace;
-        }
-        
-        log::cout << log::endl;
+        }        
     }
 }
 

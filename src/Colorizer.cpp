@@ -58,7 +58,7 @@ Colorizer::colorize(Coord c)
 void
 Colorizer::save(const string &path)
 {
-    ProgressIndicator progress("Saving image");
+    ProgressIndicator progress("Saving image data");
     
     std::ofstream os;
     

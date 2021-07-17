@@ -96,6 +96,7 @@ Options::initialize(map <string,string> &keys)
         
     deriveVariables();
     
+    /*
     if (verbose) {
         
         log::cout << log::vspace;
@@ -138,6 +139,7 @@ Options::initialize(map <string,string> &keys)
         log::cout << mpf_get_default_prec() << log::endl;
         log::cout << log::vspace;
     }
+    */
 }
 
 const string *

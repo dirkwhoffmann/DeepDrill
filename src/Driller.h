@@ -21,8 +21,6 @@
 namespace dd {
 
 class Driller {
-
-    friend class Application;
     
     // Configuration options
     const class Options &opt;

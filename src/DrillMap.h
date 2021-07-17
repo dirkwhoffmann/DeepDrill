@@ -25,17 +25,21 @@ class DrillMap {
   
 public:
     
+    // Configuration options
+    const class Options &opt;
+
+    // Image dimensions
     isize width = 0;
     isize height = 0;
+    
+    // Yet unused
     double logBailout = 0;
 
     MapEntry *data = nullptr;
 
 public:
     
-    DrillMap() { };
-    DrillMap(isize w, isize h);
-    DrillMap(const string &path) throws;
+    DrillMap(const Options &options);
     
     void load(const string &path) throws;
     void resize(isize w, isize h);

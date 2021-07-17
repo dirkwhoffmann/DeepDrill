@@ -33,7 +33,7 @@ Application::main(std::vector <string> &args)
 
     log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
     log::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
-    log::cout << log::endl;
+    log::cout << log::endl << log::endl;
 
     // Setup the GMP library
     setupGmp(keys);
@@ -52,6 +52,8 @@ Application::main(std::vector <string> &args)
 void
 Application::runPipeline(Options &opt)
 {
+    DrillMap drillMap(opt);
+    
     // Is the input a map file? If yes, load it from disk
     if (opt.mapFileIn != "") {
         drillMap.load(opt.mapFileIn);

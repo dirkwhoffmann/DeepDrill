@@ -11,18 +11,15 @@
 
 #include "config.h"
 #include "DrillMap.h"
+#include "Logger.h"
+#include "Options.h"
 #include "ProgressIndicator.h"
 
 namespace dd {
 
-DrillMap::DrillMap(isize w, isize h)
+DrillMap::DrillMap(const Options &o) : opt(o)
 {
-    resize(w, h);
-}
-
-DrillMap::DrillMap(const string &path)
-{
-    load(path);
+    
 }
 
 void
@@ -53,6 +50,16 @@ DrillMap::load(const string &path)
 
             set(x, y, MapEntry { iteration, lognorm });
         }
+    }
+    
+    progress.done();
+    
+    if (opt.verbose) {
+        
+        log::cout << log::vspace;
+        log::cout << log::ralign("Image size: ");
+        log::cout << "(" << width << "," << height << ")" << log::endl;
+        log::cout << log::vspace;
     }
 }
 

@@ -27,7 +27,7 @@ class Application {
     std::vector <string> outputs;
     
     // The drill map
-    DrillMap drillMap;
+    // DrillMap drillMap;
         
 public:
         
