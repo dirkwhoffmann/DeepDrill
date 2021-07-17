@@ -30,23 +30,33 @@ Application::main(std::vector <string> &args)
     readInputs(keys);
     readOutputs(keys);
     readProfiles(keys);
-    
-    std::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
-    std::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
-    std::cout << std::endl << std::endl;
-        
+
+    log << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
+    log << " - (C)opyright 2021 Dirk W. Hoffmann";
+    log << log::endl;
+
     // Setup the GMP library
     setupGmp(keys);
 
     // Parse all options
     Options opt(keys);
-
-    std::cout << "mapFileIn" << opt.mapFileIn << std::endl;
-    std::cout << "mapFileOut" << opt.mapFileOut << std::endl;
-    std::cout << "tifFileOut" << opt.tifFileOut << std::endl;
     
+    // Execute the drill pipeline
+    Clock stopWatch;
+    runPipeline(opt);
+    auto elapsed = stopWatch.stop();
+
+    std::cout << std::endl << "Total time: " << elapsed;
+    std::cout << std::endl << std::endl;
+}
+
+void
+Application::runPipeline(Options &opt)
+{
     // Is the input a map file? If yes, load it from disk
-    if (opt.mapFileIn != "") drillMap.load(opt.mapFileIn);
+    if (opt.mapFileIn != "") {
+        drillMap.load(opt.mapFileIn);
+    }
     
     // If not, compute the drill map
     if (opt.mapFileIn == "") {

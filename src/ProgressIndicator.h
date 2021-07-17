@@ -28,6 +28,9 @@ class ProgressIndicator {
     // Stop watch
     Clock clock;
     
+    // Verbosity level
+    int verbose;
+    
     
     //
     // Methods
@@ -39,11 +42,11 @@ public:
     ~ProgressIndicator();
 
     void step(isize delta = 1);
+    void done(const string &info = "");
 
 private:
     
     void init(const string &description, isize max = 100);
-    void done(const string &info = "");
 };
 
 }

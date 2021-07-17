@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "DrillMap.h"
+#include "ProgressIndicator.h"
 
 namespace dd {
 
@@ -29,6 +30,8 @@ DrillMap::load(const string &path)
 {
     std::ifstream os(path.c_str(), std::ios::binary);
     if (!os.is_open()) throw Exception("Failed to open file " + path);
+ 
+    ProgressIndicator progress("Loading map file");
 
     // Read header
     os.read((char *)&width, sizeof(width));
@@ -83,8 +86,8 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
 void
 DrillMap::save(const string &path)
 {
-    printf("DrillMap::save(%s)\n", path.c_str());
-    
+    ProgressIndicator progress("Saving map file");
+        
     std::ofstream os(path.c_str(), std::ios::binary);
     if (!os.is_open()) throw Exception("Failed to write file " + path);
     save(os);
@@ -97,8 +100,6 @@ DrillMap::save(std::ostream &os)
     os.write((char *)&width, sizeof(width));
     os.write((char *)&height, sizeof(height));
     os.write((char *)&logBailout, sizeof(logBailout));
-
-    printf("save: width = %zd height = %zd\n", width, height);
 
     // Write data
     for (int y = 0; y < height; y++) {

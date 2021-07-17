@@ -33,6 +33,8 @@ ProgressIndicator::init(const string &description, isize max)
     dots = 0;
     dotsMax = 33;
  
+    verbose = 1;
+    
     std::cout << std::right << std::setw(30) << (description + ": ");
     clock.restart();
 }
@@ -40,6 +42,8 @@ ProgressIndicator::init(const string &description, isize max)
 void
 ProgressIndicator::step(isize delta)
 {
+    if (verbose == 0) return;
+    
     progress += delta;
 
     isize newDots = dotsMax * progress / progressMax;
@@ -50,6 +54,8 @@ ProgressIndicator::step(isize delta)
 void
 ProgressIndicator::done(const string &info)
 {
+    if (verbose == 0) return;
+
     auto elapsed = clock.stop();
         
     for (; dots < dotsMax; dots++) { std::cout << "."; } std::cout << " ";
@@ -57,6 +63,8 @@ ProgressIndicator::done(const string &info)
     
     if (info != "") std::cout << " (" << info << ")";
     std::cout << std::endl;
+    
+    verbose = 0;
 }
 
 }

@@ -14,6 +14,7 @@
 #include "Coord.h"
 #include "DrillMap.h"
 #include "Options.h"
+#include "ProgressIndicator.h"
 
 namespace dd {
 
@@ -33,10 +34,14 @@ Colorizer::~Colorizer()
 void
 Colorizer::colorize()
 {
+    ProgressIndicator progress("Colorizing", map.height * map.width);
+    
     for (isize y = 0; y < map.height; y++) {
+        
         for (isize x = 0; x < map.width; x++) {
             colorize(Coord(x,y));
         }
+        progress.step(map.width);
     }
 }
 
@@ -51,7 +56,9 @@ Colorizer::colorize(Coord c)
 
 void
 Colorizer::save(const string &path)
-{    
+{
+    ProgressIndicator progress("Saving image");
+    
     std::ofstream os;
     
     isize width = map.width;
@@ -60,11 +67,6 @@ Colorizer::save(const string &path)
     // Assemble the target file names
     string rawFile = stripSuffix(path) + ".raw";
     string tifFile = path;
-    
-    /*
-    std::cout << "rawFile: " << rawFile << std::endl;
-    std::cout << "tifFile: " << tifFile << std::endl;
-    */
     
     // Open an output stream
     os.open(rawFile.c_str());
@@ -81,19 +83,34 @@ Colorizer::save(const string &path)
         }
     }
     os.close();
+    progress.done();
+
+    ProgressIndicator progress2("Converting to TIFF");
     
     // Convert raw data into a TIFF file
-    string cmd = "/usr/local/bin/raw2tiff";
-    cmd += " -p rgb -b 3";
-    cmd += " -w " + std::to_string(width);
-    cmd += " -l " + std::to_string(height);
-    cmd += " " + rawFile + " " + tifFile;
+    string exec = "/usr/local/bin/raw2tiff";
+    string options = "-p rgb -b 3";
+    options += " -w " + std::to_string(width);
+    options += " -l " + std::to_string(height);
+    string command = exec + " " + options + " " + rawFile + " " + tifFile;
     
-    std::cout << "Executing " << cmd << std::endl;
-
     // std::cout << "Executing " << cmd << std::endl;
-    if (system(cmd.c_str()) != 0) {
-        std::cout << "Failed to execute " << cmd << std::endl;
+    if (system(command.c_str()) != 0) {
+        throw Exception("Failed to execute " + command);
+    }
+    progress2.done();
+    
+    if (opt.verbose) {
+        
+        std::cout << std::endl;
+        std::cout << RALIGN << "Input: ";
+        std::cout << rawFile << std::endl;
+        std::cout << RALIGN << "Output: ";
+        std::cout << tifFile << std::endl;
+        std::cout << RALIGN << "Converter: ";
+        std::cout << exec << std::endl;
+        std::cout << RALIGN << "Options: ";
+        std::cout << options << std::endl;
     }
 }
 

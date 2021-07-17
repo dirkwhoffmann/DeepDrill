@@ -13,6 +13,7 @@
 
 #include "commons.h"
 #include "DrillMap.h"
+#include "Logger.h"
 
 namespace dd {
 
@@ -26,12 +27,18 @@ class Application {
     // The drill map
     DrillMap drillMap;
     
+    // Textual IO
+    Logger log;
+    
 public:
         
     // Main entry point
     void main(std::vector <string> &args) throws;
     
 private:
+    
+    // Executes the drill pipeline
+    void runPipeline(class Options &opt);
     
     // Helper methods for parsing command line arguments
     void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;

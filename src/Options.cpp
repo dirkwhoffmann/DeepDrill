@@ -62,12 +62,8 @@ Options::initialize(map <string,string> &keys)
         if (auto value = lookupKey(keys, key, "320")) {
             height = stoi(*value);
         }
-        key = "image.rotate";
-        if (auto value = lookupKey(keys, key, "0.0")) {
-            rotate = stod(*value);
-        }
         key = "palette.values";
-        if (auto value = lookupKey(keys, key)) {
+        if (auto value = lookupKey(keys, key, "")) {
             palette = *value;
         }
         key = "perturbation.tolerance";
@@ -103,8 +99,18 @@ Options::initialize(map <string,string> &keys)
         
         static int align = 30;
         
-        std::cout << std::right << std::setw(align) << "Map file: ";
-        std::cout << mapFileIn << std::endl;
+        if (mapFileIn != "") {
+            std::cout << std::right << std::setw(align) << "Input map file: ";
+            std::cout << mapFileIn << std::endl;
+        }
+        if (mapFileOut != "") {
+            std::cout << std::right << std::setw(align) << "Output map: ";
+            std::cout << mapFileOut << std::endl;
+        }
+        if (tifFileOut != "") {
+            std::cout << std::right << std::setw(align) << "Image file: ";
+            std::cout << tifFileOut << std::endl;
+        }
         std::cout << std::right << std::setw(align) << "Real: ";
         std::cout << real << std::endl;
         std::cout << std::right << std::setw(align) << "Imag: ";
@@ -113,20 +119,16 @@ Options::initialize(map <string,string> &keys)
         std::cout << zoom << std::endl;
         std::cout << std::right << std::setw(align) << "Depth: ";
         std::cout << depth << std::endl;
-        std::cout << std::right << std::setw(align) << "Width: ";
+        std::cout << std::right << std::setw(align) << "Image Width: ";
         std::cout << width << std::endl;
-        std::cout << std::right << std::setw(align) << "Height: ";
+        std::cout << std::right << std::setw(align) << "Image Height: ";
         std::cout << height << std::endl;
-        std::cout << std::right << std::setw(align) << "Rotate: ";
-        std::cout << rotate << std::endl;
         std::cout << std::right << std::setw(align) << "Perturbation tolerance: ";
         std::cout << perturbationTolerance << std::endl;
         std::cout << std::right << std::setw(align) << "Max rounds: ";
         std::cout << maxRounds << std::endl;
         std::cout << std::right << std::setw(align) << "Coefficients: ";
         std::cout << numCoefficients << std::endl;
-        std::cout << std::right << std::setw(align) << "Rotate: ";
-        std::cout << rotate << std::endl;
 
         std::cout << std::right << std::setw(align) << "Center: ";
         std::cout << center << std::endl;

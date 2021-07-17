@@ -11,6 +11,7 @@
 		50102346269DBEF000AC61A8 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
 		50102349269DC4F500AC61A8 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		50102352269EC70200AC61A8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
+		5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
@@ -52,6 +53,8 @@
 		5010234B269DDE9C00AC61A8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		50102350269EC70200AC61A8 /* DrillMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DrillMap.cpp; sourceTree = "<group>"; };
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
+		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EE269486A800CCDFA8 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 				50BEC700269486AA00CCDFA8 /* Application.cpp */,
 				50BEC6FD269486A900CCDFA8 /* Options.h */,
 				50BEC6FA269486A900CCDFA8 /* Options.cpp */,
+				5030F11326A2BCCF009A53B3 /* Logger.h */,
+				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
 				50EB497526A067850019078C /* Maker.h */,
 				50EB497426A067850019078C /* Maker.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
@@ -378,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50BEC709269486AA00CCDFA8 /* ReferencePoint.cpp in Sources */,
+				5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */,
 				50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */,
 				50BEC70A269486AA00CCDFA8 /* Application.cpp in Sources */,
 				50EB497626A067850019078C /* Maker.cpp in Sources */,

@@ -53,9 +53,6 @@ public:
     isize width;
     isize height;
     
-    // Rotation angle (not supported yet)
-    double rotate;
-
     // Color palette
     string palette;
 

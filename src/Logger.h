@@ -1,5 +1,6 @@
 // -----------------------------------------------------------------------------
 // This file is part of DeepDrill
+//
 // A Mandelbrot generator based on perturbation and series approximation
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
@@ -14,31 +15,30 @@
 
 namespace dd {
 
-class Palette {
+class Logger {
 
-    // The Default palette
-    static const string defaultPalette;
-    
-    // Configuration options
-    const class Options &opt;
-    
-    // The color table
-    vector <u32> colors;
-    
-    
-    //
-    // Initialization
-    //
+    // Blank line counter
+    isize blanks = 0;
 
 public:
+
+    // Wrapper structures
+    struct Endl { };
+    struct VSpace { };
     
-    Palette(const Options &options);
-            
-    // Initializes the color table
-    void init(string values);
-    
-    // Translates an iteration count into a color
-    u32 colorize(isize depth) const;
+    // static constexpr Endl endl;
+    // static constexpr VSpace vspace;
+
+    Logger& operator<<(const string &arg);
+    Logger& operator<<(const isize &arg);
+    Logger& operator<<(const Endl &arg);
+    Logger& operator<<(const VSpace &arg);
 };
+
+namespace log {
+
+    static constexpr Logger::Endl endl;
+    static constexpr Logger::VSpace vspace;
+}
 
 }

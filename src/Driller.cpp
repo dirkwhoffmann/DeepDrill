@@ -48,7 +48,7 @@ Driller::drill()
         // Exit if enough pixels have been computed
         if ((isize)remaining.size() <= allowedBadPixels) break;
         
-        std::cout << std::endl << "Round " << round << ": ";
+        std::cout << "Round " << round << ": ";
         std::cout << remaining.size() << " points" << std::endl << std::endl;
                 
         // Select a reference point
@@ -99,12 +99,9 @@ Driller::drill()
             std::cout << glitches.size() << std::endl;
             std::cout << std::endl;
         }
+        
+        std::cout << std::endl;
     }
-    
-    auto elapsed = stopWatch.stop();
-    // map.saveImage();
-
-    std::cout << std::endl << "Total time: " << elapsed << std::endl;
 }
 
 ReferencePoint
