@@ -98,47 +98,45 @@ Options::initialize(map <string,string> &keys)
     
     if (verbose) {
         
-        // log << log::vspace;
-        
-        static int align = 30;
-        
+        log::cout << log::vspace;
         if (mapFileIn != "") {
-            std::cout << std::right << std::setw(align) << "Input map file: ";
-            std::cout << mapFileIn << std::endl;
+            log::cout << log::ralign("Input map file: ");
+            log::cout << mapFileIn << log::endl;
         }
         if (mapFileOut != "") {
-            std::cout << std::right << std::setw(align) << "Output map: ";
-            std::cout << mapFileOut << std::endl;
+            log::cout << log::ralign("Output map: ");
+            log::cout << mapFileOut << log::endl;
         }
         if (tifFileOut != "") {
-            std::cout << std::right << std::setw(align) << "Image file: ";
-            std::cout << tifFileOut << std::endl;
+            log::cout << log::ralign("Image file: ");
+            log::cout << tifFileOut << log::endl;
         }
-        std::cout << std::right << std::setw(align) << "Real: ";
-        std::cout << real << std::endl;
-        std::cout << std::right << std::setw(align) << "Imag: ";
-        std::cout << imag << std::endl;
-        std::cout << std::right << std::setw(align) << "Zoom: ";
-        std::cout << zoom << std::endl;
-        std::cout << std::right << std::setw(align) << "Depth: ";
-        std::cout << depth << std::endl;
-        std::cout << std::right << std::setw(align) << "Image Width: ";
-        std::cout << width << std::endl;
-        std::cout << std::right << std::setw(align) << "Image Height: ";
-        std::cout << height << std::endl;
-        std::cout << std::right << std::setw(align) << "Perturbation tolerance: ";
-        std::cout << perturbationTolerance << std::endl;
-        std::cout << std::right << std::setw(align) << "Max rounds: ";
-        std::cout << maxRounds << std::endl;
-        std::cout << std::right << std::setw(align) << "Coefficients: ";
-        std::cout << numCoefficients << std::endl;
+        log::cout << log::ralign("Real: ");
+        log::cout << real << log::endl;
+        log::cout << log::ralign("Imag: ");
+        log::cout << imag << log::endl;
+        log::cout << log::ralign("Zoom: ");
+        log::cout << zoom << log::endl;
+        log::cout << log::ralign("Depth: ");
+        log::cout << depth << log::endl;
+        log::cout << log::ralign("Image Width: ");
+        log::cout << width << log::endl;
+        log::cout << log::ralign("Image Height: ");
+        log::cout << height << log::endl;
+        log::cout << log::ralign("Perturbation tolerance: ");
+        log::cout << perturbationTolerance << log::endl;
+        log::cout << log::ralign("Max rounds: ");
+        log::cout << maxRounds << log::endl;
+        log::cout << log::ralign("Coefficients: ");
+        log::cout << numCoefficients << log::endl;
 
-        std::cout << std::right << std::setw(align) << "Center: ";
-        std::cout << center << std::endl;
-        std::cout << std::right << std::setw(align) << "Pixel delta: ";
-        std::cout << mpfPixelDelta << std::endl;
-        std::cout << std::right << std::setw(align) << "Precision: ";
-        std::cout << mpf_get_default_prec() << std::endl;
+        log::cout << log::ralign("Center: ");
+        log::cout << center << log::endl;
+        log::cout << log::ralign("Pixel delta: ");
+        log::cout << mpfPixelDelta << log::endl;
+        log::cout << log::ralign("Precision: ");
+        log::cout << mpf_get_default_prec() << log::endl;
+        log::cout << log::vspace;
     }
 }
 

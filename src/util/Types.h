@@ -60,8 +60,6 @@ using std::map;
 // typedef struct { i16 x; i16 y; } Coord;
 typedef struct { i16 width; i16 height; } Size;
 
-#define RALIGN std::right << std::setw(30)
-
 
 //
 // Syntactic sugar

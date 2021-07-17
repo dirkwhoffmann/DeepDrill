@@ -11,6 +11,7 @@
 
 #include "Application.h"
 
+using namespace dd;
 
 int main(int argc, char *argv[])
 {
@@ -26,18 +27,18 @@ int main(int argc, char *argv[])
 
     } catch (dd::SyntaxError &e) {
                 
-        std::cout << "Syntax: " << dd::extractName(string(argv[0]));
-        std::cout << " [-v] [-p <profile>] -o <output> <input>";
-        std::cout << std::endl;
+        log::cout << "Syntax: " << dd::extractName(string(argv[0]));
+        log::cout << " [-v] [-p <profile>] -o <output> <input>";
+        log::cout << log::endl;
         
         if (!e.description.empty()) {
-            std::cout << e.what() << std::endl;
+            log::cout << e.what() << log::endl;
         }
         return 1;
 
     } catch (std::exception &e) {
         
-        std::cout << e.what() << std::endl;
+        log::cout << e.what() << log::endl;
         return 1;
     }
     

@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "ProgressIndicator.h"
+#include "Logger.h"
 
 namespace dd {
 
@@ -35,7 +36,7 @@ ProgressIndicator::init(const string &description, isize max)
  
     verbose = 1;
     
-    std::cout << std::right << std::setw(30) << (description + ": ");
+    log::cout << log::ralign(description + ": ");
     clock.restart();
 }
 
@@ -47,8 +48,8 @@ ProgressIndicator::step(isize delta)
     progress += delta;
 
     isize newDots = dotsMax * progress / progressMax;
-    for (; dots < newDots; dots++) { std::cout << "."; }
-    std::cout.flush();
+    for (; dots < newDots; dots++) { log::cout << "."; }
+    log::cout << log::flush;
 }
 
 void
@@ -58,11 +59,11 @@ ProgressIndicator::done(const string &info)
 
     auto elapsed = clock.stop();
         
-    for (; dots < dotsMax; dots++) { std::cout << "."; } std::cout << " ";
-    std::cout << elapsed << " sec";
+    for (; dots < dotsMax; dots++) { log::cout << "."; } log::cout << " ";
+    log::cout << elapsed << " sec";
     
-    if (info != "") std::cout << " (" << info << ")";
-    std::cout << std::endl;
+    if (info != "") log::cout << " (" << info << ")";
+    log::cout << log::endl;
     
     verbose = 0;
 }

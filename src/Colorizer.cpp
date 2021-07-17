@@ -13,6 +13,7 @@
 #include "Colorizer.h"
 #include "Coord.h"
 #include "DrillMap.h"
+#include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
 
@@ -94,7 +95,6 @@ Colorizer::save(const string &path)
     options += " -l " + std::to_string(height);
     string command = exec + " " + options + " " + rawFile + " " + tifFile;
     
-    // std::cout << "Executing " << cmd << std::endl;
     if (system(command.c_str()) != 0) {
         throw Exception("Failed to execute " + command);
     }
@@ -102,15 +102,15 @@ Colorizer::save(const string &path)
     
     if (opt.verbose) {
         
-        std::cout << std::endl;
-        std::cout << RALIGN << "Input: ";
-        std::cout << rawFile << std::endl;
-        std::cout << RALIGN << "Output: ";
-        std::cout << tifFile << std::endl;
-        std::cout << RALIGN << "Converter: ";
-        std::cout << exec << std::endl;
-        std::cout << RALIGN << "Options: ";
-        std::cout << options << std::endl;
+        log::cout << log::vspace;
+        log::cout << log::ralign("Input: ");
+        log::cout << rawFile << log::endl;
+        log::cout << log::ralign("Output: ");
+        log::cout << tifFile << log::endl;
+        log::cout << log::ralign("Converter: ");
+        log::cout << exec << log::endl;
+        log::cout << log::ralign("Options: ");
+        log::cout << options << log::vspace;
     }
 }
 

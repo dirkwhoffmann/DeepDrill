@@ -20,11 +20,13 @@ namespace log {
 // Wrapper structures
 struct Endl { };
 struct VSpace { };
+struct Flush { };
 struct ralign { string str; ralign(const string s) : str(s) { } };
 
 // Constants
 static constexpr Endl endl;
 static constexpr VSpace vspace;
+static constexpr Flush flush;
 
 }
 
@@ -37,10 +39,16 @@ public:
 
     Logger& operator<<(const log::Endl &arg);
     Logger& operator<<(const log::VSpace &arg);
+    Logger& operator<<(const log::Flush &arg);
     Logger& operator<<(const log::ralign &arg);
     Logger& operator<<(const string &arg);
     Logger& operator<<(const isize &arg);
     Logger& operator<<(const Time &arg);
+    Logger& operator<<(const class Coord &arg);
+    Logger& operator<<(const StandardComplex& arg);
+    Logger& operator<<(const ExtendedDouble& arg);
+    Logger& operator<<(const ExtendedComplex& arg);
+    Logger& operator<<(const PrecisionComplex& arg);
 };
 
 // Default logger object

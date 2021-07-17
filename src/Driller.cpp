@@ -12,6 +12,7 @@
 #include "config.h"
 #include "Driller.h"
 #include "Colorizer.h"
+#include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
 
@@ -48,8 +49,8 @@ Driller::drill()
         // Exit if enough pixels have been computed
         if ((isize)remaining.size() <= allowedBadPixels) break;
         
-        std::cout << "Round " << round << ": ";
-        std::cout << remaining.size() << " points" << std::endl << std::endl;
+        log::cout << "Round " << round << ": ";
+        log::cout << remaining.size() << " points" << log::endl << log::endl;
                 
         // Select a reference point
         ref = pickReference(glitches);
@@ -59,12 +60,12 @@ Driller::drill()
         
         if (opt.verbose) {
             
-            std::cout << std::endl;
-            std::cout << RALIGN << "Reference point: ";
-            std::cout << ref.coord << std::endl;
-            std::cout << RALIGN << "Depth: ";
-            std::cout << ref.xn.size() << std::endl;
-            std::cout << std::endl;
+            log::cout << log::vspace;
+            log::cout << log::ralign("Reference point: ");
+            log::cout << ref.coord << log::endl;
+            log::cout << log::ralign("Depth: ");
+            log::cout << ref.xn.size() << log::endl;
+            log::cout << log::vspace;
         }
         
         // If series approximation is enabled...
@@ -81,10 +82,10 @@ Driller::drill()
             
             if (opt.verbose) {
                 
-                std::cout << std::endl;
-                std::cout << RALIGN << "Skippable iterations: ";
-                std::cout << ref.skipped << std::endl;
-                std::cout << std::endl;
+                log::cout << log::vspace;
+                log::cout << log::ralign("Skippable iterations: ");
+                log::cout << ref.skipped << log::endl;
+                log::cout << log::vspace;
             }
         }
 
@@ -94,13 +95,13 @@ Driller::drill()
         
         if (opt.verbose) {
             
-            std::cout << std::endl;
-            std::cout << RALIGN << "Glitches: ";
-            std::cout << glitches.size() << std::endl;
-            std::cout << std::endl;
+            log::cout << log::vspace;
+            log::cout << log::ralign("Glitches: ");
+            log::cout << glitches.size() << log::endl;
+            log::cout << log::vspace;
         }
         
-        std::cout << std::endl;
+        log::cout << log::endl;
     }
 }
 
@@ -245,7 +246,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         // Perform the escape check
         if (norm >= 256) {
             // map.setPixel(point, palette, iteration, norm);
-            map.set(point.x, point.y, MapEntry { (u32)iteration, (float)log(norm) });
+            map.set(point.x, point.y, MapEntry { (u32)iteration, (float)::log(norm) });
             return;
         }
     }
