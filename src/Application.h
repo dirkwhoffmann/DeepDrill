@@ -18,7 +18,9 @@
 namespace dd {
 
 class Application {
-        
+    
+    // static Logger log;
+
     // Extracted command line arguments
     std::vector <string> profiles;
     std::vector <string> inputs;
@@ -26,10 +28,7 @@ class Application {
     
     // The drill map
     DrillMap drillMap;
-    
-    // Textual IO
-    Logger log;
-    
+        
 public:
         
     // Main entry point

@@ -31,9 +31,9 @@ Application::main(std::vector <string> &args)
     readOutputs(keys);
     readProfiles(keys);
 
-    log << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
-    log << " - (C)opyright 2021 Dirk W. Hoffmann";
-    log << log::endl;
+    log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
+    log::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
+    log::cout << log::endl;
 
     // Setup the GMP library
     setupGmp(keys);
@@ -46,8 +46,7 @@ Application::main(std::vector <string> &args)
     runPipeline(opt);
     auto elapsed = stopWatch.stop();
 
-    std::cout << std::endl << "Total time: " << elapsed;
-    std::cout << std::endl << std::endl;
+    log::cout << log::vspace << "Total time: " << elapsed << log::endl;
 }
 
 void

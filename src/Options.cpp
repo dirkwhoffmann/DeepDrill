@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "Options.h"
+#include "Logger.h"
 
 namespace dd {
 
@@ -96,6 +97,8 @@ Options::initialize(map <string,string> &keys)
     deriveVariables();
     
     if (verbose) {
+        
+        // log << log::vspace;
         
         static int align = 30;
         

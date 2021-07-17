@@ -15,6 +15,29 @@
 namespace dd {
 
 Logger&
+Logger::operator<<(const log::Endl &arg)
+{
+    blanks++;
+    std::cout << std::endl;
+    return *this;
+}
+
+Logger&
+Logger::operator<<(const log::VSpace &arg)
+{
+    if (blanks < 2) *this << log::endl;
+    if (blanks < 2) *this << log::endl;
+    return *this;
+}
+
+Logger&
+Logger::operator<<(const log::ralign &arg)
+{
+    std::cout << std::right << std::setw(30) << arg.str;
+    return *this;
+}
+
+Logger&
 Logger::operator<<(const string &arg)
 {
     blanks = 0;
@@ -31,19 +54,12 @@ Logger::operator<<(const isize &arg)
 }
 
 Logger&
-Logger::operator<<(const Endl &arg)
+Logger::operator<<(const Time &arg)
 {
-    blanks++;
-    std::cout << std::endl;
+    blanks = 0;
+    std::cout << arg;
     return *this;
 }
 
-Logger&
-Logger::operator<<(const VSpace &arg)
-{
-    if (blanks < 2) *this << log::endl;
-    if (blanks < 2) *this << log::endl;
-    return *this;
-}
-
+    Logger log::cout;
 }

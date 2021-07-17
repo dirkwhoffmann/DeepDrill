@@ -15,6 +15,19 @@
 
 namespace dd {
 
+namespace log {
+
+// Wrapper structures
+struct Endl { };
+struct VSpace { };
+struct ralign { string str; ralign(const string s) : str(s) { } };
+
+// Constants
+static constexpr Endl endl;
+static constexpr VSpace vspace;
+
+}
+
 class Logger {
 
     // Blank line counter
@@ -22,23 +35,17 @@ class Logger {
 
 public:
 
-    // Wrapper structures
-    struct Endl { };
-    struct VSpace { };
-    
-    // static constexpr Endl endl;
-    // static constexpr VSpace vspace;
-
+    Logger& operator<<(const log::Endl &arg);
+    Logger& operator<<(const log::VSpace &arg);
+    Logger& operator<<(const log::ralign &arg);
     Logger& operator<<(const string &arg);
     Logger& operator<<(const isize &arg);
-    Logger& operator<<(const Endl &arg);
-    Logger& operator<<(const VSpace &arg);
+    Logger& operator<<(const Time &arg);
 };
 
+// Default logger object
 namespace log {
-
-    static constexpr Logger::Endl endl;
-    static constexpr Logger::VSpace vspace;
+    extern class Logger cout;
 }
 
 }
