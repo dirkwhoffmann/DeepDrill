@@ -23,6 +23,16 @@ Options::initialize()
 
     try {
 
+        key = "input";
+        if (auto value = lookupKey(key, "")) {
+            input = *value;
+        }
+        key = "output";
+        if (auto value = lookupKey(key, "")) {
+            output = *value;
+        }
+
+        /*
         key = "locfilein";
         if (auto value = lookupKey(key, "")) {
             locFileIn = *value;
@@ -43,6 +53,7 @@ Options::initialize()
         if (auto value = lookupKey(key, "")) {
             targetDir = *value;
         }
+        */
         key = "verbose";
         if (auto value = lookupKey(key, "0")) {
             verbose = stoi(*value);
@@ -144,16 +155,15 @@ Options::deriveVariables()
 Format
 Options::deriveFormat(const string &path)
 {
-    if (isDirectory(path)) return DIR;
+    if (isDirectory(path)) return Format::DIR;
 
     auto suffix = extractSuffix(path);
-    if (suffix == "loc") return LOC;
-    if (suffix == "map") return MAP;
-    if (suffix == "prf") return PRF;
-    if (suffix == "tif") return TIF;
-    if (suffix == "tiff") return TIF;
+    if (suffix == "loc") return Format::LOC;
+    if (suffix == "map") return Format::MAP;
+    if (suffix == "prf") return Format::PRF;
+    if (suffix == "tif" || suffix == "tiff") return Format::TIF;
     
-    return NONE;
+    return Format::NONE;
 }
 
 }

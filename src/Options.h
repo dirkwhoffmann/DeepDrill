@@ -15,7 +15,7 @@
 
 namespace dd {
 
-enum Format { NONE, LOC, MAP, PRF, DIR, TIF };
+enum class Format { NONE, LOC, MAP, PRF, DIR, TIF };
 
 struct MissingKeyException : std::runtime_error {
     using std::runtime_error::runtime_error;
@@ -27,7 +27,7 @@ struct InvalidValueException : std::runtime_error {
 struct Options {
 
     //
-    // Key-value pairs (orginal)
+    // Key-value pairs (unparsed)
     //
     
     map<string,string> keys;
@@ -39,13 +39,7 @@ struct Options {
     
     string input;
     string output;
-    
-    string locFileIn;
-    string mapFileIn;
-    string mapFileOut;
-    string tifFileOut;
-    string targetDir;
-    
+        
     //
     // Location parameters
     //
@@ -111,8 +105,8 @@ struct Options {
     //
     
     // Format of the specified input and output files
-    Format inputFormat = NONE;
-    Format outputFormat = NONE;
+    Format inputFormat = Format::NONE;
+    Format outputFormat = Format::NONE;
 
     // The center coordinate
     PrecisionComplex center;

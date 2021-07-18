@@ -18,10 +18,12 @@ namespace dd {
 
 Maker::Maker(map<string,string> &k, const Options &o) : keys(k), opt(o)
 {
-    project = stripSuffix(stripPath(opt.locFileIn));
-    pathLoc = appendPath(opt.targetDir, project + ".loc");
-    pathPrf = appendPath(opt.targetDir, project + ".prf");
-    pathMakefile = appendPath(opt.targetDir, "Makefile");
+    auto path = std::filesystem::path(opt.output);
+    
+    project = stripSuffix(stripPath(opt.input));
+    pathLoc = path / (project + ".loc");
+    pathPrf = path / (project + ".prf");
+    pathMakefile = path / "Makefile";
 
     log::cout << "pathLoc = " << pathLoc << log::endl;
     log::cout << "pathPrf = " << pathPrf << log::endl;

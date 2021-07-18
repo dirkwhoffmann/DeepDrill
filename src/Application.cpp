@@ -58,31 +58,35 @@ void
 Application::runPipeline(Options &opt)
 {
     DrillMap drillMap(opt);
-    
-    // Is the input a map file? If yes, load it from disk
-    if (opt.mapFileIn != "") {
+
+    std::cout << "Input format = " << (int)opt.inputFormat << std::endl;
+    std::cout << "Output format = " << (int)opt.outputFormat << std::endl;
+
+    if (opt.inputFormat == Format::MAP) {
         
-        drillMap.load(opt.mapFileIn);
-    }
+        // Load the drill map from disk
+        drillMap.load(opt.input);
+
+    } else {
     
-    // If not, compute the drill map
-    if (opt.mapFileIn == "") {
-        
-        // Run the driller
+        // Compute the drill map
         Driller driller(opt, drillMap);
         driller.drill();
     }
     
     // Are we supposed to save the map file?
-    if (opt.mapFileOut != "") drillMap.save(opt.mapFileOut);
+    if (opt.outputFormat == Format::MAP) {
+        
+        drillMap.save(opt.output);
+    }
     
     // Are we suppoed to create an image file?
-    if (opt.tifFileOut != "") {
+    if (opt.outputFormat == Format::TIF) {
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);
         colorizer.colorize();
-        colorizer.save(opt.tifFileOut);
+        colorizer.save(opt.output);
     }
 }
 
