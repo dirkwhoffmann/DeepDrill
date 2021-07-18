@@ -127,7 +127,7 @@ ReferencePoint
 Driller::pickReference(const vector<Coord> &glitches)
 {
     if (glitches.empty()) {
-                                         
+
         return ReferencePoint(opt, Coord::center(opt));
 
     } else {

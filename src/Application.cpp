@@ -23,7 +23,7 @@ Application::main(std::vector <string> &args)
 {
     map<string,string> keys;
     string option = "";
-                    
+                        
     // Parse all command line arguments
     parseArguments(args, keys);
 
@@ -41,12 +41,17 @@ Application::main(std::vector <string> &args)
     // Parse all options
     Options opt(keys);
     
-    // Execute the drill pipeline
+    // Start a stop watch
     Clock stopWatch;
-    runPipeline(opt);
-    auto elapsed = stopWatch.stop();
 
-    log::cout << log::vspace << "Total time: " << elapsed << log::endl;
+    // Check the operation mode
+    if (keys.find("make") != keys.end()) {
+        runMaker(keys, opt);
+    } else {
+        runPipeline(opt);
+    }
+
+    log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
 }
 
 void
@@ -56,6 +61,7 @@ Application::runPipeline(Options &opt)
     
     // Is the input a map file? If yes, load it from disk
     if (opt.mapFileIn != "") {
+        
         drillMap.load(opt.mapFileIn);
     }
     
@@ -81,8 +87,18 @@ Application::runPipeline(Options &opt)
 }
 
 void
+Application::runMaker(map<string,string> &keys, class Options &opt)
+{
+    Maker maker(keys, opt);
+    maker.generate();
+}
+
+void
 Application::parseArguments(std::vector <string> &args, map<string,string> &keys)
 {
+    // The first argument is the path the executed binary
+    keys["exec"] = pop(args);
+    
     if (args.empty()) throw SyntaxError();
     
     while (!args.empty()) {
@@ -206,12 +222,13 @@ Application::readInputs(map<string,string> &keys)
     }
     if (suffix == "loc") {
         
+        keys["locfilein"] = path;
         Parser::parse(path, keys);
         return;
     }
     if (isDirectory(path)) {
         
-        keys["projectdir"] = path;
+        keys["sourcedir"] = path;
         return;
     }
 
@@ -236,7 +253,7 @@ Application::readOutputs(map<string,string> &keys)
     }
     if (isDirectory(path)) {
         
-        keys["outdir"] = path;
+        keys["targetdir"] = path;
         return;
     }
 

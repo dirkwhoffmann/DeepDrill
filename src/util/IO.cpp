@@ -115,7 +115,7 @@ bool isDirectory(const string &path)
     struct stat fileProperties;
     
     if (stat(path.c_str(), &fileProperties) != 0)
-        return -1;
+        return false;
     
     return S_ISDIR(fileProperties.st_mode);
 }

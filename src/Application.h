@@ -18,17 +18,12 @@
 namespace dd {
 
 class Application {
-    
-    // static Logger log;
-
+        
     // Extracted command line arguments
     std::vector <string> profiles;
     std::vector <string> inputs;
     std::vector <string> outputs;
-    
-    // The drill map
-    // DrillMap drillMap;
-        
+            
 public:
         
     // Main entry point
@@ -36,9 +31,10 @@ public:
     
 private:
     
-    // Executes the drill pipeline
+    // Executes the drill pipeline or the Makefile generator
     void runPipeline(class Options &opt);
-    
+    void runMaker(map<string,string> &keys, class Options &opt);
+
     // Helper methods for parsing command line arguments
     void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;
     void parseOption(vector <string> &args, map<string,string> &keys) throws;

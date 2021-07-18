@@ -17,6 +17,36 @@ namespace dd {
 
 class Maker {
 
+    // Key-value pairs
+    map<string,string> &keys;
+    
+    // Configuration options
+    const class Options &opt;
+    
+    // Names
+    string project;
+    
+    // Paths
+    string execPath;
+    string pathLoc;
+    string pathPrf;
+    string pathMakefile;
+    
+public:
+    
+    // Constructor
+    Maker(map<string,string> &keys, const Options &opt);
+    
+    // Main entry point
+    void generate(); 
+    
+private:
+    
+    void generateLocationFile();
+    void generateProfile();
+    void generateMakefile();
+    
+    void writeHeader(std::ofstream &os);
 };
 
 }

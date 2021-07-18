@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
     std::vector<string> args;
 
-    for (int i = 1; i < argc; i++) {
+    for (int i = 0; i < argc; i++) {
         args.push_back(string(argv[i]));
     }
         
@@ -27,7 +27,9 @@ int main(int argc, char *argv[])
 
     } catch (dd::SyntaxError &e) {
                 
-        log::cout << "Syntax: " << dd::extractName(string(argv[0]));
+        log::cout << "Syntax: ";
+        // log::cout << dd::extractName(string(argv[0]));
+        log::cout << "deepdrill";
         log::cout << " [-v] [-p <profile>] -o <output> <input>";
         log::cout << log::endl;
         

@@ -23,6 +23,10 @@ Options::initialize(map <string,string> &keys)
 
     try {
 
+        key = "locfilein";
+        if (auto value = lookupKey(keys, key, "")) {
+            locFileIn = *value;
+        }
         key = "mapfilein";
         if (auto value = lookupKey(keys, key, "")) {
             mapFileIn = *value;
@@ -34,6 +38,10 @@ Options::initialize(map <string,string> &keys)
         key = "tiff";
         if (auto value = lookupKey(keys, key, "")) {
             tifFileOut = *value;
+        }
+        key = "targetdir";
+        if (auto value = lookupKey(keys, key, "")) {
+            targetDir = *value;
         }
         key = "verbose";
         if (auto value = lookupKey(keys, key, "0")) {
@@ -143,7 +151,7 @@ Options::initialize(map <string,string> &keys)
 }
 
 const string *
-Options::lookupKey(const map <string,string> &keys, const string &key)
+Options::lookupKey(map <string,string> &keys, const string &key)
 {
     if (auto it = keys.find(key); it != keys.end()) {
         return &it->second;
@@ -153,11 +161,12 @@ Options::lookupKey(const map <string,string> &keys, const string &key)
 }
 
 const string *
-Options::lookupKey(const map <string,string> &keys, const string &key, const string &fallback)
+Options::lookupKey(map <string,string> &keys, const string &key, const string &fallback)
 {
     try {
         return lookupKey(keys, key);
     } catch (const MissingKeyException &e) {
+        keys[key] = fallback;
         return &fallback;
     }
 }

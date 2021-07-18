@@ -26,9 +26,11 @@ class Options {
 
 public:
 
+    string locFileIn;
     string mapFileIn;
     string mapFileOut;
     string tifFileOut;
+    string targetDir;
     
     //
     // Location parameters
@@ -113,9 +115,9 @@ public:
 
 private:
     
-    const string *lookupKey(const map <string,string> &keys,
+    const string *lookupKey(map <string,string> &keys,
                             const string &key) throws;
-    const string *lookupKey(const map <string,string> &keys,
+    const string *lookupKey(map <string,string> &keys,
                             const string &key,
                             const string &fallback);
 
