@@ -22,16 +22,13 @@ class Maker {
     
     // Configuration options
     const struct Options &opt;
-    
-    // Names
+
+    // Name of the project
     string project;
-    
-    // Paths
-    string execPath;
-    string pathLoc;
-    string pathPrf;
-    string pathMakefile;
-    
+
+    // Path to the project directory
+    std::filesystem::path projectDir;
+
 public:
     
     // Constructor
@@ -42,11 +39,11 @@ public:
     
 private:
     
+    void writeHeader(std::ofstream &os);
+
     void generateLocationFile();
     void generateProfile();
     void generateMakefile();
-    
-    void writeHeader(std::ofstream &os);
 };
 
 }

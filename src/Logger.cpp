@@ -128,4 +128,5 @@ Logger::operator<<(const PrecisionComplex& arg)
 }
 
 Logger log::cout;
+
 }

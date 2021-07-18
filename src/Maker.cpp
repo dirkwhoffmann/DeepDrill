@@ -18,16 +18,8 @@ namespace dd {
 
 Maker::Maker(map<string,string> &k, const Options &o) : keys(k), opt(o)
 {
-    auto path = std::filesystem::path(opt.output);
-    
     project = stripSuffix(stripPath(opt.input));
-    pathLoc = path / (project + ".loc");
-    pathPrf = path / (project + ".prf");
-    pathMakefile = path / "Makefile";
-
-    log::cout << "pathLoc = " << pathLoc << log::endl;
-    log::cout << "pathPrf = " << pathPrf << log::endl;
-    log::cout << "pathMakefile = " << pathMakefile << log::endl;
+    projectDir = std::filesystem::path(opt.output);
 }
 
 void
@@ -42,8 +34,8 @@ void
 Maker::generateLocationFile()
 {
     log::cout << "generateLocationFile()" << log::endl;
-    
-    std::ofstream os(pathLoc);
+        
+    std::ofstream os(projectDir / (project + ".loc"));
 
     // Write header
     writeHeader(os);
@@ -62,8 +54,8 @@ Maker::generateProfile()
 {
     log::cout << "generateProfile()" << log::endl;
     
-    std::ofstream os(pathPrf);
-
+    std::ofstream os(projectDir / (project + ".prf"));
+    
     for (auto &it : keys) {
         std::cout << "Key: " << it.first << " = " << it.second << std::endl;
     }
@@ -79,7 +71,7 @@ Maker::generateProfile()
     // Write perturbation section
     os << "[perturbation]" << std::endl;
     os << "tolerance = " << keys["perturbation.tolerance"] << std::endl;
-    os << "maxRounds = " << keys["perturbation.maxrounds"] << std::endl;
+    os << "rounds = " << keys["perturbation.rounds"] << std::endl;
     os << "accuracy = " << keys["perturbation.accuracy"] << std::endl;
     os << std::endl;
 
@@ -100,7 +92,7 @@ Maker::generateMakefile()
 {
     log::cout << "generateMakefile()" << log::endl;
 
-    std::ofstream os(pathMakefile);
+    std::ofstream os(projectDir / "Makefile");
 
     // Write header
     writeHeader(os);

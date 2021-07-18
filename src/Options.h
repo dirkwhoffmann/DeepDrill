@@ -18,11 +18,6 @@ namespace dd {
 
 enum class Format { NONE, LOC, MAP, PRF, DIR, TIF };
 
-/*
-struct MissingKeyException : std::runtime_error {
-    using std::runtime_error::runtime_error;
-};
-*/
 struct InvalidValueException : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
@@ -80,7 +75,7 @@ struct Options {
         double tolerance;
         
         // Maximum number of rounds
-        isize maxRounds;
+        isize rounds;
         
         // Fraction of pixels that need to be computed
         double accuracy;
@@ -124,13 +119,8 @@ public:
     void parse();
 
 private:
-    
-    // const string *lookupKey(const string &key) throws;
-    // const string *lookupKey(const string &key, const string &fallback);
-
-public:
-    
-    void deriveVariables();
+        
+    void derive();
     Format deriveFormat(const string &path);
 };
 

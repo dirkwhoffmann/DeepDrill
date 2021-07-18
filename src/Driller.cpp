@@ -46,7 +46,7 @@ Driller::drill()
         log::cout << log::ralign("Perturbation tolerance: ");
         log::cout << opt.perturbation.tolerance << log::endl;
         log::cout << log::ralign("Max rounds: ");
-        log::cout << opt.perturbation.maxRounds << log::endl;
+        log::cout << opt.perturbation.rounds << log::endl;
         log::cout << log::vspace;
     }
     
@@ -64,7 +64,7 @@ Driller::drill()
         }
     }
              
-    for (isize round = 1; round <= opt.perturbation.maxRounds; round++) {
+    for (isize round = 1; round <= opt.perturbation.rounds; round++) {
 
         // Exit if enough pixels have been computed
         if ((isize)remaining.size() <= allowedBadPixels) break;

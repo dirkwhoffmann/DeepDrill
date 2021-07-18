@@ -4,7 +4,7 @@ height = 270
 
 [perturbation]
 tolerance = 1e-6
-maxrounds = 10
+rounds = 10
 
 [approximation]
 coefficients = 5

@@ -30,7 +30,7 @@ Options::Options(map <string,string> &k)
     keys["image.height"] = "540";
     keys["palette.values"] = Palette::defaultPalette;
     keys["perturbation.tolerance"] = "1e-12";
-    keys["perturbation.maxrounds"] = "50";
+    keys["perturbation.rounds"] = "50";
     keys["perturbation.accuracy"] = "0.999";
     keys["approximation.coefficients"] = "5";
     keys["approximation.tolerance"] = "1e-12";
@@ -79,8 +79,8 @@ Options::parse()
             palette.values = value;
         } else if (key == "perturbation.tolerance") {
             perturbation.tolerance = stod(value);
-        } else if (key == "perturbation.maxrounds") {
-            perturbation.maxRounds = stod(value);
+        } else if (key == "perturbation.rounds") {
+            perturbation.rounds = stod(value);
         } else if (key == "perturbation.accuracy") {
             perturbation.accuracy = stod(value);
         } else if (key == "approximation.coefficients") {
@@ -91,34 +91,11 @@ Options::parse()
             assert(false);
         }
     }
-    deriveVariables();
+    derive();
 }
-
-/*
-const string *
-Options::lookupKey(const string &key)
-{
-    if (auto it = keys.find(key); it != keys.end()) {
-        return &it->second;
-    } else {
-        throw MissingKeyException("Error: Missing key '" + key + "'");
-    }
-}
-
-const string *
-Options::lookupKey(const string &key, const string &fallback)
-{
-    try {
-        return lookupKey(key);
-    } catch (const MissingKeyException &e) {
-        keys[key] = fallback;
-        return &fallback;
-    }
-}
-*/
  
 void
-Options::deriveVariables()
+Options::derive()
 {
     // Determine the input and output format
     inputFormat = deriveFormat(input);
@@ -129,7 +106,7 @@ Options::deriveVariables()
 
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
-    pixelDelta = mpfPixelDelta;    
+    pixelDelta = mpfPixelDelta;
 }
 
 Format
