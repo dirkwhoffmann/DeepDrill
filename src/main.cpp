@@ -15,29 +15,22 @@ using namespace dd;
 
 int main(int argc, char *argv[])
 {
-    std::vector<string> args;
-
-    for (int i = 0; i < argc; i++) {
-        args.push_back(string(argv[i]));
-    }
-        
     try {
-
+        
         dd::Application().main(argc, argv);
-
+        
     } catch (dd::SyntaxError &e) {
-                
+        
         log::cout << "Syntax: ";
-        log::cout << "deepdrill";
-        log::cout << " [-v] [-p <profile>] -o <output> <input>";
+        log::cout << "deepdrill [-v] [-p <profile>] -o <output> <input>";
         log::cout << log::endl;
         
         if (!e.description.empty()) {
             log::cout << e.what() << log::endl;
         }
-
+        
         return 1;
-
+        
     } catch (std::exception &e) {
         
         log::cout << e.what() << log::endl;

@@ -31,17 +31,17 @@ public:
 
 private:
     
-    // Executes the drill pipeline or the Makefile generator
-    void runPipeline(struct Options &opt);
-    void runMaker(map<string,string> &keys, struct Options &opt);
-
     // Helper methods for parsing command line arguments
     void parseArguments(int argc, char *argv[], map<string,string> &keys) throws;
     void checkArguments(map<string,string> &keys) throws;
     void readInputs(map<string,string> &keys) throws;
     void readOutputs(map<string,string> &keys) throws;
     void readProfiles(map<string,string> &keys) throws;
-            
+    
+    // Executes the drill pipeline or the Makefile generator
+    void runPipeline(struct Options &opt);
+    void runMaker(map<string,string> &keys, struct Options &opt);
+
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);
 };

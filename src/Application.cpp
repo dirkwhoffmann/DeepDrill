@@ -54,6 +54,8 @@ Application::main(int argc, char *argv[])
 void
 Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
 {
+    keys["exec"] = argv[0];
+    
     static struct option long_options[] = {
         
         { "verbose", no_argument,       NULL, 'v' },
@@ -103,7 +105,6 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
     }
     
     checkArguments(keys);
-    
     readInputs(keys);
     readOutputs(keys);
     readProfiles(keys);
@@ -161,46 +162,6 @@ Application::checkArguments(map<string,string> &keys)
                               ": Invalid format. Expected .map or .tiff");
         }
     }
-}
-
-void
-Application::runPipeline(Options &opt)
-{
-    DrillMap drillMap(opt);
-
-    if (opt.inputFormat == Format::MAP) {
-        
-        // Load the drill map from disk
-        drillMap.load(opt.input);
-
-    } else {
-    
-        // Compute the drill map
-        Driller driller(opt, drillMap);
-        driller.drill();
-    }
-    
-    // Are we supposed to save the map file?
-    if (opt.outputFormat == Format::MAP) {
-        
-        drillMap.save(opt.output);
-    }
-    
-    // Are we suppoed to create an image file?
-    if (opt.outputFormat == Format::TIF) {
-
-        // Run the colorizer
-        Colorizer colorizer(opt, drillMap);
-        colorizer.colorize();
-        colorizer.save(opt.output);
-    }
-}
-
-void
-Application::runMaker(map<string,string> &keys, Options &opt)
-{
-    Maker maker(keys, opt);
-    maker.generate();
 }
 
 void
@@ -279,6 +240,46 @@ Application::setupGmp(std::map <string,string> &keys)
         
         mpf_set_default_prec(exponent + 64);
     }
+}
+
+void
+Application::runPipeline(Options &opt)
+{
+    DrillMap drillMap(opt);
+
+    if (opt.inputFormat == Format::MAP) {
+        
+        // Load the drill map from disk
+        drillMap.load(opt.input);
+
+    } else {
+    
+        // Compute the drill map
+        Driller driller(opt, drillMap);
+        driller.drill();
+    }
+    
+    // Are we supposed to save the map file?
+    if (opt.outputFormat == Format::MAP) {
+        
+        drillMap.save(opt.output);
+    }
+    
+    // Are we suppoed to create an image file?
+    if (opt.outputFormat == Format::TIF) {
+
+        // Run the colorizer
+        Colorizer colorizer(opt, drillMap);
+        colorizer.colorize();
+        colorizer.save(opt.output);
+    }
+}
+
+void
+Application::runMaker(map<string,string> &keys, Options &opt)
+{
+    Maker maker(keys, opt);
+    maker.generate();
 }
 
 }
