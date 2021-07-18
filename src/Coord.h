@@ -27,7 +27,7 @@ struct Coord {
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
     
-    static Coord center(const class Options &opt);
+    static Coord center(const struct Options &opt);
     
     
     //

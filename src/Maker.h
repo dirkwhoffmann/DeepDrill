@@ -21,7 +21,7 @@ class Maker {
     map<string,string> &keys;
     
     // Configuration options
-    const class Options &opt;
+    const struct Options &opt;
     
     // Names
     string project;

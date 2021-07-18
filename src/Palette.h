@@ -20,7 +20,7 @@ class Palette {
     static const string defaultPalette;
     
     // Configuration options
-    const class Options &opt;
+    const struct Options &opt;
     
     // The color table
     vector <u32> colors;

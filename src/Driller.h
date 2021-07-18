@@ -23,7 +23,7 @@ namespace dd {
 class Driller {
     
     // Configuration options
-    const class Options &opt;
+    const struct Options &opt;
     
     // The associated map file
     DrillMap &map;

@@ -32,8 +32,8 @@ public:
 private:
     
     // Executes the drill pipeline or the Makefile generator
-    void runPipeline(class Options &opt);
-    void runMaker(map<string,string> &keys, class Options &opt);
+    void runPipeline(struct Options &opt);
+    void runMaker(map<string,string> &keys, struct Options &opt);
 
     // Helper methods for parsing command line arguments
     void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;

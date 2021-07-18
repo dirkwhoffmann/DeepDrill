@@ -87,7 +87,7 @@ Application::runPipeline(Options &opt)
 }
 
 void
-Application::runMaker(map<string,string> &keys, class Options &opt)
+Application::runMaker(map<string,string> &keys, Options &opt)
 {
     Maker maker(keys, opt);
     maker.generate();
