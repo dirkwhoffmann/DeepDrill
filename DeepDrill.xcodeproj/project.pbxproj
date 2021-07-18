@@ -85,7 +85,6 @@
 		50BEC717269486C200CCDFA8 /* StandardComplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardComplex.h; sourceTree = "<group>"; };
 		50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtendedComplex.cpp; sourceTree = "<group>"; };
 		50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrecisionComplex.cpp; sourceTree = "<group>"; };
-		50BEC722269486E500CCDFA8 /* config.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.prf; sourceTree = "<group>"; };
 		50BEC723269486E500CCDFA8 /* medium.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = medium.prf; sourceTree = "<group>"; };
 		50BEC724269486E600CCDFA8 /* low.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = low.prf; sourceTree = "<group>"; };
 		50BEC726269486E600CCDFA8 /* ultra.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ultra.prf; sourceTree = "<group>"; };
@@ -230,11 +229,10 @@
 		50BEC721269486D900CCDFA8 /* profiles */ = {
 			isa = PBXGroup;
 			children = (
-				50BEC722269486E500CCDFA8 /* config.prf */,
-				50BEC727269486E600CCDFA8 /* high.prf */,
+				50BEC728269486E600CCDFA8 /* thumbnail.prf */,
 				50BEC724269486E600CCDFA8 /* low.prf */,
 				50BEC723269486E500CCDFA8 /* medium.prf */,
-				50BEC728269486E600CCDFA8 /* thumbnail.prf */,
+				50BEC727269486E600CCDFA8 /* high.prf */,
 				50BEC726269486E600CCDFA8 /* ultra.prf */,
 			);
 			path = profiles;

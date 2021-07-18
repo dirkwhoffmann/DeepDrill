@@ -58,15 +58,18 @@ Colorizer::colorize(Coord c)
 void
 Colorizer::save(const string &path)
 {
+    namespace fs = std::filesystem;
+    fs::path tmp = fs::temp_directory_path();
+
     ProgressIndicator progress("Saving image data");
     
     std::ofstream os;
-    
+        
     isize width = map.width;
     isize height = map.height;
     
     // Assemble the target file names
-    string rawFile = stripSuffix(path) + ".raw";
+    string rawFile = tmp / "image.raw";
     string tifFile = path;
     
     // Open an output stream
@@ -98,6 +101,10 @@ Colorizer::save(const string &path)
     if (system(command.c_str()) != 0) {
         throw Exception("Failed to execute " + command);
     }
+    
+    // Remove the temporary file
+    fs::remove(rawFile);
+    
     progress2.done();
     
     if (opt.verbose) {
