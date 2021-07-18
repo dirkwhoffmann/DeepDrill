@@ -103,51 +103,6 @@ Options::initialize()
     }
         
     deriveVariables();
-    
-    /*
-    if (verbose) {
-        
-        log::cout << log::vspace;
-        if (mapFileIn != "") {
-            log::cout << log::ralign("Input map file: ");
-            log::cout << mapFileIn << log::endl;
-        }
-        if (mapFileOut != "") {
-            log::cout << log::ralign("Output map: ");
-            log::cout << mapFileOut << log::endl;
-        }
-        if (tifFileOut != "") {
-            log::cout << log::ralign("Image file: ");
-            log::cout << tifFileOut << log::endl;
-        }
-        log::cout << log::ralign("Real: ");
-        log::cout << real << log::endl;
-        log::cout << log::ralign("Imag: ");
-        log::cout << imag << log::endl;
-        log::cout << log::ralign("Zoom: ");
-        log::cout << zoom << log::endl;
-        log::cout << log::ralign("Depth: ");
-        log::cout << depth << log::endl;
-        log::cout << log::ralign("Image Width: ");
-        log::cout << width << log::endl;
-        log::cout << log::ralign("Image Height: ");
-        log::cout << height << log::endl;
-        log::cout << log::ralign("Perturbation tolerance: ");
-        log::cout << perturbationTolerance << log::endl;
-        log::cout << log::ralign("Max rounds: ");
-        log::cout << maxRounds << log::endl;
-        log::cout << log::ralign("Coefficients: ");
-        log::cout << numCoefficients << log::endl;
-
-        log::cout << log::ralign("Center: ");
-        log::cout << center << log::endl;
-        log::cout << log::ralign("Pixel delta: ");
-        log::cout << mpfPixelDelta << log::endl;
-        log::cout << log::ralign("Precision: ");
-        log::cout << mpf_get_default_prec() << log::endl;
-        log::cout << log::vspace;
-    }
-    */
 }
 
 const string *
@@ -174,12 +129,31 @@ Options::lookupKey(const string &key, const string &fallback)
 void
 Options::deriveVariables()
 {
+    // Determine the input and output format
+    inputFormat = deriveFormat(input);
+    outputFormat = deriveFormat(output);
+    
     // Compute the center coordinate
     center = PrecisionComplex(real, imag);
 
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / zoom / height;
     pixelDelta = mpfPixelDelta;    
+}
+
+Format
+Options::deriveFormat(const string &path)
+{
+    if (isDirectory(path)) return DIR;
+
+    auto suffix = extractSuffix(path);
+    if (suffix == "loc") return LOC;
+    if (suffix == "map") return MAP;
+    if (suffix == "prf") return PRF;
+    if (suffix == "tif") return TIF;
+    if (suffix == "tiff") return TIF;
+    
+    return NONE;
 }
 
 }

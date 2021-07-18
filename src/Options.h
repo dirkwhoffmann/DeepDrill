@@ -15,6 +15,8 @@
 
 namespace dd {
 
+enum Format { NONE, LOC, MAP, PRF, DIR, TIF };
+
 struct MissingKeyException : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
@@ -34,6 +36,9 @@ struct Options {
     //
     // Key-value pairs (parsed)
     //
+    
+    string input;
+    string output;
     
     string locFileIn;
     string mapFileIn;
@@ -105,6 +110,10 @@ struct Options {
     // Derived values
     //
     
+    // Format of the specified input and output files
+    Format inputFormat = NONE;
+    Format outputFormat = NONE;
+
     // The center coordinate
     PrecisionComplex center;
 
@@ -130,6 +139,7 @@ private:
 public:
     
     void deriveVariables();
+    Format deriveFormat(const string &path);
 };
 
 }

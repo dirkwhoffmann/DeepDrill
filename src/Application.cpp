@@ -217,22 +217,25 @@ Application::readInputs(map<string,string> &keys)
 
     if (suffix == "map") {
         
-        keys["mapfilein"] = path;
+        keys["input"] = path;
+        keys["mapfilein"] = path; // DEPRECATED
         return;
     }
     if (suffix == "loc") {
         
-        keys["locfilein"] = path;
+        keys["input"] = path;
+        keys["locfilein"] = path; // DEPRECATED
         Parser::parse(path, keys);
         return;
     }
     if (isDirectory(path)) {
         
-        keys["sourcedir"] = path;
+        keys["input"] = path;
+        keys["sourcedir"] = path; // DEPRECATED
         return;
     }
 
-    throw SyntaxError(path + ": Invalid input format");
+    throw SyntaxError(path + ": Unknown input format");
 }
 
 void
@@ -243,21 +246,24 @@ Application::readOutputs(map<string,string> &keys)
 
     if (suffix == "map") {
         
-        keys["mapfileout"] = path;
+        keys["output"] = path;
+        keys["mapfileout"] = path; // DEPRECATED
         return;
     }
     if (suffix == "tiff" || suffix == "tif") {
         
-        keys["tiff"] = path;
+        keys["output"] = path;
+        keys["tiff"] = path;  // DEPRECATED
         return;
     }
     if (isDirectory(path)) {
         
-        keys["targetdir"] = path;
+        keys["output"] = path;
+        keys["targetdir"] = path; // DEPRECATED
         return;
     }
 
-    throw SyntaxError(path + ": Invalid output format");
+    throw SyntaxError(path + ": Unknown output format");
 }
 
 void
