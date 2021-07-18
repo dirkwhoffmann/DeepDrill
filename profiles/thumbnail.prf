@@ -1,7 +1,6 @@
 [image]
 width = 240
 height = 135
-rotate = 0
  
 [perturbation]
 tolerance = 1e-6

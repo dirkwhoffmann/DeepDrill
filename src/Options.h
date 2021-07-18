@@ -36,68 +36,63 @@ struct Options {
     //
     // Key-value pairs (parsed)
     //
-    
+        
     string input;
     string output;
-        
-    //
-    // Location parameters
-    //
-
-    // Complex coordinates of the center
-    mpf_class real;
-    mpf_class imag;
-
-    // Magnification
-    mpf_class zoom;
     
-    // Maximum number of iterations
-    isize depth;
-
-    
-    //
-    // Image parameters
-    //
-
-    // Image dimensions ins pixels
-    isize width;
-    isize height;
-    
-    // Color palette
-    string palette;
-
-    
-    //
-    // Perturbation parameters
-    //
-
-    // Tolerance used for glitch detection
-    double perturbationTolerance;
-
-    // Maximum number of rounds
-    isize maxRounds;
-    
-    // Fraction of pixels that need to be computed
-    double accuracy;
-    
-    
-    //
-    // Series approximation parameters
-    //
-
-    // Number of coefficients used in series approximation
-    isize numCoefficients;
-        
-    // Tolerance used for glitch detection
-    double approximationTolerance;
-
-    
-    //
-    // Debug parameters
-    //
-    
-    // Debug output level
     isize verbose;
+
+    struct {
+
+        // Center coordinate
+        mpf_class real;
+        mpf_class imag;
+
+        // Magnification
+        mpf_class zoom;
+        
+        // Maximum iterations count
+        isize depth;
+
+    } location;
+    
+    struct {
+
+        // Image dimensions ins pixels
+        isize width;
+        isize height;
+        
+    } image;
+    
+    struct {
+        
+        // Color palette
+        string palette;
+
+    } palette;
+    
+    struct {
+        
+        // Tolerance used for glitch detection
+        double tolerance;
+        
+        // Maximum number of rounds
+        isize maxRounds;
+        
+        // Fraction of pixels that need to be computed
+        double accuracy;
+        
+    } perturbation;
+    
+    struct {
+
+        // Number of coefficients used in series approximation
+        isize coefficients;
+        
+        // Approximation tolerance
+        double tolerance;
+
+    } approximation;
     
     
     //

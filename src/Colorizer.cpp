@@ -21,7 +21,7 @@ namespace dd {
 
 Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 {
-    palette.init(opt.palette);
+    palette.init(opt.palette.palette);
     
     auto bytes = map.width * map.height;
     image = new u32[bytes] {};

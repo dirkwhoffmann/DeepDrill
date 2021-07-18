@@ -18,7 +18,7 @@ namespace dd {
 Coord
 Coord::center(const Options &opt)
 {
-    return Coord(opt.width / 2, opt.height / 2);
+    return Coord(opt.image.width / 2, opt.image.height / 2);
 }
 
 PrecisionComplex

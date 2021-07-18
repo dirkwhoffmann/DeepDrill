@@ -17,7 +17,7 @@ namespace dd {
 
 Palette::Palette(const Options &options) : opt(options)
 {
-    init(opt.palette);    
+    init(opt.palette.palette);    
 }
 
 void

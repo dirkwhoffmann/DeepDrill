@@ -36,35 +36,35 @@ Driller::drill()
         log::cout << log::ralign("Center: ");
         log::cout << opt.center << log::endl;
         log::cout << log::ralign("Magnification: ");
-        log::cout << opt.zoom << log::endl;
+        log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Pixel delta: ");
         log::cout << opt.mpfPixelDelta << log::endl;
         log::cout << log::ralign("Maximum drill depth: ");
-        log::cout << opt.depth << log::endl;
+        log::cout << opt.location.depth << log::endl;
         log::cout << log::ralign("GMP Precision: ");
         log::cout << mpf_get_default_prec() << " Bit" << log::endl;
         log::cout << log::ralign("Perturbation tolerance: ");
-        log::cout << opt.perturbationTolerance << log::endl;
+        log::cout << opt.perturbation.tolerance << log::endl;
         log::cout << log::ralign("Max rounds: ");
-        log::cout << opt.maxRounds << log::endl;
+        log::cout << opt.perturbation.maxRounds << log::endl;
         log::cout << log::vspace;
     }
     
     // Allcoate the drill map
-    map.resize(opt.width, opt.height);
+    map.resize(opt.image.width, opt.image.height);
     
     // Determine the number of tolerated glitched pixels
-    isize allowedBadPixels = opt.width * opt.height * (1.0 - opt.accuracy);
+    isize allowedBadPixels = opt.image.width * opt.image.height * (1.0 - opt.perturbation.accuracy);
         
     // Collect all pixel coordinates to be drilled at
-    for (isize y = 0; y < opt.height; y++) {
-        for (isize x = 0; x < opt.width; x++) {
+    for (isize y = 0; y < opt.image.height; y++) {
+        for (isize x = 0; x < opt.image.width; x++) {
             
             remaining.push_back(Coord(x,y));
         }
     }
              
-    for (isize round = 1; round <= opt.maxRounds; round++) {
+    for (isize round = 1; round <= opt.perturbation.maxRounds; round++) {
 
         // Exit if enough pixels have been computed
         if ((isize)remaining.size() <= allowedBadPixels) break;
@@ -89,10 +89,10 @@ Driller::drill()
         }
         
         // If series approximation is enabled...
-        if (opt.numCoefficients > 0) {
+        if (opt.approximation.coefficients > 0) {
         
             // Compute the coefficients
-            coeff.compute(ref, opt.numCoefficients, opt.depth);
+            coeff.compute(ref, opt.approximation.coefficients, opt.location.depth);
 
             // Pick the probe points
             pickProbePoints(probePoints);
@@ -142,8 +142,8 @@ Driller::pickProbePoints(vector <Coord> &probes)
 {
     static const isize sampling = 2;
 
-    isize width = opt.width - 1;
-    isize height = opt.height - 1;
+    isize width = opt.image.width - 1;
+    isize height = opt.image.height - 1;
     
     probes.clear();
     
@@ -163,7 +163,7 @@ Driller::drillProbePoints(vector <Coord> &probes)
 {
     ProgressIndicator progress("Checking probe points", probes.size());
     
-    isize minValid = opt.depth - 1;
+    isize minValid = opt.location.depth - 1;
     
     for (auto &probe : probes) {
 
@@ -183,7 +183,7 @@ Driller::drillProbePoint(Coord &probe)
     ExtendedComplex dn = d0;
             
     isize iteration = 0;
-    auto tolerance = ExtendedDouble(opt.approximationTolerance);
+    auto tolerance = ExtendedDouble(opt.approximation.tolerance);
     
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
@@ -269,7 +269,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         }
     }
         
-    if (limit == opt.depth) {
+    if (limit == opt.location.depth) {
 
         // This point belongs to the Mandelbrot set
         map.set(point.x, point.y, MapEntry { 0, 0 });

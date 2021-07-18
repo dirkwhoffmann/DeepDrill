@@ -57,17 +57,17 @@ ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const
 void
 ReferencePoint::drill(const Options &opt)
 {
-    ProgressIndicator progress("Computing reference orbit", opt.depth);
+    ProgressIndicator progress("Computing reference orbit", opt.location.depth);
 
     PrecisionComplex z = location;
-    xn.push_back(ReferenceIteration(z, opt.perturbationTolerance));
+    xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
         
-    for (isize i = 1; i < opt.depth; i++) {
+    for (isize i = 1; i < opt.location.depth; i++) {
         
         z *= z;
         z += location;
         
-        xn.push_back(ReferenceIteration(z, opt.perturbationTolerance));
+        xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
         
         // Perform the escape check
         if (norm = StandardComplex(z).norm(); norm > 256) {
