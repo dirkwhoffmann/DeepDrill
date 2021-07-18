@@ -22,10 +22,19 @@ struct InvalidValueException : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
 
-class Options {
+struct Options {
 
-public:
-
+    //
+    // Key-value pairs (orginal)
+    //
+    
+    map<string,string> keys;
+    
+    
+    //
+    // Key-value pairs (parsed)
+    //
+    
     string locFileIn;
     string mapFileIn;
     string mapFileOut;
@@ -110,16 +119,13 @@ public:
 
 public:
 
-    Options(map <string,string> &keys) { initialize(keys); }
-    void initialize(map <string,string> &keys);
+    Options(map <string,string> &k) : keys(k) { initialize(); }
+    void initialize();
 
 private:
     
-    const string *lookupKey(map <string,string> &keys,
-                            const string &key) throws;
-    const string *lookupKey(map <string,string> &keys,
-                            const string &key,
-                            const string &fallback);
+    const string *lookupKey(const string &key) throws;
+    const string *lookupKey(const string &key, const string &fallback);
 
 public:
     
