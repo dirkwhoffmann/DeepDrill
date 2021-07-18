@@ -52,7 +52,7 @@ Driller::drill()
     
     // Allcoate the drill map
     map.resize(opt.image.width, opt.image.height);
-    
+        
     // Determine the number of tolerated glitched pixels
     isize allowedBadPixels = opt.image.width * opt.image.height * (1.0 - opt.perturbation.accuracy);
         

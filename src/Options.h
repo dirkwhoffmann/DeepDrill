@@ -12,14 +12,17 @@
 #pragma once
 
 #include "commons.h"
+#include "Palette.h"
 
 namespace dd {
 
 enum class Format { NONE, LOC, MAP, PRF, DIR, TIF };
 
+/*
 struct MissingKeyException : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
+*/
 struct InvalidValueException : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
@@ -37,9 +40,9 @@ struct Options {
     // Key-value pairs (parsed)
     //
         
+    string exec;
     string input;
     string output;
-    
     isize verbose;
 
     struct {
@@ -67,7 +70,7 @@ struct Options {
     struct {
         
         // Color palette
-        string palette;
+        string values;
 
     } palette;
     
@@ -117,13 +120,13 @@ struct Options {
 
 public:
 
-    Options(map <string,string> &k) : keys(k) { initialize(); }
-    void initialize();
+    Options(map <string,string> &keys);
+    void parse();
 
 private:
     
-    const string *lookupKey(const string &key) throws;
-    const string *lookupKey(const string &key, const string &fallback);
+    // const string *lookupKey(const string &key) throws;
+    // const string *lookupKey(const string &key, const string &fallback);
 
 public:
     

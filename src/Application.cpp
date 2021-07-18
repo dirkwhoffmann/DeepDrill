@@ -61,6 +61,8 @@ Application::runPipeline(Options &opt)
 
     std::cout << "Input format = " << (int)opt.inputFormat << std::endl;
     std::cout << "Output format = " << (int)opt.outputFormat << std::endl;
+    std::cout << "Input = " << opt.input << std::endl;
+    std::cout << "Output = " << opt.output << std::endl;
 
     if (opt.inputFormat == Format::MAP) {
         
@@ -222,20 +224,17 @@ Application::readInputs(map<string,string> &keys)
     if (suffix == "map") {
         
         keys["input"] = path;
-        keys["mapfilein"] = path; // DEPRECATED
         return;
     }
     if (suffix == "loc") {
         
         keys["input"] = path;
-        keys["locfilein"] = path; // DEPRECATED
         Parser::parse(path, keys);
         return;
     }
     if (isDirectory(path)) {
         
         keys["input"] = path;
-        keys["sourcedir"] = path; // DEPRECATED
         return;
     }
 
@@ -251,7 +250,6 @@ Application::readOutputs(map<string,string> &keys)
     if (suffix == "map") {
         
         keys["output"] = path;
-        keys["mapfileout"] = path; // DEPRECATED
         return;
     }
     if (suffix == "tiff" || suffix == "tif") {

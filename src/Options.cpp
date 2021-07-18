@@ -15,84 +15,86 @@
 
 namespace dd {
 
-void
-Options::initialize()
+Options::Options(map <string,string> &k)
 {
-    std::map<string, string>::iterator it;
-    string key;
-
-    try {
-
-        key = "input";
-        if (auto value = lookupKey(key, "")) {
-            input = *value;
+    // Register default keys
+    keys["exec"] = "";
+    keys["input"] = "";
+    keys["output"] = "";
+    keys["verbose"] = "0";
+    keys["location.real"] = "0.0";
+    keys["location.imag"] = "0.0";
+    keys["location.zoom"] = "1.0";
+    keys["location.depth"] = "500";
+    keys["image.width"] = "960";
+    keys["image.height"] = "540";
+    keys["palette.values"] = Palette::defaultPalette;
+    keys["perturbation.tolerance"] = "1e-12";
+    keys["perturbation.maxrounds"] = "50";
+    keys["perturbation.accuracy"] = "0.999";
+    keys["approximation.coefficients"] = "5";
+    keys["approximation.tolerance"] = "1e-12";
+    
+    // Overwrite defaults with user-defined values
+    for (auto &it : k) {
+        if (keys.find(it.first) == keys.end()) {
+            throw InvalidValueException("Error: Unknown key '" + it.first + "'");
         }
-        key = "output";
-        if (auto value = lookupKey(key, "")) {
-            output = *value;
-        }
-        key = "verbose";
-        if (auto value = lookupKey(key, "0")) {
-            verbose = stoi(*value);
-        }
-        key = "location.real";
-        if (auto value = lookupKey(key, "0.0")) {
-            location.real = mpf_class(*value);
-        }
-        key = "location.imag";
-        if (auto value = lookupKey(key, "0.0")) {
-            location.imag = mpf_class(*value);
-        }
-        key = "location.zoom";
-        if (auto value = lookupKey(key, "1")) {
-            location.zoom = mpf_class(*value);
-        }
-        key = "location.depth";
-        if (auto value = lookupKey(key, "500")) {
-            location.depth = stoi(*value);
-        }
-        key = "image.width";
-        if (auto value = lookupKey(key, "640")) {
-            image.width = stoi(*value);
-        }
-        key = "image.height";
-        if (auto value = lookupKey(key, "320")) {
-            image.height = stoi(*value);
-        }
-        key = "palette.values";
-        if (auto value = lookupKey(key, "")) {
-            palette.palette = *value;
-        }
-        key = "perturbation.tolerance";
-        if (auto value = lookupKey(key, "1e-6")) {
-            perturbation.tolerance = stod(*value);
-        }
-        key = "perturbation.maxrounds";
-        if (auto value = lookupKey(key, "50")) {
-            perturbation.maxRounds = stod(*value);
-        }
-        key = "perturbation.accuracy";
-        if (auto value = lookupKey(key, "0.999")) {
-            perturbation.accuracy = stod(*value);
-        }
-        key = "approximation.coefficients";
-        if (auto value = lookupKey(key, "5")) {
-            approximation.coefficients = stoi(*value);
-        }
-        key = "approximation.tolerance";
-        if (auto value = lookupKey(key, "1e-12")) {
-            approximation.tolerance = stod(*value);
-        }
-
-    } catch(const MissingKeyException &e) {
-        throw e;
-    } catch (const std::exception &e) {
-        throw InvalidValueException("Error: Key " + key + " is not valid");
+        keys[it.first] = it.second;
     }
-        
+    
+    // Parse all key-value pairs
+    parse();
+}
+
+void
+Options::parse()
+{
+    for (auto &it : keys) {
+
+        auto &key = it.first;
+        auto &value = it.second;
+
+        if (key == "exec") {
+            exec = value;
+        } else if (key == "input") {
+            input = value;
+        } else if (key == "output") {
+            output = value;
+        } else if (key == "verbose") {
+            verbose = stoi(value);
+        } else if (key == "location.real") {
+            location.real = mpf_class(value);
+        } else if (key == "location.imag") {
+            location.imag = mpf_class(value);
+        } else if (key == "location.zoom") {
+            location.zoom = mpf_class(value);
+        } else if (key == "location.depth") {
+            location.depth = stoi(value);
+        } else if (key == "image.width") {
+            image.width = stoi(value);
+        } else if (key == "image.height") {
+            image.height = stoi(value);
+        } else if (key == "palette.values") {
+            palette.values = value;
+        } else if (key == "perturbation.tolerance") {
+            perturbation.tolerance = stod(value);
+        } else if (key == "perturbation.maxrounds") {
+            perturbation.maxRounds = stod(value);
+        } else if (key == "perturbation.accuracy") {
+            perturbation.accuracy = stod(value);
+        } else if (key == "approximation.coefficients") {
+            approximation.coefficients = stoi(value);
+        } else if (key == "approximation.tolerance") {
+            approximation.tolerance = stod(value);
+        } else {
+            assert(false);
+        }
+    }
     deriveVariables();
 }
 
+/*
 const string *
 Options::lookupKey(const string &key)
 {
@@ -113,7 +115,8 @@ Options::lookupKey(const string &key, const string &fallback)
         return &fallback;
     }
 }
-
+*/
+ 
 void
 Options::deriveVariables()
 {

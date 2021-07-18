@@ -15,16 +15,20 @@
 namespace dd {
 
 class Palette {
-
+    
+public:
+    
     // The Default palette
     static const string defaultPalette;
+
+private:
     
     // Configuration options
     const struct Options &opt;
     
     // The color table
     vector <u32> colors;
-    
+
     
     //
     // Initialization
