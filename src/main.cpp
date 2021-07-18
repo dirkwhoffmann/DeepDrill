@@ -23,12 +23,11 @@ int main(int argc, char *argv[])
         
     try {
 
-        dd::Application().main(args);
+        dd::Application().main(argc, argv);
 
     } catch (dd::SyntaxError &e) {
                 
         log::cout << "Syntax: ";
-        // log::cout << dd::extractName(string(argv[0]));
         log::cout << "deepdrill";
         log::cout << " [-v] [-p <profile>] -o <output> <input>";
         log::cout << log::endl;
@@ -36,6 +35,7 @@ int main(int argc, char *argv[])
         if (!e.description.empty()) {
             log::cout << e.what() << log::endl;
         }
+
         return 1;
 
     } catch (std::exception &e) {

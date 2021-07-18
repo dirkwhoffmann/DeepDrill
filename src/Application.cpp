@@ -15,21 +15,18 @@
 #include "Driller.h"
 #include "Options.h"
 #include "Maker.h"
+#include <getopt.h>
 
 namespace dd {
 
 void
-Application::main(std::vector <string> &args)
+Application::main(int argc, char *argv[])
 {
     map<string,string> keys;
     string option = "";
                         
     // Parse all command line arguments
-    parseArguments(args, keys);
-
-    readInputs(keys);
-    readOutputs(keys);
-    readProfiles(keys);
+    parseArguments(argc, argv, keys);
 
     log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
     log::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
@@ -55,110 +52,61 @@ Application::main(std::vector <string> &args)
 }
 
 void
-Application::runPipeline(Options &opt)
+Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
 {
-    DrillMap drillMap(opt);
-
-    std::cout << "Input format = " << (int)opt.inputFormat << std::endl;
-    std::cout << "Output format = " << (int)opt.outputFormat << std::endl;
-    std::cout << "Input = " << opt.input << std::endl;
-    std::cout << "Output = " << opt.output << std::endl;
-
-    if (opt.inputFormat == Format::MAP) {
+    static struct option long_options[] = {
         
-        // Load the drill map from disk
-        drillMap.load(opt.input);
-
-    } else {
+        { "verbose", no_argument,       NULL, 'v' },
+        { "make",    no_argument,       NULL, 'm' },
+        { "profile", required_argument, NULL, 'p' },
+        { "output",  required_argument, NULL, 'o' },
+        { NULL,      0,                 NULL,  0  }
+    };
     
-        // Compute the drill map
-        Driller driller(opt, drillMap);
-        driller.drill();
-    }
+    opterr = 0; // Don't print the default error messages
     
-    // Are we supposed to save the map file?
-    if (opt.outputFormat == Format::MAP) {
+    while (1) {
         
-        drillMap.save(opt.output);
-    }
-    
-    // Are we suppoed to create an image file?
-    if (opt.outputFormat == Format::TIF) {
+        int arg = getopt_long(argc, argv, ":vmp:o:", long_options, NULL);
+        if (arg == -1) break;
 
-        // Run the colorizer
-        Colorizer colorizer(opt, drillMap);
-        colorizer.colorize();
-        colorizer.save(opt.output);
-    }
-}
-
-void
-Application::runMaker(map<string,string> &keys, Options &opt)
-{
-    Maker maker(keys, opt);
-    maker.generate();
-}
-
-void
-Application::parseArguments(std::vector <string> &args, map<string,string> &keys)
-{
-    // The first argument is the path the executed binary
-    keys["exec"] = pop(args);
-    
-    if (args.empty()) throw SyntaxError();
-    
-    while (!args.empty()) {
-        
-        if (args.front()[0] == '-') {
+        switch (arg) {
+                
+            case 'v':
+                keys["verbose"] = "1";
+                break;
+                
+            case 'm':
+                keys["make"] = "1";
+                break;
             
-            parseOption(args, keys);
-            continue;
-        }
+            case 'p':
+                profiles.push_back(makeAbsolutePath(optarg));
+                break;
+            
+            case 'o':
+                outputs.push_back(makeAbsolutePath(optarg));
+                break;
 
-        inputs.push_back(makeAbsolutePath(pop(args)));
+            case ':':
+                throw SyntaxError("Missing argument for option '" +
+                                  string(argv[optind - 1]) + "'");
+                
+            default:
+                throw SyntaxError("Invalid option '" +
+                                  string(argv[optind - 1]) + "'");
+        }
+    }
+    
+    while (optind < argc) {
+        inputs.push_back(makeAbsolutePath(argv[optind++]));
     }
     
     checkArguments(keys);
-}
-
-void
-Application::parseOption(vector <string> &args, map<string,string> &keys)
-{
-    auto arg = pop(args);
-
-    if (arg == "-v" || arg == "-verbose") {
-        
-        keys["verbose"] = "1";
-        return;
-    }
-    if (arg == "-m" || arg == "-make") {
-        
-        keys["make"] = "1";
-        return;
-    }
-    if (arg == "-p" || arg == "-profile") {
-        
-        profiles.push_back(pop(args));
-        return;
-    }
-    if (arg == "-o" || arg == "-output") {
-
-        outputs.push_back(makeAbsolutePath(pop(args)));
-        return;
-    }
-
-    throw SyntaxError("Unknown option: " + arg);
-}
-
-string
-Application::pop(vector <string> &args)
-{
-    if (args.empty()) throw SyntaxError("Missing argument");
     
-    auto result = args.front();
-    args.erase(args.begin());
-    
-    return result;
+    readInputs(keys);
+    readOutputs(keys);
+    readProfiles(keys);
 }
 
 void
@@ -213,6 +161,46 @@ Application::checkArguments(map<string,string> &keys)
                               ": Invalid format. Expected .map or .tiff");
         }
     }
+}
+
+void
+Application::runPipeline(Options &opt)
+{
+    DrillMap drillMap(opt);
+
+    if (opt.inputFormat == Format::MAP) {
+        
+        // Load the drill map from disk
+        drillMap.load(opt.input);
+
+    } else {
+    
+        // Compute the drill map
+        Driller driller(opt, drillMap);
+        driller.drill();
+    }
+    
+    // Are we supposed to save the map file?
+    if (opt.outputFormat == Format::MAP) {
+        
+        drillMap.save(opt.output);
+    }
+    
+    // Are we suppoed to create an image file?
+    if (opt.outputFormat == Format::TIF) {
+
+        // Run the colorizer
+        Colorizer colorizer(opt, drillMap);
+        colorizer.colorize();
+        colorizer.save(opt.output);
+    }
+}
+
+void
+Application::runMaker(map<string,string> &keys, Options &opt)
+{
+    Maker maker(keys, opt);
+    maker.generate();
 }
 
 void

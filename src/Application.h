@@ -27,8 +27,8 @@ class Application {
 public:
         
     // Main entry point
-    void main(std::vector <string> &args) throws;
-    
+    void main(int argc, char *argv[]) throws;
+
 private:
     
     // Executes the drill pipeline or the Makefile generator
@@ -36,12 +36,8 @@ private:
     void runMaker(map<string,string> &keys, struct Options &opt);
 
     // Helper methods for parsing command line arguments
-    void parseArguments(std::vector <string> &args, map<string,string> &keys) throws;
-    void parseOption(vector <string> &args, map<string,string> &keys) throws;
-    string pop(vector <string> &args) throws;
-
+    void parseArguments(int argc, char *argv[], map<string,string> &keys) throws;
     void checkArguments(map<string,string> &keys) throws;
-
     void readInputs(map<string,string> &keys) throws;
     void readOutputs(map<string,string> &keys) throws;
     void readProfiles(map<string,string> &keys) throws;
