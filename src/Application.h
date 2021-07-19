@@ -25,16 +25,16 @@ class Application {
 public:
         
     // Main entry point
-    void main(int argc, char *argv[]) throws;
+    void main(int argc, char *argv[]);
 
 private:
     
     // Helper methods for parsing command line arguments
-    void parseArguments(int argc, char *argv[], map<string,string> &keys) throws;
-    void checkArguments(map<string,string> &keys) throws;
-    void readInputs(map<string,string> &keys) throws;
-    void readOutputs(map<string,string> &keys) throws;
-    void readProfiles(map<string,string> &keys) throws;
+    void parseArguments(int argc, char *argv[], map<string,string> &keys);
+    void checkArguments(map<string,string> &keys);
+    void readInputs(map<string,string> &keys);
+    void readOutputs(map<string,string> &keys);
+    void readProfiles(map<string,string> &keys);
     
     // Executes the drill pipeline or the Makefile generator
     void runPipeline(struct Options &opt);

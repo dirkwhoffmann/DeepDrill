@@ -35,6 +35,7 @@ Maker::generateLocationFile()
 {
     auto &keys = opt.keys;
 
+    // Open output stream
     std::ofstream os(projectDir / (project + ".loc"));
 
     // Write header
@@ -54,11 +55,9 @@ Maker::generateProfile()
 {
     auto &keys = opt.keys;
     
+    // Open output stream
     std::ofstream os(projectDir / (project + ".prf"));
     
-    for (auto &it : keys) {
-        std::cout << "Key: " << it.first << " = " << it.second << std::endl;
-    }
     // Write header
     writeHeader(os);
     
@@ -92,6 +91,7 @@ Maker::generateMakefile()
 {
     auto &keys = opt.keys;
 
+    // Open output stream
     std::ofstream os(projectDir / "Makefile");
 
     // Write header

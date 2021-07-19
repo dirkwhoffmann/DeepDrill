@@ -37,12 +37,14 @@ Logger&
 Logger::operator<<(const log::Flush &arg)
 {
     std::cout.flush();
+    
     return *this;
 }
 
 Logger&
 Logger::operator<<(const log::ralign &arg)
 {
+    blanks = 0;
     std::cout << std::right << std::setw(30) << arg.str;
     
     return *this;
@@ -99,7 +101,7 @@ Logger&
 Logger::operator<<(const ExtendedDouble& arg)
 {
     blanks = 0;
-    std::cout << arg.mantissa << "*2^" << arg.exponent;
+    std::cout << arg.mantissa << "|" << arg.exponent;
     
     return *this;
 
@@ -111,7 +113,7 @@ Logger::operator<<(const ExtendedComplex& arg)
     blanks = 0;
     std::cout << "(" << arg.mantissa.re;
     std::cout << "," << arg.mantissa.im << "i";
-    std::cout << ")" << "*2^" << arg.exponent;
+    std::cout << ")" << "|" << arg.exponent;
     
     return *this;
 }

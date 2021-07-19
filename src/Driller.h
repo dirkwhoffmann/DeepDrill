@@ -25,12 +25,9 @@ class Driller {
     // Configuration options
     const struct Options &opt;
     
-    // The associated map file
+    // The associated drill map
     DrillMap &map;
 
-    // Stop flag for interrupting the computation
-    bool stop = false;
-    
     
     //
     // Perturbation parameters
@@ -69,9 +66,9 @@ public:
                 
 public:
     
-    // Computes the drill map
+    // Computes the drill map (main entry point)
     void drill();
-
+    
 private:
 
     // Drills a collection of points or a single point

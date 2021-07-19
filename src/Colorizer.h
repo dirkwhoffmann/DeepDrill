@@ -53,7 +53,7 @@ public:
     // Exporting
     //
     
-    void save(const string &path) throws;
+    void save(const string &path);
 };
 
 }

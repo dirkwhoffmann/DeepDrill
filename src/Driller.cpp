@@ -29,7 +29,7 @@ Driller::drill()
     Clock stopWatch;
     vector<Coord> remaining;
     vector<Coord> glitches;
-    
+        
     if (opt.verbose) {
         
         log::cout << log::vspace;

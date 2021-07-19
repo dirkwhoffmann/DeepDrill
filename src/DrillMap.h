@@ -41,7 +41,7 @@ public:
     
     DrillMap(const Options &options);
     
-    void load(const string &path) throws;
+    void load(const string &path);
     void resize(isize w, isize h);
 
     const MapEntry &get(isize w, isize h) const;
