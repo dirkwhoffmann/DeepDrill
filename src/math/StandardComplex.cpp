@@ -31,6 +31,7 @@ StandardComplex::operator=(const PrecisionComplex &other)
     return *this;
 }
 
+/*
 std::ostream& operator<<(std::ostream& os, const StandardComplex& value)
 {
     os << "(" << value.re;
@@ -39,5 +40,6 @@ std::ostream& operator<<(std::ostream& os, const StandardComplex& value)
 
     return os;
 }
+*/
 
 }

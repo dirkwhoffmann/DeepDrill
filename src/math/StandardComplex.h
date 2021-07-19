@@ -142,7 +142,7 @@ struct StandardComplex {
     // Pretty printing
     //
     
-    friend std::ostream& operator<<(std::ostream& os, const StandardComplex& value);
+    // friend std::ostream& operator<<(std::ostream& os, const StandardComplex& value);
 };
 
 }
