@@ -217,14 +217,7 @@ struct ExtendedComplex {
         result.mantissa.im = -result.mantissa.im;
         result *= norm().reciprocal();
         return result;
-    }
-    
-
-    //
-    // Pretty printing
-    //
-    
-    // friend std::ostream& operator<<(std::ostream& os, const ExtendedComplex& value);
+    }    
 };
 
 }

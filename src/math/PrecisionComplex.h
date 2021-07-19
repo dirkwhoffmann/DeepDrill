@@ -77,12 +77,6 @@ struct PrecisionComplex {
         
         return PrecisionComplex(re *other.re - im * other.im, re * other.im + im * other.re);
     }
-    
-    //
-    // Pretty printing
-    //
-    
-    // friend std::ostream& operator<<(std::ostream& os, const PrecisionComplex& value);
 };
 
 }

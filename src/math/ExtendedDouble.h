@@ -183,13 +183,6 @@ struct ExtendedDouble {
     bool operator>(ExtendedDouble &other);
     bool operator<(double other);
     bool operator>(double other);
-
-    
-    //
-    // Pretty printing
-    //
-    
-    // friend std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value);
-};
+ };
 
 }
