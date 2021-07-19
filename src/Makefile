@@ -54,7 +54,7 @@ subdirs:
 
 $(EXEC): $(OBJ) $(UTILOBJ) $(MATHOBJ)
 	@echo "Linking"
-	g++ -pthread -o deepdrill */*.o *.o $(MYLPATH) -lgmpxx -lgmp
+	g++ -pthread -o deepdrill -lgmpxx -lgmp */*.o *.o
 	# $(CC) $(LDFLAGS) -o $(EXEC) */*.o *.o
 	@echo "Installing"
 	mv $(EXEC) $(BINDIR)
