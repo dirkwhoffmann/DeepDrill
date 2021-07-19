@@ -143,7 +143,7 @@ Application::checkArguments(map<string,string> &keys)
         }
     }
     
-    if (keys.find("make") != keys.end()) {
+    if (keys["make"] == "1") {
         
         // The input files must be a location files
         if (inSuffix != "loc") {
@@ -151,6 +151,9 @@ Application::checkArguments(map<string,string> &keys)
         }
 
         // The output must be an empty directory
+        if (!fileExists(out)) {
+            throw SyntaxError("Output directory " + out + " does not exist");
+        }
         if (!isDirectory(out)) {
             throw SyntaxError("The output file must be a directory");
         }

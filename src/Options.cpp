@@ -22,6 +22,7 @@ Options::Options(map <string,string> &k)
     keys["input"] = "";
     keys["output"] = "";
     keys["verbose"] = "0";
+    keys["make"] = "0";
     keys["location.real"] = "0.0";
     keys["location.imag"] = "0.0";
     keys["location.zoom"] = "1.0";
@@ -54,9 +55,10 @@ Options::parse()
 
         auto &key = it.first;
         auto &value = it.second;
-
+        
         if (key == "exec") {
             exec = value;
+        } else if (key == "make") {
         } else if (key == "input") {
             input = value;
         } else if (key == "output") {
