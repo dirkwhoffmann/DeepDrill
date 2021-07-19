@@ -59,7 +59,10 @@ struct Options {
         // Image dimensions ins pixels
         isize width;
         isize height;
-        
+    
+        // Fraction of pixels that are allowed to have a wrong color
+        double badpixels;
+
     } image;
     
     struct {
@@ -76,10 +79,7 @@ struct Options {
         
         // Maximum number of rounds
         isize rounds;
-        
-        // Fraction of pixels that need to be computed
-        double accuracy;
-        
+                
     } perturbation;
     
     struct {

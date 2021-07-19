@@ -28,10 +28,10 @@ Options::Options(map <string,string> &k)
     keys["location.depth"] = "500";
     keys["image.width"] = "960";
     keys["image.height"] = "540";
+    keys["image.badpixels"] = "0.001";
     keys["palette.values"] = Palette::defaultPalette;
     keys["perturbation.tolerance"] = "1e-12";
     keys["perturbation.rounds"] = "50";
-    keys["perturbation.accuracy"] = "0.999";
     keys["approximation.coefficients"] = "5";
     keys["approximation.tolerance"] = "1e-12";
     
@@ -75,14 +75,14 @@ Options::parse()
             image.width = stoi(value);
         } else if (key == "image.height") {
             image.height = stoi(value);
+        } else if (key == "image.badpixels") {
+            image.badpixels = stod(value);
         } else if (key == "palette.values") {
             palette.values = value;
         } else if (key == "perturbation.tolerance") {
             perturbation.tolerance = stod(value);
         } else if (key == "perturbation.rounds") {
             perturbation.rounds = stod(value);
-        } else if (key == "perturbation.accuracy") {
-            perturbation.accuracy = stod(value);
         } else if (key == "approximation.coefficients") {
             approximation.coefficients = stoi(value);
         } else if (key == "approximation.tolerance") {

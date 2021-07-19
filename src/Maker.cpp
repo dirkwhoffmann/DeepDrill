@@ -61,17 +61,17 @@ Maker::generateProfile()
     // Write header
     writeHeader(os);
     
-    // Write location section
+    // Write image section
     os << "[image]" << std::endl;
     os << "width = " << keys["image.width"] << std::endl;
     os << "height = " << keys["image.height"] << std::endl;
+    os << "badpixels = " << keys["image.badpixels"] << std::endl;
     os << std::endl;
 
     // Write perturbation section
     os << "[perturbation]" << std::endl;
     os << "tolerance = " << keys["perturbation.tolerance"] << std::endl;
     os << "rounds = " << keys["perturbation.rounds"] << std::endl;
-    os << "accuracy = " << keys["perturbation.accuracy"] << std::endl;
     os << std::endl;
 
     // Write series approximation section

@@ -101,7 +101,7 @@ Logger&
 Logger::operator<<(const ExtendedDouble& arg)
 {
     blanks = 0;
-    std::cout << arg.mantissa << "|" << arg.exponent;
+    std::cout << arg.mantissa << "b" << arg.exponent;
     
     return *this;
 
@@ -113,7 +113,7 @@ Logger::operator<<(const ExtendedComplex& arg)
     blanks = 0;
     std::cout << "(" << arg.mantissa.re;
     std::cout << "," << arg.mantissa.im << "i";
-    std::cout << ")" << "|" << arg.exponent;
+    std::cout << ")" << "b" << arg.exponent;
     
     return *this;
 }

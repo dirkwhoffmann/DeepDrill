@@ -27,6 +27,7 @@ void
 Driller::drill()
 {
     Clock stopWatch;
+    
     vector<Coord> remaining;
     vector<Coord> glitches;
         
@@ -39,22 +40,18 @@ Driller::drill()
         log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Pixel delta: ");
         log::cout << opt.mpfPixelDelta << log::endl;
-        log::cout << log::ralign("Maximum drill depth: ");
-        log::cout << opt.location.depth << log::endl;
         log::cout << log::ralign("GMP Precision: ");
         log::cout << mpf_get_default_prec() << " Bit" << log::endl;
-        log::cout << log::ralign("Perturbation tolerance: ");
-        log::cout << opt.perturbation.tolerance << log::endl;
         log::cout << log::ralign("Max rounds: ");
         log::cout << opt.perturbation.rounds << log::endl;
         log::cout << log::vspace;
     }
     
     // Allcoate the drill map
-    map.resize(opt.image.width, opt.image.height);
+    // map.resize(opt.image.width, opt.image.height);
         
     // Determine the number of tolerated glitched pixels
-    isize allowedBadPixels = opt.image.width * opt.image.height * (1.0 - opt.perturbation.accuracy);
+    isize allowedBadPixels = opt.image.width * opt.image.height * opt.image.badpixels;
         
     // Collect all pixel coordinates to be drilled at
     for (isize y = 0; y < opt.image.height; y++) {
@@ -83,7 +80,11 @@ Driller::drill()
             log::cout << log::vspace;
             log::cout << log::ralign("Reference point: ");
             log::cout << ref.coord << log::endl;
-            log::cout << log::ralign("Depth: ");
+            log::cout << log::ralign("Perturbation tolerance: ");
+            log::cout << opt.perturbation.tolerance << log::endl;
+            log::cout << log::ralign("Maximum depth: ");
+            log::cout << opt.location.depth << log::endl;
+            log::cout << log::ralign("Actual depth: ");
             log::cout << ref.xn.size() << log::endl;
             log::cout << log::vspace;
         }
@@ -103,6 +104,10 @@ Driller::drill()
             if (opt.verbose) {
                 
                 log::cout << log::vspace;
+                log::cout << log::ralign("Coefficients: ");
+                log::cout << opt.approximation.coefficients << log::endl;
+                log::cout << log::ralign("Tolerance: ");
+                log::cout << opt.approximation.tolerance << log::endl;
                 log::cout << log::ralign("Skippable iterations: ");
                 log::cout << ref.skipped << log::endl;
                 log::cout << log::vspace;
