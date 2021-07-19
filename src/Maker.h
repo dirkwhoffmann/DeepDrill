@@ -16,12 +16,9 @@
 namespace dd {
 
 class Maker {
-
-    // Key-value pairs
-    map<string,string> &keys;
     
     // Configuration options
-    const struct Options &opt;
+    struct Options &opt;
 
     // Name of the project
     string project;
@@ -32,7 +29,7 @@ class Maker {
 public:
     
     // Constructor
-    Maker(map<string,string> &keys, const Options &opt);
+    Maker(Options &opt);
     
     // Main entry point
     void generate(); 

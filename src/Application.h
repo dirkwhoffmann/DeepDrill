@@ -12,8 +12,6 @@
 #pragma once
 
 #include "commons.h"
-#include "DrillMap.h"
-#include "Logger.h"
 
 namespace dd {
 
@@ -40,7 +38,7 @@ private:
     
     // Executes the drill pipeline or the Makefile generator
     void runPipeline(struct Options &opt);
-    void runMaker(map<string,string> &keys, struct Options &opt);
+    void runMaker(struct Options &opt);
 
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);

@@ -16,7 +16,7 @@
 
 namespace dd {
 
-Maker::Maker(map<string,string> &k, const Options &o) : keys(k), opt(o)
+Maker::Maker(Options &o) : opt(o)
 {
     project = stripSuffix(stripPath(opt.input));
     projectDir = std::filesystem::path(opt.output);
@@ -33,8 +33,8 @@ Maker::generate()
 void
 Maker::generateLocationFile()
 {
-    log::cout << "generateLocationFile()" << log::endl;
-        
+    auto &keys = opt.keys;
+
     std::ofstream os(projectDir / (project + ".loc"));
 
     // Write header
@@ -52,7 +52,7 @@ Maker::generateLocationFile()
 void
 Maker::generateProfile()
 {
-    log::cout << "generateProfile()" << log::endl;
+    auto &keys = opt.keys;
     
     std::ofstream os(projectDir / (project + ".prf"));
     
@@ -90,7 +90,7 @@ Maker::generateProfile()
 void
 Maker::generateMakefile()
 {
-    log::cout << "generateMakefile()" << log::endl;
+    auto &keys = opt.keys;
 
     std::ofstream os(projectDir / "Makefile");
 

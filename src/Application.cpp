@@ -13,6 +13,7 @@
 #include "Application.h"
 #include "Colorizer.h"
 #include "Driller.h"
+#include "Logger.h"
 #include "Options.h"
 #include "Maker.h"
 #include <getopt.h>
@@ -43,7 +44,7 @@ Application::main(int argc, char *argv[])
 
     // Check the operation mode
     if (keys.find("make") != keys.end()) {
-        runMaker(keys, opt);
+        runMaker(opt);
     } else {
         runPipeline(opt);
     }
@@ -276,9 +277,9 @@ Application::runPipeline(Options &opt)
 }
 
 void
-Application::runMaker(map<string,string> &keys, Options &opt)
+Application::runMaker(Options &opt)
 {
-    Maker maker(keys, opt);
+    Maker maker(opt);
     maker.generate();
 }
 

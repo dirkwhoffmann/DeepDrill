@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Application.h"
+#include "Logger.h"
 
 using namespace dd;
 
@@ -17,7 +18,7 @@ int main(int argc, char *argv[])
 {
     try {
         
-        dd::Application().main(argc, argv);
+        Application().main(argc, argv);
         
     } catch (dd::SyntaxError &e) {
         
