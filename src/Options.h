@@ -47,7 +47,8 @@ struct Options {
     string input;
     string output;
     isize verbose;
-
+    bool make;
+    
     struct {
 
         // Center coordinate

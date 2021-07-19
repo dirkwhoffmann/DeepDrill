@@ -40,7 +40,7 @@ Options::Options(map <string,string> &k)
     for (auto &it : k) {
         if (keys.find(it.first) == keys.end()) {
             throw InvalidValueException("Error: Unknown key '" + it.first + "'");
-        }
+        }        
         keys[it.first] = it.second;
     }
     
@@ -59,6 +59,7 @@ Options::parse()
         if (key == "exec") {
             exec = value;
         } else if (key == "make") {
+            make = stoi(value);
         } else if (key == "input") {
             input = value;
         } else if (key == "output") {

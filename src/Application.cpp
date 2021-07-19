@@ -42,12 +42,8 @@ Application::main(int argc, char *argv[])
     // Start a stop watch
     Clock stopWatch;
 
-    // Check the operation mode
-    if (keys.find("make") != keys.end()) {
-        runMaker(opt);
-    } else {
-        runPipeline(opt);
-    }
+    // Execute
+    opt.make ? runMaker(opt) : runPipeline(opt);
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
 }
@@ -143,7 +139,7 @@ Application::checkArguments(map<string,string> &keys)
         }
     }
     
-    if (keys["make"] == "1") {
+    if (keys.find("make") != keys.end()) {
         
         // The input files must be a location files
         if (inSuffix != "loc") {
