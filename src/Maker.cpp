@@ -112,7 +112,8 @@ Maker::generateMakefile()
 
     os << project << ".tiff: " << project << ".map" << std::endl;
     os << "\t";
-    os << "$(DEEPDRILL) -v ";
+    os << "$(DEEPDRILL)";
+    if (opt.verbose) os << " -v";
     os << " -p " << project << ".prf";
     os << " -o " << project << ".tiff";
     os << " " << project << ".map " << std::endl;
@@ -120,7 +121,8 @@ Maker::generateMakefile()
 
     os << project << ".map: " << project << ".loc" << std::endl;
     os << "\t";
-    os << "$(DEEPDRILL) -v ";
+    os << "$(DEEPDRILL)";
+    if (opt.verbose) os << " -v";
     os << " -p " << project << ".prf";
     os << " -o " << project << ".map";
     os << " " << project << ".loc " << std::endl;
