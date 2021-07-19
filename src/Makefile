@@ -20,8 +20,10 @@ CCFLAGS    = -std=c++17 -O3 -Wall -Wfatal-errors
 CPPFLAGS   = -I$(CURDIR) \
              -I$(CURDIR)/$(UTILDIR) \
 			 -I$(CURDIR)/$(MATHDIR) \
+			 -I/usr/local/include \
 			 $(shell pkg-config --cflags gmpxx)
 LDFLAGS    = -pthread \
+             -L/usr/local/lib \
              $(shell pkg-config --libs gmpxx)
 SRC        = $(wildcard *.cpp)
 MATHSRC    = $(wildcard math/*.cpp)
