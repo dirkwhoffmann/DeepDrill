@@ -81,19 +81,16 @@ ExtendedComplex::ExtendedComplex(const mpf_class &re, const mpf_class &im)
 ExtendedComplex::ExtendedComplex(const PrecisionComplex &other) :
 ExtendedComplex(other.re, other.im) { }
 
+/*
 std::ostream& operator<<(std::ostream& os, const ExtendedComplex& value)
 {
     
     os << "(" << value.mantissa.re;
     os << "," << value.mantissa.im << "i";
     os << ")" << "*2^" << value.exponent;
-    /*
-    os << "(" << ldexp(value.mantissa.re, (int)value.exponent);
-    os << "," << ldexp(value.mantissa.im, (int)value.exponent) << "i";
-    os << ")";
-    */
 
     return os;
 }
+*/
 
 }

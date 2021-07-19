@@ -82,7 +82,7 @@ struct PrecisionComplex {
     // Pretty printing
     //
     
-    friend std::ostream& operator<<(std::ostream& os, const PrecisionComplex& value);
+    // friend std::ostream& operator<<(std::ostream& os, const PrecisionComplex& value);
 };
 
 }

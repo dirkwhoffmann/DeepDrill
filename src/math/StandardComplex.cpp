@@ -31,15 +31,4 @@ StandardComplex::operator=(const PrecisionComplex &other)
     return *this;
 }
 
-/*
-std::ostream& operator<<(std::ostream& os, const StandardComplex& value)
-{
-    os << "(" << value.re;
-    os << "," << value.im << "i";
-    os << ")";
-
-    return os;
-}
-*/
-
 }

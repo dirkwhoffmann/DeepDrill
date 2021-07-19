@@ -224,7 +224,7 @@ struct ExtendedComplex {
     // Pretty printing
     //
     
-    friend std::ostream& operator<<(std::ostream& os, const ExtendedComplex& value);
+    // friend std::ostream& operator<<(std::ostream& os, const ExtendedComplex& value);
 };
 
 }

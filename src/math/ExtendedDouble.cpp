@@ -97,9 +97,11 @@ ExtendedDouble::operator>(double other)
     return *this > tmp;
 }
 
+/*
 std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value)
 {
     return os << value.mantissa << "*2^" << value.exponent;
 }
+*/
 
 }

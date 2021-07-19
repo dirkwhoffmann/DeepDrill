@@ -136,13 +136,6 @@ struct StandardComplex {
         auto nrm = norm();
         return StandardComplex { re / nrm, -im / nrm };
     }
-
-    
-    //
-    // Pretty printing
-    //
-    
-    // friend std::ostream& operator<<(std::ostream& os, const StandardComplex& value);
 };
 
 }

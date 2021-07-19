@@ -56,6 +56,7 @@ $(EXEC): $(OBJ) $(UTILOBJ) $(MATHOBJ)
 	@echo "Linking"
 	$(CC) -o $(EXEC) */*.o *.o $(LDFLAGS)
 	@echo "Installing"
+	mkdir -p $(BINDIR)
 	mv $(EXEC) $(BINDIR)
 
 clean:

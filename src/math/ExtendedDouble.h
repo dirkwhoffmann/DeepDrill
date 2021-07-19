@@ -189,7 +189,7 @@ struct ExtendedDouble {
     // Pretty printing
     //
     
-    friend std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value);
+    // friend std::ostream& operator<<(std::ostream& os, const ExtendedDouble& value);
 };
 
 }
