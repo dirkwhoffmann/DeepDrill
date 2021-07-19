@@ -36,8 +36,9 @@ public:
     void compute(ReferencePoint &ref, isize num, isize depth);
         
     // Computes an approximation
-    ExtendedComplex evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const;
-
+    ExtendedComplex evaluate(const Coord &coord,
+                             const ExtendedComplex &delta,
+                             isize iteration) const;
 };
 
 }
