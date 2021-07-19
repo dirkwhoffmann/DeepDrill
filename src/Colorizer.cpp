@@ -25,6 +25,14 @@ Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
     
     auto bytes = map.width * map.height;
     image = new u32[bytes] {};
+
+    raw2tiff = "/usr/bin/raw2tiff";
+    if (!fileExists(raw2tiff)) {
+        raw2tiff = "/usr/local/bin/raw2tiff";
+        if (!fileExists(raw2tiff)) {
+            throw Exception("Expecting raw2tiff in /usr/bin or /usr/local/bin");
+        }
+    }
 }
 
 Colorizer::~Colorizer()
@@ -94,11 +102,10 @@ Colorizer::save(const string &path)
     ProgressIndicator progress2("Converting to TIFF");
     
     // Convert raw data into a TIFF file
-    string exec = "/usr/local/bin/raw2tiff";
     string options = "-p rgb -b 3";
     options += " -w " + std::to_string(width);
     options += " -l " + std::to_string(height);
-    string command = exec + " " + options + " " + rawFile + " " + tifFile;
+    string command = raw2tiff + " " + options + " " + rawFile + " " + tifFile;
     
     if (system(command.c_str()) != 0) {
         throw Exception("Failed to execute " + command);
@@ -117,7 +124,7 @@ Colorizer::save(const string &path)
         log::cout << log::ralign("Output: ");
         log::cout << tifFile << log::endl;
         log::cout << log::ralign("Converter: ");
-        log::cout << exec << log::endl;
+        log::cout << raw2tiff << log::endl;
         log::cout << log::ralign("Options: ");
         log::cout << options << log::vspace;
     }
