@@ -54,9 +54,7 @@ Application::main(int argc, char *argv[])
 
 void
 Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
-{
-    keys["exec"] = argv[0];
-    
+{    
     static struct option long_options[] = {
         
         { "verbose", no_argument,       NULL, 'v' },
@@ -66,8 +64,13 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
         { NULL,      0,                 NULL,  0  }
     };
     
-    opterr = 0; // Don't print the default error messages
+    // Don't print the default error messages
+    opterr = 0;
     
+    // Remember the path to the DeppDrill executable
+    keys["exec"] = argv[0];
+
+    // Parse all options
     while (1) {
         
         int arg = getopt_long(argc, argv, ":vmp:o:", long_options, NULL);
@@ -101,6 +104,7 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
         }
     }
     
+    // Parse all remaining arguments
     while (optind < argc) {
         inputs.push_back(makeAbsolutePath(argv[optind++]));
     }
@@ -171,20 +175,16 @@ Application::readInputs(map<string,string> &keys)
     auto path = inputs.front();
     auto suffix = extractSuffix(path);
 
-    if (suffix == "map") {
-        
-        keys["input"] = path;
-        return;
-    }
+    keys["input"] = path;
+    
     if (suffix == "loc") {
-        
-        keys["input"] = path;
         Parser::parse(path, keys);
         return;
     }
+    if (suffix == "map") {
+        return;
+    }
     if (isDirectory(path)) {
-        
-        keys["input"] = path;
         return;
     }
 
@@ -197,21 +197,15 @@ Application::readOutputs(map<string,string> &keys)
     auto path = outputs.front();
     auto suffix = extractSuffix(path);
 
+    keys["output"] = path;
+
     if (suffix == "map") {
-        
-        keys["output"] = path;
         return;
     }
     if (suffix == "tiff" || suffix == "tif") {
-        
-        keys["output"] = path;
-        keys["tiff"] = path;  // DEPRECATED
         return;
     }
     if (isDirectory(path)) {
-        
-        keys["output"] = path;
-        keys["targetdir"] = path; // DEPRECATED
         return;
     }
 
@@ -248,6 +242,7 @@ Application::runPipeline(Options &opt)
 {
     DrillMap drillMap(opt);
 
+    // Create the drill map
     if (opt.inputFormat == Format::MAP) {
         
         // Load the drill map from disk
@@ -255,7 +250,7 @@ Application::runPipeline(Options &opt)
 
     } else {
     
-        // Compute the drill map
+        // Run the driller
         Driller driller(opt, drillMap);
         driller.drill();
     }
