@@ -22,7 +22,8 @@ CPPFLAGS   = -I$(CURDIR) \
 			 -I$(CURDIR)/$(MATHDIR) \
 			 -I/usr/local/include \
 			 $(shell pkg-config --cflags gmpxx)
-LDFLAGS    = -L/usr/local/lib \
+LDFLAGS    = -pthread \
+             -L/usr/local/lib \
              $(shell pkg-config --libs gmpxx)
 SRC        = $(wildcard *.cpp)
 MATHSRC    = $(wildcard math/*.cpp)
@@ -53,8 +54,7 @@ subdirs:
 
 $(EXEC): $(OBJ) $(UTILOBJ) $(MATHOBJ)
 	@echo "Linking"
-	#g++ -pthread -o deepdrill */*.o *.o -lgmpxx -lgmp
-	$(CC) -pthread -o $(EXEC) */*.o *.o $(LDFLAGS)
+	$(CC) -o $(EXEC) */*.o *.o $(LDFLAGS)
 	@echo "Installing"
 	mv $(EXEC) $(BINDIR)
 
