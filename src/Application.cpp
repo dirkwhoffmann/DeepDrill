@@ -69,7 +69,7 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
     opterr = 0;
     
     // Remember the path to the DeppDrill executable
-    keys["exec"] = argv[0];
+    keys["exec"] = makeAbsolutePath(argv[0]);
 
     // Parse all options
     while (1) {
