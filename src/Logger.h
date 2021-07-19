@@ -28,18 +28,20 @@ static constexpr Endl endl;
 static constexpr VSpace vspace;
 static constexpr Flush flush;
 
-// Default logger (writes to stdout)
-// extern class Logger cout;
-
 }
 
 class Logger {
 
     // Blank line counter
     isize blanks = 0;
+    
+    // Indicates if all output should be omitted
+    bool silent = false;
 
 public:
 
+    void setSilent(bool value) { silent = value; }
+    
     Logger& operator<<(const log::Endl &arg);
     Logger& operator<<(const log::VSpace &arg);
     Logger& operator<<(const log::Flush &arg);

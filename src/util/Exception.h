@@ -29,7 +29,6 @@ struct Exception : public std::exception {
 };
 
 struct SyntaxError : public Exception {
-
     using Exception::Exception;
 };
 

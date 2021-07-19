@@ -59,6 +59,7 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
         
         { "verbose", no_argument,       NULL, 'v' },
         { "make",    no_argument,       NULL, 'm' },
+        { "batch",   no_argument,       NULL, 'b' },
         { "profile", required_argument, NULL, 'p' },
         { "output",  required_argument, NULL, 'o' },
         { NULL,      0,                 NULL,  0  }
@@ -73,7 +74,7 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vmp:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vmbp:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -85,7 +86,11 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
             case 'm':
                 keys["make"] = "1";
                 break;
-            
+
+            case 'b':
+                log::cout.setSilent(true);
+                break;
+
             case 'p':
                 profiles.push_back(makeAbsolutePath(optarg));
                 break;

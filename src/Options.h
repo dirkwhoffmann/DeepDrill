@@ -18,12 +18,20 @@ namespace dd {
 
 enum class Format { NONE, LOC, MAP, PRF, DIR, TIF };
 
-struct InvalidValueException : std::runtime_error {
-    using std::runtime_error::runtime_error;
+struct InvalidValueException : Exception {
+    using Exception::Exception;
+};
+
+struct UserInterruptException : Exception {
+    using Exception::Exception;
 };
 
 struct Options {
 
+    // Set to true to abort the computation
+    bool stop = false;
+
+    
     //
     // Key-value pairs (unparsed)
     //

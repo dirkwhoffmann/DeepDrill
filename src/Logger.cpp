@@ -18,91 +18,111 @@ namespace dd {
 Logger&
 Logger::operator<<(const log::Endl &arg)
 {
-    blanks++;
-    std::cout << std::endl;
-    
+    if (!silent) {
+        
+        blanks++;
+        std::cout << std::endl;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const log::VSpace &arg)
 {
-    if (blanks < 2) *this << log::endl;
-    if (blanks < 2) *this << log::endl;
-    
+    if (!silent) {
+
+        if (blanks < 2) *this << log::endl;
+        if (blanks < 2) *this << log::endl;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const log::Flush &arg)
 {
-    std::cout.flush();
-    
+    if (!silent) {
+
+        std::cout.flush();
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const log::ralign &arg)
 {
-    blanks = 0;
-    std::cout << std::right << std::setw(30) << arg.str;
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << std::right << std::setw(30) << arg.str;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const string &arg)
 {
-    blanks = 0;
-    std::cout << arg;
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << arg;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const isize &arg)
 {
-    blanks = 0;
-    std::cout << arg;
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << arg;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const Time &arg)
 {
-    blanks = 0;
-    std::cout << arg;
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << arg;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const Coord &arg)
 {
-    blanks = 0;
-    std::cout << "(" << arg.x << "," << arg.y << ")";
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << "(" << arg.x << "," << arg.y << ")";
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const StandardComplex& arg)
 {
-    blanks = 0;
-    std::cout << "(" << arg.re;
-    std::cout << "," << arg.im << "i";
-    std::cout << ")";
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << "(" << arg.re;
+        std::cout << "," << arg.im << "i";
+        std::cout << ")";
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const ExtendedDouble& arg)
 {
-    blanks = 0;
-    std::cout << arg.mantissa << "b" << arg.exponent;
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << arg.mantissa << "b" << arg.exponent;
+    }
     return *this;
 
 }
@@ -110,22 +130,26 @@ Logger::operator<<(const ExtendedDouble& arg)
 Logger&
 Logger::operator<<(const ExtendedComplex& arg)
 {
-    blanks = 0;
-    std::cout << "(" << arg.mantissa.re;
-    std::cout << "," << arg.mantissa.im << "i";
-    std::cout << ")" << "b" << arg.exponent;
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << "(" << arg.mantissa.re;
+        std::cout << "," << arg.mantissa.im << "i";
+        std::cout << ")" << "b" << arg.exponent;
+    }
     return *this;
 }
 
 Logger&
 Logger::operator<<(const PrecisionComplex& arg)
 {
-    blanks = 0;
-    std::cout << "(" << arg.re.get_d();
-    std::cout << "," << arg.im.get_d() << "i";
-    std::cout << ")";
-    
+    if (!silent) {
+
+        blanks = 0;
+        std::cout << "(" << arg.re.get_d();
+        std::cout << "," << arg.im.get_d() << "i";
+        std::cout << ")";
+    }
     return *this;
 }
 

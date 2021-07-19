@@ -22,8 +22,13 @@ int main(int argc, char *argv[])
         
     } catch (dd::SyntaxError &e) {
         
-        log::cout << "Syntax: ";
-        log::cout << "deepdrill [-v] [-p <profile>] -o <output> <input>";
+        log::cout << "Usage: ";
+        log::cout << "deepdrill [-bmv] [-p <profile>] -o <output> <input>" << log::endl;
+        log::cout << log::endl;
+        log::cout << "       -b or --batch    Run in batch mode" << log::endl;
+        log::cout << "       -m or --make     Run the Makefile generator" << log::endl;
+        log::cout << "       -v or --verbose  Run in verbose mode" << log::endl;
+        log::cout << "       -p or --profile  Customize settings" << log::endl;
         log::cout << log::endl;
         
         if (!e.description.empty()) {

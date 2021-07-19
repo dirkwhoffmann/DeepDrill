@@ -171,6 +171,8 @@
 				50BEC6FA269486A900CCDFA8 /* Options.cpp */,
 				5030F11326A2BCCF009A53B3 /* Logger.h */,
 				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
+				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
+				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 				50EB497526A067850019078C /* Maker.h */,
 				50EB497426A067850019078C /* Maker.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
@@ -185,8 +187,6 @@
 				50102350269EC70200AC61A8 /* DrillMap.cpp */,
 				50BEC6EE269486A800CCDFA8 /* Palette.h */,
 				50BEC6FE269486AA00CCDFA8 /* Palette.cpp */,
-				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
-				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
 				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
 			);

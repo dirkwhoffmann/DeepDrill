@@ -42,6 +42,8 @@ Colorizer::colorize()
         for (isize x = 0; x < map.width; x++) {
             colorize(Coord(x,y));
         }
+        
+        if (opt.stop) throw UserInterruptException();
         progress.step(map.width);
     }
 }

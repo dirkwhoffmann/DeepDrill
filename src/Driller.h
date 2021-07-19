@@ -27,7 +27,7 @@ class Driller {
     
     // The associated drill map
     DrillMap &map;
-
+    
     
     //
     // Perturbation parameters
@@ -68,7 +68,7 @@ public:
     
     // Computes the drill map (main entry point)
     void drill();
-    
+        
 private:
 
     //

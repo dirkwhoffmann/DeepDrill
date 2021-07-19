@@ -21,11 +21,14 @@ class Application {
     std::vector <string> profiles;
     std::vector <string> inputs;
     std::vector <string> outputs;
-            
+                
 public:
         
     // Main entry point
     void main(int argc, char *argv[]);
+
+    // Interrupt the current run
+    // void abort() { opt.stop = true; }
 
 private:
     

@@ -190,7 +190,6 @@ Driller::drill(ReferencePoint &r)
         double norm = z.norm();
 
         // Perform the escape check
-        // if (r.norm = StandardComplex(z).norm(); r.norm > 256) {
         if (norm >= 256) {
             r.escaped = true;
             map.set(r.coord, MapEntry { (u32)i, (float)::log(norm) });
@@ -198,7 +197,10 @@ Driller::drill(ReferencePoint &r)
         }
         
         // Update the progress counter
-        if (i % 1024 == 0) progress.step(1024);
+        if (i % 1024 == 0) {
+            if (opt.stop) throw UserInterruptException();
+            progress.step(1024);
+        }
     }
 }
 
@@ -214,6 +216,7 @@ Driller::drillProbePoints(vector <Coord> &probes)
         isize valid = drillProbePoint(probe);
         minValid = std::min(minValid, valid);
 
+        if (opt.stop) throw UserInterruptException();
         progress.step();
     }
     
@@ -259,6 +262,8 @@ Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
     for (unsigned int i = 0; i < remaining.size(); i++) {
         
         drill(remaining[i], glitches);
+        
+        if (opt.stop) throw UserInterruptException();
         progress.step(1);
     }
 }
