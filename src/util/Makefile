@@ -1,7 +1,18 @@
-.PHONY: all clean
+# ------------------------------------------------------------------------------
+# This file is part of DeepDrill
+#
+# A Mandelbrot generator based on perturbation and series approximation
+#
+# Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+# Licensed under the GNU General Public License v3
+#
+# See https://www.gnu.org for license information
+# ------------------------------------------------------------------------------
 
-SRC=$(wildcard *.cpp)
-OBJ=$(SRC:.cpp=.o)
+SRC = $(wildcard *.cpp)
+OBJ = $(SRC:.cpp=.o)
+
+.PHONY: all clean
 
 all: $(OBJ)
 	@echo > /dev/null
@@ -12,4 +23,4 @@ clean:
 
 %.o: %.cpp $(DEPS)
 	@echo "Compiling $<"
-	@$(MYCC) $(MYINC) -c -o $@ $<
+	$(CC) $(CCFLAGS) $(CPPFLAGS) -c -o $@ $<

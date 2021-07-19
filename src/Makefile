@@ -1,26 +1,36 @@
-SUBDIRS = util math
-MYINC = -I$(CURDIR) -I$(CURDIR)/math -I$(CURDIR)/util
-MYCC = g++ $(MYINC) -std=c++17 -O3 -Wall -Wfatal-errors
+# ------------------------------------------------------------------------------
+# This file is part of DeepDrill
+#
+# A Mandelbrot generator based on perturbation and series approximation
+#
+# Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+# Licensed under the GNU General Public License v3
+#
+# See https://www.gnu.org for license information
+# ------------------------------------------------------------------------------
 
-SRC=$(wildcard *.cpp)
-MATHSRC=$(wildcard math/*.cpp)
-UTILSRC=$(wildcard math/*.cpp)
+EXEC       = deepdrill
+BINDIR     = ../bin
+UTILDIR    = util
+MATHDIR    = math
+SUBDIRS    = $(UTILDIR) $(MATHDIR)
+CXX        = g++
+CC         = $(CXX)
+CCFLAGS    = -std=c++17 -O3 -Wall -Wfatal-errors
+CPPFLAGS   = -I$(CURDIR) \
+             -I$(CURDIR)/$(UTILDIR) \
+			 -I$(CURDIR)/$(MATHDIR) \
+			 $(shell pkg-config --cflags gmpxx)
+LDFLAGS    = -pthread \
+             $(shell pkg-config --libs gmpxx)
+SRC        = $(wildcard *.cpp)
+MATHSRC    = $(wildcard math/*.cpp)
+UTILSRC    = $(wildcard math/*.cpp)
+OBJ        = $(SRC:.cpp=.o)
+MATHOBJ    = $(MATHSRC:.cpp=.o)
+UTILOBJ    = $(UTILSRC:.cpp=.o)
 
-OBJ=$(SRC:.cpp=.o)
-MATHOBJ=$(MATHSRC:.cpp=.o)
-UTILOBJ=$(UTILSRC:.cpp=.o)
-
-UNAME := $(shell uname)
-
-ifeq ($(UNAME), Darwin)
-I_GMP = -I /usr/local/Cellar/gmp/6.2.1/include
-L_GMP = -L /usr/local/Cellar/gmp/6.2.1/lib
-else
-I_GMP = -I /usr/local/include
-L_GMP = -L /usr/local/lib
-endif
-
-export MYCC MYINC I_GMP L_GMP
+export CC CCFLAGS CPPFLAGS LDFLAGS
 
 .PHONY: all prebuild subdirs clean
 
@@ -38,13 +48,13 @@ subdirs:
 
 %.o: %.cpp $(DEPS)
 	@echo "Compiling $<"
-	@$(MYCC) $(MYINC) -c -o $@ $<
+	$(CC) $(CCFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-deepdrill: $(OBJ) $(UTILOBJ) $(MATHOBJ)
+$(EXEC): $(OBJ) $(UTILOBJ) $(MATHOBJ)
 	@echo "Linking"
-	@g++ -pthread -o deepdrill */*.o *.o $(MYLPATH) -lgmpxx -lgmp
+	$(CC) $(LDFLAGS) -o $(EXEC) */*.o *.o
 	@echo "Installing"
-	@mv deepdrill ../bin
+	mv $(EXEC) $(BINDIR)
 
 clean:
 	@echo "Cleaning up $(CURDIR)"

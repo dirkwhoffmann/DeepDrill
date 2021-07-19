@@ -36,9 +36,6 @@ class Driller {
     // The current reference point
     ReferencePoint ref;
 
-    // Pixel tolerance (fraction of pixels that can be glitched)
-    double badPixels = 0.001;
-
     
     //
     // Series approximation parameters
