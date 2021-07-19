@@ -46,7 +46,6 @@
 		500655E626957C8400982789 /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		500655E726957C8400982789 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500655EC2695AACB00982789 /* ice.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice.prf; sourceTree = "<group>"; };
-		5007E1DC26A58CEE000E7344 /* tmp */ = {isa = PBXFileReference; lastKnownFileType = text; path = tmp; sourceTree = "<group>"; };
 		50102344269DBEF000AC61A8 /* Exception.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Exception.cpp; sourceTree = "<group>"; };
 		50102345269DBEF000AC61A8 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		50102347269DC4F500AC61A8 /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
@@ -301,7 +300,6 @@
 		50CBBF0326A16E8D00EAF4F7 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				5007E1DC26A58CEE000E7344 /* tmp */,
 			);
 			path = bin;
 			sourceTree = "<group>";
