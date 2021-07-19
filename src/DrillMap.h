@@ -45,8 +45,10 @@ public:
     void resize(isize w, isize h);
 
     const MapEntry &get(isize w, isize h) const;
+    const MapEntry &get(const struct Coord &c) const;
     void set(isize w, isize h, const MapEntry &entry);
-    
+    void set(const struct Coord &c, const MapEntry &entry);
+
     void save(const string &path); 
     void save(std::ostream &stream);
 };

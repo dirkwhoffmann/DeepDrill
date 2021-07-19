@@ -71,24 +71,35 @@ public:
     
 private:
 
-    // Drills a collection of points or a single point
-    void drill(const vector<Coord> &remaining, vector<Coord> &glitchPoints);
-    void drill(const Coord &point, vector<Coord> &glitchPoints);
+    //
+    // Picking points
+    //
     
     // Picks a reference point
     ReferencePoint pickReference(const vector<Coord> &glitches);
 
-
-    //
-    // Series approximation
-    //
-    
-    // Picks the probe points
+    // Picks a collection of probe points
     void pickProbePoints(vector <Coord> &probes);
 
-    // Drills the probe points
+    
+    //
+    // Drilling points
+    //
+    
+    // Drills a reference point
+    void drill(ReferencePoint &ref);
+    
+    // Drills a collection of probe points
     isize drillProbePoints(vector <Coord> &probes);
+
+    // Drills a single probe point
     isize drillProbePoint(Coord &probe);
+
+    // Drills a collection of delta points
+    void drill(const vector<Coord> &remaining, vector<Coord> &glitchPoints);
+
+    // Drills a single delta point
+    void drill(const Coord &point, vector<Coord> &glitchPoints);
 };
 
 }

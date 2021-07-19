@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "DrillMap.h"
+#include "Coord.h"
 #include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
@@ -39,8 +40,8 @@ DrillMap::load(const string &path)
     resize(width, height);
     
     // Write data
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
             
             u32 iteration;
             float lognorm;
@@ -83,11 +84,23 @@ DrillMap::get(isize w, isize h) const
     return data[h * width + w];
 }
 
+const MapEntry &
+DrillMap::get(const struct Coord &c) const
+{
+    return get(c.x, c.y);
+}
+
 void
 DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
     assert(data != nullptr && w < width && h < height);
     data[h * width + w] = entry;
+}
+
+void
+DrillMap::set(const struct Coord &c, const MapEntry &entry)
+{
+    set(c.x, c.y, entry);
 }
 
 void
@@ -109,10 +122,10 @@ DrillMap::save(std::ostream &os)
     os.write((char *)&logBailout, sizeof(logBailout));
 
     // Write data
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
             
-            auto item = get(x,y);
+            auto item = get(x, y);
             os.write((char *)&item.iteration, sizeof(item.iteration));
             os.write((char *)&item.lognorm, sizeof(item.lognorm));
         }

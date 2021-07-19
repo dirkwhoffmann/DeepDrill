@@ -27,10 +27,7 @@ class ProgressIndicator {
     
     // Stop watch
     Clock clock;
-    
-    // Verbosity level
-    int verbose;
-    
+        
     
     //
     // Methods

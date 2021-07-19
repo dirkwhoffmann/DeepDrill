@@ -46,12 +46,9 @@ Driller::drill()
         log::cout << opt.perturbation.rounds << log::endl;
         log::cout << log::vspace;
     }
-    
-    // Allcoate the drill map
-    // map.resize(opt.image.width, opt.image.height);
-        
+            
     // Determine the number of tolerated glitched pixels
-    isize allowedBadPixels = opt.image.width * opt.image.height * opt.image.badpixels;
+    isize threshold = opt.image.width * opt.image.height * opt.image.badpixels;
         
     // Collect all pixel coordinates to be drilled at
     for (isize y = 0; y < opt.image.height; y++) {
@@ -60,11 +57,12 @@ Driller::drill()
             remaining.push_back(Coord(x,y));
         }
     }
-             
+        
+    // Enter the main loop
     for (isize round = 1; round <= opt.perturbation.rounds; round++) {
 
-        // Exit if enough pixels have been computed
-        if ((isize)remaining.size() <= allowedBadPixels) break;
+        // Exit once enough pixels have been computed
+        if ((isize)remaining.size() <= threshold) break;
         
         log::cout << "Round " << round << ": ";
         log::cout << remaining.size() << " points" << log::endl << log::endl;
@@ -73,7 +71,7 @@ Driller::drill()
         ref = pickReference(glitches);
         
         // Drill the reference point
-        ref.drill(opt);
+        drill(ref);
         
         if (opt.verbose) {
             
@@ -131,7 +129,13 @@ Driller::drill()
 ReferencePoint
 Driller::pickReference(const vector<Coord> &glitches)
 {
-    if (glitches.empty()) {
+    // Current strategy: In the first round, the center is used as reference
+    // point. In all other rounds, the reference point is selected randomly
+    // among all glitch points.
+
+    bool firstRound = glitches.empty();
+
+    if (firstRound) {
 
         return ReferencePoint(opt, Coord::center(opt));
 
@@ -145,6 +149,11 @@ Driller::pickReference(const vector<Coord> &glitches)
 void
 Driller::pickProbePoints(vector <Coord> &probes)
 {
+    // Current strategy: The image canvas is superimposed with an equidistant
+    // mesh. The density of the mesh is controlled by the 'sampling' parameter.
+    // The minimum value is 2 which produces a mesh that comprises the four
+    // corner points.
+    
     static const isize sampling = 2;
 
     isize width = opt.image.width - 1;
@@ -160,6 +169,36 @@ Driller::pickProbePoints(vector <Coord> &probes)
             
             probes.push_back(Coord(x,y));
         }
+    }
+}
+
+void
+Driller::drill(ReferencePoint &r)
+{
+    ProgressIndicator progress("Computing reference orbit", opt.location.depth);
+
+    PrecisionComplex z = r.location;
+    r.xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
+        
+    for (isize i = 1; i < opt.location.depth; i++) {
+        
+        z *= z;
+        z += r.location;
+        
+        r.xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
+
+        double norm = z.norm();
+
+        // Perform the escape check
+        // if (r.norm = StandardComplex(z).norm(); r.norm > 256) {
+        if (norm >= 256) {
+            r.escaped = true;
+            map.set(r.coord, MapEntry { (u32)i, (float)::log(norm) });
+            return;
+        }
+        
+        // Update the progress counter
+        if (i % 1024 == 0) progress.step(1024);
     }
 }
 
@@ -227,14 +266,8 @@ Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
 void
 Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 {
-    // Check if this point is the reference point
-    /*
-    if (point == ref.coord) {
-        map.setPixel(ref, palette);
-        mapFile.set(ref.coord.x, ref.coord.y, MapEntry { TODO });
-        return;
-    }
-    */
+    // If point is the reference point, then there is nothing to do
+    if (point == ref.coord) return;
     
     ExtendedComplex d0 = ref.deltaLocation(opt, point);
     ExtendedComplex dn;
@@ -268,8 +301,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         
         // Perform the escape check
         if (norm >= 256) {
-            // map.setPixel(point, palette, iteration, norm);
-            map.set(point.x, point.y, MapEntry { (u32)iteration, (float)::log(norm) });
+            map.set(point, MapEntry { (u32)iteration, (float)::log(norm) });
             return;
         }
     }
@@ -277,7 +309,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     if (limit == opt.location.depth) {
 
         // This point belongs to the Mandelbrot set
-        map.set(point.x, point.y, MapEntry { 0, 0 });
+        map.set(point, MapEntry { 0, 0 });
 
     } else {
 

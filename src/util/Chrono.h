@@ -70,6 +70,9 @@ public:
 
     Time getElapsedTime();
     
+    bool isPaused() const { return paused; }
+    bool isRunning() const { return !paused; }
+    
     Time stop();
     Time go();
     Time restart();

@@ -33,9 +33,7 @@ ProgressIndicator::init(const string &description, isize max)
     
     dots = 0;
     dotsMax = 33;
- 
-    verbose = 1;
-    
+     
     log::cout << log::ralign(description + ": ");
     clock.restart();
 }
@@ -43,7 +41,7 @@ ProgressIndicator::init(const string &description, isize max)
 void
 ProgressIndicator::step(isize delta)
 {
-    if (verbose == 0) return;
+    if (clock.isPaused()) return;
     
     progress += delta;
 
@@ -55,8 +53,8 @@ ProgressIndicator::step(isize delta)
 void
 ProgressIndicator::done(const string &info)
 {
-    if (verbose == 0) return;
-
+    if (clock.isPaused()) return;
+    
     auto elapsed = clock.stop();
         
     for (; dots < dotsMax; dots++) { log::cout << "."; } log::cout << " ";
@@ -64,8 +62,6 @@ ProgressIndicator::done(const string &info)
     
     if (info != "") log::cout << " (" << info << ")";
     log::cout << log::endl;
-    
-    verbose = 0;
 }
 
 }
