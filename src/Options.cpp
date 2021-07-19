@@ -35,7 +35,7 @@ Options::Options(map <string,string> &k)
     keys["approximation.coefficients"] = "5";
     keys["approximation.tolerance"] = "1e-12";
     
-    // Overwrite defaults with user-defined values
+    // Overwrite default values with the user settings
     for (auto &it : k) {
         if (keys.find(it.first) == keys.end()) {
             throw InvalidValueException("Error: Unknown key '" + it.first + "'");
@@ -91,13 +91,14 @@ Options::parse()
             assert(false);
         }
     }
+    
     derive();
 }
  
 void
 Options::derive()
 {
-    // Determine the input and output format
+    // Determine the input and output formats
     inputFormat = deriveFormat(input);
     outputFormat = deriveFormat(output);
     
