@@ -6,8 +6,6 @@
 DeepDrill User's Manual
 =======================
 
-$\sqrt{3x-1}+(1+x)^2$
-
 .. toctree::
    :maxdepth: 1
    :caption: Overview
