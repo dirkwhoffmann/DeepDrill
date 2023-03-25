@@ -30,7 +30,7 @@ Application::main(int argc, char *argv[])
     parseArguments(argc, argv, keys);
 
     log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
-    log::cout << " - (C)opyright 2021 Dirk W. Hoffmann";
+    log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
 
     // Setup the GMP library
