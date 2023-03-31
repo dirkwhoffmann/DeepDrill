@@ -15,17 +15,16 @@
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
-		50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
+		50BEC706269486AA00CCDFA8 /* DrillOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */; };
 		50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
 		50BEC708269486AA00CCDFA8 /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FE269486AA00CCDFA8 /* Palette.cpp */; };
 		50BEC709269486AA00CCDFA8 /* ReferencePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */; };
-		50BEC70A269486AA00CCDFA8 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC700269486AA00CCDFA8 /* Application.cpp */; };
+		50BEC70A269486AA00CCDFA8 /* DeepDrill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */; };
 		50BEC71B269486C200CCDFA8 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
 		50BEC71D269486C200CCDFA8 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
 		50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
 		50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */; };
 		50BEC720269486C200CCDFA8 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
-		50CF8E522694848800887FFC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CF8E512694848800887FFC /* main.cpp */; };
 		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
 		50EB497626A067850019078C /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
 /* End PBXBuildFile section */
@@ -55,6 +54,7 @@
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		505EB93329D72266008DE5BB /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EE269486A800CCDFA8 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
@@ -62,17 +62,17 @@
 		50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressIndicator.h; sourceTree = "<group>"; };
 		50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coefficients.cpp; sourceTree = "<group>"; };
 		50BEC6F3269486A900CCDFA8 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		50BEC6F5269486A900CCDFA8 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		50BEC6F5269486A900CCDFA8 /* DeepDrill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeepDrill.h; sourceTree = "<group>"; };
 		50BEC6F6269486A900CCDFA8 /* Coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coord.cpp; sourceTree = "<group>"; };
 		50BEC6F7269486A900CCDFA8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		50BEC6F8269486A900CCDFA8 /* Coord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coord.h; sourceTree = "<group>"; };
-		50BEC6FA269486A900CCDFA8 /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
+		50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrillOptions.cpp; sourceTree = "<group>"; };
 		50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressIndicator.cpp; sourceTree = "<group>"; };
 		50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferencePoint.h; sourceTree = "<group>"; };
-		50BEC6FD269486A900CCDFA8 /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
+		50BEC6FD269486A900CCDFA8 /* DrillOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrillOptions.h; sourceTree = "<group>"; };
 		50BEC6FE269486AA00CCDFA8 /* Palette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
 		50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReferencePoint.cpp; sourceTree = "<group>"; };
-		50BEC700269486AA00CCDFA8 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeepDrill.cpp; sourceTree = "<group>"; };
 		50BEC70D269486C100CCDFA8 /* Chrono.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chrono.h; sourceTree = "<group>"; };
 		50BEC70E269486C100CCDFA8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		50BEC70F269486C100CCDFA8 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
@@ -136,7 +136,6 @@
 		50BEC7572694874E00CCDFA8 /* vulcano.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = vulcano.prf; sourceTree = "<group>"; };
 		50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepDrill.entitlements; sourceTree = "<group>"; };
 		50CF8E4E2694848800887FFC /* DeepDrill */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepDrill; sourceTree = BUILT_PRODUCTS_DIR; };
-		50CF8E512694848800887FFC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -164,31 +163,7 @@
 				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				50BEC70B269486B400CCDFA8 /* util */,
 				5030F11026A1B92C009A53B3 /* math */,
-				50CF8E512694848800887FFC /* main.cpp */,
-				50BEC6F5269486A900CCDFA8 /* Application.h */,
-				50BEC700269486AA00CCDFA8 /* Application.cpp */,
-				50BEC6FD269486A900CCDFA8 /* Options.h */,
-				50BEC6FA269486A900CCDFA8 /* Options.cpp */,
-				5030F11326A2BCCF009A53B3 /* Logger.h */,
-				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
-				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
-				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
-				50EB497526A067850019078C /* Maker.h */,
-				50EB497426A067850019078C /* Maker.cpp */,
-				50BEC6ED269486A800CCDFA8 /* Driller.h */,
-				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
-				50EB497226A00C2A0019078C /* Colorizer.h */,
-				50EB497126A00C2A0019078C /* Colorizer.cpp */,
-				50BEC6EF269486A800CCDFA8 /* Coefficients.h */,
-				50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */,
-				50BEC6F8269486A900CCDFA8 /* Coord.h */,
-				50BEC6F6269486A900CCDFA8 /* Coord.cpp */,
-				50102351269EC70200AC61A8 /* DrillMap.h */,
-				50102350269EC70200AC61A8 /* DrillMap.cpp */,
-				50BEC6EE269486A800CCDFA8 /* Palette.h */,
-				50BEC6FE269486AA00CCDFA8 /* Palette.cpp */,
-				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
-				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
+				505EB93129D720B5008DE5BB /* ddrill */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -209,6 +184,34 @@
 			path = math;
 			sourceTree = "<group>";
 		};
+		505EB93129D720B5008DE5BB /* ddrill */ = {
+			isa = PBXGroup;
+			children = (
+				505EB93329D72266008DE5BB /* Makefile */,
+				50BEC6F5269486A900CCDFA8 /* DeepDrill.h */,
+				50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */,
+				50BEC6FD269486A900CCDFA8 /* DrillOptions.h */,
+				50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */,
+				50EB497526A067850019078C /* Maker.h */,
+				50EB497426A067850019078C /* Maker.cpp */,
+				50BEC6ED269486A800CCDFA8 /* Driller.h */,
+				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
+				50EB497226A00C2A0019078C /* Colorizer.h */,
+				50EB497126A00C2A0019078C /* Colorizer.cpp */,
+				50BEC6EF269486A800CCDFA8 /* Coefficients.h */,
+				50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */,
+				50BEC6F8269486A900CCDFA8 /* Coord.h */,
+				50BEC6F6269486A900CCDFA8 /* Coord.cpp */,
+				50102351269EC70200AC61A8 /* DrillMap.h */,
+				50102350269EC70200AC61A8 /* DrillMap.cpp */,
+				50BEC6EE269486A800CCDFA8 /* Palette.h */,
+				50BEC6FE269486AA00CCDFA8 /* Palette.cpp */,
+				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
+				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
+			);
+			path = ddrill;
+			sourceTree = "<group>";
+		};
 		50BEC70B269486B400CCDFA8 /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +225,10 @@
 				50102344269DBEF000AC61A8 /* Exception.cpp */,
 				50102348269DC4F500AC61A8 /* IO.h */,
 				50102347269DC4F500AC61A8 /* IO.cpp */,
+				5030F11326A2BCCF009A53B3 /* Logger.h */,
+				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
+				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
+				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -383,7 +390,7 @@
 				50BEC709269486AA00CCDFA8 /* ReferencePoint.cpp in Sources */,
 				5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */,
 				50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */,
-				50BEC70A269486AA00CCDFA8 /* Application.cpp in Sources */,
+				50BEC70A269486AA00CCDFA8 /* DeepDrill.cpp in Sources */,
 				50EB497626A067850019078C /* Maker.cpp in Sources */,
 				50BEC71B269486C200CCDFA8 /* ExtendedDouble.cpp in Sources */,
 				50BEC720269486C200CCDFA8 /* PrecisionComplex.cpp in Sources */,
@@ -392,9 +399,8 @@
 				50102349269DC4F500AC61A8 /* IO.cpp in Sources */,
 				50BEC708269486AA00CCDFA8 /* Palette.cpp in Sources */,
 				50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */,
-				50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */,
+				50BEC706269486AA00CCDFA8 /* DrillOptions.cpp in Sources */,
 				50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */,
-				50CF8E522694848800887FFC /* main.cpp in Sources */,
 				50BEC71D269486C200CCDFA8 /* Chrono.cpp in Sources */,
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,

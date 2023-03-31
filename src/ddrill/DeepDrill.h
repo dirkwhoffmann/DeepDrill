@@ -15,7 +15,7 @@
 
 namespace dd {
 
-class Application {
+class DeepDrill {
         
     // Extracted command line arguments
     std::vector <string> profiles;

@@ -57,5 +57,4 @@ using std::map;
 // Aliases
 //
 
-// typedef struct { i16 x; i16 y; } Coord;
 typedef struct { i16 width; i16 height; } Size;

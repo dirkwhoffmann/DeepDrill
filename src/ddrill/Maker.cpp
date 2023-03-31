@@ -12,7 +12,7 @@
 #include "config.h"
 #include "Maker.h"
 #include "Logger.h"
-#include "Options.h"
+#include "DrillOptions.h"
 
 namespace dd {
 

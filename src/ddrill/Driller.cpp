@@ -13,7 +13,7 @@
 #include "Driller.h"
 #include "Colorizer.h"
 #include "Logger.h"
-#include "Options.h"
+#include "DrillOptions.h"
 #include "ProgressIndicator.h"
 
 namespace dd {

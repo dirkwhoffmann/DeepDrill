@@ -65,7 +65,7 @@ struct Options {
     
     struct {
 
-        // Image dimensions ins pixels
+        // Image dimensions in pixels
         isize width;
         isize height;
     
@@ -113,7 +113,7 @@ struct Options {
     // The center coordinate
     PrecisionComplex center;
 
-    // Distance between two adjacent pixels (derived variable)
+    // Distance between two adjacent pixels
     mpf_class mpfPixelDelta;
     ExtendedDouble pixelDelta;
     

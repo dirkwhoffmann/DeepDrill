@@ -17,7 +17,7 @@ namespace dd {
 
 class ProgressIndicator {
         
-    // Pprogress
+    // Progress
     isize progress;
     isize progressMax;
     

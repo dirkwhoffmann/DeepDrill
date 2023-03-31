@@ -10,7 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Options.h"
+#include "DrillOptions.h"
 #include "Logger.h"
 
 namespace dd {

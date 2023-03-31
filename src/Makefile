@@ -13,13 +13,15 @@ EXEC       = deepdrill
 BINDIR     = ../bin
 UTILDIR    = util
 MATHDIR    = math
-SUBDIRS    = $(UTILDIR) $(MATHDIR)
+DDDIR      = ddrill
+SUBDIRS    = $(UTILDIR) $(MATHDIR) $(DDDIR)
 CXX        = g++
 CC         = $(CXX)
 CCFLAGS    = -std=c++17 -O3 -Wall -Wfatal-errors
 CPPFLAGS   = -I$(CURDIR) \
              -I$(CURDIR)/$(UTILDIR) \
 			 -I$(CURDIR)/$(MATHDIR) \
+			 -I$(CURDIR)/$(DDDIR) \
 			 -I/usr/local/include \
 			 $(shell pkg-config --cflags gmpxx)
 LDFLAGS    = -pthread \
@@ -54,7 +56,7 @@ subdirs:
 
 $(EXEC): $(OBJ) $(UTILOBJ) $(MATHOBJ)
 	@echo "Linking"
-	$(CC) -o $(EXEC) */*.o *.o $(LDFLAGS)
+	$(CC) -o $(EXEC) */*.o $(LDFLAGS)
 	@echo "Installing"
 	mkdir -p $(BINDIR)
 	mv $(EXEC) $(BINDIR)

@@ -10,18 +10,54 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Application.h"
+#include "DeepDrill.h"
 #include "Colorizer.h"
 #include "Driller.h"
 #include "Logger.h"
-#include "Options.h"
+#include "DrillOptions.h"
 #include "Maker.h"
 #include <getopt.h>
+
+extern "C" {
+int main(int argc, char *argv[])
+{
+    using namespace dd;
+    
+    try {
+
+        DeepDrill().main(argc, argv);
+
+    } catch (dd::SyntaxError &e) {
+
+        log::cout << "Usage: ";
+        log::cout << "deepdrill [-bmv] [-p <profile>] -o <output> <input>" << log::endl;
+        log::cout << log::endl;
+        log::cout << "       -b or --batch    Run in batch mode" << log::endl;
+        log::cout << "       -m or --make     Run the Makefile generator" << log::endl;
+        log::cout << "       -v or --verbose  Run in verbose mode" << log::endl;
+        log::cout << "       -p or --profile  Customize settings" << log::endl;
+        log::cout << log::endl;
+
+        if (!e.description.empty()) {
+            log::cout << e.what() << log::endl;
+        }
+
+        return 1;
+
+    } catch (std::exception &e) {
+
+        log::cout << e.what() << log::endl;
+        return 1;
+    }
+
+    return 0;
+}
+}
 
 namespace dd {
 
 void
-Application::main(int argc, char *argv[])
+DeepDrill::main(int argc, char *argv[])
 {
     map<string,string> keys;
     string option = "";
@@ -49,7 +85,7 @@ Application::main(int argc, char *argv[])
 }
 
 void
-Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
+DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
 {    
     static struct option long_options[] = {
         
@@ -117,7 +153,7 @@ Application::parseArguments(int argc, char *argv[], map<string,string> &keys)
 }
 
 void
-Application::checkArguments(map<string,string> &keys)
+DeepDrill::checkArguments(map<string,string> &keys)
 {
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
@@ -174,7 +210,7 @@ Application::checkArguments(map<string,string> &keys)
 }
 
 void
-Application::readInputs(map<string,string> &keys)
+DeepDrill::readInputs(map<string,string> &keys)
 {
     auto path = inputs.front();
     auto suffix = extractSuffix(path);
@@ -196,7 +232,7 @@ Application::readInputs(map<string,string> &keys)
 }
 
 void
-Application::readOutputs(map<string,string> &keys)
+DeepDrill::readOutputs(map<string,string> &keys)
 {
     auto path = outputs.front();
     auto suffix = extractSuffix(path);
@@ -217,7 +253,7 @@ Application::readOutputs(map<string,string> &keys)
 }
 
 void
-Application::readProfiles(map<string,string> &keys)
+DeepDrill::readProfiles(map<string,string> &keys)
 {
     for (auto &path: profiles) {
         Parser::parse(path, keys);
@@ -225,7 +261,7 @@ Application::readProfiles(map<string,string> &keys)
 }
 
 void
-Application::setupGmp(std::map <string,string> &keys)
+DeepDrill::setupGmp(std::map <string,string> &keys)
 {
     long exponent = 0;
     
@@ -242,7 +278,7 @@ Application::setupGmp(std::map <string,string> &keys)
 }
 
 void
-Application::runPipeline(Options &opt)
+DeepDrill::runPipeline(Options &opt)
 {
     DrillMap drillMap(opt);
 
@@ -276,7 +312,7 @@ Application::runPipeline(Options &opt)
 }
 
 void
-Application::runMaker(Options &opt)
+DeepDrill::runMaker(Options &opt)
 {
     Maker maker(opt);
     maker.generate();

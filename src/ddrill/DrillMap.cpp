@@ -13,7 +13,7 @@
 #include "DrillMap.h"
 #include "Coord.h"
 #include "Logger.h"
-#include "Options.h"
+#include "DrillOptions.h"
 #include "ProgressIndicator.h"
 
 namespace dd {

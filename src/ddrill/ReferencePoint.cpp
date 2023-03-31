@@ -11,7 +11,7 @@
 
 #include "config.h"
 #include "ReferencePoint.h"
-#include "Options.h"
+#include "DrillOptions.h"
 #include "ProgressIndicator.h"
 
 namespace dd {

@@ -14,7 +14,7 @@
 #include "Coord.h"
 #include "DrillMap.h"
 #include "Logger.h"
-#include "Options.h"
+#include "DrillOptions.h"
 #include "ProgressIndicator.h"
 
 namespace dd {
@@ -25,14 +25,15 @@ Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
     
     auto bytes = map.width * map.height;
     image = new u32[bytes] {};
+    string paths[] = { "/usr/bin/raw2tiff", "/usr/local/bin/raw2tiff", "/opt/homebrew/bin/raw2tiff" };
 
-    raw2tiff = "/usr/bin/raw2tiff";
-    if (!fileExists(raw2tiff)) {
-        raw2tiff = "/usr/local/bin/raw2tiff";
-        if (!fileExists(raw2tiff)) {
-            throw Exception("Expecting raw2tiff in /usr/bin or /usr/local/bin");
-        }
+    for (isize i = 0; i < 3; i++) {
+
+        raw2tiff = paths[i];
+        if (fileExists(raw2tiff)) return;
     }
+
+    throw Exception("Expecting raw2tiff in /" + paths[0] + ", " + paths[1] + ", or " + paths[2]);
 }
 
 Colorizer::~Colorizer()
@@ -60,7 +61,14 @@ void
 Colorizer::colorize(Coord c)
 {
     auto data = map.get(c.x, c.y);
-                        
+
+    // Map to a black if the point belongs to the mandelbrot set
+    if (data.iteration == 0) {
+
+        image[c.y * map.width + c.x] = 0;
+        return;
+    }
+    
     isize index = (isize)((data.iteration - log2(data.lognorm)) * 5);
     image[c.y * map.width + c.x] = palette.colorize(index);
 }

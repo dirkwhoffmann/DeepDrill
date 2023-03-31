@@ -11,7 +11,7 @@
 
 #include "config.h"
 #include "Palette.h"
-#include "Options.h"
+#include "DrillOptions.h"
 
 namespace dd {
 
