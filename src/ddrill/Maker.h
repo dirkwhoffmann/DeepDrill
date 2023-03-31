@@ -38,9 +38,10 @@ private:
     
     void writeHeader(std::ofstream &os);
 
-    void generateLocationFile();
+    void generateLocationFiles(isize count);
+    void generateLocationFile(isize nr);
     void generateProfile();
-    void generateMakefile();
+    void generateMakefile(isize numImages);
 };
 
 }

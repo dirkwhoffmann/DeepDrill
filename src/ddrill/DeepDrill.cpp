@@ -18,7 +18,6 @@
 #include "Maker.h"
 #include <getopt.h>
 
-extern "C" {
 int main(int argc, char *argv[])
 {
     using namespace dd;
@@ -51,7 +50,6 @@ int main(int argc, char *argv[])
     }
 
     return 0;
-}
 }
 
 namespace dd {

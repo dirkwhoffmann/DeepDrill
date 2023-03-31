@@ -25,28 +25,44 @@ Maker::Maker(Options &o) : opt(o)
 void
 Maker::generate()
 {
-    generateLocationFile();
+    isize numImages = 4;
+
     generateProfile();
-    generateMakefile();
+    generateLocationFiles(numImages);
+    generateMakefile(numImages);
 }
 
 void
-Maker::generateLocationFile()
+Maker::generateLocationFiles(isize count)
+{
+    for (isize i = 0; i < count; i++) {
+        generateLocationFile(i);
+    }
+}
+
+void
+Maker::generateLocationFile(isize nr)
 {
     auto &keys = opt.keys;
 
     // Open output stream
-    std::ofstream os(projectDir / (project + ".loc"));
+    std::ofstream os(projectDir / (project + "_" + std::to_string(nr) + ".loc"));
 
     // Write header
     writeHeader(os);
-    
+
+    // Limit depth
+    isize maxDepth = 1000 * nr;
+    isize depth = std::min(maxDepth, opt.location.depth);
+
     // Write location section
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
-    os << "zoom = " << keys["location.zoom"] << std::endl;
-    os << "depth = " << keys["location.depth"] << std::endl;
+    // os << "zoom = " << keys["location.zoom"] << std::endl;
+    os << "zoom = " << std::to_string(exp2(nr)) << std::endl;
+    // os << "depth = " << keys["location.depth"] << std::endl;
+    os << "depth = " << std::to_string(depth) << std::endl;
     os << std::endl;
 }
 
@@ -87,7 +103,7 @@ Maker::generateProfile()
 }
 
 void
-Maker::generateMakefile()
+Maker::generateMakefile(isize numImages)
 {
     auto &keys = opt.keys;
 
