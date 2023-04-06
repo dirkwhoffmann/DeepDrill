@@ -12,6 +12,13 @@
 		50102349269DC4F500AC61A8 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		50102352269EC70200AC61A8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
 		5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
+		5049968229DED17800B15919 /* DeepTravel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepTravel.cpp */; };
+		5049968729DED32700B15919 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
+		5049968829DED32900B15919 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
+		5049968929DED32B00B15919 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
+		5049968A29DED32E00B15919 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
+		5049968B29DED33000B15919 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
+		5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
@@ -30,6 +37,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5049967D29DED17800B15919 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		50CF8E4C2694848800887FFC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -53,6 +69,10 @@
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		5049967F29DED17800B15919 /* DeepTravel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepTravel; sourceTree = BUILT_PRODUCTS_DIR; };
+		5049968129DED17800B15919 /* DeepTravel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepTravel.cpp; sourceTree = "<group>"; };
+		5049968629DED20600B15919 /* DeepTravel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepTravel.h; sourceTree = "<group>"; };
+		5049968D29DED3BC00B15919 /* DeepTravel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepTravel.entitlements; sourceTree = "<group>"; };
 		505EB93429D73E42008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -143,6 +163,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5049967C29DED17800B15919 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CF8E4B2694848800887FFC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -163,6 +190,7 @@
 				50BEC70B269486B400CCDFA8 /* util */,
 				5030F11026A1B92C009A53B3 /* math */,
 				505EB93129D720B5008DE5BB /* ddrill */,
+				5049968029DED17800B15919 /* DeepTravel */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -181,6 +209,15 @@
 				50BEC716269486C200CCDFA8 /* StandardComplex.cpp */,
 			);
 			path = math;
+			sourceTree = "<group>";
+		};
+		5049968029DED17800B15919 /* DeepTravel */ = {
+			isa = PBXGroup;
+			children = (
+				5049968629DED20600B15919 /* DeepTravel.h */,
+				5049968129DED17800B15919 /* DeepTravel.cpp */,
+			);
+			path = DeepTravel;
 			sourceTree = "<group>";
 		};
 		505EB93129D720B5008DE5BB /* ddrill */ = {
@@ -302,17 +339,10 @@
 			path = palettes;
 			sourceTree = "<group>";
 		};
-		50CBBF0326A16E8D00EAF4F7 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = bin;
-			sourceTree = "<group>";
-		};
 		50CF8E452694848800887FFC = {
 			isa = PBXGroup;
 			children = (
-				50CBBF0326A16E8D00EAF4F7 /* bin */,
+				5049968D29DED3BC00B15919 /* DeepTravel.entitlements */,
 				5010234A269DDE6D00AC61A8 /* src */,
 				50BEC7292694870100CCDFA8 /* locations */,
 				50BEC721269486D900CCDFA8 /* profiles */,
@@ -325,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				50CF8E4E2694848800887FFC /* DeepDrill */,
+				5049967F29DED17800B15919 /* DeepTravel */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -332,6 +363,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5049967E29DED17800B15919 /* DeepTravel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepTravel" */;
+			buildPhases = (
+				5049967B29DED17800B15919 /* Sources */,
+				5049967C29DED17800B15919 /* Frameworks */,
+				5049967D29DED17800B15919 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeepTravel;
+			productName = DeepTravel;
+			productReference = 5049967F29DED17800B15919 /* DeepTravel */;
+			productType = "com.apple.product-type.tool";
+		};
 		50CF8E4D2694848800887FFC /* DeepDrill */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50CF8E552694848800887FFC /* Build configuration list for PBXNativeTarget "DeepDrill" */;
@@ -357,6 +405,9 @@
 			attributes = {
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					5049967E29DED17800B15919 = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					50CF8E4D2694848800887FFC = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -376,11 +427,26 @@
 			projectRoot = "";
 			targets = (
 				50CF8E4D2694848800887FFC /* DeepDrill */,
+				5049967E29DED17800B15919 /* DeepTravel */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5049967B29DED17800B15919 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5049968A29DED32E00B15919 /* IO.cpp in Sources */,
+				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
+				5049968729DED32700B15919 /* Chrono.cpp in Sources */,
+				5049968929DED32B00B15919 /* Exception.cpp in Sources */,
+				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
+				5049968829DED32900B15919 /* Parser.cpp in Sources */,
+				5049968229DED17800B15919 /* DeepTravel.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CF8E4A2694848800887FFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,6 +477,44 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		5049968429DED17800B15919 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DeepTravel.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
+				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				OTHER_LDFLAGS = (
+					"-lgmp",
+					"-lgmpxx",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5049968529DED17800B15919 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DeepTravel.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
+				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				OTHER_LDFLAGS = (
+					"-lgmp",
+					"-lgmpxx",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		50CF8E532694848800887FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -580,6 +684,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepTravel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5049968429DED17800B15919 /* Debug */,
+				5049968529DED17800B15919 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		50CF8E492694848800887FFC /* Build configuration list for PBXProject "DeepDrill" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
