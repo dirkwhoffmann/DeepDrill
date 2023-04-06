@@ -22,6 +22,9 @@ class DeepTravel {
     std::vector <string> inputs;
     std::vector <string> outputs;
 
+    // Paths to all image files
+    std::vector <string> imageFiles;
+
 public:
 
     // Main entry point

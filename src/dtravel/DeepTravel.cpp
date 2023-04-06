@@ -186,17 +186,17 @@ DeepTravel::readInputs(map<string,string> &keys)
 
     for (isize i = 0;; i++) {
 
-        name = path + std::to_string(i) + ".tiff";
+        name = path + "_" + std::to_string(i) + ".tiff";
         if (!fileExists(name)) break;
-        inputs.push_back(name);
+        imageFiles.push_back(name);
     }
 
-    if (inputs.empty()) {
-        throw SyntaxError("File " + name + " does not exist");
+    if (imageFiles.empty()) {
+        throw FileNotFoundError("File " + name + " does not exist");
     }
 
     // REMOVE ASAP
-    for (const auto &item : inputs) {
+    for (const auto &item : imageFiles) {
         printf("File %s\n", item.c_str());
     }
 }

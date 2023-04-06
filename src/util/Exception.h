@@ -32,6 +32,10 @@ struct SyntaxError : public Exception {
     using Exception::Exception;
 };
 
+struct FileNotFoundError : Exception {
+    using Exception::Exception;
+};
+
 struct InvalidValueException : Exception {
     using Exception::Exception;
 };
