@@ -492,12 +492,21 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
-				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/include/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/lib/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				OTHER_LDFLAGS = (
 					"-lgmp",
 					"-lgmpxx",
+					"-lsfml-system",
+					"-lsfml-window",
+					"-lsfml-graphics",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -511,12 +520,21 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
-				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/include/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/lib/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				OTHER_LDFLAGS = (
 					"-lgmp",
 					"-lgmpxx",
+					"-lsfml-system",
+					"-lsfml-window",
+					"-lsfml-graphics",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
