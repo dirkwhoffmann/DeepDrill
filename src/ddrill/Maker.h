@@ -35,13 +35,14 @@ public:
     void generate(); 
     
 private:
-    
-    void writeHeader(std::ofstream &os);
 
     void generateLocationFiles(isize count);
     void generateLocationFile(isize nr);
     void generateProfile();
     void generateMakefile(isize numImages);
+
+    void writeHeader(std::ofstream &os);
+    void writeTarget(std::ofstream &os, isize nr);
 };
 
 }
