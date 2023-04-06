@@ -18,7 +18,7 @@ namespace dd {
 class Maker {
     
     // Configuration options
-    struct Options &opt;
+    struct DrillOptions &opt;
 
     // Name of the project
     string project;
@@ -29,7 +29,7 @@ class Maker {
 public:
     
     // Constructor
-    Maker(Options &opt);
+    Maker(DrillOptions &opt);
     
     // Main entry point
     void generate(); 

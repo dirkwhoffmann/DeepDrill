@@ -15,7 +15,7 @@
 
 namespace dd {
 
-Palette::Palette(const Options &options) : opt(options)
+Palette::Palette(const DrillOptions &options) : opt(options)
 {
     init(opt.palette.values);    
 }

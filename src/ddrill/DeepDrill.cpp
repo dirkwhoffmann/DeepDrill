@@ -71,7 +71,7 @@ DeepDrill::main(int argc, char *argv[])
     setupGmp(keys);
 
     // Parse all options
-    Options opt(keys);
+    DrillOptions opt(keys);
     
     // Start a stop watch
     Clock stopWatch;
@@ -276,7 +276,7 @@ DeepDrill::setupGmp(std::map <string,string> &keys)
 }
 
 void
-DeepDrill::runPipeline(Options &opt)
+DeepDrill::runPipeline(DrillOptions &opt)
 {
     DrillMap drillMap(opt);
 
@@ -310,7 +310,7 @@ DeepDrill::runPipeline(Options &opt)
 }
 
 void
-DeepDrill::runMaker(Options &opt)
+DeepDrill::runMaker(DrillOptions &opt)
 {
     Maker maker(opt);
     maker.generate();

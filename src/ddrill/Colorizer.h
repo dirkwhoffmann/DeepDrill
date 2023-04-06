@@ -19,7 +19,7 @@ namespace dd {
 class Colorizer {
 
     // Configuration options
-    const struct Options &opt;
+    const struct DrillOptions &opt;
     
     // The associated map file
     const class DrillMap &map;
@@ -40,7 +40,7 @@ class Colorizer {
 
 public:
 
-    Colorizer(const Options &options, const DrillMap &map);
+    Colorizer(const DrillOptions &options, const DrillMap &map);
     ~Colorizer();
     
     

@@ -18,7 +18,7 @@
 
 namespace dd {
 
-Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
+Driller::Driller(const DrillOptions &o, DrillMap &m) : opt(o), map(m)
 {
 
 }

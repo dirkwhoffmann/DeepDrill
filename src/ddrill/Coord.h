@@ -27,7 +27,7 @@ struct Coord {
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
     
-    static Coord center(const struct Options &opt);
+    static Coord center(const struct DrillOptions &opt);
     
     
     //
@@ -35,7 +35,7 @@ struct Coord {
     //
     
     // Translates the coordinate to it's location on the complex plane
-    PrecisionComplex translate(const Options &opt) const;
+    PrecisionComplex translate(const DrillOptions &opt) const;
 
 
     //

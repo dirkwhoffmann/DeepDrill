@@ -31,14 +31,14 @@ ReferenceIteration::ReferenceIteration(PrecisionComplex c, double tolerance)
     this->tolerance = tt * standard.norm();
 }
 
-ReferencePoint::ReferencePoint(const Options &opt, Coord c)
+ReferencePoint::ReferencePoint(const DrillOptions &opt, Coord c)
 {
     this->coord = c;
     this->location = c.translate(opt);
 }
 
 ExtendedComplex
-ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const
+ReferencePoint::deltaLocation(const DrillOptions &opt, const Coord &other) const
 {
     // Compute the pixel offset
     auto dx = other.x - coord.x;

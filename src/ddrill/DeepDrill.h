@@ -40,8 +40,8 @@ private:
     void readProfiles(map<string,string> &keys);
     
     // Executes the drill pipeline or the Makefile generator
-    void runPipeline(struct Options &opt);
-    void runMaker(struct Options &opt);
+    void runPipeline(struct DrillOptions &opt);
+    void runMaker(struct DrillOptions &opt);
 
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);

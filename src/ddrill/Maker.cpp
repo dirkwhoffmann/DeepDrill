@@ -16,7 +16,7 @@
 
 namespace dd {
 
-Maker::Maker(Options &o) : opt(o)
+Maker::Maker(DrillOptions &o) : opt(o)
 {
     project = stripSuffix(stripPath(opt.input));
     projectDir = std::filesystem::path(opt.output);

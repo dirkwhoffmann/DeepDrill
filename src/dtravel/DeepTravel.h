@@ -1,13 +1,49 @@
+// -----------------------------------------------------------------------------
+// This file is part of DeepDrill
 //
-//  DeepTravel.hpp
-//  DeepDrill
+// A Mandelbrot generator based on perturbation and series approximation
 //
-//  Created by Dirk Hoffmann on 06.04.23.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
 //
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
-#ifndef DeepTravel_hpp
-#define DeepTravel_hpp
+#pragma once
 
-#include <stdio.h>
+#include "commons.h"
 
-#endif /* DeepTravel_hpp */
+namespace dd {
+
+class DeepTravel {
+
+    // Extracted command line arguments
+    std::vector <string> profiles;
+    std::vector <string> inputs;
+    std::vector <string> outputs;
+
+public:
+
+    // Main entry point
+    void main(int argc, char *argv[]);
+
+private:
+
+    // Helper methods for parsing command line arguments
+    void parseArguments(int argc, char *argv[], map<string,string> &keys);
+    void checkArguments(map<string,string> &keys);
+    void readInputs(map<string,string> &keys);
+    void readOutputs(map<string,string> &keys);
+    void readProfiles(map<string,string> &keys);
+
+    // Executes the drill pipeline or the Makefile generator
+    /*
+    void runPipeline(struct Options &opt);
+    void runMaker(struct Options &opt);
+    */
+
+    // Sets up the GMP library
+    void setupGmp(std::map <string,string> &keys);
+};
+
+}

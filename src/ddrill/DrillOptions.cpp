@@ -15,7 +15,7 @@
 
 namespace dd {
 
-Options::Options(map <string,string> &k)
+DrillOptions::DrillOptions(map <string,string> &k)
 {
     // Register default keys
     keys["exec"] = "";
@@ -49,7 +49,7 @@ Options::Options(map <string,string> &k)
 }
 
 void
-Options::parse()
+DrillOptions::parse()
 {
     for (auto &it : keys) {
 
@@ -99,7 +99,7 @@ Options::parse()
 }
  
 void
-Options::derive()
+DrillOptions::derive()
 {
     // Determine the input and output formats
     inputFormat = deriveFormat(input);
@@ -114,7 +114,7 @@ Options::derive()
 }
 
 Format
-Options::deriveFormat(const string &path)
+DrillOptions::deriveFormat(const string &path)
 {
     if (isDirectory(path)) return Format::DIR;
 

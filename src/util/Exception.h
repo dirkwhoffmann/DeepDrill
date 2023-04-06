@@ -32,4 +32,12 @@ struct SyntaxError : public Exception {
     using Exception::Exception;
 };
 
+struct InvalidValueException : Exception {
+    using Exception::Exception;
+};
+
+struct UserInterruptException : Exception {
+    using Exception::Exception;
+};
+
 }

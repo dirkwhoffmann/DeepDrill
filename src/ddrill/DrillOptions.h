@@ -18,15 +18,7 @@ namespace dd {
 
 enum class Format { NONE, LOC, MAP, PRF, DIR, TIF };
 
-struct InvalidValueException : Exception {
-    using Exception::Exception;
-};
-
-struct UserInterruptException : Exception {
-    using Exception::Exception;
-};
-
-struct Options {
+struct DrillOptions {
 
     // Set to true to abort the computation
     bool stop = false;
@@ -124,7 +116,7 @@ struct Options {
 
 public:
 
-    Options(map <string,string> &keys);
+    DrillOptions(map <string,string> &keys);
     void parse();
 
 private:

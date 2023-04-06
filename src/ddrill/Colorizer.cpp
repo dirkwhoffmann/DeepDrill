@@ -19,7 +19,7 @@
 
 namespace dd {
 
-Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
+Colorizer::Colorizer(const DrillOptions &o, const DrillMap &m) : opt(o), map(m)
 {
     palette.init(opt.palette.values);
     

@@ -24,7 +24,7 @@ public:
 private:
     
     // Configuration options
-    const struct Options &opt;
+    const struct DrillOptions &opt;
     
     // The color table
     vector <u32> colors;
@@ -36,7 +36,7 @@ private:
 
 public:
     
-    Palette(const Options &options);
+    Palette(const DrillOptions &options);
             
     // Initializes the color table
     void init(string values);

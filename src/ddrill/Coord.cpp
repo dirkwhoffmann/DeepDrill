@@ -16,13 +16,13 @@
 namespace dd {
 
 Coord
-Coord::center(const Options &opt)
+Coord::center(const DrillOptions &opt)
 {
     return Coord(opt.image.width / 2, opt.image.height / 2);
 }
 
 PrecisionComplex
-Coord::translate(const Options &opt) const
+Coord::translate(const DrillOptions &opt) const
 {
     auto c = center(opt);
     
