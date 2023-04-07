@@ -42,7 +42,10 @@ private:
     void generateMakefile(isize numImages);
 
     void writeHeader(std::ofstream &os);
-    void writeTarget(std::ofstream &os, isize nr);
+    void writeDefinitions(std::ofstream &os);
+    void writeTargets(std::ofstream &os);
+
+    [[deprecated]] void writeTarget(std::ofstream &os, isize nr);
 };
 
 }

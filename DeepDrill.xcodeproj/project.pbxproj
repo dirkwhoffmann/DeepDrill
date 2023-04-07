@@ -39,6 +39,10 @@
 		50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
 		50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */; };
 		50BEC720269486C200CCDFA8 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
+		50D69A6A29E037160025DE0D /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6829E037160025DE0D /* FFmpeg.cpp */; };
+		50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6B29E03E2C0025DE0D /* Recorder.cpp */; };
+		50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6E29E03F940025DE0D /* NamedPipe.cpp */; };
+		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
 		50EB497626A067850019078C /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
 /* End PBXBuildFile section */
@@ -166,6 +170,14 @@
 		50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepDrill.entitlements; sourceTree = "<group>"; };
 		50CF8E4E2694848800887FFC /* DeepDrill */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepDrill; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D69A6729E01C6A0025DE0D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50D69A6829E037160025DE0D /* FFmpeg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFmpeg.cpp; sourceTree = "<group>"; };
+		50D69A6929E037160025DE0D /* FFmpeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
+		50D69A6B29E03E2C0025DE0D /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
+		50D69A6C29E03E2C0025DE0D /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
+		50D69A6E29E03F940025DE0D /* NamedPipe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipe.cpp; sourceTree = "<group>"; };
+		50D69A6F29E03F940025DE0D /* NamedPipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipe.h; sourceTree = "<group>"; };
+		50D69A7129E0409E0025DE0D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
+		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -230,6 +242,12 @@
 				5049968129DED17800B15919 /* DeepTravel.cpp */,
 				5049969329DEED6800B15919 /* Traveller.h */,
 				5049969229DEED6800B15919 /* Traveller.cpp */,
+				50D69A6C29E03E2C0025DE0D /* Recorder.h */,
+				50D69A6B29E03E2C0025DE0D /* Recorder.cpp */,
+				50D69A6F29E03F940025DE0D /* NamedPipe.h */,
+				50D69A6E29E03F940025DE0D /* NamedPipe.cpp */,
+				50D69A6929E037160025DE0D /* FFmpeg.h */,
+				50D69A6829E037160025DE0D /* FFmpeg.cpp */,
 			);
 			path = dtravel;
 			sourceTree = "<group>";
@@ -268,6 +286,8 @@
 				505EB93629D73E62008DE5BB /* CMakeLists.txt */,
 				50BEC70F269486C100CCDFA8 /* Types.h */,
 				5049969C29DFFC8000B15919 /* Animated.h */,
+				50D69A7129E0409E0025DE0D /* Buffer.h */,
+				50D69A7229E041510025DE0D /* Buffer.cpp */,
 				50BEC70D269486C100CCDFA8 /* Chrono.h */,
 				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
 				500655E726957C8400982789 /* Parser.h */,
@@ -456,7 +476,11 @@
 				5049968A29DED32E00B15919 /* IO.cpp in Sources */,
 				5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */,
 				5049969429DEED6800B15919 /* Traveller.cpp in Sources */,
+				50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */,
+				50D69A6A29E037160025DE0D /* FFmpeg.cpp in Sources */,
 				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
+				50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */,
+				50D69A7329E041510025DE0D /* Buffer.cpp in Sources */,
 				5049968729DED32700B15919 /* Chrono.cpp in Sources */,
 				5049968929DED32B00B15919 /* Exception.cpp in Sources */,
 				5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */,
