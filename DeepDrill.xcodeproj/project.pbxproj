@@ -20,6 +20,13 @@
 		5049968B29DED33000B15919 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
 		5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
 		5049969029DEDD2800B15919 /* TravelOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968E29DEDD2800B15919 /* TravelOptions.cpp */; };
+		5049969429DEED6800B15919 /* Traveller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049969229DEED6800B15919 /* Traveller.cpp */; };
+		5049969529DF04F500B15919 /* DrillOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */; };
+		5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */; };
+		5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
+		5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
+		5049969929DF051200B15919 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
+		5049969A29DF051F00B15919 /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FE269486AA00CCDFA8 /* Palette.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
@@ -76,6 +83,9 @@
 		5049968D29DED3BC00B15919 /* DeepTravel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepTravel.entitlements; sourceTree = "<group>"; };
 		5049968E29DEDD2800B15919 /* TravelOptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TravelOptions.cpp; sourceTree = "<group>"; };
 		5049968F29DEDD2800B15919 /* TravelOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelOptions.h; sourceTree = "<group>"; };
+		5049969229DEED6800B15919 /* Traveller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Traveller.cpp; sourceTree = "<group>"; };
+		5049969329DEED6800B15919 /* Traveller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traveller.h; sourceTree = "<group>"; };
+		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
 		505EB93429D73E42008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -221,6 +231,8 @@
 				5049968129DED17800B15919 /* DeepTravel.cpp */,
 				5049968F29DEDD2800B15919 /* TravelOptions.h */,
 				5049968E29DEDD2800B15919 /* TravelOptions.cpp */,
+				5049969329DEED6800B15919 /* Traveller.h */,
+				5049969229DEED6800B15919 /* Traveller.cpp */,
 			);
 			path = dtravel;
 			sourceTree = "<group>";
@@ -258,6 +270,7 @@
 			children = (
 				505EB93629D73E62008DE5BB /* CMakeLists.txt */,
 				50BEC70F269486C100CCDFA8 /* Types.h */,
+				5049969C29DFFC8000B15919 /* Animated.h */,
 				50BEC70D269486C100CCDFA8 /* Chrono.h */,
 				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
 				500655E726957C8400982789 /* Parser.h */,
@@ -444,10 +457,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				5049968A29DED32E00B15919 /* IO.cpp in Sources */,
+				5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */,
+				5049969429DEED6800B15919 /* Traveller.cpp in Sources */,
 				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
 				5049968729DED32700B15919 /* Chrono.cpp in Sources */,
 				5049968929DED32B00B15919 /* Exception.cpp in Sources */,
 				5049969029DEDD2800B15919 /* TravelOptions.cpp in Sources */,
+				5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */,
+				5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */,
+				5049969929DF051200B15919 /* StandardComplex.cpp in Sources */,
+				5049969A29DF051F00B15919 /* Palette.cpp in Sources */,
+				5049969529DF04F500B15919 /* DrillOptions.cpp in Sources */,
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepTravel.cpp in Sources */,

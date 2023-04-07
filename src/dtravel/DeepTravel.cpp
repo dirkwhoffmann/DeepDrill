@@ -11,8 +11,9 @@
 
 #include "config.h"
 #include "DeepTravel.h"
+#include "DrillOptions.h"
+#include "Traveller.h"
 #include "Logger.h"
-#include "TravelOptions.h"
 #include <getopt.h>
 
 int main(int argc, char *argv[])
@@ -67,13 +68,13 @@ DeepTravel::main(int argc, char *argv[])
     setupGmp(keys);
 
     // Parse all options
-    TravelOptions opt(keys);
+    DrillOptions opt(keys);
 
     // Start a stop watch
     Clock stopWatch;
 
     // Execute
-    // TODO
+    Traveller(opt).launch();
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
 }
@@ -183,6 +184,8 @@ DeepTravel::readInputs(map<string,string> &keys)
 {
     string path = inputs.front();
     string name;
+
+    keys["input"] = path;
 
     for (isize i = 0;; i++) {
 
