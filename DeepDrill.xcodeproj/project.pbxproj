@@ -165,6 +165,7 @@
 		50BEC7572694874E00CCDFA8 /* vulcano.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = vulcano.prf; sourceTree = "<group>"; };
 		50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepDrill.entitlements; sourceTree = "<group>"; };
 		50CF8E4E2694848800887FFC /* DeepDrill */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepDrill; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D69A6729E01C6A0025DE0D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -224,6 +225,7 @@
 		5049968029DED17800B15919 /* dtravel */ = {
 			isa = PBXGroup;
 			children = (
+				50D69A6729E01C6A0025DE0D /* CMakeLists.txt */,
 				5049968629DED20600B15919 /* DeepTravel.h */,
 				5049968129DED17800B15919 /* DeepTravel.cpp */,
 				5049969329DEED6800B15919 /* Traveller.h */,

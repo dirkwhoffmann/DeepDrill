@@ -10,11 +10,12 @@ set(CMAKE_CXX_EXTENSIONS False)
 
 # Set the optimization level (if not specified on the command line)
 if(NOT CMAKE_BUILD_TYPE)
-#  set(CMAKE_BUILD_TYPE Release)
+   set(CMAKE_BUILD_TYPE Release)
 endif()
 
 # Specify the executable
 add_executable(deepdrill ddrill/DeepDrill.cpp)
+add_executable(deeptravel dtravel/DeepTravel.cpp)
 
 # Specify compile options
 target_compile_options(deepdrill PUBLIC -Wall -Werror)
@@ -23,13 +24,22 @@ target_compile_options(deepdrill PUBLIC -Wno-gnu-anonymous-struct)
 target_compile_options(deepdrill PUBLIC -Wno-nested-anon-types)
 
 # Specify link options
-target_link_options(deepdrill PUBLIC -L/opt/homebrew/Cellar/gmp/6.2.1_1/lib -lgmpxx -lgmp)
+target_link_options(deepdrill PUBLIC -L/opt/homebrew/Cellar/gmp/6.2.1_1/lib)
+target_link_options(deepdrill PUBLIC -lgmpxx -lgmp)
+target_link_options(deeptravel PUBLIC -L/opt/homebrew/Cellar/gmp/6.2.1_1/lib)
+target_link_options(deeptravel PUBLIC -L/opt/homebrew/Cellar/sfml/2.5.1_2/lib)
+target_link_options(deeptravel PUBLIC -lgmpxx -lgmp)
+target_link_options(deeptravel PUBLIC -lsfml-system -lsfml-window -lsfml-graphics)
 
 # Add include paths
 target_include_directories(deepdrill PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(deepdrill PUBLIC /opt/homebrew/Cellar/gmp/6.2.1_1/include)
+target_include_directories(deeptravel PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(deeptravel PUBLIC /opt/homebrew/Cellar/gmp/6.2.1_1/include)
+target_include_directories(deeptravel PUBLIC /opt/homebrew/Cellar/sfml/2.5.1_2/include)
 
 # Add sub directories
 add_subdirectory(util)
 add_subdirectory(math)
 add_subdirectory(ddrill)
+add_subdirectory(dtravel)
