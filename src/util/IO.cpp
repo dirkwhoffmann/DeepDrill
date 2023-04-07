@@ -105,6 +105,22 @@ string makeAbsolutePath(const string &path)
     }
 }
 
+string join(const std::vector<string> &v, const string &delim1)
+{
+    return join(v, delim1, delim1);
+}
+
+string join(const std::vector<string> &v, const string &delim1, const string &delim2)
+{
+    std::string result;
+    isize size = isize(v.size());
+
+    for(isize i = 0; i < size; i++) {
+        result += (i == size - 1 ? delim2 : i != 0 ? delim1 : "") + v[i];
+    }
+    return result;
+}
+
 bool fileExists(const string &path)
 {
     return getSizeOfFile(path) >= 0;

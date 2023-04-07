@@ -189,7 +189,7 @@ DeepTravel::readInputs(map<string,string> &keys)
 
     for (isize i = 0;; i++) {
 
-        name = path + "_" + std::to_string(i) + ".tiff";
+        name = path + "_" + std::to_string(i) + ".png";
         if (!fileExists(name)) break;
         imageFiles.push_back(name);
     }

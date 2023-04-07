@@ -30,9 +30,6 @@ class Colorizer {
     // The color palette
     Palette palette = Palette(opt);
 
-    // Path to the raw2tiff tool
-    string raw2tiff;
-    
     
     //
     // Initialization

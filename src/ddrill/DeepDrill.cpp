@@ -200,9 +200,9 @@ DeepDrill::checkArguments(map<string,string> &keys)
         }
         
         // The output file must be a map file or an image file
-        if (outSuffix != "map" && outSuffix != "tiff") {
+        if (outSuffix != "map" && outSuffix != "tiff" && outSuffix != "png") {
             throw SyntaxError(outputs.front() +
-                              ": Invalid format. Expected .map or .tiff");
+                              ": Invalid format. Expected .map, .tiff, or .png");
         }
     }
 }
@@ -240,7 +240,7 @@ DeepDrill::readOutputs(map<string,string> &keys)
     if (suffix == "map") {
         return;
     }
-    if (suffix == "tiff" || suffix == "tif") {
+    if (suffix == "tiff" || suffix == "tif" || suffix == "png") {
         return;
     }
     if (isDirectory(path)) {
@@ -300,7 +300,7 @@ DeepDrill::runPipeline(Options &opt)
     }
     
     // Are we suppoed to create an image file?
-    if (opt.outputFormat == Format::TIF) {
+    if (opt.outputFormat == Format::TIF || opt.outputFormat == Format::PNG) {
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);

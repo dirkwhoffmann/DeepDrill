@@ -50,6 +50,10 @@ string appendPath(const string &path, const string &path2);
 bool isAbsolutePath(const string &path);
 string makeAbsolutePath(const string &path);
 
+// Joins a vector of strings
+string join(const std::vector<string> &v, const string &delim1);
+string join(const std::vector<string> &v, const string &delim1, const string &delim2);
+
 
 //
 // Handling files

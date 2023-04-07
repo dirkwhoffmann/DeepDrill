@@ -23,6 +23,8 @@ Options::Options(map <string,string> &k)
     keys["output"] = "";
     keys["verbose"] = "0";
     keys["make"] = "0";
+    keys["tools.raw2tiff"] = "";
+    keys["tools.convert"] = "";
     keys["location.real"] = "0.0";
     keys["location.imag"] = "0.0";
     keys["location.zoom"] = "1.0";
@@ -36,7 +38,14 @@ Options::Options(map <string,string> &k)
     keys["perturbation.rounds"] = "50";
     keys["approximation.coefficients"] = "5";
     keys["approximation.tolerance"] = "1e-12";
-    
+
+    // Search external tools in some default locations
+    std::vector<string> paths = { "/usr/bin", "/usr/local/bin", "/opt/homebrew/bin" };
+    for (const auto &path : paths) {
+        if (fileExists(path + "/raw2tiff")) keys["tools.raw2tiff"] = path + "/raw2tiff";
+        if (fileExists(path + "/convert")) keys["tools.convert"] = path + "/convert";
+    }
+
     // Overwrite default values with the user settings
     for (auto &it : k) {
         if (keys.find(it.first) == keys.end()) {
@@ -67,6 +76,10 @@ Options::parse()
             output = value;
         } else if (key == "verbose") {
             verbose = stoi(value);
+        } else if (key == "tools.raw2tiff") {
+            tools.raw2tiff = value;
+        } else if (key == "tools.convert") {
+            tools.convert = value;
         } else if (key == "location.real") {
             location.real = mpf_class(value);
         } else if (key == "location.imag") {

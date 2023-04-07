@@ -121,14 +121,13 @@ Maker::generateMakefile(isize numImages)
     os << std::endl;
 
     // Write 'all' target
-    // os << "all: " << project << ".tiff" << std::endl;
     os << "all: ";
     for (isize i = 0; i < numImages; i++) {
-        os << project << "_" << std::to_string(i) << ".tiff ";
+        os << project << "_" << std::to_string(i) << ".png ";
     }
     os << std::endl;
 
-    // Write 'map' and 'tiff' targets
+    // Write 'map' and 'png' targets
     for (isize i = 0; i < numImages; i++) {
         writeTarget(os, i);
     }
@@ -136,7 +135,7 @@ Maker::generateMakefile(isize numImages)
     // Write 'clean' target
     os << "clean:" << std::endl;
     os << "\t";
-    os << "rm *.map *.tiff" << std::endl;
+    os << "rm *.map *.png" << std::endl;
     os << std::endl;
 }
 
@@ -155,12 +154,12 @@ Maker::writeTarget(std::ofstream &os, isize nr)
 {
     auto name = project + "_" + std::to_string(nr);
 
-    os << name << ".tiff: " << name << ".map" << std::endl;
+    os << name << ".png: " << name << ".map" << std::endl;
     os << "\t";
     os << "$(DEEPDRILL)";
     if (opt.verbose) os << " -v";
     os << " -p " << project << ".prf";
-    os << " -o " << name << ".tiff";
+    os << " -o " << name << ".png";
     os << " " << name << ".map " << std::endl;
     os << std::endl;
 

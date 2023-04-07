@@ -22,18 +22,9 @@ namespace dd {
 Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 {
     palette.init(opt.palette.values);
-    
+
     auto bytes = map.width * map.height;
     image = new u32[bytes] {};
-    string paths[] = { "/usr/bin/raw2tiff", "/usr/local/bin/raw2tiff", "/opt/homebrew/bin/raw2tiff" };
-
-    for (isize i = 0; i < 3; i++) {
-
-        raw2tiff = paths[i];
-        if (fileExists(raw2tiff)) return;
-    }
-
-    throw Exception("Expecting raw2tiff in /" + paths[0] + ", " + paths[1] + ", or " + paths[2]);
 }
 
 Colorizer::~Colorizer()
@@ -87,9 +78,21 @@ Colorizer::save(const string &path)
     isize height = map.height;
     
     // Assemble the target file names
-    string rawFile = tmp / "image.raw";
-    string tifFile = path;
-    
+    string rawFile, tifFile, pngFile;
+
+    if (opt.outputFormat == Format::TIF) {
+
+        rawFile = tmp / "image.raw";
+        tifFile = path;
+        pngFile = "";
+    }
+    if (opt.outputFormat == Format::PNG) {
+
+        rawFile = tmp / "image.raw";
+        tifFile = tmp / "image.tif";
+        pngFile = path;
+    }
+
     // Open an output stream
     os.open(rawFile.c_str());
     
@@ -109,17 +112,34 @@ Colorizer::save(const string &path)
 
     ProgressIndicator progress2("Converting to TIFF");
     
-    // Convert raw data into a TIFF file
-    string options = "-p rgb -b 3";
-    options += " -w " + std::to_string(width);
-    options += " -l " + std::to_string(height);
-    string command = raw2tiff + " " + options + " " + rawFile + " " + tifFile;
-    
-    if (system(command.c_str()) != 0) {
-        throw Exception("Failed to execute " + command);
+    // Create TIFF file
+    if (!tifFile.empty()) {
+        string options = "-p rgb -b 3";
+        options += " -w " + std::to_string(width);
+        options += " -l " + std::to_string(height);
+        string command = opt.tools.raw2tiff + " " + options + " " + rawFile + " " + tifFile;
+
+        if (system(command.c_str()) != 0) {
+            throw Exception("Failed to execute " + command);
+        }
     }
-    
-    // Remove the temporary file
+
+    // Create PNG file
+    if (!pngFile.empty()) {
+
+        string options = "";
+        string command = opt.tools.convert + " " + options + " " + tifFile + " " + pngFile;
+
+        if (system(command.c_str()) != 0) {
+            throw Exception("Failed to execute " + command);
+        }
+
+        // Remove the temporary TIFF file
+        fs::remove(tifFile);
+
+    }
+
+    // Remove the temporary RAW file
     fs::remove(rawFile);
     
     progress2.done();
@@ -131,10 +151,10 @@ Colorizer::save(const string &path)
         log::cout << rawFile << log::endl;
         log::cout << log::ralign("Output: ");
         log::cout << tifFile << log::endl;
-        log::cout << log::ralign("Converter: ");
-        log::cout << raw2tiff << log::endl;
-        log::cout << log::ralign("Options: ");
-        log::cout << options << log::vspace;
+        log::cout << log::ralign("TIFF Converter: ");
+        log::cout << opt.tools.raw2tiff << log::endl;
+        log::cout << log::ralign("PNG Converter: ");
+        log::cout << opt.tools.convert << log::endl;
     }
 }
 

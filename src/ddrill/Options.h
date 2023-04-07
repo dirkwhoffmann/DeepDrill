@@ -40,7 +40,15 @@ struct Options {
     string output;
     isize verbose;
     bool make;
-    
+
+    struct {
+
+        // Paths to external shell tools
+        string raw2tiff;
+        string convert;
+
+    } tools;
+
     struct {
 
         // Center coordinate
