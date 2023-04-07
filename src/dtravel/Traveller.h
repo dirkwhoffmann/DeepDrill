@@ -19,7 +19,7 @@ namespace dd {
 class Traveller {
 
     // Configuration options
-    const struct DrillOptions &opt;
+    const struct Options &opt;
 
     // The application window
     sf::RenderWindow window;
@@ -31,7 +31,7 @@ class Traveller {
 public:
 
     // Constructor
-    Traveller(DrillOptions &opt);
+    Traveller(Options &opt);
 
     // Main entry point
     void launch();

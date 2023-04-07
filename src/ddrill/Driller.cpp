@@ -13,12 +13,12 @@
 #include "Driller.h"
 #include "Colorizer.h"
 #include "Logger.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "ProgressIndicator.h"
 
 namespace dd {
 
-Driller::Driller(const DrillOptions &o, DrillMap &m) : opt(o), map(m)
+Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
 {
 
 }

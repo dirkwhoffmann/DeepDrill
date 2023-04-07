@@ -26,7 +26,7 @@ class DrillMap {
 public:
     
     // Configuration options
-    const struct DrillOptions &opt;
+    const struct Options &opt;
 
     // Image dimensions
     isize width = 0;
@@ -39,7 +39,7 @@ public:
 
 public:
     
-    DrillMap(const DrillOptions &options);
+    DrillMap(const Options &options);
     
     void load(const string &path);
     void resize(isize w, isize h);

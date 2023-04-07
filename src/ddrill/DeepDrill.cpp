@@ -14,7 +14,7 @@
 #include "Colorizer.h"
 #include "Driller.h"
 #include "Logger.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "Maker.h"
 #include <getopt.h>
 
@@ -71,7 +71,7 @@ DeepDrill::main(int argc, char *argv[])
     setupGmp(keys);
 
     // Parse all options
-    DrillOptions opt(keys);
+    Options opt(keys);
     
     // Start a stop watch
     Clock stopWatch;
@@ -276,7 +276,7 @@ DeepDrill::setupGmp(std::map <string,string> &keys)
 }
 
 void
-DeepDrill::runPipeline(DrillOptions &opt)
+DeepDrill::runPipeline(Options &opt)
 {
     DrillMap drillMap(opt);
 
@@ -310,7 +310,7 @@ DeepDrill::runPipeline(DrillOptions &opt)
 }
 
 void
-DeepDrill::runMaker(DrillOptions &opt)
+DeepDrill::runMaker(Options &opt)
 {
     Maker maker(opt);
     maker.generate();

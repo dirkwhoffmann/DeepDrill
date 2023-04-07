@@ -12,11 +12,11 @@
 #include "config.h"
 #include "Maker.h"
 #include "Logger.h"
-#include "DrillOptions.h"
+#include "Options.h"
 
 namespace dd {
 
-Maker::Maker(DrillOptions &o) : opt(o)
+Maker::Maker(Options &o) : opt(o)
 {
     project = stripSuffix(stripPath(opt.input));
     projectDir = std::filesystem::path(opt.output);

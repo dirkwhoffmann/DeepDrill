@@ -11,18 +11,18 @@
 
 #include "config.h"
 #include "Coord.h"
-#include "DrillOptions.h"
+#include "Options.h"
 
 namespace dd {
 
 Coord
-Coord::center(const DrillOptions &opt)
+Coord::center(const Options &opt)
 {
     return Coord(opt.image.width / 2, opt.image.height / 2);
 }
 
 PrecisionComplex
-Coord::translate(const DrillOptions &opt) const
+Coord::translate(const Options &opt) const
 {
     auto c = center(opt);
     

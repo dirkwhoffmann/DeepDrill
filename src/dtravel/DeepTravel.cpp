@@ -11,7 +11,7 @@
 
 #include "config.h"
 #include "DeepTravel.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "Traveller.h"
 #include "Logger.h"
 #include <getopt.h>
@@ -68,7 +68,7 @@ DeepTravel::main(int argc, char *argv[])
     setupGmp(keys);
 
     // Parse all options
-    DrillOptions opt(keys);
+    Options opt(keys);
 
     // Start a stop watch
     Clock stopWatch;

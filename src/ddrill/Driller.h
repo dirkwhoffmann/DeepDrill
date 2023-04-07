@@ -23,7 +23,7 @@ namespace dd {
 class Driller {
     
     // Configuration options
-    const struct DrillOptions &opt;
+    const struct Options &opt;
     
     // The associated drill map
     DrillMap &map;
@@ -54,7 +54,7 @@ class Driller {
 
 public:
 
-    Driller(const DrillOptions &options, DrillMap &map);
+    Driller(const Options &options, DrillMap &map);
     
     
     //

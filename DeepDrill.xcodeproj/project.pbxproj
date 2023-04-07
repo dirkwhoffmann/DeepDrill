@@ -19,9 +19,8 @@
 		5049968A29DED32E00B15919 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		5049968B29DED33000B15919 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
 		5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
-		5049969029DEDD2800B15919 /* TravelOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968E29DEDD2800B15919 /* TravelOptions.cpp */; };
 		5049969429DEED6800B15919 /* Traveller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049969229DEED6800B15919 /* Traveller.cpp */; };
-		5049969529DF04F500B15919 /* DrillOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */; };
+		5049969529DF04F500B15919 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
 		5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */; };
 		5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
 		5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
@@ -30,7 +29,7 @@
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
-		50BEC706269486AA00CCDFA8 /* DrillOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */; };
+		50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
 		50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
 		50BEC708269486AA00CCDFA8 /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FE269486AA00CCDFA8 /* Palette.cpp */; };
 		50BEC709269486AA00CCDFA8 /* ReferencePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */; };
@@ -81,8 +80,6 @@
 		5049968129DED17800B15919 /* DeepTravel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepTravel.cpp; sourceTree = "<group>"; };
 		5049968629DED20600B15919 /* DeepTravel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepTravel.h; sourceTree = "<group>"; };
 		5049968D29DED3BC00B15919 /* DeepTravel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepTravel.entitlements; sourceTree = "<group>"; };
-		5049968E29DEDD2800B15919 /* TravelOptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TravelOptions.cpp; sourceTree = "<group>"; };
-		5049968F29DEDD2800B15919 /* TravelOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelOptions.h; sourceTree = "<group>"; };
 		5049969229DEED6800B15919 /* Traveller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Traveller.cpp; sourceTree = "<group>"; };
 		5049969329DEED6800B15919 /* Traveller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traveller.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
@@ -100,10 +97,10 @@
 		50BEC6F5269486A900CCDFA8 /* DeepDrill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeepDrill.h; sourceTree = "<group>"; };
 		50BEC6F6269486A900CCDFA8 /* Coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coord.cpp; sourceTree = "<group>"; };
 		50BEC6F8269486A900CCDFA8 /* Coord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coord.h; sourceTree = "<group>"; };
-		50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrillOptions.cpp; sourceTree = "<group>"; };
+		50BEC6FA269486A900CCDFA8 /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressIndicator.cpp; sourceTree = "<group>"; };
 		50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferencePoint.h; sourceTree = "<group>"; };
-		50BEC6FD269486A900CCDFA8 /* DrillOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrillOptions.h; sourceTree = "<group>"; };
+		50BEC6FD269486A900CCDFA8 /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		50BEC6FE269486AA00CCDFA8 /* Palette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
 		50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReferencePoint.cpp; sourceTree = "<group>"; };
 		50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeepDrill.cpp; sourceTree = "<group>"; };
@@ -229,8 +226,6 @@
 			children = (
 				5049968629DED20600B15919 /* DeepTravel.h */,
 				5049968129DED17800B15919 /* DeepTravel.cpp */,
-				5049968F29DEDD2800B15919 /* TravelOptions.h */,
-				5049968E29DEDD2800B15919 /* TravelOptions.cpp */,
 				5049969329DEED6800B15919 /* Traveller.h */,
 				5049969229DEED6800B15919 /* Traveller.cpp */,
 			);
@@ -243,8 +238,8 @@
 				505EB93429D73E42008DE5BB /* CMakeLists.txt */,
 				50BEC6F5269486A900CCDFA8 /* DeepDrill.h */,
 				50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */,
-				50BEC6FD269486A900CCDFA8 /* DrillOptions.h */,
-				50BEC6FA269486A900CCDFA8 /* DrillOptions.cpp */,
+				50BEC6FD269486A900CCDFA8 /* Options.h */,
+				50BEC6FA269486A900CCDFA8 /* Options.cpp */,
 				50EB497526A067850019078C /* Maker.h */,
 				50EB497426A067850019078C /* Maker.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
@@ -462,12 +457,11 @@
 				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
 				5049968729DED32700B15919 /* Chrono.cpp in Sources */,
 				5049968929DED32B00B15919 /* Exception.cpp in Sources */,
-				5049969029DEDD2800B15919 /* TravelOptions.cpp in Sources */,
 				5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */,
 				5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */,
 				5049969929DF051200B15919 /* StandardComplex.cpp in Sources */,
 				5049969A29DF051F00B15919 /* Palette.cpp in Sources */,
-				5049969529DF04F500B15919 /* DrillOptions.cpp in Sources */,
+				5049969529DF04F500B15919 /* Options.cpp in Sources */,
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepTravel.cpp in Sources */,
@@ -490,7 +484,7 @@
 				50102349269DC4F500AC61A8 /* IO.cpp in Sources */,
 				50BEC708269486AA00CCDFA8 /* Palette.cpp in Sources */,
 				50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */,
-				50BEC706269486AA00CCDFA8 /* DrillOptions.cpp in Sources */,
+				50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */,
 				50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */,
 				50BEC71D269486C200CCDFA8 /* Chrono.cpp in Sources */,
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,

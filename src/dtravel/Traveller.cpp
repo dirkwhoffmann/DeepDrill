@@ -11,7 +11,7 @@
 
 #include "config.h"
 #include "Traveller.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "Animated.h"
 #include "Logger.h"
 
@@ -19,7 +19,7 @@
 
 namespace dd {
 
-Traveller::Traveller(DrillOptions &o) : opt(o)
+Traveller::Traveller(Options &o) : opt(o)
 {
 
 }
@@ -31,6 +31,7 @@ Traveller::launch()
 
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
+    auto frames = opt.video.frames;
 
     // Create render window
     auto videoMode = sf::VideoMode(width, height);
@@ -44,24 +45,12 @@ Traveller::launch()
     textureRect.setSize(sf::Vector2f(width, height));
     textureRect.setTexture(&texture.getTexture());
 
-    // Load image
-    updateTexture(0);
-
     auto rect = textureRect.getTextureRect();
     auto newRect = sf::IntRect(0, rect.height, rect.width, -rect.height);
     textureRect.setTextureRect(newRect);
 
-    x1.set(0);
-    y1.set(0);
-    x2.set(width);
-    y2.set(height);
-
-    x1.set(width / 4, 200);
-    y1.set(height / 4, 200);
-    x2.set(width * 3 / 4, 200);
-    y2.set(height * 3 / 4, 200);
-
-    isize i = 0;
+    isize frame = 0;
+    isize image = 0;
 
     while (window.isOpen())
     {
@@ -73,20 +62,23 @@ Traveller::launch()
                 window.close();
         }
 
-        i++;
-        if (i == 200 || i == 400 || i == 600) {
+        if (frame++ % frames == 0) {
 
-            updateTexture(i == 200 ? 1 : i == 400 ? 2 : 3);
+            try {
 
-            x1.set(0);
-            y1.set(0);
-            x2.set(width);
-            y2.set(height);
+                updateTexture(image++);
 
-            x1.set(width / 4, 200);
-            y1.set(height / 4, 200);
-            x2.set(width * 3 / 4, 200);
-            y2.set(height * 3 / 4, 200);
+                x1.set(0);
+                y1.set(0);
+                x2.set(width);
+                y2.set(height);
+
+                x1.set(width / 4, frames);
+                y1.set(height / 4, frames);
+                x2.set(width * 3 / 4, frames);
+                y2.set(height * 3 / 4, frames);
+
+            } catch (...) { }
         }
 
         x1.move();
@@ -124,6 +116,8 @@ Traveller::updateTexture(isize nr)
     }
     sf::Sprite sprite(image);
     texture.draw(sprite);
+
+    printf("Switched to texture %ld\n", nr);
 }
 
 }

@@ -11,11 +11,11 @@
 
 #include "config.h"
 #include "Palette.h"
-#include "DrillOptions.h"
+#include "Options.h"
 
 namespace dd {
 
-Palette::Palette(const DrillOptions &options) : opt(options)
+Palette::Palette(const Options &options) : opt(options)
 {
     init(opt.palette.values);    
 }

@@ -14,12 +14,12 @@
 #include "Coord.h"
 #include "DrillMap.h"
 #include "Logger.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "ProgressIndicator.h"
 
 namespace dd {
 
-Colorizer::Colorizer(const DrillOptions &o, const DrillMap &m) : opt(o), map(m)
+Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 {
     palette.init(opt.palette.values);
     

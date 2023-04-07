@@ -16,9 +16,9 @@
 
 namespace dd {
 
-enum class Format { NONE, LOC, MAP, PRF, DIR, TIF };
+enum class Format { NONE, LOC, MAP, PRF, DIR, TIF, PNG, MPG };
 
-struct DrillOptions {
+struct Options {
 
     // Set to true to abort the computation
     bool stop = false;
@@ -65,7 +65,14 @@ struct DrillOptions {
         double badpixels;
 
     } image;
-    
+
+    struct {
+
+        // Number of video frames per computed image
+        isize frames;
+
+    } video;
+
     struct {
         
         // Color palette
@@ -116,7 +123,7 @@ struct DrillOptions {
 
 public:
 
-    DrillOptions(map <string,string> &keys);
+    Options(map <string,string> &keys);
     void parse();
 
 private:

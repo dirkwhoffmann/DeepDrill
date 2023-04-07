@@ -13,12 +13,12 @@
 #include "DrillMap.h"
 #include "Coord.h"
 #include "Logger.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "ProgressIndicator.h"
 
 namespace dd {
 
-DrillMap::DrillMap(const DrillOptions &o) : opt(o)
+DrillMap::DrillMap(const Options &o) : opt(o)
 {
     resize(opt.image.width, opt.image.height);
 }

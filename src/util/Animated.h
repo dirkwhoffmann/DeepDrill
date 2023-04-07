@@ -32,7 +32,7 @@ template <class T> struct Animated {
         target = value;
     }
 
-    void set(T value, int steps) {
+    void set(T value, long steps) {
 
         target = value;
         deltaStep = std::abs(target - current) / steps;

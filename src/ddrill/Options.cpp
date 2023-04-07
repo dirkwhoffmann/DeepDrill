@@ -10,12 +10,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "DrillOptions.h"
+#include "Options.h"
 #include "Logger.h"
 
 namespace dd {
 
-DrillOptions::DrillOptions(map <string,string> &k)
+Options::Options(map <string,string> &k)
 {
     // Register default keys
     keys["exec"] = "";
@@ -30,6 +30,7 @@ DrillOptions::DrillOptions(map <string,string> &k)
     keys["image.width"] = "960";
     keys["image.height"] = "540";
     keys["image.badpixels"] = "0.001";
+    keys["video.frames"] = "200";
     keys["palette.values"] = Palette::defaultPalette;
     keys["perturbation.tolerance"] = "1e-12";
     keys["perturbation.rounds"] = "50";
@@ -49,7 +50,7 @@ DrillOptions::DrillOptions(map <string,string> &k)
 }
 
 void
-DrillOptions::parse()
+Options::parse()
 {
     for (auto &it : keys) {
 
@@ -80,6 +81,8 @@ DrillOptions::parse()
             image.height = stoi(value);
         } else if (key == "image.badpixels") {
             image.badpixels = stod(value);
+        } else if (key == "video.frames") {
+            video.frames = stoi(value);
         } else if (key == "palette.values") {
             palette.values = value;
         } else if (key == "perturbation.tolerance") {
@@ -99,7 +102,7 @@ DrillOptions::parse()
 }
  
 void
-DrillOptions::derive()
+Options::derive()
 {
     // Determine the input and output formats
     inputFormat = deriveFormat(input);
@@ -114,7 +117,7 @@ DrillOptions::derive()
 }
 
 Format
-DrillOptions::deriveFormat(const string &path)
+Options::deriveFormat(const string &path)
 {
     if (isDirectory(path)) return Format::DIR;
 
@@ -123,7 +126,9 @@ DrillOptions::deriveFormat(const string &path)
     if (suffix == "map") return Format::MAP;
     if (suffix == "prf") return Format::PRF;
     if (suffix == "tif" || suffix == "tiff") return Format::TIF;
-    
+    if (suffix == "png") return Format::PNG;
+    if (suffix == "mpg" || suffix == "mpeg") return Format::MPG;
+
     return Format::NONE;
 }
 
