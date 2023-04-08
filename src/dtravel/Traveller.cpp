@@ -21,6 +21,44 @@ namespace dd {
 
 Traveller::Traveller(Options &o) : opt(o)
 {
+    init();
+}
+
+void
+Traveller::init()
+{
+    auto width = unsigned(opt.image.width);
+    auto height = unsigned(opt.image.height);
+    // auto frames = opt.video.frames;
+
+    // Create the render window
+    auto videoMode = sf::VideoMode(width, height);
+    window.create(videoMode, "Preview");
+    window.setFramerateLimit(60);
+
+    // Create textures
+    if (!source.create(width, height)) {
+        throw Exception("Can't create source texture");
+    }
+    if (!target.create(width, height)) {
+        throw Exception("Can't create target texture");
+    }
+    sourceRect.setSize(sf::Vector2f(width, height));
+    sourceRect.setTexture(&source);
+    targetRect.setSize(sf::Vector2f(width, height));
+    targetRect.setTexture(&target.getTexture());
+
+    // Load shader
+    auto shaderSource =
+    "uniform sampler2D texture;"
+    "void main() {"
+    "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
+    "gl_FragColor = gl_Color * pixel;"
+    "}";
+
+    if (!shader.loadFromMemory(shaderSource, sf::Shader::Fragment)) {
+        throw std::runtime_error("Can't load fragment shader");
+    }
 
 }
 
@@ -35,18 +73,6 @@ Traveller::launch()
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
     auto frames = opt.video.frames;
-
-    // Create the render window
-    auto videoMode = sf::VideoMode(width, height);
-    window.create(videoMode, "Preview");
-    window.setFramerateLimit(60);
-
-    // Create the texture
-    if (!texture.create(width, height)) {
-        throw Exception("Can't create texture");
-    }
-    textureRect.setSize(sf::Vector2f(width, height));
-    textureRect.setTexture(&texture.getTexture());
 
     recorder.startRecording(4096, 4, 3);
 
@@ -93,10 +119,17 @@ Traveller::launch()
         int y2i = int(y2.current);
 
         auto newRect = sf::IntRect(x1i, y2i, x2i - x1i, -(y2i - y1i));
-        textureRect.setTextureRect(newRect);
+        sourceRect.setTextureRect(newRect);
 
         window.clear();
-        window.draw(textureRect);
+        // window.draw(sourceRect);
+
+        // Render target texture
+        shader.setUniform("texture", source);
+        target.draw(sourceRect, &shader);
+
+        // Draw target texture
+        window.draw(targetRect);
         window.display();
     }
 
@@ -114,11 +147,9 @@ Traveller::updateTexture(isize nr)
     if (!fileExists(name)) {
         throw FileNotFoundError("File " + name + " does not exist");
     }
-    if (!image.loadFromFile(name)) {
+    if (!source.loadFromFile(name)) {
         throw Exception("Can't load image file " + name);
     }
-    sf::Sprite sprite(image);
-    texture.draw(sprite);
 
     printf("Switched to texture %ld\n", nr);
 }

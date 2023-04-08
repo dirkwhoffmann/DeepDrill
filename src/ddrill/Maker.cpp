@@ -139,6 +139,7 @@ void
 Maker::writeDefinitions(std::ofstream &os)
 {
     os << "DEEPDRILL  = " << opt.keys["exec"] << std::endl;
+    os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
     os << std::endl;
@@ -152,7 +153,7 @@ Maker::writeTargets(std::ofstream &os)
     os << std::endl;
 
     // Write 'all' target
-    os << "all: init $(IMAGES)" << std::endl;
+    os << "all: init $(IMAGES) $(MAPS)" << std::endl;
     os << "\t" << "@echo \"\"" << std::endl;
     os << std::endl;
 

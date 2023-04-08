@@ -382,6 +382,7 @@
 				50BEC7292694870100CCDFA8 /* locations */,
 				50BEC721269486D900CCDFA8 /* profiles */,
 				50BEC7562694873C00CCDFA8 /* palettes */,
+				50D69A7429E177D50025DE0D /* shaders */,
 				50CF8E4F2694848800887FFC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -393,6 +394,13 @@
 				5049967F29DED17800B15919 /* DeepTravel */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		50D69A7429E177D50025DE0D /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

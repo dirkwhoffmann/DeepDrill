@@ -25,10 +25,17 @@ class Traveller {
     // The application window
     sf::RenderWindow window;
     
-    // The preview texture
-    sf::RenderTexture texture;
-    sf::RectangleShape textureRect;
+    // The render source
+    sf::Texture source;
+    sf::RectangleShape sourceRect;
 
+    // The render target
+    sf::RenderTexture target;
+    sf::RectangleShape targetRect;
+
+    // The compute kernel
+    sf::Shader shader;
+    
     // The video recorder
     Recorder recorder = Recorder(opt);
 
@@ -36,6 +43,9 @@ public:
 
     // Constructor
     Traveller(Options &opt);
+
+    // Initializer
+    void init();
 
     // Main entry point
     void launch();

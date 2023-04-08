@@ -337,8 +337,8 @@ DeepDrill::printProgress(Options &opt)
 
     // Prepare output string
     ss << "\r" << std::string(80, ' ') << '\r';
-    ss << blue << "[" << percent << "] ";
-    ss << blue << cnt1 << "/" << cnt2 << " ";
+    ss << blue << "[" << percent << "%] ";
+    ss << blue << cnt1 << "/" << cnt2 << ": ";
     ss << green << opt.output << black << std::flush;
 
     // Print output in a single chunk
