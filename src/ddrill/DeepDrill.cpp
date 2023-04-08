@@ -63,16 +63,19 @@ DeepDrill::main(int argc, char *argv[])
     // Parse all command line arguments
     parseArguments(argc, argv, keys);
 
-    log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
-    log::cout << " - (C)opyright Dirk W. Hoffmann";
-    log::cout << log::endl << log::endl;
-
     // Setup the GMP library
     setupGmp(keys);
 
     // Parse all options
     Options opt(keys);
-    
+
+    if (!opt.batch) {
+
+        log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
+        log::cout << " - (C)opyright Dirk W. Hoffmann";
+        log::cout << log::endl << log::endl;
+    }
+
     // Start a stop watch
     Clock stopWatch;
 
@@ -118,7 +121,7 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
                 break;
 
             case 'b':
-                log::cout.setSilent(true);
+                keys["batch"] = "1";
                 break;
 
             case 'p':
@@ -306,6 +309,9 @@ DeepDrill::runPipeline(Options &opt)
         Colorizer colorizer(opt, drillMap);
         colorizer.colorize();
         colorizer.save(opt.output);
+
+        // Print a progress status line in batch mode
+        if (opt.batch) printProgress(opt);
     }
 }
 
@@ -314,6 +320,29 @@ DeepDrill::runMaker(Options &opt)
 {
     Maker maker(opt);
     maker.generate();
+}
+
+void
+DeepDrill::printProgress(Options &opt)
+{
+    std::stringstream ss;
+
+    auto black = "\033[0;30m";
+    auto green = "\033[0;32m";
+    auto blue  = "\033[0;34m";
+
+    auto cnt1 = countFiles("png");
+    auto cnt2 = countFiles("loc");
+    auto percent = isize(100.0 * cnt1 / cnt2);
+
+    // Prepare output string
+    ss << "\r" << std::string(80, ' ') << '\r';
+    ss << blue << "[" << percent << "] ";
+    ss << blue << cnt1 << "/" << cnt2 << " ";
+    ss << green << opt.output << black << std::flush;
+
+    // Print output in a single chunk
+    std::cout << ss.str();
 }
 
 }

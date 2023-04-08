@@ -12,6 +12,7 @@
 #pragma once
 
 #include "commons.h"
+#include "Recorder.h"
 #include <SFML/Graphics.hpp>
 
 namespace dd {
@@ -27,6 +28,9 @@ class Traveller {
     // The preview texture
     sf::RenderTexture texture;
     sf::RectangleShape textureRect;
+
+    // The video recorder
+    Recorder recorder = Recorder(opt);
 
 public:
 

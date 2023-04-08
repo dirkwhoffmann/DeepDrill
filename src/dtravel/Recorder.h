@@ -36,17 +36,6 @@ class Recorder {
 
 
     //
-    // Recording status
-    //
-
-    // All possible recorder states
-    enum class State { wait, prepare, record, finalize, abort };
-
-    // The current recorder state
-    State state = State::wait;
-
-
-    //
     // Recording parameters
     //
 
@@ -54,10 +43,6 @@ class Recorder {
     isize frameRate = 0;
     isize bitRate = 0;
     isize sampleRate = 0;
-
-    // Time stamps
-    Time recStart;
-    Time recStop;
 
     // Temporary data storage
     Buffer<u32> videoData;
@@ -69,7 +54,7 @@ class Recorder {
 
 public:
 
-    Recorder(Options &opt);
+    Recorder(const Options &opt);
 
 
     //
@@ -93,7 +78,6 @@ public:
 
 public:
 
-    Time getDuration() const;
     isize getFrameRate() const { return frameRate; }
     isize getBitRate() const { return bitRate; }
     isize getSampleRate() const { return sampleRate; }
@@ -105,17 +89,11 @@ public:
 
 public:
 
-    // Checks whether the screen is currently recorded
-    bool isRecording() const { return state != State::wait; }
-
     // Starts the screen recorder
     void startRecording(isize bitRate, isize aspectX, isize aspectY);
 
     // Stops the screen recorder
     void stopRecording();
-
-    // Exports the recorded video
-    bool exportAs(const string &path);
 
 
     //
@@ -126,11 +104,7 @@ public:
 
 private:
 
-    void prepare();
     void record();
-    void recordVideo();
-    void finalize();
-    void abort();
 };
 
 }

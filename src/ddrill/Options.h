@@ -40,6 +40,7 @@ struct Options {
     string output;
     isize verbose;
     bool make;
+    bool batch;
 
     struct {
 
@@ -76,8 +77,17 @@ struct Options {
 
     struct {
 
-        // Number of video frames per computed image
+        // Number of images (derived value)
+        isize images;
+
+        // Number of frames per image
         isize frames;
+
+        // Video length in seconds
+        isize duration;
+
+        // Bitrate
+        isize bitrate;
 
     } video;
 

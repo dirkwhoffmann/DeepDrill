@@ -69,6 +69,7 @@ Colorizer::save(const string &path)
 {
     namespace fs = std::filesystem;
     fs::path tmp = fs::temp_directory_path();
+    auto name = stripSuffix(stripPath(path));
 
     ProgressIndicator progress("Saving image data");
     
@@ -82,14 +83,14 @@ Colorizer::save(const string &path)
 
     if (opt.outputFormat == Format::TIF) {
 
-        rawFile = tmp / "image.raw";
+        rawFile = tmp / (name + ".raw");
         tifFile = path;
         pngFile = "";
     }
     if (opt.outputFormat == Format::PNG) {
 
-        rawFile = tmp / "image.raw";
-        tifFile = tmp / "image.tif";
+        rawFile = tmp / (name + ".raw");
+        tifFile = tmp / (name + ".tif");
         pngFile = path;
     }
 

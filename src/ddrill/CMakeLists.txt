@@ -21,6 +21,5 @@ Options.cpp
 Coord.cpp
 Palette.cpp
 ReferencePoint.cpp
-FFmpeg.cpp
 
 )

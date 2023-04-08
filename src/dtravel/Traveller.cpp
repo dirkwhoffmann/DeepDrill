@@ -27,13 +27,16 @@ Traveller::Traveller(Options &o) : opt(o)
 void
 Traveller::launch()
 {
+    isize frame = 0;
+    isize image = 0;
+
     Animated<float> x1, y1, x2, y2;
 
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
     auto frames = opt.video.frames;
 
-    // Create render window
+    // Create the render window
     auto videoMode = sf::VideoMode(width, height);
     window.create(videoMode, "Preview");
     window.setFramerateLimit(60);
@@ -45,12 +48,7 @@ Traveller::launch()
     textureRect.setSize(sf::Vector2f(width, height));
     textureRect.setTexture(&texture.getTexture());
 
-    auto rect = textureRect.getTextureRect();
-    auto newRect = sf::IntRect(0, rect.height, rect.width, -rect.height);
-    textureRect.setTextureRect(newRect);
-
-    isize frame = 0;
-    isize image = 0;
+    recorder.startRecording(4096, 4, 3);
 
     while (window.isOpen())
     {
@@ -78,7 +76,10 @@ Traveller::launch()
                 x2.set(width * 3 / 4, frames);
                 y2.set(height * 3 / 4, frames);
 
-            } catch (...) { }
+            } catch (...) {
+
+                break;
+            }
         }
 
         x1.move();
@@ -98,6 +99,8 @@ Traveller::launch()
         window.draw(textureRect);
         window.display();
     }
+
+    recorder.stopRecording();
 }
 
 void

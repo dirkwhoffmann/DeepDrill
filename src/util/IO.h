@@ -54,6 +54,10 @@ string makeAbsolutePath(const string &path);
 string join(const std::vector<string> &v, const string &delim1);
 string join(const std::vector<string> &v, const string &delim1, const string &delim2);
 
+// Counts files in a directory
+isize countFiles(const string &suffix);
+isize countFiles(const std::filesystem::path &path, const string &suffix);
+
 
 //
 // Handling files

@@ -15,7 +15,7 @@
 
 namespace dd {
 
-Recorder::Recorder(Options &opt) : opt(opt)
+Recorder::Recorder(const Options &opt) : opt(opt)
 {
     FFmpeg::init();
 }
@@ -32,22 +32,12 @@ Recorder::videoStreamPath()
     return "/tmp/video.mp4";
 }
 
-Time
-Recorder::getDuration() const
-{
-    return (isRecording() ? Time::now() : recStop) - recStart;
-}
-
 void
 Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
 {
-    if (isRecording()) {
-        throw Exception("Recording in progress.");
-    }
+    assert(!videoPipe.isOpen());
 
     // Create pipe
-    if (opt.verbose) log::cout << log::vspace << "Creating pipes..." << log::endl;
-
     if (!videoPipe.create(videoPipePath())) {
         throw Exception("Failed to create the video encoder pipe.");
     }
@@ -55,49 +45,47 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
     // Set the bit rate, frame rate, and sample rate
     this->bitRate = bitRate;
     frameRate = 60;
-    sampleRate = 44100;
 
     // Create temporary buffers
-    if (opt.verbose) log::cout << "Creating buffers..." << log::endl;
     videoData.alloc(opt.image.width * opt.image.height);
 
     //
     // Assemble the command line arguments for the video encoder
     //
 
-    if (opt.verbose) log::cout << "Assembling command line arguments..." << log::endl;
-
     // Console interactions
-    string cmd1 = " -nostdin";
+    string cmd = " -nostdin";
 
     // Verbosity
-    cmd1 += " -loglevel " + loglevel();
+    cmd += " -loglevel " + loglevel();
 
     // Input stream format
-    cmd1 += " -f:v rawvideo -pixel_format rgba";
+    cmd += " -f:v rawvideo -pixel_format rgba";
 
     // Frame rate
-    cmd1 += " -r " + std::to_string(frameRate);
+    cmd += " -r " + std::to_string(frameRate);
 
     // Frame size (width x height)
-    cmd1 += " -s:v " + std::to_string(opt.image.width) + "x" + std::to_string(opt.image.height);
+    cmd += " -s:v " + std::to_string(opt.image.width) + "x" + std::to_string(opt.image.height);
 
     // Input source (named pipe)
-    cmd1 += " -i " + videoPipePath();
+    cmd += " -i " + videoPipePath();
 
     // Output stream format
-    cmd1 += " -f mp4 -pix_fmt yuv420p";
+    cmd += " -f mp4 -pix_fmt yuv420p";
 
     // Bit rate
-    cmd1 += " -b:v " + std::to_string(bitRate) + "k";
+    cmd += " -b:v " + std::to_string(bitRate) + "k";
 
     // Aspect ratio
-    cmd1 += " -bsf:v ";
-    cmd1 += "\"h264_metadata=sample_aspect_ratio=";
-    cmd1 += std::to_string(aspectX) + "/" + std::to_string(2*aspectY) + "\"";
+    /*
+    cmd += " -bsf:v ";
+    cmd += "\"h264_metadata=sample_aspect_ratio=";
+    cmd += std::to_string(aspectX) + "/" + std::to_string(2*aspectY) + "\"";
+    */
 
     // Output file
-    cmd1 += " -y " + videoStreamPath();
+    cmd += " -y " + videoStreamPath();
 
     //
     // Launch FFmpeg instance
@@ -106,41 +94,40 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
     assert(!videoFFmpeg.isRunning());
 
     // Launch the video encoder
-    if (!videoFFmpeg.launch(cmd1)) {
+    if (!videoFFmpeg.launch(cmd)) {
         throw Exception("Unable to launch the FFmpeg encoder.");
     }
 
     // Open the video pipe
-    if (opt.verbose) log::cout << "Opening video pipe..." << log::endl;
-
     if (!videoPipe.open()) {
         throw Exception("Unable to open the video pipe.");
     }
 
+    if (opt.verbose) {
 
-    if (opt.verbose) log::cout << "Success." << log::endl;
-    state = State::prepare;
+        log::cout << log::vspace;
+        log::cout << log::ralign("Number of images: ");
+        log::cout << opt.video.images << log::endl;
+        log::cout << log::ralign("Frames per image: ");
+        log::cout << opt.video.frames << log::endl;
+        log::cout << log::ralign("Duration: ");
+        log::cout << opt.video.duration << " sec" << log::endl;
+        log::cout << log::ralign("Bitrate: ");
+        log::cout << opt.video.bitrate << log::endl;
+        log::cout << log::vspace;
+    }
 }
 
 void
 Recorder::stopRecording()
 {
-    if (isRecording()) {
-        state = State::finalize;
-    }
-}
+    assert(videoPipe.isOpen());
 
-bool
-Recorder::exportAs(const string &path)
-{
-    return true;
-}
+    // Close pipe
+    videoPipe.close();
 
-void
-Recorder::prepare()
-{
-    state = State::record;
-    recStart = Time::now();
+    // Wait for the decoder to terminate
+    videoFFmpeg.join();
 }
 
 void
@@ -149,12 +136,9 @@ Recorder::record()
     assert(videoFFmpeg.isRunning());
     assert(videoPipe.isOpen());
 
-    recordVideo();
+    // TODO
 }
 
-void
-Recorder::recordVideo()
-{
     /*
     auto *buffer = denise.pixelEngine.stablePtr();
 
@@ -177,26 +161,5 @@ Recorder::recordVideo()
         state = State::abort;
     }
     */
-}
-
-void
-Recorder::finalize()
-{
-    // Close pipe
-    videoPipe.close();
-
-    // Wait for the decoder to terminate
-    videoFFmpeg.join();
-
-    // Switch state
-    state = State::wait;
-    recStop = Time::now();
-}
-
-void
-Recorder::abort()
-{
-    finalize();
-}
 
 }

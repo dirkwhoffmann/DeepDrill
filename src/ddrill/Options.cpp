@@ -18,24 +18,43 @@ namespace dd {
 Options::Options(map <string,string> &k)
 {
     // Register default keys
+
+    // Command line options
     keys["exec"] = "";
     keys["input"] = "";
     keys["output"] = "";
     keys["verbose"] = "0";
     keys["make"] = "0";
+    keys["batch"] = "0";
+
+    // Tool keys
     keys["tools.raw2tiff"] = "";
     keys["tools.convert"] = "";
+
+    // Location keys
     keys["location.real"] = "0.0";
     keys["location.imag"] = "0.0";
     keys["location.zoom"] = "1.0";
     keys["location.depth"] = "500";
+
+    // Image keys
     keys["image.width"] = "960";
     keys["image.height"] = "540";
     keys["image.badpixels"] = "0.001";
-    keys["video.frames"] = "200";
+
+    // Video keys
+    keys["video.frames"] = "120";
+    keys["video.duration"] = "0";
+    keys["video.bitrate"] = "4096";
+
+    // Palette keys
     keys["palette.values"] = Palette::defaultPalette;
+
+    // Perturbation keys
     keys["perturbation.tolerance"] = "1e-12";
     keys["perturbation.rounds"] = "50";
+
+    // Approximation keys
     keys["approximation.coefficients"] = "5";
     keys["approximation.tolerance"] = "1e-12";
 
@@ -70,6 +89,9 @@ Options::parse()
             exec = value;
         } else if (key == "make") {
             make = stoi(value);
+        } else if (key == "batch") {
+            batch = stoi(value);
+            log::cout.setSilent(batch);
         } else if (key == "input") {
             input = value;
         } else if (key == "output") {
@@ -96,6 +118,10 @@ Options::parse()
             image.badpixels = stod(value);
         } else if (key == "video.frames") {
             video.frames = stoi(value);
+        } else if (key == "video.duration") {
+            video.duration = stoi(value);
+        } else if (key == "video.bitrate") {
+            video.bitrate = stoi(value);
         } else if (key == "palette.values") {
             palette.values = value;
         } else if (key == "perturbation.tolerance") {
@@ -127,6 +153,24 @@ Options::derive()
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
+
+    // Derive missing image parameters
+    if (video.frames == 0 && video.duration == 0) video.frames = 120;
+
+    if (video.frames != 0 && video.duration == 0) {
+
+        video.images = std::log2(location.zoom.get_d());
+        video.duration = video.images * video.frames / 60;
+
+    } else if (video.frames == 0 && video.duration != 0) {
+
+        video.images = std::log2(location.zoom.get_d());
+        video.frames = 60 * video.duration / video.images;
+
+    } else if (video.frames == 0 && video.duration != 0) {
+
+        video.images = 60 * video.duration / video.images;
+    }
 }
 
 Format

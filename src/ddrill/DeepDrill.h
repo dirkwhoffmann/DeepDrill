@@ -16,14 +16,14 @@
 namespace dd {
 
 class DeepDrill {
-        
+
     // Extracted command line arguments
     std::vector <string> profiles;
     std::vector <string> inputs;
     std::vector <string> outputs;
-                
+
 public:
-        
+
     // Main entry point
     void main(int argc, char *argv[]);
 
@@ -42,6 +42,9 @@ private:
     // Executes the drill pipeline or the Makefile generator
     void runPipeline(struct Options &opt);
     void runMaker(struct Options &opt);
+
+    // Prints a progress line in batch mode
+    void printProgress(Options &opt);
 
     // Sets up the GMP library
     void setupGmp(std::map <string,string> &keys);

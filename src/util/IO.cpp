@@ -121,6 +121,26 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
     return result;
 }
 
+isize countFiles(const string &suffix)
+{
+    return countFiles(std::filesystem::current_path(), suffix); 
+}
+
+isize countFiles(const std::filesystem::path &path, const string &suffix)
+{
+    isize count = 0;
+
+    for (const auto &file : std::filesystem::directory_iterator(path)) {
+
+        auto name = file.path().string();
+        if(name.substr(name.find_last_of(".") + 1) == suffix) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 bool fileExists(const string &path)
 {
     return getSizeOfFile(path) >= 0;
