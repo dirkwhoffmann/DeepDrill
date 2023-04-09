@@ -171,7 +171,7 @@ Options::derive()
         if (video.duration) {
             video.inbetweens = isize(std::round(60.0 * video.duration / video.keyframes));
         } else {
-            throw Exception("Not enough information to derive missing key video.inbetweens");
+            throw Exception("Not enough information to derive key video.inbetweens");
         }
     }
 

@@ -21,7 +21,7 @@ Logger::operator<<(const log::Endl &arg)
     if (!silent) {
         
         blanks++;
-        std::cout << std::endl;
+        stream << std::endl;
     }
     return *this;
 }
@@ -42,7 +42,7 @@ Logger::operator<<(const log::Flush &arg)
 {
     if (!silent) {
 
-        std::cout.flush();
+        stream.flush();
     }
     return *this;
 }
@@ -53,7 +53,7 @@ Logger::operator<<(const log::ralign &arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << std::right << std::setw(30) << arg.str;
+        stream << std::right << std::setw(30) << arg.str;
     }
     return *this;
 }
@@ -64,7 +64,7 @@ Logger::operator<<(const string &arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << arg;
+        stream << arg;
     }
     return *this;
 }
@@ -75,7 +75,7 @@ Logger::operator<<(const isize &arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << arg;
+        stream << arg;
     }
     return *this;
 }
@@ -86,7 +86,7 @@ Logger::operator<<(const Time &arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << arg;
+        stream << arg;
     }
     return *this;
 }
@@ -97,7 +97,7 @@ Logger::operator<<(const Coord &arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << "(" << arg.x << "," << arg.y << ")";
+        stream << "(" << arg.x << "," << arg.y << ")";
     }
     return *this;
 }
@@ -108,9 +108,9 @@ Logger::operator<<(const StandardComplex& arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << "(" << arg.re;
-        std::cout << "," << arg.im << "i";
-        std::cout << ")";
+        stream << "(" << arg.re;
+        stream << "," << arg.im << "i";
+        stream << ")";
     }
     return *this;
 }
@@ -121,7 +121,7 @@ Logger::operator<<(const ExtendedDouble& arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << arg.mantissa << "b" << arg.exponent;
+        stream << arg.mantissa << "b" << arg.exponent;
     }
     return *this;
 
@@ -133,9 +133,9 @@ Logger::operator<<(const ExtendedComplex& arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << "(" << arg.mantissa.re;
-        std::cout << "," << arg.mantissa.im << "i";
-        std::cout << ")" << "b" << arg.exponent;
+        stream << "(" << arg.mantissa.re;
+        stream << "," << arg.mantissa.im << "i";
+        stream << ")" << "b" << arg.exponent;
     }
     return *this;
 }
@@ -146,13 +146,22 @@ Logger::operator<<(const PrecisionComplex& arg)
     if (!silent) {
 
         blanks = 0;
-        std::cout << "(" << arg.re.get_d();
-        std::cout << "," << arg.im.get_d() << "i";
-        std::cout << ")";
+        stream << "(" << arg.re.get_d();
+        stream << "," << arg.im.get_d() << "i";
+        stream << ")";
     }
     return *this;
 }
 
-Logger log::cout;
+void
+Logger::setColor(isize c, bool b)
+{
+    color = c;
+    bold = b;
+
+    *this << "\033[" << (bold ? "1" : "0") << ";3" << color << "m";
+}
+
+Logger log::cout(std::cout);
 
 }

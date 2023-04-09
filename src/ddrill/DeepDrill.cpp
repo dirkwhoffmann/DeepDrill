@@ -327,19 +327,17 @@ DeepDrill::printProgress(Options &opt)
 {
     std::stringstream ss;
 
-    auto black = "\033[0;30m";
-    auto green = "\033[0;32m";
-    auto blue  = "\033[0;34m";
-
     auto cnt1 = countFiles("png");
     auto cnt2 = countFiles("loc");
     auto percent = isize(100.0 * cnt1 / cnt2);
 
     // Prepare output string
-    ss << "\r" << std::string(80, ' ') << '\r';
-    ss << blue << "[" << percent << "%] ";
-    ss << blue << cnt1 << "/" << cnt2 << ": ";
-    ss << green << opt.output << black << std::flush;
+    Logger logger(ss);
+    logger << "\r" << std::string(80, ' ') << "\r";
+    logger << log::blue << "[" << percent << "%] ";
+    logger << log::blue << cnt1 << "/" << cnt2 << ": ";
+    logger << log::green << opt.output;
+    logger << log::black << log::flush;
 
     // Print output in a single chunk
     std::cout << ss.str();

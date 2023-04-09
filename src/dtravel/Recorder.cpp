@@ -106,10 +106,10 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
     if (opt.verbose) {
 
         log::cout << log::vspace;
-        log::cout << log::ralign("Number of images: ");
-        log::cout << opt.video.images << log::endl;
-        log::cout << log::ralign("Frames per image: ");
+        log::cout << log::ralign("Keyframes: ");
         log::cout << opt.video.keyframes << log::endl;
+        log::cout << log::ralign("Inbetweens: ");
+        log::cout << opt.video.inbetweens << log::endl;
         log::cout << log::ralign("Duration: ");
         log::cout << opt.video.duration << " sec" << log::endl;
         log::cout << log::ralign("Bitrate: ");
