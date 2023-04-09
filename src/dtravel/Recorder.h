@@ -42,10 +42,12 @@ class Recorder {
     //
 
     // Video properties
+    /*
     isize frameRate = 0;
     isize bitRate = 0;
     isize sampleRate = 0;
-
+    */
+    
     // Temporary data storage
     Buffer<u32> videoData;
 
@@ -80,10 +82,11 @@ public:
 
 public:
 
+    /*
     isize getFrameRate() const { return frameRate; }
     isize getBitRate() const { return bitRate; }
     isize getSampleRate() const { return sampleRate; }
-
+    */
 
     //
     // Starting and stopping a video capture
@@ -92,7 +95,7 @@ public:
 public:
 
     // Starts the screen recorder
-    void startRecording(isize bitRate, isize aspectX, isize aspectY);
+    void startRecording();
 
     // Stops the screen recorder
     void stopRecording();

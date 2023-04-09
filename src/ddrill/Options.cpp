@@ -43,6 +43,9 @@ Options::Options(map <string,string> &k)
     keys["image.badpixels"] = "0.001";
 
     // Video keys
+    keys["video.framerate"] = "60";
+    keys["video.width"] = "480";
+    keys["video.height"] = "270";
     keys["video.keyframes"] = "derive";
     keys["video.inbetweens"] = "120";
     keys["video.duration"] = "derive";
@@ -117,6 +120,12 @@ Options::parse()
             image.height = stoi(value);
         } else if (key == "image.badpixels") {
             image.badpixels = stod(value);
+        } else if (key == "video.framerate") {
+            video.frameRate = stod(value);
+        } else if (key == "video.width") {
+            video.width = stod(value);
+        } else if (key == "video.height") {
+            video.height = stod(value);
         } else if (key == "video.keyframes") {
             video.keyframes = value == "derive" ? 0 : stoi(value);
         } else if (key == "video.inbetweens") {

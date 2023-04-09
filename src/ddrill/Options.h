@@ -77,6 +77,13 @@ struct Options {
 
     struct {
 
+        // Video frame rate
+        isize frameRate;
+
+        // Resolution
+        isize width;
+        isize height;
+
         // Number of keyframes
         isize keyframes;
 

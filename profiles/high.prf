@@ -1,7 +1,11 @@
 [image]
 width = 1920
 height = 1080
- 
+
+[video]
+width = 960
+height = 540
+
 [perturbation]
 tolerance = 1e-6
 rounds = 100

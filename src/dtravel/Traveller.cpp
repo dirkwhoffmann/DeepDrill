@@ -27,25 +27,29 @@ Traveller::Traveller(Options &o) : opt(o)
 void
 Traveller::init()
 {
-    auto width = unsigned(opt.image.width);
-    auto height = unsigned(opt.image.height);
-    // auto frames = opt.video.frames;
+    auto sourceWidth = unsigned(opt.image.width);
+    auto sourceHeight = unsigned(opt.image.height);
+    auto targetWidth = unsigned(opt.video.width);
+    auto targetHeight = unsigned(opt.video.height);
 
     // Create the render window
-    auto videoMode = sf::VideoMode(width, height);
+    auto videoMode = sf::VideoMode(targetWidth, targetHeight);
     window.create(videoMode, "Preview");
+
+    // Preview in real-time when no video is recorded
+    // TODO: if !video
     window.setFramerateLimit(60);
 
     // Create textures
-    if (!source.create(width, height)) {
+    if (!source.create(sourceWidth, sourceHeight)) {
         throw Exception("Can't create source texture");
     }
-    if (!target.create(width, height)) {
+    if (!target.create(targetWidth, targetHeight)) {
         throw Exception("Can't create target texture");
     }
-    sourceRect.setSize(sf::Vector2f(width, height));
+    sourceRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     sourceRect.setTexture(&source);
-    targetRect.setSize(sf::Vector2f(width, height));
+    targetRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     targetRect.setTexture(&target.getTexture());
 
     // Load shader
@@ -53,6 +57,7 @@ Traveller::init()
     "uniform sampler2D texture;"
     "void main() {"
     "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
+    // "gl_FragColor = gl_Color * pixel * vec4(0.0,1.0,1.0,1.0);"
     "gl_FragColor = gl_Color * pixel;"
     "}";
 
@@ -74,7 +79,7 @@ Traveller::launch()
     auto height = unsigned(opt.image.height);
     auto inbetweens = opt.video.inbetweens;
 
-    recorder.startRecording(4096, 4, 3);
+    recorder.startRecording();
 
     while (window.isOpen())
     {
@@ -84,35 +89,6 @@ Traveller::launch()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-        }
-
-        int x1i = int(x1.current);
-        int y1i = int(y1.current);
-        int x2i = int(x2.current);
-        int y2i = int(y2.current);
-
-        if (opt.verbose) {
-            printf("(%d,%d) - (%d,%d) [%d,%d]\n", x1i, y1i, x2i, y2i, x2i - x1i, y2i - y1i);
-        }
-        auto newRect = sf::IntRect(x1i, y2i, x2i - x1i, -(y2i - y1i));
-        sourceRect.setTextureRect(newRect);
-
-        // Render target texture
-        shader.setUniform("texture", source);
-        target.draw(sourceRect, &shader);
-
-        // Draw target texture in the preview window
-        window.clear();
-        window.draw(targetRect);
-        window.display();
-
-        if (!opt.output.empty()) {
-
-            // Read back image data
-            auto image = target.getTexture().copyToImage();
-
-            // Record frame
-            recorder.record(image);
         }
 
         x1.move();
@@ -140,6 +116,36 @@ Traveller::launch()
 
                 break;
             }
+        }
+
+        int x1i = int(x1.current);
+        int y1i = int(y1.current);
+        int x2i = int(x2.current);
+        int y2i = int(y2.current);
+
+        if (opt.verbose) {
+            // printf("(%d,%d) - (%d,%d) [%d,%d]\n", x1i, y1i, x2i, y2i, x2i - x1i, y2i - y1i);
+        }
+        auto newRect = sf::IntRect(x1i, y2i, x2i - x1i, -(y2i - y1i));
+        sourceRect.setTextureRect(newRect);
+
+        // Render target texture
+        shader.setUniform("texture", source);
+        target.draw(sourceRect, &shader);
+        target.display();
+
+        // Draw target texture in the preview window
+        window.clear();
+        window.draw(targetRect);
+        window.display();
+
+        if (!opt.output.empty()) {
+
+            // Read back image data
+            auto image = target.getTexture().copyToImage();
+
+            // Record frame
+            recorder.record(image);
         }
     }
 

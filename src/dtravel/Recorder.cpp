@@ -33,7 +33,7 @@ Recorder::videoStreamPath()
 }
 
 void
-Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
+Recorder::startRecording()
 {
     assert(!videoPipe.isOpen());
 
@@ -42,12 +42,8 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
         throw Exception("Failed to create the video encoder pipe.");
     }
 
-    // Set the bit rate, frame rate, and sample rate
-    this->bitRate = bitRate;
-    frameRate = 60;
-
     // Create temporary buffers
-    videoData.alloc(opt.image.width * opt.image.height);
+    videoData.alloc(opt.video.width * opt.video.height);
 
     //
     // Assemble the command line arguments for the video encoder
@@ -63,10 +59,10 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
     cmd += " -f:v rawvideo -pixel_format rgba";
 
     // Frame rate
-    cmd += " -r " + std::to_string(frameRate);
+    cmd += " -r " + std::to_string(60);
 
     // Frame size (width x height)
-    cmd += " -s:v " + std::to_string(opt.image.width) + "x" + std::to_string(opt.image.height);
+    cmd += " -s:v " + std::to_string(opt.video.width) + "x" + std::to_string(opt.video.height);
 
     // Input source (named pipe)
     cmd += " -i " + videoPipePath();
@@ -75,14 +71,7 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
     cmd += " -f mp4 -pix_fmt yuv420p";
 
     // Bit rate
-    cmd += " -b:v " + std::to_string(bitRate) + "k";
-
-    // Aspect ratio
-    /*
-     cmd += " -bsf:v ";
-     cmd += "\"h264_metadata=sample_aspect_ratio=";
-     cmd += std::to_string(aspectX) + "/" + std::to_string(2*aspectY) + "\"";
-     */
+    cmd += " -b:v " + std::to_string(opt.video.bitrate) + "k";
 
     // Output file
     cmd += " -y " + videoStreamPath();
@@ -106,6 +95,10 @@ Recorder::startRecording(isize bitRate, isize aspectX, isize aspectY)
     if (opt.verbose) {
 
         log::cout << log::vspace;
+        log::cout << log::ralign("Frame rate: ");
+        log::cout << opt.video.frameRate << " Hz" << log::endl;
+        log::cout << log::ralign("Resolution: ");
+        log::cout << opt.video.width << " x " << opt.video.height << log::endl;
         log::cout << log::ralign("Keyframes: ");
         log::cout << opt.video.keyframes << log::endl;
         log::cout << log::ralign("Inbetweens: ");
@@ -133,14 +126,12 @@ Recorder::stopRecording()
 void
 Recorder::record(const sf::Image &img)
 {
+    assert(img.getSize().x == opt.video.width);
+    assert(img.getSize().y == opt.video.height);
     assert(videoFFmpeg.isRunning());
     assert(videoPipe.isOpen());
 
-    isize width = opt.image.width;
-    isize height = opt.image.height;
-    isize length = sizeof(u32) * width * height;
-    assert(img.getSize().x == width);
-    assert(img.getSize().y == height);
+    isize length = sizeof(u32) * opt.video.width * opt.video.height;
 
     u8 *src = (u8 *)img.getPixelsPtr();
     u8 *dst = (u8 *)videoData.ptr;

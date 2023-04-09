@@ -82,6 +82,9 @@ Maker::generateProfile()
 
     // Write video section
     os << "[video]" << std::endl;
+    os << "framerate = " << keys["video.framerate"] << std::endl;
+    os << "width = " << keys["video.width"] << std::endl;
+    os << "height = " << keys["video.height"] << std::endl;
     os << "keyframes = " << keys["video.keyframes"] << std::endl;
     os << "inbetweens = " << keys["video.inbetweens"] << std::endl;
     os << "duration = " << keys["video.duration"] << std::endl;
