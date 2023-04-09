@@ -11,52 +11,13 @@
 
 #pragma once
 
-template <class T> struct Animated {
-
-    T current = 0;
-    T target = 0;
-    T deltaStep = 0;
-
-    Animated(T value = 0) {
-
-        set(value);
-    }
-
-    bool animates() const {
-        return current != target;
-    }
-
-    void set(T value) {
-
-        current = value;
-        target = value;
-    }
-
-    void set(T value, long steps) {
-
-        target = value;
-        deltaStep = std::abs(target - current) / steps;
-    }
-
-    void move() {
-        
-        if (current + deltaStep <= target) {
-            current += deltaStep;
-        } else if (current - deltaStep >= target) {
-            current -= deltaStep;
-        } else {
-            current = target;
-        }
-    }
-};
-
-struct Animated2 {
+struct Animated {
 
     double current = 1.0;
     double target = 1.0;
     double factor = 1.0;
 
-    Animated2(double value = 0) {
+    Animated(double value = 0) {
 
         set(value);
     }

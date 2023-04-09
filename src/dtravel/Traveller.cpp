@@ -73,7 +73,7 @@ Traveller::launch()
     isize frame = 0;
     isize image = 0;
 
-    Animated2 w, h;
+    Animated w, h;
 
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
