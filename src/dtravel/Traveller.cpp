@@ -73,7 +73,7 @@ Traveller::launch()
     isize frame = 0;
     isize image = 0;
 
-    Animated<float> x1, y1, x2, y2;
+    Animated2 w, h;
 
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
@@ -91,10 +91,8 @@ Traveller::launch()
                 window.close();
         }
 
-        x1.move();
-        y1.move();
-        x2.move();
-        y2.move();
+        w.move();
+        h.move();
 
         if (frame++ % (inbetweens) == 0) {
 
@@ -102,15 +100,10 @@ Traveller::launch()
 
                 updateTexture(image++);
 
-                x1.set(0);
-                y1.set(0);
-                x2.set(width);
-                y2.set(height);
-
-                x1.set(width / 4, inbetweens);
-                y1.set(height / 4, inbetweens);
-                x2.set(width * 3 / 4, inbetweens);
-                y2.set(height * 3 / 4, inbetweens);
+                w.set(opt.image.width);
+                h.set(opt.image.height);
+                w.set(opt.image.width / 2.0, inbetweens);
+                h.set(opt.image.height / 2.0, inbetweens);
 
             } catch (...) {
 
@@ -118,15 +111,13 @@ Traveller::launch()
             }
         }
 
-        int x1i = int(x1.current);
-        int y1i = int(y1.current);
-        int x2i = int(x2.current);
-        int y2i = int(y2.current);
-
         if (opt.verbose) {
-            // printf("(%d,%d) - (%d,%d) [%d,%d]\n", x1i, y1i, x2i, y2i, x2i - x1i, y2i - y1i);
+            // printf("%f %f %f %f\n", w.current, w.factor, h.current, h.factor);
         }
-        auto newRect = sf::IntRect(x1i, y2i, x2i - x1i, -(y2i - y1i));
+        auto newRect = sf::IntRect(unsigned((width - w.current) / 2.0),
+                                   unsigned((height - h.current) / 2.0),
+                                   unsigned(w.current),
+                                   unsigned(h.current));
         sourceRect.setTextureRect(newRect);
 
         // Render target texture
