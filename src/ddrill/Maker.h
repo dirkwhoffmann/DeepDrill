@@ -36,10 +36,10 @@ public:
     
 private:
 
-    void generateLocationFiles(isize count);
+    void generateLocationFiles();
     void generateLocationFile(isize nr);
     void generateProfile();
-    void generateMakefile(isize numImages);
+    void generateMakefile();
 
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);

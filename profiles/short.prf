@@ -1,0 +1,4 @@
+[video]
+keyframes = derive
+inbetweens = 120
+duration = 20

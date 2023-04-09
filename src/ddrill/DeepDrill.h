@@ -27,9 +27,6 @@ public:
     // Main entry point
     void main(int argc, char *argv[]);
 
-    // Interrupt the current run
-    // void abort() { opt.stop = true; }
-
 private:
     
     // Helper methods for parsing command line arguments

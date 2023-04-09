@@ -43,8 +43,9 @@ Options::Options(map <string,string> &k)
     keys["image.badpixels"] = "0.001";
 
     // Video keys
-    keys["video.frames"] = "120";
-    keys["video.duration"] = "0";
+    keys["video.keyframes"] = "derive";
+    keys["video.inbetweens"] = "120";
+    keys["video.duration"] = "derive";
     keys["video.bitrate"] = "4096";
 
     // Palette keys
@@ -116,10 +117,12 @@ Options::parse()
             image.height = stoi(value);
         } else if (key == "image.badpixels") {
             image.badpixels = stod(value);
-        } else if (key == "video.frames") {
-            video.frames = stoi(value);
+        } else if (key == "video.keyframes") {
+            video.keyframes = value == "derive" ? 0 : stoi(value);
+        } else if (key == "video.inbetweens") {
+            video.inbetweens = value == "derive" ? 0 : stoi(value);
         } else if (key == "video.duration") {
-            video.duration = stoi(value);
+            video.duration = value == "derive" ? 0 : stoi(value);
         } else if (key == "video.bitrate") {
             video.bitrate = stoi(value);
         } else if (key == "palette.values") {
@@ -154,23 +157,26 @@ Options::derive()
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
 
-    // Derive missing image parameters
-    if (video.frames == 0 && video.duration == 0) video.frames = 120;
+    // Derive parameters 'keyframes' and 'inbetweens' if not specified
+    if (!video.keyframes) {
 
-    if (video.frames != 0 && video.duration == 0) {
-
-        video.images = std::log2(location.zoom.get_d());
-        video.duration = video.images * video.frames / 60;
-
-    } else if (video.frames == 0 && video.duration != 0) {
-
-        video.images = std::log2(location.zoom.get_d());
-        video.frames = 60 * video.duration / video.images;
-
-    } else if (video.frames == 0 && video.duration != 0) {
-
-        video.images = 60 * video.duration / video.images;
+        if (video.inbetweens && video.duration) {
+            video.keyframes = isize(std::ceil(60.0 * video.duration / video.inbetweens));
+        } else {
+            video.keyframes = isize(std::ceil(std::log2(location.zoom.get_d())));
+        }
     }
+    if (!video.inbetweens) {
+
+        if (video.duration) {
+            video.inbetweens = isize(std::round(60.0 * video.duration / video.keyframes));
+        } else {
+            throw Exception("Not enough information to derive missing key video.inbetweens");
+        }
+    }
+
+    // Derive or rectify duration parameter
+    video.duration = isize(std::round(video.keyframes * video.inbetweens / 60.0));
 }
 
 Format

@@ -178,6 +178,7 @@
 		50D69A6F29E03F940025DE0D /* NamedPipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipe.h; sourceTree = "<group>"; };
 		50D69A7129E0409E0025DE0D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
+		50D69A7629E2A4630025DE0D /* short.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = short.prf; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -312,6 +313,7 @@
 				50BEC723269486E500CCDFA8 /* medium.prf */,
 				50BEC727269486E600CCDFA8 /* high.prf */,
 				50BEC726269486E600CCDFA8 /* ultra.prf */,
+				50D69A7629E2A4630025DE0D /* short.prf */,
 			);
 			path = profiles;
 			sourceTree = "<group>";

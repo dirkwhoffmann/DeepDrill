@@ -72,7 +72,7 @@ Traveller::launch()
 
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
-    auto frames = opt.video.frames;
+    auto frames = opt.video.keyframes;
 
     recorder.startRecording(4096, 4, 3);
 
@@ -121,16 +121,23 @@ Traveller::launch()
         auto newRect = sf::IntRect(x1i, y2i, x2i - x1i, -(y2i - y1i));
         sourceRect.setTextureRect(newRect);
 
-        window.clear();
-        // window.draw(sourceRect);
-
         // Render target texture
         shader.setUniform("texture", source);
         target.draw(sourceRect, &shader);
 
-        // Draw target texture
+        // Draw target texture in the preview window
+        window.clear();
         window.draw(targetRect);
         window.display();
+
+        if (!opt.output.empty()) {
+
+            // Read back image data
+            auto image = target.getTexture().copyToImage();
+
+            // Record frame
+            recorder.record(image);
+        }
     }
 
     recorder.stopRecording();

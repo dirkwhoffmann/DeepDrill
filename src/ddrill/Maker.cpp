@@ -25,17 +25,15 @@ Maker::Maker(Options &o) : opt(o)
 void
 Maker::generate()
 {
-    isize numImages = 4; // opt.video.images;
-
     generateProfile();
-    generateLocationFiles(numImages);
-    generateMakefile(numImages);
+    generateLocationFiles();
+    generateMakefile();
 }
 
 void
-Maker::generateLocationFiles(isize count)
+Maker::generateLocationFiles()
 {
-    for (isize i = 0; i < count; i++) {
+    for (isize i = 0; i < opt.video.keyframes; i++) {
         generateLocationFile(i);
     }
 }
@@ -84,14 +82,10 @@ Maker::generateProfile()
 
     // Write video section
     os << "[video]" << std::endl;
-    /*
-    os << "frames = " << keys["video.frames"] << std::endl;
+    os << "keyframes = " << keys["video.keyframes"] << std::endl;
+    os << "inbetweens = " << keys["video.inbetweens"] << std::endl;
     os << "duration = " << keys["video.duration"] << std::endl;
     os << "bitrate = " << keys["video.bitrate"] << std::endl;
-    */
-    os << "frames = " << opt.video.frames << std::endl;
-    os << "duration = " << opt.video.duration << std::endl;
-    os << "bitrate = " << opt.video.bitrate << std::endl;
     os << std::endl;
 
     // Write perturbation section
@@ -113,7 +107,7 @@ Maker::generateProfile()
 }
 
 void
-Maker::generateMakefile(isize numImages)
+Maker::generateMakefile()
 {
     // Open output stream
     std::ofstream os(projectDir / "Makefile");

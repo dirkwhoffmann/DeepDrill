@@ -77,11 +77,11 @@ struct Options {
 
     struct {
 
-        // Number of images (derived value)
-        isize images;
+        // Number of keyframes
+        isize keyframes;
 
-        // Number of frames per image
-        isize frames;
+        // Number of in-between images
+        isize inbetweens;
 
         // Video length in seconds
         isize duration;

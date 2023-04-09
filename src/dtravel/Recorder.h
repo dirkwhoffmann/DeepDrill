@@ -16,6 +16,8 @@
 #include "NamedPipe.h"
 #include "Buffer.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace dd {
 
 class Recorder {
@@ -102,9 +104,7 @@ public:
 
 public:
 
-private:
-
-    void record();
+    void record(const sf::Image &img);
 };
 
 }

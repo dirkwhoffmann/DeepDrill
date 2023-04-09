@@ -191,7 +191,7 @@ DeepDrill::checkArguments(map<string,string> &keys)
             throw SyntaxError("The output file must be a directory");
         }
         if (numDirectoryItems(out) > 0) {
-            throw SyntaxError("The output directory must be empty");
+            throw Exception("The output directory must be empty");
         }
         
     } else {
