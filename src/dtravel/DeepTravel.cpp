@@ -165,14 +165,6 @@ DeepTravel::checkArguments(map<string,string> &keys)
         }
     }
 
-    // The input file must be ... what?
-    /*
-     if (inSuffix != "loc" && inSuffix != "map") {
-     throw SyntaxError(inputs.front() +
-     ": Invalid format. Expected .loc or .map");
-     }
-     */
-
     // The output file must be a mpg file
     if (outSuffix != "mpg") {
         throw SyntaxError(outputs.front() + ": Invalid format. Expected .mpg");
@@ -196,11 +188,6 @@ DeepTravel::readInputs(map<string,string> &keys)
 
     if (imageFiles.empty()) {
         throw FileNotFoundError("File " + name + " does not exist");
-    }
-
-    // REMOVE ASAP
-    for (const auto &item : imageFiles) {
-        printf("File %s\n", item.c_str());
     }
 }
 

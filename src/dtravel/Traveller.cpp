@@ -72,7 +72,7 @@ Traveller::launch()
 
     auto width = unsigned(opt.image.width);
     auto height = unsigned(opt.image.height);
-    auto frames = opt.video.keyframes;
+    auto inbetweens = opt.video.inbetweens;
 
     recorder.startRecording(4096, 4, 3);
 
@@ -86,38 +86,14 @@ Traveller::launch()
                 window.close();
         }
 
-        if (frame++ % frames == 0) {
-
-            try {
-
-                updateTexture(image++);
-
-                x1.set(0);
-                y1.set(0);
-                x2.set(width);
-                y2.set(height);
-
-                x1.set(width / 4, frames);
-                y1.set(height / 4, frames);
-                x2.set(width * 3 / 4, frames);
-                y2.set(height * 3 / 4, frames);
-
-            } catch (...) {
-
-                break;
-            }
-        }
-
-        x1.move();
-        y1.move();
-        x2.move();
-        y2.move();
-
         int x1i = int(x1.current);
         int y1i = int(y1.current);
         int x2i = int(x2.current);
         int y2i = int(y2.current);
 
+        if (opt.verbose) {
+            printf("(%d,%d) - (%d,%d) [%d,%d]\n", x1i, y1i, x2i, y2i, x2i - x1i, y2i - y1i);
+        }
         auto newRect = sf::IntRect(x1i, y2i, x2i - x1i, -(y2i - y1i));
         sourceRect.setTextureRect(newRect);
 
@@ -137,6 +113,33 @@ Traveller::launch()
 
             // Record frame
             recorder.record(image);
+        }
+
+        x1.move();
+        y1.move();
+        x2.move();
+        y2.move();
+
+        if (frame++ % (inbetweens) == 0) {
+
+            try {
+
+                updateTexture(image++);
+
+                x1.set(0);
+                y1.set(0);
+                x2.set(width);
+                y2.set(height);
+
+                x1.set(width / 4, inbetweens);
+                y1.set(height / 4, inbetweens);
+                x2.set(width * 3 / 4, inbetweens);
+                y2.set(height * 3 / 4, inbetweens);
+
+            } catch (...) {
+
+                break;
+            }
         }
     }
 
