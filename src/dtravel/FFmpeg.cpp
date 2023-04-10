@@ -21,7 +21,7 @@ void
 FFmpeg::init()
 {
     auto add = [&](const string &path) {
-        if (getSizeOfFile(path) > 0) {
+        if (getSizeOfFile(path) > 0 && !FORCE_NO_FFMPEG) {
             paths.push_back(path);
         }
     };
@@ -36,8 +36,6 @@ FFmpeg::init()
 
         // Use the first entry as the default executable
         if (!paths.empty()) exec = paths[0];
-
-        printf("exec = %s\n", exec.c_str());
     }
 }
 

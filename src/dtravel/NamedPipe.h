@@ -15,13 +15,14 @@
 
 namespace dd {
 
-class NamedPipe {
+struct NamedPipe {
 
     int pipe = -1;
     string name;
 
 public:
 
+    bool create();
     bool create(const string &name);
     bool open();
     bool isOpen();

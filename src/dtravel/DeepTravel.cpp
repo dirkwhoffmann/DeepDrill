@@ -149,14 +149,8 @@ DeepTravel::checkArguments(map<string,string> &keys)
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
     if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
-    // The user needs to specify a single output
-    if (outputs.size() < 1) throw SyntaxError("No output file is given");
+    // The user needs to specify at most one output
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
-
-    auto in = inputs.front();
-    auto out = outputs.front();
-    auto inSuffix = extractSuffix(in);
-    auto outSuffix = extractSuffix(out);
 
     // All profiles must be files of type ".prf"
     for (auto &it : profiles) {
@@ -165,9 +159,21 @@ DeepTravel::checkArguments(map<string,string> &keys)
         }
     }
 
-    // The output file must be a mpg file
-    if (outSuffix != "mpg") {
-        throw SyntaxError(outputs.front() + ": Invalid format. Expected .mpg");
+    if (!outputs.empty()) {
+
+        auto out = outputs.front();
+        auto outSuffix = extractSuffix(out);
+
+        // The output file must be a mpg file
+        if (outSuffix != "mpg") {
+            throw SyntaxError(out + ": Invalid format. Expected .mpg");
+        }
+
+        // The output file must be writable
+        std::ofstream file(out, std::ofstream::out);
+        if (!file.is_open()) {
+            throw SyntaxError("Can't write to file " + out);
+        }
     }
 }
 
@@ -194,16 +200,19 @@ DeepTravel::readInputs(map<string,string> &keys)
 void
 DeepTravel::readOutputs(map<string,string> &keys)
 {
-    auto path = outputs.front();
-    auto suffix = extractSuffix(path);
+    if (!outputs.empty()) {
 
-    keys["output"] = path;
+        auto path = outputs.front();
+        auto suffix = extractSuffix(path);
 
-    if (suffix == "mpg") {
-        return;
+        keys["output"] = path;
+
+        if (suffix == "mpg") {
+            return;
+        }
+
+        throw SyntaxError(path + ": Unknown output format");
     }
-
-    throw SyntaxError(path + ": Unknown output format");
 }
 
 void

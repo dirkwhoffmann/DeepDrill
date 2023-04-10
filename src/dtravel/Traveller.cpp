@@ -12,7 +12,6 @@
 #include "config.h"
 #include "Traveller.h"
 #include "Options.h"
-#include "Animated.h"
 #include "Logger.h"
 
 #include <SFML/Graphics.hpp>
@@ -34,11 +33,10 @@ Traveller::init()
 
     // Create the render window
     auto videoMode = sf::VideoMode(targetWidth, targetHeight);
-    window.create(videoMode, "Preview");
+    window.create(videoMode, "");
 
-    // Preview in real-time when no video is recorded
-    // TODO: if !video
-    window.setFramerateLimit(60);
+    // Preview in real-time if no video is recorded
+    window.setFramerateLimit(recordMode() ? 0 : unsigned(opt.video.frameRate));
 
     // Create textures
     if (!source.create(sourceWidth, sourceHeight)) {
@@ -75,72 +73,94 @@ Traveller::launch()
 
     Animated w, h;
 
-    auto width = unsigned(opt.image.width);
-    auto height = unsigned(opt.image.height);
-    auto inbetweens = opt.video.inbetweens;
+    // Start FFmpeg
+    if (recordMode()) recorder.startRecording();
 
-    recorder.startRecording();
+    // Enter main loop
+    while (window.isOpen()) {
 
-    while (window.isOpen())
-    {
         sf::Event event;
 
+        // Process events
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
-        w.move();
-        h.move();
+        // Update state
+        try { update(frame, image, w, h); } catch (...) { break; }
 
-        if (frame++ % (inbetweens) == 0) {
-
-            try {
-
-                updateTexture(image++);
-
-                w.set(opt.image.width);
-                h.set(opt.image.height);
-                w.set(opt.image.width / 2.0, inbetweens);
-                h.set(opt.image.height / 2.0, inbetweens);
-
-            } catch (...) {
-
-                break;
-            }
-        }
-
-        if (opt.verbose) {
-            // printf("%f %f %f %f\n", w.current, w.factor, h.current, h.factor);
-        }
-        auto newRect = sf::IntRect(unsigned((width - w.current) / 2.0),
-                                   unsigned((height - h.current) / 2.0),
-                                   unsigned(w.current),
-                                   unsigned(h.current));
-        sourceRect.setTextureRect(newRect);
-
-        // Render target texture
-        shader.setUniform("texture", source);
-        target.draw(sourceRect, &shader);
-        target.display();
-
-        // Draw target texture in the preview window
-        window.clear();
-        window.draw(targetRect);
-        window.display();
-
-        if (!opt.output.empty()) {
-
-            // Read back image data
-            auto image = target.getTexture().copyToImage();
-
-            // Record frame
-            recorder.record(image);
-        }
+        // Render frame
+        draw();
     }
 
-    recorder.stopRecording();
+    // Stop FFmpeg
+    if (recordMode()) recorder.stopRecording();
+}
+
+void
+Traveller::update(isize &frame, isize &image, Animated &w, Animated &h)
+{
+    auto flip = [](sf::IntRect r) {
+        return sf::IntRect(r.left, r.top + r.height, r.width, -r.height);
+    };
+
+    w.move();
+    h.move();
+
+    if (frame++ % opt.video.inbetweens == 0) {
+
+        updateTexture(image++);
+
+        w.set(opt.image.width);
+        h.set(opt.image.height);
+        w.set(opt.image.width / 2.0, opt.video.inbetweens);
+        h.set(opt.image.height / 2.0, opt.video.inbetweens);
+
+        auto progress = isize(100.0 * image / opt.video.keyframes);
+        string title = "DeepFlight - ";
+        title += recordMode() ? "Recording " : "Preview ";
+        window.setTitle(title + "[" + std::to_string(progress) + "%]");
+    }
+
+    if (opt.verbose) {
+        // printf("%f %f %f %f\n", w.current, w.factor, h.current, h.factor);
+    }
+    auto newRect = sf::IntRect(unsigned((opt.image.width - w.current) / 2.0),
+                               unsigned((opt.image.height - h.current) / 2.0),
+                               unsigned(w.current),
+                               unsigned(h.current));
+    sourceRect.setTextureRect(flip(newRect));
+}
+
+void
+Traveller::draw()
+{
+    // Render target texture
+    shader.setUniform("texture", source);
+    target.draw(sourceRect, &shader);
+    target.display();
+
+    // Draw target texture in the preview window
+    window.clear();
+    window.draw(targetRect);
+    window.display();
+
+    if (recordMode()) {
+
+        // Read back image data
+        auto image = target.getTexture().copyToImage();
+
+        // Record frame
+        recorder.record(image);
+    }
+}
+
+bool
+Traveller::recordMode()
+{
+    return !opt.output.empty();
 }
 
 void
@@ -157,8 +177,9 @@ Traveller::updateTexture(isize nr)
     if (!source.loadFromFile(name)) {
         throw Exception("Can't load image file " + name);
     }
-
-    printf("Switched to texture %ld\n", nr);
+    if (opt.verbose) {
+        printf("Switched to texture %ld\n", nr);
+    }
 }
 
 }

@@ -13,6 +13,7 @@
 
 #include "commons.h"
 #include "Recorder.h"
+#include "Animated.h"
 #include <SFML/Graphics.hpp>
 
 namespace dd {
@@ -51,6 +52,13 @@ public:
     void launch();
 
 private:
+
+    // Called inside launch()
+    void update(isize &frame, isize &image, Animated &w, Animated &h);
+    void draw();
+
+    // Indicates if we run in record mode or preview mode
+    bool recordMode();
 
     // Loads a new texture from disk
     void updateTexture(isize nr); 

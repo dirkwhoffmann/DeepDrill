@@ -40,13 +40,6 @@ class Recorder {
     //
     // Recording parameters
     //
-
-    // Video properties
-    /*
-    isize frameRate = 0;
-    isize bitRate = 0;
-    isize sampleRate = 0;
-    */
     
     // Temporary data storage
     Buffer<u32> videoData;
@@ -62,34 +55,15 @@ public:
 
 
     //
-    // Querying locations and flags
+    // Querying
     //
-
-    // Returns the paths to the two named input pipes
-    string videoPipePath();
-
-    // Return the paths to the two temporary output files
-    string videoStreamPath();
 
     //Returns the log level passed to FFmpeg
-    // const string loglevel() { return REC_DEBUG ? "verbose" : "warning"; }
-    const string loglevel() { return "warning"; }
+    const string loglevel() { return REC_DEBUG ? "verbose" : "warning"; }
 
 
     //
-    // Querying recording parameters
-    //
-
-public:
-
-    /*
-    isize getFrameRate() const { return frameRate; }
-    isize getBitRate() const { return bitRate; }
-    isize getSampleRate() const { return sampleRate; }
-    */
-
-    //
-    // Starting and stopping a video capture
+    // Starting and stopping
     //
 
 public:
@@ -102,7 +76,7 @@ public:
 
 
     //
-    // Recording a video stream
+    // Recording
     //
 
 public:

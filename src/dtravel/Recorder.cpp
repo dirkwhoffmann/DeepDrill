@@ -20,25 +20,13 @@ Recorder::Recorder(const Options &opt) : opt(opt)
     FFmpeg::init();
 }
 
-string
-Recorder::videoPipePath()
-{
-    return "/tmp/videoPipe"; // TODO: USE TMP FILE
-}
-
-string
-Recorder::videoStreamPath()
-{
-    return "/tmp/video.mp4"; // TODO: READ FROM opt
-}
-
 void
 Recorder::startRecording()
 {
     assert(!videoPipe.isOpen());
 
     // Create pipe
-    if (!videoPipe.create(videoPipePath())) {
+    if (!videoPipe.create()) {
         throw Exception("Failed to create the video encoder pipe.");
     }
 
@@ -65,7 +53,7 @@ Recorder::startRecording()
     cmd += " -s:v " + std::to_string(opt.video.width) + "x" + std::to_string(opt.video.height);
 
     // Input source (named pipe)
-    cmd += " -i " + videoPipePath();
+    cmd += " -i " + videoPipe.name;
 
     // Output stream format
     cmd += " -f mp4 -pix_fmt yuv420p";
@@ -74,7 +62,7 @@ Recorder::startRecording()
     cmd += " -b:v " + std::to_string(opt.video.bitrate) + "k";
 
     // Output file
-    cmd += " -y " + videoStreamPath();
+    cmd += " -y " + opt.output;
 
     //
     // Launch FFmpeg instance

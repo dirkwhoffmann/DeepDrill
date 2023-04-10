@@ -24,6 +24,19 @@
 
 
 //
+// Debug settings
+//
+
+static const int REC_DEBUG          = 0; // Video recording
+
+//
+// Forced error conditions
+//
+
+static const int FORCE_NO_FFMPEG   = 0;
+
+
+//
 // Build settings
 //
 
