@@ -10,7 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Traveller.h"
+#include "Zoomer.h"
 #include "Options.h"
 #include "Logger.h"
 
@@ -18,13 +18,13 @@
 
 namespace dd {
 
-Traveller::Traveller(Options &o) : opt(o)
+Zoomer::Zoomer(Options &o) : opt(o)
 {
     init();
 }
 
 void
-Traveller::init()
+Zoomer::init()
 {
     auto sourceWidth = unsigned(opt.image.width);
     auto sourceHeight = unsigned(opt.image.height);
@@ -66,7 +66,7 @@ Traveller::init()
 }
 
 void
-Traveller::launch()
+Zoomer::launch()
 {
     isize frame = 0;
     isize image = 0;
@@ -100,7 +100,7 @@ Traveller::launch()
 }
 
 void
-Traveller::update(isize &frame, isize &image, Animated &w, Animated &h)
+Zoomer::update(isize &frame, isize &image, Animated &w, Animated &h)
 {
     auto flip = [](sf::IntRect r) {
         return sf::IntRect(r.left, r.top + r.height, r.width, -r.height);
@@ -135,7 +135,7 @@ Traveller::update(isize &frame, isize &image, Animated &w, Animated &h)
 }
 
 void
-Traveller::draw()
+Zoomer::draw()
 {
     // Render target texture
     shader.setUniform("texture", source);
@@ -158,13 +158,13 @@ Traveller::draw()
 }
 
 bool
-Traveller::recordMode()
+Zoomer::recordMode()
 {
     return !opt.output.empty();
 }
 
 void
-Traveller::updateTexture(isize nr)
+Zoomer::updateTexture(isize nr)
 {
     string path = opt.input;
     string name = path + "_" + std::to_string(nr) + ".png";

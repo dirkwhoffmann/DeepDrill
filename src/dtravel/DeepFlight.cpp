@@ -10,9 +10,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "DeepTravel.h"
+#include "DeepFlight.h"
 #include "Options.h"
-#include "Traveller.h"
+#include "Zoomer.h"
 #include "Logger.h"
 #include <getopt.h>
 
@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
 
     try {
 
-        DeepTravel().main(argc, argv);
+        DeepFlight().main(argc, argv);
 
     } catch (dd::SyntaxError &e) {
 
         log::cout << "Usage: ";
-        log::cout << "deeptravel [-bv] [-p <profile>] -o <output> <input>" << log::endl;
+        log::cout << "deepflight [-bv] [-p <profile>] -o <output> <input>" << log::endl;
         log::cout << log::endl;
         log::cout << "       -b or --batch    Run in batch mode" << log::endl;
         log::cout << "       -v or --verbose  Run in verbose mode" << log::endl;
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 namespace dd {
 
 void
-DeepTravel::main(int argc, char *argv[])
+DeepFlight::main(int argc, char *argv[])
 {
     map<string,string> keys;
     string option = "";
@@ -60,7 +60,7 @@ DeepTravel::main(int argc, char *argv[])
     // Parse all command line arguments
     parseArguments(argc, argv, keys);
 
-    log::cout << "DeepTravel " << VER_MAJOR << "." << VER_MINOR;
+    log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
     log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
 
@@ -74,13 +74,13 @@ DeepTravel::main(int argc, char *argv[])
     Clock stopWatch;
 
     // Execute
-    Traveller(opt).launch();
+    Zoomer(opt).launch();
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
 }
 
 void
-DeepTravel::parseArguments(int argc, char *argv[], map<string,string> &keys)
+DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
 {
     static struct option long_options[] = {
 
@@ -143,7 +143,7 @@ DeepTravel::parseArguments(int argc, char *argv[], map<string,string> &keys)
 }
 
 void
-DeepTravel::checkArguments(map<string,string> &keys)
+DeepFlight::checkArguments(map<string,string> &keys)
 {
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
@@ -178,7 +178,7 @@ DeepTravel::checkArguments(map<string,string> &keys)
 }
 
 void
-DeepTravel::readInputs(map<string,string> &keys)
+DeepFlight::readInputs(map<string,string> &keys)
 {
     string path = inputs.front();
     string name;
@@ -198,7 +198,7 @@ DeepTravel::readInputs(map<string,string> &keys)
 }
 
 void
-DeepTravel::readOutputs(map<string,string> &keys)
+DeepFlight::readOutputs(map<string,string> &keys)
 {
     if (!outputs.empty()) {
 
@@ -216,7 +216,7 @@ DeepTravel::readOutputs(map<string,string> &keys)
 }
 
 void
-DeepTravel::readProfiles(map<string,string> &keys)
+DeepFlight::readProfiles(map<string,string> &keys)
 {
     for (auto &path: profiles) {
         Parser::parse(path, keys);
@@ -224,7 +224,7 @@ DeepTravel::readProfiles(map<string,string> &keys)
 }
 
 void
-DeepTravel::setupGmp(std::map <string,string> &keys)
+DeepFlight::setupGmp(std::map <string,string> &keys)
 {
     mpf_set_default_prec(64);
 }

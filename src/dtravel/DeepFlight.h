@@ -15,7 +15,7 @@
 
 namespace dd {
 
-class DeepTravel {
+class DeepFlight {
 
     // Extracted command line arguments
     std::vector <string> profiles;

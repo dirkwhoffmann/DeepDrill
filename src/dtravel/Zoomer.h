@@ -18,7 +18,7 @@
 
 namespace dd {
 
-class Traveller {
+class Zoomer {
 
     // Configuration options
     const struct Options &opt;
@@ -43,7 +43,7 @@ class Traveller {
 public:
 
     // Constructor
-    Traveller(Options &opt);
+    Zoomer(Options &opt);
 
     // Initializer
     void init();

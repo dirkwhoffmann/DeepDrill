@@ -12,14 +12,14 @@
 		50102349269DC4F500AC61A8 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		50102352269EC70200AC61A8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
 		5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
-		5049968229DED17800B15919 /* DeepTravel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepTravel.cpp */; };
+		5049968229DED17800B15919 /* DeepFlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepFlight.cpp */; };
 		5049968729DED32700B15919 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
 		5049968829DED32900B15919 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
 		5049968929DED32B00B15919 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
 		5049968A29DED32E00B15919 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		5049968B29DED33000B15919 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
 		5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
-		5049969429DEED6800B15919 /* Traveller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049969229DEED6800B15919 /* Traveller.cpp */; };
+		5049969429DEED6800B15919 /* Zoomer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049969229DEED6800B15919 /* Zoomer.cpp */; };
 		5049969529DF04F500B15919 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
 		5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */; };
 		5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
@@ -80,12 +80,12 @@
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
-		5049967F29DED17800B15919 /* DeepTravel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepTravel; sourceTree = BUILT_PRODUCTS_DIR; };
-		5049968129DED17800B15919 /* DeepTravel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepTravel.cpp; sourceTree = "<group>"; };
-		5049968629DED20600B15919 /* DeepTravel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepTravel.h; sourceTree = "<group>"; };
-		5049968D29DED3BC00B15919 /* DeepTravel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepTravel.entitlements; sourceTree = "<group>"; };
-		5049969229DEED6800B15919 /* Traveller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Traveller.cpp; sourceTree = "<group>"; };
-		5049969329DEED6800B15919 /* Traveller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traveller.h; sourceTree = "<group>"; };
+		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
+		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
+		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
+		5049968D29DED3BC00B15919 /* DeepFlight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepFlight.entitlements; sourceTree = "<group>"; };
+		5049969229DEED6800B15919 /* Zoomer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Zoomer.cpp; sourceTree = "<group>"; };
+		5049969329DEED6800B15919 /* Zoomer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zoomer.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
 		505EB93429D73E42008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -210,7 +210,6 @@
 				505EB93729D73E6E008DE5BB /* CMakeLists.txt */,
 				50BEC6F3269486A900CCDFA8 /* config.h */,
 				50EB497726A069780019078C /* commons.h */,
-				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				50BEC70B269486B400CCDFA8 /* util */,
 				5030F11026A1B92C009A53B3 /* math */,
 				505EB93129D720B5008DE5BB /* ddrill */,
@@ -239,10 +238,10 @@
 			isa = PBXGroup;
 			children = (
 				50D69A6729E01C6A0025DE0D /* CMakeLists.txt */,
-				5049968629DED20600B15919 /* DeepTravel.h */,
-				5049968129DED17800B15919 /* DeepTravel.cpp */,
-				5049969329DEED6800B15919 /* Traveller.h */,
-				5049969229DEED6800B15919 /* Traveller.cpp */,
+				5049968629DED20600B15919 /* DeepFlight.h */,
+				5049968129DED17800B15919 /* DeepFlight.cpp */,
+				5049969329DEED6800B15919 /* Zoomer.h */,
+				5049969229DEED6800B15919 /* Zoomer.cpp */,
 				50D69A6C29E03E2C0025DE0D /* Recorder.h */,
 				50D69A6B29E03E2C0025DE0D /* Recorder.cpp */,
 				50D69A6F29E03F940025DE0D /* NamedPipe.h */,
@@ -379,7 +378,8 @@
 		50CF8E452694848800887FFC = {
 			isa = PBXGroup;
 			children = (
-				5049968D29DED3BC00B15919 /* DeepTravel.entitlements */,
+				5049968D29DED3BC00B15919 /* DeepFlight.entitlements */,
+				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				5010234A269DDE6D00AC61A8 /* src */,
 				50BEC7292694870100CCDFA8 /* locations */,
 				50BEC721269486D900CCDFA8 /* profiles */,
@@ -393,7 +393,7 @@
 			isa = PBXGroup;
 			children = (
 				50CF8E4E2694848800887FFC /* DeepDrill */,
-				5049967F29DED17800B15919 /* DeepTravel */,
+				5049967F29DED17800B15919 /* DeepFlight */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -408,9 +408,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5049967E29DED17800B15919 /* DeepTravel */ = {
+		5049967E29DED17800B15919 /* DeepFlight */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepTravel" */;
+			buildConfigurationList = 5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepFlight" */;
 			buildPhases = (
 				5049967B29DED17800B15919 /* Sources */,
 				5049967C29DED17800B15919 /* Frameworks */,
@@ -420,9 +420,9 @@
 			);
 			dependencies = (
 			);
-			name = DeepTravel;
+			name = DeepFlight;
 			productName = DeepTravel;
-			productReference = 5049967F29DED17800B15919 /* DeepTravel */;
+			productReference = 5049967F29DED17800B15919 /* DeepFlight */;
 			productType = "com.apple.product-type.tool";
 		};
 		50CF8E4D2694848800887FFC /* DeepDrill */ = {
@@ -473,7 +473,7 @@
 			projectRoot = "";
 			targets = (
 				50CF8E4D2694848800887FFC /* DeepDrill */,
-				5049967E29DED17800B15919 /* DeepTravel */,
+				5049967E29DED17800B15919 /* DeepFlight */,
 			);
 		};
 /* End PBXProject section */
@@ -485,7 +485,7 @@
 			files = (
 				5049968A29DED32E00B15919 /* IO.cpp in Sources */,
 				5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */,
-				5049969429DEED6800B15919 /* Traveller.cpp in Sources */,
+				5049969429DEED6800B15919 /* Zoomer.cpp in Sources */,
 				50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */,
 				50D69A6A29E037160025DE0D /* FFmpeg.cpp in Sources */,
 				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
@@ -500,7 +500,7 @@
 				5049969529DF04F500B15919 /* Options.cpp in Sources */,
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
-				5049968229DED17800B15919 /* DeepTravel.cpp in Sources */,
+				5049968229DED17800B15919 /* DeepFlight.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +537,7 @@
 		5049968429DED17800B15919 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = DeepTravel.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DeepFlight.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -565,7 +565,7 @@
 		5049968529DED17800B15919 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = DeepTravel.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DeepFlight.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -759,7 +759,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepTravel" */ = {
+		5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepFlight" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5049968429DED17800B15919 /* Debug */,

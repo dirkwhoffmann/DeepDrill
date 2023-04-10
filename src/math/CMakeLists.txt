@@ -1,5 +1,5 @@
 target_include_directories(deepdrill PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(deeptravel PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(deepflight PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_sources(deepdrill PRIVATE
 
@@ -10,7 +10,7 @@ StandardComplex.cpp
 
 )
 
-target_sources(deeptravel PRIVATE
+target_sources(deepflight PRIVATE
 
 ExtendedDouble.cpp
 ExtendedComplex.cpp
