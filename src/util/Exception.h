@@ -17,10 +17,10 @@ namespace dd {
 
 struct Exception : public std::exception {
     
-    i64 data;
     string description;
-    
-    Exception(i64 d, const string &s) : data(d), description(s) { }
+    i64 data;
+
+    Exception(const string &s, i64 d) : data(d), description(s) { }
     Exception(i64 d) : data(d), description("") { }
     Exception(const string &s) : data(0), description(s) { }
     Exception() : data(0) { }
@@ -36,8 +36,11 @@ struct FileNotFoundError : Exception {
     using Exception::Exception;
 };
 
-struct InvalidValueException : Exception {
-    using Exception::Exception;
+struct InvalidValueException : public Exception {
+
+    InvalidValueException(const string &s, i64 d) : Exception(s, d) {
+        description = s + ": Invalid value (" + std::to_string(data) + ")";
+    }
 };
 
 struct UserInterruptException : Exception {

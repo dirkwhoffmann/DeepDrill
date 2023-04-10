@@ -72,7 +72,7 @@ Options::Options(map <string,string> &k)
     // Overwrite default values with the user settings
     for (auto &it : k) {
         if (keys.find(it.first) == keys.end()) {
-            throw InvalidValueException("Error: Unknown key '" + it.first + "'");
+            throw Exception("Unknown key '" + it.first + "'");
         }        
         keys[it.first] = it.second;
     }
@@ -148,16 +148,40 @@ Options::parse()
             assert(false);
         }
     }
-    
+
+    check();
     derive();
 }
- 
+
+void
+Options::check()
+{
+    if (video.frameRate < 25 || video.frameRate > 240) {
+        throw InvalidValueException("video.framrate", video.frameRate);
+    }
+}
+
 void
 Options::derive()
 {
+    auto format = [](const string &path) {
+
+        if (isDirectory(path)) return Format::DIR;
+
+        auto suffix = extractSuffix(path);
+        if (suffix == "loc") return Format::LOC;
+        if (suffix == "map") return Format::MAP;
+        if (suffix == "prf") return Format::PRF;
+        if (suffix == "tif" || suffix == "tiff") return Format::TIF;
+        if (suffix == "png") return Format::PNG;
+        if (suffix == "mpg" || suffix == "mpeg") return Format::MPG;
+
+        return Format::NONE;
+    };
+
     // Determine the input and output formats
-    inputFormat = deriveFormat(input);
-    outputFormat = deriveFormat(output);
+    inputFormat = format(input);
+    outputFormat = format(output);
     
     // Compute the center coordinate
     center = PrecisionComplex(location.real, location.imag);
@@ -166,11 +190,16 @@ Options::derive()
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
 
-    // Derive parameters 'keyframes' and 'inbetweens' if not specified
+    // Derive unspecified parameters
+    auto frameRate = double(video.frameRate);
+    auto keyframes = double(video.keyframes);
+    auto duration = double(video.duration);
+    auto inbetweens = double(video.inbetweens);
+
     if (!video.keyframes) {
 
         if (video.inbetweens && video.duration) {
-            video.keyframes = isize(std::ceil(60.0 * video.duration / video.inbetweens));
+            video.keyframes = isize(std::ceil(frameRate * duration / inbetweens));
         } else {
             video.keyframes = isize(std::ceil(std::log2(location.zoom.get_d())));
         }
@@ -178,30 +207,14 @@ Options::derive()
     if (!video.inbetweens) {
 
         if (video.duration) {
-            video.inbetweens = isize(std::round(60.0 * video.duration / video.keyframes));
+            video.inbetweens = isize(std::round(frameRate * duration / keyframes));
         } else {
             throw Exception("Not enough information to derive key video.inbetweens");
         }
     }
 
     // Derive or rectify duration parameter
-    video.duration = isize(std::round(video.keyframes * video.inbetweens / 60.0));
-}
-
-Format
-Options::deriveFormat(const string &path)
-{
-    if (isDirectory(path)) return Format::DIR;
-
-    auto suffix = extractSuffix(path);
-    if (suffix == "loc") return Format::LOC;
-    if (suffix == "map") return Format::MAP;
-    if (suffix == "prf") return Format::PRF;
-    if (suffix == "tif" || suffix == "tiff") return Format::TIF;
-    if (suffix == "png") return Format::PNG;
-    if (suffix == "mpg" || suffix == "mpeg") return Format::MPG;
-
-    return Format::NONE;
+    video.duration = isize(std::round(keyframes * inbetweens / frameRate));
 }
 
 }

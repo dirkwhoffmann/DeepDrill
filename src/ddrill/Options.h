@@ -152,9 +152,9 @@ public:
     void parse();
 
 private:
-        
+
+    void check();
     void derive();
-    Format deriveFormat(const string &path);
 };
 
 }
