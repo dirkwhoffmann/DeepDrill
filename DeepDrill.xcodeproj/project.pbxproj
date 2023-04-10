@@ -421,7 +421,7 @@
 			dependencies = (
 			);
 			name = DeepFlight;
-			productName = DeepTravel;
+			productName = DeepFlight;
 			productReference = 5049967F29DED17800B15919 /* DeepFlight */;
 			productType = "com.apple.product-type.tool";
 		};
@@ -709,7 +709,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
-				CODE_SIGN_ENTITLEMENTS = src/DeepDrill.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DeepDrill.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
@@ -735,7 +735,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
-				CODE_SIGN_ENTITLEMENTS = src/DeepDrill.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DeepDrill.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
