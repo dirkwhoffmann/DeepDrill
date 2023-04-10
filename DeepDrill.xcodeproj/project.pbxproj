@@ -213,7 +213,7 @@
 				50BEC70B269486B400CCDFA8 /* util */,
 				5030F11026A1B92C009A53B3 /* math */,
 				505EB93129D720B5008DE5BB /* ddrill */,
-				5049968029DED17800B15919 /* dtravel */,
+				5049968029DED17800B15919 /* dflight */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -234,7 +234,7 @@
 			path = math;
 			sourceTree = "<group>";
 		};
-		5049968029DED17800B15919 /* dtravel */ = {
+		5049968029DED17800B15919 /* dflight */ = {
 			isa = PBXGroup;
 			children = (
 				50D69A6729E01C6A0025DE0D /* CMakeLists.txt */,
@@ -249,7 +249,7 @@
 				50D69A6929E037160025DE0D /* FFmpeg.h */,
 				50D69A6829E037160025DE0D /* FFmpeg.cpp */,
 			);
-			path = dtravel;
+			path = dflight;
 			sourceTree = "<group>";
 		};
 		505EB93129D720B5008DE5BB /* ddrill */ = {

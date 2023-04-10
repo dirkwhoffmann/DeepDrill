@@ -15,7 +15,7 @@ endif()
 
 # Specify the executable
 add_executable(deepdrill ddrill/DeepDrill.cpp)
-add_executable(deepflight dtravel/DeepFlight.cpp)
+add_executable(deepflight dflight/DeepFlight.cpp)
 
 # Specify compile options
 target_compile_options(deepdrill PUBLIC -Wall -Werror)
@@ -42,4 +42,4 @@ target_include_directories(deepflight PUBLIC /opt/homebrew/Cellar/sfml/2.5.1_2/i
 add_subdirectory(util)
 add_subdirectory(math)
 add_subdirectory(ddrill)
-add_subdirectory(dtravel)
+add_subdirectory(dflight)
