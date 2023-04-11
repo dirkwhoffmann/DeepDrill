@@ -184,6 +184,7 @@
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
 		50EB497526A067850019078C /* Maker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maker.h; sourceTree = "<group>"; };
 		50EB497726A069780019078C /* commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commons.h; sourceTree = "<group>"; };
+		50F8C40F29E44042008A0B4C /* bypass.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bypass.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -401,6 +402,7 @@
 		50D69A7429E177D50025DE0D /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				50F8C40F29E44042008A0B4C /* bypass.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

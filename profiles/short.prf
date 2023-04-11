@@ -1,4 +1,5 @@
 [video]
 keyframes = derive
 inbetweens = 120
-duration = 160
+duration = 60
+scaler = /Users/hoff/Retro/DeepDrill/shaders/bypass.glsl

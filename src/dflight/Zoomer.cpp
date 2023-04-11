@@ -51,6 +51,7 @@ Zoomer::init()
     targetRect.setTexture(&target.getTexture());
 
     // Load shader
+    /*
     auto shaderSource =
     "uniform sampler2D texture;"
     "void main() {"
@@ -58,11 +59,16 @@ Zoomer::init()
     // "gl_FragColor = gl_Color * pixel * vec4(0.0,1.0,1.0,1.0);"
     "gl_FragColor = gl_Color * pixel;"
     "}";
+    */
 
+    if (!shader.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
+        throw std::runtime_error("Can't load fragment shader '" + opt.video.scaler + "'");
+    }
+    /*
     if (!shader.loadFromMemory(shaderSource, sf::Shader::Fragment)) {
         throw std::runtime_error("Can't load fragment shader");
     }
-
+    */
 }
 
 void

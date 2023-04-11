@@ -57,7 +57,7 @@ Maker::generateLocationFile(isize nr)
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
-    os << "zoom = " << std::to_string(exp2(nr)) << std::endl;
+    os << "zoom = " << std::to_string(exp2(nr - 2)) << std::endl;
     os << "depth = " << std::to_string(depth) << std::endl;
     os << std::endl;
 }
@@ -89,6 +89,7 @@ Maker::generateProfile()
     os << "inbetweens = " << keys["video.inbetweens"] << std::endl;
     os << "duration = " << keys["video.duration"] << std::endl;
     os << "bitrate = " << keys["video.bitrate"] << std::endl;
+    os << "scaler = " << keys["video.scaler"] << std::endl;
     os << std::endl;
 
     // Write perturbation section

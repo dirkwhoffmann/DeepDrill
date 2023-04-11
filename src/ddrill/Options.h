@@ -96,6 +96,9 @@ struct Options {
         // Bitrate
         isize bitrate;
 
+        // Path to fragment shaders
+        string scaler;
+
     } video;
 
     struct {

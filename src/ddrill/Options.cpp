@@ -50,6 +50,7 @@ Options::Options(map <string,string> &k)
     keys["video.inbetweens"] = "120";
     keys["video.duration"] = "derive";
     keys["video.bitrate"] = "4096";
+    keys["video.scaler"] = "";
 
     // Palette keys
     keys["palette.values"] = Palette::defaultPalette;
@@ -134,6 +135,8 @@ Options::parse()
             video.duration = value == "derive" ? 0 : stoi(value);
         } else if (key == "video.bitrate") {
             video.bitrate = stoi(value);
+        } else if (key == "video.scaler") {
+            video.scaler = value;
         } else if (key == "palette.values") {
             palette.values = value;
         } else if (key == "perturbation.tolerance") {
