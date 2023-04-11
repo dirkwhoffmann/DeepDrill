@@ -33,6 +33,9 @@ Maker::generate()
 void
 Maker::generateLocationFiles()
 {
+    dreal = opt.location.dreal;
+    dimag = opt.location.dimag;
+
     for (isize i = 0; i < opt.video.keyframes; i++) {
         generateLocationFile(i);
     }
@@ -57,9 +60,14 @@ Maker::generateLocationFile(isize nr)
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
-    os << "zoom = " << std::to_string(exp2(nr - 2)) << std::endl;
+    os << "dreal = " << dreal << std::endl;
+    os << "dimag = " << dimag << std::endl;
+    os << "zoom = " << std::to_string(exp2(nr)) << std::endl;
     os << "depth = " << std::to_string(depth) << std::endl;
     os << std::endl;
+
+    dreal /= 2.0;
+    dimag /= 2.0;
 }
 
 void
@@ -72,7 +80,15 @@ Maker::generateProfile()
     
     // Write header
     writeHeader(os);
-    
+
+    // Write location section
+    os << "[location]" << std::endl;
+    os << "real = " << keys["location.real"] << std::endl;
+    os << "imag = " << keys["location.imag"] << std::endl;
+    os << "dreal = " << opt.location.dreal << std::endl;
+    os << "dimag = " << opt.location.dimag << std::endl;
+    os << std::endl;
+
     // Write image section
     os << "[image]" << std::endl;
     os << "width = " << keys["image.width"] << std::endl;

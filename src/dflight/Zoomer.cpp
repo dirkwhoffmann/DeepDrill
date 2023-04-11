@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "Zoomer.h"
+#include "Coord.h"
 #include "Options.h"
 #include "Logger.h"
 
@@ -69,6 +70,10 @@ Zoomer::init()
         throw std::runtime_error("Can't load fragment shader");
     }
     */
+
+    shift = Coord(PrecisionComplex(-opt.location.dreal / 2, -opt.location.dimag / 2) + opt.center, opt);
+    log::cout << "Center pixel pos: " << Coord::center(opt) << log::endl;
+    log::cout << "Target pixel pos: " << shift << log::endl;
 }
 
 void
@@ -76,8 +81,6 @@ Zoomer::launch()
 {
     isize frame = 0;
     isize image = 0;
-
-    Animated w, h;
 
     // Start FFmpeg
     if (recordMode()) recorder.startRecording();
@@ -95,7 +98,7 @@ Zoomer::launch()
         }
 
         // Update state
-        try { update(frame, image, w, h); } catch (...) { break; }
+        try { update(frame, image); } catch (...) { break; }
 
         // Render frame
         draw();
@@ -106,12 +109,14 @@ Zoomer::launch()
 }
 
 void
-Zoomer::update(isize &frame, isize &image, Animated &w, Animated &h)
+Zoomer::update(isize &frame, isize &image)
 {
     auto flip = [](sf::IntRect r) {
         return sf::IntRect(r.left, r.top + r.height, r.width, -r.height);
     };
 
+    x.move();
+    y.move();
     w.move();
     h.move();
 
@@ -119,8 +124,13 @@ Zoomer::update(isize &frame, isize &image, Animated &w, Animated &h)
 
         updateTexture(image++);
 
+        x.set(Coord::center(opt).x);
+        y.set(Coord::center(opt).y);
         w.set(opt.image.width);
         h.set(opt.image.height);
+
+        x.set(shift.x, opt.video.inbetweens);
+        y.set(shift.y, opt.video.inbetweens);
         w.set(opt.image.width / 2.0, opt.video.inbetweens);
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
 
@@ -131,13 +141,20 @@ Zoomer::update(isize &frame, isize &image, Animated &w, Animated &h)
     }
 
     if (opt.verbose) {
-        // printf("%f %f %f %f\n", w.current, w.factor, h.current, h.factor);
+        printf("%f %f %f %f\n", x.current, y.current, w.current, h.current);
     }
+    auto newRect = sf::IntRect(unsigned(x.current - (w.current / 2.0)),
+                               unsigned(y.current - (h.current / 2.0)),
+                               unsigned(w.current),
+                               unsigned(h.current));
+    /*
     auto newRect = sf::IntRect(unsigned((opt.image.width - w.current) / 2.0),
                                unsigned((opt.image.height - h.current) / 2.0),
                                unsigned(w.current),
                                unsigned(h.current));
+    */
     sourceRect.setTextureRect(flip(newRect));
+    // sourceRect.setTextureRect((newRect));
 }
 
 void

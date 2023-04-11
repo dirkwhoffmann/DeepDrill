@@ -12,6 +12,7 @@
 #pragma once
 
 #include "commons.h"
+#include "Coord.h"
 #include "Recorder.h"
 #include "Animated.h"
 #include <SFML/Graphics.hpp>
@@ -40,6 +41,12 @@ class Zoomer {
     // The video recorder
     Recorder recorder = Recorder(opt);
 
+    // Animation parameters
+    Animated x, y, w, h;
+
+    // Experimental
+    Coord shift;
+
 public:
 
     // Constructor
@@ -54,7 +61,7 @@ public:
 private:
 
     // Called inside launch()
-    void update(isize &frame, isize &image, Animated &w, Animated &h);
+    void update(isize &frame, isize &image);
     void draw();
 
     // Indicates if we run in record mode or preview mode

@@ -56,6 +56,10 @@ struct Options {
         mpf_class real;
         mpf_class imag;
 
+        // Center shift (experimental)
+        mpf_class dreal;
+        mpf_class dimag;
+
         // Magnification
         mpf_class zoom;
         

@@ -34,6 +34,8 @@ Options::Options(map <string,string> &k)
     // Location keys
     keys["location.real"] = "0.0";
     keys["location.imag"] = "0.0";
+    keys["location.dreal"] = "0.0";
+    keys["location.dimag"] = "0.0";
     keys["location.zoom"] = "1.0";
     keys["location.depth"] = "500";
 
@@ -111,6 +113,10 @@ Options::parse()
             location.real = mpf_class(value);
         } else if (key == "location.imag") {
             location.imag = mpf_class(value);
+        } else if (key == "location.dreal") {
+            location.dreal = mpf_class(value);
+        } else if (key == "location.dimag") {
+            location.dimag = mpf_class(value);
         } else if (key == "location.zoom") {
             location.zoom = mpf_class(value);
         } else if (key == "location.depth") {
@@ -185,9 +191,9 @@ Options::derive()
     // Determine the input and output formats
     inputFormat = format(input);
     outputFormat = format(output);
-    
+
     // Compute the center coordinate
-    center = PrecisionComplex(location.real, location.imag);
+    center = PrecisionComplex(location.real + location.dreal, location.imag + location.dimag);
 
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;

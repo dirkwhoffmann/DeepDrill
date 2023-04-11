@@ -24,10 +24,11 @@ struct Coord {
     Coord(i16 nx, i16 ny) : x(nx), y(ny) { };
     Coord(isize nx, isize ny) : x((i16)nx), y((i16)ny) { };
     Coord(double nx, double ny) : x((i16)nx), y((i16)ny) { };
+    Coord(PrecisionComplex pos, const struct Options &opt);
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
     
-    static Coord center(const struct Options &opt);
+    static Coord center(const Options &opt);
     
     
     //

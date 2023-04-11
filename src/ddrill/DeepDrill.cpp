@@ -148,9 +148,9 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
     }
     
     checkArguments(keys);
+    readProfiles(keys);
     readInputs(keys);
     readOutputs(keys);
-    readProfiles(keys);
 }
 
 void

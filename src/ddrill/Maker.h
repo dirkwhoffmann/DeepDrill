@@ -23,6 +23,10 @@ class Maker {
     // Name of the project
     string project;
 
+    // Experimental
+    mpf_class dreal;
+    mpf_class dimag;
+    
     // Path to the project directory
     std::filesystem::path projectDir;
 

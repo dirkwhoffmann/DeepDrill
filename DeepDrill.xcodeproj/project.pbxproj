@@ -45,6 +45,7 @@
 		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
 		50EB497626A067850019078C /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
+		50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -503,6 +504,7 @@
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepFlight.cpp in Sources */,
+				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
