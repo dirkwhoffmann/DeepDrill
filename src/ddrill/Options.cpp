@@ -15,7 +15,7 @@
 
 namespace dd {
 
-Options::Options(map <string,string> &k)
+Options::Options(map <string,string> &keymap)
 {
     // Register default keys
 
@@ -43,6 +43,10 @@ Options::Options(map <string,string> &k)
     keys["image.width"] = "960";
     keys["image.height"] = "540";
     keys["image.badpixels"] = "0.001";
+
+    // Animation keys
+    keys["animation.dx"] = "0";
+    keys["animation.dy"] = "0";
 
     // Video keys
     keys["video.framerate"] = "60";
@@ -73,7 +77,7 @@ Options::Options(map <string,string> &k)
     }
 
     // Overwrite default values with the user settings
-    for (auto &it : k) {
+    for (auto &it : keymap) {
         if (keys.find(it.first) == keys.end()) {
             throw Exception("Unknown key '" + it.first + "'");
         }        
@@ -81,13 +85,13 @@ Options::Options(map <string,string> &k)
     }
     
     // Parse all key-value pairs
-    parse();
+    parse(keys);
 }
 
 void
-Options::parse()
+Options::parse(map <string,string> &keymap)
 {
-    for (auto &it : keys) {
+    for (auto &it : keymap) {
 
         auto &key = it.first;
         auto &value = it.second;
@@ -127,6 +131,10 @@ Options::parse()
             image.height = stoi(value);
         } else if (key == "image.badpixels") {
             image.badpixels = stod(value);
+        } else if (key == "animation.dx") {
+            animation.dx = stoi(value);
+        } else if (key == "animation.dy") {
+            animation.dy = stoi(value);
         } else if (key == "video.framerate") {
             video.frameRate = stod(value);
         } else if (key == "video.width") {

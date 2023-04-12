@@ -22,7 +22,7 @@ namespace dd {
 class Zoomer {
 
     // Configuration options
-    const struct Options &opt;
+    struct Options &opt;
 
     // The application window
     sf::RenderWindow window;
@@ -67,8 +67,11 @@ private:
     // Indicates if we run in record mode or preview mode
     bool recordMode();
 
-    // Loads a new texture from disk
-    void updateTexture(isize nr); 
+    // Loads a new image file from disk
+    void updateTexture(isize nr);
+
+    // Loads a new location from disk
+    void updateLocation(isize nr);
 };
 
 }

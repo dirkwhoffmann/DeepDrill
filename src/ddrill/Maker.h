@@ -24,9 +24,8 @@ class Maker {
     string project;
 
     // Experimental
-    mpf_class dreal;
-    mpf_class dimag;
-    
+    PrecisionComplex shift;
+
     // Path to the project directory
     std::filesystem::path projectDir;
 

@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "Maker.h"
+#include "Coord.h"
 #include "Logger.h"
 #include "Options.h"
 
@@ -33,8 +34,7 @@ Maker::generate()
 void
 Maker::generateLocationFiles()
 {
-    dreal = opt.location.dreal;
-    dimag = opt.location.dimag;
+    shift = PrecisionComplex(opt.location.dreal, opt.location.dimag);
 
     for (isize i = 0; i < opt.video.keyframes; i++) {
         generateLocationFile(i);
@@ -45,6 +45,7 @@ void
 Maker::generateLocationFile(isize nr)
 {
     auto &keys = opt.keys;
+    double zoom = exp2(nr);
 
     // Open output stream
     std::ofstream os(projectDir / (project + "_" + std::to_string(nr) + ".loc"));
@@ -60,14 +61,27 @@ Maker::generateLocationFile(isize nr)
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
-    os << "dreal = " << dreal << std::endl;
-    os << "dimag = " << dimag << std::endl;
-    os << "zoom = " << std::to_string(exp2(nr)) << std::endl;
+    os << "dreal = " << shift.re << std::endl;
+    os << "dimag = " << shift.im << std::endl;
+    os << "zoom = " << std::to_string(zoom) << std::endl;
     os << "depth = " << std::to_string(depth) << std::endl;
     os << std::endl;
 
-    dreal /= 2.0;
-    dimag /= 2.0;
+    mpf_class mpfPixelDelta = mpf_class(4.0) / zoom / opt.image.height;
+    auto oldShift = shift;
+    shift /= (2.0 / 0.9);
+    auto delta = oldShift - shift;
+    log::cout << "delta: " << delta << log::endl;
+    mpf_class renorm = delta.re / mpfPixelDelta;
+    mpf_class imnorm = delta.im / mpfPixelDelta;
+    auto coord = Coord(std::round(renorm.get_d()), std::round(imnorm.get_d()));
+
+    log::cout << "coord: " << coord << log::endl;
+
+    // Write animation section
+    os << "[animation]" << std::endl;
+    os << "dx = " << coord.x << std::endl;
+    os << "dy = " << coord.y << std::endl;
 }
 
 void

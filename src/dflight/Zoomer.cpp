@@ -70,10 +70,6 @@ Zoomer::init()
         throw std::runtime_error("Can't load fragment shader");
     }
     */
-
-    shift = Coord(PrecisionComplex(-opt.location.dreal / 2, -opt.location.dimag / 2) + opt.center, opt);
-    log::cout << "Center pixel pos: " << Coord::center(opt) << log::endl;
-    log::cout << "Target pixel pos: " << shift << log::endl;
 }
 
 void
@@ -98,7 +94,7 @@ Zoomer::launch()
         }
 
         // Update state
-        try { update(frame, image); } catch (...) { break; }
+        try { update(frame, image); } catch (FileNotFoundError &) { break; }
 
         // Render frame
         draw();
@@ -122,15 +118,17 @@ Zoomer::update(isize &frame, isize &image)
 
     if (frame++ % opt.video.inbetweens == 0) {
 
-        updateTexture(image++);
+        updateTexture(image);
+        updateLocation(image);
+        image++;
 
         x.set(Coord::center(opt).x);
         y.set(Coord::center(opt).y);
         w.set(opt.image.width);
         h.set(opt.image.height);
 
-        x.set(shift.x, opt.video.inbetweens);
-        y.set(shift.y, opt.video.inbetweens);
+        x.set(Coord::center(opt).x - opt.animation.dx, opt.video.inbetweens);
+        y.set(Coord::center(opt).y - opt.animation.dy, opt.video.inbetweens);
         w.set(opt.image.width / 2.0, opt.video.inbetweens);
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
 
@@ -141,7 +139,7 @@ Zoomer::update(isize &frame, isize &image)
     }
 
     if (opt.verbose) {
-        printf("%f %f %f %f\n", x.current, y.current, w.current, h.current);
+        // printf("%f %f %f %f\n", x.current, y.current, w.current, h.current);
     }
     auto newRect = sf::IntRect(unsigned(x.current - (w.current / 2.0)),
                                unsigned(y.current - (h.current / 2.0)),
@@ -203,6 +201,27 @@ Zoomer::updateTexture(isize nr)
     if (opt.verbose) {
         printf("Switched to texture %ld\n", nr);
     }
+}
+
+void
+Zoomer::updateLocation(isize nr)
+{
+    string path = opt.input;
+    string name = path + "_" + std::to_string(nr) + ".loc";
+
+    if (opt.verbose) {
+        printf("updateLocation: %s\n", name.c_str());
+    }
+
+    if (!fileExists(name)) {
+        throw FileNotFoundError("File " + name + " does not exist");
+    }
+
+    map<string,string> keys;
+    Parser::parse(name, keys);
+    opt.parse(keys);
+
+    printf("dx = %ld dy = %ld\n", opt.animation.dx, opt.animation.dy);
 }
 
 }

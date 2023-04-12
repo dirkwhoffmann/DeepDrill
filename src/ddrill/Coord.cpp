@@ -20,14 +20,11 @@ Coord::Coord(PrecisionComplex pos, const Options &opt)
     auto c = opt.center;
 
     // Compute the pixel distance to the center
-    mpf_class dx = (c.re - pos.re) / opt.mpfPixelDelta;
-    mpf_class dy = (c.im - pos.im) / opt.mpfPixelDelta;
+    mpf_class dx = (pos.re - c.re) / opt.mpfPixelDelta;
+    mpf_class dy = (pos.im - c.im) / opt.mpfPixelDelta;
 
-    auto ddx = i16(round(dx.get_d()));
-    auto ddy = i16(round(dy.get_d()));
-    
-    x = center(opt).x - ddx;
-    y = center(opt).y - ddy;
+    x = center(opt).x + i16(round(dx.get_d()));
+    y = center(opt).y + i16(round(dy.get_d()));
 }
 
 Coord

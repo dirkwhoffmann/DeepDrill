@@ -67,7 +67,15 @@ struct Options {
         isize depth;
 
     } location;
-    
+
+    struct {
+
+        // Center shift (experimental)
+        isize dx;
+        isize dy;
+
+    } animation;
+
     struct {
 
         // Image dimensions in pixels
@@ -156,7 +164,7 @@ struct Options {
 public:
 
     Options(map <string,string> &keys);
-    void parse();
+    void parse(map <string,string> &keys);
 
 private:
 
