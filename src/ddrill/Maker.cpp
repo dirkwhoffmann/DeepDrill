@@ -67,21 +67,16 @@ Maker::generateLocationFile(isize nr)
     os << "depth = " << std::to_string(depth) << std::endl;
     os << std::endl;
 
-    mpf_class mpfPixelDelta = mpf_class(4.0) / zoom / opt.image.height;
+    // Compute center shift
+    mpf_class pixelDelta = mpf_class(4.0) / zoom / opt.image.height;
     auto oldShift = shift;
-    shift /= (2.0 / 0.9);
-    auto delta = oldShift - shift;
-    log::cout << "delta: " << delta << log::endl;
-    mpf_class renorm = delta.re / mpfPixelDelta;
-    mpf_class imnorm = delta.im / mpfPixelDelta;
-    auto coord = Coord(std::round(renorm.get_d()), std::round(imnorm.get_d()));
-
-    log::cout << "coord: " << coord << log::endl;
+    shift *= 0.5 * 0.9;
+    auto delta = (shift - oldShift) / pixelDelta;
 
     // Write animation section
     os << "[animation]" << std::endl;
-    os << "dx = " << coord.x << std::endl;
-    os << "dy = " << coord.y << std::endl;
+    os << "dx = " << isize(std::round(delta.re.get_d())) << std::endl;
+    os << "dy = " << isize(std::round(delta.im.get_d())) << std::endl;
 }
 
 void

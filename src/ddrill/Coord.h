@@ -23,12 +23,12 @@ struct Coord {
     Coord() : x(0), y(0) { };
     Coord(i16 nx, i16 ny) : x(nx), y(ny) { };
     Coord(isize nx, isize ny) : x((i16)nx), y((i16)ny) { };
-    Coord(double nx, double ny) : x((i16)nx), y((i16)ny) { };
-    Coord(PrecisionComplex pos, const struct Options &opt);
+    Coord(double nx, double ny) : x(i16(std::round(nx))), y(i16(std::round(ny))) { };
+    // Coord(PrecisionComplex pos, const struct Options &opt);
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
     
-    static Coord center(const Options &opt);
+    static Coord center(const struct Options &opt);
     
     
     //
@@ -36,7 +36,7 @@ struct Coord {
     //
     
     // Translates the coordinate to it's location on the complex plane
-    PrecisionComplex translate(const Options &opt) const;
+    PrecisionComplex translate(const struct Options &opt) const;
 
 
     //

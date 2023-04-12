@@ -15,6 +15,7 @@
 
 namespace dd {
 
+/*
 Coord::Coord(PrecisionComplex pos, const Options &opt)
 {
     auto c = opt.center;
@@ -26,6 +27,7 @@ Coord::Coord(PrecisionComplex pos, const Options &opt)
     x = center(opt).x + i16(round(dx.get_d()));
     y = center(opt).y + i16(round(dy.get_d()));
 }
+*/
 
 Coord
 Coord::center(const Options &opt)

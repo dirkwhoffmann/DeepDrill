@@ -35,29 +35,50 @@ struct PrecisionComplex {
     PrecisionComplex &operator=(const StandardComplex &other);
 
     inline PrecisionComplex &operator+=(const PrecisionComplex &other) {
-    
+
         re += other.re;
         im += other.im;
         return *this;
     }
 
     inline PrecisionComplex &operator-=(const PrecisionComplex &other) {
-    
+
         re -= other.re;
         im -= other.im;
         return *this;
     }
 
     inline PrecisionComplex &operator*=(const PrecisionComplex &other) {
-    
+
         const mpf_class r = re *other.re - im * other.im;
         im = re * other.im + im * other.re;
         re = r;
         return *this;
     }
 
+    inline PrecisionComplex &operator*=(mpf_class other) {
+
+        re *= other;
+        im *= other;
+        return *this;
+    }
+
+    inline PrecisionComplex &operator*=(double other) {
+
+        re *= other;
+        im *= other;
+        return *this;
+    }
+
+    inline PrecisionComplex &operator/=(const mpf_class &other) {
+
+        re /= other;
+        im /= other;
+        return *this;
+    }
+
     inline PrecisionComplex &operator/=(double other) {
-    
+
         re /= other;
         im /= other;
         return *this;
@@ -67,7 +88,7 @@ struct PrecisionComplex {
         
         return PrecisionComplex(re + other.re, im + other.im);
     }
-            
+
     inline PrecisionComplex operator-(const PrecisionComplex &other) const {
         
         return PrecisionComplex(re - other.re, im - other.im);
@@ -77,6 +98,17 @@ struct PrecisionComplex {
         
         return PrecisionComplex(re *other.re - im * other.im, re * other.im + im * other.re);
     }
+
+    inline PrecisionComplex operator*(const mpf_class &other) const {
+
+        return PrecisionComplex(re * other, im * other);
+    }
+
+    inline PrecisionComplex operator/(const mpf_class &other) const {
+
+        return PrecisionComplex(re / other, im / other);
+    }
+
 };
 
 }

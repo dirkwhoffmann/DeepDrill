@@ -127,8 +127,8 @@ Zoomer::update(isize &frame, isize &image)
         w.set(opt.image.width);
         h.set(opt.image.height);
 
-        x.set(Coord::center(opt).x - opt.animation.dx, opt.video.inbetweens);
-        y.set(Coord::center(opt).y - opt.animation.dy, opt.video.inbetweens);
+        x.set(Coord::center(opt).x + opt.animation.dx, opt.video.inbetweens);
+        y.set(Coord::center(opt).y + opt.animation.dy, opt.video.inbetweens);
         w.set(opt.image.width / 2.0, opt.video.inbetweens);
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
 
