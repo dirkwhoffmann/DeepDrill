@@ -27,7 +27,11 @@ struct Options {
     //
     // Key-value pairs (unparsed)
     //
-    
+
+    // Default keys
+    map<string,string> defaults;
+
+    // User-defined keys
     map<string,string> keys;
     
     
@@ -163,7 +167,7 @@ struct Options {
 
 public:
 
-    Options(map <string,string> &keys);
+    Options();
     void parse(map <string,string> &keys);
 
 private:

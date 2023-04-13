@@ -139,7 +139,7 @@ Zoomer::update(isize &frame, isize &image)
     }
 
     if (opt.verbose) {
-        // printf("%f %f %f %f\n", x.current, y.current, w.current, h.current);
+        // printf("[%ld] %f %f %f %f\n", frame, x.current, y.current, w.current, h.current);
     }
     auto newRect = sf::IntRect(unsigned(x.current - (w.current / 2.0)),
                                unsigned(y.current - (h.current / 2.0)),

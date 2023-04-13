@@ -68,7 +68,7 @@ DeepFlight::main(int argc, char *argv[])
     setupGmp(keys);
 
     // Parse all options
-    Options opt(keys);
+    opt.parse(keys);
 
     // Start a stop watch
     Clock stopWatch;

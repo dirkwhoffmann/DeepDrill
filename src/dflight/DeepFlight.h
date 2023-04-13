@@ -12,6 +12,7 @@
 #pragma once
 
 #include "commons.h"
+#include "Options.h"
 
 namespace dd {
 
@@ -21,6 +22,9 @@ class DeepFlight {
     std::vector <string> profiles;
     std::vector <string> inputs;
     std::vector <string> outputs;
+
+    // Config options
+    Options opt;
 
     // Paths to all image files
     std::vector <string> imageFiles;

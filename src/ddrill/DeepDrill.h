@@ -12,6 +12,7 @@
 #pragma once
 
 #include "commons.h"
+#include "Options.h"
 
 namespace dd {
 
@@ -22,6 +23,9 @@ class DeepDrill {
     std::vector <string> inputs;
     std::vector <string> outputs;
 
+    // Config options
+    Options opt;
+    
 public:
 
     // Main entry point
@@ -37,8 +41,8 @@ private:
     void readProfiles(map<string,string> &keys);
     
     // Executes the drill pipeline or the Makefile generator
-    void runPipeline(struct Options &opt);
-    void runMaker(struct Options &opt);
+    void runPipeline(Options &opt);
+    void runMaker(Options &opt);
 
     // Prints a progress line in batch mode
     void printProgress(Options &opt);

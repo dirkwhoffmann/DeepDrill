@@ -15,60 +15,71 @@
 
 namespace dd {
 
-Options::Options(map <string,string> &keymap)
+Options::Options()
 {
     // Register default keys
 
     // Command line options
-    keys["exec"] = "";
-    keys["input"] = "";
-    keys["output"] = "";
-    keys["verbose"] = "0";
-    keys["make"] = "0";
-    keys["batch"] = "0";
+    defaults["exec"] = "";
+    defaults["input"] = "";
+    defaults["output"] = "";
+    defaults["verbose"] = "0";
+    defaults["make"] = "0";
+    defaults["batch"] = "0";
 
     // Tool keys
-    keys["tools.raw2tiff"] = "";
-    keys["tools.convert"] = "";
+    defaults["tools.raw2tiff"] = "";
+    defaults["tools.convert"] = "";
 
     // Location keys
-    keys["location.real"] = "0.0";
-    keys["location.imag"] = "0.0";
-    keys["location.dreal"] = "0.0";
-    keys["location.dimag"] = "0.0";
-    keys["location.zoom"] = "1.0";
-    keys["location.depth"] = "500";
+    defaults["location.real"] = "0.0";
+    defaults["location.imag"] = "0.0";
+    defaults["location.dreal"] = "0.0";
+    defaults["location.dimag"] = "0.0";
+    defaults["location.zoom"] = "1.0";
+    defaults["location.depth"] = "500";
 
     // Image keys
-    keys["image.width"] = "960";
-    keys["image.height"] = "540";
-    keys["image.badpixels"] = "0.001";
+    defaults["image.width"] = "960";
+    defaults["image.height"] = "540";
+    defaults["image.badpixels"] = "0.001";
 
     // Animation keys
-    keys["animation.dx"] = "0";
-    keys["animation.dy"] = "0";
+    defaults["animation.dx"] = "0";
+    defaults["animation.dy"] = "0";
 
     // Video keys
-    keys["video.framerate"] = "60";
-    keys["video.width"] = "480";
-    keys["video.height"] = "270";
-    keys["video.keyframes"] = "derive";
-    keys["video.inbetweens"] = "120";
-    keys["video.duration"] = "derive";
-    keys["video.bitrate"] = "4096";
-    keys["video.scaler"] = "";
+    defaults["video.framerate"] = "60";
+    defaults["video.width"] = "480";
+    defaults["video.height"] = "270";
+    defaults["video.keyframes"] = "derive";
+    defaults["video.inbetweens"] = "120";
+    defaults["video.duration"] = "derive";
+    defaults["video.bitrate"] = "4096";
+    defaults["video.scaler"] = "";
 
     // Palette keys
-    keys["palette.values"] = Palette::defaultPalette;
+    defaults["palette.values"] = Palette::defaultPalette;
 
     // Perturbation keys
-    keys["perturbation.tolerance"] = "1e-12";
-    keys["perturbation.rounds"] = "50";
+    defaults["perturbation.tolerance"] = "1e-12";
+    defaults["perturbation.rounds"] = "50";
 
     // Approximation keys
-    keys["approximation.coefficients"] = "5";
-    keys["approximation.tolerance"] = "1e-12";
+    defaults["approximation.coefficients"] = "5";
+    defaults["approximation.tolerance"] = "1e-12";
+}
 
+void
+Options::parse(map <string,string> &keymap)
+{
+    // Add default keys
+    if (keys.empty()) {
+        for (const auto &it : defaults) {
+            keys[it.first] = it.second;
+        }
+    }
+    
     // Search external tools in some default locations
     std::vector<string> paths = { "/usr/bin", "/usr/local/bin", "/opt/homebrew/bin" };
     for (const auto &path : paths) {
@@ -78,20 +89,13 @@ Options::Options(map <string,string> &keymap)
 
     // Overwrite default values with the user settings
     for (auto &it : keymap) {
-        if (keys.find(it.first) == keys.end()) {
+        if (defaults.find(it.first) == keys.end()) {
             throw Exception("Unknown key '" + it.first + "'");
-        }        
+        }
         keys[it.first] = it.second;
     }
-    
-    // Parse all key-value pairs
-    parse(keys);
-}
 
-void
-Options::parse(map <string,string> &keymap)
-{
-    for (auto &it : keymap) {
+    for (auto &it : keys) {
 
         auto &key = it.first;
         auto &value = it.second;
@@ -124,7 +128,7 @@ Options::parse(map <string,string> &keymap)
         } else if (key == "location.zoom") {
             location.zoom = mpf_class(value);
         } else if (key == "location.depth") {
-            location.depth = stoi(value);
+            location.depth = stol(value);
         } else if (key == "image.width") {
             image.width = stoi(value);
         } else if (key == "image.height") {
