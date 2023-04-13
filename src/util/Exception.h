@@ -20,9 +20,9 @@ struct Exception : public std::exception {
     string description;
     i64 data;
 
-    Exception(const string &s, i64 d) : data(d), description(s) { }
-    Exception(i64 d) : data(d), description("") { }
-    Exception(const string &s) : data(0), description(s) { }
+    Exception(const string &s, i64 d) : description(s), data(d) { }
+    Exception(const string &s) : description(s), data(0) { }
+    Exception(i64 d) : description(""), data(d) { }
     Exception() : data(0) { }
     
     const char *what() const throw() override { return description.c_str(); }
@@ -33,7 +33,10 @@ struct SyntaxError : public Exception {
 };
 
 struct FileNotFoundError : Exception {
-    using Exception::Exception;
+
+    FileNotFoundError(const string &s) {
+        description = s + ": File not found.";
+    }
 };
 
 struct InvalidValueException : public Exception {

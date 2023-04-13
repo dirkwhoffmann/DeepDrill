@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "Parser.h"
+#include "commons.h"
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -21,14 +22,15 @@ namespace dd {
 void
 Parser::parse(const string &path, std::map<string, string> &keys)
 {
+    auto name = extractName(path);
     auto fs = std::ifstream(path);
-    
+
     if (!fs.is_open()) {
-        throw std::runtime_error("Error: Failed to open file " + path);
+        throw Exception("Failed to open file " + path);
     }
  
-    try { parse(fs, keys); } catch (std::runtime_error &e) {
-        throw std::runtime_error(path + ": " + e.what());
+    try { parse(fs, keys); } catch (Exception &e) {
+        throw Exception(name + ":" + std::to_string(e.data) + ": " + e.what());
     }
 }
 
@@ -87,7 +89,7 @@ Parser::parse(std::stringstream &stream, std::map<string, string> &keys)
             continue;
         }
         
-        throw std::runtime_error("Syntax error in line " + std::to_string(line));
+        throw Exception("Syntax error", line);
     }    
 }
 
