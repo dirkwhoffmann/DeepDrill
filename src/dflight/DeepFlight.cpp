@@ -11,9 +11,9 @@
 
 #include "config.h"
 #include "DeepFlight.h"
+#include "Logger.h"
 #include "Options.h"
 #include "Zoomer.h"
-#include "Logger.h"
 #include <getopt.h>
 
 int main(int argc, char *argv[])
@@ -54,23 +54,27 @@ namespace dd {
 void
 DeepFlight::main(int argc, char *argv[])
 {
-    map<string,string> keys;
-    string option = "";
+    // Parse command line arguments
+    parseArguments(argc, argv);
 
-    // Parse all command line arguments
-    parseArguments(argc, argv, keys);
+    if (opt.batch) {
+
+        log::cout.setSilent(true);
+
+    } else {
+
+        log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
+        log::cout << " - (C)opyright Dirk W. Hoffmann";
+        log::cout << log::endl << log::endl;
+    }
 
     // Read files
-    readInputs(keys);
-    readOutputs(keys);
-    readProfiles(keys);
+    readInputs();
+    readOutputs();
+    readProfiles();
 
-    log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
-    log::cout << " - (C)opyright Dirk W. Hoffmann";
-    log::cout << log::endl << log::endl;
-
-    // Parse all options
-    opt.parse(keys);
+    // Deduce missing options
+    opt.derive();
 
     // Start a stop watch
     Clock stopWatch;
@@ -82,7 +86,7 @@ DeepFlight::main(int argc, char *argv[])
 }
 
 void
-DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
+DeepFlight::parseArguments(int argc, char *argv[])
 {
     static struct option long_options[] = {
 
@@ -101,7 +105,7 @@ DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
     opterr = 0;
 
     // Remember the path to the executable
-    keys["exec"] = makeAbsolutePath(argv[0]);
+    opt.exec = makeAbsolutePath(argv[0]);
 
     // Parse all options
     while (1) {
@@ -112,11 +116,11 @@ DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
         switch (arg) {
 
             case 'v':
-                keys["verbose"] = "1";
+                opt.verbose = true;
                 break;
 
             case 'b':
-                log::cout.setSilent(true);
+                opt.batch = true;
                 break;
 
             case 'a':
@@ -146,12 +150,12 @@ DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
         inputs.push_back(makeAbsolutePath(argv[optind++]));
     }
 
-    checkArguments(keys);
+    checkArguments();
     setupGmp(accuracy);
 }
 
 void
-DeepFlight::checkArguments(map<string,string> &keys)
+DeepFlight::checkArguments()
 {
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
@@ -186,12 +190,12 @@ DeepFlight::checkArguments(map<string,string> &keys)
 }
 
 void
-DeepFlight::readInputs(map<string,string> &keys)
+DeepFlight::readInputs()
 {
     string path = inputs.front();
     string name;
 
-    keys["input"] = path;
+    opt.input = path;
 
     for (isize i = 0;; i++) {
 
@@ -206,14 +210,14 @@ DeepFlight::readInputs(map<string,string> &keys)
 }
 
 void
-DeepFlight::readOutputs(map<string,string> &keys)
+DeepFlight::readOutputs()
 {
     if (!outputs.empty()) {
 
         auto path = outputs.front();
         auto suffix = extractSuffix(path);
 
-        keys["output"] = path;
+        opt.output = path;
 
         if (suffix == "mpg") {
             return;
@@ -224,10 +228,10 @@ DeepFlight::readOutputs(map<string,string> &keys)
 }
 
 void
-DeepFlight::readProfiles(map<string,string> &keys)
+DeepFlight::readProfiles()
 {
     for (auto &path: profiles) {
-        Parser::parse(path, keys);
+        Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
     }
 }
 

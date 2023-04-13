@@ -161,7 +161,7 @@ Maker::writeHeader(std::ofstream &os)
 void
 Maker::writeDefinitions(std::ofstream &os)
 {
-    os << "DEEPDRILL  = " << opt.keys["exec"] << std::endl;
+    os << "DEEPDRILL  = " << opt.exec << std::endl;
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;

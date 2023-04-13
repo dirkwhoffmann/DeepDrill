@@ -34,18 +34,18 @@ public:
 private:
     
     // Helper methods for parsing command line arguments
-    void parseArguments(int argc, char *argv[], map<string,string> &keys);
-    void checkArguments(map<string,string> &keys);
-    void readInputs(map<string,string> &keys);
-    void readOutputs(map<string,string> &keys);
-    void readProfiles(map<string,string> &keys);
+    void parseArguments(int argc, char *argv[]);
+    void checkArguments();
+    void readInputs();
+    void readOutputs();
+    void readProfiles();
     
     // Executes the drill pipeline or the Makefile generator
-    void runPipeline(Options &opt);
-    void runMaker(Options &opt);
+    void runPipeline();
+    void runMaker();
 
     // Prints a progress line in batch mode
-    void printProgress(Options &opt);
+    void printProgress();
 
     // Sets up the GMP library
     void setupGmp(isize accuracy);

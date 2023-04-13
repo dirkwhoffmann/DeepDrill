@@ -20,7 +20,7 @@
 namespace dd {
 
 void
-Parser::parse(const string &path, std::map<string, string> &keys)
+Parser::parse(const string &path, std::function<void(string,string)>callback)
 {
     auto name = extractName(path);
     auto fs = std::ifstream(path);
@@ -29,22 +29,22 @@ Parser::parse(const string &path, std::map<string, string> &keys)
         throw Exception("Failed to open file " + path);
     }
  
-    try { parse(fs, keys); } catch (Exception &e) {
+    try { parse(fs, callback); } catch (Exception &e) {
         throw Exception(name + ":" + std::to_string(e.data) + ": " + e.what());
     }
 }
 
 void
-Parser::parse(std::ifstream &stream, std::map<string, string> &keys)
+Parser::parse(std::ifstream &stream, std::function<void(string,string)>callback)
 {
     std::stringstream ss;
     ss << stream.rdbuf();
     
-    parse(ss, keys);
+    parse(ss, callback);
 }
 
 void
-Parser::parse(std::stringstream &stream, std::map<string, string> &keys)
+Parser::parse(std::stringstream &stream, std::function<void(string,string)>callback)
 {
     isize line = 0;
     string input;
@@ -85,7 +85,8 @@ Parser::parse(std::stringstream &stream, std::map<string, string> &keys)
             tolower(key);
             
             // Add the key-value pair
-            keys[section + "." + key] = value;
+            callback(section + "." + key ,value);
+            // keys[section + "." + key] = value;
             continue;
         }
         

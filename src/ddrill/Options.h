@@ -168,12 +168,14 @@ struct Options {
 public:
 
     Options();
-    void parse(map <string,string> &keys);
+    [[deprecated]] void parse(map <string,string> &keys);
+    void parse(string key, string value);
+    // void parseDefaults();
+    void derive();
 
 private:
 
     void check();
-    void derive();
 };
 
 }

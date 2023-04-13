@@ -37,11 +37,11 @@ public:
 private:
 
     // Helper methods for parsing command line arguments
-    void parseArguments(int argc, char *argv[], map<string,string> &keys);
-    void checkArguments(map<string,string> &keys);
-    void readInputs(map<string,string> &keys);
-    void readOutputs(map<string,string> &keys);
-    void readProfiles(map<string,string> &keys);
+    void parseArguments(int argc, char *argv[]);
+    void checkArguments();
+    void readInputs();
+    void readOutputs();
+    void readProfiles();
 
     // Sets up the GMP library
     void setupGmp(isize accuracy);

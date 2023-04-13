@@ -19,14 +19,6 @@ Options::Options()
 {
     // Register default keys
 
-    // Command line options
-    defaults["exec"] = "";
-    defaults["input"] = "";
-    defaults["output"] = "";
-    defaults["verbose"] = "0";
-    defaults["make"] = "0";
-    defaults["batch"] = "0";
-
     // Tool keys
     defaults["tools.raw2tiff"] = "";
     defaults["tools.convert"] = "";
@@ -68,6 +60,13 @@ Options::Options()
     // Approximation keys
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
+
+    // Search for external tools...
+    std::vector<string> paths = { "/usr/bin", "/usr/local/bin", "/opt/homebrew/bin" };
+    for (const auto &path : paths) {
+        if (fileExists(path + "/raw2tiff")) defaults["tools.raw2tiff"] = path + "/raw2tiff";
+        if (fileExists(path + "/convert")) defaults["tools.convert"] = path + "/convert";
+    }
 }
 
 void
@@ -79,13 +78,6 @@ Options::parse(map <string,string> &keymap)
             keys[it.first] = it.second;
         }
     }
-    
-    // Search external tools in some default locations
-    std::vector<string> paths = { "/usr/bin", "/usr/local/bin", "/opt/homebrew/bin" };
-    for (const auto &path : paths) {
-        if (fileExists(path + "/raw2tiff")) keys["tools.raw2tiff"] = path + "/raw2tiff";
-        if (fileExists(path + "/convert")) keys["tools.convert"] = path + "/convert";
-    }
 
     // Overwrite default values with the user settings
     for (auto &it : keymap) {
@@ -96,83 +88,87 @@ Options::parse(map <string,string> &keymap)
     }
 
     for (auto &it : keys) {
-
-        auto &key = it.first;
-        auto &value = it.second;
-        
-        if (key == "exec") {
-            exec = value;
-        } else if (key == "make") {
-            make = stoi(value);
-        } else if (key == "batch") {
-            batch = stoi(value);
-            log::cout.setSilent(batch);
-        } else if (key == "input") {
-            input = value;
-        } else if (key == "output") {
-            output = value;
-        } else if (key == "verbose") {
-            verbose = stoi(value);
-        } else if (key == "tools.raw2tiff") {
-            tools.raw2tiff = value;
-        } else if (key == "tools.convert") {
-            tools.convert = value;
-        } else if (key == "location.real") {
-            location.real = mpf_class(value);
-        } else if (key == "location.imag") {
-            location.imag = mpf_class(value);
-        } else if (key == "location.dreal") {
-            location.dreal = mpf_class(value);
-        } else if (key == "location.dimag") {
-            location.dimag = mpf_class(value);
-        } else if (key == "location.zoom") {
-            location.zoom = mpf_class(value);
-        } else if (key == "location.depth") {
-            location.depth = stol(value);
-        } else if (key == "image.width") {
-            image.width = stoi(value);
-        } else if (key == "image.height") {
-            image.height = stoi(value);
-        } else if (key == "image.badpixels") {
-            image.badpixels = stod(value);
-        } else if (key == "animation.dx") {
-            animation.dx = stoi(value);
-        } else if (key == "animation.dy") {
-            animation.dy = stoi(value);
-        } else if (key == "video.framerate") {
-            video.frameRate = stod(value);
-        } else if (key == "video.width") {
-            video.width = stod(value);
-        } else if (key == "video.height") {
-            video.height = stod(value);
-        } else if (key == "video.keyframes") {
-            video.keyframes = value == "derive" ? 0 : stoi(value);
-        } else if (key == "video.inbetweens") {
-            video.inbetweens = value == "derive" ? 0 : stoi(value);
-        } else if (key == "video.duration") {
-            video.duration = value == "derive" ? 0 : stoi(value);
-        } else if (key == "video.bitrate") {
-            video.bitrate = stoi(value);
-        } else if (key == "video.scaler") {
-            video.scaler = value;
-        } else if (key == "palette.values") {
-            palette.values = value;
-        } else if (key == "perturbation.tolerance") {
-            perturbation.tolerance = stod(value);
-        } else if (key == "perturbation.rounds") {
-            perturbation.rounds = stod(value);
-        } else if (key == "approximation.coefficients") {
-            approximation.coefficients = stoi(value);
-        } else if (key == "approximation.tolerance") {
-            approximation.tolerance = stod(value);
-        } else {
-            assert(false);
-        }
+        parse(it.first, it.second);
     }
 
     check();
     derive();
 }
+
+void
+Options::parse(string key, string value)
+{
+    keys[key] = value;
+
+    if (key == "tools.raw2tiff") {
+        tools.raw2tiff = value;
+    } else if (key == "tools.convert") {
+        tools.convert = value;
+    } else if (key == "location.real") {
+        location.real = mpf_class(value);
+    } else if (key == "location.imag") {
+        location.imag = mpf_class(value);
+    } else if (key == "location.dreal") {
+        location.dreal = mpf_class(value);
+    } else if (key == "location.dimag") {
+        location.dimag = mpf_class(value);
+    } else if (key == "location.zoom") {
+        location.zoom = mpf_class(value);
+    } else if (key == "location.depth") {
+        location.depth = stol(value);
+    } else if (key == "image.width") {
+        image.width = stoi(value);
+    } else if (key == "image.height") {
+        image.height = stoi(value);
+    } else if (key == "image.badpixels") {
+        image.badpixels = stod(value);
+    } else if (key == "animation.dx") {
+        animation.dx = stoi(value);
+    } else if (key == "animation.dy") {
+        animation.dy = stoi(value);
+    } else if (key == "video.framerate") {
+        video.frameRate = stod(value);
+    } else if (key == "video.width") {
+        video.width = stod(value);
+    } else if (key == "video.height") {
+        video.height = stod(value);
+    } else if (key == "video.keyframes") {
+        video.keyframes = value == "derive" ? 0 : stoi(value);
+    } else if (key == "video.inbetweens") {
+        video.inbetweens = value == "derive" ? 0 : stoi(value);
+    } else if (key == "video.duration") {
+        video.duration = value == "derive" ? 0 : stoi(value);
+    } else if (key == "video.bitrate") {
+        video.bitrate = stoi(value);
+    } else if (key == "video.scaler") {
+        video.scaler = value;
+    } else if (key == "palette.values") {
+        palette.values = value;
+    } else if (key == "perturbation.tolerance") {
+        perturbation.tolerance = stod(value);
+    } else if (key == "perturbation.rounds") {
+        perturbation.rounds = stod(value);
+    } else if (key == "approximation.coefficients") {
+        approximation.coefficients = stoi(value);
+    } else if (key == "approximation.tolerance") {
+        approximation.tolerance = stod(value);
+    } else {
+        assert(false);
+    }
+}
+
+/*
+void
+Options::parseDefaults()
+{
+    for (auto &it : defaults) {
+        if (keys.find(it.first) == keys.end()) {
+            printf("Adding default for key %s\n", it.first.c_str());
+            parse(it.first, it.second);
+        }
+    }
+}
+*/
 
 void
 Options::check()
@@ -199,6 +195,14 @@ Options::derive()
 
         return Format::NONE;
     };
+
+    // Set default values for all missing options
+    for (auto &it : defaults) {
+        if (keys.find(it.first) == keys.end()) {
+            printf("Adding default for key %s\n", it.first.c_str());
+            parse(it.first, it.second);
+        }
+    }
 
     // Determine the input and output formats
     inputFormat = format(input);

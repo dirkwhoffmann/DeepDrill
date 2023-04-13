@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     } catch (dd::SyntaxError &e) {
 
         log::cout << "Usage: ";
-        log::cout << "deepdrill [-bmv] [-p <profile>] -o <output> <input>" << log::endl;
+        log::cout << "deepdrill [-bmv] [-a <bits>] [-p <profile>] -o <output> <input>" << log::endl;
         log::cout << log::endl;
         log::cout << "       -b or --batch     Run in batch mode" << log::endl;
         log::cout << "       -m or --make      Run the Makefile generator" << log::endl;
@@ -58,38 +58,39 @@ namespace dd {
 void
 DeepDrill::main(int argc, char *argv[])
 {
-    map<string,string> keys;
-    string option = "";
-                        
-    // Parse all command line arguments
-    parseArguments(argc, argv, keys);
+    // Parse command line arguments
+    parseArguments(argc, argv);
 
-    // Read files
-    readProfiles(keys);
-    readInputs(keys);
-    readOutputs(keys);
+    if (opt.batch) {
 
-    // Parse all options
-    opt.parse(keys);
+        log::cout.setSilent(true);
 
-    if (!opt.batch) {
+    } else {
 
         log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
         log::cout << " - (C)opyright Dirk W. Hoffmann";
         log::cout << log::endl << log::endl;
     }
 
+    // Read files
+    readProfiles();
+    readInputs();
+    readOutputs();
+
+    // Deduce missing options
+    opt.derive();
+
     // Start a stop watch
     Clock stopWatch;
 
     // Execute
-    opt.make ? runMaker(opt) : runPipeline(opt);
+    opt.make ? runMaker() : runPipeline();
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
 }
 
 void
-DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
+DeepDrill::parseArguments(int argc, char *argv[])
 {
     static struct option long_options[] = {
         
@@ -109,7 +110,7 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
     opterr = 0;
     
     // Remember the path to the DeppDrill executable
-    keys["exec"] = makeAbsolutePath(argv[0]);
+    opt.exec = makeAbsolutePath(argv[0]);
 
     // Parse all options
     while (1) {
@@ -120,15 +121,15 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
         switch (arg) {
                 
             case 'v':
-                keys["verbose"] = "1";
+                opt.verbose = true;
                 break;
                 
             case 'm':
-                keys["make"] = "1";
+                opt.make = true;
                 break;
 
             case 'b':
-                keys["batch"] = "1";
+                opt.batch = true;
                 break;
 
             case 'a':
@@ -158,12 +159,12 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
         inputs.push_back(makeAbsolutePath(argv[optind++]));
     }
     
-    checkArguments(keys);
+    checkArguments();
     setupGmp(accuracy);
 }
 
 void
-DeepDrill::checkArguments(map<string,string> &keys)
+DeepDrill::checkArguments()
 {
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
@@ -185,7 +186,7 @@ DeepDrill::checkArguments(map<string,string> &keys)
         }
     }
     
-    if (keys.find("make") != keys.end()) {
+    if (opt.make) {
         
         // The input files must be a location files
         if (inSuffix != "loc") {
@@ -220,15 +221,15 @@ DeepDrill::checkArguments(map<string,string> &keys)
 }
 
 void
-DeepDrill::readInputs(map<string,string> &keys)
+DeepDrill::readInputs()
 {
     auto path = inputs.front();
     auto suffix = extractSuffix(path);
 
-    keys["input"] = path;
+    opt.input = path;
     
     if (suffix == "loc") {
-        Parser::parse(path, keys);
+        Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
         return;
     }
     if (suffix == "map") {
@@ -242,12 +243,12 @@ DeepDrill::readInputs(map<string,string> &keys)
 }
 
 void
-DeepDrill::readOutputs(map<string,string> &keys)
+DeepDrill::readOutputs()
 {
     auto path = outputs.front();
     auto suffix = extractSuffix(path);
 
-    keys["output"] = path;
+    opt.output = path;
 
     if (suffix == "map") {
         return;
@@ -263,10 +264,10 @@ DeepDrill::readOutputs(map<string,string> &keys)
 }
 
 void
-DeepDrill::readProfiles(map<string,string> &keys)
+DeepDrill::readProfiles()
 {
     for (auto &path: profiles) {
-        Parser::parse(path, keys);
+        Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
     }
 }
 
@@ -296,7 +297,7 @@ DeepDrill::setupGmp(std::map <string,string> &keys)
 */
 
 void
-DeepDrill::runPipeline(Options &opt)
+DeepDrill::runPipeline()
 {
     DrillMap drillMap(opt);
 
@@ -328,19 +329,19 @@ DeepDrill::runPipeline(Options &opt)
         colorizer.save(opt.output);
 
         // Print a progress status line in batch mode
-        if (opt.batch) printProgress(opt);
+        if (opt.batch) printProgress();
     }
 }
 
 void
-DeepDrill::runMaker(Options &opt)
+DeepDrill::runMaker()
 {
     Maker maker(opt);
     maker.generate();
 }
 
 void
-DeepDrill::printProgress(Options &opt)
+DeepDrill::printProgress()
 {
     std::stringstream ss;
 

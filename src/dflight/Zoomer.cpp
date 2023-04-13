@@ -94,7 +94,7 @@ Zoomer::launch()
         }
 
         // Update state
-        try { update(frame, image); } catch (FileNotFoundError &) { break; }
+        update(frame, image);
 
         // Render frame
         draw();
@@ -218,8 +218,8 @@ Zoomer::updateLocation(isize nr)
     }
 
     map<string,string> keys;
-    Parser::parse(name, keys);
-    opt.parse(keys);
+    Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
+    // opt.parse(keys);
 
     printf("dx = %ld dy = %ld\n", opt.animation.dx, opt.animation.dy);
 }
