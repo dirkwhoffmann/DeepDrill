@@ -48,7 +48,8 @@ private:
     void printProgress(Options &opt);
 
     // Sets up the GMP library
-    void setupGmp(std::map <string,string> &keys);
+    void setupGmp(isize accuracy);
+    // [[deprecated]] void setupGmp(std::map <string,string> &keys);
 };
 
 }

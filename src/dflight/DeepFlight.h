@@ -44,7 +44,7 @@ private:
     void readProfiles(map<string,string> &keys);
 
     // Sets up the GMP library
-    void setupGmp(std::map <string,string> &keys);
+    void setupGmp(isize accuracy);
 };
 
 }

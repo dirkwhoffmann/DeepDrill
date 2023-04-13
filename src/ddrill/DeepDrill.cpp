@@ -31,10 +31,11 @@ int main(int argc, char *argv[])
         log::cout << "Usage: ";
         log::cout << "deepdrill [-bmv] [-p <profile>] -o <output> <input>" << log::endl;
         log::cout << log::endl;
-        log::cout << "       -b or --batch    Run in batch mode" << log::endl;
-        log::cout << "       -m or --make     Run the Makefile generator" << log::endl;
-        log::cout << "       -v or --verbose  Run in verbose mode" << log::endl;
-        log::cout << "       -p or --profile  Customize settings" << log::endl;
+        log::cout << "       -b or --batch     Run in batch mode" << log::endl;
+        log::cout << "       -m or --make      Run the Makefile generator" << log::endl;
+        log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
+        log::cout << "       -a or --accuracy  Precision in binary digits" << log::endl;
+        log::cout << "       -p or --profile   Customize settings" << log::endl;
         log::cout << log::endl;
 
         if (!e.description.empty()) {
@@ -63,8 +64,10 @@ DeepDrill::main(int argc, char *argv[])
     // Parse all command line arguments
     parseArguments(argc, argv, keys);
 
-    // Setup the GMP library
-    setupGmp(keys);
+    // Read files
+    readProfiles(keys);
+    readInputs(keys);
+    readOutputs(keys);
 
     // Parse all options
     opt.parse(keys);
@@ -87,17 +90,21 @@ DeepDrill::main(int argc, char *argv[])
 
 void
 DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
-{    
+{
     static struct option long_options[] = {
         
-        { "verbose", no_argument,       NULL, 'v' },
-        { "make",    no_argument,       NULL, 'm' },
-        { "batch",   no_argument,       NULL, 'b' },
-        { "profile", required_argument, NULL, 'p' },
-        { "output",  required_argument, NULL, 'o' },
-        { NULL,      0,                 NULL,  0  }
+        { "verbose",  no_argument,       NULL, 'v' },
+        { "make",     no_argument,       NULL, 'm' },
+        { "batch",    no_argument,       NULL, 'b' },
+        { "accuracy", required_argument, NULL, 'a' },
+        { "profile",  required_argument, NULL, 'p' },
+        { "output",   required_argument, NULL, 'o' },
+        { NULL,       0,                 NULL,  0  }
     };
-    
+
+    // Default accuracy (number of binary digits)
+    isize accuracy = 128;
+
     // Don't print the default error messages
     opterr = 0;
     
@@ -107,7 +114,7 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vmbp:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vmba:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -122,6 +129,10 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
 
             case 'b':
                 keys["batch"] = "1";
+                break;
+
+            case 'a':
+                accuracy = std::stoi(optarg);
                 break;
 
             case 'p':
@@ -148,9 +159,7 @@ DeepDrill::parseArguments(int argc, char *argv[], map<string,string> &keys)
     }
     
     checkArguments(keys);
-    readProfiles(keys);
-    readInputs(keys);
-    readOutputs(keys);
+    setupGmp(accuracy);
 }
 
 void
@@ -262,6 +271,13 @@ DeepDrill::readProfiles(map<string,string> &keys)
 }
 
 void
+DeepDrill::setupGmp(isize accuracy)
+{
+    mpf_set_default_prec(accuracy);
+}
+
+/*
+void
 DeepDrill::setupGmp(std::map <string,string> &keys)
 {
     long exponent = 0;
@@ -277,6 +293,7 @@ DeepDrill::setupGmp(std::map <string,string> &keys)
         mpf_set_default_prec(exponent + 64);
     }
 }
+*/
 
 void
 DeepDrill::runPipeline(Options &opt)

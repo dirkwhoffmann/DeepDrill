@@ -60,12 +60,14 @@ DeepFlight::main(int argc, char *argv[])
     // Parse all command line arguments
     parseArguments(argc, argv, keys);
 
+    // Read files
+    readInputs(keys);
+    readOutputs(keys);
+    readProfiles(keys);
+
     log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
     log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
-
-    // Setup the GMP library
-    setupGmp(keys);
 
     // Parse all options
     opt.parse(keys);
@@ -84,12 +86,16 @@ DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
 {
     static struct option long_options[] = {
 
-        { "verbose", no_argument,       NULL, 'v' },
-        { "batch",   no_argument,       NULL, 'b' },
-        { "profile", required_argument, NULL, 'p' },
-        { "output",  required_argument, NULL, 'o' },
-        { NULL,      0,                 NULL,  0  }
+        { "verbose",  no_argument,       NULL, 'v' },
+        { "batch",    no_argument,       NULL, 'b' },
+        { "accuracy", required_argument, NULL, 'a' },
+        { "profile",  required_argument, NULL, 'p' },
+        { "output",   required_argument, NULL, 'o' },
+        { NULL,       0,                 NULL,  0  }
     };
+
+    // Default accuracy (number of binary digits)
+    isize accuracy = 128;
 
     // Don't print the default error messages
     opterr = 0;
@@ -111,6 +117,10 @@ DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
 
             case 'b':
                 log::cout.setSilent(true);
+                break;
+
+            case 'a':
+                accuracy = std::stoi(optarg);
                 break;
 
             case 'p':
@@ -137,9 +147,7 @@ DeepFlight::parseArguments(int argc, char *argv[], map<string,string> &keys)
     }
 
     checkArguments(keys);
-    readInputs(keys);
-    readOutputs(keys);
-    readProfiles(keys);
+    setupGmp(accuracy);
 }
 
 void
@@ -224,9 +232,9 @@ DeepFlight::readProfiles(map<string,string> &keys)
 }
 
 void
-DeepFlight::setupGmp(std::map <string,string> &keys)
+DeepFlight::setupGmp(isize accuracy)
 {
-    mpf_set_default_prec(64);
+    mpf_set_default_prec(accuracy);
 }
 
 }
