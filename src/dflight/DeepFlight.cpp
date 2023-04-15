@@ -197,6 +197,7 @@ DeepFlight::readInputs()
 
     opt.input = path;
 
+    /*
     for (isize i = 0;; i++) {
 
         name = path + "_" + std::to_string(i) + ".png";
@@ -207,6 +208,7 @@ DeepFlight::readInputs()
     if (imageFiles.empty()) {
         throw FileNotFoundError("File " + name + " does not exist");
     }
+    */
 }
 
 void

@@ -157,19 +157,6 @@ Options::parse(string key, string value)
     }
 }
 
-/*
-void
-Options::parseDefaults()
-{
-    for (auto &it : defaults) {
-        if (keys.find(it.first) == keys.end()) {
-            printf("Adding default for key %s\n", it.first.c_str());
-            parse(it.first, it.second);
-        }
-    }
-}
-*/
-
 void
 Options::check()
 {
@@ -199,7 +186,6 @@ Options::derive()
     // Set default values for all missing options
     for (auto &it : defaults) {
         if (keys.find(it.first) == keys.end()) {
-            printf("Adding default for key %s\n", it.first.c_str());
             parse(it.first, it.second);
         }
     }

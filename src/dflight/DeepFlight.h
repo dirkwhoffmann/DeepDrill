@@ -26,9 +26,6 @@ class DeepFlight {
     // Config options
     Options opt;
 
-    // Paths to all image files
-    std::vector <string> imageFiles;
-
 public:
 
     // Main entry point
