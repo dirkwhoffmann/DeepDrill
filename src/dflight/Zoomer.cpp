@@ -39,17 +39,30 @@ Zoomer::init()
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode() ? 0 : unsigned(opt.video.frameRate));
 
-    // Create textures
+    // Create the source texture
     if (!source.create(sourceWidth, sourceHeight)) {
         throw Exception("Can't create source texture");
     }
+    sourceRect.setSize(sf::Vector2f(targetWidth, targetHeight));
+    sourceRect.setTexture(&source);
+
+    // Create the scale textures
+    for (isize i = 0; i < 3; i++) {
+
+        if (!scaled[i].create(targetWidth, targetHeight)) {
+            throw Exception("Can't create scale texture " + std::to_string(i));
+        }
+        scaledRect[i].setSize(sf::Vector2f(targetWidth, targetHeight));
+        scaledRect[i].setTexture(&scaled[i].getTexture());
+    }
+
+    // Create the target texture
     if (!target.create(targetWidth, targetHeight)) {
         throw Exception("Can't create target texture");
     }
-    sourceRect.setSize(sf::Vector2f(targetWidth, targetHeight));
-    sourceRect.setTexture(&source);
     targetRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     targetRect.setTexture(&target.getTexture());
+
 
     // Load shader
     /*
@@ -160,9 +173,14 @@ Zoomer::update(isize &keyframe, isize &frame)
 void
 Zoomer::draw()
 {
-    // Render target texture
+    // Stage 1: Scale down the source texture
     shader.setUniform("texture", source);
-    target.draw(sourceRect, &shader);
+    scaled[0].draw(sourceRect, &shader);
+    scaled[0].display();
+
+    // Stage 2: Render target texture
+    shader.setUniform("texture", scaled[0].getTexture());
+    target.draw(scaledRect[0], &shader);
     target.display();
 
     // Draw target texture in the preview window

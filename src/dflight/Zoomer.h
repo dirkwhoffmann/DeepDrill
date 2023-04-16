@@ -28,9 +28,13 @@ class Zoomer {
     // The application window
     sf::RenderWindow window;
     
-    // The render source
+    // The source texture (read from image file)
     sf::Texture source;
     sf::RectangleShape sourceRect;
+
+    // The downscaled source textures (latest three)
+    sf::RenderTexture scaled[3];
+    sf::RectangleShape scaledRect[3];
 
     // The render target
     sf::RenderTexture target;
