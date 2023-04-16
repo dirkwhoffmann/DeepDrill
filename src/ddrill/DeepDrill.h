@@ -48,8 +48,8 @@ private:
     void printProgress();
 
     // Sets up the GMP library
+    void setupGmp();
     void setupGmp(isize accuracy);
-    // [[deprecated]] void setupGmp(std::map <string,string> &keys);
 };
 
 }

@@ -29,12 +29,11 @@ int main(int argc, char *argv[])
     } catch (dd::SyntaxError &e) {
 
         log::cout << "Usage: ";
-        log::cout << "deepdrill [-bmv] [-a <bits>] [-p <profile>] -o <output> <input>" << log::endl;
+        log::cout << "deepdrill [-bmv] [-p <profile>] -o <output> <input>" << log::endl;
         log::cout << log::endl;
         log::cout << "       -b or --batch     Run in batch mode" << log::endl;
         log::cout << "       -m or --make      Run the Makefile generator" << log::endl;
         log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
-        log::cout << "       -a or --accuracy  Precision in binary digits" << log::endl;
         log::cout << "       -p or --profile   Customize settings" << log::endl;
         log::cout << log::endl;
 
@@ -97,14 +96,10 @@ DeepDrill::parseArguments(int argc, char *argv[])
         { "verbose",  no_argument,       NULL, 'v' },
         { "make",     no_argument,       NULL, 'm' },
         { "batch",    no_argument,       NULL, 'b' },
-        { "accuracy", required_argument, NULL, 'a' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
     };
-
-    // Default accuracy (number of binary digits)
-    isize accuracy = 128;
 
     // Don't print the default error messages
     opterr = 0;
@@ -115,7 +110,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vmba:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vmb:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -130,10 +125,6 @@ DeepDrill::parseArguments(int argc, char *argv[])
 
             case 'b':
                 opt.batch = true;
-                break;
-
-            case 'a':
-                accuracy = std::stoi(optarg);
                 break;
 
             case 'p':
@@ -160,7 +151,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     }
     
     checkArguments();
-    setupGmp(accuracy);
+    setupGmp();
 }
 
 void
@@ -272,29 +263,42 @@ DeepDrill::readProfiles()
 }
 
 void
+DeepDrill::setupGmp()
+{
+    isize accuracy = 64;
+
+    if (extractSuffix(inputs.front()) == "loc") {
+
+        /* If a location is given, we need to adjust the GMP precision based
+         * on the zoom factor. Because we haven't parsed any input file when
+         * this function is called, we need to peek this value directly from
+         * the location file.
+         */
+        Parser::parse(inputs.front(), [this, &accuracy](string key, string value) {
+
+            if (key == "location.zoom") {
+
+                try {
+
+                    long exponent = 0;
+                    auto zoom = mpf_class(value);
+                    mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
+                    accuracy = exponent + 64;
+                    return;
+
+                } catch (...) { }
+            }
+        });
+    }
+
+    setupGmp(accuracy);
+}
+
+void
 DeepDrill::setupGmp(isize accuracy)
 {
     mpf_set_default_prec(accuracy);
 }
-
-/*
-void
-DeepDrill::setupGmp(std::map <string,string> &keys)
-{
-    long exponent = 0;
-    
-    // Peek the zoom factor
-    if (auto it = keys.find("location.zoom"); it != keys.end()) {
-        
-        try {
-            auto zoom = mpf_class(it->second);
-            mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
-        } catch (...) { }
-        
-        mpf_set_default_prec(exponent + 64);
-    }
-}
-*/
 
 void
 DeepDrill::runPipeline()

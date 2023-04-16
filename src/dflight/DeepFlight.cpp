@@ -243,6 +243,12 @@ DeepFlight::readProfiles()
 }
 
 void
+DeepFlight::setupGmp()
+{
+    setupGmp(64);
+}
+
+void
 DeepFlight::setupGmp(isize accuracy)
 {
     mpf_set_default_prec(accuracy);
