@@ -102,6 +102,7 @@ struct Options {
 
         // Path to fragment shaders
         string scaler;
+        string merger;
 
     } video;
 

@@ -78,6 +78,7 @@ Maker::generateProjectFile()
     os << "duration = " << keys["video.duration"] << std::endl;
     os << "bitrate = " << keys["video.bitrate"] << std::endl;
     os << "scaler = " << keys["video.scaler"] << std::endl;
+    os << "merger = " << keys["video.merger"] << std::endl;
     os << std::endl;
 }
 

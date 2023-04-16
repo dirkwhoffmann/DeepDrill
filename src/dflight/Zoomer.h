@@ -40,9 +40,10 @@ class Zoomer {
     sf::RenderTexture target;
     sf::RectangleShape targetRect;
 
-    // The compute kernel
-    sf::Shader shader;
-    
+    // Compute kernels
+    sf::Shader scaler;
+    sf::Shader merger;
+
     // The video recorder
     Recorder recorder = Recorder(opt);
 

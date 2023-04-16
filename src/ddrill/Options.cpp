@@ -130,6 +130,8 @@ Options::parse(string key, string value)
         parse(key, value, video.bitrate);
     } else if (key == "video.scaler") {
         parse(key, value, video.scaler);
+    } else if (key == "video.merger") {
+        parse(key, value, video.merger);
     } else if (key == "palette.values") {
         parse(key, value, palette.values);
     } else if (key == "perturbation.tolerance") {

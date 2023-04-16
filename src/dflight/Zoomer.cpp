@@ -75,8 +75,11 @@ Zoomer::init()
      "}";
      */
 
-    if (!shader.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
+    if (!scaler.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
         throw std::runtime_error("Can't load fragment shader '" + opt.video.scaler + "'");
+    }
+    if (!merger.loadFromFile(opt.video.merger, sf::Shader::Fragment)) {
+        throw std::runtime_error("Can't load fragment shader '" + opt.video.merger + "'");
     }
     /*
      if (!shader.loadFromMemory(shaderSource, sf::Shader::Fragment)) {
@@ -174,13 +177,13 @@ void
 Zoomer::draw()
 {
     // Stage 1: Scale down the source texture
-    shader.setUniform("texture", source);
-    scaled[0].draw(sourceRect, &shader);
+    scaler.setUniform("texture", source);
+    scaled[0].draw(sourceRect, &scaler);
     scaled[0].display();
 
     // Stage 2: Render target texture
-    shader.setUniform("texture", scaled[0].getTexture());
-    target.draw(scaledRect[0], &shader);
+    scaler.setUniform("texture", scaled[0].getTexture());
+    target.draw(scaledRect[0], &merger);
     target.display();
 
     // Draw target texture in the preview window
