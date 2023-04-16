@@ -168,12 +168,16 @@ struct Options {
 public:
 
     Options();
-    [[deprecated]] void parse(map <string,string> &keys);
+    // [[deprecated]] void parse(map <string,string> &keys);
     void parse(string key, string value);
-    // void parseDefaults();
     void derive();
 
 private:
+
+    void parse(const string &key, const string &value, string &parsed);
+    void parse(const string &key, const string &value, isize &parsed);
+    void parse(const string &key, const string &value, double &parsed);
+    void parse(const string &key, const string &value, mpf_class &parsed);
 
     void check();
 };

@@ -110,7 +110,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vmb:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vmbp:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {

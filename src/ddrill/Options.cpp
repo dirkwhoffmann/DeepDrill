@@ -44,9 +44,9 @@ Options::Options()
     defaults["video.framerate"] = "60";
     defaults["video.width"] = "480";
     defaults["video.height"] = "270";
-    defaults["video.keyframes"] = "derive";
+    defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "120";
-    defaults["video.duration"] = "derive";
+    defaults["video.duration"] = "0";
     defaults["video.bitrate"] = "4096";
     defaults["video.scaler"] = "";
 
@@ -69,6 +69,7 @@ Options::Options()
     }
 }
 
+/*
 void
 Options::parse(map <string,string> &keymap)
 {
@@ -94,6 +95,7 @@ Options::parse(map <string,string> &keymap)
     check();
     derive();
 }
+*/
 
 void
 Options::parse(string key, string value)
@@ -101,59 +103,95 @@ Options::parse(string key, string value)
     keys[key] = value;
 
     if (key == "tools.raw2tiff") {
-        tools.raw2tiff = value;
+        parse(key, value, tools.raw2tiff);
     } else if (key == "tools.convert") {
-        tools.convert = value;
+        parse(key, value, tools.convert);
     } else if (key == "location.real") {
-        location.real = mpf_class(value);
+        parse(key, value, location.real);
     } else if (key == "location.imag") {
-        location.imag = mpf_class(value);
+        parse(key, value, location.imag);
     } else if (key == "location.dreal") {
-        location.dreal = mpf_class(value);
+        parse(key, value, location.dreal);
     } else if (key == "location.dimag") {
-        location.dimag = mpf_class(value);
+        parse(key, value, location.dimag);
     } else if (key == "location.zoom") {
-        location.zoom = mpf_class(value);
+        parse(key, value, location.zoom);
     } else if (key == "location.depth") {
-        location.depth = stol(value);
+        parse(key, value, location.depth);
     } else if (key == "image.width") {
-        image.width = stoi(value);
+        parse(key, value, image.width);
     } else if (key == "image.height") {
-        image.height = stoi(value);
+        parse(key, value, image.height);
     } else if (key == "image.badpixels") {
-        image.badpixels = stod(value);
+        parse(key, value, image.badpixels);
     } else if (key == "animation.dx") {
-        animation.dx = stoi(value);
+        parse(key, value, animation.dx);
     } else if (key == "animation.dy") {
-        animation.dy = stoi(value);
+        parse(key, value, animation.dy);
     } else if (key == "video.framerate") {
-        video.frameRate = stod(value);
+        parse(key, value, video.frameRate);
     } else if (key == "video.width") {
-        video.width = stod(value);
+        parse(key, value, video.width);
     } else if (key == "video.height") {
-        video.height = stod(value);
+        parse(key, value, video.height);
     } else if (key == "video.keyframes") {
-        video.keyframes = value == "derive" ? 0 : stoi(value);
+        parse(key, value, video.keyframes);
     } else if (key == "video.inbetweens") {
-        video.inbetweens = value == "derive" ? 0 : stoi(value);
+        parse(key, value, video.inbetweens);
     } else if (key == "video.duration") {
-        video.duration = value == "derive" ? 0 : stoi(value);
+        parse(key, value, video.duration);
     } else if (key == "video.bitrate") {
-        video.bitrate = stoi(value);
+        parse(key, value, video.bitrate);
     } else if (key == "video.scaler") {
-        video.scaler = value;
+        parse(key, value, video.scaler);
     } else if (key == "palette.values") {
-        palette.values = value;
+        parse(key, value, palette.values);
     } else if (key == "perturbation.tolerance") {
-        perturbation.tolerance = stod(value);
+        parse(key, value, perturbation.tolerance);
     } else if (key == "perturbation.rounds") {
-        perturbation.rounds = stod(value);
+        parse(key, value, perturbation.rounds);
     } else if (key == "approximation.coefficients") {
-        approximation.coefficients = stoi(value);
+        parse(key, value, approximation.coefficients);
     } else if (key == "approximation.tolerance") {
-        approximation.tolerance = stod(value);
+        parse(key, value, approximation.tolerance);
     } else {
         assert(false);
+    }
+}
+
+void
+Options::parse(const string &key, const string &value, string &parsed)
+{
+    parsed = value;
+}
+
+void
+Options::parse(const string &key, const string &value, isize &parsed)
+{
+    try {
+        parsed = stoi(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Options::parse(const string &key, const string &value, double &parsed)
+{
+    try {
+        parsed = stod(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Options::parse(const string &key, const string &value, mpf_class &parsed)
+{
+    try {
+        parsed = mpf_class(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
     }
 }
 

@@ -14,6 +14,7 @@
 #include "Coord.h"
 #include "Logger.h"
 #include "Options.h"
+#include "ProgressIndicator.h"
 
 namespace dd {
 
@@ -26,10 +27,22 @@ Maker::Maker(Options &o) : opt(o)
 void
 Maker::generate()
 {
-    generateProjectFile();
-    generateLocationFiles();
-    generateProfile();
-    generateMakefile();
+    {
+        ProgressIndicator progress("Generating project file");
+        generateProjectFile();
+    }
+    {
+        ProgressIndicator progress("Generating location files");
+        generateLocationFiles();
+    }
+    {
+        ProgressIndicator progress("Generating profile");
+        generateProfile();
+    }
+    {
+        ProgressIndicator progress("Generating Makefile");
+        generateMakefile();
+    }
 }
 
 void
