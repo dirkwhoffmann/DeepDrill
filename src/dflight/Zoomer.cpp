@@ -94,7 +94,7 @@ Zoomer::launch()
         }
 
         // Update state
-        update(keyframe, frame);
+        if (!update(keyframe, frame) && recordMode()) break;
 
         // Render frame
         draw();
@@ -104,9 +104,13 @@ Zoomer::launch()
     if (recordMode()) recorder.stopRecording();
 }
 
-void
+bool
 Zoomer::update(isize &keyframe, isize &frame)
 {
+    if (keyframe >= opt.video.keyframes) {
+        return false;
+    }
+
     x.move();
     y.move();
     w.move();
@@ -149,6 +153,8 @@ Zoomer::update(isize &keyframe, isize &frame)
                                unsigned(w.current),
                                unsigned(h.current));
     sourceRect.setTextureRect(newRect);
+
+    return true;
 }
 
 void

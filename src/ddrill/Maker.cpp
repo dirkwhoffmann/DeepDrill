@@ -119,16 +119,10 @@ Maker::generateLocationFiles()
         os << "height = " << keys["image.height"] << std::endl;
         os << std::endl;
 
-        // Compute center shift
+        // Compute the center displacement for the next keyframe
         mpf_class pixelDelta = mpf_class(4.0) / zoom / opt.image.height;
         auto oldShift = shift;
         shift *= 0.5 * 0.95;
-        auto delta = (shift - oldShift) / pixelDelta;
-
-        // Write animation section
-        os << "[animation]" << std::endl;
-        os << "dx = " << isize(std::round(delta.re.get_d())) << std::endl;
-        os << "dy = " << isize(-std::round(delta.im.get_d())) << std::endl;
     }
 }
 

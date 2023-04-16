@@ -60,7 +60,7 @@ struct Options {
         mpf_class real;
         mpf_class imag;
 
-        // Center shift (experimental)
+        // Center displacement
         mpf_class dreal;
         mpf_class dimag;
 
@@ -71,14 +71,6 @@ struct Options {
         isize depth;
 
     } location;
-
-    struct {
-
-        // Center shift (experimental)
-        isize dx;
-        isize dy;
-
-    } animation;
 
     struct {
 

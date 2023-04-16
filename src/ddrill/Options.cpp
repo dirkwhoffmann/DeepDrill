@@ -36,10 +36,6 @@ Options::Options()
     defaults["image.height"] = "540";
     defaults["image.badpixels"] = "0.001";
 
-    // Animation keys
-    defaults["animation.dx"] = "0";
-    defaults["animation.dy"] = "0";
-
     // Video keys
     defaults["video.framerate"] = "60";
     defaults["video.width"] = "480";
@@ -124,10 +120,6 @@ Options::parse(string key, string value)
         parse(key, value, image.height);
     } else if (key == "image.badpixels") {
         parse(key, value, image.badpixels);
-    } else if (key == "animation.dx") {
-        parse(key, value, animation.dx);
-    } else if (key == "animation.dy") {
-        parse(key, value, animation.dy);
     } else if (key == "video.framerate") {
         parse(key, value, video.frameRate);
     } else if (key == "video.width") {

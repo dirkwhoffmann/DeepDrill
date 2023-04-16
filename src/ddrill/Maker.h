@@ -23,7 +23,7 @@ class Maker {
     // Name of the project
     string project;
 
-    // Experimental
+    // Center displacement
     PrecisionComplex shift;
 
     // Path to the project directory

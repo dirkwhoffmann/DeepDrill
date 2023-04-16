@@ -61,7 +61,7 @@ public:
 private:
 
     // Called inside launch()
-    void update(isize &keyframe, isize &frame);
+    bool update(isize &keyframe, isize &frame);
     void draw();
 
     // Indicates if we run in record mode or preview mode
