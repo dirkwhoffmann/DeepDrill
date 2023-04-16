@@ -239,6 +239,12 @@ Options::derive()
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
 
+    // Convert the displacement into pixel offsets
+    mpf_class mpfDx = location.dreal / mpfPixelDelta;
+    mpf_class mpfDy = location.dimag / mpfPixelDelta;
+    dx = isize(std::round(mpfDx.get_d()));
+    dy = isize(std::round(mpfDy.get_d()));
+
     // Derive unspecified parameters
     auto frameRate = double(video.frameRate);
     auto keyframes = double(video.keyframes);

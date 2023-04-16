@@ -60,6 +60,8 @@ Maker::generateProjectFile()
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
+    os << "dreal = " << shift.re << std::endl;
+    os << "dimag = " << shift.im << std::endl;
     os << std::endl;
 
     // Write image section
@@ -120,7 +122,7 @@ Maker::generateLocationFiles()
         // Compute center shift
         mpf_class pixelDelta = mpf_class(4.0) / zoom / opt.image.height;
         auto oldShift = shift;
-        shift *= 0.5 * 0.9;
+        shift *= 0.5 * 0.95;
         auto delta = (shift - oldShift) / pixelDelta;
 
         // Write animation section

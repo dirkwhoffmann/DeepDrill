@@ -159,6 +159,10 @@ struct Options {
     // Distance between two adjacent pixels
     mpf_class mpfPixelDelta;
     ExtendedDouble pixelDelta;
+
+    // Displacement converted to pixels
+    isize dx;
+    isize dy;
     
     
     //

@@ -61,7 +61,7 @@ public:
 private:
 
     // Called inside launch()
-    void update(isize &frame, isize &image);
+    void update(isize &keyframe, isize &frame);
     void draw();
 
     // Indicates if we run in record mode or preview mode
@@ -71,7 +71,7 @@ private:
     void updateTexture(isize nr);
 
     // Loads a new location from disk
-    void updateLocation(isize nr);
+    void updateLocation(isize nr, isize &dx, isize &dy);
 };
 
 }

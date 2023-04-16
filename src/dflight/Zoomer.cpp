@@ -53,30 +53,30 @@ Zoomer::init()
 
     // Load shader
     /*
-    auto shaderSource =
-    "uniform sampler2D texture;"
-    "void main() {"
-    "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
-    // "gl_FragColor = gl_Color * pixel * vec4(0.0,1.0,1.0,1.0);"
-    "gl_FragColor = gl_Color * pixel;"
-    "}";
-    */
+     auto shaderSource =
+     "uniform sampler2D texture;"
+     "void main() {"
+     "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
+     // "gl_FragColor = gl_Color * pixel * vec4(0.0,1.0,1.0,1.0);"
+     "gl_FragColor = gl_Color * pixel;"
+     "}";
+     */
 
     if (!shader.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
         throw std::runtime_error("Can't load fragment shader '" + opt.video.scaler + "'");
     }
     /*
-    if (!shader.loadFromMemory(shaderSource, sf::Shader::Fragment)) {
-        throw std::runtime_error("Can't load fragment shader");
-    }
-    */
+     if (!shader.loadFromMemory(shaderSource, sf::Shader::Fragment)) {
+     throw std::runtime_error("Can't load fragment shader");
+     }
+     */
 }
 
 void
 Zoomer::launch()
 {
+    isize keyframe = 0;
     isize frame = 0;
-    isize image = 0;
 
     // Start FFmpeg
     if (recordMode()) recorder.startRecording();
@@ -94,7 +94,7 @@ Zoomer::launch()
         }
 
         // Update state
-        update(frame, image);
+        update(keyframe, frame);
 
         // Render frame
         draw();
@@ -105,12 +105,8 @@ Zoomer::launch()
 }
 
 void
-Zoomer::update(isize &frame, isize &image)
+Zoomer::update(isize &keyframe, isize &frame)
 {
-    auto flip = [](sf::IntRect r) {
-        return sf::IntRect(r.left, r.top + r.height, r.width, -r.height);
-    };
-
     x.move();
     y.move();
     w.move();
@@ -118,24 +114,31 @@ Zoomer::update(isize &frame, isize &image)
 
     if (frame++ % opt.video.inbetweens == 0) {
 
-        updateTexture(image);
-        updateLocation(image);
-        image++;
+        isize dx;
+        isize dy;
 
+        updateTexture(keyframe);
+        updateLocation(keyframe, dx, dy);
+        keyframe++;
+
+        // Set animation start point
         x.set(Coord::center(opt).x);
         y.set(Coord::center(opt).y);
         w.set(opt.image.width);
         h.set(opt.image.height);
 
-        x.set(Coord::center(opt).x + opt.animation.dx, opt.video.inbetweens);
-        y.set(Coord::center(opt).y + opt.animation.dy, opt.video.inbetweens);
+        // Set animation end point and speed
+        x.set(Coord::center(opt).x + dx, opt.video.inbetweens);
+        y.set(Coord::center(opt).y - dy, opt.video.inbetweens);
         w.set(opt.image.width / 2.0, opt.video.inbetweens);
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
 
-        auto progress = isize(100.0 * image / opt.video.keyframes);
+        // Update window title bar
         string title = "DeepFlight - ";
         title += recordMode() ? "Recording " : "Preview ";
-        window.setTitle(title + "[" + std::to_string(progress) + "%]");
+        title += "[Keyframe " + std::to_string(keyframe);
+        title += " / " + std::to_string(opt.video.keyframes) + "] ";
+        window.setTitle(title);
     }
 
     if (opt.verbose) {
@@ -191,30 +194,40 @@ Zoomer::updateTexture(isize nr)
     if (!source.loadFromFile(name)) {
         throw Exception("Can't load image file " + name);
     }
-    if (opt.verbose) {
-        printf("Switched to texture %ld\n", nr);
-    }
 }
 
 void
-Zoomer::updateLocation(isize nr)
+Zoomer::updateLocation(isize nr, isize &dx, isize &dy)
 {
     string path = opt.input;
-    string name = path + "_" + std::to_string(nr) + ".loc";
+    string name = path + "_" + std::to_string(nr + 1) + ".loc";
 
-    if (opt.verbose) {
-        printf("updateLocation: %s\n", name.c_str());
+    // Read the first location file if this is the first location update
+    if (nr == 0) {
+
+        string name = path + "_0.loc";
+        Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
+        opt.derive();
     }
 
-    if (!fileExists(name)) {
-        throw FileNotFoundError(name);
+    // Read the next location file if existent
+    if (fileExists(name)) {
+
+        auto oldCenter = opt.center;
+        auto oldPixelDelta = opt.mpfPixelDelta;
+
+        Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
+        opt.derive();
+
+        auto centerDelta = (opt.center - oldCenter) / oldPixelDelta;
+        dx = isize(std::round(centerDelta.re.get_d()));
+        dy = isize(std::round(centerDelta.im.get_d()));
+
+    } else {
+
+        dx = 0;
+        dy = 0;
     }
-
-    map<string,string> keys;
-    Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
-    // opt.parse(keys);
-
-    printf("dx = %ld dy = %ld\n", opt.animation.dx, opt.animation.dy);
 }
 
 }
