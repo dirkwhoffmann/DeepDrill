@@ -98,9 +98,9 @@ Colorizer::save(const string &path)
     os.open(rawFile.c_str());
     
     // Dump texture
-    for (int y = 0; y < height; y++) {
+    for (isize y = height - 1; y >= 0; y--) {
         
-        for (int x = 0; x < width; x++) {
+        for (isize x = 0; x < width; x++) {
             
             char *cptr = (char *)(image + y * width + x);
             os.write(cptr + 0, 1);

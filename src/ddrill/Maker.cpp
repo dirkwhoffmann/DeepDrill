@@ -126,7 +126,7 @@ Maker::generateLocationFiles()
         // Write animation section
         os << "[animation]" << std::endl;
         os << "dx = " << isize(std::round(delta.re.get_d())) << std::endl;
-        os << "dy = " << isize(std::round(delta.im.get_d())) << std::endl;
+        os << "dy = " << isize(-std::round(delta.im.get_d())) << std::endl;
     }
 }
 

@@ -145,14 +145,7 @@ Zoomer::update(isize &frame, isize &image)
                                unsigned(y.current - (h.current / 2.0)),
                                unsigned(w.current),
                                unsigned(h.current));
-    /*
-    auto newRect = sf::IntRect(unsigned((opt.image.width - w.current) / 2.0),
-                               unsigned((opt.image.height - h.current) / 2.0),
-                               unsigned(w.current),
-                               unsigned(h.current));
-    */
-    sourceRect.setTextureRect(flip(newRect));
-    // sourceRect.setTextureRect((newRect));
+    sourceRect.setTextureRect(newRect);
 }
 
 void
