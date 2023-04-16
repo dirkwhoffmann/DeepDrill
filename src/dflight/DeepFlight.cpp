@@ -173,6 +173,22 @@ DeepFlight::checkArguments()
 
     if (!outputs.empty()) {
 
+        auto in = outputs.front();
+        auto inSuffix = extractSuffix(in);
+
+        // The input files must be a prj file
+        if (inSuffix != "prj") {
+            throw SyntaxError(in + " is not a location file (.loc)");
+        }
+
+        // The input file must exist
+        if (!fileExists(in)) {
+            throw FileNotFoundError(in);
+        }
+    }
+
+    if (!outputs.empty()) {
+
         auto out = outputs.front();
         auto outSuffix = extractSuffix(out);
 
@@ -197,18 +213,7 @@ DeepFlight::readInputs()
 
     opt.input = path;
 
-    /*
-    for (isize i = 0;; i++) {
-
-        name = path + "_" + std::to_string(i) + ".png";
-        if (!fileExists(name)) break;
-        imageFiles.push_back(name);
-    }
-
-    if (imageFiles.empty()) {
-        throw FileNotFoundError("File " + name + " does not exist");
-    }
-    */
+    Parser::parse(path + ".prj", [this](string k, string v) { opt.parse(k,v); });
 }
 
 void

@@ -193,7 +193,7 @@ Zoomer::updateTexture(isize nr)
     sf::Texture image;
 
     if (!fileExists(name)) {
-        throw FileNotFoundError("File " + name + " does not exist");
+        throw FileNotFoundError(name);
     }
     if (!source.loadFromFile(name)) {
         throw Exception("Can't load image file " + name);
@@ -214,7 +214,7 @@ Zoomer::updateLocation(isize nr)
     }
 
     if (!fileExists(name)) {
-        throw FileNotFoundError("File " + name + " does not exist");
+        throw FileNotFoundError(name);
     }
 
     map<string,string> keys;

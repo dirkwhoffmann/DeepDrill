@@ -39,8 +39,8 @@ public:
     
 private:
 
+    void generateProjectFile();
     void generateLocationFiles();
-    void generateLocationFile(isize nr);
     void generateProfile();
     void generateMakefile();
 

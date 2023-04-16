@@ -26,67 +26,20 @@ Maker::Maker(Options &o) : opt(o)
 void
 Maker::generate()
 {
-    generateProfile();
+    generateProjectFile();
     generateLocationFiles();
+    generateProfile();
     generateMakefile();
 }
 
 void
-Maker::generateLocationFiles()
-{
-    shift = PrecisionComplex(opt.location.dreal, opt.location.dimag);
-
-    for (isize i = 0; i < opt.video.keyframes; i++) {
-        generateLocationFile(i);
-    }
-}
-
-void
-Maker::generateLocationFile(isize nr)
+Maker::generateProjectFile()
 {
     auto &keys = opt.keys;
-    double zoom = exp2(nr);
 
     // Open output stream
-    std::ofstream os(projectDir / (project + "_" + std::to_string(nr) + ".loc"));
+    std::ofstream os(projectDir / (project + ".prj"));
 
-    // Write header
-    writeHeader(os);
-
-    // Limit depth
-    isize maxDepth = 1000 * (nr + 1);
-    isize depth = std::min(maxDepth, opt.location.depth);
-
-    // Write location section
-    os << "[location]" << std::endl;
-    os << "real = " << keys["location.real"] << std::endl;
-    os << "imag = " << keys["location.imag"] << std::endl;
-    os << "dreal = " << shift.re << std::endl;
-    os << "dimag = " << shift.im << std::endl;
-    os << "zoom = " << std::to_string(zoom) << std::endl;
-    os << "depth = " << std::to_string(depth) << std::endl;
-    os << std::endl;
-
-    // Compute center shift
-    mpf_class pixelDelta = mpf_class(4.0) / zoom / opt.image.height;
-    auto oldShift = shift;
-    shift *= 0.5 * 0.9;
-    auto delta = (shift - oldShift) / pixelDelta;
-
-    // Write animation section
-    os << "[animation]" << std::endl;
-    os << "dx = " << isize(std::round(delta.re.get_d())) << std::endl;
-    os << "dy = " << isize(std::round(delta.im.get_d())) << std::endl;
-}
-
-void
-Maker::generateProfile()
-{
-    auto &keys = opt.keys;
-    
-    // Open output stream
-    std::ofstream os(projectDir / (project + ".prf"));
-    
     // Write header
     writeHeader(os);
 
@@ -94,15 +47,12 @@ Maker::generateProfile()
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
-    os << "dreal = " << opt.location.dreal << std::endl;
-    os << "dimag = " << opt.location.dimag << std::endl;
     os << std::endl;
 
     // Write image section
     os << "[image]" << std::endl;
     os << "width = " << keys["image.width"] << std::endl;
     os << "height = " << keys["image.height"] << std::endl;
-    os << "badpixels = " << keys["image.badpixels"] << std::endl;
     os << std::endl;
 
     // Write video section
@@ -116,6 +66,67 @@ Maker::generateProfile()
     os << "bitrate = " << keys["video.bitrate"] << std::endl;
     os << "scaler = " << keys["video.scaler"] << std::endl;
     os << std::endl;
+}
+
+void
+Maker::generateLocationFiles()
+{
+    shift = PrecisionComplex(opt.location.dreal, opt.location.dimag);
+
+    for (isize nr = 0; nr < opt.video.keyframes; nr++) {
+
+        auto &keys = opt.keys;
+        double zoom = exp2(nr);
+
+        // Open output stream
+        std::ofstream os(projectDir / (project + "_" + std::to_string(nr) + ".loc"));
+
+        // Write header
+        writeHeader(os);
+
+        // Limit depth
+        isize maxDepth = 1000 * (nr + 1);
+        isize depth = std::min(maxDepth, opt.location.depth);
+
+        // Write location section
+        os << "[location]" << std::endl;
+        os << "real = " << keys["location.real"] << std::endl;
+        os << "imag = " << keys["location.imag"] << std::endl;
+        os << "dreal = " << shift.re << std::endl;
+        os << "dimag = " << shift.im << std::endl;
+        os << "zoom = " << std::to_string(zoom) << std::endl;
+        os << "depth = " << std::to_string(depth) << std::endl;
+        os << std::endl;
+
+        // Write image section
+        os << "[image]" << std::endl;
+        os << "width = " << keys["image.width"] << std::endl;
+        os << "height = " << keys["image.height"] << std::endl;
+        os << std::endl;
+
+        // Compute center shift
+        mpf_class pixelDelta = mpf_class(4.0) / zoom / opt.image.height;
+        auto oldShift = shift;
+        shift *= 0.5 * 0.9;
+        auto delta = (shift - oldShift) / pixelDelta;
+
+        // Write animation section
+        os << "[animation]" << std::endl;
+        os << "dx = " << isize(std::round(delta.re.get_d())) << std::endl;
+        os << "dy = " << isize(std::round(delta.im.get_d())) << std::endl;
+    }
+}
+
+void
+Maker::generateProfile()
+{
+    auto &keys = opt.keys;
+    
+    // Open output stream
+    std::ofstream os(projectDir / (project + ".prf"));
+    
+    // Write header
+    writeHeader(os);
 
     // Write perturbation section
     os << "[perturbation]" << std::endl;
