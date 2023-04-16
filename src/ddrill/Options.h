@@ -60,10 +60,6 @@ struct Options {
         mpf_class real;
         mpf_class imag;
 
-        // Center displacement
-        mpf_class dreal;
-        mpf_class dimag;
-
         // Magnification
         mpf_class zoom;
         
@@ -152,11 +148,7 @@ struct Options {
     mpf_class mpfPixelDelta;
     ExtendedDouble pixelDelta;
 
-    // Displacement converted to pixels
-    isize dx;
-    isize dy;
-    
-    
+
     //
     // Initialization
     //

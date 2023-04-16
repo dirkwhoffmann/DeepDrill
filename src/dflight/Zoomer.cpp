@@ -229,6 +229,8 @@ Zoomer::updateLocation(isize nr, isize &dx, isize &dy)
         dx = isize(std::round(centerDelta.re.get_d()));
         dy = isize(std::round(centerDelta.im.get_d()));
 
+        // printf("dx: %ld dy: %ld\n", dx, dy);
+
     } else {
 
         dx = 0;

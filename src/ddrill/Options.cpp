@@ -26,8 +26,6 @@ Options::Options()
     // Location keys
     defaults["location.real"] = "0.0";
     defaults["location.imag"] = "0.0";
-    defaults["location.dreal"] = "0.0";
-    defaults["location.dimag"] = "0.0";
     defaults["location.zoom"] = "1.0";
     defaults["location.depth"] = "500";
 
@@ -106,10 +104,6 @@ Options::parse(string key, string value)
         parse(key, value, location.real);
     } else if (key == "location.imag") {
         parse(key, value, location.imag);
-    } else if (key == "location.dreal") {
-        parse(key, value, location.dreal);
-    } else if (key == "location.dimag") {
-        parse(key, value, location.dimag);
     } else if (key == "location.zoom") {
         parse(key, value, location.zoom);
     } else if (key == "location.depth") {
@@ -225,17 +219,11 @@ Options::derive()
     outputFormat = format(output);
 
     // Compute the center coordinate
-    center = PrecisionComplex(location.real + location.dreal, location.imag + location.dimag);
+    center = PrecisionComplex(location.real, location.imag);
 
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
-
-    // Convert the displacement into pixel offsets
-    mpf_class mpfDx = location.dreal / mpfPixelDelta;
-    mpf_class mpfDy = location.dimag / mpfPixelDelta;
-    dx = isize(std::round(mpfDx.get_d()));
-    dy = isize(std::round(mpfDy.get_d()));
 
     // Derive unspecified parameters
     auto frameRate = double(video.frameRate);

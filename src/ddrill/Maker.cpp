@@ -60,8 +60,6 @@ Maker::generateProjectFile()
     os << "[location]" << std::endl;
     os << "real = " << keys["location.real"] << std::endl;
     os << "imag = " << keys["location.imag"] << std::endl;
-    os << "dreal = " << shift.re << std::endl;
-    os << "dimag = " << shift.im << std::endl;
     os << std::endl;
 
     // Write image section
@@ -86,7 +84,8 @@ Maker::generateProjectFile()
 void
 Maker::generateLocationFiles()
 {
-    shift = PrecisionComplex(opt.location.dreal, opt.location.dimag);
+    // Start in the middle of the Mandelbrot set by shifting the center
+    auto shift = PrecisionComplex(-opt.location.real, -opt.location.imag);
 
     for (isize nr = 0; nr < opt.video.keyframes; nr++) {
 
@@ -95,6 +94,7 @@ Maker::generateLocationFiles()
 
         // Open output stream
         std::ofstream os(projectDir / (project + "_" + std::to_string(nr) + ".loc"));
+        os.precision(mpf_get_default_prec());
 
         // Write header
         writeHeader(os);
@@ -103,12 +103,14 @@ Maker::generateLocationFiles()
         isize maxDepth = 1000 * (nr + 1);
         isize depth = std::min(maxDepth, opt.location.depth);
 
+        // Shift the center coordinate
+        auto center = PrecisionComplex(opt.location.real, opt.location.imag) + shift;
+        shift *= 0.5 * 0.9;
+
         // Write location section
         os << "[location]" << std::endl;
-        os << "real = " << keys["location.real"] << std::endl;
-        os << "imag = " << keys["location.imag"] << std::endl;
-        os << "dreal = " << shift.re << std::endl;
-        os << "dimag = " << shift.im << std::endl;
+        os << "real = " << center.re << std::endl;
+        os << "imag = " << center.im << std::endl;
         os << "zoom = " << std::to_string(zoom) << std::endl;
         os << "depth = " << std::to_string(depth) << std::endl;
         os << std::endl;
@@ -118,11 +120,6 @@ Maker::generateLocationFiles()
         os << "width = " << keys["image.width"] << std::endl;
         os << "height = " << keys["image.height"] << std::endl;
         os << std::endl;
-
-        // Compute the center displacement for the next keyframe
-        mpf_class pixelDelta = mpf_class(4.0) / zoom / opt.image.height;
-        auto oldShift = shift;
-        shift *= 0.5 * 0.95;
     }
 }
 

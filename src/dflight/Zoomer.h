@@ -15,6 +15,7 @@
 #include "Coord.h"
 #include "Recorder.h"
 #include "Animated.h"
+
 #include <SFML/Graphics.hpp>
 
 namespace dd {

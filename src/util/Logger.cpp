@@ -146,8 +146,8 @@ Logger::operator<<(const PrecisionComplex& arg)
     if (!silent) {
 
         blanks = 0;
-        stream << "(" << arg.re.get_d();
-        stream << "," << arg.im.get_d() << "i";
+        stream << "(" << arg.re;
+        stream << "," << arg.im << "i";
         stream << ")";
     }
     return *this;
