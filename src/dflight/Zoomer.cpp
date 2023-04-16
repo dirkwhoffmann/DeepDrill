@@ -178,13 +178,16 @@ Zoomer::draw()
 {
     // Stage 1: Scale down the source texture
     scaler.setUniform("texture", source);
-    scaled[0].draw(sourceRect, &scaler);
-    scaled[0].display();
+    scaled[latest].draw(sourceRect, &scaler);
+    scaled[latest].display();
 
     // Stage 2: Render target texture
-    scaler.setUniform("texture", scaled[0].getTexture());
-    target.draw(scaledRect[0], &merger);
+    merger.setUniform("current", scaled[latest].getTexture());
+    merger.setUniform("prev", scaled[(latest + 3 - 1) % 3].getTexture());
+    merger.setUniform("prevprev", scaled[(latest + 3 - 2) % 3].getTexture());
+    target.draw(scaledRect[latest], &merger);
     target.display();
+    latest = (latest + 1) % 3;
 
     // Draw target texture in the preview window
     window.clear();

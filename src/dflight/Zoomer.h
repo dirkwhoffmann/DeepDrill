@@ -36,6 +36,9 @@ class Zoomer {
     sf::RenderTexture scaled[3];
     sf::RectangleShape scaledRect[3];
 
+    // Storage position of the most recent scaled texture
+    isize latest = 0;
+
     // The render target
     sf::RenderTexture target;
     sf::RectangleShape targetRect;
