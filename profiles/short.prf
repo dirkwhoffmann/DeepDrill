@@ -1,5 +1,3 @@
 [video]
 inbetweens = 120
 duration = 60
-scaler = /Users/hoff/Retro/DeepDrill/shaders/bypass.glsl
-merger = /Users/hoff/Retro/DeepDrill/shaders/merger.glsl

@@ -14,6 +14,7 @@
 #include "Coord.h"
 #include "Options.h"
 #include "Logger.h"
+#include "Shaders.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -64,28 +65,17 @@ Zoomer::init()
     targetRect.setTexture(&target.getTexture());
 
 
-    // Load shader
-    /*
-     auto shaderSource =
-     "uniform sampler2D texture;"
-     "void main() {"
-     "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
-     // "gl_FragColor = gl_Color * pixel * vec4(0.0,1.0,1.0,1.0);"
-     "gl_FragColor = gl_Color * pixel;"
-     "}";
-     */
-
-    if (!scaler.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
+    // Load shaders
+    if (!fileExists(opt.video.scaler)) {
+        scaler.loadFromMemory(bypassShader, sf::Shader::Fragment);
+    } else if (!scaler.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
         throw std::runtime_error("Can't load fragment shader '" + opt.video.scaler + "'");
     }
-    if (!merger.loadFromFile(opt.video.merger, sf::Shader::Fragment)) {
+    if (!fileExists(opt.video.merger)) {
+        merger.loadFromMemory(mergeShader, sf::Shader::Fragment);
+    } else if (!merger.loadFromFile(opt.video.merger, sf::Shader::Fragment)) {
         throw std::runtime_error("Can't load fragment shader '" + opt.video.merger + "'");
     }
-    /*
-     if (!shader.loadFromMemory(shaderSource, sf::Shader::Fragment)) {
-     throw std::runtime_error("Can't load fragment shader");
-     }
-     */
 }
 
 void
