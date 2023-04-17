@@ -10,11 +10,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Zoomer.h"
 #include "Coord.h"
-#include "Options.h"
 #include "Logger.h"
+#include "Options.h"
+#include "ProgressIndicator.h"
 #include "Shaders.h"
+#include "Zoomer.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -81,55 +82,51 @@ Zoomer::init()
 void
 Zoomer::launch()
 {
-    isize keyframe = 0;
-    isize frame = 0;
+    sf::Event event;
 
     // Start FFmpeg
     if (recordMode()) recorder.startRecording();
 
-    // Enter main loop
-    while (window.isOpen()) {
+    // Process all keyframes
+    for (isize keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
 
-        sf::Event event;
+        ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
-        // Process events
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
+        // Process all inbetweens
+        for (isize frame = 0; frame < opt.video.inbetweens; frame++) {
+
+            // Process all events
+            if (!window.isOpen()) throw UserInterruptException();
+            while (window.pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    window.close();
+            }
+
+            // Update state
+            update(keyframe, frame);
+
+            // Render frame
+            draw();
+
+            progress.step(1);
         }
-
-        // Update state
-        if (!update(keyframe, frame) && recordMode()) break;
-
-        // Render frame
-        draw();
     }
 
     // Stop FFmpeg
     if (recordMode()) recorder.stopRecording();
 }
 
-bool
-Zoomer::update(isize &keyframe, isize &frame)
+void
+Zoomer::update(isize keyframe, isize frame)
 {
-    if (keyframe >= opt.video.keyframes) {
-        return false;
-    }
-
-    x.move();
-    y.move();
-    w.move();
-    h.move();
-
-    if (frame++ % opt.video.inbetweens == 0) {
+    if (frame == 0) {
 
         isize dx;
         isize dy;
 
         updateTexture(keyframe);
         updateLocation(keyframe, dx, dy);
-        keyframe++;
 
         // Set animation start point
         x.set(Coord::center(opt).x);
@@ -146,21 +143,23 @@ Zoomer::update(isize &keyframe, isize &frame)
         // Update window title bar
         string title = "DeepFlight - ";
         title += recordMode() ? "Recording " : "Preview ";
-        title += "[Keyframe " + std::to_string(keyframe);
+        title += "[Keyframe " + std::to_string(keyframe + 1);
         title += " / " + std::to_string(opt.video.keyframes) + "] ";
         window.setTitle(title);
+
+    } else {
+
+        x.move();
+        y.move();
+        w.move();
+        h.move();
     }
 
-    if (opt.verbose) {
-        // printf("[%ld] %f %f %f %f\n", frame, x.current, y.current, w.current, h.current);
-    }
     auto newRect = sf::IntRect(unsigned(x.current - (w.current / 2.0)),
                                unsigned(y.current - (h.current / 2.0)),
                                unsigned(w.current),
                                unsigned(h.current));
     sourceRect.setTextureRect(newRect);
-
-    return true;
 }
 
 void

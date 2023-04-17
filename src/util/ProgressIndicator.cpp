@@ -35,6 +35,7 @@ ProgressIndicator::init(const string &description, isize max)
     dotsMax = 33;
      
     log::cout << log::ralign(description + ": ");
+    log::cout << log::flush;
     clock.restart();
 }
 

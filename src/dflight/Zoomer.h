@@ -36,7 +36,7 @@ class Zoomer {
     sf::RenderTexture scaled[3];
     sf::RectangleShape scaledRect[3];
 
-    // Storage position of the most recent scaled texture
+    // Storage position of the most recent scaled texture (experimental)
     isize latest = 0;
 
     // The render target
@@ -52,9 +52,8 @@ class Zoomer {
 
     // Animation parameters
     Animated x, y, w, h;
-
-    // Experimental
-    Coord shift;
+//    isize keyframe = 0;
+//    isize frame = 0;
 
 public:
 
@@ -69,8 +68,8 @@ public:
 
 private:
 
-    // Called inside launch()
-    bool update(isize &keyframe, isize &frame);
+    // Called inside the main loop
+    void update(isize keyframe, isize frame);
     void draw();
 
     // Indicates if we run in record mode or preview mode
