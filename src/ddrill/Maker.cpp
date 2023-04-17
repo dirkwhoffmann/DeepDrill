@@ -183,6 +183,7 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
+    os << "FLAGS      = -b" << std::endl;
     os << std::endl;
 }
 
@@ -210,10 +211,10 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'map' and 'png' targets
     os << "%.png: %.map" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) -b -p " << project << ".prf -o $*.png $*.map" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) $(FLAGS) -p " << project << ".prf -o $*.png $*.map" << std::endl;
     os << std::endl;
     os << "%.map: %.loc" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) -b -p " << project << ".prf -o $*.map $*.loc" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) $(FLAGS) -p " << project << ".prf -o $*.map $*.loc" << std::endl;
     os << std::endl;
 
     // Write 'clean' target
