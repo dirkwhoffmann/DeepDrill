@@ -274,7 +274,7 @@ DeepDrill::setupGmp()
          * this function is called, we need to peek this value directly from
          * the location file.
          */
-        Parser::parse(inputs.front(), [this, &accuracy](string key, string value) {
+        Parser::parse(inputs.front(), [&accuracy](string key, string value) {
 
             if (key == "location.zoom") {
 

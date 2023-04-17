@@ -171,9 +171,9 @@ DeepFlight::checkArguments()
         }
     }
 
-    if (!outputs.empty()) {
+    if (!inputs.empty()) {
 
-        auto in = outputs.front();
+        auto in = inputs.front();
         auto inSuffix = extractSuffix(in);
 
         // The input files must be a prj file
@@ -208,12 +208,10 @@ DeepFlight::checkArguments()
 void
 DeepFlight::readInputs()
 {
-    string path = inputs.front();
-    string name;
+    auto in = inputs.front();
+    opt.input = stripSuffix(in);
 
-    opt.input = path;
-
-    Parser::parse(path + ".prj", [this](string k, string v) { opt.parse(k,v); });
+    Parser::parse(in, [this](string k, string v) { opt.parse(k,v); });
 }
 
 void

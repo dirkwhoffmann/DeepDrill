@@ -5,6 +5,6 @@ target_sources(deepflight PRIVATE
 FFmpeg.cpp
 NamedPipe.cpp
 Recorder.cpp
-Traveller.cpp
+Zoomer.cpp
 
 )

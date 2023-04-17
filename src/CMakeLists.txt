@@ -13,6 +13,10 @@ if(NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE Release)
 endif()
 
+# Look for GMP library
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
+find_package(GMP REQUIRED)
+
 # Specify the executable
 add_executable(deepdrill ddrill/DeepDrill.cpp)
 add_executable(deepflight dflight/DeepFlight.cpp)
