@@ -43,5 +43,6 @@ target_include_directories(deepflight PUBLIC ${SFML_INCLUDE_DIRS})
 # Add sub directories
 add_subdirectory(util)
 add_subdirectory(math)
+add_subdirectory(shared)
 add_subdirectory(ddrill)
 add_subdirectory(dflight)
