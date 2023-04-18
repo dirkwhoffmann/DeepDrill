@@ -9,8 +9,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "commons.h"
 #include "Parser.h"
+#include "Exception.h"
+#include "IO.h"
 
 #include <algorithm>
 #include <fstream>

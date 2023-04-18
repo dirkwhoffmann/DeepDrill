@@ -9,13 +9,12 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "commons.h"
+#include "Zoomer.h"
 #include "Coord.h"
 #include "Options.h"
 #include "Parser.h"
 #include "ProgressIndicator.h"
 #include "Shaders.h"
-#include "Zoomer.h"
 
 #include <SFML/Graphics.hpp>
 

@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "config.h"
+#include "Types.h"
 #include "commons.h"
 
 namespace dd {

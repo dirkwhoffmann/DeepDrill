@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "config.h"
+
 struct Animated {
 
     double current = 1.0;

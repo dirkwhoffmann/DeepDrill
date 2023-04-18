@@ -10,7 +10,6 @@
 // -----------------------------------------------------------------------------
 
 #include "NamedPipe.h"
-
 #include <filesystem>
 #include <thread>
 

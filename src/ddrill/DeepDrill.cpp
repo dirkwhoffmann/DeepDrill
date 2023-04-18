@@ -9,7 +9,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "commons.h"
 #include "DeepDrill.h"
 #include "Colorizer.h"
 #include "Driller.h"

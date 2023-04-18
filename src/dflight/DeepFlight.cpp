@@ -9,7 +9,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "commons.h"
 #include "DeepFlight.h"
 #include "Options.h"
 #include "Parser.h"

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "config.h"
+#include "Types.h"
 #include "StandardComplex.h"
 #include "ExtendedDouble.h"
 #include "PrecisionComplex.h"

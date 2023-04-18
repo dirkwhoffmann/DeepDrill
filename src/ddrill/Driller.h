@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "config.h"
+#include "Types.h"
 #include "commons.h"
 #include "Coefficients.h"
 #include "Coord.h"
