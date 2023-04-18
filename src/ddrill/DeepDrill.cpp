@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepDrill.h"
+#include "Chrono.h"
 #include "Colorizer.h"
 #include "Driller.h"
 #include "Exception.h"
@@ -306,6 +307,7 @@ DeepDrill::setupGmp(isize accuracy)
 void
 DeepDrill::runPipeline()
 {
+    Clock clock;
     DrillMap drillMap(opt);
 
     // Create the drill map
@@ -325,6 +327,9 @@ DeepDrill::runPipeline()
     if (opt.outputFormat == Format::MAP) {
         
         drillMap.save(opt.output);
+
+        // Print a progress status line in batch mode
+        if (opt.batch) printProgress(clock);
     }
     
     // Are we suppoed to create an image file?
@@ -334,9 +339,6 @@ DeepDrill::runPipeline()
         Colorizer colorizer(opt, drillMap);
         colorizer.colorize();
         colorizer.save(opt.output);
-
-        // Print a progress status line in batch mode
-        if (opt.batch) printProgress();
     }
 }
 
@@ -348,21 +350,23 @@ DeepDrill::runMaker()
 }
 
 void
-DeepDrill::printProgress()
+DeepDrill::printProgress(Clock &clock)
 {
     std::stringstream ss;
 
-    auto cnt1 = countFiles("png");
+    auto elapsed = clock.stop();
+    auto cnt1 = countFiles("map");
     auto cnt2 = countFiles("loc");
     auto percent = isize(100.0 * cnt1 / cnt2);
 
     // Prepare output string
     Logger logger(ss);
-    logger << "\r" << std::string(80, ' ') << "\r";
+    // logger << "\r" << std::string(80, ' ') << "\r";
     logger << log::blue << "[" << percent << "%] ";
     logger << log::blue << cnt1 << "/" << cnt2 << ": ";
     logger << log::green << opt.output;
-    logger << log::black << log::flush;
+    logger << log::black; // << log::flush;
+    logger << " (" << elapsed << " sec)" << log::endl;
 
     // Print output in a single chunk
     std::cout << ss.str();

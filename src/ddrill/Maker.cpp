@@ -207,6 +207,7 @@ Maker::writeTargets(std::ofstream &os)
     os << "\t" << "@echo \"Licensed under the GNU General Public License v3\"" << std::endl;
     os << "\t" << "@echo \"\"" << std::endl;
     os << "\t" << "@echo \"Generating $(NUM_IMAGES) images...\"" << std::endl;
+    os << "\t" << "@echo \"\"" << std::endl;
     os << std::endl;
 
     // Write 'map' and 'png' targets

@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Chrono.h"
 #include "Options.h"
 
 namespace dd {
@@ -46,7 +47,7 @@ private:
     void runMaker();
 
     // Prints a progress line in batch mode
-    void printProgress();
+    void printProgress(Clock &clock);
 
     // Sets up the GMP library
     void setupGmp();
