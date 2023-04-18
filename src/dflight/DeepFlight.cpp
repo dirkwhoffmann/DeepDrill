@@ -9,11 +9,12 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#include "commons.h"
 #include "DeepFlight.h"
-#include "Logger.h"
 #include "Options.h"
+#include "Parser.h"
 #include "Zoomer.h"
+
 #include <getopt.h>
 
 int main(int argc, char *argv[])

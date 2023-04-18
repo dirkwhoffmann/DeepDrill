@@ -9,13 +9,14 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#include "commons.h"
 #include "DeepDrill.h"
 #include "Colorizer.h"
 #include "Driller.h"
-#include "Logger.h"
-#include "Options.h"
 #include "Maker.h"
+#include "Options.h"
+#include "Parser.h"
+
 #include <getopt.h>
 
 int main(int argc, char *argv[])

@@ -8,9 +8,7 @@ Buffer.cpp
 Chrono.cpp
 Exception.cpp
 IO.cpp
-Logger.cpp
 Parser.cpp
-ProgressIndicator.cpp
 
 )
 
@@ -20,8 +18,6 @@ Buffer.cpp
 Chrono.cpp
 Exception.cpp
 IO.cpp
-Logger.cpp
 Parser.cpp
-ProgressIndicator.cpp
 
 )

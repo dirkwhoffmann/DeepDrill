@@ -9,14 +9,13 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
-#include "Parser.h"
 #include "commons.h"
+#include "Parser.h"
+
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <functional>
 
 namespace dd {
 

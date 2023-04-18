@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Buffer.h"
+#include "IO.h"
 #include <cassert>
 
 namespace dd {

@@ -297,10 +297,6 @@
 				50102344269DBEF000AC61A8 /* Exception.cpp */,
 				50102348269DC4F500AC61A8 /* IO.h */,
 				50102347269DC4F500AC61A8 /* IO.cpp */,
-				5030F11326A2BCCF009A53B3 /* Logger.h */,
-				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
-				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
-				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -418,6 +414,10 @@
 				50BEC6F6269486A900CCDFA8 /* Coord.cpp */,
 				50BEC6EE269486A800CCDFA8 /* Palette.h */,
 				50BEC6FE269486AA00CCDFA8 /* Palette.cpp */,
+				5030F11326A2BCCF009A53B3 /* Logger.h */,
+				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
+				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
+				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 			);
 			path = shared;
 			sourceTree = "<group>";

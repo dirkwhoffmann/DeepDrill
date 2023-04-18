@@ -9,10 +9,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#include "commons.h"
 #include "Coord.h"
-#include "Logger.h"
 #include "Options.h"
+#include "Parser.h"
 #include "ProgressIndicator.h"
 #include "Shaders.h"
 #include "Zoomer.h"
