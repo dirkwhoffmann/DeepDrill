@@ -14,6 +14,8 @@
 #include "config.h"
 #include "Types.h"
 #include "Coord.h"
+#include "StandardComplex.h"
+#include "ExtendedComplex.h"
 
 namespace dd {
 

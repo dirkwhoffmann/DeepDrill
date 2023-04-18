@@ -11,6 +11,7 @@
 
 #include "Driller.h"
 #include "Colorizer.h"
+#include "Exception.h"
 #include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
@@ -189,7 +190,8 @@ Driller::drill(ReferencePoint &r)
         double norm = z.norm();
 
         // Perform the escape check
-        if (norm >= 256) {
+        if (norm >= 7) {
+        // if (norm >= 256) {
             r.escaped = true;
             map.set(r.coord, MapEntry { (u32)i, (float)::log(norm) });
             return;

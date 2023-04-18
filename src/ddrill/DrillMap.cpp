@@ -11,9 +11,12 @@
 
 #include "DrillMap.h"
 #include "Coord.h"
+#include "Exception.h"
+#include "IO.h"
 #include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
+#include "StandardComplex.h"
 
 namespace dd {
 

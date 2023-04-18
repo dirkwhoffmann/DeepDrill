@@ -12,6 +12,8 @@
 #include "Colorizer.h"
 #include "Coord.h"
 #include "DrillMap.h"
+#include "Exception.h"
+#include "IO.h"
 #include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
@@ -58,9 +60,29 @@ Colorizer::colorize(Coord c)
         image[c.y * map.width + c.x] = 0;
         return;
     }
-    
+
+    /*
     isize index = (isize)((data.iteration - log2(data.lognorm)) * 5);
     image[c.y * map.width + c.x] = palette.colorize(index);
+    */
+    // float sl = float(data.iteration) - log2(data.lognorm) + 4.0;
+    float sl = (float(data.iteration) - log2(data.lognorm)) + 4.0;
+    sl *= .0025;
+
+    float r = 0.5 + 0.5 * cos(2.7 + sl * 30.0 + 0.0);
+    float g = 0.5 + 0.5 * cos(2.7 + sl * 30.0 + 0.6);
+    float b = 0.5 + 0.5 * cos(2.7 + sl * 30.0 + 1.0);
+    auto rr = u8(r * 255.0);
+    auto gg = u8(g * 255.0);
+    auto bb = u8(b * 255.0);
+
+    image[c.y * map.width + c.x] = rr << 0 | gg << 8 | bb << 16 | 255 << 24;
+
+    /* From https://www.shadertoy.com/view/tllSWj
+    vec4 mapColor(float mcol) {
+        return vec4(0.5 + 0.5*cos(2.7+mcol*30.0 + vec3(0.0,.6,1.0)),1.0);
+    }
+    */
 }
 
 void

@@ -12,6 +12,8 @@
 #include "ReferencePoint.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
+#include "PrecisionComplex.h"
+#include "StandardComplex.h"
 
 namespace dd {
 

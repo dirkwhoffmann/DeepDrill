@@ -11,6 +11,7 @@
 
 #include "Coefficients.h"
 #include "ProgressIndicator.h"
+#include "ExtendedComplex.h"
 
 namespace dd {
 

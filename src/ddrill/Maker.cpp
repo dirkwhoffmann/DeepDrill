@@ -11,6 +11,7 @@
 
 #include "Maker.h"
 #include "Coord.h"
+#include "IO.h"
 #include "Logger.h"
 #include "Options.h"
 #include "ProgressIndicator.h"
