@@ -17,6 +17,8 @@
 
 namespace dd {
 
+enum class ColorScheme { Default, Custom };
+
 class Colorizer {
 
     // Configuration options
@@ -27,6 +29,12 @@ class Colorizer {
     
     // The image data
     u32 *image = nullptr;
+
+    // The color scheme
+    ColorScheme scheme = ColorScheme::Default;
+
+    // Custom color table
+    vector <u32> colors;
 
     // The color palette
     Palette palette = Palette(opt);
@@ -47,13 +55,18 @@ public:
     //
 
     void colorize();
+
+private:
+
     void colorize(struct Coord c);
 
     
     //
     // Exporting
     //
-    
+
+public:
+
     void save(const string &path);
 };
 

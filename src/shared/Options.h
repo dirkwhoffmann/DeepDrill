@@ -159,7 +159,6 @@ struct Options {
 public:
 
     Options();
-    // [[deprecated]] void parse(map <string,string> &keys);
     void parse(string key, string value);
     void derive();
 
