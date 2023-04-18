@@ -13,7 +13,6 @@
 
 #include "config.h"
 #include "Types.h"
-#include "commons.h"
 #include "Options.h"
 
 namespace dd {

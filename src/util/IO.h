@@ -20,6 +20,7 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <vector>

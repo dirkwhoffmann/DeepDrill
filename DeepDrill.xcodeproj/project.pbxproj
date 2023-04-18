@@ -185,7 +185,6 @@
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
 		50EB497526A067850019078C /* Maker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maker.h; sourceTree = "<group>"; };
-		50EB497726A069780019078C /* commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commons.h; sourceTree = "<group>"; };
 		50F8C40F29E44042008A0B4C /* bypass.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bypass.glsl; sourceTree = "<group>"; };
 		50F8C41129EC3C97008A0B4C /* merger.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = merger.glsl; sourceTree = "<group>"; };
 		50F8C41229ED14C6008A0B4C /* Shaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shaders.h; sourceTree = "<group>"; };
@@ -214,7 +213,6 @@
 			children = (
 				505EB93729D73E6E008DE5BB /* CMakeLists.txt */,
 				50BEC6F3269486A900CCDFA8 /* config.h */,
-				50EB497726A069780019078C /* commons.h */,
 				50BEC70B269486B400CCDFA8 /* util */,
 				5030F11026A1B92C009A53B3 /* math */,
 				50EB0D4729EE605E00770F31 /* shared */,

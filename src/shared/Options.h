@@ -13,8 +13,8 @@
 
 #include "config.h"
 #include "Types.h"
-#include "commons.h"
-#include "Palette.h"
+#include "PrecisionComplex.h"
+#include "ExtendedDouble.h"
 
 namespace dd {
 

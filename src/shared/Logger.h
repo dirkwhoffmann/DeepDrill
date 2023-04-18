@@ -13,7 +13,10 @@
 
 #include "config.h"
 #include "Types.h"
-#include "commons.h"
+#include "Chrono.h"
+#include "StandardComplex.h"
+#include "ExtendedComplex.h"
+#include "PrecisionComplex.h"
 
 namespace dd {
 

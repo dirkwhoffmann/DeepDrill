@@ -11,6 +11,8 @@
 
 #include "Zoomer.h"
 #include "Coord.h"
+#include "Exception.h"
+#include "IO.h"
 #include "Options.h"
 #include "Parser.h"
 #include "ProgressIndicator.h"

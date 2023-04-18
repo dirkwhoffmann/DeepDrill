@@ -10,7 +10,10 @@
 // -----------------------------------------------------------------------------
 
 #include "Options.h"
+#include "Exception.h"
+#include "IO.h"
 #include "Logger.h"
+#include "Palette.h"
 
 namespace dd {
 

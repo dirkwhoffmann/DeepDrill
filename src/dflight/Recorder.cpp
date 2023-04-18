@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Recorder.h"
+#include "Exception.h"
 #include "Options.h"
 #include "Logger.h"
 

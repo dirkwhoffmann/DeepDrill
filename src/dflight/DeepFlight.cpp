@@ -10,6 +10,9 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepFlight.h"
+#include "Exception.h"
+#include "IO.h"
+#include "Logger.h"
 #include "Options.h"
 #include "Parser.h"
 #include "Zoomer.h"
