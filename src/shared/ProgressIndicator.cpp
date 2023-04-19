@@ -10,8 +10,9 @@
 // -----------------------------------------------------------------------------
 
 #include "ProgressIndicator.h"
-#include "Logger.h"
 #include "IO.h"
+#include "Logger.h"
+#include "Options.h"
 
 namespace dd {
 
@@ -65,29 +66,37 @@ ProgressIndicator::done(const string &info)
     log::cout << log::endl;
 }
 
-BatchProgressIndicator::BatchProgressIndicator(const string &msg) : msg(msg)
+BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg)
 {
-    std::stringstream ss;
-    Logger logger(ss);
+    if (opt.batch && opt.verbose) {
 
-    prefix(logger);
-    logger << log::cyan << msg << log::black;
-    logger << " ..." << log::endl;
+        this->msg = msg;
 
-    std::cout << ss.str();
-    clock.restart();
+        std::stringstream ss;
+        Logger logger(ss);
+
+        prefix(logger);
+        logger << log::yellow << msg << log::black;
+        logger << " ..." << log::endl;
+
+        std::cout << ss.str();
+        clock.restart();
+    }
 }
 
 BatchProgressIndicator::~BatchProgressIndicator()
 {
-    std::stringstream ss;
-    Logger logger(ss);
+    if (msg != "") {
 
-    prefix(logger);
-    logger << log::green << msg;
-    logger << log::black << " (" << clock.stop() << " sec)" << log::endl;
+        std::stringstream ss;
+        Logger logger(ss);
 
-    std::cout << ss.str();
+        prefix(logger);
+        logger << log::green << msg;
+        logger << log::black << " (" << clock.stop() << " sec)" << log::endl;
+
+        std::cout << ss.str();
+    }
 }
 
 void

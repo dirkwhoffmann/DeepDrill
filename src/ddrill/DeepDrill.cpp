@@ -318,7 +318,7 @@ DeepDrill::runPipeline()
 
     } else {
 
-        BatchProgressIndicator progress(opt.output);
+        BatchProgressIndicator progress(opt, opt.output);
 
         // Run the driller
         Driller driller(opt, drillMap);
@@ -334,7 +334,7 @@ DeepDrill::runPipeline()
     // Are we suppoed to create an image file?
     if (opt.outputFormat == Format::TIF || opt.outputFormat == Format::PNG) {
 
-        BatchProgressIndicator progress(opt.output);
+        BatchProgressIndicator progress(opt, opt.output);
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);

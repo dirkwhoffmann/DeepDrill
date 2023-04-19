@@ -183,7 +183,7 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
-    os << "FLAGS      = -b" << std::endl;
+    os << "FLAGS      = -b -v" << std::endl;
     os << std::endl;
 }
 
