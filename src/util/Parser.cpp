@@ -31,7 +31,7 @@ Parser::parse(const string &path, std::function<void(string,string)>callback)
     }
  
     try { parse(fs, callback); } catch (Exception &e) {
-        throw Exception(name + ":" + std::to_string(e.data) + ": " + e.what());
+        throw Exception("Error in '" + name + "' line " + std::to_string(e.data) + ": " + e.what());
     }
 }
 

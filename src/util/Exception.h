@@ -33,6 +33,13 @@ struct SyntaxError : public Exception {
     using Exception::Exception;
 };
 
+struct KeyValueError : public Exception {
+
+    KeyValueError(const string &k, const string &s) {
+        description = "'" + k + "': " + s;
+    }
+};
+
 struct FileNotFoundError : Exception {
 
     FileNotFoundError(const string &s) {

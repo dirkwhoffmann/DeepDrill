@@ -24,11 +24,6 @@ Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 {
     auto values = opt.palette.values;
 
-    palette.init(opt.palette.values);
-
-    // printf("Values: %s\n", values.c_str());
-    // printf("Num: %ld\n", std::count(values.cbegin(), values.cend(), ' '));
-
     if (std::count(values.cbegin(), values.cend(), ' ') != 0) {
 
         // Custom palette
@@ -47,13 +42,13 @@ Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
         scheme = ColorScheme::Default;
     }
 
-    // Allocate image data (TODO: Use Buffer object)
-    image = new u32[map.width * map.height] {};
+    // Allocate image data
+    image.alloc(map.width * map.height);
 }
 
 Colorizer::~Colorizer()
 {
-    if (image) delete [] image;
+
 }
 
 void
@@ -149,7 +144,7 @@ Colorizer::save(const string &path)
         
         for (isize x = 0; x < width; x++) {
             
-            char *cptr = (char *)(image + y * width + x);
+            char *cptr = (char *)(image.ptr + y * width + x);
             os.write(cptr + 0, 1);
             os.write(cptr + 1, 1);
             os.write(cptr + 2, 1);

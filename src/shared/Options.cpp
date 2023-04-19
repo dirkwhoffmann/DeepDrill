@@ -65,63 +65,102 @@ Options::Options()
     }
 }
 
-/*
-void
-Options::parse(map <string,string> &keymap)
-{
-    // Add default keys
-    if (keys.empty()) {
-        for (const auto &it : defaults) {
-            keys[it.first] = it.second;
-        }
-    }
-
-    // Overwrite default values with the user settings
-    for (auto &it : keymap) {
-        if (defaults.find(it.first) == keys.end()) {
-            throw Exception("Unknown key '" + it.first + "'");
-        }
-        keys[it.first] = it.second;
-    }
-
-    for (auto &it : keys) {
-        parse(it.first, it.second);
-    }
-
-    check();
-    derive();
-}
-*/
-
 void
 Options::parse(string key, string value)
 {
     keys[key] = value;
 
     if (key == "tools.raw2tiff") {
+
         parse(key, value, tools.raw2tiff);
+
+        if (!fileExists(tools.raw2tiff)) {
+            throw KeyValueError(key, "File " + value + " not found.");
+        }
+
     } else if (key == "tools.convert") {
+
         parse(key, value, tools.convert);
+
+        if (!fileExists(tools.convert)) {
+            throw KeyValueError(key, "File " + value + " not found.");
+        }
+
     } else if (key == "location.real") {
+
         parse(key, value, location.real);
+
     } else if (key == "location.imag") {
+
         parse(key, value, location.imag);
+
     } else if (key == "location.zoom") {
+
         parse(key, value, location.zoom);
+
     } else if (key == "location.depth") {
+
         parse(key, value, location.depth);
+
     } else if (key == "image.width") {
+
         parse(key, value, image.width);
+
+        if (image.width == 0) {
+            throw KeyValueError(key, "Width must be greater than 0.");
+        }
+        if (image.width > 3840) {
+            throw KeyValueError(key, "Width must be smaller or equal to 3840.");
+        }
+
     } else if (key == "image.height") {
+
         parse(key, value, image.height);
+
+        if (image.height == 0) {
+            throw KeyValueError(key, "Height must be greater than 0.");
+        }
+        if (image.height > 2160) {
+            throw KeyValueError(key, "Height must be less or equal to 2160.");
+        }
+
     } else if (key == "image.badpixels") {
+
         parse(key, value, image.badpixels);
+
     } else if (key == "video.framerate") {
+
         parse(key, value, video.frameRate);
+
+        if (video.frameRate < 25 || video.frameRate > 240) {
+            throw KeyValueError(key, "Framerate out of range (25 - 240)");
+        }
+
     } else if (key == "video.width") {
+
         parse(key, value, video.width);
+
+        if (video.width == 0) {
+            throw KeyValueError(key, "Width must be greater than 0.");
+        }
+        if (video.width > 1920) {
+            throw KeyValueError(key, "Width must be smaller or equal to 1920.");
+        }
+
     } else if (key == "video.height") {
+
         parse(key, value, video.height);
+
+        if (video.height == 0) {
+            throw KeyValueError(key, "Height must be greater than 0.");
+        }
+        if (video.height > 1080) {
+            throw KeyValueError(key, "Height must be less or equal to 1080.");
+        }
+        if (video.height % 2 == 1) {
+            throw KeyValueError(key, "Height must be dividable by 2.");
+        }
+
     } else if (key == "video.keyframes") {
         parse(key, value, video.keyframes);
     } else if (key == "video.inbetweens") {
@@ -131,9 +170,21 @@ Options::parse(string key, string value)
     } else if (key == "video.bitrate") {
         parse(key, value, video.bitrate);
     } else if (key == "video.scaler") {
+
         parse(key, value, video.scaler);
+
+        if (!fileExists(video.scaler)) {
+            throw KeyValueError(key, "File " + video.scaler + " not found.");
+        }
+
     } else if (key == "video.merger") {
+
         parse(key, value, video.merger);
+
+        if (!fileExists(video.merger)) {
+            throw KeyValueError(key, "File " + video.merger + " not found.");
+        }
+
     } else if (key == "palette.values") {
         parse(key, value, palette.values);
     } else if (key == "perturbation.tolerance") {
@@ -188,9 +239,7 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
 void
 Options::check()
 {
-    if (video.frameRate < 25 || video.frameRate > 240) {
-        throw InvalidValueException("video.framrate", video.frameRate);
-    }
+
 }
 
 void

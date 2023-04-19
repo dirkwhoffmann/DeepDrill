@@ -13,7 +13,8 @@
 
 #include "config.h"
 #include "Types.h"
-#include "Palette.h"
+#include "Buffer.h"
+// #include "Palette.h"
 
 namespace dd {
 
@@ -28,7 +29,7 @@ class Colorizer {
     const class DrillMap &map;
     
     // The image data
-    u32 *image = nullptr;
+    Buffer <u32> image;
 
     // The color scheme
     ColorScheme scheme = ColorScheme::Default;
@@ -37,7 +38,7 @@ class Colorizer {
     vector <u32> colors;
 
     // The color palette
-    Palette palette = Palette(opt);
+    // Palette palette = Palette(opt);
 
     
     //

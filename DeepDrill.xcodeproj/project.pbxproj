@@ -43,6 +43,7 @@
 		50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6B29E03E2C0025DE0D /* Recorder.cpp */; };
 		50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6E29E03F940025DE0D /* NamedPipe.cpp */; };
 		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
+		50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
 		50EB497626A067850019078C /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
 		50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
@@ -540,6 +541,7 @@
 				50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */,
 				50BEC71D269486C200CCDFA8 /* Chrono.cpp in Sources */,
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
+				50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */,
