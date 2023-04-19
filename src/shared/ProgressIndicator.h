@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Chrono.h"
+#include "Logger.h"
 
 namespace dd {
 
@@ -45,6 +46,21 @@ public:
 private:
     
     void init(const string &description, isize max = 100);
+};
+
+class BatchProgressIndicator {
+
+    string msg;
+    Clock clock;
+
+public:
+
+    BatchProgressIndicator(const string &msg);
+    ~BatchProgressIndicator();
+
+private:
+
+    void prefix(Logger &logger);
 };
 
 }

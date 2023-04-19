@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Logger.h"
 #include "Chrono.h"
 #include "Options.h"
 
@@ -47,7 +48,8 @@ private:
     void runMaker();
 
     // Prints a progress line in batch mode
-    void printProgress(Clock &clock);
+    // void printProgress(const string &msg2 = "");
+    // void printProgress(Clock &clock);
 
     // Sets up the GMP library
     void setupGmp();

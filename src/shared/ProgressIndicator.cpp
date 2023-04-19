@@ -11,6 +11,7 @@
 
 #include "ProgressIndicator.h"
 #include "Logger.h"
+#include "IO.h"
 
 namespace dd {
 
@@ -62,6 +63,42 @@ ProgressIndicator::done(const string &info)
     
     if (info != "") log::cout << " (" << info << ")";
     log::cout << log::endl;
+}
+
+BatchProgressIndicator::BatchProgressIndicator(const string &msg) : msg(msg)
+{
+    std::stringstream ss;
+    Logger logger(ss);
+
+    prefix(logger);
+    logger << log::cyan << msg << log::black;
+    logger << " ..." << log::endl;
+
+    std::cout << ss.str();
+    clock.restart();
+}
+
+BatchProgressIndicator::~BatchProgressIndicator()
+{
+    std::stringstream ss;
+    Logger logger(ss);
+
+    prefix(logger);
+    logger << log::green << msg;
+    logger << log::black << " (" << clock.stop() << " sec)" << log::endl;
+
+    std::cout << ss.str();
+}
+
+void
+BatchProgressIndicator::prefix(Logger &logger)
+{
+    auto cnt1 = countFiles("png");
+    auto cnt2 = countFiles("loc");
+    auto percent = isize(100.0 * cnt1 / cnt2);
+
+    logger << log::blue << "[" << percent << "%] ";
+    logger << cnt1 << "/" << cnt2 << ": ";
 }
 
 }

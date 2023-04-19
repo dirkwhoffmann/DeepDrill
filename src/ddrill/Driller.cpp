@@ -25,9 +25,7 @@ Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
 
 void
 Driller::drill()
-{
-    Clock stopWatch;
-    
+{    
     vector<Coord> remaining;
     vector<Coord> glitches;
         
