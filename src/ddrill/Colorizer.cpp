@@ -26,7 +26,10 @@ Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 
     palette.init(opt.palette.values);
 
-    if (std::count(values.cbegin(), values.cend(), ' ') == 0) {
+    // printf("Values: %s\n", values.c_str());
+    // printf("Num: %ld\n", std::count(values.cbegin(), values.cend(), ' '));
+
+    if (std::count(values.cbegin(), values.cend(), ' ') != 0) {
 
         // Custom palette
         scheme = ColorScheme::Custom;
@@ -103,6 +106,7 @@ Colorizer::colorize(Coord c)
             auto bb = u8(b * 255.0);
 
             image[c.y * map.width + c.x] = rr << 0 | gg << 8 | bb << 16 | 255 << 24;
+            break;
         }
     }
 }

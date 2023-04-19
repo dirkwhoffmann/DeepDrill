@@ -47,7 +47,7 @@ Options::Options()
     defaults["video.scaler"] = "";
 
     // Palette keys
-    defaults["palette.values"] = Palette::defaultPalette;
+    defaults["palette.values"] = "Default"; // Palette::defaultPalette;
 
     // Perturbation keys
     defaults["perturbation.tolerance"] = "1e-12";
