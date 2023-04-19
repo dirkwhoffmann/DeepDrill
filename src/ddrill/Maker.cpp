@@ -86,7 +86,7 @@ void
 Maker::generateLocationFiles()
 {
     // Start in the middle of the Mandelbrot set by shifting the center
-    auto shift = PrecisionComplex(-opt.location.real, -opt.location.imag);
+    auto shift = PrecisionComplex(); // PrecisionComplex(-opt.location.real, -opt.location.imag);
 
     for (isize nr = 0; nr < opt.video.keyframes; nr++) {
 

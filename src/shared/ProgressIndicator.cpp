@@ -102,7 +102,7 @@ BatchProgressIndicator::~BatchProgressIndicator()
 void
 BatchProgressIndicator::prefix(Logger &logger)
 {
-    auto cnt1 = countFiles("png");
+    auto cnt1 = countFiles(extractSuffix(msg));
     auto cnt2 = countFiles("loc");
     auto percent = isize(100.0 * cnt1 / cnt2);
 
