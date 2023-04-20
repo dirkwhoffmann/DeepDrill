@@ -1,10 +1,10 @@
 [image]
 width = 480
-height = 270
+height = 260
 
 [video]
 width = 240
-height = 135
+height = 130
 
 [perturbation]
 tolerance = 1e-6

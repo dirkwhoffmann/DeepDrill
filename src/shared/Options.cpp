@@ -158,22 +158,30 @@ Options::parse(string key, string value)
             throw KeyValueError(key, "Height must be less or equal to 1080.");
         }
         if (video.height % 2 == 1) {
-            throw KeyValueError(key, "Height must be dividable by 2.");
+            throw Exception(key + " must be dividable by 2.");
         }
 
     } else if (key == "video.keyframes") {
+
         parse(key, value, video.keyframes);
+
     } else if (key == "video.inbetweens") {
+
         parse(key, value, video.inbetweens);
+
     } else if (key == "video.duration") {
+
         parse(key, value, video.duration);
+
     } else if (key == "video.bitrate") {
+
         parse(key, value, video.bitrate);
+
     } else if (key == "video.scaler") {
 
         parse(key, value, video.scaler);
 
-        if (!fileExists(video.scaler)) {
+        if (video.scaler != "" && !fileExists(video.scaler)) {
             throw KeyValueError(key, "File " + video.scaler + " not found.");
         }
 
@@ -181,21 +189,32 @@ Options::parse(string key, string value)
 
         parse(key, value, video.merger);
 
-        if (!fileExists(video.merger)) {
+        if (video.merger != "" && !fileExists(video.merger)) {
             throw KeyValueError(key, "File " + video.merger + " not found.");
         }
 
     } else if (key == "palette.values") {
+
         parse(key, value, palette.values);
+
     } else if (key == "perturbation.tolerance") {
+
         parse(key, value, perturbation.tolerance);
+
     } else if (key == "perturbation.rounds") {
+
         parse(key, value, perturbation.rounds);
+
     } else if (key == "approximation.coefficients") {
+
         parse(key, value, approximation.coefficients);
+
     } else if (key == "approximation.tolerance") {
+
         parse(key, value, approximation.tolerance);
+
     } else {
+
         assert(false);
     }
 }
@@ -234,12 +253,6 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }
-}
-
-void
-Options::check()
-{
-
 }
 
 void

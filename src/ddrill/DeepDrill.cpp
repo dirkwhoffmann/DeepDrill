@@ -76,7 +76,13 @@ DeepDrill::main(int argc, char *argv[])
         log::cout << log::endl << log::endl;
     }
 
-    // Read files
+    // Check arguments for consistency
+    checkArguments();
+
+    // Setup the GMP library
+    setupGmp();
+
+    // Process files
     readProfiles();
     readInputs();
     readOutputs();
@@ -154,9 +160,6 @@ DeepDrill::parseArguments(int argc, char *argv[])
     while (optind < argc) {
         inputs.push_back(makeAbsolutePath(argv[optind++]));
     }
-    
-    checkArguments();
-    setupGmp();
 }
 
 void
@@ -197,7 +200,7 @@ DeepDrill::checkArguments()
             throw SyntaxError("The output file must be a directory");
         }
         if (numDirectoryItems(out) > 0) {
-            throw Exception("The output directory must be empty");
+            throw Exception("The output directory must be empty.");
         }
         
     } else {

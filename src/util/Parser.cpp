@@ -27,7 +27,7 @@ Parser::parse(const string &path, std::function<void(string,string)>callback)
     auto fs = std::ifstream(path);
 
     if (!fs.is_open()) {
-        throw Exception("Failed to open file " + path);
+        throw Exception("Failed to open file " + path + ".");
     }
  
     try { parse(fs, callback); } catch (Exception &e) {
@@ -86,8 +86,11 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
             tolower(key);
             
             // Add the key-value pair
-            callback(section + "." + key ,value);
-            // keys[section + "." + key] = value;
+            try {
+                callback(section + "." + key ,value);
+            } catch (Exception e) {
+                throw Exception(e.what(), line);
+            }
             continue;
         }
         

@@ -168,8 +168,6 @@ private:
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
-
-    void check();
 };
 
 }
