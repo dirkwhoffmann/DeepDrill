@@ -186,7 +186,8 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
-    os << "FLAGS      = -b -v" << std::endl;
+    os << "MAPFLAGS   = -b -v" << std::endl;
+    os << "PNGFLAGS   = -b" << std::endl;
     os << std::endl;
 }
 
@@ -204,39 +205,15 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'map' and 'png' targets
     os << "%.png: %.map" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(FLAGS) -p " << project << ".prf -o $*.png $*.map" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) $(PNGFLAGS) -p " << project << ".prf -o $*.png $*.map" << std::endl;
     os << std::endl;
     os << "%.map: %.loc" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(FLAGS) -p " << project << ".prf -o $*.map $*.loc" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf -o $*.map $*.loc" << std::endl;
     os << std::endl;
 
     // Write 'clean' target
     os << "clean:" << std::endl;
     os << "\t" << "rm *.map *.png" << std::endl;
-    os << std::endl;
-}
-
-void
-Maker::writeTarget(std::ofstream &os, isize nr)
-{
-    auto name = project + "_" + std::to_string(nr);
-
-    os << name << ".png: " << name << ".map" << std::endl;
-    os << "\t";
-    os << "$(DEEPDRILL)";
-    if (opt.verbose) os << " -v";
-    os << " -p " << project << ".prf";
-    os << " -o " << name << ".png";
-    os << " " << name << ".map " << std::endl;
-    os << std::endl;
-
-    os << name << ".map: " << name << ".loc" << std::endl;
-    os << "\t";
-    os << "$(DEEPDRILL)";
-    if (opt.verbose) os << " -v";
-    os << " -p " << project << ".prf";
-    os << " -o " << name << ".map";
-    os << " " << name << ".loc " << std::endl;
     os << std::endl;
 }
 

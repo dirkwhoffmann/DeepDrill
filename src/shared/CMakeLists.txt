@@ -6,7 +6,6 @@ target_sources(deepdrill PRIVATE
 Options.cpp
 Coord.cpp
 Logger.cpp
-Palette.cpp
 ProgressIndicator.cpp
 
 )
@@ -16,7 +15,6 @@ target_sources(deepflight PRIVATE
 Options.cpp
 Coord.cpp
 Logger.cpp
-Palette.cpp
 ProgressIndicator.cpp
 
 )

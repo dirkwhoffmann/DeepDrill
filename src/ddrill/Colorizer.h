@@ -14,7 +14,6 @@
 #include "config.h"
 #include "Types.h"
 #include "Buffer.h"
-// #include "Palette.h"
 
 namespace dd {
 
@@ -37,10 +36,7 @@ class Colorizer {
     // Custom color table
     vector <u32> colors;
 
-    // The color palette
-    // Palette palette = Palette(opt);
 
-    
     //
     // Initialization
     //

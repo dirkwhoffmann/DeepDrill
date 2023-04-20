@@ -13,7 +13,6 @@
 #include "Exception.h"
 #include "IO.h"
 #include "Logger.h"
-#include "Palette.h"
 
 namespace dd {
 
@@ -47,7 +46,7 @@ Options::Options()
     defaults["video.scaler"] = "";
 
     // Palette keys
-    defaults["palette.values"] = "Default"; // Palette::defaultPalette;
+    defaults["palette.values"] = "Default";
 
     // Perturbation keys
     defaults["perturbation.tolerance"] = "1e-12";
