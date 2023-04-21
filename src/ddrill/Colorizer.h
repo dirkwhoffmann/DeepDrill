@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Options.h"
 #include "Buffer.h"
 
 namespace dd {
@@ -64,7 +65,7 @@ private:
 
 public:
 
-    void save(const string &path);
+    void save(const string &path, Format format);
 };
 
 }

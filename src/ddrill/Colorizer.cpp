@@ -18,6 +18,8 @@
 #include "Options.h"
 #include "ProgressIndicator.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace dd {
 
 Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
@@ -75,7 +77,7 @@ Colorizer::colorize(Coord c)
     // Map to a black if the point belongs to the mandelbrot set
     if (data.iteration == 0) {
 
-        image[c.y * map.width + c.x] = 0;
+        image[c.y * map.width + c.x] = 255 << 24;
         return;
     }
 
@@ -107,98 +109,15 @@ Colorizer::colorize(Coord c)
 }
 
 void
-Colorizer::save(const string &path)
+Colorizer::save(const string &path, Format format)
 {
-    namespace fs = std::filesystem;
-    fs::path tmp = fs::temp_directory_path();
-    auto name = stripSuffix(stripPath(path));
+    sf::Image sfImage;
 
-    ProgressIndicator progress("Saving image data");
-    
-    std::ofstream os;
-        
-    isize width = map.width;
-    isize height = map.height;
-    
-    // Assemble the target file names
-    string rawFile, tifFile, pngFile;
+    auto width = (int)map.width;
+    auto height = (int)map.height;
 
-    if (opt.outputFormat == Format::TIF) {
-
-        rawFile = tmp / (name + ".raw");
-        tifFile = path;
-        pngFile = "";
-    }
-    if (opt.outputFormat == Format::PNG) {
-
-        rawFile = tmp / (name + ".raw");
-        tifFile = tmp / (name + ".tif");
-        pngFile = path;
-    }
-
-    // Open an output stream
-    os.open(rawFile.c_str());
-    
-    // Dump texture
-    for (isize y = height - 1; y >= 0; y--) {
-        
-        for (isize x = 0; x < width; x++) {
-            
-            char *cptr = (char *)(image.ptr + y * width + x);
-            os.write(cptr + 0, 1);
-            os.write(cptr + 1, 1);
-            os.write(cptr + 2, 1);
-        }
-    }
-    os.close();
-    progress.done();
-
-    ProgressIndicator progress2("Converting to TIFF");
-    
-    // Create TIFF file
-    if (!tifFile.empty()) {
-        string options = "-p rgb -b 3";
-        options += " -w " + std::to_string(width);
-        options += " -l " + std::to_string(height);
-        string command = opt.tools.raw2tiff + " " + options + " " + rawFile + " " + tifFile;
-
-        if (system(command.c_str()) != 0) {
-            throw Exception("Failed to execute " + command);
-        }
-    }
-
-    // Create PNG file
-    if (!pngFile.empty()) {
-
-        string options = "";
-        string command = opt.tools.convert + " " + options + " " + tifFile + " " + pngFile;
-
-        if (system(command.c_str()) != 0) {
-            throw Exception("Failed to execute " + command);
-        }
-
-        // Remove the temporary TIFF file
-        fs::remove(tifFile);
-
-    }
-
-    // Remove the temporary RAW file
-    fs::remove(rawFile);
-    
-    progress2.done();
-    
-    if (opt.verbose) {
-        
-        log::cout << log::vspace;
-        log::cout << log::ralign("Input: ");
-        log::cout << rawFile << log::endl;
-        log::cout << log::ralign("Output: ");
-        log::cout << tifFile << log::endl;
-        log::cout << log::ralign("TIFF Converter: ");
-        log::cout << opt.tools.raw2tiff << log::endl;
-        log::cout << log::ralign("PNG Converter: ");
-        log::cout << opt.tools.convert << log::endl;
-    }
+    sfImage.create(width, height, (u8 *)image.ptr);
+    sfImage.saveToFile(path);
 }
 
 }

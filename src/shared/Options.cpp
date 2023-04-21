@@ -265,7 +265,9 @@ Options::derive()
         if (suffix == "loc") return Format::LOC;
         if (suffix == "map") return Format::MAP;
         if (suffix == "prf") return Format::PRF;
-        if (suffix == "tif" || suffix == "tiff") return Format::TIF;
+        if (suffix == "bmp") return Format::BMP;
+        if (suffix == "gif") return Format::GIF;
+        if (suffix == "jpg") return Format::JPG;
         if (suffix == "png") return Format::PNG;
         if (suffix == "mpg" || suffix == "mpeg") return Format::MPG;
 

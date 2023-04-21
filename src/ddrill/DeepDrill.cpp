@@ -252,7 +252,7 @@ DeepDrill::readOutputs()
     if (suffix == "map") {
         return;
     }
-    if (suffix == "tiff" || suffix == "tif" || suffix == "png") {
+    if (suffix == "bmp" || suffix == "gif" || suffix == "jpg" || suffix == "png") {
         return;
     }
     if (isDirectory(path)) {
@@ -335,14 +335,17 @@ DeepDrill::runPipeline()
     }
     
     // Are we suppoed to create an image file?
-    if (opt.outputFormat == Format::TIF || opt.outputFormat == Format::PNG) {
+    if (opt.outputFormat == Format::BMP ||
+        opt.outputFormat == Format::GIF ||
+        opt.outputFormat == Format::JPG ||
+        opt.outputFormat == Format::PNG) {
 
         BatchProgressIndicator progress(opt, opt.output);
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);
         colorizer.colorize();
-        colorizer.save(opt.output);
+        colorizer.save(opt.output, opt.outputFormat);
     }
 }
 

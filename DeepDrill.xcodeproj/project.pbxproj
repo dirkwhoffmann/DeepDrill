@@ -729,11 +729,21 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/include/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/lib/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				OTHER_LDFLAGS = (
 					"-lgmp",
 					"-lgmpxx",
+					"-lsfml-system",
+					"-lsfml-window",
+					"-lsfml-graphics",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -755,12 +765,22 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/include/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/gmp/6.2.1_1/lib/,
+					/opt/homebrew/Cellar/sfml/2.5.1_2/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lgmp",
 					"-lgmpxx",
+					"-lsfml-system",
+					"-lsfml-window",
+					"-lsfml-graphics",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
