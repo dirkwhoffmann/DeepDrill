@@ -79,11 +79,12 @@ void
 Colorizer::colorize(Coord c)
 {
     auto data = map.get(c.x, c.y);
+    auto pos = (map.height - 1 - c.y) * map.width + c.x;
 
     // Map to a black if the point belongs to the mandelbrot set
     if (data.iteration == 0) {
 
-        image[c.y * map.width + c.x] = 255 << 24;
+        image[pos] = 0xFF000000;
         return;
     }
 
@@ -92,7 +93,7 @@ Colorizer::colorize(Coord c)
         case ColorScheme::Custom:
         {
             isize index = (isize)((data.iteration - log2(data.lognorm)) * 5);
-            image[c.y * map.width + c.x] = colors[index % colors.size()];
+            image[pos] = colors[index % colors.size()];
             break;
         }
         case ColorScheme::Default:
@@ -108,7 +109,7 @@ Colorizer::colorize(Coord c)
             auto gg = u8(g * 255.0);
             auto bb = u8(b * 255.0);
 
-            image[c.y * map.width + c.x] = 255 << 24 | bb << 16 | gg << 8 | rr;
+            image[pos] = 255 << 24 | bb << 16 | gg << 8 | rr;
             break;
         }
     }
