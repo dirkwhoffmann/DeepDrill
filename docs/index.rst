@@ -1,7 +1,7 @@
-.. DeepDrill documentation master file, created by
-   sphinx-quickstart on Fri Mar 24 16:13:18 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. image:: images/dd-titlepage2.jpg
+   :width: 100%
+   :align: center
+   :alt: Banner
 
 DeepDrill User's Manual
 =======================
@@ -18,6 +18,7 @@ DeepDrill User's Manual
 
    Tutorials/Installation
    Tutorials/StillImages
+   Tutorials/ZoomVideos
 
 .. toctree::
    :maxdepth: 1

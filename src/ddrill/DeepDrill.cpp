@@ -206,15 +206,19 @@ DeepDrill::checkArguments()
     } else {
                 
         // The input file must be a location file or a map file
-        if (inSuffix != "loc" && inSuffix != "map") {
+        if (inSuffix != "loc" &&
+            inSuffix != "map") {
             throw SyntaxError(inputs.front() +
                               ": Invalid format. Expected .loc or .map");
         }
         
         // The output file must be a map file or an image file
-        if (outSuffix != "map" && outSuffix != "tiff" && outSuffix != "png") {
+        if (outSuffix != "map" &&
+            outSuffix != "bmp" &&
+            outSuffix != "jpg" &&
+            outSuffix != "png") {
             throw SyntaxError(outputs.front() +
-                              ": Invalid format. Expected .map, .tiff, or .png");
+                              ": Invalid format. Expected .map, .bmp, .jpg, or .png");
         }
     }
 }
@@ -252,7 +256,7 @@ DeepDrill::readOutputs()
     if (suffix == "map") {
         return;
     }
-    if (suffix == "bmp" || suffix == "gif" || suffix == "jpg" || suffix == "png") {
+    if (suffix == "bmp" || suffix == "jpg" || suffix == "png") {
         return;
     }
     if (isDirectory(path)) {
@@ -336,7 +340,6 @@ DeepDrill::runPipeline()
     
     // Are we suppoed to create an image file?
     if (opt.outputFormat == Format::BMP ||
-        opt.outputFormat == Format::GIF ||
         opt.outputFormat == Format::JPG ||
         opt.outputFormat == Format::PNG) {
 

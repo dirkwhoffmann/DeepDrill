@@ -14,20 +14,6 @@
 
 namespace dd {
 
-/*
-Coord::Coord(PrecisionComplex pos, const Options &opt)
-{
-    auto c = opt.center;
-
-    // Compute the pixel distance to the center
-    mpf_class dx = (pos.re - c.re) / opt.mpfPixelDelta;
-    mpf_class dy = (pos.im - c.im) / opt.mpfPixelDelta;
-
-    x = center(opt).x + i16(round(dx.get_d()));
-    y = center(opt).y + i16(round(dy.get_d()));
-}
-*/
-
 Coord
 Coord::center(const Options &opt)
 {

@@ -9,7 +9,7 @@
 project = 'DeepDrill'
 copyright = '2023, Dirk W. Hoffmann'
 author = 'Dirk W. Hoffmann'
-release = '0.1'
+release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -36,4 +36,4 @@ source_suffix = ['.rst', '.md']
 html_theme = 'insipid'
 html_static_path = ['_static']
 html_logo = "images/icon.png"
-html_title = "DeepDrill 0.1"
+html_title = "DeepDrill 1.0"

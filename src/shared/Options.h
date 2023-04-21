@@ -18,7 +18,7 @@
 
 namespace dd {
 
-enum class Format { NONE, LOC, MAP, PRF, DIR, BMP, GIF, JPG, PNG, MPG };
+enum class Format { NONE, LOC, MAP, PRF, DIR, BMP, JPG, PNG, MPG };
 
 struct Options {
 

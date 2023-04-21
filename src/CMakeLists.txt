@@ -30,12 +30,14 @@ target_compile_options(deepdrill PUBLIC -Wno-nested-anon-types)
 
 # Specify link options
 target_link_options(deepdrill PUBLIC ${GMP_LDFLAGS})
+target_link_options(deepdrill PUBLIC ${SFML_LDFLAGS})
 target_link_options(deepflight PUBLIC ${GMP_LDFLAGS})
 target_link_options(deepflight PUBLIC ${SFML_LDFLAGS})
 
 # Add include paths
 target_include_directories(deepdrill PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(deepdrill PUBLIC ${GMP_INCLUDE_DIRS})
+target_include_directories(deepdrill PUBLIC ${SFML_INCLUDE_DIRS})
 target_include_directories(deepflight PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(deepflight PUBLIC ${GMP_INCLUDE_DIRS})
 target_include_directories(deepflight PUBLIC ${SFML_INCLUDE_DIRS})

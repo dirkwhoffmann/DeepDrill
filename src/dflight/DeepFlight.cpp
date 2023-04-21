@@ -196,8 +196,8 @@ DeepFlight::checkArguments()
         auto outSuffix = extractSuffix(out);
 
         // The output file must be a mpg file
-        if (outSuffix != "mpg") {
-            throw SyntaxError(out + ": Invalid format. Expected .mpg");
+        if (outSuffix != "mpg" && outSuffix != "mpeg" && outSuffix != "mov") {
+            throw SyntaxError(out + ": Invalid format. Expected .mpg, .mpeg, or .mov");
         }
 
         // The output file must be writable
@@ -227,7 +227,7 @@ DeepFlight::readOutputs()
 
         opt.output = path;
 
-        if (suffix == "mpg") {
+        if (suffix == "mpg" || suffix == "mpeg" || suffix == "mov") {
             return;
         }
 

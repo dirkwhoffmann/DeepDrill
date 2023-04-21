@@ -36,7 +36,7 @@ Options::Options()
     defaults["video.width"] = "480";
     defaults["video.height"] = "270";
     defaults["video.keyframes"] = "0";
-    defaults["video.inbetweens"] = "120";
+    defaults["video.inbetweens"] = "0";
     defaults["video.duration"] = "0";
     defaults["video.bitrate"] = "4096";
     defaults["video.scaler"] = "";
@@ -45,7 +45,7 @@ Options::Options()
     defaults["palette.values"] = "Default";
 
     // Perturbation keys
-    defaults["perturbation.tolerance"] = "1e-12";
+    defaults["perturbation.tolerance"] = "1e-6";
     defaults["perturbation.rounds"] = "50";
 
     // Approximation keys
@@ -239,10 +239,9 @@ Options::derive()
         if (suffix == "map") return Format::MAP;
         if (suffix == "prf") return Format::PRF;
         if (suffix == "bmp") return Format::BMP;
-        if (suffix == "gif") return Format::GIF;
         if (suffix == "jpg") return Format::JPG;
         if (suffix == "png") return Format::PNG;
-        if (suffix == "mpg" || suffix == "mpeg") return Format::MPG;
+        if (suffix == "mpg" || suffix == "mpeg" || suffix == "mov") return Format::MPG;
 
         return Format::NONE;
     };
@@ -284,7 +283,8 @@ Options::derive()
         if (video.duration) {
             video.inbetweens = isize(std::round(frameRate * duration / keyframes));
         } else {
-            throw Exception("Not enough information to derive key video.inbetweens");
+            video.inbetweens = 120;
+            // throw Exception("Not enough information to derive key video.inbetweens");
         }
     }
 

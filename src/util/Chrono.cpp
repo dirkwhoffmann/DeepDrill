@@ -97,13 +97,11 @@ std::ostream& operator<<(std::ostream& os, const Time& value)
 {
     auto usec = value.asMicroseconds();
 
-    auto msec = usec / (1000LL);
     auto hsec = usec / (1000LL * 10LL);
     auto sec  = usec / (1000LL * 1000LL);
     auto min  = sec  / (1000LL * 1000LL * 60LL);
     auto hrs  = min  / (1000LL * 1000LL * 60LL * 60LL);
 
-    msec %= 1000;
     hsec %= 100;
     sec  %= 60;
     min  %= 60;
@@ -127,6 +125,7 @@ std::ostream& operator<<(std::ostream& os, const Time& value)
         os << std::setw(2) << hsec << " sec";
     }
 
+    os << std::setfill(' ');
     return os;
 }
 

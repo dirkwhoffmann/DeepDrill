@@ -1,12 +1,12 @@
-# Computing still images
+# Computing Still Images
 
 In this tutorial you will learn how to create the DeepDrill cover image with the DeepDrill tool chain. 
-
-![DeepDrill Cover Image](images/cover.jpg "DeepDrill Cover Image")
 
 It is assumed that DeepDrill has been installed successfully on your machine. The structure we will create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (`.loc`) as a command line parameter. A predefined location file for the cover image is stored in the locations directory under `spider.loc`. Before we proceed, let's have a look at the contents of this file:
 
 ```
+[location]
+
 real = -2.2677664067387922388691356244792255191880358267082812585024439971401610105397724372362029456154053824622609164675371629196502594528331340581293956764916452361e-01
 imag = -1.117239683936324591688558276484236515382167529582119984326546585480315896250189264406156057191817849297272681286515999107473779581849650803960450730872327827101e+00
 zoom = 6.36119E152
@@ -16,79 +16,52 @@ Four key-value pairs are defined. The first two determine the position of the ce
 
 Assuming the current directory is DeepDrill's main directory, we can launch DeepDrill by executing the following command on the command line:
 ```bash
-bin/deepdrill -o spider.map locations/spider.loc
+./deepdrill -o spider.map ../locations/spider.loc
 ```
 The following output is generated: 
 ````none
-DeepDrill 0.1 - (C)opyright 2021 Dirk W. Hoffmann
+DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
 
-  Round 1: 518400 points
-  
-     Computing reference orbit: ................................. 0.02 sec
-        Computing coefficients: ................................. 0.36 sec
-         Checking probe points: ................................. 0.01 sec
-        Computing delta orbits: ................................. 1.02 sec
-               Saving map file: ................................. 0.02 sec
-  
-  Total time: 1.44
+Round 1: 518400 points
+
+   Computing reference orbit: ................................. 0.01 sec
+      Computing coefficients: ................................. 0.05 sec
+       Checking probe points: ................................. 0.00 sec
+      Computing delta orbits: ................................. 0.48 sec
+             Saving map file: ................................. 0.01 sec
+
+Total time: 0.57 sec
 ````
-Note that we don't generate the image directly. Instead, we compute a so called map file which stores various information about the orbit of each pixel. Creating the map file is the first phase in a two-phase process. In the second phase, the map file is tranlated into an image. This phase is started by specifying a map file as input and a tiff file as output.
+Note that we don't generate the image directly. Instead, we compute a so called map file which stores various information about the orbit of each pixel. Creating the map file is the first phase in a two-phase process. In the second phase, the map file is tranlated into an image. This phase is started by specifying a map file as input and an image file as output.
 ```bash
-bin/deepdrill -o spider.tiff spider.map
+./deepdrill -o spider.png spider.map
 ```
 The following output is generated: 
 ```none
-DeepDrill 0.1 - (C)opyright 2021 Dirk W. Hoffmann
+DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
 
-  Loading map file: ................................. 0.03 sec
-        Colorizing: ................................. 0.01 sec
- Saving image data: ................................. 0.03 sec
-Converting to TIFF: ................................. 0.02 sec
+            Loading map file: ................................. 0.02 sec
+                  Colorizing: ................................. 0.00 sec
+           Saving image data: ................................. 0.05 sec
 
-Total time: 0.10
+Total time: 0.08 sec
 ```
-Up to now, DeepDrill only supports tiff images, but other formats are likely to come.
+Besides png images, DeepDrill supports images of type bmp and jpg.
 
-By default, DeepDrill generates a 960 x 540 pixel image with a predefined color palette and other predefined standard settings. All settings can be customized by specifying one or more profiles (`.prf` files). DeepDrill comes with a number of predefined profiles, such as the high.prf profile, which generates HD quality images. Profiles are passed to DeepDrill with the `-p` option:
+By default, DeepDrill generates a 960 x 540 pixel image with a predefined color palette and other predefined standard settings. For our example, the followign image is created:
+
+![Spider Image](images/spider1.png "Spider Image")
+
+All settings can be customized by specifying one or more profiles (`.prf` files). 
+DeepDrill comes with a number of predefined profiles, such as the vulcano.prf profile, which changes the color scheme. Profiles are passed to DeepDrill with the `-p` option:
 ```bash
-bin/deepdrill -v -p profiles/high.prf -o spider.tiff locations/spider.loc
+./deepdrill -v -o spider.png -p ../palettes/vulcano.prf ../locations/spider.loc
 ```
-As can be seen in this example, it is possible to go directly from a location file to a tiff image. In this case the map file is only built internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes.	
+Now, the image is created in the following form: 
 
-You may also have noticed the additional `-v` option. If this option is specified, DeepDrill runs in verbose mode and prints details about the settings and the current computing run.
+![DeepDrill Cover Image](images/spider2.png "DeepDrill Cover Image")
 
-# Workflow automation
+As can be seen in this example, it is possible to go directly from a location file to an image. In this case the map file is only built internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes.	
 
-To simplify the workflow, DeepDrill can set up a Makefile that automates the various processing steps. To do so, we first create an empty project directory:
-```bash
-mkdir project
-```
-To set up a workflow in this directory, we start DeepDrill with option `-m`:
-```bash
-bin/deepdrill -m -p profiles/high.prf -o project locations/spider.loc
-```
-After executing the command, three files have been created in the project directory: `Makefile`, `spider.loc`, and `spider.prf`. Let's have a look at the Makefile: 
-```Make
-# Generated by DeepDrill 0.1
+You may also have spotted the additional `-v` option. If this option is specified, DeepDrill runs in verbose mode and prints details about the settings and the current computing run.
 
-DEEPDRILL = bin/deepdrill
-	
-.PHONY: all clean
-	
-all: spider.tiff
-	
-spider.tiff: spider.map
-    $(DEEPDRILL) -v  -p spider.prf -o spider.tiff spider.map 
-	
-spider.map: spider.loc
-    $(DEEPDRILL) -v  -p spider.prf -o spider.map spider.loc 
-	
-clean:
-    rm *.map *.tiff
-```
-The Makefile defines two major goals: One to create the map file from the location file and another to convert the map file to an image. To create the image, change to the project directory and run the Make utility:
-```bash
-cd project
-make
-```
-Admittedly, workflow automation is of limited use when creating still images, since such images can be calculated by issuing a single shell command. However, the feature will become invaluable once DeepDrill gains support for creating zoom videos. In this case, a cascade of images will have to be computed and assembled in the right way. However, this functionality is yet to come.

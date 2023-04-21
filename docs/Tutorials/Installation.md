@@ -4,20 +4,20 @@ Follow the steps below to compile DeepDrill on your machine. The application has
 
 - **Step 1: Install third-party libraries**
 
-    DeepDrill utilizes the GNU Multiple Precision Arithmetic Library (GMP) and the tool raw2tiff from the libtiff package. 
+    DeepDrill utilizes the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML). 
 
   - Option 1: Install with Homebrew
  
     ```bash
     brew install gmp
-    brew install libtiff
+    brew install libsfml
     ```
 
   - Option 2: Install with APT
 
     ```bash
     sudo apt-get install libgmp3-dev
-    sudo apt-get install libtiff-tools
+    sudo apt-get install libsfml-dev
     ```
 
 - **Step 2: Clone the GitHub project**
@@ -28,11 +28,13 @@ Follow the steps below to compile DeepDrill on your machine. The application has
 
 - **Step 3: Compile the source code**
 
-    Compiling the application requires a standard C++ tool chain to be installed:
+    Compiling the application requires CMake and a standard C++ tool chain to be installed:
     ```bash
-    cd DeepDrill/src
-    make
-    cd ..
+    cd DeepDrill
+    mkdir build
+    cd build
+    cmake ../src
+    make -j
     ```
 
-On success, a `bin`</code>` directory has been created which contains the `deepdrill`</code>` executable.
+On success, two executables have been build: `deepdrill` and `deepflight`.

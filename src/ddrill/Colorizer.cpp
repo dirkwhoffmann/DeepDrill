@@ -18,6 +18,7 @@
 #include "Options.h"
 #include "ProgressIndicator.h"
 
+#include <bit>
 #include <SFML/Graphics.hpp>
 
 namespace dd {
@@ -35,7 +36,12 @@ Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
         u32 value;
 
         while(stream >> value) {
-            colors.push_back(value);
+
+            auto r = u8(value & 0xFF);
+            auto g = u8((value >> 8) & 0xFF);
+            auto b = u8((value >> 16) & 0xFF);
+
+            colors.push_back(u32(0xFF << 24 | b << 16 | g << 8 | r));
         }
 
     } else {
@@ -63,7 +69,7 @@ Colorizer::colorize()
         for (isize x = 0; x < map.width; x++) {
             colorize(Coord(x,y));
         }
-        
+
         if (opt.stop) throw UserInterruptException();
         progress.step(map.width);
     }
@@ -102,7 +108,7 @@ Colorizer::colorize(Coord c)
             auto gg = u8(g * 255.0);
             auto bb = u8(b * 255.0);
 
-            image[c.y * map.width + c.x] = rr << 0 | gg << 8 | bb << 16 | 255 << 24;
+            image[c.y * map.width + c.x] = 255 << 24 | bb << 16 | gg << 8 | rr;
             break;
         }
     }
@@ -111,11 +117,12 @@ Colorizer::colorize(Coord c)
 void
 Colorizer::save(const string &path, Format format)
 {
-    sf::Image sfImage;
+    ProgressIndicator progress("Saving image data");
 
     auto width = (int)map.width;
     auto height = (int)map.height;
 
+    sf::Image sfImage;
     sfImage.create(width, height, (u8 *)image.ptr);
     sfImage.saveToFile(path);
 }
