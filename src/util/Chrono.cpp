@@ -95,7 +95,39 @@ Time::sleepUntil()
 
 std::ostream& operator<<(std::ostream& os, const Time& value)
 {
-    return os << std::fixed << std::setprecision(2) << value.asSeconds();
+    auto usec = value.asMicroseconds();
+
+    auto msec = usec / (1000LL);
+    auto hsec = usec / (1000LL * 10LL);
+    auto sec  = usec / (1000LL * 1000LL);
+    auto min  = sec  / (1000LL * 1000LL * 60LL);
+    auto hrs  = min  / (1000LL * 1000LL * 60LL * 60LL);
+
+    msec %= 1000;
+    hsec %= 100;
+    sec  %= 60;
+    min  %= 60;
+
+    os << std::setfill('0');
+
+    if (hrs) {
+
+        os << std::setw(0) << hrs << ":";
+        os << std::setw(2) << min << ":";
+        os << std::setw(2) << sec << " hrs";
+
+    } else if (min) {
+
+        os << std::setw(0) << min << ":";
+        os << std::setw(2) << sec << " min";
+
+    } else {
+
+        os << std::setw(0) << sec << ".";
+        os << std::setw(2) << hsec << " sec";
+    }
+
+    return os;
 }
 
 string

@@ -356,44 +356,4 @@ DeepDrill::runMaker()
     maker.generate();
 }
 
-/*
-void
-DeepDrill::printProgress(const string &msg2)
-{
-    std::stringstream ss;
-
-    auto cnt1 = countFiles("png");
-    auto cnt2 = countFiles("loc");
-    auto percent = isize(100.0 * cnt1 / cnt2);
-
-    // Prepare output string
-    Logger logger(ss);
-    logger << log::blue << "[" << percent << "%] ";
-    logger << cnt1 << "/" << cnt2 << ": ";
-
-    if (msg2 == "") {
-
-        logger << log::cyan << opt.output << log::black;
-        logger << " ..." << log::endl;
-
-    } else {
-
-        logger << log::green << opt.output;
-        logger << log::black << " (" << msg2 << ")" << log::endl;
-    }
-
-    // Print output in a single chunk
-    std::cout << ss.str();
-}
-
-void
-DeepDrill::printProgress(Clock &clock)
-{
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << clock.stop();
-
-    printProgress(ss.str() + " sec");
-}
-*/
-
 }

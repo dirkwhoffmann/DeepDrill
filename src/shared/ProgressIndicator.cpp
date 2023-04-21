@@ -60,7 +60,7 @@ ProgressIndicator::done(const string &info)
     auto elapsed = clock.stop();
         
     for (; dots < dotsMax; dots++) { log::cout << "."; } log::cout << " ";
-    log::cout << elapsed << " sec";
+    log::cout << elapsed;
     
     if (info != "") log::cout << " (" << info << ")";
     log::cout << log::endl;
@@ -93,7 +93,7 @@ BatchProgressIndicator::~BatchProgressIndicator()
 
         prefix(logger);
         logger << log::green << msg;
-        logger << log::black << " (" << clock.stop() << " sec)" << log::endl;
+        logger << log::black << " (" << clock.stop() << ")" << log::endl;
 
         std::cout << ss.str();
     }
