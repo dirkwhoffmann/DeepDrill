@@ -20,10 +20,6 @@ Options::Options()
 {
     // Register default keys
 
-    // Tool keys
-    defaults["tools.raw2tiff"] = "";
-    defaults["tools.convert"] = "";
-
     // Location keys
     defaults["location.real"] = "0.0";
     defaults["location.imag"] = "0.0";
@@ -55,13 +51,6 @@ Options::Options()
     // Approximation keys
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
-
-    // Search for external tools...
-    std::vector<string> paths = { "/usr/bin", "/usr/local/bin", "/opt/homebrew/bin" };
-    for (const auto &path : paths) {
-        if (fileExists(path + "/raw2tiff")) defaults["tools.raw2tiff"] = path + "/raw2tiff";
-        if (fileExists(path + "/convert")) defaults["tools.convert"] = path + "/convert";
-    }
 }
 
 void
@@ -69,23 +58,7 @@ Options::parse(string key, string value)
 {
     keys[key] = value;
 
-    if (key == "tools.raw2tiff") {
-
-        parse(key, value, tools.raw2tiff);
-
-        if (!fileExists(tools.raw2tiff)) {
-            throw KeyValueError(key, "File " + value + " not found.");
-        }
-
-    } else if (key == "tools.convert") {
-
-        parse(key, value, tools.convert);
-
-        if (!fileExists(tools.convert)) {
-            throw KeyValueError(key, "File " + value + " not found.");
-        }
-
-    } else if (key == "location.real") {
+    if (key == "location.real") {
 
         parse(key, value, location.real);
 

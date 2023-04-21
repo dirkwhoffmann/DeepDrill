@@ -50,14 +50,6 @@ struct Options {
 
     struct {
 
-        // Paths to external shell tools
-        string raw2tiff;
-        string convert;
-
-    } tools;
-
-    struct {
-
         // Center coordinate
         mpf_class real;
         mpf_class imag;
