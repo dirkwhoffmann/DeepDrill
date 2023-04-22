@@ -20,6 +20,18 @@ namespace dd {
 
 enum class Format { NONE, LOC, MAP, PRF, DIR, BMP, JPG, PNG, MPG };
 
+inline bool isImageFormat(Format format) {
+    return
+    format == Format::BMP ||
+    format == Format::JPG ||
+    format == Format::PNG;
+}
+
+inline bool isVideoFormat(Format format) {
+    return
+    format == Format::MPG;
+}
+
 struct Options {
 
     // Set to true to abort the computation
@@ -88,9 +100,6 @@ struct Options {
         // Number of in-between images
         isize inbetweens;
 
-        // Video length in seconds
-        isize duration;
-
         // Bitrate
         isize bitrate;
 
@@ -131,7 +140,7 @@ struct Options {
     //
     // Derived values
     //
-    
+
     // Format of the specified input and output files
     Format inputFormat = Format::NONE;
     Format outputFormat = Format::NONE;
@@ -142,6 +151,9 @@ struct Options {
     // Distance between two adjacent pixels
     mpf_class mpfPixelDelta;
     ExtendedDouble pixelDelta;
+
+    // Video duration in seconds
+    isize duration;
 
 
     //

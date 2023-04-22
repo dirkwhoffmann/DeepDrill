@@ -33,16 +33,15 @@ Options::Options()
 
     // Video keys
     defaults["video.framerate"] = "60";
-    defaults["video.width"] = "480";
-    defaults["video.height"] = "270";
+    defaults["video.width"] = "0";
+    defaults["video.height"] = "0";
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
-    defaults["video.duration"] = "0";
     defaults["video.bitrate"] = "4096";
     defaults["video.scaler"] = "";
 
     // Palette keys
-    defaults["palette.values"] = "Default";
+    defaults["palette.values"] = "default";
 
     // Perturbation keys
     defaults["perturbation.tolerance"] = "1e-6";
@@ -140,10 +139,6 @@ Options::parse(string key, string value)
     } else if (key == "video.inbetweens") {
 
         parse(key, value, video.inbetweens);
-
-    } else if (key == "video.duration") {
-
-        parse(key, value, video.duration);
 
     } else if (key == "video.bitrate") {
 
@@ -246,6 +241,28 @@ Options::derive()
         return Format::NONE;
     };
 
+    // Derive unspecified parameters
+    auto frameRate = double(video.frameRate);
+    auto keyframes = double(video.keyframes);
+    auto inbetweens = double(video.inbetweens);
+
+    if (!video.width) {
+        video.width = image.width / 2;     // can be even or odd
+    }
+    if (!video.height) {
+        video.height = image.height / 2;
+        video.height += video.height & 1;  // must be even
+    }
+    if (!video.inbetweens) {
+        video.inbetweens = 2 * video.frameRate;
+    }
+    if (!video.keyframes) {
+        video.keyframes = isize(std::ceil(std::log2(location.zoom.get_d())));
+    }
+
+    // Derive the video length
+    duration = isize(std::round(keyframes * inbetweens / frameRate));
+
     // Set default values for all missing options
     for (auto &it : defaults) {
         if (keys.find(it.first) == keys.end()) {
@@ -263,33 +280,6 @@ Options::derive()
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
-
-    // Derive unspecified parameters
-    auto frameRate = double(video.frameRate);
-    auto keyframes = double(video.keyframes);
-    auto duration = double(video.duration);
-    auto inbetweens = double(video.inbetweens);
-
-    if (!video.keyframes) {
-
-        if (video.inbetweens && video.duration) {
-            video.keyframes = isize(std::ceil(frameRate * duration / inbetweens));
-        } else {
-            video.keyframes = isize(std::ceil(std::log2(location.zoom.get_d())));
-        }
-    }
-    if (!video.inbetweens) {
-
-        if (video.duration) {
-            video.inbetweens = isize(std::round(frameRate * duration / keyframes));
-        } else {
-            video.inbetweens = 120;
-            // throw Exception("Not enough information to derive key video.inbetweens");
-        }
-    }
-
-    // Derive or rectify duration parameter
-    video.duration = isize(std::round(keyframes * inbetweens / frameRate));
 }
 
 }

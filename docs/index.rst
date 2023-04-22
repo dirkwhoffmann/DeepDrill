@@ -32,4 +32,5 @@ DeepDrill User's Manual
    :maxdepth: 1
    :caption: References
 
+   References/Options
    References/Links
