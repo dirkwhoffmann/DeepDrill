@@ -19,7 +19,7 @@ DEEPDRILL  = $(BINDIR)/deepdrill
 DEEPFLIGHT = $(BINDIR)/deepflight
 CXX        = g++
 CC         = $(CXX)
-CCFLAGS    = -std=c++20 -O3 -Wall -Wfatal-errors
+CCFLAGS    = -std=c++2a -O3 -march=native -Wall -Wfatal-errors
 CPPFLAGS   = -I$(CURDIR) \
              -I$(CURDIR)/$(UTILDIR) \
 			 -I$(CURDIR)/$(MATHDIR) \
