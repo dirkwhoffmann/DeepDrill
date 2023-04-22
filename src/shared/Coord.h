@@ -14,6 +14,7 @@
 #include "config.h"
 #include "Types.h"
 #include "PrecisionComplex.h"
+#include <cmath>
 
 namespace dd {
 
