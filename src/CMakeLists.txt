@@ -25,8 +25,9 @@ add_executable(deepflight dflight/DeepFlight.cpp)
 # Specify compile options
 target_compile_options(deepdrill PUBLIC -Wall -Werror)
 target_compile_options(deepdrill PUBLIC -Wno-unused-parameter)
-target_compile_options(deepdrill PUBLIC -Wno-gnu-anonymous-struct)
-target_compile_options(deepdrill PUBLIC -Wno-nested-anon-types)
+#target_compile_options(deepdrill PUBLIC -Wno-gnu-anonymous-struct)
+#target_compile_options(deepdrill PUBLIC -Wno-nested-anon-types)
+target_compile_options(deepdrill PUBLIC -Wno-restrict)
 
 # Specify link options
 target_link_options(deepdrill PUBLIC ${GMP_LDFLAGS})
