@@ -88,7 +88,7 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
             // Add the key-value pair
             try {
                 callback(section + "." + key ,value);
-            } catch (Exception e) {
+            } catch (const Exception &e) {
                 throw Exception(e.what(), line);
             }
             continue;
