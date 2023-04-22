@@ -2,10 +2,6 @@
 width = 480
 height = 260
 
-[video]
-width = 240
-height = 130
-
 [perturbation]
 tolerance = 1e-6
 rounds = 10

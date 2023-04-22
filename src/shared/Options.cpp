@@ -111,8 +111,8 @@ Options::parse(string key, string value)
 
         parse(key, value, video.width);
 
-        if (video.width == 0) {
-            throw KeyValueError(key, "Width must be greater than 0.");
+        if (video.width < 0) {
+            throw KeyValueError(key, "Width must not be negative.");
         }
         if (video.width > 1920) {
             throw KeyValueError(key, "Width must be smaller or equal to 1920.");
@@ -122,8 +122,8 @@ Options::parse(string key, string value)
 
         parse(key, value, video.height);
 
-        if (video.height == 0) {
-            throw KeyValueError(key, "Height must be greater than 0.");
+        if (video.height < 0) {
+            throw KeyValueError(key, "Height must not be negative.");
         }
         if (video.height > 1080) {
             throw KeyValueError(key, "Height must be less or equal to 1080.");
@@ -247,11 +247,11 @@ Options::derive()
     auto inbetweens = double(video.inbetweens);
 
     if (!video.width) {
-        video.width = image.width / 2;     // can be even or odd
+        video.width = image.width / 2;     // Width can be even or odd
     }
     if (!video.height) {
         video.height = image.height / 2;
-        video.height += video.height & 1;  // must be even
+        video.height += video.height & 1;  // Height must be even
     }
     if (!video.inbetweens) {
         video.inbetweens = 2 * video.frameRate;
