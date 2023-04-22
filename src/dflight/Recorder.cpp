@@ -93,7 +93,7 @@ Recorder::startRecording()
         log::cout << log::ralign("Inbetweens: ");
         log::cout << opt.video.inbetweens << log::endl;
         log::cout << log::ralign("Duration: ");
-        log::cout << opt.video.duration << " sec" << log::endl;
+        log::cout << opt.duration << " sec" << log::endl;
         log::cout << log::ralign("Bitrate: ");
         log::cout << opt.video.bitrate << log::endl;
         log::cout << log::vspace;
