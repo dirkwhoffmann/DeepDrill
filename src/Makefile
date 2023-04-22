@@ -52,11 +52,11 @@ all: $(DEEPDRILL) $(DEEPFLIGHT)
 
 $(DEEPDRILL): $(DDOBJ)
 	@echo "Linking $@"
-	@$(CC) $(LDFLAGS) $(DDOBJ) -o $(DEEPDRILL)
+	@$(CC) $(DDOBJ) $(LDFLAGS) -o $(DEEPDRILL)
 
 $(DEEPFLIGHT): $(MATHOBJ) $(UTILOBJ) $(SHAREDOBJ) $(DFOBJ)
 	@echo "Linking $@"
-	@$(CC) $(LDFLAGS) $(DFOBJ) -o $(DEEPFLIGHT)
+	@$(CC) $(DFOBJ) $(LDFLAGS) -o $(DEEPFLIGHT)
 
 clean:
 	@rm -f $(DEEPDRILL) $(DEEPFLIGHT) *.o */*.o
