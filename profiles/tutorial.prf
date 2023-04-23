@@ -1,4 +1,15 @@
-[video]
+[image]
+width = 3840
+height = 2160
 
+[video]
 keyframes = 75
 inbetweens = 143
+bitrate = 8000
+
+[perturbation]
+tolerance = 1e-6
+rounds = 100
+
+[approximation]
+coefficients = 5
