@@ -322,14 +322,14 @@ DeepDrill::runPipeline()
         // Run the driller
         Driller driller(opt, drillMap);
         driller.drill();
+
+        // Are we supposed to save the map file?
+        if (opt.outputFormat == Format::MAP) {
+
+            drillMap.save(opt.output);
+        }
     }
-    
-    // Are we supposed to save the map file?
-    if (opt.outputFormat == Format::MAP) {
-        
-        drillMap.save(opt.output);
-    }
-    
+
     // Are we suppoed to create an image file?
     if (opt.outputFormat == Format::BMP ||
         opt.outputFormat == Format::JPG ||

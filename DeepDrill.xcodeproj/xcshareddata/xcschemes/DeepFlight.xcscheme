@@ -61,15 +61,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/Dropbox/spider/spider.prj"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/seahorse.prj"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-o /tmp/garbage.mpg "
+            argument = "/Users/hoff/tmp/dd/project/orion.prj"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-o /tmp/garbage.mpg "
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>

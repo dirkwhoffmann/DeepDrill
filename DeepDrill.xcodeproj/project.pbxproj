@@ -179,6 +179,8 @@
 		50D69A7629E2A4630025DE0D /* tutorial.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.prf; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
+		50EB0D4D29F57D2600770F31 /* infinity.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.loc; sourceTree = "<group>"; };
+		50EB0D4E29F57D5200770F31 /* spider.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.loc; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -347,7 +349,6 @@
 				50BEC72B2694872900CCDFA8 /* peanuts.loc */,
 				50BEC72C2694872900CCDFA8 /* safari.loc */,
 				50BEC72E2694872900CCDFA8 /* seahorse.loc */,
-				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				50BEC7332694872A00CCDFA8 /* super_dense.loc */,
 				50BEC73D2694872B00CCDFA8 /* threads_colour.loc */,
 				50BEC7342694872A00CCDFA8 /* triangle.loc */,
@@ -356,6 +357,7 @@
 				50BEC73E2694872B00CCDFA8 /* wfs2.loc */,
 				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
+				50EB0D4E29F57D5200770F31 /* spider.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -376,6 +378,7 @@
 				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				5010234A269DDE6D00AC61A8 /* src */,
 				50BEC7292694870100CCDFA8 /* locations */,
+				50EB0D4C29F57D0200770F31 /* tutorial */,
 				50BEC721269486D900CCDFA8 /* profiles */,
 				50BEC7562694873C00CCDFA8 /* palettes */,
 				50D69A7429E177D50025DE0D /* shaders */,
@@ -415,6 +418,15 @@
 				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
 			);
 			path = shared;
+			sourceTree = "<group>";
+		};
+		50EB0D4C29F57D0200770F31 /* tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				50BEC72F2694872900CCDFA8 /* spider.loc */,
+				50EB0D4D29F57D2600770F31 /* infinity.loc */,
+			);
+			path = tutorial;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
