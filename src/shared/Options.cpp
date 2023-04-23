@@ -182,7 +182,7 @@ Options::parse(string key, string value)
 
     } else {
 
-        assert(false);
+        throw KeyValueError(key, "Unexpected key");
     }
 }
 

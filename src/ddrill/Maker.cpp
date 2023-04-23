@@ -75,7 +75,6 @@ Maker::generateProjectFile()
     os << "height = " << keys["video.height"] << std::endl;
     os << "keyframes = " << keys["video.keyframes"] << std::endl;
     os << "inbetweens = " << keys["video.inbetweens"] << std::endl;
-    os << "duration = " << keys["video.duration"] << std::endl;
     os << "bitrate = " << keys["video.bitrate"] << std::endl;
     os << "scaler = " << keys["video.scaler"] << std::endl;
     os << "merger = " << keys["video.merger"] << std::endl;
@@ -182,11 +181,15 @@ Maker::writeHeader(std::ofstream &os)
 void
 Maker::writeDefinitions(std::ofstream &os)
 {
-    os << "DEEPDRILL  = " << opt.exec << std::endl;
+    auto path = extractPath(opt.exec);
+
+    os << "DEEPDRILL  = " << path << "deepdrill" << std::endl;
+    os << "DEEPFLIGHT = " << path << "deepflight" << std::endl;
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
+    os << "VIDEO      = " << project << ".mov" << std::endl;
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
-    os << "MAPFLAGS   = -b -v" << std::endl;
+    os << "MAPFLAGS   = -b" << std::endl;
     os << "PNGFLAGS   = -b" << std::endl;
     os << std::endl;
 }
@@ -199,21 +202,32 @@ Maker::writeTargets(std::ofstream &os)
     os << std::endl;
 
     // Write 'all' target
-    os << "all: $(IMAGES) $(MAPS)" << std::endl;
+    os << "all: $(VIDEO) $(IMAGES) $(MAPS)" << std::endl;
     os << "\t" << "@echo \"\"" << std::endl;
     os << std::endl;
 
-    // Write 'map' and 'png' targets
-    os << "%.png: %.map" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(PNGFLAGS) -p " << project << ".prf -o $*.png $*.map" << std::endl;
-    os << std::endl;
+    // Write 'map' target
     os << "%.map: %.loc" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf -o $*.map $*.loc" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf";
+    os << " -o $*.map $*.loc > $*.progress" << std::endl;
+    os << "\t" << "@mv $*.progress $*.log" << std::endl;
+    os << std::endl;
+
+    // Write 'png' target
+    os << "%.png: %.map" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) $(PNGFLAGS) -p " << project << ".prf";
+    os << " -o $*.png $*.map > /dev/null" << std::endl;
+    os << std::endl;
+
+    // Write 'mov' target
+    os << "$(VIDEO): $(IMAGES)" << std::endl;
+    os << "\t" << "@$(DEEPFLIGHT) $(MOVFLAGS) " << project << ".prj";
+    os << " -o $(VIDEO)";
     os << std::endl;
 
     // Write 'clean' target
     os << "clean:" << std::endl;
-    os << "\t" << "rm *.map *.png" << std::endl;
+    os << "\t" << "rm *.mov *.map *.png *.log" << std::endl;
     os << std::endl;
 }
 

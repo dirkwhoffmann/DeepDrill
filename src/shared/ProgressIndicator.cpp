@@ -66,20 +66,21 @@ ProgressIndicator::done(const string &info)
     log::cout << log::endl;
 }
 
-BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg)
+BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg, const string &file)
 {
-    if (opt.batch && opt.verbose) {
+    if (opt.batch) {
 
         this->msg = msg;
+        this->file = file;
 
         std::stringstream ss;
         Logger logger(ss);
 
         prefix(logger);
-        logger << log::yellow << msg << log::black;
+        logger << log::yellow << msg << " " << file << log::black;
         logger << " ..." << log::endl;
 
-        std::cout << ss.str();
+        std::cerr << ss.str();
         clock.restart();
     }
 }
@@ -92,17 +93,17 @@ BatchProgressIndicator::~BatchProgressIndicator()
         Logger logger(ss);
 
         prefix(logger);
-        logger << log::green << msg;
+        logger << log::green << "Created " << file;
         logger << log::black << " (" << clock.stop() << ")" << log::endl;
 
-        std::cout << ss.str();
+        std::cerr << ss.str();
     }
 }
 
 void
 BatchProgressIndicator::prefix(Logger &logger)
 {
-    auto cnt1 = countFiles(extractSuffix(msg));
+    auto cnt1 = countFiles(extractSuffix(file));
     auto cnt2 = countFiles("loc");
     auto percent = isize(100.0 * cnt1 / cnt2);
 

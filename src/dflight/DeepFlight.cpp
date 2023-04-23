@@ -57,19 +57,12 @@ namespace dd {
 void
 DeepFlight::main(int argc, char *argv[])
 {
+    log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
+    log::cout << " - (C)opyright Dirk W. Hoffmann";
+    log::cout << log::endl << log::endl;
+
     // Parse command line arguments
     parseArguments(argc, argv);
-
-    if (opt.batch) {
-
-        log::cout.setSilent(true);
-
-    } else {
-
-        log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
-        log::cout << " - (C)opyright Dirk W. Hoffmann";
-        log::cout << log::endl << log::endl;
-    }
 
     // Read files
     readInputs();

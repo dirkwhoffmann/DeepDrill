@@ -50,15 +50,15 @@ private:
 
 class BatchProgressIndicator {
 
-    // Displayed message
     string msg;
+    string file;
 
     // Stop watch
     Clock clock;
 
 public:
 
-    BatchProgressIndicator(const struct Options &opt, const string &msg);
+    BatchProgressIndicator(const struct Options &opt, const string &msg, const string &file);
     ~BatchProgressIndicator();
 
 private:

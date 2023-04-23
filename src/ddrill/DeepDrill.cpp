@@ -62,19 +62,12 @@ namespace dd {
 void
 DeepDrill::main(int argc, char *argv[])
 {
+    log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
+    log::cout << " - (C)opyright Dirk W. Hoffmann";
+    log::cout << log::endl << log::endl;
+
     // Parse command line arguments
     parseArguments(argc, argv);
-
-    if (opt.batch) {
-
-        log::cout.setSilent(true);
-
-    } else {
-
-        log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
-        log::cout << " - (C)opyright Dirk W. Hoffmann";
-        log::cout << log::endl << log::endl;
-    }
 
     // Check arguments for consistency
     checkArguments();
@@ -325,7 +318,7 @@ DeepDrill::runPipeline()
 
     } else {
 
-        BatchProgressIndicator progress(opt, opt.output);
+        BatchProgressIndicator progress(opt, "Drilling", opt.output);
 
         // Run the driller
         Driller driller(opt, drillMap);
@@ -343,7 +336,7 @@ DeepDrill::runPipeline()
         opt.outputFormat == Format::JPG ||
         opt.outputFormat == Format::PNG) {
 
-        BatchProgressIndicator progress(opt, opt.output);
+        BatchProgressIndicator progress(opt, "Colorizing", opt.output);
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);

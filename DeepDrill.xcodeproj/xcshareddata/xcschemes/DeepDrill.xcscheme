@@ -62,7 +62,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p /Users/hoff/Retro/DeepDrill/profiles/low.prf "
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p /Users/hoff/Retro/DeepDrill/profiles/medium.prf "
@@ -74,7 +74,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p /Users/hoff/Retro/DeepDrill/profiles/ultra.prf "
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p /Users/hoff/Retro/DeepDrill/profiles/tutorial.prf"
