@@ -15,7 +15,7 @@ To set up a workflow in this directory, we start DeepDrill with the `-m` option:
 ./deepdrill -m -p ../profiles/tutorial.prf -o project ../locations/spider.loc
 ```
 ```
-DeepDrill 0.9 - (C)opyright Dirk W. Hoffmann
+DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
 
      Generating project file: ................................. 0.00 sec
    Generating location files: ................................. 0.04 sec
@@ -24,13 +24,27 @@ DeepDrill 0.9 - (C)opyright Dirk W. Hoffmann
 
 Total time: 0.05 sec
 ```
-If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc`. In our example, this would result in a fairly long video. To shorten the video, we instructed DeepDrill to read in `tutorial.prf` before setting up the workflow. This profile defines two keys:
+If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc` with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in `tutorial.prf` before setting up the workflow. This profile defines two keys:
 ```
+[image]
+width = 3840
+height = 2160
+
 [video]
 keyframes = 75
 inbetweens = 143
+bitrate = 8000
+
+[perturbation]
+tolerance = 1e-6
+rounds = 100
+
+[approximation]
+coefficients = 5
 ```
-The first key specifies the number of keyframes to calculate. The second key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes.
+The first two keys specify the resolution of the keyframe images. The resolution of the generated video will be half the size. Hence, a video with a standard HD resolution of 1920 x 1080 pixels will be produced.  
+
+The next key specifies the number of keyframes to calculate, and the third key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes. 
 
 Let's take a closer look at the files DeepDrill created in the project directory:  
 - `spider.prj`
@@ -79,9 +93,9 @@ Depending on the performance of your machine, it may take a while to calculate a
 
 ## Assembling the zoom video
 
-The final step is to combine all the keyframes into a zoom video. For this purpose we use a separate tool called `deepflight`. We call this tool with the created project file `spider.prj` as input and a `.mov` file as output:
+The final step is to combine all the keyframes into a zoom video by calling `make` with the `spider.mov` target as argument:
+```bash
+make spider.mov 
 ```
-./deepflight -o spider.mov spider.prj
-```
-After completion, the file `spider.mov was created, which contains the final video.
-![Spider movie screenshot](images/spider_mov.png "Spider Movie Screenshot")
+This target executes a separate tool called `deepflight` which stiches together all previously computed keyframes. After completion, the file `spider.mov was created, which contains the final video:
+[![Youtube screenshot](images/spider_youtube.png)](https://www.youtube.com/watch?v=Ph3vJASDVaE)
