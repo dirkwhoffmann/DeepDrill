@@ -179,7 +179,6 @@
 		50D69A7629E2A4630025DE0D /* tutorial.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.prf; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
-		50EB0D4B29F40B2900770F31 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -217,7 +216,6 @@
 				50EB0D4729EE605E00770F31 /* shared */,
 				505EB93129D720B5008DE5BB /* ddrill */,
 				5049968029DED17800B15919 /* dflight */,
-				50EB0D4B29F40B2900770F31 /* Makefile */,
 			);
 			path = src;
 			sourceTree = "<group>";
