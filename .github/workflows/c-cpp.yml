@@ -16,6 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install
+      run:  sudo apt-get install libsfml-dev libgmp3-dev
+      
     - name: Configure CMake
       working-directory: ./src
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
