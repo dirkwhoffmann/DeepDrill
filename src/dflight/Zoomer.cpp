@@ -39,6 +39,9 @@ Zoomer::init()
     auto videoMode = sf::VideoMode(targetWidth, targetHeight);
     window.create(videoMode, "");
 
+    // Hide the window in batch mode
+    if (opt.batch) window.setVisible(false);
+
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode() ? 0 : unsigned(opt.video.frameRate));
 

@@ -191,6 +191,7 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
     os << "MAPFLAGS   = -b" << std::endl;
     os << "PNGFLAGS   = -b" << std::endl;
+    // os << "MOVFLAGS   = -b" << std::endl;
     os << std::endl;
 }
 
@@ -202,8 +203,7 @@ Maker::writeTargets(std::ofstream &os)
     os << std::endl;
 
     // Write 'all' target
-    os << "all: $(VIDEO) $(IMAGES) $(MAPS)" << std::endl;
-    os << "\t" << "@echo \"\"" << std::endl;
+    os << "all: $(IMAGES) $(MAPS)" << std::endl;
     os << std::endl;
 
     // Write 'map' target
