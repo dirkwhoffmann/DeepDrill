@@ -52,10 +52,3 @@ using std::string;
 #include <map>
 using std::vector;
 using std::map;
-
-
-//
-// Aliases
-//
-
-typedef struct { i16 width; i16 height; } Size;

@@ -17,11 +17,11 @@
 //
 
 // Version number
-#define VER_MAJOR 0
-#define VER_MINOR 9
+#define VER_MAJOR 1
+#define VER_MINOR 0
 
 // Uncomment this setting in a release build
-// #define RELEASEBUILD
+#define RELEASEBUILD
 
 
 //
