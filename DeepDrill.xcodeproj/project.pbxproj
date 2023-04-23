@@ -176,11 +176,12 @@
 		50D69A6F29E03F940025DE0D /* NamedPipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipe.h; sourceTree = "<group>"; };
 		50D69A7129E0409E0025DE0D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
-		50D69A7629E2A4630025DE0D /* tutorial.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.prf; sourceTree = "<group>"; };
+		50D69A7629E2A4630025DE0D /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
 		50EB0D4D29F57D2600770F31 /* infinity.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.loc; sourceTree = "<group>"; };
 		50EB0D4E29F57D5200770F31 /* spider.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.loc; sourceTree = "<group>"; };
+		50EB0D4F29F596DE00770F31 /* infinity.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.prf; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
@@ -307,7 +308,6 @@
 				50BEC723269486E500CCDFA8 /* medium.prf */,
 				50BEC727269486E600CCDFA8 /* high.prf */,
 				50BEC726269486E600CCDFA8 /* ultra.prf */,
-				50D69A7629E2A4630025DE0D /* tutorial.prf */,
 				50EB0D4A29F3E15800770F31 /* debug.prf */,
 			);
 			path = profiles;
@@ -425,6 +425,8 @@
 			children = (
 				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				50EB0D4D29F57D2600770F31 /* infinity.loc */,
+				50D69A7629E2A4630025DE0D /* spider.prf */,
+				50EB0D4F29F596DE00770F31 /* infinity.prf */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";
