@@ -13,12 +13,29 @@
 
 #include "config.h"
 #include "Types.h"
+#include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
 namespace dd {
 
 enum class Format { NONE, LOC, MAP, PRF, DIR, BMP, JPG, PNG, MPG };
+
+inline Format getFormat(const string &path) {
+
+    if (isDirectory(path)) return Format::DIR;
+
+    auto suffix = extractSuffix(path);
+    if (suffix == "loc") return Format::LOC;
+    if (suffix == "map") return Format::MAP;
+    if (suffix == "prf") return Format::PRF;
+    if (suffix == "bmp") return Format::BMP;
+    if (suffix == "jpg") return Format::JPG;
+    if (suffix == "png") return Format::PNG;
+    if (suffix == "mpg" || suffix == "mpeg" || suffix == "mov") return Format::MPG;
+
+    return Format::NONE;
+}
 
 inline bool isImageFormat(Format format) {
     return

@@ -168,12 +168,15 @@ DeepDrill::checkArguments()
 
     auto in = inputs.front();
     auto out = outputs.front();
-    auto inSuffix = extractSuffix(in);
-    auto outSuffix = extractSuffix(out);
+    auto inFormat = getFormat(in);
+    auto outFormat = getFormat(out);
+
+    // auto inSuffix = extractSuffix(in);
+    // auto outSuffix = extractSuffix(out);
 
     // All profiles must be files of type ".prf"
     for (auto &it : profiles) {
-        if (extractSuffix(it) != "prf") {
+        if (getFormat(it) != Format::PRF) {
             throw SyntaxError(it + " is not a profile (.prf)");
         }
     }
@@ -181,7 +184,7 @@ DeepDrill::checkArguments()
     if (opt.make) {
         
         // The input files must be a location files
-        if (inSuffix != "loc") {
+        if (inFormat != Format::LOC) {
             throw SyntaxError(in + " is not a location file (.loc)");
         }
 
@@ -199,17 +202,13 @@ DeepDrill::checkArguments()
     } else {
                 
         // The input file must be a location file or a map file
-        if (inSuffix != "loc" &&
-            inSuffix != "map") {
+        if (inFormat != Format::LOC && inFormat != Format::MAP) {
             throw SyntaxError(inputs.front() +
                               ": Invalid format. Expected .loc or .map");
         }
         
         // The output file must be a map file or an image file
-        if (outSuffix != "map" &&
-            outSuffix != "bmp" &&
-            outSuffix != "jpg" &&
-            outSuffix != "png") {
+        if (outFormat != Format::MAP && !isImageFormat(outFormat)) {
             throw SyntaxError(outputs.front() +
                               ": Invalid format. Expected .map, .bmp, .jpg, or .png");
         }
@@ -242,14 +241,14 @@ void
 DeepDrill::readOutputs()
 {
     auto path = outputs.front();
-    auto suffix = extractSuffix(path);
+    auto format = getFormat(path);
 
     opt.output = path;
 
-    if (suffix == "map") {
+    if (format == Format::MAP) {
         return;
     }
-    if (suffix == "bmp" || suffix == "jpg" || suffix == "png") {
+    if (isImageFormat(format)) {
         return;
     }
     if (isDirectory(path)) {
