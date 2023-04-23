@@ -135,7 +135,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-m<span class="w"> </span>-p<span class="w"> </span>../profiles/tutorial.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>../locations/spider.loc
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeepDrill</span> <span class="mf">0.9</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeepDrill</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
 
      <span class="n">Generating</span> <span class="n">project</span> <span class="n">file</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
    <span class="n">Generating</span> <span class="n">location</span> <span class="n">files</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.04</span> <span class="n">sec</span>
@@ -145,13 +145,26 @@
 <span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.05</span> <span class="n">sec</span>
 </pre></div>
 </div>
-<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code>. In our example, this would result in a fairly long video. To shorten the video, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">tutorial.prf</span></code> before setting up the workflow. This profile defines two keys:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">video</span><span class="p">]</span>
+<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">tutorial.prf</span></code> before setting up the workflow. This profile defines two keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mi">3840</span>
+<span class="n">height</span> <span class="o">=</span> <span class="mi">2160</span>
+
+<span class="p">[</span><span class="n">video</span><span class="p">]</span>
 <span class="n">keyframes</span> <span class="o">=</span> <span class="mi">75</span>
 <span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">143</span>
+<span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
+<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">rounds</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="p">[</span><span class="n">approximation</span><span class="p">]</span>
+<span class="n">coefficients</span> <span class="o">=</span> <span class="mi">5</span>
 </pre></div>
 </div>
-<p>The first key specifies the number of keyframes to calculate. The second key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes.</p>
+<p>The first two keys specify the resolution of the keyframe images. The resolution of the generated video will be half the size. Hence, a video with a standard HD resolution of 1920 x 1080 pixels will be produced.</p>
+<p>The next key specifies the number of keyframes to calculate, and the third key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes.</p>
 <p>Let’s take a closer look at the files DeepDrill created in the project directory:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">spider.prj</span></code>
@@ -196,12 +209,12 @@ make<span class="w"> </span>-j
 </section>
 <section id="assembling-the-zoom-video">
 <h2>Assembling the zoom video<a class="headerlink" href="#assembling-the-zoom-video" title="Permalink to this heading">¶</a></h2>
-<p>The final step is to combine all the keyframes into a zoom video. For this purpose we use a separate tool called <code class="docutils literal notranslate"><span class="pre">deepflight</span></code>. We call this tool with the created project file <code class="docutils literal notranslate"><span class="pre">spider.prj</span></code> as input and a <code class="docutils literal notranslate"><span class="pre">.mov</span></code> file as output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deepflight</span> <span class="o">-</span><span class="n">o</span> <span class="n">spider</span><span class="o">.</span><span class="n">mov</span> <span class="n">spider</span><span class="o">.</span><span class="n">prj</span>
+<p>The final step is to combine all the keyframes into a zoom video by calling <code class="docutils literal notranslate"><span class="pre">make</span></code> with the <code class="docutils literal notranslate"><span class="pre">spider.mov</span></code> target as argument:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>spider.mov<span class="w"> </span>
 </pre></div>
 </div>
-<p>After completion, the file `spider.mov was created, which contains the final video.
-<img alt="Spider movie screenshot" src="../_images/spider_mov.png" /></p>
+<p>This target executes a separate tool called <code class="docutils literal notranslate"><span class="pre">deepflight</span></code> which stiches together all previously computed keyframes. After completion, the file `spider.mov was created, which contains the final video:
+<a class="reference external" href="https://www.youtube.com/watch?v=Ph3vJASDVaE"><img alt="Youtube screenshot" src="../_images/spider_youtube.png" /></a></p>
 </section>
 </section>
 
