@@ -88,6 +88,12 @@ Colorizer::colorize(Coord c)
         return;
     }
 
+    double sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
+    sl *= .0025;
+
+    image[pos] = palette.interpolateABGR(sl);
+
+    /*
     switch (scheme) {
 
         case ColorScheme::Custom:
@@ -113,6 +119,7 @@ Colorizer::colorize(Coord c)
             break;
         }
     }
+    */
 }
 
 void

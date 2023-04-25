@@ -15,6 +15,7 @@
 #include "Types.h"
 #include "Options.h"
 #include "Buffer.h"
+#include "Palette.h"
 
 namespace dd {
 
@@ -31,10 +32,13 @@ class Colorizer {
     // The image data
     Buffer <u32> image;
 
-    // The color scheme
+    // The color palette
+    Palette palette;
+    
+    // The color scheme (DEPRECATED)
     ColorScheme scheme = ColorScheme::Default;
 
-    // Custom color table
+    // Custom color table (DEPRECATED)
     vector <u32> colors;
 
 

@@ -12,6 +12,8 @@
 		50102349269DC4F500AC61A8 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
 		50102352269EC70200AC61A8 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
 		5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
+		5047B4E329F812F700AC38DC /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4E129F812F700AC38DC /* Palette.cpp */; };
+		5047B4E429F812F700AC38DC /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4E129F812F700AC38DC /* Palette.cpp */; };
 		5049968229DED17800B15919 /* DeepFlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepFlight.cpp */; };
 		5049968729DED32700B15919 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
 		5049968829DED32900B15919 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
@@ -80,6 +82,8 @@
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		5047B4E129F812F700AC38DC /* Palette.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
+		5047B4E229F812F700AC38DC /* Palette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
 		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
 		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
@@ -414,6 +418,8 @@
 				5030F11226A2BCCF009A53B3 /* Logger.cpp */,
 				50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */,
 				50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */,
+				5047B4E229F812F700AC38DC /* Palette.h */,
+				5047B4E129F812F700AC38DC /* Palette.cpp */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -511,6 +517,7 @@
 				5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */,
 				5049969429DEED6800B15919 /* Zoomer.cpp in Sources */,
 				50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */,
+				5047B4E429F812F700AC38DC /* Palette.cpp in Sources */,
 				50D69A6A29E037160025DE0D /* FFmpeg.cpp in Sources */,
 				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
 				50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */,
@@ -539,6 +546,7 @@
 				50EB497626A067850019078C /* Maker.cpp in Sources */,
 				50BEC71B269486C200CCDFA8 /* ExtendedDouble.cpp in Sources */,
 				50BEC720269486C200CCDFA8 /* PrecisionComplex.cpp in Sources */,
+				5047B4E329F812F700AC38DC /* Palette.cpp in Sources */,
 				50102352269EC70200AC61A8 /* DrillMap.cpp in Sources */,
 				500655E826957C8400982789 /* Parser.cpp in Sources */,
 				50102349269DC4F500AC61A8 /* IO.cpp in Sources */,

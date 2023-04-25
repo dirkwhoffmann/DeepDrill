@@ -54,6 +54,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-m -o /Users/hoff/tmp/dd/project"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-o /Users/hoff/tmp/garbage.png"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -82,15 +86,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p /Users/hoff/Retro/DeepDrill/profiles/debug.prf "
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "/Users/hoff/Retro/DeepDrill/locations/spider.loc"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = " /Users/hoff/Retro/DeepDrill/tutorial/orion.loc"
+            argument = "/Users/hoff/Retro/DeepDrill/tutorial/spider.loc"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = " /Users/hoff/Retro/DeepDrill/tutorial/orion.loc"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
