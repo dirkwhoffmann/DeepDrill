@@ -1,6 +1,11 @@
 # Computing Zoom Videos
 
-In this tutorial, you'll learn how to create a Mandelbrot zoom video using the DeepDrill tool chain.
+In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following two videos that are available on Youtube: 
+
+<p float="left">
+    <a href = "https://www.youtube.com/watch?v=Ph3vJASDVaE"><img src="https://dirkwhoffmann.github.io/DeepDrill/images/spider-youtube.png" width="49%"></a>
+    <a href = "https://www.youtube.com/watch?v=OcXcHgwJ33g"><img src="https://dirkwhoffmann.github.io/DeepDrill/images/infinity-youtube.png" width="49%"></a>
+</p>
 
 Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, DeepDrill is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images. In the last phase, DeepFlight is utilized to assemble the final video by calculating intermediate frames.
 
@@ -12,7 +17,7 @@ mkdir project
 ```
 To set up a workflow in this directory, we start DeepDrill with the `-m` option:
 ```bash
-./deepdrill -m -p ../profiles/tutorial.prf -o project ../locations/spider.loc
+./deepdrill -m -p ../tutorial/spider.prf -o project ../tutorial/spider.loc
 ```
 ```
 DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
@@ -24,7 +29,7 @@ DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
 
 Total time: 0.05 sec
 ```
-If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc` with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in `tutorial.prf` before setting up the workflow. This profile defines two keys:
+If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc` with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in `spider.prf` before setting up the workflow. This profile defines two keys:
 ```
 [image]
 width = 3840
@@ -53,7 +58,7 @@ Let's take a closer look at the files DeepDrill created in the project directory
 - `spider.prf`
   This profile is used for calculating keyframes. It is composed out of the profiles that were passed in as command line arguments when the workflow was set up.
 
-- `spider_0.loc` to `spider_73.loc`
+- `spider_0.loc` to `spider_74.loc`
   These position files contain the coordinates and zoom factors for each keyframe.
 
 - `Makefile`
@@ -64,23 +69,30 @@ Let's take a closer look at the files DeepDrill created in the project directory
 For our tutorial project, DeepDrill has created the following Makefile:
 
 ```Make
-DEEPDRILL  = /Users/hoff/Retro/DeepDrill/build/./deepdrill
+DEEPDRILL  = /Users/hoff/Retro/DeepDrill/bin/./deepdrill
+DEEPFLIGHT = /Users/hoff/Retro/DeepDrill/bin/./deepflight
 MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))
 IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))
+VIDEO      = spider.mov
 NUM_IMAGES = $(words $(IMAGES))
-MAPFLAGS   = -b -v
+MAPFLAGS   = -b
 PNGFLAGS   = -b
 
 .PHONY: all clean
 
 all: $(IMAGES) $(MAPS)
-        @echo ""
-
-%.png: %.map
-        @$(DEEPDRILL) $(PNGFLAGS) -p spider.prf -o $*.png $*.map
 
 %.map: %.loc
-        @$(DEEPDRILL) $(MAPFLAGS) -p spider.prf -o $*.map $*.loc
+        @$(DEEPDRILL) $(MAPFLAGS) -p spider.prf -o $*.map $*.loc > $*.progress
+        @mv $*.progress $*.log
+
+%.png: %.map
+        @$(DEEPDRILL) $(PNGFLAGS) -p spider.prf -o $*.png $*.map > /dev/null
+
+$(VIDEO): $(IMAGES)
+        @$(DEEPFLIGHT) $(MOVFLAGS) spider.prj -o $(VIDEO)
+clean:
+        rm *.mov *.map *.png *.log
 ```
 The Makefile defines two major goals: One is to create the map files from the location files and the other is to convert the map files into images. To create the images, we simply change to the project directory and run the Make utility:
 ```bash
@@ -98,4 +110,10 @@ The final step is to combine all the keyframes into a zoom video by calling `mak
 make spider.mov 
 ```
 This target executes a separate tool called `deepflight` which stiches together all previously computed keyframes. After completion, the file `spider.mov was created, which contains the final video:
-[![Youtube screenshot](images/spider_youtube.png)](https://www.youtube.com/watch?v=Ph3vJASDVaE)
+[![Youtube screenshot](images/spider-youtube.png)](https://www.youtube.com/watch?v=Ph3vJASDVaE)
+
+## Creating the second video
+
+The second tutorial video can be created with the same workflow. You'll find the corresponding location file in `tutorial/infinity.loc` and a predefined profile in `tutorial/infinity.prf`. The second video is about three times as long as the first one and many keyframes need more computation time. On an avarage machine, it may take a few hours to create the entire video.
+
+[![Youtube screenshot](images/infinity-youtube.png)](https://www.youtube.com/watch?v=OcXcHgwJ33g)

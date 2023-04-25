@@ -124,7 +124,7 @@
 <section class="tex2jax_ignore mathjax_ignore" id="computing-still-images">
 <h1>Computing Still Images<a class="headerlink" href="#computing-still-images" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial, you will learn how to create the DeepDrill cover image using the DeepDrill tool chain.</p>
-<p>It is assumed that DeepDrill has been successfully installed on your computer. The structure we are going to create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (<code class="docutils literal notranslate"><span class="pre">.loc</span></code>) as a command line parameter. A predefined location file for the cover image is stored in the locations directory under <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code>. Before we continue, let’s take a look at the contents of this file:</p>
+<p>It is assumed that DeepDrill has been successfully installed on your computer. The structure we are going to create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (<code class="docutils literal notranslate"><span class="pre">.loc</span></code>) as a command line parameter. A predefined location file for the cover image is stored in the <code class="docutils literal notranslate"><span class="pre">tutorial</span></code> directory under <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code>. Before we continue, let’s take a look at the contents of this file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">location</span><span class="p">]</span>
 
 <span class="n">real</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.2677664067387922388691356244792255191880358267082812585024439971401610105397724372362029456154053824622609164675371629196502594528331340581293956764916452361e-01</span>
@@ -135,7 +135,7 @@
 </div>
 <p>Four key-value pairs are defined. The first two define the position of the center coordinate on the complex number plane. The third pair defines the magnification factor and the fourth pair defines the maximum number of iterations. If an orbit has not yet broken out at the time this iteration is performed, the corresponding point is considered part of the Mandelbrot set.</p>
 <p>Assuming that the current directory is the DeepDrill root directory, we can start DeepDrill by executing the following command on the command line:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>spider.map<span class="w"> </span>../locations/spider.loc
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>spider.map<span class="w"> </span>../tutorial/spider.loc
 </pre></div>
 </div>
 <p>The following output is generated:</p>
@@ -171,7 +171,7 @@ Total time: 0.08 sec
 <p><img alt="Spider Image" src="../_images/spider1.png" /></p>
 <p>All settings can be customized by specifying one or more profiles (<code class="docutils literal notranslate"><span class="pre">.prf</span></code> files).
 DeepDrill comes with a set of predefined profiles, such as the <code class="docutils literal notranslate"><span class="pre">vulcano.prf</span></code> profile, which changes the color scheme. Profiles are passed to DeepDrill with the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>spider.png<span class="w"> </span>-p<span class="w"> </span>../palettes/vulcano.prf<span class="w"> </span>../locations/spider.loc
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>spider.png<span class="w"> </span>-p<span class="w"> </span>../palettes/vulcano.prf<span class="w"> </span>../tutorial/spider.loc
 </pre></div>
 </div>
 <p>The image is now created in the following form:</p>
