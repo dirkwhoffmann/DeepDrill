@@ -180,7 +180,6 @@
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
 		50EB0D4D29F57D2600770F31 /* infinity.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.loc; sourceTree = "<group>"; };
-		50EB0D4E29F57D5200770F31 /* spider.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.loc; sourceTree = "<group>"; };
 		50EB0D4F29F596DE00770F31 /* infinity.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.prf; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
@@ -357,7 +356,6 @@
 				50BEC73E2694872B00CCDFA8 /* wfs2.loc */,
 				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
-				50EB0D4E29F57D5200770F31 /* spider.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";

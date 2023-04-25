@@ -61,7 +61,8 @@ Driller::drill()
 
         // Exit once enough pixels have been computed
         if ((isize)remaining.size() <= threshold) break;
-        
+
+        log::cout << log::vspace;
         log::cout << "Round " << round << ": ";
         log::cout << remaining.size() << " points" << log::endl << log::endl;
                 

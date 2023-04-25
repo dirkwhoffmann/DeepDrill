@@ -2,7 +2,7 @@
 
 In this tutorial, you will learn how to create the DeepDrill cover image using the DeepDrill tool chain. 
 
-It is assumed that DeepDrill has been successfully installed on your computer. The structure we are going to create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (`.loc`) as a command line parameter. A predefined location file for the cover image is stored in the locations directory under `spider.loc`. Before we continue, let's take a look at the contents of this file:
+It is assumed that DeepDrill has been successfully installed on your computer. The structure we are going to create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (`.loc`) as a command line parameter. A predefined location file for the cover image is stored in the `tutorial` directory under `spider.loc`. Before we continue, let's take a look at the contents of this file:
 ```
 [location]
 
@@ -15,7 +15,7 @@ Four key-value pairs are defined. The first two define the position of the cente
 
 Assuming that the current directory is the DeepDrill root directory, we can start DeepDrill by executing the following command on the command line:
 ```bash
-./deepdrill -o spider.map ../locations/spider.loc
+./deepdrill -o spider.map ../tutorial/spider.loc
 ```
 The following output is generated: 
 ````none
@@ -54,7 +54,7 @@ By default, DeepDrill creates a 960 x 540 image with a predefined color palette 
 All settings can be customized by specifying one or more profiles (`.prf` files). 
 DeepDrill comes with a set of predefined profiles, such as the `vulcano.prf` profile, which changes the color scheme. Profiles are passed to DeepDrill with the `-p` option:
 ```bash
-./deepdrill -v -o spider.png -p ../palettes/vulcano.prf ../locations/spider.loc
+./deepdrill -v -o spider.png -p ../palettes/vulcano.prf ../tutorial/spider.loc
 ```
 The image is now created in the following form: 
 

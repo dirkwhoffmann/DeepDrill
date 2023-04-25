@@ -60,16 +60,16 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/Dropbox/spider/spider.prj"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/orion.prj"
+            argument = "/Users/hoff/Dropbox/infinity/infinity.prj"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-o /tmp/garbage.mpg "
+            argument = "/Users/hoff/tmp/dd/project/orion.prj"
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-o /tmp/garbage.mpg "
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
