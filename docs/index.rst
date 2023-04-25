@@ -1,5 +1,6 @@
-.. image:: images/dd-titlepage2.jpg
-   :width: 100%
+.. image:: https://dirkwhoffmann.github.io/DeepDrill/images/infinity-youtube.png
+   :width: 100 %
+   :target: https://www.youtube.com/watch?v=OcXcHgwJ33g
    :align: center
    :alt: Banner
 

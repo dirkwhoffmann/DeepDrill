@@ -41,7 +41,7 @@ Each option is briefly explained below:
 
   Maximum number of iterations.
 
-### Image section (`[image]`)
+### Section `[image]`
 
 - `width`
   
