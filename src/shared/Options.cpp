@@ -282,7 +282,7 @@ Options::derive()
 }
 
 fs::path
-Options::findAsset(const fs::path &name, const fs::path &dir)
+Options::findAsset(const fs::path &name, const fs::path &dir) const
 {
     // Search the file at the specified path
     if (fileExists(name)) return name;
@@ -292,6 +292,34 @@ Options::findAsset(const fs::path &name, const fs::path &dir)
 
     // File not found
     return "";
+}
+
+fs::path
+Options::findLocationFile(const fs::path &name) const
+{
+    if (auto result = findAsset(name, "locations"); result != "") return result;
+    if (auto result = findAsset(name, "tutorial"); result != "") return result;
+    return "";
+}
+
+fs::path
+Options::findProfile(const fs::path &name) const
+{
+    if (auto result = findAsset(name, "profiles"); result != "") return result;
+    if (auto result = findAsset(name, "tutorial"); result != "") return result;
+    return "";
+}
+
+fs::path
+Options::findPalette(const fs::path &name) const
+{
+    return findAsset(name, "palettes");
+}
+
+fs::path
+Options::findShader(const fs::path &name) const
+{
+    return findAsset(name, "shaders");
 }
 
 }

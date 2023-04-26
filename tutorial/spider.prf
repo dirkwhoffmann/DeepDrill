@@ -3,7 +3,7 @@ width = 3840
 height = 2160
 
 [palette]
-colors = /Users/hoff/Desktop/palette1.png
+colors = vulcano.png
 
 [video]
 keyframes = 75

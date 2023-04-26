@@ -3,7 +3,7 @@ width = 3840
 height = 2160
 
 [palette]
-colors = palettes/palette1.png
+colors = dolomiti.png
 
 [video]
 #keyframes = 227

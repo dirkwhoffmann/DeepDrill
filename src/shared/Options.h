@@ -209,8 +209,11 @@ private:
 
 public:
 
-    fs::path findAsset(const fs::path &name, const fs::path &dir = "");
-    fs::path findShader(const fs::path &name) { return findAsset(name, "shaders"); }
+    fs::path findAsset(const fs::path &name, const fs::path &dir = "") const;
+    fs::path findLocationFile(const fs::path &name) const;
+    fs::path findProfile(const fs::path &name) const;
+    fs::path findPalette(const fs::path &name) const;
+    fs::path findShader(const fs::path &name) const;
 };
 
 }

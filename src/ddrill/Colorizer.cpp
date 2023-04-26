@@ -23,13 +23,14 @@
 
 namespace dd {
 
-Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
+Colorizer::Colorizer(const Options &opt, const DrillMap &map) : opt(opt), map(map)
 {
     // Allocate image data
     image.alloc(map.width * map.height);
 
-    // Load palette file
-    if (opt.palette.colors != "") palette.load(o.palette.colors);
+    // Load color palette
+    auto path = opt.findPalette(opt.palette.colors);
+    if (path != "") palette.load(path);
 }
 
 Colorizer::~Colorizer()
