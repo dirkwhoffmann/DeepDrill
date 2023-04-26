@@ -196,7 +196,6 @@
 		50EB497526A067850019078C /* Maker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maker.h; sourceTree = "<group>"; };
 		50F8C40F29E44042008A0B4C /* bypass.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bypass.glsl; sourceTree = "<group>"; };
 		50F8C41129EC3C97008A0B4C /* merger.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = merger.glsl; sourceTree = "<group>"; };
-		50F8C41229ED14C6008A0B4C /* Shaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shaders.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,7 +260,6 @@
 				50D69A6E29E03F940025DE0D /* NamedPipe.cpp */,
 				50D69A6929E037160025DE0D /* FFmpeg.h */,
 				50D69A6829E037160025DE0D /* FFmpeg.cpp */,
-				50F8C41229ED14C6008A0B4C /* Shaders.h */,
 			);
 			path = dflight;
 			sourceTree = "<group>";

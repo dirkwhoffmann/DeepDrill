@@ -25,6 +25,8 @@
 #include <unistd.h>
 #include <vector>
 
+namespace fs = std::filesystem;
+
 namespace dd {
 
 //

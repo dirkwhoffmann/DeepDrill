@@ -32,9 +32,10 @@ int main(int argc, char *argv[])
         log::cout << "Usage: ";
         log::cout << "deepflight [-bv] [-p <profile>] -o <output> <input>" << log::endl;
         log::cout << log::endl;
-        log::cout << "       -b or --batch    Run in batch mode" << log::endl;
-        log::cout << "       -v or --verbose  Run in verbose mode" << log::endl;
-        log::cout << "       -p or --profile  Customize settings" << log::endl;
+        log::cout << "       -b or --batch     Run in batch mode" << log::endl;
+        log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
+        log::cout << "       -a or --assets    Path to assets directory" << log::endl;
+        log::cout << "       -p or --profile   Customize settings" << log::endl;
         log::cout << log::endl;
 
         if (!e.description.empty()) {
@@ -88,25 +89,21 @@ DeepFlight::parseArguments(int argc, char *argv[])
 
         { "verbose",  no_argument,       NULL, 'v' },
         { "batch",    no_argument,       NULL, 'b' },
-        { "accuracy", required_argument, NULL, 'a' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
     };
-
-    // Default accuracy (number of binary digits)
-    isize accuracy = 128;
 
     // Don't print the default error messages
     opterr = 0;
 
     // Remember the path to the executable
     opt.exec = makeAbsolutePath(argv[0]);
-
+    
     // Parse all options
     while (1) {
 
-        int arg = getopt_long(argc, argv, ":vbp:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vba:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -120,7 +117,7 @@ DeepFlight::parseArguments(int argc, char *argv[])
                 break;
 
             case 'a':
-                accuracy = std::stoi(optarg);
+                opt.assets = optarg;
                 break;
 
             case 'p':
@@ -147,7 +144,7 @@ DeepFlight::parseArguments(int argc, char *argv[])
     }
 
     checkArguments();
-    setupGmp(accuracy);
+    setupGmp(128);
 }
 
 void

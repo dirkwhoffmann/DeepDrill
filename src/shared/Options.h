@@ -54,7 +54,10 @@ struct Options {
     // Set to true to abort the computation
     bool stop = false;
 
-    
+    // Assets search path
+    fs::path assets;
+
+
     //
     // Key-value pairs (unparsed)
     //
@@ -183,6 +186,12 @@ struct Options {
 public:
 
     Options();
+
+
+    //
+    // Parsing key-value pairs
+    //
+
     void parse(string key, string value);
     void derive();
 
@@ -192,6 +201,16 @@ private:
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
+
+
+    //
+    // Managing assets
+    //
+
+public:
+
+    fs::path findAsset(const fs::path &name, const fs::path &dir = "");
+    fs::path findShader(const fs::path &name) { return findAsset(name, "shaders"); }
 };
 
 }

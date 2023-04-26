@@ -56,12 +56,12 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/spider.prj"
-            isEnabled = "NO">
+            argument = "/Users/hoff/tmp/dd/project/infinity.prj"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/Dropbox/infinity/infinity.prj"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/tmp/dd/project/orion.prj"

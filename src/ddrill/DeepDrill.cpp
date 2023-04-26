@@ -39,7 +39,9 @@ int main(int argc, char *argv[])
         log::cout << "       -b or --batch     Run in batch mode" << log::endl;
         log::cout << "       -m or --make      Run the Makefile generator" << log::endl;
         log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
+        log::cout << "       -a or --assets    Path to assets directory" << log::endl;
         log::cout << "       -p or --profile   Customize settings" << log::endl;
+        log::cout << "       -o or --output    Output file" << log::endl;
         log::cout << log::endl;
 
         if (!e.description.empty()) {
@@ -100,6 +102,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
         { "verbose",  no_argument,       NULL, 'v' },
         { "make",     no_argument,       NULL, 'm' },
         { "batch",    no_argument,       NULL, 'b' },
+        { "assets",   required_argument, NULL, 'a' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
@@ -114,7 +117,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vmbp:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vmba:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -129,6 +132,10 @@ DeepDrill::parseArguments(int argc, char *argv[])
 
             case 'b':
                 opt.batch = true;
+                break;
+
+            case 'a':
+                opt.assets = optarg;
                 break;
 
             case 'p':

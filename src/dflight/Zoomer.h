@@ -61,7 +61,7 @@ public:
     // Constructor
     Zoomer(Options &opt);
 
-    // Initializer
+    // Initializers
     void init();
 
     // Main entry point

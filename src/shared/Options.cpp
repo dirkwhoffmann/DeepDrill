@@ -38,7 +38,8 @@ Options::Options()
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
     defaults["video.bitrate"] = "4096";
-    defaults["video.scaler"] = "";
+    defaults["video.scaler"] = "bypass.glsl";
+    defaults["video.merger"] = "merger.glsl";
 
     // Palette keys
     defaults["palette.colors"] = "";
@@ -51,6 +52,9 @@ Options::Options()
     // Approximation keys
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
+
+    // Search assets in the repo dir by default
+    assets = fs::path(__FILE__).parent_path().parent_path().parent_path();
 }
 
 void
@@ -149,17 +153,23 @@ Options::parse(string key, string value)
 
         parse(key, value, video.scaler);
 
+        // TODO: Can we load the shader here?
+        /*
         if (video.scaler != "" && !fileExists(video.scaler)) {
             throw KeyValueError(key, "File " + video.scaler + " not found.");
         }
+        */
 
     } else if (key == "video.merger") {
 
         parse(key, value, video.merger);
 
+        // TODO: Can we load the shader here?
+        /*
         if (video.merger != "" && !fileExists(video.merger)) {
             throw KeyValueError(key, "File " + video.merger + " not found.");
         }
+        */
 
     } else if (key == "palette.colors") {
 
@@ -269,6 +279,19 @@ Options::derive()
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
+}
+
+fs::path
+Options::findAsset(const fs::path &name, const fs::path &dir)
+{
+    // Search the file at the specified path
+    if (fileExists(name)) return name;
+
+    // Search the file in the assets directory
+    if (fileExists(assets / dir / name)) return assets / dir / name;
+
+    // File not found
+    return "";
 }
 
 }

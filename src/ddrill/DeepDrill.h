@@ -16,6 +16,7 @@
 #include "Logger.h"
 #include "Chrono.h"
 #include "Options.h"
+#include "IO.h"
 
 namespace dd {
 
@@ -46,10 +47,6 @@ private:
     // Executes the drill pipeline or the Makefile generator
     void runPipeline();
     void runMaker();
-
-    // Prints a progress line in batch mode
-    // void printProgress(const string &msg2 = "");
-    // void printProgress(Clock &clock);
 
     // Sets up the GMP library
     void setupGmp();

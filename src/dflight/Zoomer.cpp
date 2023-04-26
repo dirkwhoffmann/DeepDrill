@@ -16,9 +16,11 @@
 #include "Options.h"
 #include "Parser.h"
 #include "ProgressIndicator.h"
-#include "Shaders.h"
 
+#include <filesystem>
 #include <SFML/Graphics.hpp>
+
+namespace fs = std::filesystem;
 
 namespace dd {
 
@@ -69,18 +71,22 @@ Zoomer::init()
     targetRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     targetRect.setTexture(&target.getTexture());
 
-
     // Load shaders
-    if (!fileExists(opt.video.scaler)) {
-        scaler.loadFromMemory(bypassShader, sf::Shader::Fragment);
-    } else if (!scaler.loadFromFile(opt.video.scaler, sf::Shader::Fragment)) {
-        throw std::runtime_error("Can't load fragment shader '" + opt.video.scaler + "'");
+    auto scalerPath = opt.findShader(opt.video.scaler);
+    auto mergerPath = opt.findShader(opt.video.merger);
+
+    printf("scalerPath = '%s'\n", scalerPath.c_str());
+    printf("mergerPath = '%s'\n", mergerPath.c_str());
+
+    if (scalerPath == "") {
+        throw Exception("Can't load fragment shader '" + opt.video.scaler + "'");
     }
-    if (!fileExists(opt.video.merger)) {
-        merger.loadFromMemory(mergeShader, sf::Shader::Fragment);
-    } else if (!merger.loadFromFile(opt.video.merger, sf::Shader::Fragment)) {
-        throw std::runtime_error("Can't load fragment shader '" + opt.video.merger + "'");
+    if (mergerPath == "") {
+        throw Exception("Can't load fragment shader '" + opt.video.merger + "'");
     }
+
+    scaler.loadFromFile(scalerPath, sf::Shader::Fragment);
+    merger.loadFromFile(mergerPath, sf::Shader::Fragment);
 }
 
 void
