@@ -19,7 +19,7 @@
 
 namespace dd {
 
-enum class ColorScheme { Default, Custom };
+// enum class ColorScheme { Default, Custom };
 
 class Colorizer {
 
@@ -36,7 +36,7 @@ class Colorizer {
     Palette palette;
     
     // The color scheme (DEPRECATED)
-    ColorScheme scheme = ColorScheme::Default;
+    // ColorScheme scheme = ColorScheme::Default;
 
     // Custom color table (DEPRECATED)
     vector <u32> colors;

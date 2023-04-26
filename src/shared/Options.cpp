@@ -41,7 +41,8 @@ Options::Options()
     defaults["video.scaler"] = "";
 
     // Palette keys
-    defaults["palette.values"] = "default";
+    defaults["palette.colors"] = "";
+    defaults["palette.scale"] = "1.0";
 
     // Perturbation keys
     defaults["perturbation.tolerance"] = "1e-6";
@@ -160,9 +161,13 @@ Options::parse(string key, string value)
             throw KeyValueError(key, "File " + video.merger + " not found.");
         }
 
-    } else if (key == "palette.values") {
+    } else if (key == "palette.colors") {
 
-        parse(key, value, palette.values);
+        parse(key, value, palette.colors);
+
+    } else if (key == "palette.scale") {
+
+        parse(key, value, palette.scale);
 
     } else if (key == "perturbation.tolerance") {
 

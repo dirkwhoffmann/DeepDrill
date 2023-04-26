@@ -2,8 +2,12 @@
 width = 3840
 height = 2160
 
+[palette]
+colors = palettes/palette1.png
+
 [video]
-keyframes = 227
+#keyframes = 227
+keyframes = 36
 inbetweens = 148
 bitrate = 8000
 

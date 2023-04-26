@@ -73,7 +73,6 @@
 /* Begin PBXFileReference section */
 		500655E626957C8400982789 /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		500655E726957C8400982789 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
-		500655EC2695AACB00982789 /* ice.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice.prf; sourceTree = "<group>"; };
 		50102344269DBEF000AC61A8 /* Exception.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Exception.cpp; sourceTree = "<group>"; };
 		50102345269DBEF000AC61A8 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		50102347269DC4F500AC61A8 /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
@@ -84,6 +83,13 @@
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5047B4E129F812F700AC38DC /* Palette.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
 		5047B4E229F812F700AC38DC /* Palette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
+		5047B4E529F82D4500AC38DC /* base.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = base.loc; sourceTree = "<group>"; };
+		5047B4E629F8EFE800AC38DC /* ultrafrac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ultrafrac.png; sourceTree = "<group>"; };
+		5047B4E729F9623500AC38DC /* candy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = candy.png; sourceTree = "<group>"; };
+		5047B4E829F9624100AC38DC /* dolomiti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dolomiti.png; sourceTree = "<group>"; };
+		5047B4E929F9625500AC38DC /* ice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ice.png; sourceTree = "<group>"; };
+		5047B4EA29F9625600AC38DC /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		5047B4EB29F9625600AC38DC /* vulcano.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vulcano.png; sourceTree = "<group>"; };
 		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
 		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
 		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
@@ -168,7 +174,6 @@
 		50BEC7522694872D00CCDFA8 /* glitch_test_2.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_2.loc; sourceTree = "<group>"; };
 		50BEC7532694872D00CCDFA8 /* hard.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard.loc; sourceTree = "<group>"; };
 		50BEC7542694872D00CCDFA8 /* 1e14.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1e14.loc; sourceTree = "<group>"; };
-		50BEC7572694874E00CCDFA8 /* vulcano.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = vulcano.prf; sourceTree = "<group>"; };
 		50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepDrill.entitlements; sourceTree = "<group>"; };
 		50CF8E4E2694848800887FFC /* DeepDrill */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepDrill; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D69A6729E01C6A0025DE0D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -360,6 +365,7 @@
 				50BEC73E2694872B00CCDFA8 /* wfs2.loc */,
 				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
+				5047B4E529F82D4500AC38DC /* base.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -367,8 +373,12 @@
 		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
-				50BEC7572694874E00CCDFA8 /* vulcano.prf */,
-				500655EC2695AACB00982789 /* ice.prf */,
+				5047B4E629F8EFE800AC38DC /* ultrafrac.png */,
+				5047B4E729F9623500AC38DC /* candy.png */,
+				5047B4E829F9624100AC38DC /* dolomiti.png */,
+				5047B4E929F9625500AC38DC /* ice.png */,
+				5047B4EA29F9625600AC38DC /* default.png */,
+				5047B4EB29F9625600AC38DC /* vulcano.png */,
 			);
 			path = palettes;
 			sourceTree = "<group>";
@@ -428,8 +438,8 @@
 			isa = PBXGroup;
 			children = (
 				50BEC72F2694872900CCDFA8 /* spider.loc */,
-				50EB0D4D29F57D2600770F31 /* infinity.loc */,
 				50D69A7629E2A4630025DE0D /* spider.prf */,
+				50EB0D4D29F57D2600770F31 /* infinity.loc */,
 				50EB0D4F29F596DE00770F31 /* infinity.prf */,
 			);
 			path = tutorial;

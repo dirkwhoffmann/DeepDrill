@@ -127,10 +127,13 @@ struct Options {
     } video;
 
     struct {
-        
-        // Color palette
-        string values;
 
+        // Path to the color image file
+        string colors;
+
+        // Scaling factor
+        double scale;
+        
     } palette;
     
     struct {

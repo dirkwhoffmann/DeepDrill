@@ -148,7 +148,8 @@ Maker::generateProfile()
 
     // Write palette section
     os << "[palette]" << std::endl;
-    os << "values = " << keys["palette.values"] << std::endl;
+    os << "colors = " << keys["palette.colors"] << std::endl;
+    os << "scale = " << keys["palette.scale"] << std::endl;
     os << std::endl;
 }
 

@@ -25,33 +25,11 @@ namespace dd {
 
 Colorizer::Colorizer(const Options &o, const DrillMap &m) : opt(o), map(m)
 {
-    auto values = opt.palette.values;
-
-    if (std::count(values.cbegin(), values.cend(), ' ') != 0) {
-
-        // Custom palette
-        scheme = ColorScheme::Custom;
-
-        std::stringstream stream(values);
-        u32 value;
-
-        while(stream >> value) {
-
-            auto r = u8(value & 0xFF);
-            auto g = u8((value >> 8) & 0xFF);
-            auto b = u8((value >> 16) & 0xFF);
-
-            colors.push_back(u32(0xFF << 24 | b << 16 | g << 8 | r));
-        }
-
-    } else {
-
-        // Default palette
-        scheme = ColorScheme::Default;
-    }
-
     // Allocate image data
     image.alloc(map.width * map.height);
+
+    // Load palette file
+    if (opt.palette.colors != "") palette.load(o.palette.colors);
 }
 
 Colorizer::~Colorizer()
@@ -90,36 +68,12 @@ Colorizer::colorize(Coord c)
 
     double sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
     sl *= .0025;
+    // sl = 2.7 + sl * 30.0;
+    sl *= 30.0;
+    sl *= opt.palette.scale;
 
     image[pos] = palette.interpolateABGR(sl);
-
-    /*
-    switch (scheme) {
-
-        case ColorScheme::Custom:
-        {
-            isize index = (isize)((data.iteration - log2(data.lognorm)) * 5);
-            image[pos] = colors[index % colors.size()];
-            break;
-        }
-        case ColorScheme::Default:
-        {
-            // Adapted from https://www.shadertoy.com/view/tllSWj
-            float sl = (float(data.iteration) - log2(data.lognorm)) + 4.0;
-            sl *= .0025;
-
-            float r = 0.5 + 0.5 * cos(2.7 + sl * 30.0 + 0.0);
-            float g = 0.5 + 0.5 * cos(2.7 + sl * 30.0 + 0.6);
-            float b = 0.5 + 0.5 * cos(2.7 + sl * 30.0 + 1.0);
-            auto rr = u8(r * 255.0);
-            auto gg = u8(g * 255.0);
-            auto bb = u8(b * 255.0);
-
-            image[pos] = 255 << 24 | bb << 16 | gg << 8 | rr;
-            break;
-        }
-    }
-    */
+    // image[pos] = palette.interpolateABGR(((double)c.x / map.width) * 2 * 3.14);
 }
 
 void

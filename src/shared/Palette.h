@@ -19,7 +19,6 @@ namespace dd {
 
 class Palette {
 
-    Buffer <u32> abgr;
     Buffer <u32> r;
     Buffer <u32> g;
     Buffer <u32> b;
@@ -28,7 +27,7 @@ public:
 
     Palette();
 
-    void load(const string &image);
+    void load(const string &path);
     u32 interpolateABGR(double value);
 };
 
