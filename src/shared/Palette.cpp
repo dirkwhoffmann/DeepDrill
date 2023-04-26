@@ -12,19 +12,29 @@
 #include "Palette.h"
 #include "Exception.h"
 #include "IO.h"
+#include <tgmath.h>
 #include <SFML/Graphics.hpp>
 
 namespace dd {
 
 Palette::Palette()
 {
-    const isize size = 2048;
+    static constexpr isize size = 2048;
 
     r.alloc(size);
     g.alloc(size);
     b.alloc(size);
 
-    // Create default palette
+    /* Create default palette
+     *
+     * The formula is an adaption from https://www.shadertoy.com/view/tllSWj
+     * It was used in an GLSL shader in the following form:
+     *
+     *     vec4 mapColor(float mcol) {
+     *        return vec4(0.5 + 0.5*cos(2.7+mcol*30.0 + vec3(0.0,.6,1.0)),1.0);
+     *     }
+     */
+
     for (isize i = 0; i < size; i++) {
 
         double v = double(i) / size * 2 * 3.14159;
