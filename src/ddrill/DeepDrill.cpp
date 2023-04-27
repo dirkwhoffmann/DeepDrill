@@ -139,11 +139,11 @@ DeepDrill::parseArguments(int argc, char *argv[])
                 break;
 
             case 'p':
-                profiles.push_back(makeAbsolutePath(optarg));
+                profiles.push_back(optarg);
                 break;
             
             case 'o':
-                outputs.push_back(makeAbsolutePath(optarg));
+                outputs.push_back(optarg);
                 break;
 
             case ':':
@@ -158,7 +158,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     
     // Parse all remaining arguments
     while (optind < argc) {
-        inputs.push_back(makeAbsolutePath(argv[optind++]));
+        inputs.push_back(argv[optind++]);
     }
 }
 
@@ -177,9 +177,6 @@ DeepDrill::checkArguments()
     auto out = outputs.front();
     auto inFormat = getFormat(in);
     auto outFormat = getFormat(out);
-
-    // auto inSuffix = extractSuffix(in);
-    // auto outSuffix = extractSuffix(out);
 
     // All profiles must be files of type ".prf"
     for (auto &it : profiles) {
@@ -225,23 +222,28 @@ DeepDrill::checkArguments()
 void
 DeepDrill::readInputs()
 {
-    auto path = inputs.front();
-    auto suffix = extractSuffix(path);
+    auto input = inputs.front();
+    auto suffix = extractSuffix(input);
 
-    opt.input = path;
-    
+    opt.input = input;
+
     if (suffix == "loc") {
-        Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
+
+        if (auto path = opt.findLocationFile(input); path != "") {
+            Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
+        } else {
+            throw FileNotFoundError(input);
+        }
         return;
     }
     if (suffix == "map") {
         return;
     }
-    if (isDirectory(path)) {
+    if (isDirectory(input)) {
         return;
     }
 
-    throw SyntaxError(path + ": Unknown input format");
+    throw SyntaxError(input + ": Unknown input format");
 }
 
 void
@@ -268,8 +270,13 @@ DeepDrill::readOutputs()
 void
 DeepDrill::readProfiles()
 {
-    for (auto &path: profiles) {
-        Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
+    for (auto &profile: profiles) {
+
+        if (auto path = opt.findProfile(profile); path != "") {
+            Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
+        } else {
+            throw FileNotFoundError(profile);
+        }
     }
 }
 
@@ -278,28 +285,34 @@ DeepDrill::setupGmp()
 {
     isize accuracy = 64;
 
-    if (extractSuffix(inputs.front()) == "loc") {
+    auto name = inputs.front();
+    auto suffix = extractSuffix(name);
 
-        /* If a location is given, we need to adjust the GMP precision based
-         * on the zoom factor. Because we haven't parsed any input file when
-         * this function is called, we need to peek this value directly from
-         * the location file.
-         */
-        Parser::parse(inputs.front(), [&accuracy](string key, string value) {
+    if (suffix == "loc") {
 
-            if (key == "location.zoom") {
+        if (auto path = opt.findLocationFile(name); path != "") {
 
-                try {
+            /* If a location is given, we need to adjust the GMP precision based
+             * on the zoom factor. Because we haven't parsed any input file when
+             * this function is called, we need to peek this value directly from
+             * the location file.
+             */
+            Parser::parse(path, [&accuracy](string key, string value) {
 
-                    long exponent = 0;
-                    auto zoom = mpf_class(value);
-                    mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
-                    accuracy = exponent + 64;
-                    return;
+                if (key == "location.zoom") {
 
-                } catch (...) { }
-            }
-        });
+                    try {
+
+                        long exponent = 0;
+                        auto zoom = mpf_class(value);
+                        mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
+                        accuracy = exponent + 64;
+                        return;
+
+                    } catch (...) { }
+                }
+            });
+        }
     }
 
     setupGmp(accuracy);

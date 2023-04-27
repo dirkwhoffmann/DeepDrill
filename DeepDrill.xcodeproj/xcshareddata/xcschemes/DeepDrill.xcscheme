@@ -57,7 +57,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/Retro/DeepDrill/locations/base.loc"
+            argument = "base.loc"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -65,47 +65,43 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/palettes/ice.prf "
+            argument = "-p spider.prf"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/tutorial/spider.prf"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/tutorial/infinity.prf"
+            argument = "-p infinity.prf"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/low.prf "
+            argument = "-p low.prf "
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/medium.prf "
+            argument = "-p medium.prf "
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/high.prf "
+            argument = "-p high.prf "
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/ultra.prf "
+            argument = "-p ultra.prf "
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/tutorial.prf"
+            argument = "-p tutorial.prf"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/debug.prf "
+            argument = "-p debug.prf "
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/Retro/DeepDrill/tutorial/spider.loc"
+            argument = "spider.loc"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = " /Users/hoff/Retro/DeepDrill/tutorial/infinity.loc"
+            argument = " infinity.loc"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

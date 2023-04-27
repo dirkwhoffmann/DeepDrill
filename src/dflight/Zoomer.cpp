@@ -75,9 +75,6 @@ Zoomer::init()
     auto scalerPath = opt.findShader(opt.video.scaler);
     auto mergerPath = opt.findShader(opt.video.merger);
 
-    printf("scalerPath = '%s'\n", scalerPath.c_str());
-    printf("mergerPath = '%s'\n", mergerPath.c_str());
-
     if (scalerPath == "") {
         throw Exception("Can't load fragment shader '" + opt.video.scaler + "'");
     }
