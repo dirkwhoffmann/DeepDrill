@@ -27,31 +27,46 @@ Maker::Maker(Options &o) : opt(o)
 void
 Maker::generate()
 {
-    {
-        ProgressIndicator progress("Generating project file");
-        generateProjectFile();
-    }
-    {
-        ProgressIndicator progress("Generating location files");
-        generateLocationFiles();
-    }
-    {
-        ProgressIndicator progress("Generating profile");
-        generateProfile();
-    }
-    {
-        ProgressIndicator progress("Generating Makefile");
-        generateMakefile();
-    }
+    vector <string> skipped;
+
+    auto reportSkippedFiles = [&]() {
+
+        if (!skipped.empty()) {
+
+            log::cout << log::vspace;
+            for (auto &it : skipped) {
+
+                log::cout << log::red << log::ralign("Skipping file: ") << log::black;
+                log::cout << it << " already exists" << log::endl;
+            }
+            log::cout << log::vspace;
+            skipped = { };
+        }
+    };
+
+    generateProjectFile(skipped);
+    reportSkippedFiles();
+
+    generateLocationFiles(skipped);
+    reportSkippedFiles();
+
+    generateProfile(skipped);
+    reportSkippedFiles();
+
+    generateMakefile(skipped);
+    reportSkippedFiles();
 }
 
 void
-Maker::generateProjectFile()
+Maker::generateProjectFile(vector <string> &skipped)
 {
+    ProgressIndicator progress("Generating project file");
+
     auto &keys = opt.keys;
+    auto path = projectDir / (project + ".prj");
 
     // Open output stream
-    std::ofstream os(projectDir / (project + ".prj"));
+    std::ofstream os(path);
 
     // Write header
     writeHeader(os);
@@ -82,8 +97,10 @@ Maker::generateProjectFile()
 }
 
 void
-Maker::generateLocationFiles()
+Maker::generateLocationFiles(vector <string> &skipped)
 {
+    ProgressIndicator progress("Generating location files");
+
     // Start in the middle of the Mandelbrot set by shifting the center
     auto shift = PrecisionComplex(); // PrecisionComplex(-opt.location.real, -opt.location.imag);
 
@@ -92,8 +109,15 @@ Maker::generateLocationFiles()
         auto &keys = opt.keys;
         double zoom = exp2(nr);
 
+        // Assemble path name
+        auto name = (project + "_" + std::to_string(nr) + ".loc");
+        auto path = projectDir / name;
+
+        // Only proceed if file does not exist yet
+        if (fileExists(path)) { skipped.push_back(name); continue; }
+
         // Open output stream
-        std::ofstream os(projectDir / (project + "_" + std::to_string(nr) + ".loc"));
+        std::ofstream os(path);
         os.precision(mpf_get_default_prec());
 
         // Write header
@@ -124,12 +148,21 @@ Maker::generateLocationFiles()
 }
 
 void
-Maker::generateProfile()
+Maker::generateProfile(vector <string> &skipped)
 {
+    ProgressIndicator progress("Generating profile");
+
     auto &keys = opt.keys;
-    
+
+    // Assemble path name
+    auto name = project + ".prf";
+    auto path = projectDir / name;
+
+    // Only proceed if file does not exist yet
+    if (fileExists(path)) { skipped.push_back(name); return; }
+
     // Open output stream
-    std::ofstream os(projectDir / (project + ".prf"));
+    std::ofstream os(path);
     
     // Write header
     writeHeader(os);
@@ -154,8 +187,10 @@ Maker::generateProfile()
 }
 
 void
-Maker::generateMakefile()
+Maker::generateMakefile(vector <string> &skipped)
 {
+    ProgressIndicator progress("Generating Makefile");
+
     // Open output stream
     std::ofstream os(projectDir / "Makefile");
 

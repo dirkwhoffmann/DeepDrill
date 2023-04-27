@@ -199,9 +199,11 @@ DeepDrill::checkArguments()
         if (!isDirectory(out)) {
             throw SyntaxError("The output file must be a directory");
         }
+        /*
         if (numDirectoryItems(out) > 0) {
             throw Exception("The output directory must be empty.");
         }
+        */
         
     } else {
                 

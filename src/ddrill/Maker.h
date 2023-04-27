@@ -41,10 +41,10 @@ public:
     
 private:
 
-    void generateProjectFile();
-    void generateLocationFiles();
-    void generateProfile();
-    void generateMakefile();
+    void generateProjectFile(vector <string> &skipped);
+    void generateLocationFiles(vector <string> &skipped);
+    void generateProfile(vector <string> &skipped);
+    void generateMakefile(vector <string> &skipped);
 
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);
