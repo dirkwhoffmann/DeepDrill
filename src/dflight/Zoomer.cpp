@@ -42,7 +42,7 @@ Zoomer::init()
     window.create(videoMode, "");
 
     // Hide the window in batch mode
-    if (opt.batch) window.setVisible(false);
+    if (opt.flags.batch) window.setVisible(false);
 
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode() ? 0 : unsigned(opt.video.frameRate));
@@ -203,14 +203,14 @@ Zoomer::draw()
 bool
 Zoomer::recordMode()
 {
-    return !opt.output.empty();
+    return opt.files.outputFormat != Format::NONE;
 }
 
 void
 Zoomer::updateTexture(isize nr)
 {
-    string path = opt.input;
-    string name = path + "_" + std::to_string(nr) + ".png";
+    auto path = opt.files.input.parent_path() / opt.files.input.stem();
+    string name = path.string() + "_" + std::to_string(nr + 1) + ".png";
 
     sf::Texture image;
 
@@ -225,13 +225,13 @@ Zoomer::updateTexture(isize nr)
 void
 Zoomer::updateLocation(isize nr, isize &dx, isize &dy)
 {
-    string path = opt.input;
-    string name = path + "_" + std::to_string(nr + 1) + ".loc";
+    auto path = opt.files.input.parent_path() / opt.files.input.stem();
+    string name = path.string() + "_" + std::to_string(nr + 1) + ".loc";
 
     // Read the first location file if this is the first location update
     if (nr == 0) {
 
-        string name = path + "_0.loc";
+        string name = path.string() + "_0.loc";
         Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
         opt.derive();
     }

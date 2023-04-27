@@ -57,7 +57,7 @@ DrillMap::load(const string &path)
     
     progress.done();
     
-    if (opt.verbose) {
+    if (opt.flags.verbose) {
         
         log::cout << log::vspace;
         log::cout << log::ralign("Image size: ");

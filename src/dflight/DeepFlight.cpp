@@ -67,7 +67,6 @@ DeepFlight::main(int argc, char *argv[])
 
     // Read files
     readInputs();
-    readOutputs();
     readProfiles();
 
     // Deduce missing options
@@ -98,7 +97,7 @@ DeepFlight::parseArguments(int argc, char *argv[])
     opterr = 0;
 
     // Remember the path to the executable
-    opt.exec = makeAbsolutePath(argv[0]);
+    opt.files.exec = makeAbsolutePath(argv[0]);
     
     // Parse all options
     while (1) {
@@ -109,11 +108,11 @@ DeepFlight::parseArguments(int argc, char *argv[])
         switch (arg) {
 
             case 'v':
-                opt.verbose = true;
+                opt.flags.verbose = true;
                 break;
 
             case 'b':
-                opt.batch = true;
+                opt.flags.batch = true;
                 break;
 
             case 'a':
@@ -154,6 +153,9 @@ DeepFlight::checkArguments()
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
     if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
+    auto input = inputs.front();
+    auto inputFormat = opt.files.inputFormat = getFormat(input);
+
     // The user needs to specify at most one output
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
@@ -164,36 +166,35 @@ DeepFlight::checkArguments()
         }
     }
 
-    if (!inputs.empty()) {
+    auto in = inputs.front();
+    auto inSuffix = extractSuffix(in);
 
-        auto in = inputs.front();
-        auto inSuffix = extractSuffix(in);
+    // The input files must be a prj file
+    if (inputFormat == Format::PRJ) {
+        opt.files.input = input;
+    } else {
+        throw SyntaxError(in + " is not a project file (.prj)");
+    }
 
-        // The input files must be a prj file
-        if (inSuffix != "prj") {
-            throw SyntaxError(in + " is not a location file (.loc)");
-        }
-
-        // The input file must exist
-        if (!fileExists(in)) {
-            throw FileNotFoundError(in);
-        }
+    // The input file must exist
+    if (!fileExists(opt.files.input)) {
+        throw FileNotFoundError(input);
     }
 
     if (!outputs.empty()) {
 
-        auto out = outputs.front();
-        auto outSuffix = extractSuffix(out);
+        auto output = opt.files.output = outputs.front();
+        auto outputFormat = opt.files.outputFormat = getFormat(output);
 
         // The output file must be a mpg file
-        if (outSuffix != "mpg" && outSuffix != "mpeg" && outSuffix != "mov") {
-            throw SyntaxError(out + ": Invalid format. Expected .mpg, .mpeg, or .mov");
+        if (isVideoFormat(outputFormat)) {
+            throw SyntaxError(output.string() + ": Invalid format. Expected .mpg, .mpeg, or .mov");
         }
 
         // The output file must be writable
-        std::ofstream file(out, std::ofstream::out);
+        std::ofstream file(output, std::ofstream::out);
         if (!file.is_open()) {
-            throw SyntaxError("Can't write to file " + out);
+            throw SyntaxError("Can't write to file " + output.string());
         }
     }
 }
@@ -201,28 +202,7 @@ DeepFlight::checkArguments()
 void
 DeepFlight::readInputs()
 {
-    auto in = inputs.front();
-    opt.input = stripSuffix(in);
-
-    Parser::parse(in, [this](string k, string v) { opt.parse(k,v); });
-}
-
-void
-DeepFlight::readOutputs()
-{
-    if (!outputs.empty()) {
-
-        auto path = outputs.front();
-        auto suffix = extractSuffix(path);
-
-        opt.output = path;
-
-        if (suffix == "mpg" || suffix == "mpeg" || suffix == "mov") {
-            return;
-        }
-
-        throw SyntaxError(path + ": Unknown output format");
-    }
+    Parser::parse(opt.files.input, [this](string k, string v) { opt.parse(k,v); });
 }
 
 void

@@ -41,7 +41,6 @@ private:
     void parseArguments(int argc, char *argv[]);
     void checkArguments();
     void readInputs();
-    void readOutputs();
     void readProfiles();
     
     // Executes the drill pipeline or the Makefile generator

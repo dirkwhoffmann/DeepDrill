@@ -269,10 +269,6 @@ Options::derive()
         }
     }
 
-    // Determine the input and output formats
-    inputFormat = getFormat(input);
-    outputFormat = getFormat(output);
-
     // Compute the center coordinate
     center = PrecisionComplex(location.real, location.imag);
 

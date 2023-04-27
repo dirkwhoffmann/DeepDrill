@@ -19,20 +19,21 @@
 
 namespace dd {
 
-enum class Format { NONE, LOC, MAP, PRF, DIR, BMP, JPG, PNG, MPG };
+enum class Format { NONE, BMP, DIR, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
 
 inline Format getFormat(const string &path) {
 
     if (isDirectory(path)) return Format::DIR;
 
     auto suffix = extractSuffix(path);
-    if (suffix == "loc") return Format::LOC;
-    if (suffix == "map") return Format::MAP;
-    if (suffix == "prf") return Format::PRF;
     if (suffix == "bmp") return Format::BMP;
     if (suffix == "jpg") return Format::JPG;
-    if (suffix == "png") return Format::PNG;
+    if (suffix == "loc") return Format::LOC;
+    if (suffix == "map") return Format::MAP;
     if (suffix == "mpg" || suffix == "mpeg" || suffix == "mov") return Format::MPG;
+    if (suffix == "png") return Format::PNG;
+    if (suffix == "prf") return Format::PRF;
+    if (suffix == "prj") return Format::PRJ;
 
     return Format::NONE;
 }
@@ -70,15 +71,52 @@ struct Options {
     
     
     //
-    // Key-value pairs (parsed)
+    // Parsed and derived options
     //
-        
-    string exec;
-    string input;
-    string output;
-    isize verbose;
+
+    /*
+    string exec; // DEPRECATED
+    string input; // DEPRECATED
+    string output; // DEPRECATED
+    isize verbose; // DEPRECATED
+    Format inputFormat = Format::NONE; // DEPRECATED
+    Format outputFormat = Format::NONE; // DEPRECATED
+
     bool make;
     bool batch;
+    */
+
+    struct {
+
+        // Indicates if the '-v' flag has been specified
+        bool verbose = false;
+
+        // Indicates if the '-m' flag has been specified
+        bool make = false;
+
+        // Indicates if the '-b' flag has been specified
+        bool batch = false;
+
+    } flags;
+
+    struct {
+
+        // Full path to the executable
+        fs::path exec;
+
+        // Full path to the input file
+        fs::path input;
+
+        // The input's file type
+        Format inputFormat = Format::NONE;
+
+        // Full path to the output file
+        fs::path output;
+
+        // The output's file type
+        Format outputFormat = Format::NONE;
+
+    } files;
 
     struct {
 
@@ -163,10 +201,6 @@ struct Options {
     //
     // Derived values
     //
-
-    // Format of the specified input and output files
-    Format inputFormat = Format::NONE;
-    Format outputFormat = Format::NONE;
 
     // The center coordinate
     PrecisionComplex center;

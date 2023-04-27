@@ -29,7 +29,7 @@ Driller::drill()
     vector<Coord> remaining;
     vector<Coord> glitches;
         
-    if (opt.verbose) {
+    if (opt.flags.verbose) {
         
         log::cout << log::vspace;
         log::cout << log::ralign("Center: ");
@@ -72,7 +72,7 @@ Driller::drill()
         // Drill the reference point
         drill(ref);
         
-        if (opt.verbose) {
+        if (opt.flags.verbose) {
             
             log::cout << log::vspace;
             log::cout << log::ralign("Reference point: ");
@@ -98,7 +98,7 @@ Driller::drill()
             // Drill the probe points
             ref.skipped = drillProbePoints(probePoints);
             
-            if (opt.verbose) {
+            if (opt.flags.verbose) {
                 
                 log::cout << log::vspace;
                 log::cout << log::ralign("Coefficients: ");
@@ -115,7 +115,7 @@ Driller::drill()
         drill(remaining, glitches);
         remaining = glitches;
         
-        if (opt.verbose) {
+        if (opt.flags.verbose) {
             
             log::cout << log::vspace;
             log::cout << log::ralign("Glitches: ");

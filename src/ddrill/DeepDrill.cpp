@@ -77,10 +77,9 @@ DeepDrill::main(int argc, char *argv[])
     // Setup the GMP library
     setupGmp();
 
-    // Process files
+    // Read files
     readProfiles();
     readInputs();
-    readOutputs();
 
     // Deduce missing options
     opt.derive();
@@ -89,7 +88,7 @@ DeepDrill::main(int argc, char *argv[])
     Clock stopWatch;
 
     // Execute
-    opt.make ? runMaker() : runPipeline();
+    opt.flags.make ? runMaker() : runPipeline();
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
 }
@@ -112,7 +111,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     opterr = 0;
     
     // Remember the path to the DeppDrill executable
-    opt.exec = makeAbsolutePath(argv[0]);
+    opt.files.exec = makeAbsolutePath(argv[0]);
 
     // Parse all options
     while (1) {
@@ -123,15 +122,15 @@ DeepDrill::parseArguments(int argc, char *argv[])
         switch (arg) {
                 
             case 'v':
-                opt.verbose = true;
+                opt.flags.verbose = true;
                 break;
                 
             case 'm':
-                opt.make = true;
+                opt.flags.make = true;
                 break;
 
             case 'b':
-                opt.batch = true;
+                opt.flags.batch = true;
                 break;
 
             case 'a':
@@ -168,15 +167,16 @@ DeepDrill::checkArguments()
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
     if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
-    
+
+    auto input = inputs.front();
+    auto inputFormat = opt.files.inputFormat = getFormat(input);
+
     // The user needs to specify a single output
     if (outputs.size() < 1) throw SyntaxError("No output file is given");
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
-    auto in = inputs.front();
-    auto out = outputs.front();
-    auto inFormat = getFormat(in);
-    auto outFormat = getFormat(out);
+    auto output = outputs.front();
+    auto outputFormat = opt.files.outputFormat = getFormat(output);
 
     // All profiles must be files of type ".prf"
     for (auto &it : profiles) {
@@ -184,39 +184,41 @@ DeepDrill::checkArguments()
             throw SyntaxError(it + " is not a profile (.prf)");
         }
     }
-    
-    if (opt.make) {
-        
+
+    if (opt.flags.make) {
+
         // The input files must be a location files
-        if (inFormat != Format::LOC) {
-            throw SyntaxError(in + " is not a location file (.loc)");
+        if (inputFormat == Format::LOC) {
+            opt.files.input = opt.findLocationFile(input);
+        } else {
+            throw SyntaxError(input + " is not a location file (.loc)");
         }
 
-        // The output must be an empty directory
-        if (!fileExists(out)) {
-            throw SyntaxError("Output directory " + out + " does not exist");
+        // The output must be a directory
+        if (inputFormat == Format::DIR) {
+            opt.files.output = output;
+        } else {
+            throw SyntaxError(input + " is not a directory");
         }
-        if (!isDirectory(out)) {
-            throw SyntaxError("The output file must be a directory");
-        }
-        /*
-        if (numDirectoryItems(out) > 0) {
-            throw Exception("The output directory must be empty.");
-        }
-        */
-        
+
     } else {
                 
         // The input file must be a location file or a map file
-        if (inFormat != Format::LOC && inFormat != Format::MAP) {
-            throw SyntaxError(inputs.front() +
-                              ": Invalid format. Expected .loc or .map");
+        if (inputFormat == Format::LOC) {
+            opt.files.input = opt.findLocationFile(input);
+        } else if (inputFormat == Format::MAP) {
+            opt.files.input = input;
+        } else {
+            throw SyntaxError(input + ": Invalid format. Expected .loc or .map");
         }
         
         // The output file must be a map file or an image file
-        if (outFormat != Format::MAP && !isImageFormat(outFormat)) {
-            throw SyntaxError(outputs.front() +
-                              ": Invalid format. Expected .map, .bmp, .jpg, or .png");
+        if (outputFormat == Format::MAP) {
+            opt.files.output = output;
+        } else if (isImageFormat(outputFormat)) {
+            opt.files.output = output;
+        } else {
+            throw SyntaxError(output + ": Invalid format. Expected .map, .bmp, .jpg, or .png");
         }
     }
 }
@@ -224,49 +226,9 @@ DeepDrill::checkArguments()
 void
 DeepDrill::readInputs()
 {
-    auto input = inputs.front();
-    auto suffix = extractSuffix(input);
-
-    opt.input = input;
-
-    if (suffix == "loc") {
-
-        if (auto path = opt.findLocationFile(input); path != "") {
-            Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
-        } else {
-            throw FileNotFoundError(input);
-        }
-        return;
+    if (opt.files.inputFormat == Format::LOC) {
+        Parser::parse(opt.files.input, [this](string k, string v) { opt.parse(k,v); });
     }
-    if (suffix == "map") {
-        return;
-    }
-    if (isDirectory(input)) {
-        return;
-    }
-
-    throw SyntaxError(input + ": Unknown input format");
-}
-
-void
-DeepDrill::readOutputs()
-{
-    auto path = outputs.front();
-    auto format = getFormat(path);
-
-    opt.output = path;
-
-    if (format == Format::MAP) {
-        return;
-    }
-    if (isImageFormat(format)) {
-        return;
-    }
-    if (isDirectory(path)) {
-        return;
-    }
-
-    throw SyntaxError(path + ": Unknown output format");
 }
 
 void
@@ -332,37 +294,35 @@ DeepDrill::runPipeline()
     DrillMap drillMap(opt);
 
     // Create the drill map
-    if (opt.inputFormat == Format::MAP) {
+    if (opt.files.inputFormat == Format::MAP) {
         
         // Load the drill map from disk
-        drillMap.load(opt.input);
+        drillMap.load(opt.files.input);
 
     } else {
 
-        BatchProgressIndicator progress(opt, "Drilling", opt.output);
+        BatchProgressIndicator progress(opt, "Drilling", opt.files.output);
 
         // Run the driller
         Driller driller(opt, drillMap);
         driller.drill();
 
         // Are we supposed to save the map file?
-        if (opt.outputFormat == Format::MAP) {
+        if (opt.files.outputFormat == Format::MAP) {
 
-            drillMap.save(opt.output);
+            drillMap.save(opt.files.output);
         }
     }
 
     // Are we suppoed to create an image file?
-    if (opt.outputFormat == Format::BMP ||
-        opt.outputFormat == Format::JPG ||
-        opt.outputFormat == Format::PNG) {
+    if (isImageFormat(opt.files.outputFormat)) {
 
-        BatchProgressIndicator progress(opt, "Colorizing", opt.output);
+        BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);
         colorizer.colorize();
-        colorizer.save(opt.output, opt.outputFormat);
+        colorizer.save(opt.files.output, opt.files.outputFormat);
     }
 }
 

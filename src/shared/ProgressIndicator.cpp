@@ -68,7 +68,7 @@ ProgressIndicator::done(const string &info)
 
 BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg, const string &file)
 {
-    if (opt.batch) {
+    if (opt.flags.batch) {
 
         this->msg = msg;
         this->file = file;

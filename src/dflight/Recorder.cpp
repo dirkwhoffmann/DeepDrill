@@ -63,7 +63,7 @@ Recorder::startRecording()
     cmd += " -b:v " + std::to_string(opt.video.bitrate) + "k";
 
     // Output file
-    cmd += " -y " + opt.output;
+    cmd += " -y " + opt.files.output.string();
 
     //
     // Launch FFmpeg instance
@@ -81,7 +81,7 @@ Recorder::startRecording()
         throw Exception("Unable to open the video pipe.");
     }
 
-    if (opt.verbose) {
+    if (opt.flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Frame rate: ");

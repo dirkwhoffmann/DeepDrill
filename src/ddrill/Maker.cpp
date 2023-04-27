@@ -20,8 +20,8 @@ namespace dd {
 
 Maker::Maker(Options &o) : opt(o)
 {
-    project = stripSuffix(stripPath(opt.input));
-    projectDir = std::filesystem::path(opt.output);
+    project = stripSuffix(stripPath(opt.files.input));
+    projectDir = opt.files.output;
 }
 
 void
@@ -217,7 +217,7 @@ Maker::writeHeader(std::ofstream &os)
 void
 Maker::writeDefinitions(std::ofstream &os)
 {
-    auto path = extractPath(opt.exec);
+    auto path = extractPath(opt.files.exec);
 
     os << "DEEPDRILL  = " << path << "deepdrill" << std::endl;
     os << "DEEPFLIGHT = " << path << "deepflight" << std::endl;

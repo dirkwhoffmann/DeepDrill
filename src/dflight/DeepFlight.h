@@ -38,7 +38,6 @@ private:
     void parseArguments(int argc, char *argv[]);
     void checkArguments();
     void readInputs();
-    void readOutputs();
     void readProfiles();
 
     // Sets up the GMP library
