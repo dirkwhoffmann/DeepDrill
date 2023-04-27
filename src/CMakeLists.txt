@@ -49,13 +49,3 @@ add_subdirectory(math)
 add_subdirectory(shared)
 add_subdirectory(ddrill)
 add_subdirectory(dflight)
-
-# Copy asset directories
-set(directories tutorial profiles palettes shaders)
-foreach(dir ${directories})
-add_custom_command(
-        TARGET deepdrill POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_SOURCE_DIR}/../${dir}
-                ${CMAKE_CURRENT_BINARY_DIR}/${dir})
-endforeach()
