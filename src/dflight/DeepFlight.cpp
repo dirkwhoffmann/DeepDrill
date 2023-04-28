@@ -60,7 +60,7 @@ namespace dd {
 void
 DeepFlight::main(int argc, char *argv[])
 {
-    log::cout << "DeepFlight " << VER_MAJOR << "." << VER_MINOR;
+    log::cout << "DeepFlight " << Options::version();
     log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
 

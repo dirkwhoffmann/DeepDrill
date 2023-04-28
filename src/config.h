@@ -18,7 +18,8 @@
 
 // Version number
 #define VER_MAJOR 1
-#define VER_MINOR 0
+#define VER_MINOR 1
+#define VER_BETA  1
 
 // Uncomment this setting in a release build
 #define RELEASEBUILD
@@ -48,6 +49,12 @@ static const int FORCE_NO_FFMPEG    = 0;
 static const int releaseBuild = 1;
 #else
 static const int releaseBuild = 0;
+#endif
+
+#if VER_BETA == 0
+static const bool betaRelease = 0;
+#else
+static const bool betaRelease = 1;
 #endif
 
 #include <assert.h>

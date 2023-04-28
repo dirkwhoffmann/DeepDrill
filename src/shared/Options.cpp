@@ -57,6 +57,14 @@ Options::Options()
     assets = fs::path(__FILE__).parent_path().parent_path().parent_path();
 }
 
+string
+Options::version()
+{
+    return
+    std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR) +
+    (VER_BETA > 0 ? "b" + std::to_string(VER_BETA) : "");
+}
+
 void
 Options::parse(string key, string value)
 {

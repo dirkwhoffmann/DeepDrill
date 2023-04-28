@@ -68,23 +68,6 @@ struct Options {
 
     // User-defined keys
     map<string,string> keys;
-    
-    
-    //
-    // Parsed and derived options
-    //
-
-    /*
-    string exec; // DEPRECATED
-    string input; // DEPRECATED
-    string output; // DEPRECATED
-    isize verbose; // DEPRECATED
-    Format inputFormat = Format::NONE; // DEPRECATED
-    Format outputFormat = Format::NONE; // DEPRECATED
-
-    bool make;
-    bool batch;
-    */
 
     struct {
 
@@ -220,6 +203,9 @@ struct Options {
 public:
 
     Options();
+
+    // Returns a version string for this release
+    static string version();
 
 
     //

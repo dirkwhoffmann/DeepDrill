@@ -66,7 +66,7 @@ namespace dd {
 void
 DeepDrill::main(int argc, char *argv[])
 {
-    log::cout << "DeepDrill " << VER_MAJOR << "." << VER_MINOR;
+    log::cout << "DeepDrill " << Options::version();
     log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
 
