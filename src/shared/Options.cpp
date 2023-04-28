@@ -142,7 +142,7 @@ Options::parse(string key, string value)
             throw KeyValueError(key, "Height must be less or equal to 1080.");
         }
         if (video.height % 2 == 1) {
-            throw Exception(key + " must be dividable by 2.");
+            throw KeyValueError(key, "Height must be dividable by 2.");
         }
 
     } else if (key == "video.keyframes") {
@@ -181,7 +181,11 @@ Options::parse(string key, string value)
 
     } else if (key == "palette.colors") {
 
-        parse(key, value, palette.colors);
+        palette.colors = findPalette(value);
+
+        if (palette.colors == "") {
+            throw KeyValueError(key, "File " + value + " not found.");
+        }
 
     } else if (key == "palette.scale") {
 

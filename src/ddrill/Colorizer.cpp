@@ -29,8 +29,7 @@ Colorizer::Colorizer(const Options &opt, const DrillMap &map) : opt(opt), map(ma
     image.alloc(map.width * map.height);
 
     // Load color palette
-    auto path = opt.findPalette(opt.palette.colors);
-    if (path != "") palette.load(path);
+    palette.load(opt.palette.colors);
 }
 
 Colorizer::~Colorizer()

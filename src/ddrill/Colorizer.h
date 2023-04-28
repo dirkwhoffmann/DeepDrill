@@ -33,13 +33,7 @@ class Colorizer {
     Buffer <u32> image;
 
     // The color palette
-    Palette palette;
-    
-    // The color scheme (DEPRECATED)
-    // ColorScheme scheme = ColorScheme::Default;
-
-    // Custom color table (DEPRECATED)
-    vector <u32> colors;
+    Palette palette = Palette(opt);
 
 
     //

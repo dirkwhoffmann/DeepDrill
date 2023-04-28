@@ -152,7 +152,7 @@ struct Options {
 
     struct {
 
-        // Path to the color image file
+        // Path to the palette image
         string colors;
 
         // Scaling factor

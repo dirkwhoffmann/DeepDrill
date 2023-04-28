@@ -19,13 +19,16 @@ namespace dd {
 
 class Palette {
 
+    // Configuration options
+    const struct Options &opt;
+    
     Buffer <u32> r;
     Buffer <u32> g;
     Buffer <u32> b;
 
 public:
 
-    Palette();
+    Palette(const Options &options);
 
     void load(const string &path);
     u32 interpolateABGR(double value);

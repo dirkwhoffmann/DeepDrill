@@ -12,12 +12,13 @@
 #include "Palette.h"
 #include "Exception.h"
 #include "IO.h"
+#include "Options.h"
 #include <tgmath.h>
 #include <SFML/Graphics.hpp>
 
 namespace dd {
 
-Palette::Palette()
+Palette::Palette(const Options &opt) : opt(opt)
 {
     static constexpr isize size = 2048;
 
@@ -49,10 +50,7 @@ Palette::load(const string &path)
 {
     sf::Image img;
 
-    if (!fileExists(path)) {
-        throw FileNotFoundError(path);
-    }
-
+    // Load asset
     img.loadFromFile(path);
     auto size = img.getSize();
 

@@ -2,7 +2,7 @@
 depth = 3500000
 
 [palette]
-colors = ultrafrac.png
+colors = dolomiti.png
 
 [video]
 keyframes = 164
