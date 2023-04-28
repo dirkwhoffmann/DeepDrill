@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "IO.h"
 
 namespace dd {
 
@@ -27,6 +28,7 @@ struct Exception : public std::exception {
     Exception() : data(0) { }
     
     const char *what() const throw() override { return description.c_str(); }
+    virtual void what(const class Logger &logger) const;
 };
 
 struct SyntaxError : public Exception {
@@ -56,6 +58,18 @@ struct InvalidValueException : public Exception {
 
 struct UserInterruptException : Exception {
     using Exception::Exception;
+};
+
+struct ScriptException : Exception {
+
+    Exception exception;
+    string file;
+    isize line;
+
+    ScriptException(const Exception &exception, const string &file, isize line) :
+    exception(exception), file(file), line(line) { }
+
+    void what(const class Logger &logger) const override;
 };
 
 }

@@ -31,7 +31,9 @@ Parser::parse(const string &path, std::function<void(string,string)>callback)
     }
  
     try { parse(fs, callback); } catch (Exception &e) {
-        throw Exception("Error in '" + name + "' line " + std::to_string(e.data) + ": " + e.what());
+
+        throw ScriptException(e, name, e.data);
+        // throw Exception("Error in '" + name + "' line " + std::to_string(e.data) + ": " + e.what());
     }
 }
 

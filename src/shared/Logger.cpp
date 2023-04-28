@@ -153,6 +153,14 @@ Logger::operator<<(const PrecisionComplex& arg)
     return *this;
 }
 
+Logger&
+Logger::operator<<(const Exception& arg)
+{
+    arg.what(*this);
+    return *this;
+}
+
+
 void
 Logger::setColor(isize c, bool b)
 {

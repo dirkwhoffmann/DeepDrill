@@ -8,7 +8,23 @@
 // -----------------------------------------------------------------------------
 
 #include "Exception.h"
+#include "Logger.h"
 
 namespace dd {
+
+void
+Exception::what(const class Logger &log) const
+{
+    log::cout << log::red << log::bold << "Error: ";
+    log::cout << what() << log::light << log::black;
+}
+
+void
+ScriptException::what(const class Logger &log) const
+{
+    log::cout << log::red << log::bold;
+    log::cout << "Error in file " << file << ", line " << line << ": ";
+    log::cout << exception.what() << log::light << log::black;
+}
 
 }
