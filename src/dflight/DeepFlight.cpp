@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         if (!e.description.empty()) {
 
             log::cout << log::red << log::bold << "Error: ";
-            log::cout << log::black << e.what() << log::light << log::endl;
+            log::cout << log::normal << e.what() << log::light << log::endl;
         }
 
         return 1;

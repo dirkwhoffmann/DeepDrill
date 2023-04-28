@@ -94,7 +94,6 @@
 		5047B4EE29FBC20100AC38DC /* safari.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = safari.prf; sourceTree = "<group>"; };
 		5047B4EF29FBE5FC00AC38DC /* 1e14.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 1e14.prf; sourceTree = "<group>"; };
 		5047B4F029FBE6D500AC38DC /* dinosaur_fossils.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = dinosaur_fossils.prf; sourceTree = "<group>"; };
-		5047B4F129FBEE3000AC38DC /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rainbow.png; sourceTree = "<group>"; };
 		5047B4F229FBF1FD00AC38DC /* pistachio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pistachio.png; sourceTree = "<group>"; };
 		5047B4F329FBF20800AC38DC /* elements.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = elements.png; sourceTree = "<group>"; };
 		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,7 +383,6 @@
 				5047B4F329FBF20800AC38DC /* elements.png */,
 				5047B4F229FBF1FD00AC38DC /* pistachio.png */,
 				5047B4E929F9625500AC38DC /* ice.png */,
-				5047B4F129FBEE3000AC38DC /* rainbow.png */,
 				5047B4E629F8EFE800AC38DC /* ultrafrac.png */,
 				5047B4EB29F9625600AC38DC /* vulcano.png */,
 			);

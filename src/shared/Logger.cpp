@@ -160,16 +160,6 @@ Logger::operator<<(const Exception& arg)
     return *this;
 }
 
-
-void
-Logger::setColor(isize c, bool b)
-{
-    color = c;
-    bold = b;
-
-    *this << "\033[" << (bold ? "1" : "0") << ";3" << color << "m";
-}
-
 Logger log::cout(std::cout);
 
 }

@@ -37,7 +37,7 @@ Maker::generate()
             for (auto &it : skipped) {
 
                 log::cout << log::purple << log::bold << log::ralign("Skipping file: ") << log::light;
-                log::cout << log::black << it << " already exists" << log::endl;
+                log::cout << log::normal << it << " already exists" << log::endl;
             }
             log::cout << log::vspace;
             skipped = { };

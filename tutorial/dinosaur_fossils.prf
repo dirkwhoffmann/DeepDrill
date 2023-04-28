@@ -2,7 +2,7 @@
 depth = 3500000
 
 [palette]
-colors = dolomiti.png
+colors = candy.png
 
 [video]
 keyframes = 164

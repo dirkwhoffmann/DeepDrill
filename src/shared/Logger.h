@@ -28,6 +28,7 @@ struct Endl { };
 struct VSpace { };
 struct Flush { };
 struct ralign { string str; ralign(const string s) : str(s) { } };
+struct Normal { };
 struct Black { };
 struct Red { };
 struct Green { };
@@ -43,6 +44,7 @@ struct Light { };
 static constexpr Endl endl;
 static constexpr VSpace vspace;
 static constexpr Flush flush;
+static constexpr Normal normal;
 static constexpr Black black;
 static constexpr Red red;
 static constexpr Green green;
@@ -58,7 +60,7 @@ static constexpr Light light;
 
 class Logger {
 
-    //
+    // The underlying output stream
     std::ostream &stream;
 
     // Blank line counter
@@ -66,12 +68,6 @@ class Logger {
     
     // Indicates if all output should be omitted
     bool silent = false;
-
-    // Color index
-    isize color = 0;
-
-    // Bold flag
-    bool bold = false;
 
 public:
 
@@ -83,16 +79,17 @@ public:
     Logger& operator<<(const log::VSpace &arg);
     Logger& operator<<(const log::Flush &arg);
     Logger& operator<<(const log::ralign &arg);
-    Logger& operator<<(const log::Black &arg) { setColor(0, bold); return *this; }
-    Logger& operator<<(const log::Red &arg) { setColor(1, bold); return *this; }
-    Logger& operator<<(const log::Green &arg) { setColor(2, bold); return *this; }
-    Logger& operator<<(const log::Yellow &arg) { setColor(3, bold); return *this; }
-    Logger& operator<<(const log::Blue &arg) { setColor(4, bold); return *this; }
-    Logger& operator<<(const log::Purple &arg) { setColor(5, bold); return *this; }
-    Logger& operator<<(const log::Cyan &arg) { setColor(6, bold); return *this; }
-    Logger& operator<<(const log::White &arg) { setColor(7, bold); return *this; }
-    Logger& operator<<(const log::Bold &arg) { setColor(color, 1); return *this; }
-    Logger& operator<<(const log::Light &arg) { setColor(color, 0); return *this; }
+    Logger& operator<<(const log::Normal &arg) { *this << "\033[m"; return *this; }
+    Logger& operator<<(const log::Black &arg) { *this << "\033[30m"; return *this; }
+    Logger& operator<<(const log::Red &arg) { *this << "\033[31m"; return *this; }
+    Logger& operator<<(const log::Green &arg) { *this << "\033[32m"; return *this; }
+    Logger& operator<<(const log::Yellow &arg) { *this << "\033[33m"; return *this; }
+    Logger& operator<<(const log::Blue &arg) { *this << "\033[34m"; return *this; }
+    Logger& operator<<(const log::Purple &arg) { *this << "\033[35m"; return *this; }
+    Logger& operator<<(const log::Cyan &arg) { *this << "\033[36m"; return *this; }
+    Logger& operator<<(const log::White &arg) { *this << "\033[37m"; return *this; }
+    Logger& operator<<(const log::Bold &arg) {  *this << "\033[1m"; return *this; }
+    Logger& operator<<(const log::Light &arg) { *this << "\033[0m"; return *this; }
     Logger& operator<<(const string &arg);
     Logger& operator<<(const isize &arg);
     Logger& operator<<(const Time &arg);
@@ -102,8 +99,6 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
-
-    void setColor(isize c, bool b);
 };
 
 // Default logger (writes to stdout)
