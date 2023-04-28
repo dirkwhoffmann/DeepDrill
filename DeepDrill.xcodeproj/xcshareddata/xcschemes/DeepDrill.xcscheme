@@ -57,8 +57,8 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "base.loc"
-            isEnabled = "NO">
+            argument = "dinosaur_fossils.loc"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o /Users/hoff/tmp/garbage.png"
@@ -70,15 +70,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p infinity.prf"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-p low.prf "
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-p medium.prf "
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p dinosaur_fossils.prf "
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p low.prf"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p high.prf "
@@ -102,7 +102,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = " infinity.loc"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>

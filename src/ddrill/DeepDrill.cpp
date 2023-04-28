@@ -39,13 +39,15 @@ int main(int argc, char *argv[])
         log::cout << "       -b or --batch     Run in batch mode" << log::endl;
         log::cout << "       -m or --make      Run the Makefile generator" << log::endl;
         log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
-        log::cout << "       -a or --assets    Path to assets directory" << log::endl;
+        log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
         log::cout << "       -p or --profile   Customize settings" << log::endl;
         log::cout << "       -o or --output    Output file" << log::endl;
         log::cout << log::endl;
 
         if (!e.description.empty()) {
-            log::cout << e.what() << log::endl;
+
+            log::cout << log::red << log::bold << "Error: ";
+            log::cout << log::black << e.what() << log::light << log::endl;
         }
 
         return 1;
@@ -77,9 +79,11 @@ DeepDrill::main(int argc, char *argv[])
     // Setup the GMP library
     setupGmp();
 
-    // Read files
-    readProfiles();
+    // Read input files
     readInputs();
+
+    // Customize settings
+    readProfiles();
 
     // Deduce missing options
     opt.derive();
@@ -178,10 +182,12 @@ DeepDrill::checkArguments()
     auto output = outputs.front();
     auto outputFormat = opt.files.outputFormat = getFormat(output);
 
-    // All profiles must be files of type ".prf"
+    // All profiles must be existent prf files
     for (auto &it : profiles) {
         if (getFormat(it) != Format::PRF) {
             throw SyntaxError(it + " is not a profile (.prf)");
+        } else if (opt.findProfile(it) == "") {
+            throw FileNotFoundError(it);
         }
     }
 
@@ -195,7 +201,7 @@ DeepDrill::checkArguments()
         }
 
         // The output must be a directory
-        if (inputFormat == Format::DIR) {
+        if (outputFormat == Format::DIR) {
             opt.files.output = output;
         } else {
             throw SyntaxError(input + " is not a directory");
@@ -221,13 +227,19 @@ DeepDrill::checkArguments()
             throw SyntaxError(output + ": Invalid format. Expected .map, .bmp, .jpg, or .png");
         }
     }
+
+    // The input and output files must exist
+    if (opt.files.input == "") throw FileNotFoundError(input);
+    if (opt.files.output == "") throw FileNotFoundError(output);
 }
 
 void
 DeepDrill::readInputs()
 {
     if (opt.files.inputFormat == Format::LOC) {
-        Parser::parse(opt.files.input, [this](string k, string v) { opt.parse(k,v); });
+
+        Parser::parse(opt.files.input,
+                      [this](string k, string v) { opt.parse(k,v); });
     }
 }
 
@@ -236,11 +248,8 @@ DeepDrill::readProfiles()
 {
     for (auto &profile: profiles) {
 
-        if (auto path = opt.findProfile(profile); path != "") {
-            Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
-        } else {
-            throw FileNotFoundError(profile);
-        }
+        Parser::parse(opt.findProfile(profile),
+                      [this](string k, string v) { opt.parse(k,v); });
     }
 }
 
@@ -252,39 +261,30 @@ DeepDrill::setupGmp()
     auto name = inputs.front();
     auto suffix = extractSuffix(name);
 
-    if (suffix == "loc") {
+    if (opt.files.inputFormat == Format::LOC) {
 
-        if (auto path = opt.findLocationFile(name); path != "") {
+        /* If a location is given, we need to adjust the GMP precision based
+         * on the zoom factor. Because we haven't parsed any input file when
+         * this function is called, we need to peek this value directly from
+         * the location file.
+         */
+        Parser::parse(opt.files.input, [&accuracy](string key, string value) {
 
-            /* If a location is given, we need to adjust the GMP precision based
-             * on the zoom factor. Because we haven't parsed any input file when
-             * this function is called, we need to peek this value directly from
-             * the location file.
-             */
-            Parser::parse(path, [&accuracy](string key, string value) {
+            if (key == "location.zoom") {
 
-                if (key == "location.zoom") {
+                try {
 
-                    try {
+                    long exponent = 0;
+                    auto zoom = mpf_class(value);
+                    mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
+                    accuracy = exponent + 64;
+                    return;
 
-                        long exponent = 0;
-                        auto zoom = mpf_class(value);
-                        mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
-                        accuracy = exponent + 64;
-                        return;
-
-                    } catch (...) { }
-                }
-            });
-        }
+                } catch (...) { }
+            }
+        });
     }
 
-    setupGmp(accuracy);
-}
-
-void
-DeepDrill::setupGmp(isize accuracy)
-{
     mpf_set_default_prec(accuracy);
 }
 

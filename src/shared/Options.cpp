@@ -211,7 +211,7 @@ void
 Options::parse(const string &key, const string &value, isize &parsed)
 {
     try {
-        parsed = stoi(value);
+        parsed = stol(value);
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }

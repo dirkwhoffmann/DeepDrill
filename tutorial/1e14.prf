@@ -1,17 +1,12 @@
 [location]
 depth = 3500000
 
-[image]
-width = 3840
-height = 2160
-
 [palette]
-colors = dolomiti.png
+colors = ultrafrac.png
 
 [video]
-#keyframes = 227
-keyframes = 36
-inbetweens = 148
+keyframes = 48
+inbetweens = 120
 bitrate = 8000
 
 [perturbation]

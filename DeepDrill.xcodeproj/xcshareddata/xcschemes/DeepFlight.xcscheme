@@ -56,7 +56,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/infinity.prj"
+            argument = "/Users/hoff/tmp/dd/project/dinosaur_fossils.prj"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

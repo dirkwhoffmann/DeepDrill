@@ -90,6 +90,10 @@
 		5047B4E929F9625500AC38DC /* ice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ice.png; sourceTree = "<group>"; };
 		5047B4EA29F9625600AC38DC /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		5047B4EB29F9625600AC38DC /* vulcano.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vulcano.png; sourceTree = "<group>"; };
+		5047B4ED29FBACB600AC38DC /* seahorse.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse.prf; sourceTree = "<group>"; };
+		5047B4EE29FBC20100AC38DC /* safari.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = safari.prf; sourceTree = "<group>"; };
+		5047B4EF29FBE5FC00AC38DC /* 1e14.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 1e14.prf; sourceTree = "<group>"; };
+		5047B4F029FBE6D500AC38DC /* dinosaur_fossils.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = dinosaur_fossils.prf; sourceTree = "<group>"; };
 		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
 		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
 		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
@@ -188,7 +192,6 @@
 		50D69A7629E2A4630025DE0D /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
-		50EB0D4D29F57D2600770F31 /* infinity.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.loc; sourceTree = "<group>"; };
 		50EB0D4F29F596DE00770F31 /* infinity.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.prf; sourceTree = "<group>"; };
 		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
@@ -364,6 +367,7 @@
 				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
 				5047B4E529F82D4500AC38DC /* base.loc */,
+				50BEC72F2694872900CCDFA8 /* spider.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -435,10 +439,12 @@
 		50EB0D4C29F57D0200770F31 /* tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				50D69A7629E2A4630025DE0D /* spider.prf */,
-				50EB0D4D29F57D2600770F31 /* infinity.loc */,
 				50EB0D4F29F596DE00770F31 /* infinity.prf */,
+				5047B4ED29FBACB600AC38DC /* seahorse.prf */,
+				5047B4EE29FBC20100AC38DC /* safari.prf */,
+				5047B4EF29FBE5FC00AC38DC /* 1e14.prf */,
+				5047B4F029FBE6D500AC38DC /* dinosaur_fossils.prf */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";

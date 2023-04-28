@@ -49,7 +49,6 @@ private:
 
     // Sets up the GMP library
     void setupGmp();
-    void setupGmp(isize accuracy);
 };
 
 }

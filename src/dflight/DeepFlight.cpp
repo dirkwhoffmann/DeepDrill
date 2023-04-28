@@ -34,12 +34,14 @@ int main(int argc, char *argv[])
         log::cout << log::endl;
         log::cout << "       -b or --batch     Run in batch mode" << log::endl;
         log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
-        log::cout << "       -a or --assets    Path to assets directory" << log::endl;
+        log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
         log::cout << "       -p or --profile   Customize settings" << log::endl;
         log::cout << log::endl;
 
         if (!e.description.empty()) {
-            log::cout << e.what() << log::endl;
+
+            log::cout << log::red << log::bold << "Error: ";
+            log::cout << log::black << e.what() << log::light << log::endl;
         }
 
         return 1;
@@ -65,8 +67,16 @@ DeepFlight::main(int argc, char *argv[])
     // Parse command line arguments
     parseArguments(argc, argv);
 
-    // Read files
+    // Check arguments for consistency
+    checkArguments();
+
+    // Setup the GMP library
+    setupGmp();
+
+    // Read input files
     readInputs();
+
+    // Customize settings
     readProfiles();
 
     // Deduce missing options
@@ -88,6 +98,7 @@ DeepFlight::parseArguments(int argc, char *argv[])
 
         { "verbose",  no_argument,       NULL, 'v' },
         { "batch",    no_argument,       NULL, 'b' },
+        { "assets",   required_argument, NULL, 'a' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
@@ -139,11 +150,8 @@ DeepFlight::parseArguments(int argc, char *argv[])
 
     // Parse all remaining arguments
     while (optind < argc) {
-        inputs.push_back(makeAbsolutePath(argv[optind++]));
+        inputs.push_back(argv[optind++]);
     }
-
-    checkArguments();
-    setupGmp(128);
 }
 
 void
@@ -159,21 +167,20 @@ DeepFlight::checkArguments()
     // The user needs to specify at most one output
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
-    // All profiles must be files of type ".prf"
+    // All profiles must be existent prf files
     for (auto &it : profiles) {
-        if (extractSuffix(it) != "prf") {
+        if (getFormat(it) != Format::PRF) {
             throw SyntaxError(it + " is not a profile (.prf)");
+        } else if (opt.findProfile(it) == "") {
+            throw FileNotFoundError(it);
         }
     }
-
-    auto in = inputs.front();
-    auto inSuffix = extractSuffix(in);
 
     // The input files must be a prj file
     if (inputFormat == Format::PRJ) {
         opt.files.input = input;
     } else {
-        throw SyntaxError(in + " is not a project file (.prj)");
+        throw SyntaxError(input + " is not a project file (.prj)");
     }
 
     // The input file must exist
@@ -186,7 +193,7 @@ DeepFlight::checkArguments()
         auto output = opt.files.output = outputs.front();
         auto outputFormat = opt.files.outputFormat = getFormat(output);
 
-        // The output file must be a mpg file
+        // The output file must be a video file
         if (isVideoFormat(outputFormat)) {
             throw SyntaxError(output.string() + ": Invalid format. Expected .mpg, .mpeg, or .mov");
         }
@@ -202,27 +209,24 @@ DeepFlight::checkArguments()
 void
 DeepFlight::readInputs()
 {
-    Parser::parse(opt.files.input, [this](string k, string v) { opt.parse(k,v); });
+    Parser::parse(opt.files.input,
+                  [this](string k, string v) { opt.parse(k,v); });
 }
 
 void
 DeepFlight::readProfiles()
 {
-    for (auto &path: profiles) {
-        Parser::parse(path, [this](string k, string v) { opt.parse(k,v); });
+    for (auto &profile: profiles) {
+
+        Parser::parse(opt.findProfile(profile),
+                      [this](string k, string v) { opt.parse(k,v); });
     }
 }
 
 void
 DeepFlight::setupGmp()
 {
-    setupGmp(64);
-}
-
-void
-DeepFlight::setupGmp(isize accuracy)
-{
-    mpf_set_default_prec(accuracy);
+    mpf_set_default_prec(128);
 }
 
 }

@@ -2,16 +2,17 @@
 depth = 3500000
 
 [image]
-width = 3840
-height = 2160
+#width = 3840
+#height = 2160
+width = 480
+height = 260
 
 [palette]
-colors = dolomiti.png
+colors = vulcano.png
 
 [video]
-#keyframes = 227
-keyframes = 36
-inbetweens = 148
+keyframes = 600
+inbetweens = 120
 bitrate = 8000
 
 [perturbation]
@@ -20,3 +21,5 @@ rounds = 100
 
 [approximation]
 coefficients = 5
+
+
