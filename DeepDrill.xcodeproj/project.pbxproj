@@ -99,6 +99,7 @@
 		5047B4F829FD306700AC38DC /* orion.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = orion.prf; sourceTree = "<group>"; };
 		5047B4F929FD33AC00AC38DC /* peanuts.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = peanuts.prf; sourceTree = "<group>"; };
 		5047B4FA29FD349D00AC38DC /* x.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = x.prf; sourceTree = "<group>"; };
+		5047B4FC29FD537D00AC38DC /* prism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prism.png; sourceTree = "<group>"; };
 		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
 		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
 		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
@@ -380,6 +381,7 @@
 		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
+				5047B4FC29FD537D00AC38DC /* prism.png */,
 				5047B4E729F9623500AC38DC /* candy.png */,
 				5047B4EA29F9625600AC38DC /* default.png */,
 				5047B4E829F9624100AC38DC /* dolomiti.png */,

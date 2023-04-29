@@ -2,7 +2,8 @@
 depth = 3500000
 
 [palette]
-colors = ultrafrac.png
+colors = prism.png
+scale = 0.5
 
 [video]
 inbetweens = 120
