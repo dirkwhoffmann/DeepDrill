@@ -227,7 +227,6 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
     os << "MAPFLAGS   = -b" << std::endl;
     os << "PNGFLAGS   = -b" << std::endl;
-    // os << "MOVFLAGS   = -b" << std::endl;
     os << std::endl;
 }
 
@@ -245,8 +244,7 @@ Maker::writeTargets(std::ofstream &os)
     // Write 'map' target
     os << "%.map: %.loc" << std::endl;
     os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf";
-    os << " -o $*.map $*.loc > $*.progress" << std::endl;
-    os << "\t" << "@mv $*.progress $*.log" << std::endl;
+    os << " -o $*.map $*.loc > $*.log" << std::endl;
     os << std::endl;
 
     // Write 'png' target

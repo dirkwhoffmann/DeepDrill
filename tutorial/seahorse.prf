@@ -8,11 +8,11 @@ width = 480
 height = 260
 
 [palette]
-colors = ultrafrac.png
+colors = elements.png
 
 [video]
 keyframes = 75
-inbetweens = 143
+inbetweens = 120
 bitrate = 8000
 
 [perturbation]

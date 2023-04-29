@@ -194,7 +194,7 @@ DeepFlight::checkArguments()
         auto outputFormat = opt.files.outputFormat = getFormat(output);
 
         // The output file must be a video file
-        if (isVideoFormat(outputFormat)) {
+        if (!isVideoFormat(outputFormat)) {
             throw SyntaxError(output.string() + ": Invalid format. Expected .mpg, .mpeg, or .mov");
         }
 
