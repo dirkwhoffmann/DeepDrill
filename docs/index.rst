@@ -31,6 +31,14 @@ DeepDrill User's Manual
 
 .. toctree::
    :maxdepth: 1
+   :caption: Videos
+
+   Videos/FirstFlight
+   Videos/SecondFlight
+   Videos/Fossile
+
+.. toctree::
+   :maxdepth: 1
    :caption: References
 
    References/Options
