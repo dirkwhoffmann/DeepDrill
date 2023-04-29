@@ -99,11 +99,10 @@ Maker::generateProjectFile(vector <string> &skipped)
 void
 Maker::generateLocationFiles(vector <string> &skipped)
 {
-    ProgressIndicator progress("Generating location files");
+    ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
 
     // Start in the middle of the Mandelbrot set by shifting the center
     auto shift = PrecisionComplex(); // PrecisionComplex(-opt.location.real, -opt.location.imag);
-
     for (isize nr = 0; nr < opt.video.keyframes; nr++) {
 
         auto &keys = opt.keys;

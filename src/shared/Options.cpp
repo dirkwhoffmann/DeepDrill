@@ -252,6 +252,13 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
 void
 Options::derive()
 {
+    // Set default values for all missing options
+    for (auto &it : defaults) {
+        if (keys.find(it.first) == keys.end()) {
+            parse(it.first, it.second);
+        }
+    }
+
     // Derive unspecified parameters
     auto frameRate = double(video.frameRate);
     auto keyframes = double(video.keyframes);
@@ -273,13 +280,6 @@ Options::derive()
 
     // Derive the video length
     duration = isize(std::round(keyframes * inbetweens / frameRate));
-
-    // Set default values for all missing options
-    for (auto &it : defaults) {
-        if (keys.find(it.first) == keys.end()) {
-            parse(it.first, it.second);
-        }
-    }
 
     // Compute the center coordinate
     center = PrecisionComplex(location.real, location.imag);

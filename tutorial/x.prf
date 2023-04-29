@@ -5,7 +5,6 @@ depth = 3500000
 colors = ultrafrac.png
 
 [video]
-keyframes = 48
 inbetweens = 120
 bitrate = 8000
 
