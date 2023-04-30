@@ -17,6 +17,8 @@
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace dd {
 
 enum class Format { NONE, BMP, DIR, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
@@ -147,6 +149,9 @@ struct Options {
         // Path to fragment shaders
         string scaler;
         string merger;
+
+        sf::Shader scaleShader;
+
 
     } video;
 

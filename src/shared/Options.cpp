@@ -181,10 +181,13 @@ Options::parse(string key, string value)
 
     } else if (key == "palette.colors") {
 
-        palette.colors = findPalette(value);
+        if (value != "") {
 
-        if (palette.colors == "") {
-            throw KeyValueError(key, "File " + value + " not found.");
+            palette.colors = findPalette(value);
+
+            if (palette.colors == "") {
+                throw KeyValueError(key, "File " + value + " not found.");
+            }
         }
 
     } else if (key == "palette.scale") {
@@ -292,11 +295,14 @@ Options::derive()
 fs::path
 Options::findAsset(const fs::path &name, const fs::path &dir) const
 {
-    // Search the file at the specified path
-    if (fileExists(name)) return name;
+    if (name != "") {
 
-    // Search the file in the assets directory
-    if (fileExists(assets / dir / name)) return assets / dir / name;
+        // Search the file at the specified path
+        if (fileExists(name)) return name;
+
+        // Search the file in the assets directory
+        if (fileExists(assets / dir / name)) return assets / dir / name;
+    }
 
     // File not found
     return "";
