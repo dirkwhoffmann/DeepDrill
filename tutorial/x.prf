@@ -2,8 +2,7 @@
 depth = 3500000
 
 [palette]
-colors = prism.png
-scale = 0.5
+colors = ruby.png
 
 [video]
 inbetweens = 120
