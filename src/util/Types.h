@@ -48,7 +48,8 @@ using std::string;
 // Files
 //
 #include <filesystem>
-using std::filesystem::path;
+namespace fs = std::filesystem;
+
 
 //
 // Data structures

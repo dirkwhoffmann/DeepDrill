@@ -91,16 +91,16 @@ struct Options {
     struct {
 
         // Full path to the executable
-        path exec;
+        fs::path exec;
 
         // Full path to the input file
-        path input;
+        fs::path input;
 
         // The input's file type
         // Format inputFormat = Format::NONE;
 
         // Full path to the output file
-        path output;
+        fs::path output;
 
         // The output's file type
         // Format outputFormat = Format::NONE;

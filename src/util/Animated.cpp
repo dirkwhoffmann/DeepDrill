@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Animated.h"
+#include <tgmath.h>
 
 Animated::Animated(double value)
 {
