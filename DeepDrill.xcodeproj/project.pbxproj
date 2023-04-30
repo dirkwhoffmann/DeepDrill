@@ -115,6 +115,7 @@
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
 		50BEC6F0269486A800CCDFA8 /* Driller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driller.cpp; sourceTree = "<group>"; };
@@ -394,6 +395,7 @@
 				5047B4E929F9625500AC38DC /* ice.png */,
 				5047B4E629F8EFE800AC38DC /* ultrafrac.png */,
 				5047B4EB29F9625600AC38DC /* vulcano.png */,
+				50AE096229FE5220005E4D3E /* ruby.png */,
 			);
 			path = palettes;
 			sourceTree = "<group>";
