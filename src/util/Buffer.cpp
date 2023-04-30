@@ -198,5 +198,6 @@ template void Allocator<T>::clear(T value, isize offset, isize len); \
 template void Allocator<T>::copy(T *buf, isize offset, isize len) const;
 
 INSTANTIATE_ALLOCATOR(u32)
+INSTANTIATE_ALLOCATOR(double)
 
 }

@@ -39,9 +39,9 @@ Palette::Palette(const Options &opt) : opt(opt)
     for (isize i = 0; i < size; i++) {
 
         double v = double(i) / size * 2 * 3.14159;
-        r[i] = u8(255.0 * (0.5 + 0.5 * cos(v + 0.0 - 2.7)));
-        g[i] = u8(255.0 * (0.5 + 0.5 * cos(v + 0.6 - 2.7)));
-        b[i] = u8(255.0 * (0.5 + 0.5 * cos(v + 1.0 - 2.7)));
+        r[i] = 255.0 * (0.5 + 0.5 * cos(v + 0.0 - 2.7));
+        g[i] = 255.0 * (0.5 + 0.5 * cos(v + 0.6 - 2.7));
+        b[i] = 255.0 * (0.5 + 0.5 * cos(v + 1.0 - 2.7));
     }
 }
 
@@ -77,12 +77,12 @@ Palette::interpolateABGR(double value)
     auto scaled = value * size / (2 * 3.14159);
     auto frac = fmod(scaled, 1.0);
 
-    auto r1 = double(r[(isize(scaled) + 0) % size]);
-    auto g1 = double(g[(isize(scaled) + 0) % size]);
-    auto b1 = double(b[(isize(scaled) + 0) % size]);
-    auto r2 = double(r[(isize(scaled) + 1) % size]);
-    auto g2 = double(g[(isize(scaled) + 1) % size]);
-    auto b2 = double(b[(isize(scaled) + 1) % size]);
+    auto r1 = r[(isize(scaled) + 0) % size];
+    auto g1 = g[(isize(scaled) + 0) % size];
+    auto b1 = b[(isize(scaled) + 0) % size];
+    auto r2 = r[(isize(scaled) + 1) % size];
+    auto g2 = g[(isize(scaled) + 1) % size];
+    auto b2 = b[(isize(scaled) + 1) % size];
     auto mr = r1 + (r2 - r1) * frac;
     auto mg = g1 + (g2 - g1) * frac;
     auto mb = b1 + (b2 - b1) * frac;

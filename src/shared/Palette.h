@@ -22,9 +22,9 @@ class Palette {
     // Configuration options
     const struct Options &opt;
     
-    Buffer <u32> r;
-    Buffer <u32> g;
-    Buffer <u32> b;
+    Buffer <double> r;
+    Buffer <double> g;
+    Buffer <double> b;
 
 public:
 

@@ -22,37 +22,6 @@
 
 namespace dd {
 
-/*
-inline Format getFormat(const string &path) {
-
-    if (isDirectory(path)) return Format::DIR;
-
-    auto suffix = extractSuffix(path);
-    if (suffix == "bmp") return Format::BMP;
-    if (suffix == "jpg") return Format::JPG;
-    if (suffix == "loc") return Format::LOC;
-    if (suffix == "map") return Format::MAP;
-    if (suffix == "mpg" || suffix == "mpeg" || suffix == "mov") return Format::MPG;
-    if (suffix == "png") return Format::PNG;
-    if (suffix == "prf") return Format::PRF;
-    if (suffix == "prj") return Format::PRJ;
-
-    return Format::NONE;
-}
-
-inline bool isImageFormat(Format format) {
-    return
-    format == Format::BMP ||
-    format == Format::JPG ||
-    format == Format::PNG;
-}
-
-inline bool isVideoFormat(Format format) {
-    return
-    format == Format::MPG;
-}
-*/
-
 struct Options {
 
     // Reference to the asset manager
@@ -60,9 +29,6 @@ struct Options {
 
     // Set to true to abort the computation
     bool stop = false;
-
-    // Assets search path
-    // [[deprecated]] path assets;
 
 
     //
@@ -96,14 +62,8 @@ struct Options {
         // Full path to the input file
         fs::path input;
 
-        // The input's file type
-        // Format inputFormat = Format::NONE;
-
         // Full path to the output file
         fs::path output;
-
-        // The output's file type
-        // Format outputFormat = Format::NONE;
 
     } files;
 
@@ -227,21 +187,6 @@ private:
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
-
-
-    //
-    // Managing assets
-    //
-
-    /*
-public:
-
-    [[deprecated]] path findAsset(const path &name, const path &dir = "") const;
-    [[deprecated]] path findLocationFile(const path &name) const;
-    [[deprecated]] path findProfile(const path &name) const;
-    [[deprecated]] path findPalette(const path &name) const;
-    [[deprecated]] path findShader(const path &name) const;
-    */
 };
 
 }
