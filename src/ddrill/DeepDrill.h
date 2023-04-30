@@ -12,12 +12,7 @@
 #pragma once
 
 #include "config.h"
-#include "Types.h"
-#include "AssetManager.h"
-#include "Logger.h"
-#include "Chrono.h"
 #include "Options.h"
-#include "IO.h"
 
 namespace dd {
 
@@ -46,13 +41,13 @@ private:
     void checkArguments();
     void readInputs();
     void readProfiles();
-    
-    // Executes the drill pipeline or the Makefile generator
-    void runPipeline();
-    void runMaker();
 
     // Sets up the GMP library
     void setupGmp();
+
+    // Executes the drill pipeline or the Makefile generator
+    void runPipeline();
+    void runMaker();
 };
 
 }

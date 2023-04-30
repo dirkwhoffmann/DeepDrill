@@ -10,15 +10,12 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepDrill.h"
-#include "Chrono.h"
-#include "Colorizer.h"
-#include "Driller.h"
 #include "Exception.h"
-#include "IO.h"
 #include "Logger.h"
-#include "Maker.h"
-#include "Options.h"
 #include "Parser.h"
+#include "Driller.h"
+#include "Colorizer.h"
+#include "Maker.h"
 #include "ProgressIndicator.h"
 
 #include <getopt.h>
