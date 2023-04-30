@@ -3,6 +3,7 @@ target_include_directories(deepflight PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_sources(deepdrill PRIVATE
 
+AssetManager.cpp
 Options.cpp
 Coord.cpp
 Logger.cpp
@@ -13,6 +14,7 @@ ProgressIndicator.cpp
 
 target_sources(deepflight PRIVATE
 
+AssetManager.cpp
 Options.cpp
 Coord.cpp
 Logger.cpp

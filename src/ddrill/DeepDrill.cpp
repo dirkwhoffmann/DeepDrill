@@ -138,7 +138,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
                 break;
 
             case 'a':
-                opt.assets = optarg;
+                assets.addSearchPath(optarg);
                 break;
 
             case 'p':
@@ -172,71 +172,38 @@ DeepDrill::checkArguments()
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
     if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
-    auto input = inputs.front();
-    auto inputFormat = opt.files.inputFormat = getFormat(input);
-
     // The user needs to specify a single output
     if (outputs.size() < 1) throw SyntaxError("No output file is given");
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
-    auto output = outputs.front();
-    auto outputFormat = opt.files.outputFormat = getFormat(output);
+    opt.files.input = inputs.front();
+    opt.files.output = outputs.front();
 
-    // All profiles must be existent prf files
-    for (auto &it : profiles) {
-        if (getFormat(it) != Format::PRF) {
-            throw SyntaxError(it + " is not a profile (.prf)");
-        } else if (opt.findProfile(it) == "") {
-            throw FileNotFoundError(it);
-        }
-    }
+    // All profiles must exist
+    for (auto &it : profiles) (void)assets.findAsset(it, Format::PRF);
 
     if (opt.flags.make) {
 
-        // The input files must be a location files
-        if (inputFormat == Format::LOC) {
-            opt.files.input = opt.findLocationFile(input);
-        } else {
-            throw SyntaxError(input + " is not a location file (.loc)");
-        }
+        // The input must be a location file
+        opt.files.input = assets.findAsset(opt.files.input , Format::LOC);
 
-        // The output must be a directory
-        if (outputFormat == Format::DIR) {
-            opt.files.output = output;
-        } else {
-            throw SyntaxError(input + " is not a directory");
-        }
+        // The output must be a existent directory
+        opt.files.output = assets.findAsset(opt.files.output, Format::DIR);
 
     } else {
                 
         // The input file must be a location file or a map file
-        if (inputFormat == Format::LOC) {
-            opt.files.input = opt.findLocationFile(input);
-        } else if (inputFormat == Format::MAP) {
-            opt.files.input = input;
-        } else {
-            throw SyntaxError(input + ": Invalid format. Expected .loc or .map");
-        }
-        
-        // The output file must be a map file or an image file
-        if (outputFormat == Format::MAP) {
-            opt.files.output = output;
-        } else if (isImageFormat(outputFormat)) {
-            opt.files.output = output;
-        } else {
-            throw SyntaxError(output + ": Invalid format. Expected .map, .bmp, .jpg, or .png");
-        }
-    }
+        opt.files.input = assets.findAsset(opt.files.input, { Format::LOC, Format::MAP });
 
-    // The input and output files must exist
-    if (opt.files.input == "") throw FileNotFoundError(input);
-    if (opt.files.output == "") throw FileNotFoundError(output);
+        // The output file must be a map file or an image file
+        AssetManager::assureFormat(opt.files.output, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
+    }
 }
 
 void
 DeepDrill::readInputs()
 {
-    if (opt.files.inputFormat == Format::LOC) {
+    if (AssetManager::getFormat(opt.files.input) == Format::LOC) {
 
         Parser::parse(opt.files.input,
                       [this](string k, string v) { opt.parse(k,v); });
@@ -248,7 +215,7 @@ DeepDrill::readProfiles()
 {
     for (auto &profile: profiles) {
 
-        Parser::parse(opt.findProfile(profile),
+        Parser::parse(assets.findAsset(profile, Format::PRF),
                       [this](string k, string v) { opt.parse(k,v); });
     }
 }
@@ -261,7 +228,7 @@ DeepDrill::setupGmp()
     auto name = inputs.front();
     auto suffix = extractSuffix(name);
 
-    if (opt.files.inputFormat == Format::LOC) {
+    if (AssetManager::getFormat(opt.files.input) == Format::LOC) {
 
         /* If a location is given, we need to adjust the GMP precision based
          * on the zoom factor. Because we haven't parsed any input file when
@@ -291,11 +258,14 @@ DeepDrill::setupGmp()
 void
 DeepDrill::runPipeline()
 {
+    auto inputFormat = AssetManager::getFormat(opt.files.input);
+    auto outputFormat = AssetManager::getFormat(opt.files.output);
+
     DrillMap drillMap(opt);
 
     // Create the drill map
-    if (opt.files.inputFormat == Format::MAP) {
-        
+    if (inputFormat == Format::MAP) {
+
         // Load the drill map from disk
         drillMap.load(opt.files.input);
 
@@ -308,21 +278,21 @@ DeepDrill::runPipeline()
         driller.drill();
 
         // Are we supposed to save the map file?
-        if (opt.files.outputFormat == Format::MAP) {
+        if (outputFormat == Format::MAP) {
 
             drillMap.save(opt.files.output);
         }
     }
 
     // Are we suppoed to create an image file?
-    if (isImageFormat(opt.files.outputFormat)) {
+    if (AssetManager::isImageFormat(outputFormat)) {
 
         BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
         // Run the colorizer
         Colorizer colorizer(opt, drillMap);
         colorizer.colorize();
-        colorizer.save(opt.files.output, opt.files.outputFormat);
+        colorizer.save(opt.files.output, outputFormat);
     }
 }
 

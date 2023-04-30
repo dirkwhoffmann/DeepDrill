@@ -51,10 +51,11 @@ class Zoomer {
     // The video recorder
     Recorder recorder = Recorder(opt);
 
+    // Indicates if we run in record mode or preview mode
+    bool recordMode;
+
     // Animation parameters
     Animated x, y, w, h;
-//    isize keyframe = 0;
-//    isize frame = 0;
 
 public:
 
@@ -74,7 +75,7 @@ private:
     void draw();
 
     // Indicates if we run in record mode or preview mode
-    bool recordMode();
+    // bool recordMode();
 
     // Loads a new image file from disk
     void updateTexture(isize nr);

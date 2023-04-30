@@ -16,7 +16,7 @@
 
 namespace dd {
 
-Options::Options()
+Options::Options(const AssetManager &assets) : assets(assets)
 {
     // Register default keys
 
@@ -52,9 +52,6 @@ Options::Options()
     // Approximation keys
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
-
-    // Search assets in the repo dir by default
-    assets = fs::path(__FILE__).parent_path().parent_path().parent_path();
 }
 
 string
@@ -182,12 +179,7 @@ Options::parse(string key, string value)
     } else if (key == "palette.colors") {
 
         if (value != "") {
-
-            palette.colors = findPalette(value);
-
-            if (palette.colors == "") {
-                throw KeyValueError(key, "File " + value + " not found.");
-            }
+            palette.colors = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
         }
 
     } else if (key == "palette.scale") {
@@ -290,50 +282,6 @@ Options::derive()
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
     pixelDelta = mpfPixelDelta;
-}
-
-fs::path
-Options::findAsset(const fs::path &name, const fs::path &dir) const
-{
-    if (name != "") {
-
-        // Search the file at the specified path
-        if (fileExists(name)) return name;
-
-        // Search the file in the assets directory
-        if (fileExists(assets / dir / name)) return assets / dir / name;
-    }
-
-    // File not found
-    return "";
-}
-
-fs::path
-Options::findLocationFile(const fs::path &name) const
-{
-    if (auto result = findAsset(name, "locations"); result != "") return result;
-    if (auto result = findAsset(name, "tutorial"); result != "") return result;
-    return "";
-}
-
-fs::path
-Options::findProfile(const fs::path &name) const
-{
-    if (auto result = findAsset(name, "profiles"); result != "") return result;
-    if (auto result = findAsset(name, "tutorial"); result != "") return result;
-    return "";
-}
-
-fs::path
-Options::findPalette(const fs::path &name) const
-{
-    return findAsset(name, "palettes");
-}
-
-fs::path
-Options::findShader(const fs::path &name) const
-{
-    return findAsset(name, "shaders");
 }
 
 }

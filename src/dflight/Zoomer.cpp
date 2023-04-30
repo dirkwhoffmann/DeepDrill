@@ -32,6 +32,8 @@ Zoomer::Zoomer(Options &o) : opt(o)
 void
 Zoomer::init()
 {
+    recordMode = opt.files.output != "";
+
     auto sourceWidth = unsigned(opt.image.width);
     auto sourceHeight = unsigned(opt.image.height);
     auto targetWidth = unsigned(opt.video.width);
@@ -45,7 +47,7 @@ Zoomer::init()
     if (opt.flags.batch) window.setVisible(false);
 
     // Preview in real-time if no video is recorded
-    window.setFramerateLimit(recordMode() ? 0 : unsigned(opt.video.frameRate));
+    window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
     // Create the source texture
     if (!source.create(sourceWidth, sourceHeight)) {
@@ -72,8 +74,8 @@ Zoomer::init()
     targetRect.setTexture(&target.getTexture());
 
     // Load shaders
-    auto scalerPath = opt.findShader(opt.video.scaler);
-    auto mergerPath = opt.findShader(opt.video.merger);
+    auto scalerPath = opt.assets.findAsset(opt.video.scaler, Format::GLSL);
+    auto mergerPath = opt.assets.findAsset(opt.video.merger, Format::GLSL);
 
     if (scalerPath == "") {
         throw Exception("Can't load fragment shader '" + opt.video.scaler + "'");
@@ -92,7 +94,7 @@ Zoomer::launch()
     sf::Event event;
 
     // Start FFmpeg
-    if (recordMode()) recorder.startRecording();
+    if (recordMode) recorder.startRecording();
 
     // Process all keyframes
     for (isize keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
@@ -121,7 +123,7 @@ Zoomer::launch()
     }
 
     // Stop FFmpeg
-    if (recordMode()) recorder.stopRecording();
+    if (recordMode) recorder.stopRecording();
 }
 
 void
@@ -149,7 +151,7 @@ Zoomer::update(isize keyframe, isize frame)
 
         // Update window title bar
         string title = "DeepFlight - ";
-        title += recordMode() ? "Recording " : "Preview ";
+        title += recordMode ? "Recording " : "Preview ";
         title += "[Keyframe " + std::to_string(keyframe + 1);
         title += " / " + std::to_string(opt.video.keyframes) + "] ";
         window.setTitle(title);
@@ -190,7 +192,7 @@ Zoomer::draw()
     window.draw(targetRect);
     window.display();
 
-    if (recordMode()) {
+    if (recordMode) {
 
         // Read back image data
         auto image = target.getTexture().copyToImage();
@@ -198,12 +200,6 @@ Zoomer::draw()
         // Record frame
         recorder.record(image);
     }
-}
-
-bool
-Zoomer::recordMode()
-{
-    return opt.files.outputFormat != Format::NONE;
 }
 
 void
