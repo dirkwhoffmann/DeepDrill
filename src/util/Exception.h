@@ -22,7 +22,7 @@ struct Exception : public std::exception {
     string description;
     i64 data;
 
-    Exception(const string &s, i64 d) : description(s), data(d) { }
+    // Exception(const string &s, i64 d) : description(s), data(d) { }
     Exception(const string &s) : description(s), data(0) { }
     Exception(i64 d) : description(""), data(d) { }
     Exception() : data(0) { }
@@ -49,25 +49,34 @@ struct FileNotFoundError : Exception {
     }
 };
 
+/*
 struct InvalidValueException : public Exception {
 
     InvalidValueException(const string &s, i64 d) : Exception(s, d) {
         description = s + ": Invalid value (" + std::to_string(data) + ")";
     }
 };
+*/
 
 struct UserInterruptException : Exception {
     using Exception::Exception;
 };
 
-struct ScriptException : Exception {
+struct ParseError : Exception {
 
+    // Wrapped exception
     Exception exception;
-    string file;
+
+    // Line in which the error occurred
     isize line;
 
-    ScriptException(const Exception &exception, const string &file, isize line) :
-    exception(exception), file(file), line(line) { }
+    // File in which the error occurred
+    string file;
+
+    ParseError(const Exception &exception, isize line) :
+    exception(exception), line(line), file("") { }
+    ParseError(const Exception &exception,  isize line, const string &file) :
+    exception(exception), line(line), file(file) { }
 
     void what(const class Logger &logger) const override;
 };

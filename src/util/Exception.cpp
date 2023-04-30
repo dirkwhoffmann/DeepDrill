@@ -20,7 +20,7 @@ Exception::what(const class Logger &log) const
 }
 
 void
-ScriptException::what(const class Logger &log) const
+ParseError::what(const class Logger &log) const
 {
     log::cout << log::red << log::bold;
     log::cout << "Error in file " << file << ", line " << line << ": ";

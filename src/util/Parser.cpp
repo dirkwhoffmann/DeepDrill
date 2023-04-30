@@ -30,10 +30,10 @@ Parser::parse(const string &path, std::function<void(string,string)>callback)
         throw Exception("Failed to open file " + path + ".");
     }
  
-    try { parse(fs, callback); } catch (Exception &e) {
+    try { parse(fs, callback); } catch (ParseError &e) {
 
-        throw ScriptException(e, name, e.data);
-        // throw Exception("Error in '" + name + "' line " + std::to_string(e.data) + ": " + e.what());
+        e.file = name;
+        throw;
     }
 }
 
@@ -91,12 +91,12 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
             try {
                 callback(section + "." + key ,value);
             } catch (const Exception &e) {
-                throw Exception(e.what(), line);
+                throw ParseError(e, line);
             }
             continue;
         }
         
-        throw Exception("Syntax error", line);
+        throw ParseError(SyntaxError("Parse error"), line);
     }    
 }
 

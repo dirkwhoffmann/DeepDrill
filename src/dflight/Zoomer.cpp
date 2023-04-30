@@ -17,7 +17,6 @@
 #include "Parser.h"
 #include "ProgressIndicator.h"
 
-#include <filesystem>
 #include <SFML/Graphics.hpp>
 
 namespace fs = std::filesystem;

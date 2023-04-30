@@ -156,25 +156,11 @@ Options::parse(string key, string value)
 
     } else if (key == "video.scaler") {
 
-        parse(key, value, video.scaler);
-
-        // TODO: Can we load the shader here?
-        /*
-        if (video.scaler != "" && !fileExists(video.scaler)) {
-            throw KeyValueError(key, "File " + video.scaler + " not found.");
-        }
-        */
+        video.scaler = assets.findAsset(value, Format::GLSL);
 
     } else if (key == "video.merger") {
 
-        parse(key, value, video.merger);
-
-        // TODO: Can we load the shader here?
-        /*
-        if (video.merger != "" && !fileExists(video.merger)) {
-            throw KeyValueError(key, "File " + video.merger + " not found.");
-        }
-        */
+        video.merger = assets.findAsset(value, Format::GLSL);
 
     } else if (key == "palette.colors") {
 

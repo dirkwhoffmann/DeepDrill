@@ -18,14 +18,11 @@
 #include <istream>
 #include <iomanip>
 #include <iostream>
-#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <vector>
-
-namespace fs = std::filesystem;
 
 namespace dd {
 

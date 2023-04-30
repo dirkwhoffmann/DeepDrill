@@ -21,7 +21,7 @@ namespace dd {
 AssetManager::AssetManager()
 {
     // Search assets in the repo directory by default
-    auto repo = fs::path(__FILE__).parent_path().parent_path().parent_path();
+    auto repo = path(__FILE__).parent_path().parent_path().parent_path();
 
     paths.push_back(repo / "locations");
     paths.push_back(repo / "tutorial");
@@ -31,7 +31,7 @@ AssetManager::AssetManager()
 }
 
 void
-AssetManager::addSearchPath(const fs::path &path)
+AssetManager::addSearchPath(const path &path)
 {
     paths.insert(paths.end(), path);
 }
@@ -57,13 +57,13 @@ AssetManager::getFormat(const string &path) {
 }
 
 void
-AssetManager::assureFormat(const fs::path &name, Format format)
+AssetManager::assureFormat(const path &name, Format format)
 {
     assureFormat(name, vector <Format> { format });
 }
 
 void
-AssetManager::assureFormat(const fs::path &name, vector <Format> formats)
+AssetManager::assureFormat(const path &name, vector <Format> formats)
 {
     auto format = getFormat(name);
 
@@ -88,7 +88,7 @@ AssetManager::assureFormat(const fs::path &name, vector <Format> formats)
                     assert(false);
             }
         }
-        throw Exception(name.string() + ": Invalid file extension. Expected " + join(s, ",", ", or"));
+        throw Exception("'" + name.string() + "' has an invalid file extension. Expected " + join(s, ",", ", or"));
     }
 }
 
@@ -108,8 +108,8 @@ AssetManager::isVideoFormat(Format format) {
     format == Format::MPG;
 }
 
-fs::path
-AssetManager::findAsset(const fs::path &name) const
+path
+AssetManager::findAsset(const path &name) const
 {
     if (name != "") {
 
@@ -126,14 +126,14 @@ AssetManager::findAsset(const fs::path &name) const
     throw FileNotFoundError(name);
 }
 
-fs::path
-AssetManager::findAsset(const fs::path &name, Format format) const
+path
+AssetManager::findAsset(const path &name, Format format) const
 {
     return findAsset(name, vector <Format> { format });
 }
 
-fs::path
-AssetManager::findAsset(const fs::path &name, vector <Format> formats) const
+path
+AssetManager::findAsset(const path &name, vector <Format> formats) const
 {
     assureFormat(name, formats);
     return findAsset(name);

@@ -14,6 +14,7 @@ Parser.cpp
 
 target_sources(deepflight PRIVATE
 
+Animated.cpp
 Buffer.cpp
 Chrono.cpp
 Exception.cpp

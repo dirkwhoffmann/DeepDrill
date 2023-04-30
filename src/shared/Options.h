@@ -62,7 +62,7 @@ struct Options {
     bool stop = false;
 
     // Assets search path
-    // [[deprecated]] fs::path assets;
+    // [[deprecated]] path assets;
 
 
     //
@@ -91,16 +91,16 @@ struct Options {
     struct {
 
         // Full path to the executable
-        fs::path exec;
+        path exec;
 
         // Full path to the input file
-        fs::path input;
+        path input;
 
         // The input's file type
         // Format inputFormat = Format::NONE;
 
         // Full path to the output file
-        fs::path output;
+        path output;
 
         // The output's file type
         // Format outputFormat = Format::NONE;
@@ -153,9 +153,6 @@ struct Options {
         // Path to fragment shaders
         string scaler;
         string merger;
-
-        sf::Shader scaleShader;
-
 
     } video;
 
@@ -239,11 +236,11 @@ private:
     /*
 public:
 
-    [[deprecated]] fs::path findAsset(const fs::path &name, const fs::path &dir = "") const;
-    [[deprecated]] fs::path findLocationFile(const fs::path &name) const;
-    [[deprecated]] fs::path findProfile(const fs::path &name) const;
-    [[deprecated]] fs::path findPalette(const fs::path &name) const;
-    [[deprecated]] fs::path findShader(const fs::path &name) const;
+    [[deprecated]] path findAsset(const path &name, const path &dir = "") const;
+    [[deprecated]] path findLocationFile(const path &name) const;
+    [[deprecated]] path findProfile(const path &name) const;
+    [[deprecated]] path findPalette(const path &name) const;
+    [[deprecated]] path findShader(const path &name) const;
     */
 };
 

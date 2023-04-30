@@ -11,7 +11,6 @@
 
 #include "NamedPipe.h"
 #include "IO.h"
-#include <filesystem>
 #include <thread>
 
 namespace dd {

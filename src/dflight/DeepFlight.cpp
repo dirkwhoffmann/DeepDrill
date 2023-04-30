@@ -38,12 +38,12 @@ int main(int argc, char *argv[])
         log::cout << "       -p or --profile   Customize settings" << log::endl;
         log::cout << log::endl;
 
-        if (!e.description.empty()) {
+        log::cout << e << log::endl;
+        return 1;
 
-            log::cout << log::red << log::bold << "Error: ";
-            log::cout << log::normal << e.what() << log::light << log::endl;
-        }
+    } catch (Exception &e) {
 
+        log::cout << e << log::endl;
         return 1;
 
     } catch (std::exception &e) {
