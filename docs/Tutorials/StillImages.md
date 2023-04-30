@@ -2,7 +2,7 @@
 
 In this tutorial, you will learn how to create the DeepDrill cover image using the DeepDrill tool chain. 
 
-It is assumed that DeepDrill has been successfully installed on your computer. The structure we are going to create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (`.loc`) as a command line parameter. A predefined location file for the cover image is stored in the `tutorial` directory under `spider.loc`. Before we continue, let's take a look at the contents of this file:
+It is assumed that DeepDrill has been successfully installed on your computer. The structure we are going to create is buried deep in the Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a location file (`.loc`) as a command line parameter. A predefined location file for the cover image is stored in the `locations` directory under `spider.loc`. Before we continue, let's take a look at the contents of this file:
 ```
 [location]
 
@@ -13,13 +13,13 @@ depth = 3500000
 ```
 Four key-value pairs are defined. The first two define the position of the center coordinate on the complex number plane. The third pair defines the magnification factor and the fourth pair defines the maximum number of iterations. If an orbit has not yet broken out at the time this iteration is performed, the corresponding point is considered part of the Mandelbrot set.
 
-Assuming that the current directory is the DeepDrill root directory, we can start DeepDrill by executing the following command on the command line:
+Assuming that the current directory is the DeepDrill build directory, we can start DeepDrill by executing the following command on the command line:
 ```bash
-./deepdrill -o spider.map ../tutorial/spider.loc
+./deepdrill -o spider.map spider.loc
 ```
 The following output is generated: 
 ````none
-DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
+DeepDrill 1.1 - (C)opyright Dirk W. Hoffmann
 
 Round 1: 518400 points
 
@@ -37,24 +37,32 @@ Note that we do not generate the image directly. Instead, we compute a so-called
 ```
 The following output is generated: 
 ```none
-DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
+DeepDrill 1.1 - (C)opyright Dirk W. Hoffmann
 
             Loading map file: ................................. 0.02 sec
-                  Colorizing: ................................. 0.00 sec
-           Saving image data: ................................. 0.05 sec
+                  Colorizing: ................................. 0.03 sec
+           Saving image data: ................................. 0.06 sec
 
-Total time: 0.08 sec
+Total time: 0.12 sec
 ```
 Besides png images, DeepDrill also supports bmp and jpg type images.
 
-By default, DeepDrill creates a 960 x 540 image with a predefined color palette and other predefined default settings. For our example, the result looks as follows:
+By default, DeepDrill creates a 960 x 540 image with a predefined color palette and other default settings. For our example, the result looks as follows:
 
 ![Spider Image](images/spider1.png "Spider Image")
 
-All settings can be customized by specifying one or more profiles (`.prf` files). 
-DeepDrill comes with a set of predefined profiles, such as the `vulcano.prf` profile, which changes the color scheme. Profiles are passed to DeepDrill with the `-p` option:
+All settings can be customized by specifying one or more profiles (`.prf` files). To customize the creation of our tutorial image, please create a file `spider.prf` with the following contents:
+```
+[image]
+width = 1920
+height = 1080
+
+[palette]
+colors = vulcano.png
+```
+This file instructs DeepDrill to create the output image in HD quality using a custom color palette. Profiles are passed to DeepDrill with the `-p` option:
 ```bash
-./deepdrill -v -o spider.png -p ../palettes/vulcano.prf ../tutorial/spider.loc
+./deepdrill -v -o spider.png -p spider.prf spider.loc
 ```
 The image is now created in the following form: 
 

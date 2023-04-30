@@ -24,8 +24,11 @@ class DeepFlight {
     std::vector <string> inputs;
     std::vector <string> outputs;
 
+    // Asset manager
+    AssetManager assets;
+    
     // Config options
-    Options opt;
+    Options opt = Options(assets);
 
 public:
 

@@ -2,11 +2,11 @@
 depth = 3500000
 
 [palette]
-colors = candy.png
+colors = prism.png
+scale = 0.5
 
 [video]
-keyframes = 164
-inbetweens = 173
+inbetweens = 120
 bitrate = 8000
 
 [perturbation]

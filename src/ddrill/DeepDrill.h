@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "AssetManager.h"
 #include "Logger.h"
 #include "Chrono.h"
 #include "Options.h"
@@ -27,8 +28,11 @@ class DeepDrill {
     std::vector <string> inputs;
     std::vector <string> outputs;
 
+    // Asset manager
+    AssetManager assets;
+
     // Config options
-    Options opt;
+    Options opt = Options(assets);
     
 public:
 

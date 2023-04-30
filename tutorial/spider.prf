@@ -2,9 +2,6 @@
 width = 3840
 height = 2160
 
-[palette]
-colors = vulcano.png
-
 [video]
 keyframes = 75
 inbetweens = 143

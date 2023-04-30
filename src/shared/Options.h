@@ -13,14 +13,16 @@
 
 #include "config.h"
 #include "Types.h"
+#include "AssetManager.h"
 #include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace dd {
 
-enum class Format { NONE, BMP, DIR, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
-
+/*
 inline Format getFormat(const string &path) {
 
     if (isDirectory(path)) return Format::DIR;
@@ -49,14 +51,18 @@ inline bool isVideoFormat(Format format) {
     return
     format == Format::MPG;
 }
+*/
 
 struct Options {
+
+    // Reference to the asset manager
+    const AssetManager &assets;
 
     // Set to true to abort the computation
     bool stop = false;
 
     // Assets search path
-    fs::path assets;
+    // [[deprecated]] fs::path assets;
 
 
     //
@@ -91,13 +97,13 @@ struct Options {
         fs::path input;
 
         // The input's file type
-        Format inputFormat = Format::NONE;
+        // Format inputFormat = Format::NONE;
 
         // Full path to the output file
         fs::path output;
 
         // The output's file type
-        Format outputFormat = Format::NONE;
+        // Format outputFormat = Format::NONE;
 
     } files;
 
@@ -147,6 +153,9 @@ struct Options {
         // Path to fragment shaders
         string scaler;
         string merger;
+
+        sf::Shader scaleShader;
+
 
     } video;
 
@@ -202,7 +211,7 @@ struct Options {
 
 public:
 
-    Options();
+    Options(const AssetManager &assets);
 
     // Returns a version string for this release
     static string version();
@@ -227,13 +236,15 @@ private:
     // Managing assets
     //
 
+    /*
 public:
 
-    fs::path findAsset(const fs::path &name, const fs::path &dir = "") const;
-    fs::path findLocationFile(const fs::path &name) const;
-    fs::path findProfile(const fs::path &name) const;
-    fs::path findPalette(const fs::path &name) const;
-    fs::path findShader(const fs::path &name) const;
+    [[deprecated]] fs::path findAsset(const fs::path &name, const fs::path &dir = "") const;
+    [[deprecated]] fs::path findLocationFile(const fs::path &name) const;
+    [[deprecated]] fs::path findProfile(const fs::path &name) const;
+    [[deprecated]] fs::path findPalette(const fs::path &name) const;
+    [[deprecated]] fs::path findShader(const fs::path &name) const;
+    */
 };
 
 }

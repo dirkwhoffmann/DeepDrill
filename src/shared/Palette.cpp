@@ -50,21 +50,22 @@ Palette::load(const string &path)
 {
     sf::Image img;
 
-    // Load asset
-    img.loadFromFile(path);
-    auto size = img.getSize();
+    if (path != "" && img.loadFromFile(path)) {
 
-    r.alloc(size.x);
-    g.alloc(size.x);
-    b.alloc(size.x);
+        auto size = img.getSize();
 
-    for (unsigned x = 0; x < size.x; x++) {
+        r.alloc(size.x);
+        g.alloc(size.x);
+        b.alloc(size.x);
 
-        auto p = img.getPixel(x, 0);
+        for (unsigned x = 0; x < size.x; x++) {
 
-        r[x] = p.r;
-        g[x] = p.g;
-        b[x] = p.b;
+            auto p = img.getPixel(x, 0);
+
+            r[x] = p.r;
+            g[x] = p.g;
+            b[x] = p.b;
+        }
     }
 }
 

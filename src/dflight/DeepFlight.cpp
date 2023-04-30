@@ -127,7 +127,7 @@ DeepFlight::parseArguments(int argc, char *argv[])
                 break;
 
             case 'a':
-                opt.assets = optarg;
+                assets.addSearchPath(optarg);
                 break;
 
             case 'p':
@@ -160,48 +160,28 @@ DeepFlight::checkArguments()
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");
     if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
-
     auto input = inputs.front();
-    auto inputFormat = opt.files.inputFormat = getFormat(input);
 
     // The user needs to specify at most one output
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
-    // All profiles must be existent prf files
-    for (auto &it : profiles) {
-        if (getFormat(it) != Format::PRF) {
-            throw SyntaxError(it + " is not a profile (.prf)");
-        } else if (opt.findProfile(it) == "") {
-            throw FileNotFoundError(it);
-        }
-    }
+    // All profiles must exist
+    for (auto &it : profiles) (void)assets.findAsset(it, Format::PRF);
 
     // The input files must be a prj file
-    if (inputFormat == Format::PRJ) {
-        opt.files.input = input;
-    } else {
-        throw SyntaxError(input + " is not a project file (.prj)");
-    }
-
-    // The input file must exist
-    if (!fileExists(opt.files.input)) {
-        throw FileNotFoundError(input);
-    }
+    opt.files.input = assets.findAsset(input, Format::PRJ);
 
     if (!outputs.empty()) {
 
         auto output = opt.files.output = outputs.front();
-        auto outputFormat = opt.files.outputFormat = getFormat(output);
 
         // The output file must be a video file
-        if (isVideoFormat(outputFormat)) {
-            throw SyntaxError(output.string() + ": Invalid format. Expected .mpg, .mpeg, or .mov");
-        }
+        AssetManager::assureFormat(opt.files.output, Format::MPG);
 
         // The output file must be writable
-        std::ofstream file(output, std::ofstream::out);
+        std::ofstream file(opt.files.output, std::ofstream::out);
         if (!file.is_open()) {
-            throw SyntaxError("Can't write to file " + output.string());
+            throw SyntaxError("Can't write to file " + opt.files.output.string());
         }
     }
 }
@@ -218,7 +198,7 @@ DeepFlight::readProfiles()
 {
     for (auto &profile: profiles) {
 
-        Parser::parse(opt.findProfile(profile),
+        Parser::parse(assets.findAsset(profile, Format::PRF),
                       [this](string k, string v) { opt.parse(k,v); });
     }
 }

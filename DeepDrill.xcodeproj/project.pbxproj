@@ -14,6 +14,8 @@
 		5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
 		5047B4E329F812F700AC38DC /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4E129F812F700AC38DC /* Palette.cpp */; };
 		5047B4E429F812F700AC38DC /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4E129F812F700AC38DC /* Palette.cpp */; };
+		5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */; };
+		5047B50029FE2BBC00AC38DC /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */; };
 		5049968229DED17800B15919 /* DeepFlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepFlight.cpp */; };
 		5049968729DED32700B15919 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
 		5049968829DED32900B15919 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
@@ -96,6 +98,12 @@
 		5047B4F029FBE6D500AC38DC /* dinosaur_fossils.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = dinosaur_fossils.prf; sourceTree = "<group>"; };
 		5047B4F229FBF1FD00AC38DC /* pistachio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pistachio.png; sourceTree = "<group>"; };
 		5047B4F329FBF20800AC38DC /* elements.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = elements.png; sourceTree = "<group>"; };
+		5047B4F829FD306700AC38DC /* orion.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = orion.prf; sourceTree = "<group>"; };
+		5047B4F929FD33AC00AC38DC /* peanuts.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = peanuts.prf; sourceTree = "<group>"; };
+		5047B4FA29FD349D00AC38DC /* x.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = x.prf; sourceTree = "<group>"; };
+		5047B4FC29FD537D00AC38DC /* prism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prism.png; sourceTree = "<group>"; };
+		5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
+		5047B4FE29FE2BBC00AC38DC /* AssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetManager.h; sourceTree = "<group>"; };
 		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
 		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
 		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
@@ -107,6 +115,7 @@
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
 		50BEC6F0269486A800CCDFA8 /* Driller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driller.cpp; sourceTree = "<group>"; };
@@ -377,6 +386,7 @@
 		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
+				5047B4FC29FD537D00AC38DC /* prism.png */,
 				5047B4E729F9623500AC38DC /* candy.png */,
 				5047B4EA29F9625600AC38DC /* default.png */,
 				5047B4E829F9624100AC38DC /* dolomiti.png */,
@@ -385,6 +395,7 @@
 				5047B4E929F9625500AC38DC /* ice.png */,
 				5047B4E629F8EFE800AC38DC /* ultrafrac.png */,
 				5047B4EB29F9625600AC38DC /* vulcano.png */,
+				50AE096229FE5220005E4D3E /* ruby.png */,
 			);
 			path = palettes;
 			sourceTree = "<group>";
@@ -426,6 +437,8 @@
 			isa = PBXGroup;
 			children = (
 				50EB0D4829EE609400770F31 /* CMakeLists.txt */,
+				5047B4FE29FE2BBC00AC38DC /* AssetManager.h */,
+				5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */,
 				50BEC6FD269486A900CCDFA8 /* Options.h */,
 				50BEC6FA269486A900CCDFA8 /* Options.cpp */,
 				50BEC6F8269486A900CCDFA8 /* Coord.h */,
@@ -449,6 +462,9 @@
 				5047B4EE29FBC20100AC38DC /* safari.prf */,
 				5047B4EF29FBE5FC00AC38DC /* 1e14.prf */,
 				5047B4F029FBE6D500AC38DC /* dinosaur_fossils.prf */,
+				5047B4F829FD306700AC38DC /* orion.prf */,
+				5047B4F929FD33AC00AC38DC /* peanuts.prf */,
+				5047B4FA29FD349D00AC38DC /* x.prf */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";
@@ -547,6 +563,7 @@
 				5049969929DF051200B15919 /* StandardComplex.cpp in Sources */,
 				5049969529DF04F500B15919 /* Options.cpp in Sources */,
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
+				5047B50029FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepFlight.cpp in Sources */,
 				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
@@ -575,6 +592,7 @@
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
 				50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
+				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */,
 				50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */,

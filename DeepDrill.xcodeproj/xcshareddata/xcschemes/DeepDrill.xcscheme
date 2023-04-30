@@ -57,7 +57,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "dinosaur_fossils.loc"
+            argument = "x.loc"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -73,7 +73,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p dinosaur_fossils.prf "
+            argument = "-p x.prf "
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

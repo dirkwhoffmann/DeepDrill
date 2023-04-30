@@ -112,11 +112,22 @@ string join(const std::vector<string> &v, const string &delim1)
 string join(const std::vector<string> &v, const string &delim1, const string &delim2)
 {
     std::string result;
-    isize size = isize(v.size());
 
-    for(isize i = 0; i < size; i++) {
-        result += (i == size - 1 ? delim2 : i != 0 ? delim1 : "") + v[i];
+    if (isize size = isize(v.size()); size > 0) {
+
+        // Add the first element
+        result = v[0];
+
+        if (size > 1) {
+
+            // Append all middle elements
+            for (isize i = 1; i < size - 1; i++) result += delim1 + v[i];
+
+            // Append the last element
+            result += delim2 + v[size - 1];
+        }
     }
+
     return result;
 }
 

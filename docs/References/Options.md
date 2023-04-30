@@ -55,6 +55,16 @@ Each option is briefly explained below:
 
   Percentage of pixels that are allowed to be miscolored.
 
+### Section `[palette]`
+
+- `colors`
+
+  Assign this key the path to an image file in order to use a custom color palette. DeepDrill will derive the color palette from the uppermost horizontal line of the image. 
+
+- `scale`
+
+  An optional scaling factor that can be used to stretch or shrink the color palette.  
+
 ### Section `[video]`
 
 - `framerate`
@@ -72,10 +82,6 @@ Each option is briefly explained below:
 - `inbetweens`
 
   Number of interpolated frames between two keyframes. By default, this value is assigned twice the frame rate. Consequently, each keyframe is displayed for 2 seconds.
-
-- `palette`
-
-  The color palette. If this value is set to `default`, DeepDrill's standard palette will be used. Alternatively, user-defined color values can be assigned to this value. See profile `vulcano.prf` or `ice.prf` for details.
 
 ### Section `[perturbation]`
 

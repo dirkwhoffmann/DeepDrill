@@ -56,16 +56,16 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/dinosaur_fossils.prj"
-            isEnabled = "YES">
+            argument = "/Users/hoff/Dropbox/dinosaur/dinosaur_fossils.prj"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/Dropbox/infinity/infinity.prj"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/orion.prj"
-            isEnabled = "NO">
+            argument = "/Users/hoff/tmp/dd/project/x.prj"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o /tmp/garbage.mpg "

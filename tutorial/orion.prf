@@ -2,11 +2,11 @@
 depth = 3500000
 
 [palette]
-colors = candy.png
+colors = ultrafrac.png
 
 [video]
-keyframes = 164
-inbetweens = 173
+keyframes = 48
+inbetweens = 120
 bitrate = 8000
 
 [perturbation]
