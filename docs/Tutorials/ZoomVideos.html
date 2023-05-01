@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Computing Zoom Videos &#8212; DeepDrill 1.0</title>
+    <title>Computing Zoom Videos &#8212; DeepDrill 1.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="The Mandelbrot Set" href="../Theory/MandelbrotSet.html" />
-    <link rel="prev" title="Computing Still Images" href="StillImages.html" />
+    <link rel="prev" title="Colorizing Images" href="Colors.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -37,7 +37,7 @@
                 document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
             }
             // show sidebar on wide screen
-            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+            if (!sidebar && window.matchMedia('(min-width: 0)').matches) {
                 sidebar = 'visible';
                 // NB: We don't store the value in localStorage!
             }
@@ -60,7 +60,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 1.0</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 1.1</a>
             <a class="top" href="#">Computing Zoom Videos</a>
           </div>
           <div class="buttons">
@@ -83,7 +83,7 @@
       </div>
     </header>
     <nav>
-      <a href="StillImages.html" class="nav-icon previous" title="previous:&#13;Computing Still Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="Colors.html" class="nav-icon previous" title="previous:&#13;Colorizing Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
       <a href="../Theory/MandelbrotSet.html" class="nav-icon next" title="next:&#13;The Mandelbrot Set" aria-label="Next topic" accesskey="N" tabindex="-1">
@@ -92,14 +92,14 @@
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="StillImages.html" aria-label="Previous topic" >
+      <a class="previous" href="Colors.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing Still Images
+            Colorizing Images
           </span>
         </div>
       </a>
@@ -124,10 +124,8 @@
 <section class="tex2jax_ignore mathjax_ignore" id="computing-zoom-videos">
 <h1>Computing Zoom Videos<a class="headerlink" href="#computing-zoom-videos" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial, you’ll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following two videos that are available on Youtube:</p>
-<p float="left">
-    <a href = "https://www.youtube.com/watch?v=Ph3vJASDVaE"><img src="https://dirkwhoffmann.github.io/DeepDrill/images/spider-youtube.png" width="49%"></a>
-    <a href = "https://www.youtube.com/watch?v=OcXcHgwJ33g"><img src="https://dirkwhoffmann.github.io/DeepDrill/images/infinity-youtube.png" width="49%"></a>
-</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ph3vJASDVaE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
 <p>Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, DeepDrill is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images. In the last phase, DeepFlight is utilized to assemble the final video by calculating intermediate frames.</p>
 <section id="setting-up-the-workflow">
 <h2>Setting up the workflow<a class="headerlink" href="#setting-up-the-workflow" title="Permalink to this heading">¶</a></h2>
@@ -242,7 +240,7 @@ make<span class="w"> </span>-j
         <div class="sphinxsidebarwrapper">
 
             <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/icon2.png" alt="Logo"/>
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
             </a></p>
           <div class="sidebar-resize-handle"></div>
 
@@ -255,6 +253,7 @@ make<span class="w"> </span>-j
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
@@ -262,6 +261,12 @@ make<span class="w"> </span>-j
 <li class="toctree-l1"><a class="reference internal" href="../Theory/MandelbrotSet.html">The Mandelbrot Set</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
@@ -280,14 +285,14 @@ make<span class="w"> </span>-j
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="StillImages.html" aria-label="Previous topic" >
+      <a class="previous" href="Colors.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing Still Images
+            Colorizing Images
           </span>
         </div>
       </a>

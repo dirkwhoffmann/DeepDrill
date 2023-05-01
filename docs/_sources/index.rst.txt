@@ -19,6 +19,7 @@ DeepDrill User's Manual
 
    Tutorials/Installation
    Tutorials/StillImages
+   Tutorials/Colors
    Tutorials/ZoomVideos
 
 .. toctree::
@@ -28,6 +29,14 @@ DeepDrill User's Manual
    Theory/MandelbrotSet
    Theory/Perturbation
    Theory/SeriesApproximation
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Videos
+
+   Videos/FirstFlight
+   Videos/SecondFlight
+   Videos/Fossile
 
 .. toctree::
    :maxdepth: 1
