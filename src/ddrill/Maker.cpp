@@ -79,20 +79,20 @@ Maker::generateProjectFile(vector <string> &skipped)
 
     // Write image section
     os << "[image]" << std::endl;
-    os << "width = " << keys["image.width"] << std::endl;
-    os << "height = " << keys["image.height"] << std::endl;
+    os << "width = " << opt.image.width << std::endl;
+    os << "height = " << opt.image.height << std::endl;
     os << std::endl;
 
     // Write video section
     os << "[video]" << std::endl;
-    os << "framerate = " << keys["video.framerate"] << std::endl;
-    os << "width = " << keys["video.width"] << std::endl;
-    os << "height = " << keys["video.height"] << std::endl;
-    os << "keyframes = " << keys["video.keyframes"] << std::endl;
-    os << "inbetweens = " << keys["video.inbetweens"] << std::endl;
-    os << "bitrate = " << keys["video.bitrate"] << std::endl;
-    os << "scaler = " << keys["video.scaler"] << std::endl;
-    os << "merger = " << keys["video.merger"] << std::endl;
+    os << "framerate = " << opt.video.frameRate << std::endl;
+    os << "width = " << opt.video.width << std::endl;
+    os << "height = " << opt.video.height << std::endl;
+    os << "keyframes = " << opt.video.keyframes << std::endl;
+    os << "inbetweens = " << opt.video.inbetweens << std::endl;
+    os << "bitrate = " << opt.video.bitrate << std::endl;
+    os << "scaler = " << opt.video.scaler << std::endl;
+    os << "merger = " << opt.video.merger << std::endl;
     os << std::endl;
 }
 
@@ -216,10 +216,10 @@ Maker::writeHeader(std::ofstream &os)
 void
 Maker::writeDefinitions(std::ofstream &os)
 {
-    auto path = extractPath(opt.files.exec);
+    auto path = opt.files.exec.parent_path();
 
-    os << "DEEPDRILL  = " << path << "deepdrill" << std::endl;
-    os << "DEEPFLIGHT = " << path << "deepflight" << std::endl;
+    os << "DEEPDRILL  = " << (path / "deepdrill").string() << std::endl;
+    os << "DEEPFLIGHT = " << (path / "deepflight").string() << std::endl;
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "VIDEO      = " << project << ".mov" << std::endl;
@@ -233,11 +233,17 @@ void
 Maker::writeTargets(std::ofstream &os)
 {
     // Declare phony targets
-    os << ".PHONY: all clean" << std::endl;
+    os << ".PHONY: all maps images clean" << std::endl;
     os << std::endl;
 
-    // Write 'all' target
-    os << "all: $(IMAGES) $(MAPS)" << std::endl;
+    // Write the 'all' target and some sub targets
+    os << "all: images" << std::endl;
+    os << std::endl;
+
+    os << "maps: $(MAPS)" << std::endl;
+    os << std::endl;
+
+    os << "images: $(IMAGES) maps" << std::endl;
     os << std::endl;
 
     // Write 'map' target

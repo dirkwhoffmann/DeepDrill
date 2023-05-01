@@ -64,12 +64,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/x.prj"
+            argument = "/Users/hoff/Dropbox/x/x.prj"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o /tmp/garbage.mpg "
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>

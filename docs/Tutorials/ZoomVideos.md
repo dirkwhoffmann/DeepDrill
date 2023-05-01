@@ -2,10 +2,8 @@
 
 In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following two videos that are available on Youtube: 
 
-<p float="left">
-    <a href = "https://www.youtube.com/watch?v=Ph3vJASDVaE"><img src="https://dirkwhoffmann.github.io/DeepDrill/images/spider-youtube.png" width="49%"></a>
-    <a href = "https://www.youtube.com/watch?v=OcXcHgwJ33g"><img src="https://dirkwhoffmann.github.io/DeepDrill/images/infinity-youtube.png" width="49%"></a>
-</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ph3vJASDVaE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
 
 Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, DeepDrill is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images. In the last phase, DeepFlight is utilized to assemble the final video by calculating intermediate frames.
 

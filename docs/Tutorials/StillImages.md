@@ -51,24 +51,29 @@ By default, DeepDrill creates a 960 x 540 image with a predefined color palette 
 
 ![Spider Image](images/spider1.png "Spider Image")
 
-All settings can be customized by specifying one or more profiles (`.prf` files). To customize the creation of our tutorial image, please create a file `spider.prf` with the following contents:
+All settings can be customized by specifying one or more profiles (`.prf` files). DeepDrill comes with a set of predefined files such as the `ultra.prf` profile for generating high-quality images in 4K resolution. The contents of this profile looks like this:
 ```
 [image]
-width = 1920
-height = 1080
+width = 3840
+height = 2160
 
-[palette]
-colors = vulcano.png
+[video]
+bitrate = 8000
+
+[perturbation]
+tolerance = 1e-6
+rounds = 100
+
+[approximation]
+coefficients = 5
 ```
-This file instructs DeepDrill to create the output image in HD quality using a custom color palette. Profiles are passed to DeepDrill with the `-p` option:
+We can pass this profile to DeepDrill via the `-p` option:
 ```bash
-./deepdrill -v -o spider.png -p spider.prf spider.loc
+./deepdrill -v -o spider.png -p ultra.prf spider.loc
 ```
-The image is now created in the following form: 
-
-![DeepDrill Cover Image](images/spider2.png "DeepDrill Cover Image")
-
 As can be seen in this example, it is possible to switch directly from a location file to an image. In this case the map file is only created internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes. 
 
-You may also have noticed the additional `-v` option. When this option is specified, DeepDrill runs in verbose mode and outputs details about the settings and the current calculation run.
+The `-p` option can be specified multiple times in order to combine multiple profiles. Note that key-value pairs are overwritten if they are specified in multiple profiles. All profiles are processed in the order in which they are specified in the argument list.
+
+You may also have noticed the `-v` option that was specified above. It advices DeepDrill to run in verbose mode which makes it print out additional information about the settings and the current calculation run. 
 

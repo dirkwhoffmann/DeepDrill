@@ -19,6 +19,7 @@ DeepDrill User's Manual
 
    Tutorials/Installation
    Tutorials/StillImages
+   Tutorials/Colors
    Tutorials/ZoomVideos
 
 .. toctree::
