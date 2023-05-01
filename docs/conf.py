@@ -34,6 +34,10 @@ source_suffix = ['.rst', '.md']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'insipid'
+html_theme_options = {
+    'initial_sidebar_visibility_threshold': 0,
+    'breadcrumbs': False,
+}
 html_static_path = ['_static']
 html_logo = "images/icon.png"
 html_title = "DeepDrill 1.1"

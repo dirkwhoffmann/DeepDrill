@@ -1,6 +1,6 @@
-.. image:: https://dirkwhoffmann.github.io/DeepDrill/images/infinity-youtube.png
+.. image:: https://dirkwhoffmann.github.io/DeepDrill/images/x-youtube.png
    :width: 100 %
-   :target: https://www.youtube.com/watch?v=OcXcHgwJ33g
+   :target: https://youtu.be/6bk-HDSilGE
    :align: center
    :alt: Banner
 
