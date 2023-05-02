@@ -123,7 +123,7 @@
             
 <section class="tex2jax_ignore mathjax_ignore" id="computing-zoom-videos">
 <h1>Computing Zoom Videos<a class="headerlink" href="#computing-zoom-videos" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial, you’ll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following two videos that are available on Youtube:</p>
+<p>In this tutorial, you’ll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following  video which is available on Youtube:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ph3vJASDVaE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
 </iframe>
 <p>Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, DeepDrill is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images. In the last phase, DeepFlight is utilized to assemble the final video by calculating intermediate frames.</p>
@@ -134,7 +134,7 @@
 </pre></div>
 </div>
 <p>To set up a workflow in this directory, we start DeepDrill with the <code class="docutils literal notranslate"><span class="pre">-m</span></code> option:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-m<span class="w"> </span>-p<span class="w"> </span>../tutorial/spider.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>../tutorial/spider.loc
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-m<span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>spider.loc
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeepDrill</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
@@ -147,7 +147,7 @@
 <span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.05</span> <span class="n">sec</span>
 </pre></div>
 </div>
-<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">spider.prf</span></code> before setting up the workflow. This profile defines two keys:</p>
+<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">spider.prf</span></code> before setting up the workflow. Besides others, this profile defines the following keys:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
 <span class="n">width</span> <span class="o">=</span> <span class="mi">3840</span>
 <span class="n">height</span> <span class="o">=</span> <span class="mi">2160</span>
@@ -156,13 +156,6 @@
 <span class="n">keyframes</span> <span class="o">=</span> <span class="mi">75</span>
 <span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">143</span>
 <span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
-
-<span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
-<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
-<span class="n">rounds</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="p">[</span><span class="n">approximation</span><span class="p">]</span>
-<span class="n">coefficients</span> <span class="o">=</span> <span class="mi">5</span>
 </pre></div>
 </div>
 <p>The first two keys specify the resolution of the keyframe images. The resolution of the generated video will be half the size. Hence, a video with a standard HD resolution of 1920 x 1080 pixels will be produced.</p>
@@ -182,8 +175,8 @@ This is a standard Makefile that automatically calculates all keyframe images. I
 <section id="computing-all-keyframes">
 <h2>Computing all keyframes<a class="headerlink" href="#computing-all-keyframes" title="Permalink to this heading">¶</a></h2>
 <p>For our tutorial project, DeepDrill has created the following Makefile:</p>
-<div class="highlight-Make notranslate"><div class="highlight"><pre><span></span><span class="nv">DEEPDRILL</span><span class="w">  </span><span class="o">=</span><span class="w"> </span>/Users/hoff/Retro/DeepDrill/bin/./deepdrill
-<span class="nv">DEEPFLIGHT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/Users/hoff/Retro/DeepDrill/bin/./deepflight
+<div class="highlight-Make notranslate"><div class="highlight"><pre><span></span><span class="nv">DEEPDRILL</span><span class="w">  </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepdrill
+<span class="nv">DEEPFLIGHT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepflight
 <span class="nv">MAPS</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span>%.loc,%.map,<span class="k">$(</span>wildcard<span class="w"> </span>*_*.loc<span class="k">))</span>
 <span class="nv">IMAGES</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span>%.loc,%.png,<span class="k">$(</span>wildcard<span class="w"> </span>*_*.loc<span class="k">))</span>
 <span class="nv">VIDEO</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>spider.mov
@@ -191,13 +184,16 @@ This is a standard Makefile that automatically calculates all keyframe images. I
 <span class="nv">MAPFLAGS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-b
 <span class="nv">PNGFLAGS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-b
 
-<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">clean</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">maps</span> <span class="n">images</span> <span class="n">clean</span>
 
-<span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">IMAGES</span><span class="k">)</span> <span class="k">$(</span><span class="nv">MAPS</span><span class="k">)</span>
+<span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="n">images</span>
+
+<span class="nf">maps</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">MAPS</span><span class="k">)</span>
+
+<span class="nf">images</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">IMAGES</span><span class="k">)</span> <span class="n">maps</span>
 
 <span class="nf">%.map</span><span class="o">:</span><span class="w"> </span>%.<span class="n">loc</span>
-<span class="w">        </span>@<span class="k">$(</span>DEEPDRILL<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MAPFLAGS<span class="k">)</span><span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.map<span class="w"> </span><span class="nv">$*</span>.loc<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$*</span>.progress
-<span class="w">        </span>@mv<span class="w"> </span><span class="nv">$*</span>.progress<span class="w"> </span><span class="nv">$*</span>.log
+<span class="w">        </span>@<span class="k">$(</span>DEEPDRILL<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MAPFLAGS<span class="k">)</span><span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.map<span class="w"> </span><span class="nv">$*</span>.loc<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$*</span>.log
 
 <span class="nf">%.png</span><span class="o">:</span><span class="w"> </span>%.<span class="n">map</span>
 <span class="w">        </span>@<span class="k">$(</span>DEEPDRILL<span class="k">)</span><span class="w"> </span><span class="k">$(</span>PNGFLAGS<span class="k">)</span><span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.png<span class="w"> </span><span class="nv">$*</span>.map<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
@@ -267,6 +263,7 @@ make<span class="w"> </span>-j
 <li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>

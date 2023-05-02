@@ -169,7 +169,7 @@ Total time: 0.12 sec
 <p>Besides png images, DeepDrill also supports bmp and jpg type images.</p>
 <p>By default, DeepDrill creates a 960 x 540 image with a predefined color palette and other default settings. For our example, the result looks as follows:</p>
 <p><img alt="Spider Image" src="../_images/spider1.png" /></p>
-<p>All settings can be customized by specifying one or more profiles (<code class="docutils literal notranslate"><span class="pre">.prf</span></code> files). DeepDrill comes with a set of predefined files such as the <code class="docutils literal notranslate"><span class="pre">ultra.prf</span></code> profile for generating high-quality images in 4K resolution. The contents of this profile looks like this:</p>
+<p>All settings can be customized by specifying one or more profiles (<code class="docutils literal notranslate"><span class="pre">.prf</span></code> files). DeepDrill offers a set of predefined profiles such as <code class="docutils literal notranslate"><span class="pre">ultra.prf</span></code> for generating high-quality images in 4K resolution. The contents of this profile looks like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
 <span class="n">width</span> <span class="o">=</span> <span class="mi">3840</span>
 <span class="n">height</span> <span class="o">=</span> <span class="mi">2160</span>
@@ -190,8 +190,8 @@ Total time: 0.12 sec
 </pre></div>
 </div>
 <p>As can be seen in this example, it is possible to switch directly from a location file to an image. In this case the map file is only created internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">-p</span></code> option can be specified multiple times in order to combine multiple profiles. Note that key-value pairs are overwritten if they are specified in multiple profiles. All profiles are processed in the order in which they are specified in the argument list.</p>
-<p>You may also have noticed the <code class="docutils literal notranslate"><span class="pre">-v</span></code> option that was specified above. It advices DeepDrill to run in verbose mode which makes it print out additional information about the settings and the current calculation run.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-p</span></code> option can be specified multiple times in order to combine multiple profiles. Note that previously set key-value pairs are overwritten if they are specified multiple times. All profiles are processed in the order in which they are specified in the argument list.</p>
+<p>You may also have noticed the <code class="docutils literal notranslate"><span class="pre">-v</span></code> option in the command line arguments used above. It advices DeepDrill to run in verbose mode which makes it print out additional information about the settings and the current calculation run.</p>
 </section>
 
             <div class="clearer"></div>
@@ -229,6 +229,7 @@ Total time: 0.12 sec
 <li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>

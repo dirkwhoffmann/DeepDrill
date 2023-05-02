@@ -37,6 +37,7 @@ DeepDrill User's Manual
    Videos/FirstFlight
    Videos/SecondFlight
    Videos/Fossile
+   Videos/X
 
 .. toctree::
    :maxdepth: 1

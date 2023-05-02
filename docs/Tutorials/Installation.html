@@ -126,17 +126,19 @@
 <p>Follow the steps below to compile DeepDrill on your machine. The application has been designed to run on macOS and common Linux distributions such as Ubuntu or Mint.</p>
 <ul>
 <li><p><strong>Step 1: Install third-party libraries</strong></p>
-<p>DeepDrill utilizes the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML).</p>
+<p>To compile the DeepDrill tool chain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, DeepFlight executes FFmpeg at runtime.</p>
 <ul>
 <li><p>Option 1: Install with Homebrew</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>gmp
 brew<span class="w"> </span>install<span class="w"> </span>libsfml
+brew<span class="w"> </span>install<span class="w"> </span>ffmpeg
 </pre></div>
 </div>
 </li>
 <li><p>Option 2: Install with APT</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libgmp3-dev
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libsfml-dev
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>ffmpeg
 </pre></div>
 </div>
 </li>
@@ -196,6 +198,7 @@ make<span class="w"> </span>-j
 <li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>

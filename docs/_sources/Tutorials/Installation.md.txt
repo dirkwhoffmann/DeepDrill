@@ -4,13 +4,14 @@ Follow the steps below to compile DeepDrill on your machine. The application has
 
 - **Step 1: Install third-party libraries**
 
-    DeepDrill utilizes the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML). 
+    To compile the DeepDrill tool chain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, DeepFlight executes FFmpeg at runtime.
 
   - Option 1: Install with Homebrew
  
     ```bash
     brew install gmp
     brew install libsfml
+    brew install ffmpeg
     ```
 
   - Option 2: Install with APT
@@ -18,6 +19,7 @@ Follow the steps below to compile DeepDrill on your machine. The application has
     ```bash
     sudo apt-get install libgmp3-dev
     sudo apt-get install libsfml-dev
+    sudo apt-get install ffmpeg
     ```
 
 - **Step 2: Clone the GitHub project**
