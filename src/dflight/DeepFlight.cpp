@@ -62,6 +62,8 @@ DeepFlight::main(int argc, char *argv[])
     log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
 
+    FFmpeg::init();
+
     // Parse command line arguments
     parseArguments(argc, argv);
 

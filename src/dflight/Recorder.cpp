@@ -18,7 +18,7 @@ namespace dd {
 
 Recorder::Recorder(const Options &opt) : opt(opt)
 {
-    FFmpeg::init();
+
 }
 
 void
