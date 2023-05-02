@@ -105,7 +105,6 @@ Maker::generateLocationFiles(vector <string> &skipped)
     auto shift = PrecisionComplex(); // PrecisionComplex(-opt.location.real, -opt.location.imag);
     for (isize nr = 0; nr < opt.video.keyframes; nr++) {
 
-        auto &keys = opt.keys;
         double zoom = exp2(nr);
 
         // Assemble path name
