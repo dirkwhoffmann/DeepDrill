@@ -205,7 +205,7 @@ void
 Zoomer::updateTexture(isize nr)
 {
     auto path = opt.files.input.parent_path() / opt.files.input.stem();
-    string name = path.string() + "_" + std::to_string(nr + 1) + ".png";
+    string name = path.string() + "_" + std::to_string(nr) + ".png";
 
     sf::Texture image;
 
@@ -243,8 +243,6 @@ Zoomer::updateLocation(isize nr, isize &dx, isize &dy)
         auto centerDelta = (opt.center - oldCenter) / oldPixelDelta;
         dx = isize(std::round(centerDelta.re.get_d()));
         dy = isize(std::round(centerDelta.im.get_d()));
-
-        // printf("dx: %ld dy: %ld\n", dx, dy);
 
     } else {
 
