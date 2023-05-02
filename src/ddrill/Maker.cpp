@@ -137,12 +137,6 @@ Maker::generateLocationFiles(vector <string> &skipped)
         os << "zoom = " << std::to_string(zoom) << std::endl;
         os << "depth = " << std::to_string(depth) << std::endl;
         os << std::endl;
-
-        // Write image section
-        os << "[image]" << std::endl;
-        os << "width = " << keys["image.width"] << std::endl;
-        os << "height = " << keys["image.height"] << std::endl;
-        os << std::endl;
     }
 }
 
@@ -165,6 +159,12 @@ Maker::generateProfile(vector <string> &skipped)
     
     // Write header
     writeHeader(os);
+
+    // Write image section
+    os << "[image]" << std::endl;
+    os << "width = " << keys["image.width"] << std::endl;
+    os << "height = " << keys["image.height"] << std::endl;
+    os << std::endl;
 
     // Write perturbation section
     os << "[perturbation]" << std::endl;
