@@ -49,17 +49,11 @@ struct FileNotFoundError : Exception {
     }
 };
 
-/*
-struct InvalidValueException : public Exception {
-
-    InvalidValueException(const string &s, i64 d) : Exception(s, d) {
-        description = s + ": Invalid value (" + std::to_string(data) + ")";
-    }
-};
-*/
-
 struct UserInterruptException : Exception {
+
     using Exception::Exception;
+
+    void what(const class Logger &logger) const override;
 };
 
 struct ParseError : Exception {

@@ -20,6 +20,13 @@ Exception::what(const class Logger &log) const
 }
 
 void
+UserInterruptException::what(const class Logger &log) const
+{
+    log::cout << log::purple << log::bold << "User Interrupt";
+    log::cout << log::light << log::normal;
+}
+
+void
 ParseError::what(const class Logger &log) const
 {
     log::cout << log::red << log::bold;

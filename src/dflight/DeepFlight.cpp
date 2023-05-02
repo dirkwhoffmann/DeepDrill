@@ -181,6 +181,11 @@ DeepFlight::checkArguments()
         if (!file.is_open()) {
             throw SyntaxError("Can't write to file " + opt.files.output.string());
         }
+
+        // FFmpeg must be installed
+        if (!FFmpeg::available()) {
+            throw Exception("Unable to locate FFmpeg.");
+        }
     }
 }
 
