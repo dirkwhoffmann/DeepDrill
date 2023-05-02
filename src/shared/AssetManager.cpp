@@ -88,7 +88,9 @@ AssetManager::assureFormat(const fs::path &name, vector <Format> formats)
                     assert(false);
             }
         }
-        throw Exception("'" + name.string() + "' has an invalid file extension. Expected " + join(s, ",", ", or"));
+        throw Exception("'" + name.string() + "'" +
+                        " has an invalid file extension." +
+                        " Expected " + join(s, ", ", ", or "));
     }
 }
 

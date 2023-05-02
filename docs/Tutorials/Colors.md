@@ -2,9 +2,9 @@
 
 In this tutorial you will learn how to recolor images.
 
-By default, DeepDrill creates images with a predefined color palette and other default settings. The default method for adjusting the settings is to specify one or more profiles (`.prf` files) at the command line. 
+By default, DeepDrill creates images with a predefined color palette and other standard settings. Settings can be altered by specifying one or more profiles (`.prf` files) at the command line. 
 
-To create our example image with different colors, we create a custom profile named `colors.prf` with the following content: 
+To create our example image with different colors, we setup a custom profile named `colors.prf` with the following content: 
 ```
 [palette]
 colors = vulcano.png
@@ -12,7 +12,7 @@ scale = 1.75
 ```
 The first key specifies the color pattern. The second key is a scaling factor that determines how fast the color pattern repeats.
 
-In the next step, we instruct DeepDrill to create a png image from the map file we created in the previous tutorial. Our custom profile is passed to DeepDrill with the `-p` option:
+In the next step, we instruct DeepDrill to create a png image from the map file generated in the previous tutorial. Our custom profile is passed to DeepDrill with the `-p` option:
 ```bash
 ./deepdrill -v -o spider.png -p colors.prf spider.map
 ```
@@ -20,11 +20,11 @@ Now, the image is now created in the following form:
 
 ![DeepDrill Cover Image](images/spider-vulcano.png "Recolored Cover Image")
 
-As you have seen above, the color palette is specified in the form of an image file. The vertical resolution of the image file does not matter, as the palette is created only from the first horizontal line of the image. All other lines are ignored. The horizontal resolution of the image is not limited either. However, wider images result in smoother color transitions. 
+As you have seen above, the color palette is specified in the form of an image file. For simplicity, there are no restrictions on the format of the image. DeepDrill composes the color palette from the pixels of the first horizontal line. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images will result in slightly smoother color transitions.
 
 ## Predefined palettes
 
-DeepDrill comes with the following set of predefined color palettes: 
+DeepDrill offers the following predefined color palettes: 
 
 *default*
 ![Default palette](images/default.png "Default palette")

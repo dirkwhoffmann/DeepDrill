@@ -1,6 +1,6 @@
 # Computing Zoom Videos
 
-In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following two videos that are available on Youtube: 
+In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following  video which is available on Youtube:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ph3vJASDVaE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
 </iframe>
@@ -15,7 +15,7 @@ mkdir project
 ```
 To set up a workflow in this directory, we start DeepDrill with the `-m` option:
 ```bash
-./deepdrill -m -p ../tutorial/spider.prf -o project ../tutorial/spider.loc
+./deepdrill -m -p spider.prf -o project spider.loc
 ```
 ```
 DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
@@ -27,7 +27,7 @@ DeepDrill 1.0 - (C)opyright Dirk W. Hoffmann
 
 Total time: 0.05 sec
 ```
-If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc` with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in `spider.prf` before setting up the workflow. This profile defines two keys:
+If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc` with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in `spider.prf` before setting up the workflow. Besides others, this profile defines the following keys:
 ```
 [image]
 width = 3840
@@ -37,13 +37,6 @@ height = 2160
 keyframes = 75
 inbetweens = 143
 bitrate = 8000
-
-[perturbation]
-tolerance = 1e-6
-rounds = 100
-
-[approximation]
-coefficients = 5
 ```
 The first two keys specify the resolution of the keyframe images. The resolution of the generated video will be half the size. Hence, a video with a standard HD resolution of 1920 x 1080 pixels will be produced.  
 
@@ -67,8 +60,8 @@ Let's take a closer look at the files DeepDrill created in the project directory
 For our tutorial project, DeepDrill has created the following Makefile:
 
 ```Make
-DEEPDRILL  = /Users/hoff/Retro/DeepDrill/bin/./deepdrill
-DEEPFLIGHT = /Users/hoff/Retro/DeepDrill/bin/./deepflight
+DEEPDRILL  = /Users/hoff/tmp/dd/./deepdrill
+DEEPFLIGHT = /Users/hoff/tmp/dd/./deepflight
 MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))
 IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))
 VIDEO      = spider.mov
@@ -76,13 +69,16 @@ NUM_IMAGES = $(words $(IMAGES))
 MAPFLAGS   = -b
 PNGFLAGS   = -b
 
-.PHONY: all clean
+.PHONY: all maps images clean
 
-all: $(IMAGES) $(MAPS)
+all: images
+
+maps: $(MAPS)
+
+images: $(IMAGES) maps
 
 %.map: %.loc
-        @$(DEEPDRILL) $(MAPFLAGS) -p spider.prf -o $*.map $*.loc > $*.progress
-        @mv $*.progress $*.log
+        @$(DEEPDRILL) $(MAPFLAGS) -p spider.prf -o $*.map $*.loc > $*.log
 
 %.png: %.map
         @$(DEEPDRILL) $(PNGFLAGS) -p spider.prf -o $*.png $*.map > /dev/null

@@ -51,7 +51,7 @@ By default, DeepDrill creates a 960 x 540 image with a predefined color palette 
 
 ![Spider Image](images/spider1.png "Spider Image")
 
-All settings can be customized by specifying one or more profiles (`.prf` files). DeepDrill comes with a set of predefined files such as the `ultra.prf` profile for generating high-quality images in 4K resolution. The contents of this profile looks like this:
+All settings can be customized by specifying one or more profiles (`.prf` files). DeepDrill offers a set of predefined profiles such as `ultra.prf` for generating high-quality images in 4K resolution. The contents of this profile looks like this:
 ```
 [image]
 width = 3840
@@ -73,7 +73,7 @@ We can pass this profile to DeepDrill via the `-p` option:
 ```
 As can be seen in this example, it is possible to switch directly from a location file to an image. In this case the map file is only created internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes. 
 
-The `-p` option can be specified multiple times in order to combine multiple profiles. Note that key-value pairs are overwritten if they are specified in multiple profiles. All profiles are processed in the order in which they are specified in the argument list.
+The `-p` option can be specified multiple times in order to combine multiple profiles. Note that previously set key-value pairs are overwritten if they are specified multiple times. All profiles are processed in the order in which they are specified in the argument list.
 
-You may also have noticed the `-v` option that was specified above. It advices DeepDrill to run in verbose mode which makes it print out additional information about the settings and the current calculation run. 
+You may also have noticed the `-v` option in the command line arguments used above. It advices DeepDrill to run in verbose mode which makes it print out additional information about the settings and the current calculation run. 
 

@@ -77,7 +77,7 @@ BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string 
         Logger logger(ss);
 
         prefix(logger);
-        logger << log::yellow << msg << " " << file << log::black;
+        logger << log::yellow << msg << " " << file << log::normal;
         logger << " ..." << log::endl;
 
         std::cerr << ss.str();
@@ -94,7 +94,7 @@ BatchProgressIndicator::~BatchProgressIndicator()
 
         prefix(logger);
         logger << log::green << "Created " << file;
-        logger << log::black << " (" << clock.stop() << ")" << log::endl;
+        logger << log::normal << " (" << clock.stop() << ")" << log::endl;
 
         std::cerr << ss.str();
     }
