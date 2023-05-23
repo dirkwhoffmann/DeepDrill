@@ -113,6 +113,8 @@
 		5049969329DEED6800B15919 /* Zoomer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zoomer.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
 		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
+		504FE2C42A1CF08A007A3F04 /* lanczos.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lanczos.glsl; sourceTree = "<group>"; };
+		504FE2C52A1CF2A3007A3F04 /* catmull.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = catmull.glsl; sourceTree = "<group>"; };
 		505EB93429D73E42008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -436,6 +438,8 @@
 				50F8C40F29E44042008A0B4C /* bypass.glsl */,
 				504FE2C32A1CE74C007A3F04 /* bilinear.glsl */,
 				50F8C41129EC3C97008A0B4C /* merger.glsl */,
+				504FE2C42A1CF08A007A3F04 /* lanczos.glsl */,
+				504FE2C52A1CF2A3007A3F04 /* catmull.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
