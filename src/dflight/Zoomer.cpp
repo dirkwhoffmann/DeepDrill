@@ -31,6 +31,8 @@ Zoomer::Zoomer(Options &o) : opt(o)
 void
 Zoomer::init()
 {
+    auto smooth = false;
+
     recordMode = opt.files.output != "";
 
     auto sourceWidth = unsigned(opt.image.width);
@@ -52,6 +54,7 @@ Zoomer::init()
     if (!source.create(sourceWidth, sourceHeight)) {
         throw Exception("Can't create source texture");
     }
+    source.setSmooth(smooth);
     sourceRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     sourceRect.setTexture(&source);
 
@@ -61,6 +64,7 @@ Zoomer::init()
         if (!scaled[i].create(targetWidth, targetHeight)) {
             throw Exception("Can't create scale texture " + std::to_string(i));
         }
+        scaled[i].setSmooth(smooth);
         scaledRect[i].setSize(sf::Vector2f(targetWidth, targetHeight));
         scaledRect[i].setTexture(&scaled[i].getTexture());
     }
@@ -69,6 +73,7 @@ Zoomer::init()
     if (!target.create(targetWidth, targetHeight)) {
         throw Exception("Can't create target texture");
     }
+    target.setSmooth(smooth);
     targetRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     targetRect.setTexture(&target.getTexture());
 
@@ -175,6 +180,7 @@ Zoomer::draw()
 {
     // Stage 1: Scale down the source texture
     scaler.setUniform("texture", source);
+    scaler.setUniform("texture_size", sf::Vector2f(source.getSize()));
     scaled[latest].draw(sourceRect, &scaler);
     scaled[latest].display();
 

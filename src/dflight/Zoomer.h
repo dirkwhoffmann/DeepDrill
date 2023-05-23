@@ -74,9 +74,6 @@ private:
     void update(isize keyframe, isize frame);
     void draw();
 
-    // Indicates if we run in record mode or preview mode
-    // bool recordMode();
-
     // Loads a new image file from disk
     void updateTexture(isize nr);
 

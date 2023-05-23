@@ -38,7 +38,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
     defaults["video.bitrate"] = "4096";
-    defaults["video.scaler"] = "bypass.glsl";
+    defaults["video.scaler"] = "bilinear.glsl";
     defaults["video.merger"] = "merger.glsl";
 
     // Palette keys

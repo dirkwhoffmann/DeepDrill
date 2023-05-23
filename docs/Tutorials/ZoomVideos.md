@@ -91,9 +91,9 @@ clean:
 The Makefile defines two major goals: One is to create the map files from the location files and the other is to convert the map files into images. To create the images, we simply change to the project directory and run the Make utility:
 ```bash
 cd project
-make -j
+make -j4
 ```
-The `-j` option is optional. If it is specified, the Make utility runs several jobs in parallel, which significantly reduces total calculation time.
+The `-j` option instructs Make to run multiple jobs in parallel, four jobs in this case. Although this option is not mandatory, its use is strongly recommended as it significantly reduces the overall computation time.
 
 Depending on the performance of your machine, it may take a while to calculate all images. After successful completion, the project directory contains a map file and an image file for each keyframe. 
 

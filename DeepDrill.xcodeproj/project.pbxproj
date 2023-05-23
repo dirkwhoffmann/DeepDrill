@@ -112,6 +112,7 @@
 		5049969229DEED6800B15919 /* Zoomer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Zoomer.cpp; sourceTree = "<group>"; };
 		5049969329DEED6800B15919 /* Zoomer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zoomer.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
+		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
 		505EB93429D73E42008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -433,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				50F8C40F29E44042008A0B4C /* bypass.glsl */,
+				504FE2C32A1CE74C007A3F04 /* bilinear.glsl */,
 				50F8C41129EC3C97008A0B4C /* merger.glsl */,
 			);
 			path = shaders;
