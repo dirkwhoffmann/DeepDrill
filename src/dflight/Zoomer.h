@@ -33,6 +33,10 @@ class Zoomer {
     sf::Texture source;
     sf::RectangleShape sourceRect;
 
+    // Experimental
+    sf::Texture source2;
+    sf::RectangleShape sourceRect2;
+
     // The downscaled source textures (latest three)
     sf::RenderTexture scaled[3];
     sf::RectangleShape scaledRect[3];
@@ -72,7 +76,7 @@ private:
 
     // Called inside the main loop
     void update(isize keyframe, isize frame);
-    void draw();
+    void draw(isize keyframe, isize frame);
 
     // Loads a new image file from disk
     void updateTexture(isize nr);

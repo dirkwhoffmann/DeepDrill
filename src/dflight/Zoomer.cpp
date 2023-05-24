@@ -50,13 +50,20 @@ Zoomer::init()
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
-    // Create the source texture
+    // Create the source textures
     if (!source.create(sourceWidth, sourceHeight)) {
         throw Exception("Can't create source texture");
     }
     source.setSmooth(smooth);
     sourceRect.setSize(sf::Vector2f(targetWidth, targetHeight));
     sourceRect.setTexture(&source);
+
+    if (!source2.create(sourceWidth, sourceHeight)) {
+        throw Exception("Can't create source2 texture");
+    }
+    source2.setSmooth(smooth);
+    sourceRect2.setSize(sf::Vector2f(targetWidth, targetHeight));
+    sourceRect2.setTexture(&source2);
 
     // Create the scale textures
     for (isize i = 0; i < 3; i++) {
@@ -87,9 +94,12 @@ Zoomer::init()
     if (mergerPath == "") {
         throw Exception("Can't load fragment shader '" + opt.video.merger + "'");
     }
-
-    scaler.loadFromFile(scalerPath, sf::Shader::Fragment);
-    merger.loadFromFile(mergerPath, sf::Shader::Fragment);
+    if (!scaler.loadFromFile(scalerPath, sf::Shader::Fragment)) {
+        throw Exception("Can't load fragment shader '" + scalerPath.string() + "'");
+    }
+    if (!merger.loadFromFile(mergerPath, sf::Shader::Fragment)) {
+        throw Exception("Can't load fragment shader '" + mergerPath.string() + "'");
+    }
 }
 
 void
@@ -120,7 +130,7 @@ Zoomer::launch()
             update(keyframe, frame);
 
             // Render frame
-            draw();
+            draw(keyframe, frame);
 
             progress.step(1);
         }
@@ -176,11 +186,13 @@ Zoomer::update(isize keyframe, isize frame)
 }
 
 void
-Zoomer::draw()
+Zoomer::draw(isize keyframe, isize frame)
 {
     // Stage 1: Scale down the source texture
     scaler.setUniform("texture", source);
+    scaler.setUniform("texture2", source2);
     scaler.setUniform("texture_size", sf::Vector2f(source.getSize()));
+    scaler.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
     scaled[latest].draw(sourceRect, &scaler);
     scaled[latest].display();
 
@@ -212,6 +224,7 @@ Zoomer::updateTexture(isize nr)
 {
     auto path = opt.files.input.parent_path() / opt.files.input.stem();
     string name = path.string() + "_" + std::to_string(nr) + ".png";
+    string name2 = path.string() + "_" + std::to_string(nr + 1) + ".png";
 
     sf::Texture image;
 
@@ -220,6 +233,12 @@ Zoomer::updateTexture(isize nr)
     }
     if (!source.loadFromFile(name)) {
         throw Exception("Can't load image file " + name);
+    }
+    if (!fileExists(name2)) {
+        throw FileNotFoundError(name2);
+    }
+    if (!source2.loadFromFile(name2)) {
+        throw Exception("Can't load image file " + name2);
     }
 }
 
