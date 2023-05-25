@@ -36,6 +36,9 @@ public:
 
 private:
 
+    // Performs some basic initialization
+    void initialize();
+
     // Helper methods for parsing command line arguments
     void parseArguments(int argc, char *argv[]);
     void checkArguments();

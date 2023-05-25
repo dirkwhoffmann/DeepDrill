@@ -62,7 +62,8 @@ DeepFlight::main(int argc, char *argv[])
     log::cout << " - (C)opyright Dirk W. Hoffmann";
     log::cout << log::endl << log::endl;
 
-    FFmpeg::init();
+    // Perform some basic initialization
+    initialize();
 
     // Parse command line arguments
     parseArguments(argc, argv);
@@ -89,6 +90,18 @@ DeepFlight::main(int argc, char *argv[])
     Zoomer(opt).launch();
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
+}
+
+void
+DeepFlight::initialize()
+{
+    // Check for shader support
+    if (!sf::Shader::isAvailable()) {
+        throw Exception("No GPU shader support");
+    }
+
+    // Initialize FFmpeg
+    FFmpeg::init();
 }
 
 void
