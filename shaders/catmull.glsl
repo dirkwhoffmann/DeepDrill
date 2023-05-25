@@ -2,13 +2,13 @@
 
 //note: see also http://www.decarpentier.nl/2d-catmull-rom-in-4-samples.
 
-uniform sampler2D texture;
-uniform vec2 texture_size;
+uniform sampler2D curr;
+uniform vec2 size;
 
-vec4 sampleLevel0( vec2 uv )
+vec4 sampleLevel0(vec2 uv)
 {
     //    return texture( iChannel0, uv, -10.0 );
-    return texture2D(texture, uv);
+    return texture2D(curr, uv);
 }
 
 // note: entirely stolen from https://gist.github.com/TheRealMJP/c83b8c0f46b63f3a88a5986f4fa982b1
@@ -69,5 +69,5 @@ void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
     // gl_FragColor = vec4(1.0,0.5,0.5,0.5);
-    gl_FragColor = gl_Color * SampleTextureCatmullRom(coord, texture_size);
+    gl_FragColor = gl_Color * SampleTextureCatmullRom(coord, size);
 }

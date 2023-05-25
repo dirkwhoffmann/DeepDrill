@@ -27,8 +27,8 @@
 
  */
 
-uniform sampler2D texture;
-uniform vec2 texture_size;
+uniform sampler2D curr;
+uniform vec2 size;
 
 /*
 uniform float lanczos2_window_sinc;
@@ -91,8 +91,8 @@ void main()
     vec2 dx = vec2(1.0, 0.0);
     vec2 dy = vec2(0.0, 1.0);
 
-    vec2 pc = qt_TexCoord0 * texture_size / lanczos2_res;
-    vec2 tex = (floor(pc) + vec2(0.5, 0.5)) * lanczos2_res / texture_size;
+    vec2 pc = qt_TexCoord0 * size / lanczos2_res;
+    vec2 tex = (floor(pc) + vec2(0.5, 0.5)) * lanczos2_res / size;
 
     vec2 tc = (floor(pc-vec2(0.5,0.5))+vec2(0.5,0.5));
 
@@ -102,40 +102,40 @@ void main()
     weights[2] = resampler(vec4(d(pc, tc    -dx    +dy), d(pc, tc         +dy), d(pc, tc    +dx    +dy), d(pc, tc+2.0*dx    +dy)));
     weights[3] = resampler(vec4(d(pc, tc    -dx+2.0*dy), d(pc, tc     +2.0*dy), d(pc, tc    +dx+2.0*dy), d(pc, tc+2.0*dx+2.0*dy)));
 
-    dx = dx * lanczos2_res / texture_size;
-    dy = dy * lanczos2_res / texture_size;
-    tc = tc * lanczos2_res / texture_size;
+    dx = dx * lanczos2_res / size;
+    dy = dy * lanczos2_res / size;
+    tc = tc * lanczos2_res / size;
 
     // reading the texels
 
-    vec3 c00 = texture2D(texture, tc    -dx    -dy).xyz;
-    vec3 c10 = texture2D(texture, tc         -dy).xyz;
-    vec3 c20 = texture2D(texture, tc    +dx    -dy).xyz;
-    vec3 c30 = texture2D(texture, tc+2.0*dx    -dy).xyz;
-    vec3 c01 = texture2D(texture, tc    -dx     ).xyz;
-    vec3 c11 = texture2D(texture, tc          ).xyz;
-    vec3 c21 = texture2D(texture, tc    +dx     ).xyz;
-    vec3 c31 = texture2D(texture, tc+2.0*dx     ).xyz;
-    vec3 c02 = texture2D(texture, tc    -dx    +dy).xyz;
-    vec3 c12 = texture2D(texture, tc         +dy).xyz;
-    vec3 c22 = texture2D(texture, tc    +dx    +dy).xyz;
-    vec3 c32 = texture2D(texture, tc+2.0*dx    +dy).xyz;
-    vec3 c03 = texture2D(texture, tc    -dx+2.0*dy).xyz;
-    vec3 c13 = texture2D(texture, tc     +2.0*dy).xyz;
-    vec3 c23 = texture2D(texture, tc    +dx+2.0*dy).xyz;
-    vec3 c33 = texture2D(texture, tc+2.0*dx+2.0*dy).xyz;
+    vec3 c00 = texture2D(curr, tc    -dx    -dy).xyz;
+    vec3 c10 = texture2D(curr, tc         -dy).xyz;
+    vec3 c20 = texture2D(curr, tc    +dx    -dy).xyz;
+    vec3 c30 = texture2D(curr, tc+2.0*dx    -dy).xyz;
+    vec3 c01 = texture2D(curr, tc    -dx     ).xyz;
+    vec3 c11 = texture2D(curr, tc          ).xyz;
+    vec3 c21 = texture2D(curr, tc    +dx     ).xyz;
+    vec3 c31 = texture2D(curr, tc+2.0*dx     ).xyz;
+    vec3 c02 = texture2D(curr, tc    -dx    +dy).xyz;
+    vec3 c12 = texture2D(curr, tc         +dy).xyz;
+    vec3 c22 = texture2D(curr, tc    +dx    +dy).xyz;
+    vec3 c32 = texture2D(curr, tc+2.0*dx    +dy).xyz;
+    vec3 c03 = texture2D(curr, tc    -dx+2.0*dy).xyz;
+    vec3 c13 = texture2D(curr, tc     +2.0*dy).xyz;
+    vec3 c23 = texture2D(curr, tc    +dx+2.0*dy).xyz;
+    vec3 c33 = texture2D(curr, tc+2.0*dx+2.0*dy).xyz;
 
-    color = E = texture2D(texture, qt_TexCoord0).xyz;
+    color = E = texture2D(curr, qt_TexCoord0).xyz;
 
-    vec3 F6 = texture2D(texture, tex +dx+0.25*dx+0.25*dy).xyz;
-    vec3 F7 = texture2D(texture, tex +dx+0.25*dx-0.25*dy).xyz;
-    vec3 F8 = texture2D(texture, tex +dx-0.25*dx-0.25*dy).xyz;
-    vec3 F9 = texture2D(texture, tex +dx-0.25*dx+0.25*dy).xyz;
+    vec3 F6 = texture2D(curr, tex +dx+0.25*dx+0.25*dy).xyz;
+    vec3 F7 = texture2D(curr, tex +dx+0.25*dx-0.25*dy).xyz;
+    vec3 F8 = texture2D(curr, tex +dx-0.25*dx-0.25*dy).xyz;
+    vec3 F9 = texture2D(curr, tex +dx-0.25*dx+0.25*dy).xyz;
 
-    vec3 H6 = texture2D(texture, tex +0.25*dx+0.25*dy+dy).xyz;
-    vec3 H7 = texture2D(texture, tex +0.25*dx-0.25*dy+dy).xyz;
-    vec3 H8 = texture2D(texture, tex -0.25*dx-0.25*dy+dy).xyz;
-    vec3 H9 = texture2D(texture, tex -0.25*dx+0.25*dy+dy).xyz;
+    vec3 H6 = texture2D(curr, tex +0.25*dx+0.25*dy+dy).xyz;
+    vec3 H7 = texture2D(curr, tex +0.25*dx-0.25*dy+dy).xyz;
+    vec3 H8 = texture2D(curr, tex -0.25*dx-0.25*dy+dy).xyz;
+    vec3 H9 = texture2D(curr, tex -0.25*dx+0.25*dy+dy).xyz;
 
     vec4 f0 = reduce4(F6, F7, F8, F9);
     vec4 h0 = reduce4(H6, H7, H8, H9);

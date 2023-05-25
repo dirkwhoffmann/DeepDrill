@@ -189,17 +189,12 @@ void
 Zoomer::draw(isize keyframe, isize frame)
 {
     // Stage 1: Scale down the source texture
-    scaler.setUniform("texture", source);
-    scaler.setUniform("texture2", source2);
-    scaler.setUniform("texture_size", sf::Vector2f(source.getSize()));
-    scaler.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
+    setupScalerUniforms(keyframe, frame);
     scaled[latest].draw(sourceRect, &scaler);
     scaled[latest].display();
 
     // Stage 2: Render target texture
-    merger.setUniform("current", scaled[latest].getTexture());
-    merger.setUniform("prev", scaled[(latest + 3 - 1) % 3].getTexture());
-    merger.setUniform("prevprev", scaled[(latest + 3 - 2) % 3].getTexture());
+    setupMergerUniforms(keyframe, frame);
     target.draw(scaledRect[latest], &merger);
     target.display();
     latest = (latest + 1) % 3;
@@ -217,6 +212,23 @@ Zoomer::draw(isize keyframe, isize frame)
         // Record frame
         recorder.record(image);
     }
+}
+
+void
+Zoomer::setupScalerUniforms(isize keyframe, isize frame)
+{
+    scaler.setUniform("curr", source);
+    scaler.setUniform("next", source2);
+    scaler.setUniform("size", sf::Vector2f(source.getSize()));
+    scaler.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
+}
+
+void
+Zoomer::setupMergerUniforms(isize keyframe, isize frame)
+{
+    merger.setUniform("curr", scaled[latest].getTexture());
+    merger.setUniform("prev", scaled[(latest + 3 - 1) % 3].getTexture());
+    merger.setUniform("prevprev", scaled[(latest + 3 - 2) % 3].getTexture());
 }
 
 void

@@ -115,6 +115,9 @@
 		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
 		504FE2C42A1CF08A007A3F04 /* lanczos.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lanczos.glsl; sourceTree = "<group>"; };
 		504FE2C52A1CF2A3007A3F04 /* catmull.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = catmull.glsl; sourceTree = "<group>"; };
+		504FE2C62A1F477A007A3F04 /* trilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = trilinear.glsl; sourceTree = "<group>"; };
+		504FE2C72A1F4798007A3F04 /* bicubic.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bicubic.glsl; sourceTree = "<group>"; };
+		504FE2C82A1F47AB007A3F04 /* tricubic.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = tricubic.glsl; sourceTree = "<group>"; };
 		505EB93429D73E42008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -214,7 +217,7 @@
 		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
 		50EB497526A067850019078C /* Maker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maker.h; sourceTree = "<group>"; };
-		50F8C40F29E44042008A0B4C /* bypass.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bypass.glsl; sourceTree = "<group>"; };
+		50F8C40F29E44042008A0B4C /* nearest.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = nearest.glsl; sourceTree = "<group>"; };
 		50F8C41129EC3C97008A0B4C /* merger.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = merger.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -435,11 +438,14 @@
 		50D69A7429E177D50025DE0D /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				50F8C40F29E44042008A0B4C /* bypass.glsl */,
+				50F8C40F29E44042008A0B4C /* nearest.glsl */,
 				504FE2C32A1CE74C007A3F04 /* bilinear.glsl */,
-				50F8C41129EC3C97008A0B4C /* merger.glsl */,
+				504FE2C62A1F477A007A3F04 /* trilinear.glsl */,
+				504FE2C72A1F4798007A3F04 /* bicubic.glsl */,
+				504FE2C82A1F47AB007A3F04 /* tricubic.glsl */,
 				504FE2C42A1CF08A007A3F04 /* lanczos.glsl */,
 				504FE2C52A1CF2A3007A3F04 /* catmull.glsl */,
+				50F8C41129EC3C97008A0B4C /* merger.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

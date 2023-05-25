@@ -32,7 +32,20 @@ vec4 bilinear(sampler2D sampler, vec2 coord)
 
 void main()
 {
+    // Read texel from the current texture
     vec2 coord = gl_TexCoord[0].xy;
     vec4 color1 = bilinear(curr, coord);
+
+    // Check if a corresponding texel exists in the next texture
+    vec2 coord2 = 2.0 * coord - vec2(0.5,0.5);
+    if (coord2.x >= 0.0 && coord2.x <= 1.0 && coord2.y >= 0.0 && coord2.y <= 1.0) {
+
+        // Read the corresponding texel from the next texture
+        vec4 color2 = bilinear(next, coord2);
+
+        // Interpolate between both texels
+        color1 = mix(color1, color2, frame);
+    }
+
     gl_FragColor = gl_Color * color1;
 }

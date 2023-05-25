@@ -78,6 +78,10 @@ private:
     void update(isize keyframe, isize frame);
     void draw(isize keyframe, isize frame);
 
+    // Sets up shader uniforms
+    void setupScalerUniforms(isize keyframe, isize frame);
+    void setupMergerUniforms(isize keyframe, isize frame);
+
     // Loads a new image file from disk
     void updateTexture(isize nr);
 
