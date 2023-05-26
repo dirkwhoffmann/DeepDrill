@@ -101,8 +101,6 @@ Maker::generateLocationFiles(vector <string> &skipped)
 {
     ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
 
-    // Start in the middle of the Mandelbrot set by shifting the center
-    auto shift = PrecisionComplex(); // PrecisionComplex(-opt.location.real, -opt.location.imag);
     for (isize nr = 0; nr < opt.video.keyframes; nr++) {
 
         double zoom = exp2(nr);
@@ -125,14 +123,10 @@ Maker::generateLocationFiles(vector <string> &skipped)
         isize maxDepth = 1000 * (nr + 1);
         isize depth = std::min(maxDepth, opt.location.depth);
 
-        // Shift the center coordinate
-        auto center = PrecisionComplex(opt.location.real, opt.location.imag) + shift;
-        shift *= 0.5 * 0.9;
-
         // Write location section
         os << "[location]" << std::endl;
-        os << "real = " << center.re << std::endl;
-        os << "imag = " << center.im << std::endl;
+        os << "real = " << opt.location.real << std::endl;
+        os << "imag = " << opt.location.imag << std::endl;
         os << "zoom = " << std::to_string(zoom) << std::endl;
         os << "depth = " << std::to_string(depth) << std::endl;
         os << std::endl;

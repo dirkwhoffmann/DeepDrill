@@ -145,21 +145,14 @@ Zoomer::update(isize keyframe, isize frame)
 {
     if (frame == 0) {
 
-        isize dx;
-        isize dy;
-
         updateTexture(keyframe);
-        updateLocation(keyframe, dx, dy);
+        updateLocation(keyframe);
 
         // Set animation start point
-        x.set(Coord::center(opt).x);
-        y.set(Coord::center(opt).y);
         w.set(opt.image.width);
         h.set(opt.image.height);
 
         // Set animation end point and speed
-        x.set(Coord::center(opt).x + dx, opt.video.inbetweens);
-        y.set(Coord::center(opt).y - dy, opt.video.inbetweens);
         w.set(opt.image.width / 2.0, opt.video.inbetweens);
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
 
@@ -172,14 +165,12 @@ Zoomer::update(isize keyframe, isize frame)
 
     } else {
 
-        x.move();
-        y.move();
         w.move();
         h.move();
     }
 
-    auto newRect = sf::IntRect(unsigned(x.current - (w.current / 2.0)),
-                               unsigned(y.current - (h.current / 2.0)),
+    auto newRect = sf::IntRect(unsigned(Coord::center(opt).x - (w.current / 2.0)),
+                               unsigned(Coord::center(opt).y - (h.current / 2.0)),
                                unsigned(w.current),
                                unsigned(h.current));
     sourceRect.setTextureRect(newRect);
@@ -255,7 +246,7 @@ Zoomer::updateTexture(isize nr)
 }
 
 void
-Zoomer::updateLocation(isize nr, isize &dx, isize &dy)
+Zoomer::updateLocation(isize nr)
 {
     auto path = opt.files.input.parent_path() / opt.files.input.stem();
     string name = path.string() + "_" + std::to_string(nr + 1) + ".loc";
@@ -276,15 +267,6 @@ Zoomer::updateLocation(isize nr, isize &dx, isize &dy)
 
         Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
         opt.derive();
-
-        auto centerDelta = (opt.center - oldCenter) / oldPixelDelta;
-        dx = isize(std::round(centerDelta.re.get_d()));
-        dy = isize(std::round(centerDelta.im.get_d()));
-
-    } else {
-
-        dx = 0;
-        dy = 0;
     }
 }
 

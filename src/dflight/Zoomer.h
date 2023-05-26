@@ -59,7 +59,7 @@ class Zoomer {
     bool recordMode;
 
     // Animation parameters
-    Animated x, y, w, h;
+    Animated w, h;
 
 public:
 
@@ -86,7 +86,7 @@ private:
     void updateTexture(isize nr);
 
     // Loads a new location from disk
-    void updateLocation(isize nr, isize &dx, isize &dy);
+    void updateLocation(isize nr);
 };
 
 }
