@@ -1,10 +1,11 @@
 [location]
-
 real = 0
 imag = 0
 zoom = 1
 depth = 3000
 
-[palette]
+[perturbation]
+enabled = false
 
-colors = /Users/hoff/Desktop/palette1.png
+[palette]
+colors = pistachio.png

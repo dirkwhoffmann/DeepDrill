@@ -127,7 +127,10 @@ struct Options {
     } palette;
     
     struct {
-        
+
+        // Indicates if perturbation should be used
+        bool enabled;
+
         // Tolerance used for glitch detection
         double tolerance;
         
@@ -184,6 +187,7 @@ public:
 private:
 
     void parse(const string &key, const string &value, string &parsed);
+    void parse(const string &key, const string &value, bool &parsed);
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);

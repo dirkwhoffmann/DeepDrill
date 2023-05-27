@@ -53,11 +53,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-m -o /Users/hoff/tmp/dd/project"
+            argument = "-o /tmp/garbage.map"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "x.loc"
+            argument = "-m -o /Users/hoff/tmp/dd/project"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "base.loc"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -74,7 +78,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p x.prf "
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p low.prf"

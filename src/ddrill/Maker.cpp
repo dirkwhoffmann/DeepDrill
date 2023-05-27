@@ -161,6 +161,7 @@ Maker::generateProfile(vector <string> &skipped)
 
     // Write perturbation section
     os << "[perturbation]" << std::endl;
+    os << "enabled = " << keys["perturbation.enabled"] << std::endl;
     os << "tolerance = " << keys["perturbation.tolerance"] << std::endl;
     os << "rounds = " << keys["perturbation.rounds"] << std::endl;
     os << std::endl;

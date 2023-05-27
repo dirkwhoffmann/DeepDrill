@@ -46,6 +46,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["palette.scale"] = "1.0";
 
     // Perturbation keys
+    defaults["perturbation.enabled"] = "yes";
     defaults["perturbation.tolerance"] = "1e-6";
     defaults["perturbation.rounds"] = "50";
 
@@ -172,6 +173,10 @@ Options::parse(string key, string value)
 
         parse(key, value, palette.scale);
 
+    } else if (key == "perturbation.enabled") {
+
+        parse(key, value, perturbation.enabled);
+
     } else if (key == "perturbation.tolerance") {
 
         parse(key, value, perturbation.tolerance);
@@ -198,6 +203,23 @@ void
 Options::parse(const string &key, const string &value, string &parsed)
 {
     parsed = value;
+}
+
+void
+Options::parse(const string &key, const string &value, bool &parsed)
+{
+    if (value == "true" || value == "yes" || value == "on") {
+
+        parsed = true;
+        return;
+    }
+    if (value == "false" || value == "no" || value == "off") {
+
+        parsed = false;
+        return;
+    }
+
+    throw Exception("Invalid argument for key " + key + ": " + value);
 }
 
 void

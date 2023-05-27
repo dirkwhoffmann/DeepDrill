@@ -55,7 +55,15 @@ Driller::drill()
             remaining.push_back(Coord(x,y));
         }
     }
-        
+
+    // Use the standard algorithm if perturbation is disabled
+    if (!opt.perturbation.enabled) {
+
+        printf("TODO: IMPLEMENTATION MISSING\n");
+        // simpleDrill(remaining);
+        return;
+    }
+
     // Enter the main loop
     for (isize round = 1; round <= opt.perturbation.rounds; round++) {
 
@@ -65,7 +73,7 @@ Driller::drill()
         log::cout << log::vspace;
         log::cout << "Round " << round << ": ";
         log::cout << remaining.size() << " points" << log::endl << log::endl;
-                
+
         // Select a reference point
         ref = pickReference(glitches);
         
