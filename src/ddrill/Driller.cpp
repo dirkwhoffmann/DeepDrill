@@ -189,8 +189,8 @@ Driller::drill(ReferencePoint &r)
         double norm = z.norm();
 
         // Perform the escape check
-        if (norm >= 7) {
-        // if (norm >= 256) {
+        // if (norm >= 7) {
+        if (norm >= 256) {
             r.escaped = true;
             map.set(r.coord, MapEntry { (u32)i, (float)::log(norm) });
             return;
@@ -278,11 +278,8 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     ExtendedComplex dn;
     isize iteration = ref.skipped;
 
-    ExtendedComplex approx;
-    
     if (ref.skipped) {
         dn = coeff.evaluate(point, d0, ref.skipped);
-        approx = dn;
     } else {
         dn = d0;
     }
