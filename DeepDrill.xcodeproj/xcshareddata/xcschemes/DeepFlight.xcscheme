@@ -68,8 +68,8 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-o /tmp/garbage.mpg "
-            isEnabled = "NO">
+            argument = "-o /tmp/x.mov "
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
