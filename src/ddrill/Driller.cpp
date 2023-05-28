@@ -198,12 +198,16 @@ Driller::slowDrill(const Coord &point)
     auto x0 = ExtendedComplex(point.translate(opt));
     auto xn = x0;
 
+    auto d0 = ExtendedComplex(1, 0);
+    auto dn = d0;
+
     isize limit = opt.location.depth;
     isize iteration = 0;
 
     // Enter the main loop
     while (++iteration < limit) {
 
+        dn *= xn * 2.0;
         xn *= xn;
         xn += x0;
         xn.reduce();
@@ -214,13 +218,20 @@ Driller::slowDrill(const Coord &point)
         if (norm >= 256) {
 
             // This point is outside the Mandelbrot set
-            map.set(point, MapEntry { (u32)iteration, (float)::log(norm) });
+            auto u = xn / dn;
+            u.normalize();
+
+            map.set(point, MapEntry {
+                (u32)iteration,
+                (float)::log(norm),
+                dn.asStandardComplex(),
+                u.asStandardComplex() } );
             return;
         }
     }
 
     // This point is inside the Mandelbrot set
-    map.set(point, MapEntry { 0, 0 });
+    map.set(point, 0, 0);
 }
 
 void
@@ -244,7 +255,7 @@ Driller::drill(ReferencePoint &r)
         // if (norm >= 7) {
         if (norm >= 256) {
             r.escaped = true;
-            map.set(r.coord, MapEntry { (u32)i, (float)::log(norm) });
+            map.set(r.coord, (u32)i, (float)::log(norm));
             return;
         }
         
@@ -355,7 +366,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         
         // Perform the escape check
         if (norm >= 256) {
-            map.set(point, MapEntry { (u32)iteration, (float)::log(norm) });
+            map.set(point, (u32)iteration, (float)::log(norm));
             return;
         }
     }
@@ -363,7 +374,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     if (limit == opt.location.depth) {
 
         // This point belongs to the Mandelbrot set
-        map.set(point, MapEntry { 0, 0 });
+        map.set(point, 0, 0);
 
     } else {
 

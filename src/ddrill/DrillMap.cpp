@@ -106,6 +106,12 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
 }
 
 void
+DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
+{
+    set(c.x, c.y, MapEntry { iteration, ::log(lognorm), StandardComplex() } );
+}
+
+void
 DrillMap::save(const string &path)
 {
     ProgressIndicator progress("Saving map file");

@@ -8,4 +8,4 @@ depth = 3000
 enabled = false
 
 [palette]
-colors = pistachio.png
+# colors = pistachio.png

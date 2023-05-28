@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "StandardComplex.h"
 
 namespace dd {
 
@@ -20,6 +21,10 @@ struct MapEntry {
 
     u32 iteration;
     float lognorm;
+
+    // Experimental
+    StandardComplex derivative;
+    StandardComplex normal;
 };
 
 class DrillMap {
@@ -49,6 +54,7 @@ public:
     const MapEntry &get(const struct Coord &c) const;
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
+    void set(const struct Coord &c, u32 iteration, float lognorm);
 
     void save(const string &path); 
     void save(std::ostream &stream);

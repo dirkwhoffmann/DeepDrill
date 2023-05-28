@@ -66,6 +66,18 @@ Colorizer::colorize(Coord c)
         return;
     }
 
+    double a = 0.7;
+    double b = 0.7;
+    double h2 = 1.5;
+    double t = data.normal.re * a + data.normal.im * b + h2;
+    t = t / (1 + h2);
+    if (t < 0) t = 0;
+    t *= 255.0;
+
+    image[pos] = 0xFF << 24 | u8(t) << 16 | u8(t) << 8 | u8(t);
+
+    /*
+
     double sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
     sl *= .0025;
     // sl = 2.7 + sl * 30.0;
@@ -73,7 +85,8 @@ Colorizer::colorize(Coord c)
     sl *= opt.palette.scale;
 
     image[pos] = palette.interpolateABGR(sl);
-    // image[pos] = palette.interpolateABGR(((double)c.x / map.width) * 2 * 3.14);
+
+    */
 }
 
 void

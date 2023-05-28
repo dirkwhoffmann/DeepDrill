@@ -56,6 +56,11 @@ struct ExtendedComplex {
         return ExtendedDouble { mantissa.norm(), 2 * exponent };
     }
 
+    inline ExtendedDouble length() const {
+
+        return ExtendedDouble { sqrt(mantissa.norm()), exponent };
+    }
+
     
     //
     // Normalizing
@@ -98,7 +103,13 @@ struct ExtendedComplex {
         }
     }
     
-    
+    void normalize() {
+
+        *this *= length().reciprocal();
+        reduce();
+    }
+
+
     //
     // Comparing
     //
