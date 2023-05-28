@@ -79,11 +79,22 @@ private:
     // Picks a collection of probe points
     void pickProbePoints(vector <Coord> &probes);
 
-    
+
     //
-    // Drilling points
+    // Drilling points with the standard algorithm (for debugging)
     //
-    
+
+    // Drills a collection of points
+    void slowDrill(const vector<Coord> &remaining);
+
+    // Drills a single of point
+    void slowDrill(const Coord &point);
+
+
+    //
+    // Drilling points with perturbation and series approximation
+    //
+
     // Drills a reference point
     void drill(ReferencePoint &ref);
     

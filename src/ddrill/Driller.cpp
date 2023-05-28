@@ -59,8 +59,7 @@ Driller::drill()
     // Use the standard algorithm if perturbation is disabled
     if (!opt.perturbation.enabled) {
 
-        printf("TODO: IMPLEMENTATION MISSING\n");
-        // simpleDrill(remaining);
+        slowDrill(remaining);
         return;
     }
 
@@ -177,6 +176,51 @@ Driller::pickProbePoints(vector <Coord> &probes)
             probes.push_back(Coord(x,y));
         }
     }
+}
+
+void
+Driller::slowDrill(const vector<Coord> &remaining)
+{
+    ProgressIndicator progress("Running the standard algo", remaining.size());
+
+    for (unsigned int i = 0; i < remaining.size(); i++) {
+
+        slowDrill(remaining[i]);
+
+        if (opt.stop) throw UserInterruptException();
+        progress.step(1);
+    }
+}
+
+void
+Driller::slowDrill(const Coord &point)
+{
+    auto x0 = ExtendedComplex(point.translate(opt));
+    auto xn = x0;
+
+    isize limit = opt.location.depth;
+    isize iteration = 0;
+
+    // Enter the main loop
+    while (++iteration < limit) {
+
+        xn *= xn;
+        xn += x0;
+        xn.reduce();
+
+        auto norm = xn.norm().asDouble();
+
+        // Perform the escape check
+        if (norm >= 256) {
+
+            // This point is outside the Mandelbrot set
+            map.set(point, MapEntry { (u32)iteration, (float)::log(norm) });
+            return;
+        }
+    }
+
+    // This point is inside the Mandelbrot set
+    map.set(point, MapEntry { 0, 0 });
 }
 
 void
