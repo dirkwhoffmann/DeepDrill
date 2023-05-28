@@ -29,7 +29,10 @@ struct ReferenceIteration {
     
     // 2*zn in extended precision format
     ExtendedComplex extended2;
-    
+
+    // zn' in extended precision format
+    ExtendedComplex derivation;
+
     // Glitch tolerance for this iteration
     double tolerance;
         
@@ -38,7 +41,8 @@ struct ReferenceIteration {
     // Initializing
     //
     
-    ReferenceIteration(PrecisionComplex c, double tolerance);
+    ReferenceIteration(PrecisionComplex z, double tolerance);
+    ReferenceIteration(PrecisionComplex z, PrecisionComplex dz, double tolerance);
 };
 
 struct ReferencePoint {
@@ -68,7 +72,7 @@ struct ReferencePoint {
     
     ReferencePoint() { }
     ReferencePoint(const struct Options &opt, Coord c);
-        
+
     // Returns the relative location of a given pixel
     ExtendedComplex deltaLocation(const Options &opt, const Coord &coord) const;
 };

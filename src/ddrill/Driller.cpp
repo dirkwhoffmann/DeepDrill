@@ -240,22 +240,33 @@ Driller::drill(ReferencePoint &r)
     ProgressIndicator progress("Computing reference orbit", opt.location.depth);
 
     PrecisionComplex z = r.location;
+
+    PrecisionComplex d0 { 1.0, 0.0 };
+    PrecisionComplex dn = d0;
+
     r.xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
         
     for (isize i = 1; i < opt.location.depth; i++) {
-        
+
+        // Compute derivate
+        dn *= z * 2.0;
+
+        // Compute next number
         z *= z;
         z += r.location;
         
-        r.xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
+        r.xn.push_back(ReferenceIteration(z, dn, opt.perturbation.tolerance));
 
         double norm = z.norm();
 
         // Perform the escape check
-        // if (norm >= 7) {
         if (norm >= 256) {
+
+            auto nv = z / dn;
+            nv.normalize();
+
             r.escaped = true;
-            map.set(r.coord, (u32)i, (float)::log(norm));
+            map.set(r.coord, MapEntry { (u32)i, (float)::log(norm), StandardComplex(dn), StandardComplex(nv) } );
             return;
         }
         

@@ -17,19 +17,25 @@
 
 namespace dd {
 
-ReferenceIteration::ReferenceIteration(PrecisionComplex c, double tolerance)
+ReferenceIteration::ReferenceIteration(PrecisionComplex z, double tolerance)
 {
     auto tt = tolerance * tolerance;
     
-    this->standard = c;
+    this->standard = z;
 
-    this->extended = c;
+    this->extended = z;
     this->extended.reduce();
 
     this->extended2 = extended * 2;
     this->extended2.reduce();
 
     this->tolerance = tt * standard.norm();
+}
+
+ReferenceIteration::ReferenceIteration(PrecisionComplex z, PrecisionComplex dz, double tolerance)
+: ReferenceIteration(z, tolerance)
+{
+    this->derivation = dz;
 }
 
 ReferencePoint::ReferencePoint(const Options &opt, Coord c)

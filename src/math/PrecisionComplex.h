@@ -22,10 +22,21 @@ struct PrecisionComplex {
     
     mpf_class re;
     mpf_class im;
-    
+
+
+    //
+    // Initializing
+    //
+
     PrecisionComplex() : re(0), im(0) { }
+    PrecisionComplex(double re, double im) : re(re), im(im) { }
     PrecisionComplex(const mpf_class &r, const mpf_class &i) : re(r), im(i) { }
     PrecisionComplex(const struct StandardComplex &c) : re(c.re), im(c.im) { }
+
+
+    //
+    // Converting
+    //
 
     inline double norm() const {
         
@@ -33,6 +44,31 @@ struct PrecisionComplex {
         double i = im.get_d();
         return r*r + i*i;
     }
+
+    inline mpf_class abs() const {
+
+        return sqrt(re * re + im * im);
+    }
+
+
+    //
+    // Normalizing
+    //
+
+    inline void normalize() {
+
+        mpf_class len = abs();
+
+        if (len != 0) {
+            re /= len;
+            im /= len;
+        }
+    }
+
+
+    //
+    // Assigning
+    //
 
     PrecisionComplex &operator=(const StandardComplex &other);
 
@@ -42,6 +78,11 @@ struct PrecisionComplex {
         im += other.im;
         return *this;
     }
+
+
+    //
+    // Calculating
+    //
 
     inline PrecisionComplex &operator-=(const PrecisionComplex &other) {
 
@@ -69,6 +110,17 @@ struct PrecisionComplex {
 
         re *= other;
         im *= other;
+        return *this;
+    }
+
+    inline PrecisionComplex &operator/=(const PrecisionComplex &other) {
+
+        mpf_class norm = re * re + im * im;
+        mpf_class inv = 1.0 / norm;
+
+        im = -im;
+        im *= inv;
+        re *= inv;
         return *this;
     }
 
@@ -106,9 +158,26 @@ struct PrecisionComplex {
         return PrecisionComplex(re * other, im * other);
     }
 
+    inline PrecisionComplex operator/(const PrecisionComplex &other) const {
+
+        return *this * other.reciprocal();
+    }
+
     inline PrecisionComplex operator/(const mpf_class &other) const {
 
         return PrecisionComplex(re / other, im / other);
+    }
+
+    inline PrecisionComplex reciprocal() const {
+
+        PrecisionComplex result = *this;
+        mpf_class norm = re * re + im * im;
+        mpf_class inv = 1.0 / norm;
+
+        result.im = -result.im;
+        result *= inv;
+
+        return result;
     }
 
 };
