@@ -51,7 +51,7 @@ DrillMap::load(const string &path)
             os.read((char *)&iteration, sizeof(iteration));
             os.read((char *)&lognorm, sizeof(lognorm));
 
-            set(x, y, MapEntry { iteration, lognorm });
+            set(x, y, MapEntry { iteration, lognorm, StandardComplex(), StandardComplex() });
         }
     }
     
@@ -108,7 +108,7 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
 void
 DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
 {
-    set(c.x, c.y, MapEntry { iteration, ::log(lognorm), StandardComplex() } );
+    set(c.x, c.y, MapEntry { iteration, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
 }
 
 void
