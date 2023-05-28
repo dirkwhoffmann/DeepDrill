@@ -19,8 +19,6 @@
 
 namespace dd {
 
-// enum class ColorScheme { Default, Custom };
-
 class Colorizer {
 
     // Configuration options

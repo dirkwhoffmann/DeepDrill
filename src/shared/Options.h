@@ -22,6 +22,8 @@
 
 namespace dd {
 
+enum class ColoringMode { Default, Relief };
+
 struct Options {
 
     // Reference to the asset manager
@@ -118,6 +120,9 @@ struct Options {
 
     struct {
 
+        // Coloring mode
+        ColoringMode mode;
+        
         // Path to the palette image
         string colors;
 
@@ -191,6 +196,7 @@ private:
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
+    void parse(const string &key, const string &value, ColoringMode &parsed);
 };
 
 }

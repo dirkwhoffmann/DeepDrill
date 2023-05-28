@@ -42,6 +42,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.merger"] = "merger.glsl";
 
     // Palette keys
+    defaults["palette.mode"] = "default";
     defaults["palette.colors"] = "";
     defaults["palette.scale"] = "1.0";
 
@@ -163,6 +164,10 @@ Options::parse(string key, string value)
 
         video.merger = assets.findAsset(value, Format::GLSL);
 
+    } else if (key == "palette.mode") {
+
+        parse(key, value, palette.mode);
+
     } else if (key == "palette.colors") {
 
         if (value != "") {
@@ -247,6 +252,22 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
 {
     try {
         parsed = mpf_class(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Options::parse(const string &key, const string &value, ColoringMode &parsed)
+{
+    map <string, ColoringMode> modes = {
+
+        { "default", ColoringMode::Default },
+        { "relief", ColoringMode::Relief }
+    };
+
+    try {
+        parsed = modes.at(lowercased(value));
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }

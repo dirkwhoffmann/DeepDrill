@@ -8,4 +8,5 @@ depth = 3000
 enabled = false
 
 [palette]
+mode = Relief
 # colors = pistachio.png
