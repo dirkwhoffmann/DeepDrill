@@ -57,6 +57,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-v"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-m -o /Users/hoff/tmp/dd/project"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -82,11 +86,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p low.prf"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p high.prf "
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p ultra.prf "

@@ -8,7 +8,7 @@ depth = 300
 #enabled = false
 
 [approximation]
-coefficients = 0
+coefficients = 10
 
 [palette]
 mode = Relief

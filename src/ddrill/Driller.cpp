@@ -328,6 +328,8 @@ Driller::drillProbePoint(Coord &probe)
         dn.reduce();
                 
         auto approx = coeff.evaluate(probe, d0, iteration);
+        auto approx2 = coeff.a.evaluate(probe, d0, iteration);
+        assert(approx == approx2); 
         auto error = (approx - dn).norm() / dn.norm();
         error.reduce();
         
@@ -369,8 +371,12 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
     if (ref.skipped) {
         dn = coeff.evaluate(point, d0, ref.skipped);
+        auto dn_check = coeff.a.evaluate(point, d0, ref.skipped);
+        assert(dn == dn_check);
+        dd0.reduce();
+        ddn = coeff.b.evaluate(point, dd0, ref.skipped);
     } else {
-        dn = d0;
+        // dn = d0;
     }
 
     // The depth of the reference point limits how deep we can drill
