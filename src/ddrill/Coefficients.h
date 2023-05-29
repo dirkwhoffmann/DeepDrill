@@ -34,15 +34,6 @@ class Coefficients {
 
 public:
 
-    // Number of stored iterations
-    isize iterations = 0;
-    
-    // Number of stored coefficients
-    isize num = 0;
-    
-    // DEPRECATED Computed coefficients
-    ExtendedComplex *coeff = nullptr;
-
     // Coefficients
     CoeffArray a;
 
@@ -51,22 +42,8 @@ public:
     
 public:
     
-    // DEPRECATED Returns a pointer to the coefficients for a certain iteration
-    ExtendedComplex *operator [] (const isize &) const;
-
     // Computes all coefficients
     void compute(ReferencePoint &ref, isize num, isize depth);
-
-    // Computes an approximation
-    ExtendedComplex evaluate(const Coord &coord,
-                             const ExtendedComplex &delta,
-                             isize iteration) const;
-
-    // Computes an approximation for the derivation
-    ExtendedComplex evaluateDerivation(const Coord &coord,
-                                       const ExtendedComplex &delta,
-                                       isize iteration) const;
-
 };
 
 }

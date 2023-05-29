@@ -327,9 +327,7 @@ Driller::drillProbePoint(Coord &probe)
         dn += d0;
         dn.reduce();
                 
-        auto approx = coeff.evaluate(probe, d0, iteration);
-        auto approx2 = coeff.a.evaluate(probe, d0, iteration);
-        assert(approx == approx2); 
+        auto approx = coeff.a.evaluate(probe, d0, iteration);
         auto error = (approx - dn).norm() / dn.norm();
         error.reduce();
         
@@ -369,14 +367,11 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
     isize iteration = ref.skipped;
 
+    // Skip some iterations if possible
     if (ref.skipped) {
-        dn = coeff.evaluate(point, d0, ref.skipped);
-        auto dn_check = coeff.a.evaluate(point, d0, ref.skipped);
-        assert(dn == dn_check);
+        dn = coeff.a.evaluate(point, d0, ref.skipped);
         dd0.reduce();
         ddn = coeff.b.evaluate(point, dd0, ref.skipped);
-    } else {
-        // dn = d0;
     }
 
     // The depth of the reference point limits how deep we can drill
@@ -407,7 +402,6 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
             auto nv = zn / ddn;
             nv.normalize();
             map.set(point, MapEntry { (u32)iteration, (float)::log(norm), ddn.asStandardComplex(), nv.asStandardComplex() } );
-            // map.set(point, (u32)iteration, (float)::log(norm));
             return;
         }
     }
