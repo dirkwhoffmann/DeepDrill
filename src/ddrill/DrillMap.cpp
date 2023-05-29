@@ -41,7 +41,7 @@ DrillMap::load(const string &path)
     // Adjust the map size
     resize(width, height);
     
-    // Write data
+    // Read data
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
             

@@ -53,7 +53,7 @@ Logger::operator<<(const log::ralign &arg)
     if (!silent) {
 
         blanks = 0;
-        stream << std::right << std::setw(30) << arg.str;
+        stream << std::right << std::setw(32) << arg.str;
     }
     return *this;
 }
