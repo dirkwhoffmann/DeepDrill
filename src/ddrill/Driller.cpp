@@ -195,6 +195,11 @@ Driller::slowDrill(const vector<Coord> &remaining)
 void
 Driller::slowDrill(const Coord &point)
 {
+    /*
+    auto p = ReferencePoint(opt, point);
+    drill(p);
+    */
+
     auto x0 = ExtendedComplex(point.translate(opt));
     auto xn = x0;
 
@@ -208,6 +213,9 @@ Driller::slowDrill(const Coord &point)
     while (++iteration < limit) {
 
         dn *= xn * 2.0;
+        dn += d0;
+        dn.reduce();
+
         xn *= xn;
         xn += x0;
         xn.reduce();
@@ -250,7 +258,8 @@ Driller::drill(ReferencePoint &r)
 
         // Compute derivate
         dn *= z * 2.0;
-
+        dn += d0;
+        
         // Compute next number
         z *= z;
         z += r.location;
@@ -276,6 +285,8 @@ Driller::drill(ReferencePoint &r)
             progress.step(1024);
         }
     }
+
+    map.set(r.coord, 0, 0);
 }
 
 isize
@@ -349,7 +360,11 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     if (point == ref.coord) return;
     
     ExtendedComplex d0 = ref.deltaLocation(opt, point);
-    ExtendedComplex dn;
+    ExtendedComplex dn = d0;
+
+    ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex ddn = dd0;
+
     isize iteration = ref.skipped;
 
     if (ref.skipped) {
@@ -357,17 +372,22 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     } else {
         dn = d0;
     }
-        
+
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
             
     // Enter the main loop
     while (++iteration < limit) {
-        
+
+        ddn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
+        ddn += dd0;
+        ddn.reduce();
+
         dn *= ref.xn[iteration - 1].extended2 + dn;
         dn += d0;
         dn.reduce();
-        
+
+        auto zn = ref.xn[iteration].extended + dn;
         double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
 
         // Perform the glitch check
@@ -377,7 +397,11 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         
         // Perform the escape check
         if (norm >= 256) {
-            map.set(point, (u32)iteration, (float)::log(norm));
+
+            auto nv = zn / ddn;
+            nv.normalize();
+            map.set(point, MapEntry { (u32)iteration, (float)::log(norm), ddn.asStandardComplex(), nv.asStandardComplex() } );
+            // map.set(point, (u32)iteration, (float)::log(norm));
             return;
         }
     }
@@ -388,6 +412,9 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         map.set(point, 0, 0);
 
     } else {
+
+        // Experimental
+        map.set(point, UINT32_MAX, 0);
 
         // This point is a glitch point
         glitchPoints.push_back(point);

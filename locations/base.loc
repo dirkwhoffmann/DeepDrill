@@ -1,11 +1,14 @@
 [location]
-real = 0
-imag = 0
-zoom = 1
-depth = 3000
+real = -0.25
+imag = 0.8
+zoom = 16
+depth = 300
 
 [perturbation]
-enabled = false
+#enabled = false
+
+[approximation]
+coefficients = 0
 
 [palette]
 mode = Relief

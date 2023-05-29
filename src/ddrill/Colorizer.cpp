@@ -59,6 +59,15 @@ Colorizer::colorize(Coord c)
     auto data = map.get(c.x, c.y);
     auto pos = (map.height - 1 - c.y) * map.width + c.x;
 
+    // Experimental (highlight glitch points)
+    /*
+    if (data.iteration == UINT32_MAX) {
+
+        image[pos] = 0xFF0000FF;
+        return;
+    }
+    */
+
     // Map to a black if the point belongs to the mandelbrot set
     if (data.iteration == 0) {
 
