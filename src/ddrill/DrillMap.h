@@ -28,7 +28,7 @@ struct MapEntry {
 };
 
 class DrillMap {
-  
+
 public:
     
     // Configuration options
@@ -38,26 +38,59 @@ public:
     isize width = 0;
     isize height = 0;
     
-    // Yet unused
-    double logBailout = 0;
-
     MapEntry *data = nullptr;
 
 public:
-    
+
+
+    //
+    // Initializing
+    //
+
     DrillMap(const Options &options);
-    
-    void load(const string &path);
     void resize(isize w, isize h);
 
-    const MapEntry &get(isize w, isize h) const;
-    const MapEntry &get(const struct Coord &c) const;
+
+    //
+    // Accessing
+    //
+
+    MapEntry *operator [] (const isize &) const;
+    MapEntry &get(isize w, isize h) const;
+    MapEntry &get(const struct Coord &c) const;
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
     void set(const struct Coord &c, u32 iteration, float lognorm);
 
-    void save(const string &path); 
-    void save(std::ostream &stream);
+
+    //
+    // Loading
+    //
+
+public:
+
+    void load(const string &path);
+    void load(std::istream &is);
+
+private:
+
+    void loadHeader(std::istream &is);
+    void loadChannel(std::istream &is);
+
+
+    //
+    // Saving
+    //
+
+public:
+
+    void save(const string &path);
+    void save(std::ostream &os);
+
+private:
+
+    void saveHeader(std::ostream &os);
+    void saveChannel(std::ostream &os, const string &name);
 };
 
 }
