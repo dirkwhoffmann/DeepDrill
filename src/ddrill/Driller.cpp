@@ -371,7 +371,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     if (ref.skipped) {
         dn = coeff.a.evaluate(point, d0, ref.skipped);
         dd0.reduce();
-        ddn = coeff.b.evaluate(point, dd0, ref.skipped);
+        ddn = coeff.b.evaluate(point, d0, ref.skipped);
     }
 
     // The depth of the reference point limits how deep we can drill

@@ -53,7 +53,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-v"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/Dropbox/dinosaur/dinosaur_fossils.prj"
@@ -65,10 +65,14 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/Dropbox/x/x.prj"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-o /tmp/spider.mov "
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-o /tmp/x.mov "
+            argument = "/Users/hoff/tmp/dd/project/spider.prj"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

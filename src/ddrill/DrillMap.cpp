@@ -135,40 +135,115 @@ DrillMap::loadHeader(std::istream &is)
 void
 DrillMap::loadChannel(std::istream &is)
 {
-    char cname[17] = { };
+    u8 id, fmt;
 
-    // Channel name
-    is.read(cname, 16);
-    string name = string(cname);
+    is >> id;
+    is >> fmt;
 
-    if (name == "ITERATION") {
+    switch (ChannelID(id)) {
 
-        for (isize y = 0; y < height; y++) {
-            for (isize x = 0; x < width; x++) {
-                is.read((char *)(&get(x,y).iteration), sizeof(get(x,y).iteration));
+        case CHANNEL_ITCOUNT:
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    switch (ChannelFormat(fmt)) {
+
+                        case FMT_U32_LE: load<FMT_U32_LE> (is, get(x,y).iteration); break;
+                        case FMT_U64_LE: load<FMT_U64_LE> (is, get(x,y).iteration); break;
+
+                        default:
+                            throw Exception("Invalid data format");
+                    }
+                }
             }
-        }
+            break;
 
-    } else if (name == "LOGNORM") {
+        case CHANNEL_LOGNORM:
 
-        for (isize y = 0; y < height; y++) {
-            for (isize x = 0; x < width; x++) {
-                is.read((char *)(&get(x,y).lognorm), sizeof(get(x,y).lognorm));
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    switch (ChannelFormat(fmt)) {
+
+                        case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).lognorm); break;
+                        case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).lognorm); break;
+
+                        default:
+                            throw Exception("Invalid data format");
+                    }
+                }
+
+                // if (y == 0) printf("Loading lognorm %f\n", get(x,y).lognorm);
+
             }
-        }
+            break;
 
-    } else if (name == "NORMAL") {
+        case CHANNEL_NORMALS:
 
-        for (isize y = 0; y < height; y++) {
-            for (isize x = 0; x < width; x++) {
-                is.read((char *)(&get(x,y).normal.re), sizeof(get(x,y).normal.re));
-                is.read((char *)(&get(x,y).normal.im), sizeof(get(x,y).normal.im));
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    switch (ChannelFormat(fmt)) {
+
+                        case FMT_FLOAT_LE:
+
+                            load <FMT_FLOAT_LE> (is, get(x,y).normal.re);
+                            load <FMT_FLOAT_LE> (is, get(x,y).normal.im);
+                            break;
+
+                        case FMT_DOUBLE_LE:
+
+                            load <FMT_DOUBLE_LE> (is, get(x,y).normal.re);
+                            load <FMT_DOUBLE_LE> (is, get(x,y).normal.im);
+                            break;
+
+                        default:
+                            throw Exception("Invalid data format");
+                    }
+                }
             }
+            break;
+
+        default:
+
+            throw Exception("Invalid channel ID: " + std::to_string(id));
+    }
+}
+
+template<ChannelFormat fmt, typename T> void
+DrillMap::load(std::istream &is, T &raw)
+{
+    switch (fmt) {
+
+        case FMT_U32_LE:
+        {
+            u32 value;
+            is.read((char *)&value, sizeof(value));
+            raw = (T)value;
+            break;
         }
-
-    } else {
-
-        throw Exception("Unknown channel name: " + name);
+        case FMT_U64_LE:
+        {
+            u64 value;
+            is.read((char *)&value, sizeof(value));
+            raw = (T)value;
+            break;
+        }
+        case FMT_FLOAT_LE:
+        {
+            float value;
+            is.read((char *)&value, sizeof(value));
+            raw = (T)value;
+            break;
+        }
+        case FMT_DOUBLE_LE:
+        {
+            double value;
+            is.read((char *)&value, sizeof(value));
+            raw = (T)value;
+            break;
+        }
     }
 }
 
@@ -190,9 +265,9 @@ DrillMap::save(std::ostream &os)
     saveHeader(os);
 
     // Write channels
-    saveChannel(os, "ITERATION");
-    saveChannel(os, "LOGNORM");
-    saveChannel(os, "NORMAL");
+    saveChannel(os, CHANNEL_ITCOUNT);
+    saveChannel(os, CHANNEL_LOGNORM);
+    saveChannel(os, CHANNEL_NORMALS);
 }
 
 void
@@ -212,42 +287,84 @@ DrillMap::saveHeader(std::ostream &os)
 }
 
 void
-DrillMap::saveChannel(std::ostream &os, const string &name)
+DrillMap::saveChannel(std::ostream &os, ChannelID id)
 {
-    char cname[17] = { };
+    switch (id) {
 
-    // Channel name
-    for (usize i = 0; i < name.length(); i++) cname[i] = name[i];
-    os.write(cname, 16);
+        case CHANNEL_ITCOUNT:
 
-    if (name == "ITERATION") {
+            os << u8(id) << u8(FMT_U32_LE);
 
-        for (isize y = 0; y < height; y++) {
-            for (isize x = 0; x < width; x++) {
-                os.write((char *)(&get(x,y).iteration), sizeof(get(x,y).iteration));
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    save <FMT_U32_LE> (os, get(x,y).iteration);
+                }
             }
-        }
+            break;
 
-    } else if (name == "LOGNORM") {
+        case CHANNEL_LOGNORM:
 
-        for (isize y = 0; y < height; y++) {
-            for (isize x = 0; x < width; x++) {
-                os.write((char *)(&get(x,y).lognorm), sizeof(get(x,y).lognorm));
+            os << u8(id) << u8(FMT_FLOAT_LE);
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    save <FMT_FLOAT_LE> (os, get(x,y).lognorm);
+
+                    if (y == 0) printf("Saving lognorm %f\n", get(x,y).lognorm);
+                }
             }
-        }
+            break;
 
-    } else if (name == "NORMAL") {
+        case CHANNEL_NORMALS:
 
-        for (isize y = 0; y < height; y++) {
-            for (isize x = 0; x < width; x++) {
-                os.write((char *)(&get(x,y).normal.re), sizeof(get(x,y).normal.re));
-                os.write((char *)(&get(x,y).normal.im), sizeof(get(x,y).normal.im));
+            os << u8(id) << u8(FMT_FLOAT_LE);
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    save <FMT_FLOAT_LE> (os, get(x,y).normal.re);
+                    save <FMT_FLOAT_LE> (os, get(x,y).normal.im);
+                }
             }
+            break;
+
+        default:
+
+            throw Exception("Invalid channel ID: " + std::to_string(id));
+    }
+}
+
+template<ChannelFormat fmt, typename T> void
+DrillMap::save(std::ostream &os, T raw)
+{
+    switch (fmt) {
+
+        case FMT_U32_LE:
+        {
+            u32 value = (u32)raw;
+            os.write((char *)&value, sizeof(value));
+            break;
         }
-
-    } else {
-
-        throw Exception("Unknown channel name: " + name);
+        case FMT_U64_LE:
+        {
+            u64 value = (u64)raw;
+            os.write((char *)&value, sizeof(value));
+            break;
+        }
+        case FMT_FLOAT_LE:
+        {
+            float value = (float)raw;
+            os.write((char *)&value, sizeof(value));
+            break;
+        }
+        case FMT_DOUBLE_LE:
+        {
+            double value = (double)raw;
+            os.write((char *)&value, sizeof(value));
+            break;
+        }
     }
 }
 

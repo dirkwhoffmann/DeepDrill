@@ -90,15 +90,16 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
         }
         
         // Update the progress counter
-        if (i % 1024 == 0) progress.step(1024);
+        if (i % 1024 == 0) progress.step(512);
     }
 
     // Coefficients for the derivate
+    b[0][0] = ExtendedComplex(1, 0); // ???
     for (isize i = 1; i < limit; i++) {
 
         assert(i < (isize)ref.xn.size());
 
-        for (isize j = 1; j < numCoeff; j++) {
+        for (isize j = 0; j < numCoeff; j++) {
 
             b[i][j] = b[i-1][j] * ref.xn[i-1].extended;
             b[i][j].reduce();
@@ -114,32 +115,8 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
         }
 
         // Update the progress counter
-        if (i % 1024 == 0) progress.step(1024);
+        if (i % 1024 == 0) progress.step(512);
     }
 }
-
-/*
-ExtendedComplex
-Coefficients::evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const {
-    
-    ExtendedComplex *c = (*this)[iteration];
-    ExtendedComplex approx = c[num - 1];
-
-    assert(delta.isReduced());
-    
-    // Apply Horner's method
-    for (isize i = num - 2; i >= 0; i--) {
-        
-        approx *= delta;
-        approx += c[i];
-        approx.reduce();
-    }
-    
-    approx *= delta;
-    approx.reduce();
-    
-    return approx;
-}
-*/
 
 }

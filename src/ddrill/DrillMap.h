@@ -17,6 +17,21 @@
 
 namespace dd {
 
+enum ChannelID {
+
+    CHANNEL_ITCOUNT,
+    CHANNEL_LOGNORM,
+    CHANNEL_NORMALS
+};
+
+enum ChannelFormat {
+
+    FMT_U32_LE,
+    FMT_U64_LE,
+    FMT_FLOAT_LE,
+    FMT_DOUBLE_LE
+};
+
 struct MapEntry {
 
     u32 iteration;
@@ -76,8 +91,13 @@ private:
 
     void loadHeader(std::istream &is);
     void loadChannel(std::istream &is);
+    template<ChannelFormat fmt, typename T> void load(std::istream &is, T &raw);
+    template<ChannelFormat fmt> void load(std::istream &is, u32 &raw) { load <fmt, u32> (is, raw); }
+    template<ChannelFormat fmt> void load(std::istream &is, u64 &raw) { load <fmt, u64> (is, raw); }
+    template<ChannelFormat fmt> void load(std::istream &is, float &raw) { load <fmt, float> (is, raw); }
+    template<ChannelFormat fmt> void load(std::istream &is, double &raw) { load <fmt, double> (is, raw); }
 
-
+    
     //
     // Saving
     //
@@ -90,7 +110,12 @@ public:
 private:
 
     void saveHeader(std::ostream &os);
-    void saveChannel(std::ostream &os, const string &name);
+    void saveChannel(std::ostream &os, ChannelID id);
+    template<ChannelFormat fmt, typename T> void save(std::ostream &os, T raw);
+    template<ChannelFormat fmt> void save(std::ostream &os, u32 raw) { save <fmt, u32> (os, raw); }
+    template<ChannelFormat fmt> void save(std::ostream &os, u64 raw) { save <fmt, u64> (os, raw); }
+    template<ChannelFormat fmt> void save(std::ostream &os, float raw) { save <fmt, float> (os, raw); }
+    template<ChannelFormat fmt> void save(std::ostream &os, double raw) { save <fmt, double> (os, raw); }
 };
 
 }

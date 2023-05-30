@@ -1,4 +1,6 @@
 [image]
+#width = 480
+#height = 260
 width = 3840
 height = 2160
 
@@ -12,4 +14,4 @@ tolerance = 1e-6
 rounds = 100
 
 [approximation]
-coefficients = 5
+coefficients = 0
