@@ -31,34 +31,26 @@ struct ExtendedComplex {
     //
     
     ExtendedComplex() : exponent(0) { }
-    ExtendedComplex(const StandardComplex &m, const long e) : mantissa(m), exponent(e) { }
-    ExtendedComplex(const StandardComplex &m);
-    ExtendedComplex(const ExtendedDouble &re, const ExtendedDouble &im);
     ExtendedComplex(const double &re, const double &im);
+    ExtendedComplex(const ExtendedDouble &re, const ExtendedDouble &im);
     ExtendedComplex(const mpf_class &re, const mpf_class &im);
-    ExtendedComplex(const PrecisionComplex &other);
+    ExtendedComplex(const StandardComplex &m, long e) : mantissa(m), exponent(e) { }
+    ExtendedComplex(const StandardComplex &m) : mantissa(m), exponent(0) { };
+    ExtendedComplex(const PrecisionComplex &other) : ExtendedComplex(other.re, other.im) { };
 
     
     //
     // Converting
     //
 
-    inline StandardComplex asStandardComplex() const {
-
-        double re = ldexp(mantissa.re, (int)exponent);
-        double im = ldexp(mantissa.im, (int)exponent);
-        
-        return StandardComplex { re, im };
-    }
-
     inline ExtendedDouble norm() const {
         
         return ExtendedDouble { mantissa.norm(), 2 * exponent };
     }
 
-    inline ExtendedDouble length() const {
+    inline ExtendedDouble abs() const {
 
-        return ExtendedDouble { sqrt(mantissa.norm()), exponent };
+        return ExtendedDouble { mantissa.abs(), exponent };
     }
 
     
@@ -105,7 +97,7 @@ struct ExtendedComplex {
     
     void normalize() {
 
-        *this *= length().reciprocal();
+        *this *= abs().reciprocal();
         reduce();
     }
 

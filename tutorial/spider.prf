@@ -1,8 +1,8 @@
 [image]
-#width = 480
-#height = 260
-width = 3840
-height = 2160
+width = 480
+height = 260
+#width = 3840
+#height = 2160
 
 [video]
 keyframes = 75

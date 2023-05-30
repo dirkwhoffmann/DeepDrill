@@ -15,6 +15,7 @@
 
 namespace dd {
 
+/*
 PrecisionComplex &
 PrecisionComplex::operator=(const StandardComplex &other)
 {
@@ -22,5 +23,6 @@ PrecisionComplex::operator=(const StandardComplex &other)
     im = other.im;
     return *this;
 }
+*/
 
 }

@@ -28,16 +28,18 @@ struct StandardComplex {
     //
     
     StandardComplex() : re(0), im(0) { }
-    StandardComplex(const double r, const double i) : re(r), im(i) { }
+    StandardComplex(const double re, const double im) : re(re), im(im) { }
+    StandardComplex(const struct ExtendedComplex &other);
     StandardComplex(const struct PrecisionComplex &other);
-    
+
     
     //
     // Converting
     //
     
     inline double norm() const { return re * re + im * im; }
-    
+    inline double abs() const { return sqrt(re * re + im * im); }
+
     
     //
     // Assigning

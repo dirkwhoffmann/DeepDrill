@@ -30,7 +30,7 @@ struct PrecisionComplex {
 
     PrecisionComplex() : re(0), im(0) { }
     PrecisionComplex(double re, double im) : re(re), im(im) { }
-    PrecisionComplex(const mpf_class &r, const mpf_class &i) : re(r), im(i) { }
+    PrecisionComplex(const mpf_class &re, const mpf_class &im) : re(re), im(im) { }
     PrecisionComplex(const struct StandardComplex &c) : re(c.re), im(c.im) { }
 
 
@@ -38,11 +38,9 @@ struct PrecisionComplex {
     // Converting
     //
 
-    inline double norm() const {
+    inline mpf_class norm() const {
         
-        double r = re.get_d();
-        double i = im.get_d();
-        return r*r + i*i;
+        return re * re + im * im;
     }
 
     inline mpf_class abs() const {
@@ -60,6 +58,7 @@ struct PrecisionComplex {
         mpf_class len = abs();
 
         if (len != 0) {
+
             re /= len;
             im /= len;
         }
@@ -70,12 +69,10 @@ struct PrecisionComplex {
     // Assigning
     //
 
-    PrecisionComplex &operator=(const StandardComplex &other);
+    PrecisionComplex &operator=(const StandardComplex &other) {
 
-    inline PrecisionComplex &operator+=(const PrecisionComplex &other) {
-
-        re += other.re;
-        im += other.im;
+        re = other.re;
+        im = other.im;
         return *this;
     }
 
@@ -83,6 +80,13 @@ struct PrecisionComplex {
     //
     // Calculating
     //
+
+    inline PrecisionComplex &operator+=(const PrecisionComplex &other) {
+
+        re += other.re;
+        im += other.im;
+        return *this;
+    }
 
     inline PrecisionComplex &operator-=(const PrecisionComplex &other) {
 

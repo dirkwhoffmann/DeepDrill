@@ -153,8 +153,15 @@ struct Options {
         double tolerance;
 
     } approximation;
-    
-    
+
+    struct {
+
+        // Highlight glitches in texture
+        bool glitches;
+
+    } debug;
+
+
     //
     // Derived values
     //

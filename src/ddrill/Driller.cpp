@@ -232,8 +232,8 @@ Driller::slowDrill(const Coord &point)
             map.set(point, MapEntry {
                 (u32)iteration,
                 (float)::log(norm),
-                dn.asStandardComplex(),
-                u.asStandardComplex() } );
+                StandardComplex(dn),        // dn.asStandardComplex(),
+                StandardComplex(u) } );     // u.asStandardComplex() } );
             return;
         }
     }
@@ -266,7 +266,7 @@ Driller::drill(ReferencePoint &r)
         
         r.xn.push_back(ReferenceIteration(z, dn, opt.perturbation.tolerance));
 
-        double norm = z.norm();
+        double norm = StandardComplex(z).norm();
 
         // Perform the escape check
         if (norm >= 256) {
@@ -369,9 +369,11 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
     // Skip some iterations if possible
     if (ref.skipped) {
+
         dn = coeff.a.evaluate(point, d0, ref.skipped);
-        dd0.reduce();
+        dn.reduce();
         ddn = coeff.b.evaluate(point, d0, ref.skipped);
+        ddn.reduce();
     }
 
     // The depth of the reference point limits how deep we can drill
@@ -401,7 +403,11 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
             auto nv = zn / ddn;
             nv.normalize();
-            map.set(point, MapEntry { (u32)iteration, (float)::log(norm), ddn.asStandardComplex(), nv.asStandardComplex() } );
+            map.set(point, MapEntry {
+                (u32)iteration,
+                (float)::log(norm),
+                StandardComplex(ddn),       // ddn.asStandardComplex(),
+                StandardComplex(nv) } );    // nv.asStandardComplex() } );
             return;
         }
     }

@@ -28,8 +28,8 @@ struct ExtendedDouble {
     // Initializing
     //
     
-    constexpr ExtendedDouble() : mantissa(0), exponent(0) { }
-    constexpr ExtendedDouble(double m, long e) : mantissa(m), exponent(e) { }
+    ExtendedDouble() : mantissa(0), exponent(0) { }
+    ExtendedDouble(double m, long e) : mantissa(m), exponent(e) { }
     ExtendedDouble(double m);
     ExtendedDouble(const mpf_class &value);
     

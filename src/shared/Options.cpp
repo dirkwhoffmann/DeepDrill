@@ -54,6 +54,9 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Approximation keys
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
+
+    // Debug keys
+    defaults["debug.glitches"] = "no";
 }
 
 string
@@ -197,6 +200,10 @@ Options::parse(string key, string value)
     } else if (key == "approximation.tolerance") {
 
         parse(key, value, approximation.tolerance);
+
+    } else if (key == "debug.glitches") {
+
+        parse(key, value, debug.glitches);
 
     } else {
 

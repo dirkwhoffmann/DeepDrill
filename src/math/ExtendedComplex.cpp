@@ -14,9 +14,9 @@
 
 namespace dd {
 
-ExtendedComplex::ExtendedComplex(const StandardComplex &m)
+ExtendedComplex::ExtendedComplex(const double &re, const double &im)
 {
-    mantissa = m;
+    mantissa = StandardComplex { re, im };
     exponent = 0;
 }
 
@@ -51,12 +51,6 @@ ExtendedComplex::ExtendedComplex(const ExtendedDouble &re, const ExtendedDouble 
     }
 }
 
-ExtendedComplex::ExtendedComplex(const double &re, const double &im)
-{
-    mantissa = StandardComplex { re, im };
-    exponent = 0;
-}
-
 ExtendedComplex::ExtendedComplex(const mpf_class &re, const mpf_class &im)
 {
     long exp1, exp2;
@@ -75,8 +69,5 @@ ExtendedComplex::ExtendedComplex(const mpf_class &re, const mpf_class &im)
         exponent = exp1;
     }
 }
-
-ExtendedComplex::ExtendedComplex(const PrecisionComplex &other) :
-ExtendedComplex(other.re, other.im) { }
 
 }
