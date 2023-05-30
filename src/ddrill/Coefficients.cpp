@@ -85,7 +85,6 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
     ProgressIndicator progress("Computing coefficients", limit);
     
     a.resize(depth, numCoeff);
-    b.resize(depth, numCoeff);
 
     // Based on the formulas from:
     // https://fractalwiki.org/wiki/Series_approximation
@@ -110,32 +109,7 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
         }
         
         // Update the progress counter
-        if (i % 1024 == 0) progress.step(512);
-    }
-
-    // Coefficients for the derivate
-    b[0][0] = ExtendedComplex(0, 0);
-    for (isize i = 1; i < limit; i++) {
-
-        assert(i < (isize)ref.xn.size());
-
-        for (isize j = 0; j < numCoeff; j++) {
-
-            b[i][j] = b[i-1][j] * ref.xn[i-1].extended;
-            b[i][j].reduce();
-            b[i][j] += a[i-1][j] * ref.xn[i-1].derivation;
-            b[i][j].reduce();
-
-            for (isize l = 0; l < j; l++) {
-                b[i][j] += a[i-1][l] * b[i-1][j-1-l];
-                b[i][j].reduce();
-            }
-
-            b[i][j] *= 2.0;
-        }
-
-        // Update the progress counter
-        if (i % 1024 == 0) progress.step(512);
+        if (i % 1024 == 0) progress.step(1024);
     }
 }
 

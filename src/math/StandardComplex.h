@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include <cmath>
 #include <ostream>
 
 namespace dd {

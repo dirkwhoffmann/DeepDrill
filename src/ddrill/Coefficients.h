@@ -37,9 +37,6 @@ public:
 
     // Coefficients
     CoeffArray a;
-
-    // Coefficients for the derivate (DEPRECATED)
-    CoeffArray b;
     
 public:
     

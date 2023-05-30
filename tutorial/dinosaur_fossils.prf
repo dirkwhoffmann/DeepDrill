@@ -7,7 +7,7 @@ colors = candy.png
 
 [video]
 # keyframes = 164
-keyframes = 20
+keyframes = 40
 inbetweens = 173
 bitrate = 8000
 
