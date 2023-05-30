@@ -27,6 +27,16 @@ StandardComplex::StandardComplex(const ExtendedComplex &other)
     im = ldexp(other.mantissa.im, (int)other.exponent);
 }
 
+std::ostream& operator<<(std::ostream& os, const StandardComplex& c)
+{
+    if (c.im < 0.0) {
+        os << c.re << "-i" << -c.im;
+    } else {
+        os << c.re << "+i" << c.im;
+    }
+    return os;
+}
+
 StandardComplex &
 StandardComplex::operator=(const PrecisionComplex &other)
 {

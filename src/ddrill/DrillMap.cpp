@@ -311,8 +311,6 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
                 for (isize x = 0; x < width; x++) {
 
                     save <FMT_FLOAT_LE> (os, get(x,y).lognorm);
-
-                    if (y == 0) printf("Saving lognorm %f\n", get(x,y).lognorm);
                 }
             }
             break;

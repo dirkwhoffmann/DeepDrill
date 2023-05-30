@@ -70,4 +70,10 @@ ExtendedComplex::ExtendedComplex(const mpf_class &re, const mpf_class &im)
     }
 }
 
+std::ostream& operator<<(std::ostream& os, const ExtendedComplex& c)
+{
+    os << StandardComplex(c);
+    return os;
+}
+
 }

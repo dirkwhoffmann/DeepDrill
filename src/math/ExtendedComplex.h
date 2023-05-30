@@ -38,6 +38,13 @@ struct ExtendedComplex {
     ExtendedComplex(const StandardComplex &m) : mantissa(m), exponent(0) { };
     ExtendedComplex(const PrecisionComplex &other) : ExtendedComplex(other.re, other.im) { };
 
+
+    //
+    // Printing
+    //
+
+    friend std::ostream& operator<<(std::ostream& os, const ExtendedComplex& c);
+
     
     //
     // Converting

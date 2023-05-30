@@ -28,6 +28,7 @@ public:
     void resize(isize newRows, isize newCols);
     ExtendedComplex *operator [] (const isize &) const;
     ExtendedComplex evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const;
+    ExtendedComplex evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const;
 };
 
 class Coefficients {
@@ -37,7 +38,7 @@ public:
     // Coefficients
     CoeffArray a;
 
-    // Coefficients for the derivate
+    // Coefficients for the derivate (DEPRECATED)
     CoeffArray b;
     
 public:

@@ -32,6 +32,13 @@ struct StandardComplex {
     StandardComplex(const struct ExtendedComplex &other);
     StandardComplex(const struct PrecisionComplex &other);
 
+
+    //
+    // Printing
+    //
+
+    friend std::ostream& operator<<(std::ostream& os, const StandardComplex& c);
+
     
     //
     // Converting

@@ -220,6 +220,12 @@ Driller::slowDrill(const Coord &point)
         xn += x0;
         xn.reduce();
 
+        /*
+        if (point.x == 0 && point.y == 0) {
+            std::cout << iteration << ": " << " xn: " << xn << " dn: " << dn << std::endl;
+        }
+        */
+
         auto norm = xn.norm().asDouble();
 
         // Perform the escape check
@@ -313,7 +319,7 @@ Driller::drillProbePoint(Coord &probe)
 {
     ExtendedComplex d0 = ref.deltaLocation(opt, probe);
     ExtendedComplex dn = d0;
-            
+
     isize iteration = 0;
     auto tolerance = ExtendedDouble(opt.approximation.tolerance);
     
@@ -322,7 +328,7 @@ Driller::drillProbePoint(Coord &probe)
     
     // Enter the main loop
     while (++iteration < limit) {
-        
+
         dn *= ref.xn[iteration - 1].extended2 + dn;
         dn += d0;
         dn.reduce();
@@ -330,7 +336,7 @@ Driller::drillProbePoint(Coord &probe)
         auto approx = coeff.a.evaluate(probe, d0, iteration);
         auto error = (approx - dn).norm() / dn.norm();
         error.reduce();
-        
+
         if (error > tolerance) {
             return iteration < 4 ? 0 : iteration - 4;
         }
@@ -372,8 +378,19 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
         dn = coeff.a.evaluate(point, d0, ref.skipped);
         dn.reduce();
-        ddn = coeff.b.evaluate(point, d0, ref.skipped);
+        ddn = coeff.a.evaluateDerivate(point, d0, ref.skipped);
         ddn.reduce();
+
+        /*
+        if (point.x == 0 && point.y == 0) {
+            std::cout << "Skipping " << ref.skipped << " iterations" << std::endl;
+            for (int i = 0; i <= ref.skipped; i++) {
+                ExtendedComplex ec = coeff.a.evaluateDerivate(point, d0, i);
+                std::cout <<" Approximated: " << ec << std::endl;
+            }
+        }
+        */
+
     }
 
     // The depth of the reference point limits how deep we can drill
@@ -392,6 +409,12 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
         auto zn = ref.xn[iteration].extended + dn;
         double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
+
+        /*
+        if (point.x == 0 && point.y == 0) {
+            std::cout << "d " << iteration << ": " << " xn: " << zn << " dn: " << ddn << std::endl;
+        }
+        */
 
         // Perform the glitch check
         if (norm < ref.xn[iteration].tolerance) {

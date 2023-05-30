@@ -257,14 +257,14 @@
 			isa = PBXGroup;
 			children = (
 				505EB93529D73E55008DE5BB /* CMakeLists.txt */,
-				50BEC713269486C100CCDFA8 /* ExtendedComplex.h */,
-				50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */,
-				50BEC711269486C100CCDFA8 /* ExtendedDouble.h */,
-				50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */,
-				50BEC712269486C100CCDFA8 /* PrecisionComplex.h */,
-				50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */,
 				50BEC717269486C200CCDFA8 /* StandardComplex.h */,
 				50BEC716269486C200CCDFA8 /* StandardComplex.cpp */,
+				50BEC711269486C100CCDFA8 /* ExtendedDouble.h */,
+				50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */,
+				50BEC713269486C100CCDFA8 /* ExtendedComplex.h */,
+				50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */,
+				50BEC712269486C100CCDFA8 /* PrecisionComplex.h */,
+				50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */,
 			);
 			path = math;
 			sourceTree = "<group>";

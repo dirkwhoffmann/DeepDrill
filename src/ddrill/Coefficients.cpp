@@ -55,6 +55,26 @@ CoeffArray::evaluate(const Coord &coord, const ExtendedComplex &delta, isize ite
     return approx;
 }
 
+ExtendedComplex
+CoeffArray::evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
+{
+    ExtendedComplex *c = (*this)[iteration];
+    ExtendedComplex approx = c[cols - 1];
+    approx *= double(cols);
+
+    assert(delta.isReduced());
+
+    // Apply Horner's method
+    for (isize i = cols - 2; i >= 0; i--) {
+
+        approx *= delta;
+        approx += c[i] * double(i + 1);
+        approx.reduce();
+    }
+
+    return approx;
+}
+
 void
 Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
 {
@@ -94,7 +114,7 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
     }
 
     // Coefficients for the derivate
-    b[0][0] = ExtendedComplex(1, 0); // ???
+    b[0][0] = ExtendedComplex(0, 0);
     for (isize i = 1; i < limit; i++) {
 
         assert(i < (isize)ref.xn.size());

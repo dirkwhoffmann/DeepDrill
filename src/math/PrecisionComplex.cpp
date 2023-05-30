@@ -15,14 +15,10 @@
 
 namespace dd {
 
-/*
-PrecisionComplex &
-PrecisionComplex::operator=(const StandardComplex &other)
+std::ostream& operator<<(std::ostream& os, const PrecisionComplex& c)
 {
-    re = other.re;
-    im = other.im;
-    return *this;
+    os << StandardComplex(c);
+    return os;
 }
-*/
 
 }
