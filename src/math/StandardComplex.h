@@ -38,7 +38,7 @@ struct StandardComplex {
     //
     
     inline double norm() const { return re * re + im * im; }
-    inline double abs() const { return sqrt(re * re + im * im); }
+    inline double abs() const { return std::sqrt(re * re + im * im); }
 
     
     //

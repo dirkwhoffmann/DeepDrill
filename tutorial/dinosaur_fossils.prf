@@ -2,10 +2,12 @@
 depth = 3500000
 
 [palette]
+mode = relief
 colors = candy.png
 
 [video]
-keyframes = 164
+# keyframes = 164
+keyframes = 20
 inbetweens = 173
 bitrate = 8000
 
@@ -14,4 +16,5 @@ tolerance = 1e-6
 rounds = 100
 
 [approximation]
-coefficients = 5
+# coefficients = 5
+coefficients = 0

@@ -72,7 +72,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/spider.prj"
+            argument = "/Users/hoff/tmp/dd/project/dinosaur_fossils.prj"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
