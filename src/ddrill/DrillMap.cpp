@@ -149,6 +149,7 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
+                        case FMT_U24_LE: load<FMT_U24_LE> (is, get(x,y).iteration); break;
                         case FMT_U32_LE: load<FMT_U32_LE> (is, get(x,y).iteration); break;
                         case FMT_U64_LE: load<FMT_U64_LE> (is, get(x,y).iteration); break;
 
@@ -166,6 +167,7 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
+                        case FMT_FP16_LE: load<FMT_FP16_LE> (is, get(x,y).lognorm); break;
                         case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).lognorm); break;
                         case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).lognorm); break;
 
@@ -185,6 +187,12 @@ DrillMap::loadChannel(std::istream &is)
                 for (isize x = 0; x < width; x++) {
 
                     switch (ChannelFormat(fmt)) {
+
+                        case FMT_FP16_LE:
+
+                            load <FMT_FP16_LE> (is, get(x,y).normal.re);
+                            load <FMT_FP16_LE> (is, get(x,y).normal.im);
+                            break;
 
                         case FMT_FLOAT_LE:
 
@@ -216,6 +224,13 @@ DrillMap::load(std::istream &is, T &raw)
 {
     switch (fmt) {
 
+        case FMT_U24_LE:
+        {
+            u32 value = 0;
+            is.read((char *)&value, 3);
+            raw = (T)value;
+            break;
+        }
         case FMT_U32_LE:
         {
             u32 value;
@@ -228,6 +243,13 @@ DrillMap::load(std::istream &is, T &raw)
             u64 value;
             is.read((char *)&value, sizeof(value));
             raw = (T)value;
+            break;
+        }
+        case FMT_FP16_LE:
+        {
+            u16 value;
+            is.read((char *)&value, sizeof(value));
+            raw = (T)value / (T)(1 << 16);
             break;
         }
         case FMT_FLOAT_LE:
@@ -339,6 +361,12 @@ DrillMap::save(std::ostream &os, T raw)
 {
     switch (fmt) {
 
+        case FMT_U24_LE:
+        {
+            u32 value = (u32)raw;
+            os.write((char *)&value, 3);
+            break;
+        }
         case FMT_U32_LE:
         {
             u32 value = (u32)raw;
@@ -348,6 +376,12 @@ DrillMap::save(std::ostream &os, T raw)
         case FMT_U64_LE:
         {
             u64 value = (u64)raw;
+            os.write((char *)&value, sizeof(value));
+            break;
+        }
+        case FMT_FP16_LE:
+        {
+            u16 value = (u16)(raw * (T)(1 << 16));
             os.write((char *)&value, sizeof(value));
             break;
         }

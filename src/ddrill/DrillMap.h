@@ -26,8 +26,10 @@ enum ChannelID {
 
 enum ChannelFormat {
 
+    FMT_U24_LE,
     FMT_U32_LE,
     FMT_U64_LE,
+    FMT_FP16_LE,
     FMT_FLOAT_LE,
     FMT_DOUBLE_LE
 };
