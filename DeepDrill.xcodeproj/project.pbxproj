@@ -16,7 +16,7 @@
 		5047B4E429F812F700AC38DC /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4E129F812F700AC38DC /* Palette.cpp */; };
 		5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */; };
 		5047B50029FE2BBC00AC38DC /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */; };
-		5049968229DED17800B15919 /* DeepFlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepFlight.cpp */; };
+		5049968229DED17800B15919 /* DeepZoom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5049968129DED17800B15919 /* DeepZoom.cpp */; };
 		5049968729DED32700B15919 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
 		5049968829DED32900B15919 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
 		5049968929DED32B00B15919 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
@@ -132,10 +132,10 @@
 		5047B4FC29FD537D00AC38DC /* prism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prism.png; sourceTree = "<group>"; };
 		5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		5047B4FE29FE2BBC00AC38DC /* AssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetManager.h; sourceTree = "<group>"; };
-		5049967F29DED17800B15919 /* DeepFlight */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepFlight; sourceTree = BUILT_PRODUCTS_DIR; };
-		5049968129DED17800B15919 /* DeepFlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepFlight.cpp; sourceTree = "<group>"; };
-		5049968629DED20600B15919 /* DeepFlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepFlight.h; sourceTree = "<group>"; };
-		5049968D29DED3BC00B15919 /* DeepFlight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepFlight.entitlements; sourceTree = "<group>"; };
+		5049967F29DED17800B15919 /* DeepZoom */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepZoom; sourceTree = BUILT_PRODUCTS_DIR; };
+		5049968129DED17800B15919 /* DeepZoom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepZoom.cpp; sourceTree = "<group>"; };
+		5049968629DED20600B15919 /* DeepZoom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepZoom.h; sourceTree = "<group>"; };
+		5049968D29DED3BC00B15919 /* DeepZoom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepZoom.entitlements; sourceTree = "<group>"; };
 		5049969229DEED6800B15919 /* Zoomer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Zoomer.cpp; sourceTree = "<group>"; };
 		5049969329DEED6800B15919 /* Zoomer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zoomer.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
@@ -291,7 +291,7 @@
 				50EB0D4729EE605E00770F31 /* shared */,
 				505EB93129D720B5008DE5BB /* ddrill */,
 				5072FD5A2A271DC3003DE341 /* dmake */,
-				5049968029DED17800B15919 /* dflight */,
+				5049968029DED17800B15919 /* dzoom */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -312,12 +312,12 @@
 			path = math;
 			sourceTree = "<group>";
 		};
-		5049968029DED17800B15919 /* dflight */ = {
+		5049968029DED17800B15919 /* dzoom */ = {
 			isa = PBXGroup;
 			children = (
 				50D69A6729E01C6A0025DE0D /* CMakeLists.txt */,
-				5049968629DED20600B15919 /* DeepFlight.h */,
-				5049968129DED17800B15919 /* DeepFlight.cpp */,
+				5049968629DED20600B15919 /* DeepZoom.h */,
+				5049968129DED17800B15919 /* DeepZoom.cpp */,
 				5049969329DEED6800B15919 /* Zoomer.h */,
 				5049969229DEED6800B15919 /* Zoomer.cpp */,
 				50D69A6C29E03E2C0025DE0D /* Recorder.h */,
@@ -327,7 +327,7 @@
 				50D69A6929E037160025DE0D /* FFmpeg.h */,
 				50D69A6829E037160025DE0D /* FFmpeg.cpp */,
 			);
-			path = dflight;
+			path = dzoom;
 			sourceTree = "<group>";
 		};
 		505EB93129D720B5008DE5BB /* ddrill */ = {
@@ -469,7 +469,7 @@
 		50CF8E452694848800887FFC = {
 			isa = PBXGroup;
 			children = (
-				5049968D29DED3BC00B15919 /* DeepFlight.entitlements */,
+				5049968D29DED3BC00B15919 /* DeepZoom.entitlements */,
 				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				5010234A269DDE6D00AC61A8 /* src */,
 				50BEC7292694870100CCDFA8 /* locations */,
@@ -485,7 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				50CF8E4E2694848800887FFC /* DeepDrill */,
-				5049967F29DED17800B15919 /* DeepFlight */,
+				5049967F29DED17800B15919 /* DeepZoom */,
 				5072FD602A271E29003DE341 /* DeepMake */,
 			);
 			name = Products;
@@ -547,9 +547,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5049967E29DED17800B15919 /* DeepFlight */ = {
+		5049967E29DED17800B15919 /* DeepZoom */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepFlight" */;
+			buildConfigurationList = 5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepZoom" */;
 			buildPhases = (
 				5049967B29DED17800B15919 /* Sources */,
 				5049967C29DED17800B15919 /* Frameworks */,
@@ -559,9 +559,9 @@
 			);
 			dependencies = (
 			);
-			name = DeepFlight;
-			productName = DeepFlight;
-			productReference = 5049967F29DED17800B15919 /* DeepFlight */;
+			name = DeepZoom;
+			productName = DeepZoom;
+			productReference = 5049967F29DED17800B15919 /* DeepZoom */;
 			productType = "com.apple.product-type.tool";
 		};
 		5072FD5F2A271E29003DE341 /* DeepMake */ = {
@@ -632,7 +632,7 @@
 			projectRoot = "";
 			targets = (
 				50CF8E4D2694848800887FFC /* DeepDrill */,
-				5049967E29DED17800B15919 /* DeepFlight */,
+				5049967E29DED17800B15919 /* DeepZoom */,
 				5072FD5F2A271E29003DE341 /* DeepMake */,
 			);
 		};
@@ -663,7 +663,7 @@
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
 				5047B50029FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
-				5049968229DED17800B15919 /* DeepFlight.cpp in Sources */,
+				5049968229DED17800B15919 /* DeepZoom.cpp in Sources */,
 				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -727,7 +727,7 @@
 		5049968429DED17800B15919 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = DeepFlight.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DeepZoom.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -755,7 +755,7 @@
 		5049968529DED17800B15919 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = DeepFlight.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DeepZoom.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -1003,7 +1003,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepFlight" */ = {
+		5049968329DED17800B15919 /* Build configuration list for PBXNativeTarget "DeepZoom" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5049968429DED17800B15919 /* Debug */,

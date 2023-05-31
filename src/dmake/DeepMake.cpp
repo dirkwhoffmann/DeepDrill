@@ -88,6 +88,9 @@ DeepMake::parseArguments(int argc, char *argv[])
 void
 DeepMake::checkCustomArguments()
 {
+    // The user needs to specify an output file
+    if (outputs.size() < 1) throw SyntaxError("No output file is given");
+
     // The input must be a location file
     opt.files.input = assets.findAsset(opt.files.input , Format::LOC);
 

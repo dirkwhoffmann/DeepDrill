@@ -16,7 +16,7 @@
 
 namespace dd {
 
-class DeepFlight : public Application {
+class DeepZoom : public Application {
 
     //
     // Methods from Application
@@ -28,13 +28,6 @@ class DeepFlight : public Application {
     void parseArguments(int argc, char *argv[]);
     void checkCustomArguments();
     void run();
-
-
-
-private:
-
-    // Performs some basic initialization
-    void initialize();
 };
 
 }

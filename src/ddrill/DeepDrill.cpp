@@ -102,6 +102,9 @@ DeepDrill::parseArguments(int argc, char *argv[])
 void
 DeepDrill::checkCustomArguments()
 {
+    // The user needs to specify an output file
+    if (outputs.size() < 1) throw SyntaxError("No output file is given");
+
     // The input file must be a location file or a map file
     opt.files.input = assets.findAsset(opt.files.input, { Format::LOC, Format::MAP });
 

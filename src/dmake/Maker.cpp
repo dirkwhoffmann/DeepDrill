@@ -218,7 +218,7 @@ Maker::writeDefinitions(std::ofstream &os)
     auto path = opt.files.exec.parent_path();
 
     os << "DEEPDRILL  = " << (path / "deepdrill").string() << std::endl;
-    os << "DEEPFLIGHT = " << (path / "deepflight").string() << std::endl;
+    os << "DEEPZOOM   = " << (path / "deepzoom").string() << std::endl;
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
     os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "VIDEO      = " << project << ".mov" << std::endl;

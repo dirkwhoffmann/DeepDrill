@@ -9,23 +9,20 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "DeepFlight.h"
-// #include "Exception.h"
-// #include "Logger.h"
-// #include "Parser.h"
+#include "DeepZoom.h"
 #include "Zoomer.h"
 
 #include <getopt.h>
 
 int main(int argc, char *argv[])
 {
-    return dd::DeepFlight().main(argc, argv);
+    return dd::DeepZoom().main(argc, argv);
 }
 
 namespace dd {
 
 void
-DeepFlight::syntax()
+DeepZoom::syntax()
 {
     log::cout << "Usage: ";
     log::cout << "deepzoom [-bv] [-p <profile>] -o <output> <input>" << log::endl;
@@ -37,7 +34,7 @@ DeepFlight::syntax()
 }
 
 void
-DeepFlight::initialize()
+DeepZoom::initialize()
 {
     // Check for shader support
     if (!sf::Shader::isAvailable()) {
@@ -49,7 +46,7 @@ DeepFlight::initialize()
 }
 
 void
-DeepFlight::parseArguments(int argc, char *argv[])
+DeepZoom::parseArguments(int argc, char *argv[])
 {
     static struct option long_options[] = {
 
@@ -112,21 +109,10 @@ DeepFlight::parseArguments(int argc, char *argv[])
 }
 
 void
-DeepFlight::checkCustomArguments()
+DeepZoom::checkCustomArguments()
 {
-    // The user needs to specify a single input
-    if (inputs.size() < 1) throw SyntaxError("No input file is given");
-    if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
-    auto input = inputs.front();
-
-    // The user needs to specify at most one output
-    if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
-
-    // All profiles must exist
-    for (auto &it : profiles) (void)assets.findAsset(it, Format::PRF);
-
     // The input files must be a prj file
-    opt.files.input = assets.findAsset(input, Format::PRJ);
+    opt.files.input = assets.findAsset(inputs.front(), Format::PRJ);
 
     if (!outputs.empty()) {
 
@@ -149,26 +135,9 @@ DeepFlight::checkCustomArguments()
 }
 
 void
-DeepFlight::readInputs()
+DeepZoom::run()
 {
-    Parser::parse(opt.files.input,
-                  [this](string k, string v) { opt.parse(k,v); });
-}
-
-void
-DeepFlight::readProfiles()
-{
-    for (auto &profile: profiles) {
-
-        Parser::parse(assets.findAsset(profile, Format::PRF),
-                      [this](string k, string v) { opt.parse(k,v); });
-    }
-}
-
-void
-DeepFlight::setupGmp()
-{
-    mpf_set_default_prec(128);
+    Zoomer(opt).launch();
 }
 
 }

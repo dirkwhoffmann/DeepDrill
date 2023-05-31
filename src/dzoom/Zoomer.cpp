@@ -157,7 +157,7 @@ Zoomer::update(isize keyframe, isize frame)
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
 
         // Update window title bar
-        string title = "DeepFlight - ";
+        string title = "DeepZoom - ";
         title += recordMode ? "Recording " : "Preview ";
         title += "[Keyframe " + std::to_string(keyframe + 1);
         title += " / " + std::to_string(opt.video.keyframes) + "] ";

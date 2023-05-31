@@ -117,9 +117,8 @@ Application::checkSharedArguments()
     opt.files.input = inputs.front();
 
     // The user needs to specify a single output
-    if (outputs.size() < 1) throw SyntaxError("No output file is given");
     if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
-    opt.files.output = outputs.front();
+    if (!outputs.empty()) opt.files.output = outputs.front();
 
     // All profiles must exist
     for (auto &it : profiles) (void)assets.findAsset(it, Format::PRF);

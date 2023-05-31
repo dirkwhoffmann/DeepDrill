@@ -1,6 +1,6 @@
 target_include_directories(deepdrill PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(deepmake PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(deepflight PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(deepzoom PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_sources(deepdrill PRIVATE
 
@@ -25,7 +25,7 @@ ProgressIndicator.cpp
 
 )
 
-target_sources(deepflight PRIVATE
+target_sources(deepzoom PRIVATE
 
 Application.cpp
 AssetManager.cpp
