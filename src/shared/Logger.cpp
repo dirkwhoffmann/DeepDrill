@@ -81,6 +81,28 @@ Logger::operator<<(const isize &arg)
 }
 
 Logger&
+Logger::operator<<(const usize &arg)
+{
+    if (!silent) {
+
+        blanks = 0;
+        stream << arg;
+    }
+    return *this;
+}
+
+Logger&
+Logger::operator<<(const double &arg)
+{
+    if (!silent) {
+
+        blanks = 0;
+        stream << arg;
+    }
+    return *this;
+}
+
+Logger&
 Logger::operator<<(const Time &arg)
 {
     if (!silent) {

@@ -80,7 +80,7 @@ Driller::drill()
         drill(ref);
         
         if (opt.flags.verbose) {
-            
+
             log::cout << log::vspace;
             log::cout << log::ralign("Reference point: ");
             log::cout << ref.coord << log::endl;
@@ -106,7 +106,7 @@ Driller::drill()
             ref.skipped = drillProbePoints(probePoints);
             
             if (opt.flags.verbose) {
-                
+
                 log::cout << log::vspace;
                 log::cout << log::ralign("Coefficients: ");
                 log::cout << opt.approximation.coefficients << log::endl;

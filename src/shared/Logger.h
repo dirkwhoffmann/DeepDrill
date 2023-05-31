@@ -60,6 +60,8 @@ static constexpr Light light;
 
 class Logger {
 
+    friend class Precision;
+
     // The underlying output stream
     std::ostream &stream;
 
@@ -92,6 +94,8 @@ public:
     Logger& operator<<(const log::Light &arg) { *this << "\033[0m"; return *this; }
     Logger& operator<<(const string &arg);
     Logger& operator<<(const isize &arg);
+    Logger& operator<<(const usize &arg);
+    Logger& operator<<(const double &arg);
     Logger& operator<<(const Time &arg);
     Logger& operator<<(const struct Coord &arg);
     Logger& operator<<(const StandardComplex& arg);
