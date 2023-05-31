@@ -18,8 +18,6 @@
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
-#include <SFML/Graphics.hpp>
-
 namespace dd {
 
 enum class ColoringMode { Default, Relief };
@@ -47,9 +45,6 @@ struct Options {
 
         // Indicates if the '-v' flag has been specified
         bool verbose = false;
-
-        // Indicates if the '-m' flag has been specified
-        bool make = false;
 
         // Indicates if the '-b' flag has been specified
         bool batch = false;

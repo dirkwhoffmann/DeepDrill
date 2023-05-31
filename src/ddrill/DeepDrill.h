@@ -12,42 +12,22 @@
 #pragma once
 
 #include "config.h"
-#include "Options.h"
+#include "Application.h"
 
 namespace dd {
 
-class DeepDrill {
+class DeepDrill : public Application {
 
-    // Extracted command line arguments
-    std::vector <string> profiles;
-    std::vector <string> inputs;
-    std::vector <string> outputs;
+    //
+    // Methods from Application
+    //
 
-    // Asset manager
-    AssetManager assets;
-
-    // Config options
-    Options opt = Options(assets);
-    
-public:
-
-    // Main entry point
-    void main(int argc, char *argv[]);
-
-private:
-    
-    // Helper methods for parsing command line arguments
+    const char *appName() { return "DeepDrill"; }
+    void syntax();
+    void initialize() { };
     void parseArguments(int argc, char *argv[]);
-    void checkArguments();
-    void readInputs();
-    void readProfiles();
-
-    // Sets up the GMP library
-    void setupGmp();
-
-    // Executes the drill pipeline or the Makefile generator
-    void runPipeline();
-    void runMaker();
+    void checkCustomArguments();
+    void run();
 };
 
 }

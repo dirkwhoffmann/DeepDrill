@@ -14,8 +14,6 @@
 #include "IO.h"
 #include "Logger.h"
 
-#include <SFML/Graphics.hpp>
-
 namespace dd {
 
 AssetManager::AssetManager()

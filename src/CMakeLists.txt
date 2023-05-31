@@ -19,14 +19,17 @@ find_package(PkgConfig)
 pkg_check_modules(GMP gmpxx)
 pkg_check_modules(SFML sfml-system sfml-window sfml-graphics)
 
-# Specify the executable
+# Specify the executables
 add_executable(deepdrill ddrill/DeepDrill.cpp)
+add_executable(deepmake dmake/DeepMake.cpp)
 add_executable(deepflight dflight/DeepFlight.cpp)
 
 # Add include paths
 target_include_directories(deepdrill PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(deepdrill PUBLIC ${GMP_INCLUDE_DIRS})
 target_include_directories(deepdrill PUBLIC ${SFML_INCLUDE_DIRS})
+target_include_directories(deepmake PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(deepmake PUBLIC ${GMP_INCLUDE_DIRS})
 target_include_directories(deepflight PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(deepflight PUBLIC ${GMP_INCLUDE_DIRS})
 target_include_directories(deepflight PUBLIC ${SFML_INCLUDE_DIRS})
@@ -41,6 +44,7 @@ endif()
 
 # Specify link options
 target_link_libraries(deepdrill PUBLIC ${GMP_LDFLAGS} ${SFML_LDFLAGS})
+target_link_libraries(deepmake PUBLIC ${GMP_LDFLAGS} ${SFML_LDFLAGS})
 target_link_libraries(deepflight PUBLIC ${GMP_LDFLAGS} ${SFML_LDFLAGS})
 
 # Add sub directories
@@ -48,4 +52,5 @@ add_subdirectory(util)
 add_subdirectory(math)
 add_subdirectory(shared)
 add_subdirectory(ddrill)
+add_subdirectory(dmake)
 add_subdirectory(dflight)

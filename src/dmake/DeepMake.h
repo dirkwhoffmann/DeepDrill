@@ -16,25 +16,18 @@
 
 namespace dd {
 
-class DeepFlight : public Application {
+class DeepMake : public Application {
 
     //
     // Methods from Application
     //
 
-    const char *appName() { return "DeepZoom"; }
+    const char *appName() { return "DeepMake"; }
     void syntax();
-    void initialize();
+    void initialize() { };
     void parseArguments(int argc, char *argv[]);
     void checkCustomArguments();
     void run();
-
-
-
-private:
-
-    // Performs some basic initialization
-    void initialize();
 };
 
 }

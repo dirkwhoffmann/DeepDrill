@@ -10,86 +10,30 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepFlight.h"
-#include "Exception.h"
-#include "Logger.h"
-#include "Parser.h"
+// #include "Exception.h"
+// #include "Logger.h"
+// #include "Parser.h"
 #include "Zoomer.h"
 
 #include <getopt.h>
 
 int main(int argc, char *argv[])
 {
-    using namespace dd;
-
-    try {
-
-        DeepFlight().main(argc, argv);
-
-    } catch (dd::SyntaxError &e) {
-
-        log::cout << "Usage: ";
-        log::cout << "deepflight [-bv] [-p <profile>] -o <output> <input>" << log::endl;
-        log::cout << log::endl;
-        log::cout << "       -b or --batch     Run in batch mode" << log::endl;
-        log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
-        log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
-        log::cout << "       -p or --profile   Customize settings" << log::endl;
-        log::cout << log::endl;
-
-        log::cout << e << log::endl;
-        return 1;
-
-    } catch (Exception &e) {
-
-        log::cout << e << log::endl;
-        return 1;
-
-    } catch (std::exception &e) {
-
-        log::cout << e.what() << log::endl;
-        return 1;
-    }
-
-    return 0;
+    return dd::DeepFlight().main(argc, argv);
 }
 
 namespace dd {
 
 void
-DeepFlight::main(int argc, char *argv[])
+DeepFlight::syntax()
 {
-    log::cout << "DeepFlight " << Options::version();
-    log::cout << " - (C)opyright Dirk W. Hoffmann";
-    log::cout << log::endl << log::endl;
-
-    // Perform some basic initialization
-    initialize();
-
-    // Parse command line arguments
-    parseArguments(argc, argv);
-
-    // Check arguments for consistency
-    checkArguments();
-
-    // Setup the GMP library
-    setupGmp();
-
-    // Read input files
-    readInputs();
-
-    // Customize settings
-    readProfiles();
-
-    // Deduce missing options
-    opt.derive();
-
-    // Start a stop watch
-    Clock stopWatch;
-
-    // Execute
-    Zoomer(opt).launch();
-
-    log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
+    log::cout << "Usage: ";
+    log::cout << "deepzoom [-bv] [-p <profile>] -o <output> <input>" << log::endl;
+    log::cout << log::endl;
+    log::cout << "       -b or --batch     Run in batch mode" << log::endl;
+    log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
+    log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
+    log::cout << "       -p or --profile   Customize settings" << log::endl;
 }
 
 void
@@ -168,7 +112,7 @@ DeepFlight::parseArguments(int argc, char *argv[])
 }
 
 void
-DeepFlight::checkArguments()
+DeepFlight::checkCustomArguments()
 {
     // The user needs to specify a single input
     if (inputs.size() < 1) throw SyntaxError("No input file is given");

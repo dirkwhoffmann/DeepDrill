@@ -29,6 +29,25 @@
 		5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
 		5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
 		5049969929DF051200B15919 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
+		5072FD672A271E36003DE341 /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
+		5072FD6A2A271E4A003DE341 /* DeepMake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD682A271E4A003DE341 /* DeepMake.cpp */; };
+		5072FD6B2A271E69003DE341 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
+		5072FD6C2A271E6D003DE341 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */; };
+		5072FD6D2A271E70003DE341 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
+		5072FD6E2A271E72003DE341 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
+		5072FD6F2A271E75003DE341 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
+		5072FD712A271EE2003DE341 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
+		5072FD722A271EE4003DE341 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
+		5072FD732A271EE7003DE341 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
+		5072FD742A271EE9003DE341 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
+		5072FD752A271EEB003DE341 /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102347269DC4F500AC61A8 /* IO.cpp */; };
+		5072FD762A272016003DE341 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
+		5072FD772A272019003DE341 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
+		5072FD782A27201C003DE341 /* ExtendedComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */; };
+		5072FD792A272020003DE341 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
+		5072FD7C2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
+		5072FD7D2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
+		5072FD7E2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
 		50AE096429FE7E0A005E4D3E /* Animated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE096329FE7E0A005E4D3E /* Animated.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
@@ -48,12 +67,20 @@
 		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
-		50EB497626A067850019078C /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
 		50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5049967D29DED17800B15919 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		5072FD5E2A271E29003DE341 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -124,6 +151,12 @@
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD592A27190D003DE341 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
+		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
+		5072FD682A271E4A003DE341 /* DeepMake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepMake.cpp; sourceTree = "<group>"; };
+		5072FD692A271E4A003DE341 /* DeepMake.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepMake.h; sourceTree = "<group>"; };
+		5072FD7A2A272EF8003DE341 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		5072FD7B2A272EF8003DE341 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -231,6 +264,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5072FD5D2A271E29003DE341 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CF8E4B2694848800887FFC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -250,6 +290,7 @@
 				5030F11026A1B92C009A53B3 /* math */,
 				50EB0D4729EE605E00770F31 /* shared */,
 				505EB93129D720B5008DE5BB /* ddrill */,
+				5072FD5A2A271DC3003DE341 /* dmake */,
 				5049968029DED17800B15919 /* dflight */,
 			);
 			path = src;
@@ -295,8 +336,6 @@
 				505EB93429D73E42008DE5BB /* CMakeLists.txt */,
 				50BEC6F5269486A900CCDFA8 /* DeepDrill.h */,
 				50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */,
-				50EB497526A067850019078C /* Maker.h */,
-				50EB497426A067850019078C /* Maker.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
 				50EB497226A00C2A0019078C /* Colorizer.h */,
@@ -309,6 +348,18 @@
 				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
 			);
 			path = ddrill;
+			sourceTree = "<group>";
+		};
+		5072FD5A2A271DC3003DE341 /* dmake */ = {
+			isa = PBXGroup;
+			children = (
+				5072FD5B2A271DE8003DE341 /* CMakeLists.txt */,
+				5072FD692A271E4A003DE341 /* DeepMake.h */,
+				5072FD682A271E4A003DE341 /* DeepMake.cpp */,
+				50EB497526A067850019078C /* Maker.h */,
+				50EB497426A067850019078C /* Maker.cpp */,
+			);
+			path = dmake;
 			sourceTree = "<group>";
 		};
 		50BEC70B269486B400CCDFA8 /* util */ = {
@@ -435,6 +486,7 @@
 			children = (
 				50CF8E4E2694848800887FFC /* DeepDrill */,
 				5049967F29DED17800B15919 /* DeepFlight */,
+				5072FD602A271E29003DE341 /* DeepMake */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -458,6 +510,8 @@
 			isa = PBXGroup;
 			children = (
 				50EB0D4829EE609400770F31 /* CMakeLists.txt */,
+				5072FD7B2A272EF8003DE341 /* Application.h */,
+				5072FD7A2A272EF8003DE341 /* Application.cpp */,
 				5047B4FE29FE2BBC00AC38DC /* AssetManager.h */,
 				5047B4FD29FE2BBC00AC38DC /* AssetManager.cpp */,
 				50BEC6FD269486A900CCDFA8 /* Options.h */,
@@ -510,6 +564,23 @@
 			productReference = 5049967F29DED17800B15919 /* DeepFlight */;
 			productType = "com.apple.product-type.tool";
 		};
+		5072FD5F2A271E29003DE341 /* DeepMake */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5072FD642A271E29003DE341 /* Build configuration list for PBXNativeTarget "DeepMake" */;
+			buildPhases = (
+				5072FD5C2A271E29003DE341 /* Sources */,
+				5072FD5D2A271E29003DE341 /* Frameworks */,
+				5072FD5E2A271E29003DE341 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeepMake;
+			productName = DeepMake;
+			productReference = 5072FD602A271E29003DE341 /* DeepMake */;
+			productType = "com.apple.product-type.tool";
+		};
 		50CF8E4D2694848800887FFC /* DeepDrill */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50CF8E552694848800887FFC /* Build configuration list for PBXNativeTarget "DeepDrill" */;
@@ -539,6 +610,9 @@
 					5049967E29DED17800B15919 = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					5072FD5F2A271E29003DE341 = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					50CF8E4D2694848800887FFC = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -559,6 +633,7 @@
 			targets = (
 				50CF8E4D2694848800887FFC /* DeepDrill */,
 				5049967E29DED17800B15919 /* DeepFlight */,
+				5072FD5F2A271E29003DE341 /* DeepMake */,
 			);
 		};
 /* End PBXProject section */
@@ -570,6 +645,7 @@
 			files = (
 				5049968A29DED32E00B15919 /* IO.cpp in Sources */,
 				5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */,
+				5072FD7D2A272EF8003DE341 /* Application.cpp in Sources */,
 				5049969429DEED6800B15919 /* Zoomer.cpp in Sources */,
 				50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */,
 				5047B4E429F812F700AC38DC /* Palette.cpp in Sources */,
@@ -592,15 +668,39 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5072FD5C2A271E29003DE341 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5072FD752A271EEB003DE341 /* IO.cpp in Sources */,
+				5072FD6F2A271E75003DE341 /* ProgressIndicator.cpp in Sources */,
+				5072FD742A271EE9003DE341 /* Exception.cpp in Sources */,
+				5072FD6B2A271E69003DE341 /* Options.cpp in Sources */,
+				5072FD772A272019003DE341 /* ExtendedDouble.cpp in Sources */,
+				5072FD722A271EE4003DE341 /* Chrono.cpp in Sources */,
+				5072FD792A272020003DE341 /* PrecisionComplex.cpp in Sources */,
+				5072FD6E2A271E72003DE341 /* Logger.cpp in Sources */,
+				5072FD6D2A271E70003DE341 /* Coord.cpp in Sources */,
+				5072FD732A271EE7003DE341 /* Parser.cpp in Sources */,
+				5072FD6C2A271E6D003DE341 /* AssetManager.cpp in Sources */,
+				5072FD762A272016003DE341 /* StandardComplex.cpp in Sources */,
+				5072FD6A2A271E4A003DE341 /* DeepMake.cpp in Sources */,
+				5072FD672A271E36003DE341 /* Maker.cpp in Sources */,
+				5072FD782A27201C003DE341 /* ExtendedComplex.cpp in Sources */,
+				5072FD7E2A272EF8003DE341 /* Application.cpp in Sources */,
+				5072FD712A271EE2003DE341 /* Buffer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CF8E4A2694848800887FFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				50BEC709269486AA00CCDFA8 /* ReferencePoint.cpp in Sources */,
 				5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */,
+				5072FD7C2A272EF8003DE341 /* Application.cpp in Sources */,
 				50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */,
 				50BEC70A269486AA00CCDFA8 /* DeepDrill.cpp in Sources */,
-				50EB497626A067850019078C /* Maker.cpp in Sources */,
 				50BEC71B269486C200CCDFA8 /* ExtendedDouble.cpp in Sources */,
 				50BEC720269486C200CCDFA8 /* PrecisionComplex.cpp in Sources */,
 				5047B4E329F812F700AC38DC /* Palette.cpp in Sources */,
@@ -675,6 +775,40 @@
 					"-lsfml-system",
 					"-lsfml-window",
 					"-lsfml-graphics",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5072FD652A271E29003DE341 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
+				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				OTHER_LDFLAGS = (
+					"-lgmp",
+					"-lgmpxx",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5072FD662A271E29003DE341 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/include/;
+				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/gmp/6.2.1_1/lib/;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				OTHER_LDFLAGS = (
+					"-lgmp",
+					"-lgmpxx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -874,6 +1008,15 @@
 			buildConfigurations = (
 				5049968429DED17800B15919 /* Debug */,
 				5049968529DED17800B15919 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5072FD642A271E29003DE341 /* Build configuration list for PBXNativeTarget "DeepMake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5072FD652A271E29003DE341 /* Debug */,
+				5072FD662A271E29003DE341 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
