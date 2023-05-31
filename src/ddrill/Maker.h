@@ -25,9 +25,6 @@ class Maker {
     // Name of the project
     string project;
 
-    // Center displacement
-    // PrecisionComplex shift;
-
     // Path to the project directory
     std::filesystem::path projectDir;
 

@@ -122,6 +122,8 @@
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
+		5072FD592A27190D003DE341 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				50BEC723269486E500CCDFA8 /* medium.prf */,
 				50BEC727269486E600CCDFA8 /* high.prf */,
 				50BEC726269486E600CCDFA8 /* ultra.prf */,
+				5072FD592A27190D003DE341 /* relief.prf */,
 				50EB0D4A29F3E15800770F31 /* debug.prf */,
 			);
 			path = profiles;
@@ -396,6 +399,7 @@
 		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
+				5072FD582A2718BD003DE341 /* white.png */,
 				5047B4FC29FD537D00AC38DC /* prism.png */,
 				5047B4E729F9623500AC38DC /* candy.png */,
 				5047B4EA29F9625600AC38DC /* default.png */,
