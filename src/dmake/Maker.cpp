@@ -101,7 +101,7 @@ Maker::generateLocationFiles(vector <string> &skipped)
 {
     ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
 
-    for (isize nr = 0; nr < opt.video.keyframes; nr++) {
+    for (isize nr = 0; nr <= opt.video.keyframes; nr++) {
 
         double zoom = exp2(nr);
 
@@ -259,7 +259,7 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
-    os << "\t" << "@$(DEEPFLIGHT) $(MOVFLAGS) " << project << ".prj";
+    os << "\t" << "@$(DEEPZOOM) $(MOVFLAGS) " << project << ".prj";
     os << " -o $(VIDEO)";
     os << std::endl;
 

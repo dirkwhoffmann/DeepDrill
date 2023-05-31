@@ -129,6 +129,8 @@ Application::readInputs()
 {
     for (auto &input: inputs) {
 
+        if (AssetManager::getFormat(input) == Format::MAP) continue;
+
         Parser::parse(assets.findAsset(input),
                       [this](string k, string v) { opt.parse(k,v); });
     }

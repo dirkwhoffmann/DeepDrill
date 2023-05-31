@@ -25,7 +25,7 @@ void
 DeepZoom::syntax()
 {
     log::cout << "Usage: ";
-    log::cout << "deepzoom [-bv] [-p <profile>] -o <output> <input>" << log::endl;
+    log::cout << "deepzoom [-bv] [-p <profile>] [-o <output>] <input>" << log::endl;
     log::cout << log::endl;
     log::cout << "       -b or --batch     Run in batch mode" << log::endl;
     log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
