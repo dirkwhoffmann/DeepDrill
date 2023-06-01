@@ -92,7 +92,7 @@ Maker::generateProjectFile(vector <string> &skipped)
     os << "inbetweens = " << opt.video.inbetweens << std::endl;
     os << "bitrate = " << opt.video.bitrate << std::endl;
     os << "scaler = " << opt.video.scaler << std::endl;
-    os << "merger = " << opt.video.merger << std::endl;
+    os << "illuminator = " << opt.video.illuminator << std::endl;
     os << std::endl;
 }
 

@@ -40,7 +40,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.inbetweens"] = "0";
     defaults["video.bitrate"] = "4096";
     defaults["video.scaler"] = "tricubic.glsl";
-    defaults["video.merger"] = "merger.glsl";
+    defaults["video.illuminator"] = "lambert.glsl";
 
     // Palette keys
     defaults["palette.mode"] = "default";
@@ -172,9 +172,9 @@ Options::parse(string key, string value)
 
         video.scaler = assets.findAsset(value, Format::GLSL);
 
-    } else if (key == "video.merger") {
+    } else if (key == "video.illuminator") {
 
-        video.merger = assets.findAsset(value, Format::GLSL);
+        video.illuminator = assets.findAsset(value, Format::GLSL);
 
     } else if (key == "palette.mode") {
 

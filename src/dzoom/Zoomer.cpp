@@ -86,19 +86,19 @@ Zoomer::init()
 
     // Load shaders
     auto scalerPath = opt.assets.findAsset(opt.video.scaler, Format::GLSL);
-    auto mergerPath = opt.assets.findAsset(opt.video.merger, Format::GLSL);
+    auto illuminatorPath = opt.assets.findAsset(opt.video.illuminator, Format::GLSL);
 
     if (scalerPath == "") {
         throw Exception("Can't load fragment shader '" + opt.video.scaler + "'");
     }
-    if (mergerPath == "") {
-        throw Exception("Can't load fragment shader '" + opt.video.merger + "'");
+    if (illuminatorPath == "") {
+        throw Exception("Can't load fragment shader '" + opt.video.illuminator + "'");
     }
     if (!scaler.loadFromFile(scalerPath, sf::Shader::Fragment)) {
         throw Exception("Can't load fragment shader '" + scalerPath.string() + "'");
     }
-    if (!merger.loadFromFile(mergerPath, sf::Shader::Fragment)) {
-        throw Exception("Can't load fragment shader '" + mergerPath.string() + "'");
+    if (!illuminator.loadFromFile(illuminatorPath, sf::Shader::Fragment)) {
+        throw Exception("Can't load fragment shader '" + illuminatorPath.string() + "'");
     }
 }
 
@@ -185,8 +185,8 @@ Zoomer::draw(isize keyframe, isize frame)
     scaled[latest].display();
 
     // Stage 2: Render target texture
-    setupMergerUniforms(keyframe, frame);
-    target.draw(scaledRect[latest], &merger);
+    setupIlluminatorUniforms(keyframe, frame);
+    target.draw(scaledRect[latest], &illuminator);
     target.display();
     latest = (latest + 1) % 3;
 
@@ -215,11 +215,10 @@ Zoomer::setupScalerUniforms(isize keyframe, isize frame)
 }
 
 void
-Zoomer::setupMergerUniforms(isize keyframe, isize frame)
+Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 {
-    merger.setUniform("curr", scaled[latest].getTexture());
-    merger.setUniform("prev", scaled[(latest + 3 - 1) % 3].getTexture());
-    merger.setUniform("prevprev", scaled[(latest + 3 - 2) % 3].getTexture());
+    illuminator.setUniform("image", scaled[latest].getTexture());
+    // illuminator.setUniform("normal", );
 }
 
 void

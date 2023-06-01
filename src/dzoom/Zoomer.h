@@ -50,7 +50,7 @@ class Zoomer {
 
     // Compute kernels
     sf::Shader scaler;
-    sf::Shader merger;
+    sf::Shader illuminator;
 
     // The video recorder
     Recorder recorder = Recorder(opt);
@@ -80,7 +80,7 @@ private:
 
     // Sets up shader uniforms
     void setupScalerUniforms(isize keyframe, isize frame);
-    void setupMergerUniforms(isize keyframe, isize frame);
+    void setupIlluminatorUniforms(isize keyframe, isize frame);
 
     // Loads a new image file from disk
     void updateTexture(isize nr);
