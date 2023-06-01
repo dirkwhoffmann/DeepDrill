@@ -37,12 +37,9 @@ class Zoomer {
     sf::Texture source2;
     sf::RectangleShape sourceRect2;
 
-    // The downscaled source textures (latest three)
-    sf::RenderTexture scaled[3];
-    sf::RectangleShape scaledRect[3];
-
-    // Storage position of the most recent scaled texture (experimental)
-    isize latest = 0;
+    // The downscaled source texture
+    sf::RenderTexture scaled;
+    sf::RectangleShape scaledRect;
 
     // The render target
     sf::RenderTexture target;

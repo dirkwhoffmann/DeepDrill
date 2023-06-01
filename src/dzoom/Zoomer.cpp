@@ -66,15 +66,12 @@ Zoomer::init()
     sourceRect2.setTexture(&source2);
 
     // Create the scale textures
-    for (isize i = 0; i < 3; i++) {
-
-        if (!scaled[i].create(targetWidth, targetHeight)) {
-            throw Exception("Can't create scale texture " + std::to_string(i));
-        }
-        scaled[i].setSmooth(smooth);
-        scaledRect[i].setSize(sf::Vector2f(targetWidth, targetHeight));
-        scaledRect[i].setTexture(&scaled[i].getTexture());
+    if (!scaled.create(targetWidth, targetHeight)) {
+        throw Exception("Can't create scale texture");
     }
+    scaled.setSmooth(smooth);
+    scaledRect.setSize(sf::Vector2f(targetWidth, targetHeight));
+    scaledRect.setTexture(&scaled.getTexture());
 
     // Create the target texture
     if (!target.create(targetWidth, targetHeight)) {
@@ -181,14 +178,13 @@ Zoomer::draw(isize keyframe, isize frame)
 {
     // Stage 1: Scale down the source texture
     setupScalerUniforms(keyframe, frame);
-    scaled[latest].draw(sourceRect, &scaler);
-    scaled[latest].display();
+    scaled.draw(sourceRect, &scaler);
+    scaled.display();
 
-    // Stage 2: Render target texture
+    // Stage 2: Apply lighting effects
     setupIlluminatorUniforms(keyframe, frame);
-    target.draw(scaledRect[latest], &illuminator);
+    target.draw(scaledRect, &illuminator);
     target.display();
-    latest = (latest + 1) % 3;
 
     // Draw target texture in the preview window
     window.clear();
@@ -217,7 +213,7 @@ Zoomer::setupScalerUniforms(isize keyframe, isize frame)
 void
 Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 {
-    illuminator.setUniform("image", scaled[latest].getTexture());
+    illuminator.setUniform("image", scaled.getTexture());
     // illuminator.setUniform("normal", );
 }
 
