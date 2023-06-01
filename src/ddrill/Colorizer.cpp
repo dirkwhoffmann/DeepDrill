@@ -25,8 +25,9 @@ namespace dd {
 
 Colorizer::Colorizer(const Options &opt, const DrillMap &map) : opt(opt), map(map)
 {
-    // Allocate image data
+    // Allocate buffers
     image.alloc(map.width * map.height);
+    normalMap.alloc(map.width * map.height);
 
     // Load color palette
     palette.load(opt.palette.colors);
@@ -58,6 +59,10 @@ Colorizer::colorize(Coord c)
 {
     auto data = map.get(c.x, c.y);
     auto pos = (map.height - 1 - c.y) * map.width + c.x;
+
+    //
+    // Colorize image
+    //
 
     // Map to a black or to a debug color if the point is a glitch point
     if (data.iteration == UINT32_MAX) {
@@ -95,6 +100,17 @@ Colorizer::colorize(Coord c)
 
         image[pos] = palette.interpolateABGR(sl);
     }
+
+    //
+    // Colorize normal map
+    //
+
+    auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
+    auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
+    auto b = 255.0;
+    auto a = 255.0;
+
+    normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
 }
 
 void
@@ -102,12 +118,20 @@ Colorizer::save(const string &path, Format format)
 {
     ProgressIndicator progress("Saving image data");
 
+    auto prefix = stripSuffix(path);
+    auto suffix = extractSuffix(path);
     auto width = (int)map.width;
     auto height = (int)map.height;
 
     sf::Image sfImage;
     sfImage.create(width, height, (u8 *)image.ptr);
     sfImage.saveToFile(path);
+
+    if (opt.image.depth) {
+
+        sfImage.create(width, height, (u8 *)normalMap.ptr);
+        sfImage.saveToFile(prefix + "_nrm." + suffix);
+    }
 }
 
 }

@@ -30,6 +30,9 @@ class Colorizer {
     // The image data
     Buffer <u32> image;
 
+    // The normal map
+    Buffer <u32> normalMap;
+
     // The color palette
     Palette palette = Palette(opt);
 
