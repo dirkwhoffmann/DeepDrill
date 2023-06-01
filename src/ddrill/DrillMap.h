@@ -19,8 +19,9 @@ namespace dd {
 
 enum ChannelID {
 
-    CHANNEL_ITCOUNT,
-    CHANNEL_LOGNORM,
+    CHANNEL_ITCOUNTS,
+    CHANNEL_LOGNORMS,
+    CHANNEL_DERIVATIVES,
     CHANNEL_NORMALS
 };
 
@@ -109,6 +110,7 @@ private:
     template<ChannelFormat fmt> void load(std::istream &is, u64 &raw) { load <fmt, u64> (is, raw); }
     template<ChannelFormat fmt> void load(std::istream &is, float &raw) { load <fmt, float> (is, raw); }
     template<ChannelFormat fmt> void load(std::istream &is, double &raw) { load <fmt, double> (is, raw); }
+    template<ChannelFormat fmt> void load(std::istream &is, StandardComplex &raw);
 
     
     //
@@ -129,6 +131,7 @@ private:
     template<ChannelFormat fmt> void save(std::ostream &os, u64 raw) { save <fmt, u64> (os, raw); }
     template<ChannelFormat fmt> void save(std::ostream &os, float raw) { save <fmt, float> (os, raw); }
     template<ChannelFormat fmt> void save(std::ostream &os, double raw) { save <fmt, double> (os, raw); }
+    template<ChannelFormat fmt> void save(std::ostream &os, const StandardComplex &raw);
 };
 
 }

@@ -35,7 +35,7 @@ ReferenceIteration::ReferenceIteration(PrecisionComplex z, double tolerance)
 ReferenceIteration::ReferenceIteration(PrecisionComplex z, PrecisionComplex dz, double tolerance)
 : ReferenceIteration(z, tolerance)
 {
-    this->derivation = dz;
+    this->derivative = dz;
 }
 
 ReferencePoint::ReferencePoint(const Options &opt, Coord c)

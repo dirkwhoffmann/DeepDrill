@@ -151,12 +151,14 @@ DrillMap::load(std::istream &is)
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;
-        log::cout << log::ralign("Image size: ");
-        log::cout << "(" << width << "," << height << ")" << log::endl;
+        log::cout << log::ralign("Map size: ");
+        log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Iteration counts: ");
         log::cout << (hasIterations() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Lognorms: ");
         log::cout << (hasLogNorms() ? "Loaded" : "Not included in map file") << log::endl;
+        log::cout << log::ralign("Derivates: ");
+        log::cout << (hasDerivates() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Normals: ");
         log::cout << (hasNormals() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::vspace;
@@ -194,7 +196,7 @@ DrillMap::loadChannel(std::istream &is)
 
     switch (ChannelID(id)) {
 
-        case CHANNEL_ITCOUNT:
+        case CHANNEL_ITCOUNTS:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
@@ -212,7 +214,7 @@ DrillMap::loadChannel(std::istream &is)
             }
             break;
 
-        case CHANNEL_LOGNORM:
+        case CHANNEL_LOGNORMS:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
@@ -227,9 +229,24 @@ DrillMap::loadChannel(std::istream &is)
                             throw Exception("Invalid data format");
                     }
                 }
+            }
+            break;
 
-                // if (y == 0) printf("Loading lognorm %f\n", get(x,y).lognorm);
+        case CHANNEL_DERIVATIVES:
 
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    switch (ChannelFormat(fmt)) {
+
+                        case FMT_FP16_LE: load<FMT_FP16_LE> (is, get(x,y).derivative); break;
+                        case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).derivative); break;
+                        case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).derivative); break;
+
+                        default:
+                            throw Exception("Invalid data format");
+                    }
+                }
             }
             break;
 
@@ -240,23 +257,9 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
-                        case FMT_FP16_LE:
-
-                            load <FMT_FP16_LE> (is, get(x,y).normal.re);
-                            load <FMT_FP16_LE> (is, get(x,y).normal.im);
-                            break;
-
-                        case FMT_FLOAT_LE:
-
-                            load <FMT_FLOAT_LE> (is, get(x,y).normal.re);
-                            load <FMT_FLOAT_LE> (is, get(x,y).normal.im);
-                            break;
-
-                        case FMT_DOUBLE_LE:
-
-                            load <FMT_DOUBLE_LE> (is, get(x,y).normal.re);
-                            load <FMT_DOUBLE_LE> (is, get(x,y).normal.im);
-                            break;
+                        case FMT_FP16_LE: load<FMT_FP16_LE> (is, get(x,y).normal); break;
+                        case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).normal); break;
+                        case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).normal); break;
 
                         default:
                             throw Exception("Invalid data format");
@@ -321,6 +324,13 @@ DrillMap::load(std::istream &is, T &raw)
     }
 }
 
+template<ChannelFormat fmt> void
+DrillMap::load(std::istream &is, StandardComplex &raw)
+{
+    load <fmt> (is, raw.re);
+    load <fmt> (is, raw.im);
+}
+
 void
 DrillMap::save(const string &path)
 {
@@ -335,6 +345,7 @@ DrillMap::save(std::ostream &os)
 {
     bool saveIterations = true;
     bool saveLognorms = true;
+    bool saveDerivatives = false;
     bool saveNormals = true;
 
     {
@@ -344,8 +355,9 @@ DrillMap::save(std::ostream &os)
         saveHeader(os);
 
         // Write channels
-        if (saveIterations) saveChannel(os, CHANNEL_ITCOUNT);
-        if (saveLognorms) saveChannel(os, CHANNEL_LOGNORM);
+        if (saveIterations) saveChannel(os, CHANNEL_ITCOUNTS);
+        if (saveLognorms) saveChannel(os, CHANNEL_LOGNORMS);
+        if (saveDerivatives) saveChannel(os, CHANNEL_DERIVATIVES);
         if (saveNormals) saveChannel(os, CHANNEL_NORMALS);
     }
     
@@ -356,6 +368,8 @@ DrillMap::save(std::ostream &os)
         log::cout << (saveIterations ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Lognorms: ");
         log::cout << (saveLognorms ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::ralign("Derivatives: ");
+        log::cout << (saveDerivatives ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Normals: ");
         log::cout << (saveNormals ? "Saved" : "Not saved") << log::endl;
         log::cout << log::vspace;
@@ -383,7 +397,7 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
 {
     switch (id) {
 
-        case CHANNEL_ITCOUNT:
+        case CHANNEL_ITCOUNTS:
 
             os << u8(id) << u8(FMT_U32_LE);
 
@@ -395,7 +409,7 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
             }
             break;
 
-        case CHANNEL_LOGNORM:
+        case CHANNEL_LOGNORMS:
 
             os << u8(id) << u8(FMT_FLOAT_LE);
 
@@ -407,6 +421,18 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
             }
             break;
 
+        case CHANNEL_DERIVATIVES:
+
+            os << u8(id) << u8(FMT_FLOAT_LE);
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    save <FMT_FLOAT_LE> (os, get(x,y).derivative);
+                }
+            }
+            break;
+
         case CHANNEL_NORMALS:
 
             os << u8(id) << u8(FMT_FLOAT_LE);
@@ -414,8 +440,7 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
 
-                    save <FMT_FLOAT_LE> (os, get(x,y).normal.re);
-                    save <FMT_FLOAT_LE> (os, get(x,y).normal.im);
+                    save <FMT_FLOAT_LE> (os, get(x,y).normal);
                 }
             }
             break;
@@ -468,6 +493,13 @@ DrillMap::save(std::ostream &os, T raw)
             break;
         }
     }
+}
+
+template<ChannelFormat fmt> void
+DrillMap::save(std::ostream &os, const StandardComplex &raw)
+{
+    save <fmt> (os, raw.re);
+    save <fmt> (os, raw.im);
 }
 
 }

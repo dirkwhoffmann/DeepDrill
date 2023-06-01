@@ -31,7 +31,7 @@ struct ReferenceIteration {
     ExtendedComplex extended2;
 
     // zn' in extended precision format
-    ExtendedComplex derivation;
+    ExtendedComplex derivative;
 
     // Glitch tolerance for this iteration
     double tolerance;

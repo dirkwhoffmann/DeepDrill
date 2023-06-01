@@ -238,8 +238,8 @@ Driller::slowDrill(const Coord &point)
             map.set(point, MapEntry {
                 (u32)iteration,
                 (float)::log(norm),
-                StandardComplex(dn),        // dn.asStandardComplex(),
-                StandardComplex(u) } );     // u.asStandardComplex() } );
+                StandardComplex(dn),
+                StandardComplex(u) } );
             return;
         }
     }
