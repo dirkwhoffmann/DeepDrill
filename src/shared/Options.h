@@ -83,7 +83,10 @@ struct Options {
         // Image dimensions in pixels
         isize width;
         isize height;
-    
+
+        // Indicates if a normal map should be computed
+        isize depth;
+        
         // Fraction of pixels that are allowed to have a wrong color
         double badpixels;
 

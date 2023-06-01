@@ -65,7 +65,18 @@ public:
     //
 
     DrillMap(const Options &options);
+    ~DrillMap();
     void resize(isize w, isize h);
+
+
+    //
+    // Analyzing
+    //
+
+    bool hasIterations();
+    bool hasLogNorms();
+    bool hasDerivates();
+    bool hasNormals();
 
 
     //

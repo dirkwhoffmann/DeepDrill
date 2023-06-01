@@ -70,6 +70,39 @@ Logger::operator<<(const string &arg)
 }
 
 Logger&
+Logger::operator<<(const char &arg)
+{
+    if (!silent) {
+
+        blanks = 0;
+        stream << arg;
+    }
+    return *this;
+}
+
+Logger&
+Logger::operator<<(const char *arg)
+{
+    if (!silent) {
+
+        blanks = 0;
+        stream << arg;
+    }
+    return *this;
+}
+
+Logger&
+Logger::operator<<(const bool &arg)
+{
+    if (!silent) {
+
+        blanks = 0;
+        stream << (arg ? "yes" : "no");
+    }
+    return *this;
+}
+
+Logger&
 Logger::operator<<(const isize &arg)
 {
     if (!silent) {

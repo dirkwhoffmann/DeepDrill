@@ -93,6 +93,9 @@ public:
     Logger& operator<<(const log::Bold &arg) {  *this << "\033[1m"; return *this; }
     Logger& operator<<(const log::Light &arg) { *this << "\033[0m"; return *this; }
     Logger& operator<<(const string &arg);
+    Logger& operator<<(const char &arg);
+    Logger& operator<<(const char *arg);
+    Logger& operator<<(const bool &arg);
     Logger& operator<<(const isize &arg);
     Logger& operator<<(const usize &arg);
     Logger& operator<<(const double &arg);

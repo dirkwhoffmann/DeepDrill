@@ -25,6 +25,11 @@ DrillMap::DrillMap(const Options &o) : opt(o)
     resize(opt.image.width, opt.image.height);
 }
 
+DrillMap::~DrillMap()
+{
+    delete [] data;
+}
+
 void
 DrillMap::resize(isize w, isize h)
 {
@@ -35,7 +40,48 @@ DrillMap::resize(isize w, isize h)
     
     width = w;
     height = h;
-    data = new MapEntry[w * h];
+    data = new MapEntry[w * h] ();
+
+    assert(!hasIterations());
+    assert(!hasLogNorms());
+    assert(!hasDerivates());
+    assert(!hasNormals());
+}
+
+bool
+DrillMap::hasIterations()
+{
+    for (isize i = 0; i < width * height; i++) {
+        if (data[i].iteration) return true;
+    }
+    return false;
+}
+
+bool
+DrillMap::hasLogNorms()
+{
+    for (isize i = 0; i < width * height; i++) {
+        if (data[i].lognorm) return true;
+    }
+    return false;
+}
+
+bool
+DrillMap::hasDerivates()
+{
+    for (isize i = 0; i < width * height; i++) {
+        if (data[i].derivative != StandardComplex(0,0)) return true;
+    }
+    return false;
+}
+
+bool
+DrillMap::hasNormals()
+{
+    for (isize i = 0; i < width * height; i++) {
+        if (data[i].normal != StandardComplex(0,0)) return true;
+    }
+    return false;
 }
 
 MapEntry *
@@ -89,24 +135,30 @@ DrillMap::load(const string &path)
 void
 DrillMap::load(std::istream &is)
 {
-    ProgressIndicator progress("Loading map file");
+    {
+        ProgressIndicator progress("Loading map file");
 
-    // Load header
-    loadHeader(is);
+        // Load header
+        loadHeader(is);
 
-    // Adjust the map size
-    resize(width, height);
+        // Adjust the map size
+        resize(width, height);
 
-    // Read channels
-    while (is.peek() != EOF) { loadChannel(is); }
-
-    progress.done();
+        // Read channels
+        while (is.peek() != EOF) { loadChannel(is); }
+    }
 
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Image size: ");
         log::cout << "(" << width << "," << height << ")" << log::endl;
+        log::cout << log::ralign("Iteration counts: ");
+        log::cout << (hasIterations() ? "Loaded" : "Not included in map file") << log::endl;
+        log::cout << log::ralign("Lognorms: ");
+        log::cout << (hasLogNorms() ? "Loaded" : "Not included in map file") << log::endl;
+        log::cout << log::ralign("Normals: ");
+        log::cout << (hasNormals() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::vspace;
     }
 }
@@ -281,15 +333,33 @@ DrillMap::save(const string &path)
 void
 DrillMap::save(std::ostream &os)
 {
-    ProgressIndicator progress("Saving map file");
+    bool saveIterations = true;
+    bool saveLognorms = true;
+    bool saveNormals = true;
 
-    // Write header
-    saveHeader(os);
+    {
+        ProgressIndicator progress("Saving map file");
 
-    // Write channels
-    saveChannel(os, CHANNEL_ITCOUNT);
-    saveChannel(os, CHANNEL_LOGNORM);
-    saveChannel(os, CHANNEL_NORMALS);
+        // Write header
+        saveHeader(os);
+
+        // Write channels
+        if (saveIterations) saveChannel(os, CHANNEL_ITCOUNT);
+        if (saveLognorms) saveChannel(os, CHANNEL_LOGNORM);
+        if (saveNormals) saveChannel(os, CHANNEL_NORMALS);
+    }
+    
+    if (opt.flags.verbose) {
+
+        log::cout << log::vspace;
+        log::cout << log::ralign("Iteration counts: ");
+        log::cout << (saveIterations ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::ralign("Lognorms: ");
+        log::cout << (saveLognorms ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::ralign("Normals: ");
+        log::cout << (saveNormals ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::vspace;
+    }
 }
 
 void

@@ -29,6 +29,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Image keys
     defaults["image.width"] = "960";
     defaults["image.height"] = "540";
+    defaults["image.depth"] = "1";
     defaults["image.badpixels"] = "0.001";
 
     // Video keys
@@ -108,6 +109,14 @@ Options::parse(string key, string value)
         }
         if (image.height > 2160) {
             throw KeyValueError(key, "Height must be less or equal to 2160.");
+        }
+
+    } else if (key == "image.depth") {
+
+        parse(key, value, image.depth);
+
+        if (image.depth < 0 || image.depth > 1) {
+            throw KeyValueError(key, "Depth must be 0 or 1.");
         }
 
     } else if (key == "image.badpixels") {

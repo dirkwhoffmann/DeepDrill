@@ -390,7 +390,6 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
             }
         }
         */
-
     }
 
     // The depth of the reference point limits how deep we can drill
