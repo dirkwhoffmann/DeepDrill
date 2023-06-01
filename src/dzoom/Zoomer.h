@@ -29,21 +29,25 @@ class Zoomer {
     // The application window
     sf::RenderWindow window;
     
-    // The source texture (read from image file)
+    // Texture storing the current keyframe (read from image file)
     sf::Texture source;
     sf::RectangleShape sourceRect;
 
-    // Experimental
+    // Texture storing the next keyframe (read from image file)
     sf::Texture source2;
     sf::RectangleShape sourceRect2;
 
-    // The downscaled source texture
+    // Texture storing the illuminated current keyframe (computed)
+    sf::RenderTexture illuminated;
+    sf::RectangleShape illuminatedRect;
+
+    // Texture storing the illuminated next keyframe (computed)
+    sf::RenderTexture illuminated2;
+    sf::RectangleShape illuminatedRect2;
+
+    // The downscaled source texture (computed)
     sf::RenderTexture scaled;
     sf::RectangleShape scaledRect;
-
-    // The render target
-    sf::RenderTexture target;
-    sf::RectangleShape targetRect;
 
     // Compute kernels
     sf::Shader scaler;
@@ -65,6 +69,8 @@ public:
 
     // Initializers
     void init();
+    void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2);
+    void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2);
 
     // Main entry point
     void launch();

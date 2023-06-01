@@ -35,13 +35,15 @@ Zoomer::init()
 
     recordMode = opt.files.output != "";
 
-    auto sourceWidth = unsigned(opt.image.width);
-    auto sourceHeight = unsigned(opt.image.height);
-    auto targetWidth = unsigned(opt.video.width);
-    auto targetHeight = unsigned(opt.video.height);
+    auto imageW = unsigned(opt.image.width);
+    auto imageH = unsigned(opt.image.height);
+    auto videoW = unsigned(opt.video.width);
+    auto videoH = unsigned(opt.video.height);
+    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
+    auto videoDim = sf::Vector2u(unsigned(opt.video.width), unsigned(opt.video.height));
 
     // Create the render window
-    auto videoMode = sf::VideoMode(targetWidth, targetHeight);
+    auto videoMode = sf::VideoMode(videoW, videoH);
     window.create(videoMode, "");
 
     // Hide the window in batch mode
@@ -50,36 +52,12 @@ Zoomer::init()
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
-    // Create the source textures
-    if (!source.create(sourceWidth, sourceHeight)) {
-        throw Exception("Can't create source texture");
-    }
-    source.setSmooth(smooth);
-    sourceRect.setSize(sf::Vector2f(targetWidth, targetHeight));
-    sourceRect.setTexture(&source);
-
-    if (!source2.create(sourceWidth, sourceHeight)) {
-        throw Exception("Can't create source2 texture");
-    }
-    source2.setSmooth(smooth);
-    sourceRect2.setSize(sf::Vector2f(targetWidth, targetHeight));
-    sourceRect2.setTexture(&source2);
-
-    // Create the scale textures
-    if (!scaled.create(targetWidth, targetHeight)) {
-        throw Exception("Can't create scale texture");
-    }
-    scaled.setSmooth(smooth);
-    scaledRect.setSize(sf::Vector2f(targetWidth, targetHeight));
-    scaledRect.setTexture(&scaled.getTexture());
-
-    // Create the target texture
-    if (!target.create(targetWidth, targetHeight)) {
-        throw Exception("Can't create target texture");
-    }
-    target.setSmooth(smooth);
-    targetRect.setSize(sf::Vector2f(targetWidth, targetHeight));
-    targetRect.setTexture(&target.getTexture());
+    // Create textures
+    initTexture(source, sourceRect, imageDim, imageDim);
+    initTexture(source2, sourceRect2, imageDim, imageDim);
+    initRenderTexture(illuminated, illuminatedRect, imageDim, imageDim);
+    initRenderTexture(illuminated2, illuminatedRect2, imageDim, imageDim);
+    initRenderTexture(scaled, scaledRect, videoDim, videoDim);
 
     // Load shaders
     auto scalerPath = opt.assets.findAsset(opt.video.scaler, Format::GLSL);
@@ -97,6 +75,28 @@ Zoomer::init()
     if (!illuminator.loadFromFile(illuminatorPath, sf::Shader::Fragment)) {
         throw Exception("Can't load fragment shader '" + illuminatorPath.string() + "'");
     }
+}
+
+void
+Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+{
+    if (!tex.create(s1.x, s1.y)) {
+        throw Exception("Can't create texture");
+    }
+    tex.setSmooth(false);
+    rect.setSize(sf::Vector2f(s2.x, s2.y));
+    rect.setTexture(&tex);
+}
+
+void
+Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+{
+    if (!tex.create(s1.x, s1.y)) {
+        throw Exception("Can't create render texture");
+    }
+    tex.setSmooth(false);
+    rect.setSize(sf::Vector2f(s2.x, s2.y));
+    rect.setTexture(&tex.getTexture());
 }
 
 void
@@ -166,35 +166,44 @@ Zoomer::update(isize keyframe, isize frame)
         h.move();
     }
 
-    auto newRect = sf::IntRect(unsigned(Coord::center(opt).x - (w.current / 2.0)),
-                               unsigned(Coord::center(opt).y - (h.current / 2.0)),
-                               unsigned(w.current),
-                               unsigned(h.current));
-    sourceRect.setTextureRect(newRect);
+    auto newRect = sf::IntRect(int(Coord::center(opt).x - (w.current / 2.0)),
+                               int(Coord::center(opt).y + (h.current / 2.0)),
+                               int(w.current),
+                               int(-h.current));
+
+    illuminatedRect.setTextureRect(newRect);
+    illuminatedRect2.setTextureRect(newRect);
 }
 
 void
 Zoomer::draw(isize keyframe, isize frame)
 {
-    // Stage 1: Scale down the source texture
+    // Phase 1: Apply lighting
+    setupIlluminatorUniforms(keyframe, frame);
+
+    illuminator.setUniform("image", source);
+    illuminated.draw(illuminatedRect, &illuminator);
+    illuminated.display();
+
+    illuminator.setUniform("image", source2);
+    illuminated2.draw(illuminatedRect2, &illuminator);
+    illuminated2.display();
+
+    // Phase 2: Scale down
     setupScalerUniforms(keyframe, frame);
-    scaled.draw(sourceRect, &scaler);
+    scaled.draw(scaledRect, &scaler);
     scaled.display();
 
-    // Stage 2: Apply lighting effects
-    setupIlluminatorUniforms(keyframe, frame);
-    target.draw(scaledRect, &illuminator);
-    target.display();
+    // Phase 3: Display the result
 
-    // Draw target texture in the preview window
     window.clear();
-    window.draw(targetRect);
+    window.draw(scaledRect);
     window.display();
 
     if (recordMode) {
 
         // Read back image data
-        auto image = target.getTexture().copyToImage();
+        auto image = scaled.getTexture().copyToImage();
 
         // Record frame
         recorder.record(image);
@@ -204,17 +213,22 @@ Zoomer::draw(isize keyframe, isize frame)
 void
 Zoomer::setupScalerUniforms(isize keyframe, isize frame)
 {
-    scaler.setUniform("curr", source);
-    scaler.setUniform("next", source2);
-    scaler.setUniform("size", sf::Vector2f(source.getSize()));
+    scaler.setUniform("curr", illuminated.getTexture());
+    scaler.setUniform("next", illuminated2.getTexture());
+    scaler.setUniform("size", sf::Vector2f(illuminated.getSize()));
     scaler.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
 }
 
 void
 Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 {
-    illuminator.setUniform("image", scaled.getTexture());
+    // illuminator.setUniform("image", source);
     // illuminator.setUniform("normal", );
+    illuminator.setUniform("size", sf::Vector2f(source.getSize()));
+    illuminator.setUniform("lightPos", sf::Vector3f(0.577,0.577,0.577));
+    illuminator.setUniform("lightColor", sf::Glsl::Vec4(1.0, 0.8, 0.6, 1.0));
+    illuminator.setUniform("ambientColor", sf::Glsl::Vec4(0.6, 0.6, 1.0, 0.2));
+    illuminator.setUniform("falloff", sf::Vector3f(0.4, 3.0, 20.0));
 }
 
 void
