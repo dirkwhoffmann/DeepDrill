@@ -1,8 +1,8 @@
 [location]
 depth = 3500000
 
-[palette]
-colors = candy.png
+[colors]
+palette = candy.png
 
 [video]
 # keyframes = 164

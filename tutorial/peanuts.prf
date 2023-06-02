@@ -1,8 +1,8 @@
 [location]
 depth = 3500000
 
-[palette]
-colors = ultrafrac.png
+[colors]
+palette = ultrafrac.png
 
 [video]
 keyframes = 48

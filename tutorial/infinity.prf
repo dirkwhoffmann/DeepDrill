@@ -5,8 +5,8 @@ depth = 3500000
 width = 3840
 height = 2160
 
-[palette]
-colors = dolomiti.png
+[colors]
+palette = dolomiti.png
 
 [video]
 #keyframes = 227

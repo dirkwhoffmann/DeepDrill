@@ -173,10 +173,10 @@ Maker::generateProfile(vector <string> &skipped)
     os << std::endl;
 
     // Write palette section
-    os << "[palette]" << std::endl;
-    os << "mode = " << keys["palette.mode"] << std::endl;
-    os << "colors = " << keys["palette.colors"] << std::endl;
-    os << "scale = " << keys["palette.scale"] << std::endl;
+    os << "[colors]" << std::endl;
+    os << "mode = " << keys["colors.mode"] << std::endl;
+    os << "colors = " << keys["colors.palette"] << std::endl;
+    os << "scale = " << keys["colors.scale"] << std::endl;
     os << std::endl;
 
     // Write debug section

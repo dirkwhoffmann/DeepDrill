@@ -1,8 +1,8 @@
 [location]
 depth = 3500000
 
-[palette]
-colors = vulcano.png
+[colors]
+palette = vulcano.png
 
 [video]
 keyframes = 600

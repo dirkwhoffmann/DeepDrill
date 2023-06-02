@@ -122,12 +122,12 @@ struct Options {
         ColoringMode mode;
         
         // Path to the palette image
-        string colors;
+        string palette;
 
         // Scaling factor
         double scale;
         
-    } palette;
+    } colors;
     
     struct {
 

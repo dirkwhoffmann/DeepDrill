@@ -1,8 +1,8 @@
 [location]
 depth = 3500000
 
-[palette]
-colors = ruby.png
+[colors]
+palette = ruby.png
 
 [video]
 inbetweens = 120

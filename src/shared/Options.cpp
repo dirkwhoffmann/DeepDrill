@@ -43,9 +43,9 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.illuminator"] = "lambert.glsl";
 
     // Palette keys
-    defaults["palette.mode"] = "default";
-    defaults["palette.colors"] = "";
-    defaults["palette.scale"] = "1.0";
+    defaults["colors.mode"] = "default";
+    defaults["colors.palette"] = "";
+    defaults["colors.scale"] = "1.0";
 
     // Perturbation keys
     defaults["perturbation.enabled"] = "yes";
@@ -176,19 +176,19 @@ Options::parse(string key, string value)
 
         video.illuminator = assets.findAsset(value, Format::GLSL);
 
-    } else if (key == "palette.mode") {
+    } else if (key == "colors.mode") {
 
-        parse(key, value, palette.mode);
+        parse(key, value, colors.mode);
 
-    } else if (key == "palette.colors") {
+    } else if (key == "colors.palette") {
 
         if (value != "") {
-            palette.colors = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+            colors.palette = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
         }
 
-    } else if (key == "palette.scale") {
+    } else if (key == "colors.scale") {
 
-        parse(key, value, palette.scale);
+        parse(key, value, colors.scale);
 
     } else if (key == "perturbation.enabled") {
 

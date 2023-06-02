@@ -14,5 +14,5 @@ depth = 300
 [approximation]
 coefficients = 10
 
-[palette]
-# colors = pistachio.png
+[colors]
+# palette = pistachio.png
