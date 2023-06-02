@@ -279,7 +279,6 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
     map <string, ColoringMode> modes = {
 
         { "default", ColoringMode::Default },
-        { "relief", ColoringMode::Relief }
     };
 
     try {

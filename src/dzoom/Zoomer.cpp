@@ -54,7 +54,9 @@ Zoomer::init()
 
     // Create textures
     initTexture(source, sourceRect, imageDim, imageDim);
+    initTexture(normal, imageDim);
     initTexture(source2, sourceRect2, imageDim, imageDim);
+    initTexture(normal2, imageDim);
     initRenderTexture(illuminated, illuminatedRect, imageDim, imageDim);
     initRenderTexture(illuminated2, illuminatedRect2, imageDim, imageDim);
     initRenderTexture(scaled, scaledRect, videoDim, videoDim);
@@ -78,23 +80,35 @@ Zoomer::init()
 }
 
 void
-Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+Zoomer::initTexture(sf::Texture &tex, sf::Vector2u size)
 {
-    if (!tex.create(s1.x, s1.y)) {
+    if (!tex.create(size.x, size.y)) {
         throw Exception("Can't create texture");
     }
     tex.setSmooth(false);
+}
+
+void
+Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+{
+    initTexture(tex, s1);
     rect.setSize(sf::Vector2f(s2.x, s2.y));
     rect.setTexture(&tex);
 }
 
 void
-Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size)
 {
-    if (!tex.create(s1.x, s1.y)) {
+    if (!tex.create(size.x, size.y)) {
         throw Exception("Can't create render texture");
     }
     tex.setSmooth(false);
+}
+
+void
+Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+{
+    initRenderTexture(tex, s1);
     rect.setSize(sf::Vector2f(s2.x, s2.y));
     rect.setTexture(&tex.getTexture());
 }
@@ -142,7 +156,7 @@ Zoomer::update(isize keyframe, isize frame)
 {
     if (frame == 0) {
 
-        updateTexture(keyframe);
+        updateTextures(keyframe);
         updateLocation(keyframe);
 
         // Set animation start point
@@ -182,10 +196,12 @@ Zoomer::draw(isize keyframe, isize frame)
     setupIlluminatorUniforms(keyframe, frame);
 
     illuminator.setUniform("image", source);
+    illuminator.setUniform("normal", normal);
     illuminated.draw(illuminatedRect, &illuminator);
     illuminated.display();
 
     illuminator.setUniform("image", source2);
+    illuminator.setUniform("normal", normal2);
     illuminated2.draw(illuminatedRect2, &illuminator);
     illuminated2.display();
 
@@ -222,21 +238,22 @@ Zoomer::setupScalerUniforms(isize keyframe, isize frame)
 void
 Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 {
-    // illuminator.setUniform("image", source);
-    // illuminator.setUniform("normal", );
     illuminator.setUniform("size", sf::Vector2f(source.getSize()));
-    illuminator.setUniform("lightPos", sf::Vector3f(0.577,0.577,0.577));
-    illuminator.setUniform("lightColor", sf::Glsl::Vec4(1.0, 0.8, 0.6, 1.0));
+    // illuminator.setUniform("lightDir", sf::Vector3f(0.577,0.577,0.577));
+    illuminator.setUniform("lightDir", sf::Vector3f(0.7,0.7,1.5));
+    illuminator.setUniform("lightColor", sf::Glsl::Vec4(1.0, 1.0, 1.0, 1.0));
     illuminator.setUniform("ambientColor", sf::Glsl::Vec4(0.6, 0.6, 1.0, 0.2));
     illuminator.setUniform("falloff", sf::Vector3f(0.4, 3.0, 20.0));
 }
 
 void
-Zoomer::updateTexture(isize nr)
+Zoomer::updateTextures(isize nr)
 {
     auto path = opt.files.input.parent_path() / opt.files.input.stem();
     string name = path.string() + "_" + std::to_string(nr) + ".png";
     string name2 = path.string() + "_" + std::to_string(nr + 1) + ".png";
+    string nrmName = path.string() + "_" + std::to_string(nr) + "_nrm.png";
+    string nrmName2 = path.string() + "_" + std::to_string(nr + 1) + "_nrm.png";
 
     sf::Texture image;
 
@@ -251,6 +268,12 @@ Zoomer::updateTexture(isize nr)
     }
     if (!source2.loadFromFile(name2)) {
         throw Exception("Can't load image file " + name2);
+    }
+    if (fileExists(nrmName) && !normal.loadFromFile(nrmName)) {
+        throw Exception("Can't load image file " + nrmName);
+    }
+    if (fileExists(nrmName2) && !normal2.loadFromFile(nrmName2)) {
+        throw Exception("Can't load image file " + nrmName2);
     }
 }
 

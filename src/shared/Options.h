@@ -20,7 +20,7 @@
 
 namespace dd {
 
-enum class ColoringMode { Default, Relief };
+enum class ColoringMode { Default };
 
 struct Options {
 

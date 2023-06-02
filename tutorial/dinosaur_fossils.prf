@@ -2,7 +2,6 @@
 depth = 3500000
 
 [palette]
-mode = relief
 colors = candy.png
 
 [video]

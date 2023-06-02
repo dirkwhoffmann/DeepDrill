@@ -15,5 +15,4 @@ depth = 300
 coefficients = 10
 
 [palette]
-mode = Relief
 # colors = pistachio.png

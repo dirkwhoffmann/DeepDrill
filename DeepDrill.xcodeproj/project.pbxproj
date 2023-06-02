@@ -150,7 +150,6 @@
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
-		5072FD592A27190D003DE341 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
 		5072FD682A271E4A003DE341 /* DeepMake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeepMake.cpp; sourceTree = "<group>"; };
@@ -160,6 +159,7 @@
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
+		50B5C7772A29D55700E531CC /* relief.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.glsl; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
 		50BEC6F0269486A800CCDFA8 /* Driller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driller.cpp; sourceTree = "<group>"; };
@@ -391,7 +391,6 @@
 				50BEC723269486E500CCDFA8 /* medium.prf */,
 				50BEC727269486E600CCDFA8 /* high.prf */,
 				50BEC726269486E600CCDFA8 /* ultra.prf */,
-				5072FD592A27190D003DE341 /* relief.prf */,
 				50EB0D4A29F3E15800770F31 /* debug.prf */,
 			);
 			path = profiles;
@@ -502,6 +501,7 @@
 				504FE2C42A1CF08A007A3F04 /* lanczos.glsl */,
 				504FE2C52A1CF2A3007A3F04 /* catmull.glsl */,
 				50F8C41129EC3C97008A0B4C /* lambert.glsl */,
+				50B5C7772A29D55700E531CC /* relief.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

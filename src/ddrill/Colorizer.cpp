@@ -64,21 +64,18 @@ Colorizer::colorize(Coord c)
     // Colorize image
     //
 
-    // Map to a black or to a debug color if the point is a glitch point
     if (data.iteration == UINT32_MAX) {
 
+        // Map to a black or to a debug color if the point is a glitch point
         image[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
-        return;
-    }
 
-    // Map to a black if the point belongs to the mandelbrot set
-    if (data.iteration == 0) {
+    } else if (data.iteration == 0) {
 
+        // Map to a black if the point belongs to the mandelbrot set
         image[pos] = 0xFF000000;
-        return;
-    }
 
-    if (opt.palette.mode == ColoringMode::Relief) {
+    /*
+    } else if (opt.palette.mode == ColoringMode::Relief) {
 
         double a = 0.7;
         double b = 0.7;
@@ -89,6 +86,7 @@ Colorizer::colorize(Coord c)
         t *= 255.0;
 
         image[pos] = 0xFF << 24 | u8(t) << 16 | u8(t) << 8 | u8(t);
+    */
 
     } else {
 
@@ -105,12 +103,25 @@ Colorizer::colorize(Coord c)
     // Colorize normal map
     //
 
-    auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
-    auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
-    auto b = 255.0;
-    auto a = 255.0;
+    if (data.iteration == UINT32_MAX) {
 
-    normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
+        // Map to zero if the point is a glitch point
+        normalMap[pos] = 0;
+
+    } else if (data.iteration == 0) {
+
+        // Map to zero if the point belongs to the mandelbrot set
+        normalMap[pos] = 0;
+
+    } else {
+
+        auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
+        auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
+        auto b = 255.0;
+        auto a = 255.0;
+
+        normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
+    }
 }
 
 void

@@ -31,10 +31,12 @@ class Zoomer {
     
     // Texture storing the current keyframe (read from image file)
     sf::Texture source;
+    sf::Texture normal;
     sf::RectangleShape sourceRect;
 
     // Texture storing the next keyframe (read from image file)
     sf::Texture source2;
+    sf::Texture normal2;
     sf::RectangleShape sourceRect2;
 
     // Texture storing the illuminated current keyframe (computed)
@@ -69,7 +71,9 @@ public:
 
     // Initializers
     void init();
+    void initTexture(sf::Texture &tex, sf::Vector2u size);
     void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2);
+    void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
     void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2);
 
     // Main entry point
@@ -86,7 +90,7 @@ private:
     void setupIlluminatorUniforms(isize keyframe, isize frame);
 
     // Loads a new image file from disk
-    void updateTexture(isize nr);
+    void updateTextures(isize nr);
 
     // Loads a new location from disk
     void updateLocation(isize nr);
