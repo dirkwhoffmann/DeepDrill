@@ -241,9 +241,6 @@ Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
     illuminator.setUniform("size", sf::Vector2f(source.getSize()));
     // illuminator.setUniform("lightDir", sf::Vector3f(0.577,0.577,0.577));
     illuminator.setUniform("lightDir", sf::Vector3f(0.7,0.7,1.5));
-    illuminator.setUniform("lightColor", sf::Glsl::Vec4(1.0, 1.0, 1.0, 1.0));
-    illuminator.setUniform("ambientColor", sf::Glsl::Vec4(0.6, 0.6, 1.0, 0.2));
-    illuminator.setUniform("falloff", sf::Vector3f(0.4, 3.0, 20.0));
 }
 
 void

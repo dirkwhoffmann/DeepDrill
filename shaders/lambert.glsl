@@ -10,18 +10,9 @@ uniform vec2 size;
 // Light direction
 uniform vec3 lightDir;
 
-// Light color (alpha = intensity)
-uniform vec4 lightColor;
-
-// Ambient light color (alpha = intensity)
-uniform vec4 ambientColor;
-
-// Attenuation coefficients
-uniform vec3 falloff;
-
-//
+// See
 // https://stackoverflow.com/questions/15095909/from-rgb-to-hsv-in-opengl-glsl
-//
+// for a more sophisticated shader
 
 // All components are in the range [0…1], including hue.
 vec3 rgb2hsv(vec3 c)
@@ -61,10 +52,8 @@ void main()
     vec3 N = normalize(NormalMap * 2.0 - 1.0);
     vec3 L = normalize(lightDir);
 
-    // Pre-multiply light color with intensity
-    // Then perform "N dot L" to determine our diffuse term
-    float lambert = lightColor.a * max(dot(N, L), 0.0);
-    vec3 Diffuse = (lightColor.rgb * lightColor.a) * max(dot(N, L), 0.0);
+    // Compute "N dot L" to determine our diffuse term
+    float lambert = max(dot(N, L), 0.0);
 
     // Modulate diffuse color
     float scaler = 1.0;

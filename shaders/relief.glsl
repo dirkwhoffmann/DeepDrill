@@ -11,15 +11,6 @@ uniform vec2 size;
 // Light direction
 uniform vec3 lightDir;
 
-// Light color (alpha = intensity)
-uniform vec4 lightColor;
-
-// Ambient light color (alpha = intensity)
-uniform vec4 ambientColor;
-
-// Attenuation coefficients
-uniform vec3 falloff;
-
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
@@ -35,7 +26,7 @@ void main()
     vec3 L = normalize(lightDir);
 
     // Do Lambert
-    float lambert = lightColor.a * max(dot(N, L), 0.0);
+    float lambert = max(dot(N, L), 0.0);
 
     // Modulate
     vec3 FinalColor = vec3(lambert, lambert, lambert);
