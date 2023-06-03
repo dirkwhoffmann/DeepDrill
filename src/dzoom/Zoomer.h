@@ -72,9 +72,10 @@ public:
     // Initializers
     void init();
     void initTexture(sf::Texture &tex, sf::Vector2u size);
-    void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2);
+    void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
     void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
-    void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2);
+    void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size);
+    void initShader(sf::Shader &shader, const string &name);
 
     // Main entry point
     void launch();

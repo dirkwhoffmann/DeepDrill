@@ -31,12 +31,8 @@ Zoomer::Zoomer(Options &o) : opt(o)
 void
 Zoomer::init()
 {
-    auto smooth = false;
-
     recordMode = opt.files.output != "";
 
-    auto imageW = unsigned(opt.image.width);
-    auto imageH = unsigned(opt.image.height);
     auto videoW = unsigned(opt.video.width);
     auto videoH = unsigned(opt.video.height);
     auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
@@ -53,30 +49,17 @@ Zoomer::init()
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
     // Create textures
-    initTexture(source, sourceRect, imageDim, imageDim);
+    initTexture(source, sourceRect, imageDim);
     initTexture(normal, imageDim);
-    initTexture(source2, sourceRect2, imageDim, imageDim);
+    initTexture(source2, sourceRect2, imageDim);
     initTexture(normal2, imageDim);
-    initRenderTexture(illuminated, illuminatedRect, imageDim, imageDim);
-    initRenderTexture(illuminated2, illuminatedRect2, imageDim, imageDim);
-    initRenderTexture(scaled, scaledRect, videoDim, videoDim);
+    initRenderTexture(illuminated, illuminatedRect, imageDim);
+    initRenderTexture(illuminated2, illuminatedRect2, imageDim);
+    initRenderTexture(scaled, scaledRect, videoDim);
 
     // Load shaders
-    auto scalerPath = opt.assets.findAsset(opt.video.scaler, Format::GLSL);
-    auto illuminatorPath = opt.assets.findAsset(opt.video.illuminator, Format::GLSL);
-
-    if (scalerPath == "") {
-        throw Exception("Can't load fragment shader '" + opt.video.scaler + "'");
-    }
-    if (illuminatorPath == "") {
-        throw Exception("Can't load fragment shader '" + opt.video.illuminator + "'");
-    }
-    if (!scaler.loadFromFile(scalerPath, sf::Shader::Fragment)) {
-        throw Exception("Can't load fragment shader '" + scalerPath.string() + "'");
-    }
-    if (!illuminator.loadFromFile(illuminatorPath, sf::Shader::Fragment)) {
-        throw Exception("Can't load fragment shader '" + illuminatorPath.string() + "'");
-    }
+    initShader(scaler, opt.video.scaler);
+    initShader(illuminator, opt.video.illuminator);
 }
 
 void
@@ -89,10 +72,10 @@ Zoomer::initTexture(sf::Texture &tex, sf::Vector2u size)
 }
 
 void
-Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size)
 {
-    initTexture(tex, s1);
-    rect.setSize(sf::Vector2f(s2.x, s2.y));
+    initTexture(tex, size);
+    rect.setSize(sf::Vector2f(size.x, size.y));
     rect.setTexture(&tex);
 }
 
@@ -106,11 +89,24 @@ Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size)
 }
 
 void
-Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u s1, sf::Vector2u s2)
+Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size)
 {
-    initRenderTexture(tex, s1);
-    rect.setSize(sf::Vector2f(s2.x, s2.y));
+    initRenderTexture(tex, size);
+    rect.setSize(sf::Vector2f(size.x, size.y));
     rect.setTexture(&tex.getTexture());
+}
+
+void
+Zoomer::initShader(sf::Shader &shader, const string &name)
+{
+    auto path = opt.assets.findAsset(name, Format::GLSL);
+
+    if (path == "") {
+        throw Exception("Can't load fragment shader '" + name + "'");
+    }
+    if (!shader.loadFromFile(path, sf::Shader::Fragment)) {
+        throw Exception("Can't load fragment shader '" + path.string() + "'");
+    }
 }
 
 void
@@ -238,7 +234,6 @@ Zoomer::setupScalerUniforms(isize keyframe, isize frame)
 void
 Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 {
-    illuminator.setUniform("size", sf::Vector2f(source.getSize()));
     // illuminator.setUniform("lightDir", sf::Vector3f(0.577,0.577,0.577));
     illuminator.setUniform("lightDir", sf::Vector3f(0.7,0.7,1.5));
 }

@@ -5,7 +5,7 @@ uniform sampler2D image;
 uniform sampler2D normal;
 
 // Texture size
-uniform vec2 size;
+// uniform vec2 size;
 
 // Light direction
 uniform vec3 lightDir;
@@ -14,7 +14,7 @@ uniform vec3 lightDir;
 // https://stackoverflow.com/questions/15095909/from-rgb-to-hsv-in-opengl-glsl
 // for a more sophisticated shader
 
-// All components are in the range [0…1], including hue.
+// All components are in the range [0...1]
 vec3 rgb2hsv(vec3 c)
 {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -26,7 +26,7 @@ vec3 rgb2hsv(vec3 c)
     return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
 }
 
-// All components are in the range [0…1], including hue.
+// All components are in the range [0...1]
 vec3 hsv2rgb(vec3 c)
 {
     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
