@@ -83,6 +83,15 @@ Maker::generateProjectFile(vector <string> &skipped)
     os << "height = " << opt.image.height << std::endl;
     os << std::endl;
 
+    // Write colors section
+    os << "[colors]" << std::endl;
+    os << "mode = " << keys["colors.mode"] << std::endl;
+    os << "colors = " << keys["colors.palette"] << std::endl;
+    os << "scale = " << keys["colors.scale"] << std::endl;
+    os << "alpha = " << keys["colors.alpha"] << std::endl;
+    os << "beta = " << keys["colors.beta"] << std::endl;
+    os << std::endl;
+
     // Write video section
     os << "[video]" << std::endl;
     os << "framerate = " << opt.video.frameRate << std::endl;
@@ -159,6 +168,15 @@ Maker::generateProfile(vector <string> &skipped)
     os << "height = " << keys["image.height"] << std::endl;
     os << std::endl;
 
+    // Write colors section
+    os << "[colors]" << std::endl;
+    os << "mode = " << keys["colors.mode"] << std::endl;
+    os << "colors = " << keys["colors.palette"] << std::endl;
+    os << "scale = " << keys["colors.scale"] << std::endl;
+    os << "alpha = " << keys["colors.alpha"] << std::endl;
+    os << "beta = " << keys["colors.beta"] << std::endl;
+    os << std::endl;
+
     // Write perturbation section
     os << "[perturbation]" << std::endl;
     os << "enabled = " << keys["perturbation.enabled"] << std::endl;
@@ -170,13 +188,6 @@ Maker::generateProfile(vector <string> &skipped)
     os << "[approximation]" << std::endl;
     os << "coefficients = " << keys["approximation.coefficients"] << std::endl;
     os << "tolerance = " << keys["approximation.tolerance"] << std::endl;
-    os << std::endl;
-
-    // Write palette section
-    os << "[colors]" << std::endl;
-    os << "mode = " << keys["colors.mode"] << std::endl;
-    os << "colors = " << keys["colors.palette"] << std::endl;
-    os << "scale = " << keys["colors.scale"] << std::endl;
     os << std::endl;
 
     // Write debug section
