@@ -234,8 +234,16 @@ Zoomer::setupScalerUniforms(isize keyframe, isize frame)
 void
 Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 {
-    // illuminator.setUniform("lightDir", sf::Vector3f(0.577,0.577,0.577));
-    illuminator.setUniform("lightDir", sf::Vector3f(0.7,0.7,1.5));
+    auto a = opt.colors.alpha * 3.14159 / 180.0;
+    auto b = opt.colors.beta * 3.14159 / 180.0;
+
+    auto z = std::sin(b);
+    auto l = std::cos(b);
+    auto y = std::sin(a) * l;
+    auto x = std::cos(a) * l;
+
+    illuminator.setUniform("lightDir", sf::Vector3f(x, y, z));
+    // illuminator.setUniform("lightDir", sf::Vector3f(0.7,0.7,1.5));
 }
 
 void

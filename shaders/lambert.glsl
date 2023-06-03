@@ -4,9 +4,6 @@ uniform sampler2D image;
 // Sampler for the normal map
 uniform sampler2D normal;
 
-// Texture size
-// uniform vec2 size;
-
 // Light direction
 uniform vec3 lightDir;
 
@@ -43,32 +40,32 @@ void main()
     //
 
     // RGBA of our diffuse color
-    vec4 DiffuseColor = texture2D(image, coord);
+    vec4 diffuseColor = texture2D(image, coord);
 
     // RGB of our normal map
-    vec3 NormalMap = texture2D(normal, coord).rgb;
+    vec3 normalMap = texture2D(normal, coord).rgb;
 
     // Normalize our vectors
-    vec3 N = normalize(NormalMap * 2.0 - 1.0);
+    vec3 N = normalize(normalMap * 2.0 - 1.0);
     vec3 L = normalize(lightDir);
 
     // Compute "N dot L" to determine our diffuse term
     float lambert = max(dot(N, L), 0.0);
 
     // Modulate diffuse color
-    float scaler = 1.0;
-    vec3 hsv = rgb2hsv(DiffuseColor.rgb);
-    hsv.z *= (lambert * scaler) + 1.0 - 0.5 * scaler;
-    vec3 FinalColor = hsv2rgb(hsv);
+    vec3 final;
 
-    /*
-    vec3 hsv1 = rgb2hsv(vec3(lambert, lambert, lambert));
-    vec3 hsv2 = rgb2hsv(DiffuseColor.rgb);
-    vec3 hsv = vec3(hsv2.x, hsv2.y, hsv1.z);
-    vec3 FinalColor = hsv2rgb(hsv);
-    */
+    if (normalMap.x == 0.0 && normalMap.y == 0.0 && normalMap.z == 0.0) {
 
-    // vec3 FinalColor = ((Diffuse * 0.4) + 0.8) * DiffuseColor.rgb;
+        final = diffuseColor.rgb;
 
-    gl_FragColor = gl_Color * vec4(FinalColor, 1.0);
+    } else {
+
+        float scale = 1.0;
+        vec3 hsv = rgb2hsv(diffuseColor.rgb);
+        hsv.z *= (lambert * scale) + 1.0 - 0.5 * scale;
+        final = hsv2rgb(hsv);
+    }
+
+    gl_FragColor = gl_Color * vec4(final, 1.0);
 }

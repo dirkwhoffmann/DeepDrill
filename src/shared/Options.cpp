@@ -46,6 +46,8 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["colors.mode"] = "default";
     defaults["colors.palette"] = "";
     defaults["colors.scale"] = "1.0";
+    defaults["colors.alpha"] = "45";
+    defaults["colors.beta"] = "45";
 
     // Perturbation keys
     defaults["perturbation.enabled"] = "yes";
@@ -189,6 +191,22 @@ Options::parse(string key, string value)
     } else if (key == "colors.scale") {
 
         parse(key, value, colors.scale);
+
+    } else if (key == "colors.alpha") {
+
+        parse(key, value, colors.alpha);
+
+        if (colors.alpha < 0.0 || colors.alpha >= 360.0) {
+            throw KeyValueError(key, "Angle out of range");
+        }
+
+    } else if (key == "colors.beta") {
+
+        parse(key, value, colors.beta);
+
+        if (colors.beta < 0.0 || colors.beta >= 360.0) {
+            throw KeyValueError(key, "Angle out of range");
+        }
 
     } else if (key == "perturbation.enabled") {
 

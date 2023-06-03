@@ -126,7 +126,11 @@ struct Options {
 
         // Scaling factor
         double scale;
-        
+
+        // Light vector direction
+        double alpha;
+        double beta;
+
     } colors;
     
     struct {
