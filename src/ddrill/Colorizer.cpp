@@ -30,7 +30,7 @@ Colorizer::Colorizer(const Options &opt, const DrillMap &map) : opt(opt), map(ma
     normalMap.alloc(map.width * map.height);
 
     // Load color palette
-    palette.load(opt.palette.colors);
+    palette.load(opt.colors.palette);
 }
 
 Colorizer::~Colorizer()
@@ -94,7 +94,7 @@ Colorizer::colorize(Coord c)
         sl *= .0025;
         // sl = 2.7 + sl * 30.0;
         sl *= 30.0;
-        sl *= opt.palette.scale;
+        sl *= opt.colors.scale;
 
         image[pos] = palette.interpolateABGR(sl);
     }
