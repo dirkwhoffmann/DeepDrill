@@ -22,7 +22,9 @@ namespace dd {
 
 DrillMap::DrillMap(const Options &o) : opt(o)
 {
-    resize(opt.image.width, opt.image.height);
+    if (opt.image.width && opt.image.height) {
+        resize(opt.image.width, opt.image.height);
+    }
 }
 
 DrillMap::~DrillMap()

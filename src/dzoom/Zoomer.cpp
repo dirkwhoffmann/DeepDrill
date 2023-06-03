@@ -253,9 +253,25 @@ Zoomer::updateTextures(isize nr)
     string name2 = path.string() + "_" + std::to_string(nr + 1) + ".png";
     string nrmName = path.string() + "_" + std::to_string(nr) + "_nrm.png";
     string nrmName2 = path.string() + "_" + std::to_string(nr + 1) + "_nrm.png";
+    string mapName = path.string() + "_" + std::to_string(nr) + ".map";
+    string mapName2 = path.string() + "_" + std::to_string(nr + 1) + ".map";
 
     sf::Texture image;
 
+    // Load map files
+    {   SILENT
+
+        if (!fileExists(mapName)) {
+            throw FileNotFoundError(mapName);
+        }
+        drillMap.load(mapName);
+
+        if (!fileExists(mapName2)) {
+            throw FileNotFoundError(mapName2);
+        }
+        drillMap2.load(mapName2);
+    }
+    
     if (!fileExists(name)) {
         throw FileNotFoundError(name);
     }

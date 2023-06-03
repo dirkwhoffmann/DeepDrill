@@ -16,6 +16,7 @@
 #include "Coord.h"
 #include "Recorder.h"
 #include "Animated.h"
+#include "DrillMap.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,7 +29,11 @@ class Zoomer {
 
     // The application window
     sf::RenderWindow window;
-    
+
+    // Current drill map (read from map file)
+    DrillMap drillMap = DrillMap(opt);
+    DrillMap drillMap2 = DrillMap(opt);
+
     // Texture storing the current keyframe (read from image file)
     sf::Texture source;
     sf::Texture normal;

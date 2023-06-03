@@ -11,6 +11,7 @@ Coord.cpp
 Logger.cpp
 Palette.cpp
 ProgressIndicator.cpp
+DrillMap.cpp
 
 )
 
@@ -34,5 +35,6 @@ Coord.cpp
 Logger.cpp
 Palette.cpp
 ProgressIndicator.cpp
+DrillMap.cpp
 
 )

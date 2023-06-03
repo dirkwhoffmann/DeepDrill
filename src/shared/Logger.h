@@ -60,7 +60,7 @@ static constexpr Light light;
 
 class Logger {
 
-    friend class Precision;
+    friend class Silence;
 
     // The underlying output stream
     std::ostream &stream;
@@ -111,4 +111,20 @@ public:
 // Default logger (writes to stdout)
 namespace log { extern class Logger cout; }
 
+class Silence
+{
+    Logger &logger;
+    bool silent;
+
+public:
+    
+    Silence(Logger &logger) : logger(logger), silent(logger.silent) {
+        logger.setSilent(true);
+    }
+    ~Silence() {
+        logger.setSilent(silent);
+    }
+};
+
+#define SILENT Silence s(log::cout);
 }

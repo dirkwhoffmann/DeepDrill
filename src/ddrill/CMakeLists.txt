@@ -5,7 +5,6 @@ target_sources(deepdrill PRIVATE
 Driller.cpp
 Colorizer.cpp
 Coefficients.cpp
-DrillMap.cpp
 ReferencePoint.cpp
 
 )
