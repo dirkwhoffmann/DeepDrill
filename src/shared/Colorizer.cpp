@@ -23,15 +23,12 @@
 
 namespace dd {
 
+/*
 Colorizer::Colorizer(const Options &opt, const DrillMap &map) : opt(opt), map(map)
 {
-    // Allocate buffers
-    image.alloc(map.width * map.height);
-    normalMap.alloc(map.width * map.height);
-
-    // Load color palette
-    palette.load(opt.colors.palette);
+    init();
 }
+*/
 
 Colorizer::~Colorizer()
 {
@@ -39,14 +36,26 @@ Colorizer::~Colorizer()
 }
 
 void
-Colorizer::colorize()
+Colorizer::init()
+{
+    // Allocate buffers
+    image.alloc(opt.image.width * opt.image.height);
+    normalMap.alloc(opt.image.width * opt.image.height);
+
+    // Load color palette
+    palette.load(opt.colors.palette);
+}
+
+void
+Colorizer::colorize(const DrillMap &map)
 {
     ProgressIndicator progress("Colorizing", map.height * map.width);
 
+    if (image.size == 0) init();
+
     for (isize y = 0; y < map.height; y++) {
-        
         for (isize x = 0; x < map.width; x++) {
-            colorize(Coord(x,y));
+            colorize(map, Coord(x,y));
         }
 
         if (opt.stop) throw UserInterruptException();
@@ -55,7 +64,7 @@ Colorizer::colorize()
 }
 
 void
-Colorizer::colorize(Coord c)
+Colorizer::colorize(const DrillMap &map, Coord c)
 {
     auto data = map.get(c.x, c.y);
     auto pos = (map.height - 1 - c.y) * map.width + c.x;
@@ -131,8 +140,8 @@ Colorizer::save(const string &path, Format format)
 
     auto prefix = stripSuffix(path);
     auto suffix = extractSuffix(path);
-    auto width = (int)map.width;
-    auto height = (int)map.height;
+    auto width = (int)opt.image.width;
+    auto height = (int)opt.image.height;
 
     sf::Image sfImage;
     sfImage.create(width, height, (u8 *)image.ptr);

@@ -66,6 +66,7 @@
 		50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6E29E03F940025DE0D /* NamedPipe.cpp */; };
 		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50DA29512A2B583100600EB0 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
+		50DA29522A2B6EA000600EB0 /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
 		50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
 		50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
@@ -339,8 +340,6 @@
 				50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
-				50EB497226A00C2A0019078C /* Colorizer.h */,
-				50EB497126A00C2A0019078C /* Colorizer.cpp */,
 				50BEC6EF269486A800CCDFA8 /* Coefficients.h */,
 				50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */,
 				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
@@ -525,6 +524,8 @@
 				5047B4E129F812F700AC38DC /* Palette.cpp */,
 				50102351269EC70200AC61A8 /* DrillMap.h */,
 				50102350269EC70200AC61A8 /* DrillMap.cpp */,
+				50EB497226A00C2A0019078C /* Colorizer.h */,
+				50EB497126A00C2A0019078C /* Colorizer.cpp */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -667,6 +668,7 @@
 				50DA29512A2B583100600EB0 /* DrillMap.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepZoom.cpp in Sources */,
 				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
+				50DA29522A2B6EA000600EB0 /* Colorizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,10 +13,14 @@
 
 #include "config.h"
 #include "Application.h"
+#include "Colorizer.h"
 
 namespace dd {
 
 class DeepDrill : public Application {
+
+    Colorizer colorizer = Colorizer(opt);
+
 
     //
     // Methods from Application

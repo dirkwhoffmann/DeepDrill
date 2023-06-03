@@ -25,7 +25,7 @@ class Colorizer {
     const struct Options &opt;
     
     // The associated map file
-    const class DrillMap &map;
+    // const class DrillMap &map;
     
     // The image data
     Buffer <u32> image;
@@ -43,19 +43,22 @@ class Colorizer {
 
 public:
 
-    Colorizer(const Options &options, const DrillMap &map);
+    Colorizer(const Options &opt) : opt(opt) { };
+//     Colorizer(const Options &options, const DrillMap &map);
     ~Colorizer();
-    
+
+    void init();
+
     
     //
     // Colorizing the Mandelbrot set
     //
 
-    void colorize();
+    void colorize(const class DrillMap &map);
 
 private:
 
-    void colorize(struct Coord c);
+    void colorize(const class DrillMap &map, struct Coord c);
 
     
     //
