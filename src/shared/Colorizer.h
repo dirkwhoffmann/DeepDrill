@@ -23,6 +23,8 @@ class Colorizer {
 
     // Configuration options
     const struct Options &opt;
+
+public:
     
     // The associated map file
     // const class DrillMap &map;

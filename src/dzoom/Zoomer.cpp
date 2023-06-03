@@ -248,47 +248,34 @@ Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
 void
 Zoomer::updateTextures(isize nr)
 {
-    auto path = opt.files.input.parent_path() / opt.files.input.stem();
-    string name = path.string() + "_" + std::to_string(nr) + ".png";
-    string name2 = path.string() + "_" + std::to_string(nr + 1) + ".png";
-    string nrmName = path.string() + "_" + std::to_string(nr) + "_nrm.png";
-    string nrmName2 = path.string() + "_" + std::to_string(nr + 1) + "_nrm.png";
-    string mapName = path.string() + "_" + std::to_string(nr) + ".map";
-    string mapName2 = path.string() + "_" + std::to_string(nr + 1) + ".map";
 
-    sf::Texture image;
+    auto mapFile = [&](isize nr) {
 
-    // Load map files
+        auto path = opt.files.input.parent_path() / opt.files.input.stem();
+        return path.string() + "_" + std::to_string(nr) + ".map";
+    };
+
     {   SILENT
 
-        if (!fileExists(mapName)) {
-            throw FileNotFoundError(mapName);
+        // Load map files
+        if (!fileExists(mapFile(nr))) {
+            throw FileNotFoundError(mapFile(nr));
         }
-        drillMap.load(mapName);
+        drillMap.load(mapFile(nr));
 
-        if (!fileExists(mapName2)) {
-            throw FileNotFoundError(mapName2);
+        if (!fileExists(mapFile(nr + 1))) {
+            throw FileNotFoundError(mapFile(nr + 1));
         }
-        drillMap2.load(mapName2);
-    }
-    
-    if (!fileExists(name)) {
-        throw FileNotFoundError(name);
-    }
-    if (!source.loadFromFile(name)) {
-        throw Exception("Can't load image file " + name);
-    }
-    if (!fileExists(name2)) {
-        throw FileNotFoundError(name2);
-    }
-    if (!source2.loadFromFile(name2)) {
-        throw Exception("Can't load image file " + name2);
-    }
-    if (fileExists(nrmName) && !normal.loadFromFile(nrmName)) {
-        throw Exception("Can't load image file " + nrmName);
-    }
-    if (fileExists(nrmName2) && !normal2.loadFromFile(nrmName2)) {
-        throw Exception("Can't load image file " + nrmName2);
+        drillMap2.load(mapFile(nr + 1));
+
+        // Create textures
+        colorizer.colorize(drillMap);
+        source.update((u8 *)colorizer.image.ptr);
+        normal.update((u8 *)colorizer.normalMap.ptr);
+
+        colorizer.colorize(drillMap2);
+        source2.update((u8 *)colorizer.image.ptr);
+        normal2.update((u8 *)colorizer.normalMap.ptr);
     }
 }
 

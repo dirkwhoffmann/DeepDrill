@@ -17,6 +17,7 @@
 #include "Recorder.h"
 #include "Animated.h"
 #include "DrillMap.h"
+#include "Colorizer.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -33,6 +34,9 @@ class Zoomer {
     // Current drill map (read from map file)
     DrillMap drillMap = DrillMap(opt);
     DrillMap drillMap2 = DrillMap(opt);
+
+    // A colorizer for converting drill maps into images
+    Colorizer colorizer = Colorizer(opt);
 
     // Texture storing the current keyframe (read from image file)
     sf::Texture source;
