@@ -11,15 +11,15 @@ depth = 3000
 # zoom = 1
 
 [drillmap]
-width=3840
-height=2160
+#width=3840
+#height=2160
 
 [image]
 #width = 1920
 #height = 1080
 width = 960
 height = 540
-depth = 0
+depth = 1
 
 [colors]
-palette = candy.png
+palette = ultrafrac.png

@@ -1,4 +1,6 @@
-[video]
+[debug]
+glitches = yes
 
-keyframes = 227
-inbetweens = 148
+[export]
+colormap = yes
+normalmap = yes

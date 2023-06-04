@@ -2,7 +2,7 @@
 real = -0.7
 imag = 0
 zoom = 1.7
-depth = 3000
+depth = 800
 
 [drillmap]
 #width=3840
@@ -16,5 +16,5 @@ height = 540
 depth = 1
 
 [colors]
-palette = candy.png
+palette = ultrafrac.png
 

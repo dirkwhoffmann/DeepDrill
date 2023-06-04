@@ -219,19 +219,20 @@ ColorMap::save(const string &path, Format format)
     auto width = (int)opt.drillmap.width;
     auto height = (int)opt.drillmap.height;
 
-    /*
-    sf::Image sfImage;
-    sfImage.create(width, height, (u8 *)colorMap.ptr);
-    sfImage.saveToFile(path);
-    */
-
     final.saveToFile(path);
 
-    if (opt.image.depth) {
+    if (opt.exports.colorMap) {
 
-        sf::Image nrmImage;
-        nrmImage.create(width, height, (u8 *)normalMap.ptr);
-        nrmImage.saveToFile(prefix + "_nrm." + suffix);
+        sf::Image img;
+        img.create(width, height, (u8 *)colorMap.ptr);
+        img.saveToFile(prefix + "_raw." + suffix);
+    }
+
+    if (opt.exports.normalMap) {
+
+        sf::Image img;
+        img.create(width, height, (u8 *)normalMap.ptr);
+        img.saveToFile(prefix + "_nrm." + suffix);
     }
 }
 

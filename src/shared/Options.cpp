@@ -64,6 +64,10 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
 
+    // Export keys
+    defaults["export.colormap"] = "no";
+    defaults["export.normalmap"] = "no";
+
     // Debug keys
     defaults["debug.glitches"] = "no";
 }
@@ -214,6 +218,14 @@ Options::parse(string key, string value)
     } else if (key == "approximation.tolerance") {
 
         parse(key, value, approximation.tolerance);
+
+    } else if (key == "export.colormap") {
+
+        parse(key, value, exports.colorMap);
+
+    } else if (key == "export.normalmap") {
+
+        parse(key, value, exports.normalMap);
 
     } else if (key == "debug.glitches") {
 

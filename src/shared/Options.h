@@ -172,6 +172,16 @@ struct Options {
 
     struct {
 
+        // Indicates if the color map should be saved
+        bool colorMap;
+
+        // Indicates if the normal map should be saved
+        bool normalMap;
+
+    } exports;
+
+    struct {
+
         // Highlight glitches in texture
         bool glitches;
 
