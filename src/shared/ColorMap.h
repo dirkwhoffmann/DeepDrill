@@ -26,8 +26,8 @@ class ColorMap {
 
 public:
         
-    // The image data
-    Buffer <u32> image;
+    // The colorized drill map
+    Buffer <u32> colorMap;
 
     // The normal map
     Buffer <u32> normalMap;
@@ -45,21 +45,25 @@ public:
     ColorMap(const Options &opt) : opt(opt) { };
     ~ColorMap();
 
-    void resize();
+private:
+
+    void resize(const class DrillMap &map);
     void resize(isize w, isize h);
 
-    [[deprecated]] void init();
+    // [[deprecated]] void init();
 
     
     //
     // Colorizing the Mandelbrot set
     //
 
-    void colorize(const class DrillMap &map);
+public:
+
+    void compute(const class DrillMap &map);
 
 private:
 
-    void colorize(const class DrillMap &map, struct Coord c);
+    void compute(const class DrillMap &map, struct Coord c);
 
     
     //

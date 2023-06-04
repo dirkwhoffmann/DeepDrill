@@ -12,7 +12,7 @@ Logger.cpp
 Palette.cpp
 ProgressIndicator.cpp
 DrillMap.cpp
-Colorizer.cpp
+ColorMap.cpp
 
 )
 
@@ -37,6 +37,6 @@ Logger.cpp
 Palette.cpp
 ProgressIndicator.cpp
 DrillMap.cpp
-Colorizer.cpp
+ColorMap.cpp
 
 )

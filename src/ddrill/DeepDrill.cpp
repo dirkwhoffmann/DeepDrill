@@ -147,7 +147,7 @@ DeepDrill::run()
         BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
         // Run the colorizer
-        colorizer.colorize(drillMap);
+        colorizer.compute(drillMap);
         colorizer.save(opt.files.output, outputFormat);
     }
 }

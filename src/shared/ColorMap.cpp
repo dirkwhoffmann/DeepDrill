@@ -29,9 +29,9 @@ ColorMap::~ColorMap()
 }
 
 void
-ColorMap::resize()
+ColorMap::resize(const class DrillMap &map)
 {
-    resize(opt.image.width, opt.image.height);
+    resize(map.width, map.height);
 }
 
 void
@@ -41,34 +41,36 @@ ColorMap::resize(isize w, isize h)
     assert(h >= MIN_IMAGE_HEIGHT && h <= MAX_IMAGE_HEIGHT);
 
     // Allocate buffers
-    image.alloc(opt.image.width * opt.image.height);
+    colorMap.alloc(opt.image.width * opt.image.height);
     normalMap.alloc(opt.image.width * opt.image.height);
 
     // Reload color palette
     palette.load(opt.colors.palette);
 }
 
+/*
 void
 ColorMap::init()
 {
     // Allocate buffers
-    image.alloc(opt.image.width * opt.image.height);
+    colorMap.alloc(opt.image.width * opt.image.height);
     normalMap.alloc(opt.image.width * opt.image.height);
 
     // Load color palette
     palette.load(opt.colors.palette);
 }
+*/
 
 void
-ColorMap::colorize(const DrillMap &map)
+ColorMap::compute(const DrillMap &map)
 {
     ProgressIndicator progress("Colorizing", map.height * map.width);
 
-    resize();
+    resize(map.width, map.height);
 
     for (isize y = 0; y < map.height; y++) {
         for (isize x = 0; x < map.width; x++) {
-            colorize(map, Coord(x,y));
+            compute(map, Coord(x,y));
         }
 
         if (opt.stop) throw UserInterruptException();
@@ -77,7 +79,7 @@ ColorMap::colorize(const DrillMap &map)
 }
 
 void
-ColorMap::colorize(const DrillMap &map, Coord c)
+ColorMap::compute(const DrillMap &map, Coord c)
 {
     auto data = map.get(c.x, c.y);
     auto pos = (map.height - 1 - c.y) * map.width + c.x;
@@ -89,26 +91,12 @@ ColorMap::colorize(const DrillMap &map, Coord c)
     if (data.iteration == UINT32_MAX) {
 
         // Map to a black or to a debug color if the point is a glitch point
-        image[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
+        colorMap[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
 
     } else if (data.iteration == 0) {
 
         // Map to a black if the point belongs to the mandelbrot set
-        image[pos] = 0xFF000000;
-
-    /*
-    } else if (opt.palette.mode == ColoringMode::Relief) {
-
-        double a = 0.7;
-        double b = 0.7;
-        double h2 = 1.5;
-        double t = data.normal.re * a + data.normal.im * b + h2;
-        t = t / (1 + h2);
-        if (t < 0) t = 0;
-        t *= 255.0;
-
-        image[pos] = 0xFF << 24 | u8(t) << 16 | u8(t) << 8 | u8(t);
-    */
+        colorMap[pos] = 0xFF000000;
 
     } else {
 
@@ -118,7 +106,7 @@ ColorMap::colorize(const DrillMap &map, Coord c)
         sl *= 30.0;
         sl *= opt.colors.scale;
 
-        image[pos] = palette.interpolateABGR(sl);
+        colorMap[pos] = palette.interpolateABGR(sl);
     }
 
     //
@@ -157,7 +145,7 @@ ColorMap::save(const string &path, Format format)
     auto height = (int)opt.image.height;
 
     sf::Image sfImage;
-    sfImage.create(width, height, (u8 *)image.ptr);
+    sfImage.create(width, height, (u8 *)colorMap.ptr);
     sfImage.saveToFile(path);
 
     if (opt.image.depth) {
