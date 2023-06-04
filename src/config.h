@@ -26,10 +26,34 @@
 
 
 //
+// Constants
+//
+
+static const int MIN_MAP_WIDTH      = 480;
+static const int MIN_MAP_HEIGHT     = 270;
+
+static const int MAX_MAP_WIDTH      = 7680;
+static const int MAX_MAP_HEIGHT     = 4320;
+
+static const int MIN_IMAGE_WIDTH    = 480;
+static const int MIN_IMAGE_HEIGHT   = 270;
+
+static const int MAX_IMAGE_WIDTH    = 3840;
+static const int MAX_IMAGE_HEIGHT   = 2160;
+
+static const int MIN_VIDEO_WIDTH    = 480;
+static const int MIN_VIDEO_HEIGHT   = 270;
+
+static const int MAX_VIDEO_WIDTH    = 1920;
+static const int MAX_VIDEO_HEIGHT   = 1080;
+
+
+//
 // Debug settings
 //
 
 static const int REC_DEBUG          = 0; // Video recording
+
 
 //
 // Forced error conditions

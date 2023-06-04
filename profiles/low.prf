@@ -1,6 +1,6 @@
 [image]
 width = 480
-height = 260
+height = 270
 
 [perturbation]
 tolerance = 1e-6

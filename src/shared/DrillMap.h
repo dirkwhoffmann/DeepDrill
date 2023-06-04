@@ -67,6 +67,8 @@ public:
 
     DrillMap(const Options &options);
     ~DrillMap();
+
+    void resize();
     void resize(isize w, isize h);
 
 

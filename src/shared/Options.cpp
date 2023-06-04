@@ -26,6 +26,10 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["location.zoom"] = "1.0";
     defaults["location.depth"] = "500";
 
+    // Drill map keys
+    defaults["drillmap.width"] = "0";
+    defaults["drillmap.height"] = "0";
+
     // Image keys
     defaults["image.width"] = "960";
     defaults["image.height"] = "540";
@@ -91,35 +95,25 @@ Options::parse(string key, string value)
 
         parse(key, value, location.depth);
 
+    } else if (key == "drillmap.width") {
+
+        parse(key, value, drillmap.width, 240, 3840);
+
+    } else if (key == "drillmap.height") {
+
+        parse(key, value, drillmap.height, 135, 3840);
+
     } else if (key == "image.width") {
 
-        parse(key, value, image.width);
-
-        if (image.width == 0) {
-            throw KeyValueError(key, "Width must be greater than 0.");
-        }
-        if (image.width > 3840) {
-            throw KeyValueError(key, "Width must be smaller or equal to 3840.");
-        }
+        parse(key, value, image.width, 240, 3840);
 
     } else if (key == "image.height") {
 
-        parse(key, value, image.height);
-
-        if (image.height == 0) {
-            throw KeyValueError(key, "Height must be greater than 0.");
-        }
-        if (image.height > 2160) {
-            throw KeyValueError(key, "Height must be less or equal to 2160.");
-        }
+        parse(key, value, image.height, 135, 3840);
 
     } else if (key == "image.depth") {
 
-        parse(key, value, image.depth);
-
-        if (image.depth < 0 || image.depth > 1) {
-            throw KeyValueError(key, "Depth must be 0 or 1.");
-        }
+        parse(key, value, image.depth, 0, 1);
 
     } else if (key == "image.badpixels") {
 
@@ -127,33 +121,16 @@ Options::parse(string key, string value)
 
     } else if (key == "video.framerate") {
 
-        parse(key, value, video.frameRate);
-
-        if (video.frameRate < 25 || video.frameRate > 240) {
-            throw KeyValueError(key, "Framerate out of range (25 - 240)");
-        }
+        parse(key, value, video.frameRate, 25, 240);
 
     } else if (key == "video.width") {
 
-        parse(key, value, video.width);
-
-        if (video.width < 0) {
-            throw KeyValueError(key, "Width must not be negative.");
-        }
-        if (video.width > 1920) {
-            throw KeyValueError(key, "Width must be smaller or equal to 1920.");
-        }
+        parse(key, value, video.width, 0, 1920);
 
     } else if (key == "video.height") {
 
-        parse(key, value, video.height);
+        parse(key, value, video.height, 0, 1080);
 
-        if (video.height < 0) {
-            throw KeyValueError(key, "Height must not be negative.");
-        }
-        if (video.height > 1080) {
-            throw KeyValueError(key, "Height must be less or equal to 1080.");
-        }
         if (video.height % 2 == 1) {
             throw KeyValueError(key, "Height must be dividable by 2.");
         }
@@ -272,6 +249,21 @@ Options::parse(const string &key, const string &value, isize &parsed)
 }
 
 void
+Options::parse(const string &key, const string &value, isize &parsed, isize min, isize max)
+{
+    parse(key, value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be <= " + std::to_string(max));
+    }
+}
+
+void
 Options::parse(const string &key, const string &value, double &parsed)
 {
     try {
@@ -309,14 +301,22 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
-    // Set default values for all missing options
+    // Adjust some default values
+    if (keys.find("image.width") != keys.end()) {
+        defaults["drillmap.width"] = keys["image.width"];
+    }
+    if (keys.find("image.height") != keys.end()) {
+        defaults["drillmap.height"] = keys["image.height"];
+    }
+
+    // Use default values for all missing keys
     for (auto &it : defaults) {
         if (keys.find(it.first) == keys.end()) {
             parse(it.first, it.second);
         }
     }
 
-    // Derive unspecified parameters
+    // Derive unspecified video parameters
     auto frameRate = double(video.frameRate);
     auto keyframes = double(video.keyframes);
     auto inbetweens = double(video.inbetweens);

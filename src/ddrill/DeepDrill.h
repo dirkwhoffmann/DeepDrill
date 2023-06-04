@@ -13,12 +13,17 @@
 
 #include "config.h"
 #include "Application.h"
+#include "DrillMap.h"
 #include "Colorizer.h"
 
 namespace dd {
 
 class DeepDrill : public Application {
 
+    // The drill map
+    DrillMap drillMap = DrillMap(opt);
+
+    // A colorizer for converting the drill map into an image
     Colorizer colorizer = Colorizer(opt);
 
 

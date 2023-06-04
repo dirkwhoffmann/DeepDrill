@@ -29,11 +29,14 @@ StandardComplex::StandardComplex(const ExtendedComplex &other)
 
 std::ostream& operator<<(std::ostream& os, const StandardComplex& c)
 {
+    /*
     if (c.im < 0.0) {
-        os << c.re << "-i" << -c.im;
+        os << c.re << " - " << -c.im << "i";
     } else {
-        os << c.re << "+i" << c.im;
+        os << c.re << " + " << c.im << "i";
     }
+    */
+    os << "(" << c.re << "," << c.im << "i)";
     return os;
 }
 

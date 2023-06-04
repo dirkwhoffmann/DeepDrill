@@ -22,9 +22,7 @@ namespace dd {
 
 DrillMap::DrillMap(const Options &o) : opt(o)
 {
-    if (opt.image.width && opt.image.height) {
-        resize(opt.image.width, opt.image.height);
-    }
+
 }
 
 DrillMap::~DrillMap()
@@ -33,10 +31,16 @@ DrillMap::~DrillMap()
 }
 
 void
+DrillMap::resize()
+{
+    resize(opt.drillmap.width, opt.drillmap.height);
+}
+
+void
 DrillMap::resize(isize w, isize h)
 {
-    assert(w <= 3840);
-    assert(h <= 2160);
+    assert(w >= MIN_MAP_WIDTH && w <= MAX_MAP_WIDTH);
+    assert(h >= MIN_MAP_HEIGHT && h <= MAX_MAP_HEIGHT);
 
     if (data) delete [] data;
     
@@ -366,6 +370,8 @@ DrillMap::save(std::ostream &os)
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;
+        log::cout << log::ralign("Map size: ");
+        log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Iteration counts: ");
         log::cout << (saveIterations ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Lognorms: ");

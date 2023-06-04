@@ -80,6 +80,14 @@ struct Options {
 
     struct {
 
+        // Drill map dimensions in pixels
+        isize width;
+        isize height;
+
+    } drillmap;
+
+    struct {
+
         // Image dimensions in pixels
         isize width;
         isize height;
@@ -143,7 +151,7 @@ struct Options {
         
         // Maximum number of rounds
         isize rounds;
-                
+
     } perturbation;
     
     struct {
@@ -203,6 +211,7 @@ private:
     void parse(const string &key, const string &value, string &parsed);
     void parse(const string &key, const string &value, bool &parsed);
     void parse(const string &key, const string &value, isize &parsed);
+    void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
     void parse(const string &key, const string &value, ColoringMode &parsed);

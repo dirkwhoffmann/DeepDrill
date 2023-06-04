@@ -118,7 +118,7 @@ DeepDrill::run()
     auto inputFormat = AssetManager::getFormat(opt.files.input);
     auto outputFormat = AssetManager::getFormat(opt.files.output);
 
-    DrillMap drillMap(opt);
+    drillMap.resize();
 
     // Create the drill map
     if (inputFormat == Format::MAP) {
