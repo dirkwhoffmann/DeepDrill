@@ -19,16 +19,13 @@
 
 namespace dd {
 
-class Colorizer {
+class ColorMap {
 
     // Configuration options
     const struct Options &opt;
 
 public:
-    
-    // The associated map file
-    // const class DrillMap &map;
-    
+        
     // The image data
     Buffer <u32> image;
 
@@ -45,11 +42,13 @@ public:
 
 public:
 
-    Colorizer(const Options &opt) : opt(opt) { };
-//     Colorizer(const Options &options, const DrillMap &map);
-    ~Colorizer();
+    ColorMap(const Options &opt) : opt(opt) { };
+    ~ColorMap();
 
-    void init();
+    void resize();
+    void resize(isize w, isize h);
+
+    [[deprecated]] void init();
 
     
     //

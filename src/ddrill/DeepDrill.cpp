@@ -11,7 +11,7 @@
 
 #include "DeepDrill.h"
 #include "Driller.h"
-#include "Colorizer.h"
+#include "ColorMap.h"
 #include "ProgressIndicator.h"
 
 #include <getopt.h>

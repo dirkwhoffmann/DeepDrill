@@ -66,9 +66,9 @@
 		50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6E29E03F940025DE0D /* NamedPipe.cpp */; };
 		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50DA29512A2B583100600EB0 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
-		50DA29522A2B6EA000600EB0 /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
+		50DA29522A2B6EA000600EB0 /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* ColorMap.cpp */; };
 		50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
-		50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* Colorizer.cpp */; };
+		50EB497326A00C2A0019078C /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* ColorMap.cpp */; };
 		50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 /* End PBXBuildFile section */
 
@@ -250,8 +250,8 @@
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
 		50EB0D4F29F596DE00770F31 /* infinity.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.prf; sourceTree = "<group>"; };
-		50EB497126A00C2A0019078C /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
-		50EB497226A00C2A0019078C /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
+		50EB497126A00C2A0019078C /* ColorMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMap.cpp; sourceTree = "<group>"; };
+		50EB497226A00C2A0019078C /* ColorMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMap.h; sourceTree = "<group>"; };
 		50EB497426A067850019078C /* Maker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maker.cpp; sourceTree = "<group>"; };
 		50EB497526A067850019078C /* Maker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maker.h; sourceTree = "<group>"; };
 		50F8C40F29E44042008A0B4C /* nearest.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = nearest.glsl; sourceTree = "<group>"; };
@@ -524,8 +524,8 @@
 				5047B4E129F812F700AC38DC /* Palette.cpp */,
 				50102351269EC70200AC61A8 /* DrillMap.h */,
 				50102350269EC70200AC61A8 /* DrillMap.cpp */,
-				50EB497226A00C2A0019078C /* Colorizer.h */,
-				50EB497126A00C2A0019078C /* Colorizer.cpp */,
+				50EB497226A00C2A0019078C /* ColorMap.h */,
+				50EB497126A00C2A0019078C /* ColorMap.cpp */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -668,7 +668,7 @@
 				50DA29512A2B583100600EB0 /* DrillMap.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepZoom.cpp in Sources */,
 				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
-				50DA29522A2B6EA000600EB0 /* Colorizer.cpp in Sources */,
+				50DA29522A2B6EA000600EB0 /* ColorMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,7 +721,7 @@
 				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */,
-				50EB497326A00C2A0019078C /* Colorizer.cpp in Sources */,
+				50EB497326A00C2A0019078C /* ColorMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

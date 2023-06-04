@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Buffer.h"
 #include "StandardComplex.h"
 
 namespace dd {
@@ -52,7 +53,7 @@ public:
     // Configuration options
     const struct Options &opt;
 
-    // Image dimensions
+    // Resolution
     isize width = 0;
     isize height = 0;
     
@@ -65,7 +66,7 @@ public:
     // Initializing
     //
 
-    DrillMap(const Options &options);
+    DrillMap(const Options &opt) : opt(opt) { };
     ~DrillMap();
 
     void resize();

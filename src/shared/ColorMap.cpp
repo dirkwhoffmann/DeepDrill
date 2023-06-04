@@ -9,7 +9,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "Colorizer.h"
+#include "ColorMap.h"
 #include "Coord.h"
 #include "DrillMap.h"
 #include "Exception.h"
@@ -23,20 +23,33 @@
 
 namespace dd {
 
-/*
-Colorizer::Colorizer(const Options &opt, const DrillMap &map) : opt(opt), map(map)
-{
-    init();
-}
-*/
-
-Colorizer::~Colorizer()
+ColorMap::~ColorMap()
 {
 
 }
 
 void
-Colorizer::init()
+ColorMap::resize()
+{
+    resize(opt.image.width, opt.image.height);
+}
+
+void
+ColorMap::resize(isize w, isize h)
+{
+    assert(w >= MIN_IMAGE_WIDTH && w <= MAX_IMAGE_WIDTH);
+    assert(h >= MIN_IMAGE_HEIGHT && h <= MAX_IMAGE_HEIGHT);
+
+    // Allocate buffers
+    image.alloc(opt.image.width * opt.image.height);
+    normalMap.alloc(opt.image.width * opt.image.height);
+
+    // Reload color palette
+    palette.load(opt.colors.palette);
+}
+
+void
+ColorMap::init()
 {
     // Allocate buffers
     image.alloc(opt.image.width * opt.image.height);
@@ -47,11 +60,11 @@ Colorizer::init()
 }
 
 void
-Colorizer::colorize(const DrillMap &map)
+ColorMap::colorize(const DrillMap &map)
 {
     ProgressIndicator progress("Colorizing", map.height * map.width);
 
-    if (image.size == 0) init();
+    resize();
 
     for (isize y = 0; y < map.height; y++) {
         for (isize x = 0; x < map.width; x++) {
@@ -64,7 +77,7 @@ Colorizer::colorize(const DrillMap &map)
 }
 
 void
-Colorizer::colorize(const DrillMap &map, Coord c)
+ColorMap::colorize(const DrillMap &map, Coord c)
 {
     auto data = map.get(c.x, c.y);
     auto pos = (map.height - 1 - c.y) * map.width + c.x;
@@ -134,7 +147,7 @@ Colorizer::colorize(const DrillMap &map, Coord c)
 }
 
 void
-Colorizer::save(const string &path, Format format)
+ColorMap::save(const string &path, Format format)
 {
     ProgressIndicator progress("Saving image data");
 

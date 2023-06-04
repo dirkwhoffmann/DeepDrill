@@ -20,11 +20,6 @@
 
 namespace dd {
 
-DrillMap::DrillMap(const Options &o) : opt(o)
-{
-
-}
-
 DrillMap::~DrillMap()
 {
     delete [] data;
