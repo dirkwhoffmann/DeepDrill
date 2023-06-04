@@ -31,9 +31,7 @@ ColorMap::~ColorMap()
 void
 ColorMap::init()
 {
-    // Do not call this function twice
-    assert(colorMap.size == 0);
-    assert(normalMap.size == 0);
+    if (colorMap.size != 0) return;
 
     auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
     auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
