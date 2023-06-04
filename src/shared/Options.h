@@ -94,9 +94,9 @@ struct Options {
 
         // Indicates if a normal map should be computed
         isize depth;
-        
-        // Fraction of pixels that are allowed to have a wrong color
-        double badpixels;
+
+        // Path to the downscaling filter
+        string scaler;
 
     } image;
 
@@ -148,7 +148,10 @@ struct Options {
 
         // Tolerance used for glitch detection
         double tolerance;
-        
+
+        // Fraction of pixels that are allowed to have a wrong color
+        double badpixels;
+
         // Maximum number of rounds
         isize rounds;
 

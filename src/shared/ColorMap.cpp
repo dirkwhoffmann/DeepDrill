@@ -45,21 +45,21 @@ ColorMap::resize(isize w, isize h)
     assert(normalMap.size == 0);
 
     // Allocate buffers
-    colorMap.alloc(opt.image.width * opt.image.height);
-    normalMap.alloc(opt.image.width * opt.image.height);
+    colorMap.alloc(w * h);
+    normalMap.alloc(w * h);
 
     // Load color palette
     palette.load(opt.colors.palette);
 
     // Create textures
-    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
+    auto mapDim = sf::Vector2u(unsigned(w), unsigned(h));
     auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
     initTexture(colorMapTex, sourceRect, mapDim);
     initTexture(normalMapTex, mapDim);
     initRenderTexture(finalTex, targetRect, imageDim);
 
     // Load shaders
-    initShader(scaler, "lambert.glsl"); // TODO: CHANGE TO IMAGE.SCALER
+    initShader(scaler, opt.image.scaler);
 }
 
 void
@@ -203,9 +203,10 @@ ColorMap::compose()
     auto y = std::sin(a) * l;
     auto x = std::cos(a) * l;
 
-    scaler.setUniform("lightDir", sf::Vector3f(x, y, z));
+    scaler.setUniform("size", sf::Vector2f(colorMapTex.getSize()));
     scaler.setUniform("image", colorMapTex);
     scaler.setUniform("normal", normalMapTex);
+    scaler.setUniform("lightDir", sf::Vector3f(x, y, z));
     finalTex.draw(targetRect, &scaler);
     finalTex.display();
 
@@ -220,14 +221,15 @@ ColorMap::save(const string &path, Format format)
 
     auto prefix = stripSuffix(path);
     auto suffix = extractSuffix(path);
-    auto width = (int)opt.image.width;
-    auto height = (int)opt.image.height;
+    auto width = (int)opt.drillmap.width;
+    auto height = (int)opt.drillmap.height;
 
     /*
     sf::Image sfImage;
     sfImage.create(width, height, (u8 *)colorMap.ptr);
     sfImage.saveToFile(path);
     */
+
     final.saveToFile(path);
 
     if (opt.image.depth) {

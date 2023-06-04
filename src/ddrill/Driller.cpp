@@ -28,7 +28,10 @@ Driller::drill()
 {    
     vector<Coord> remaining;
     vector<Coord> glitches;
-        
+
+    auto width = opt.drillmap.width;
+    auto height = opt.drillmap.height;
+
     if (opt.flags.verbose) {
         
         log::cout << log::vspace;
@@ -38,6 +41,8 @@ Driller::drill()
         log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Pixel delta: ");
         log::cout << opt.mpfPixelDelta << log::endl;
+        log::cout << log::ralign("Map size: ");
+        log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("GMP Precision: ");
         log::cout << mpf_get_default_prec() << " Bit" << log::endl;
         log::cout << log::ralign("Max rounds: ");
@@ -46,11 +51,11 @@ Driller::drill()
     }
             
     // Determine the number of tolerated glitched pixels
-    isize threshold = opt.image.width * opt.image.height * opt.image.badpixels;
+    isize threshold = width * height * opt.perturbation.badpixels;
         
     // Collect all pixel coordinates to be drilled at
-    for (isize y = 0; y < opt.image.height; y++) {
-        for (isize x = 0; x < opt.image.width; x++) {
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
             
             remaining.push_back(Coord(x,y));
         }
@@ -162,8 +167,8 @@ Driller::pickProbePoints(vector <Coord> &probes)
     
     static const isize sampling = 2;
 
-    isize width = opt.image.width - 1;
-    isize height = opt.image.height - 1;
+    isize width = opt.drillmap.width - 1;
+    isize height = opt.drillmap.height - 1;
     
     probes.clear();
     

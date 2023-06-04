@@ -33,8 +33,8 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Image keys
     defaults["image.width"] = "960";
     defaults["image.height"] = "540";
-    defaults["image.depth"] = "0";
-    defaults["image.badpixels"] = "0.001";
+    defaults["image.depth"] = "1";
+    defaults["image.scaler"] = "imageScaler.glsl";
 
     // Video keys
     defaults["video.framerate"] = "60";
@@ -56,6 +56,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Perturbation keys
     defaults["perturbation.enabled"] = "yes";
     defaults["perturbation.tolerance"] = "1e-6";
+    defaults["perturbation.badpixels"] = "0.001";
     defaults["perturbation.rounds"] = "50";
 
     // Approximation keys
@@ -115,9 +116,9 @@ Options::parse(string key, string value)
 
         parse(key, value, image.depth, 0, 1);
 
-    } else if (key == "image.badpixels") {
+    } else if (key == "image.scaler") {
 
-        parse(key, value, image.badpixels);
+        image.scaler = assets.findAsset(value, Format::GLSL);
 
     } else if (key == "video.framerate") {
 
@@ -192,6 +193,10 @@ Options::parse(string key, string value)
     } else if (key == "perturbation.tolerance") {
 
         parse(key, value, perturbation.tolerance);
+
+    } else if (key == "perturbation.badpixels") {
+
+        parse(key, value, perturbation.badpixels);
 
     } else if (key == "perturbation.rounds") {
 
@@ -342,7 +347,7 @@ Options::derive()
     center = PrecisionComplex(location.real, location.imag);
 
     // Compute the distance between two pixels on the complex plane
-    mpfPixelDelta = mpf_class(4.0) / location.zoom / image.height;
+    mpfPixelDelta = mpf_class(4.0) / location.zoom / drillmap.height;
     pixelDelta = mpfPixelDelta;
 }
 

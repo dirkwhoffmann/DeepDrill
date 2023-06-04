@@ -89,8 +89,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-p medium.prf"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-p high.prf "
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p ultra.prf "
