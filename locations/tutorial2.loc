@@ -1,0 +1,20 @@
+[location]
+real = -0.7
+imag = 0
+zoom = 1.7
+depth = 3000
+
+[drillmap]
+#width=3840
+#height=2160
+
+[image]
+#width = 1920
+#height = 1080
+width = 960
+height = 540
+depth = 1
+
+[colors]
+palette = candy.png
+

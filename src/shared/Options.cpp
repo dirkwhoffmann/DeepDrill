@@ -29,6 +29,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Drill map keys
     defaults["drillmap.width"] = "960";
     defaults["drillmap.height"] = "540";
+    defaults["drillmap.depth"] = "1";
 
     // Image keys
     defaults["image.width"] = "960";
@@ -103,6 +104,10 @@ Options::parse(string key, string value)
     } else if (key == "drillmap.height") {
 
         parse(key, value, drillmap.height, 135, 3840);
+
+    } else if (key == "drillmap.depth") {
+
+        parse(key, value, drillmap.depth, 0, 1);
 
     } else if (key == "image.width") {
 

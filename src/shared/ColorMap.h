@@ -62,9 +62,7 @@ public:
 
 private:
 
-    void resize(const class DrillMap &map);
-    void resize(isize w, isize h);
-
+    void init();
     void initTexture(sf::Texture &tex, sf::Vector2u size);
     void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
     void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);

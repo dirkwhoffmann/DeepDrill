@@ -249,6 +249,7 @@
 		50D69A7629E2A4630025DE0D /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		50DA29532A2C876900600EB0 /* tutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.loc; sourceTree = "<group>"; };
 		50DA29542A2C8D0A00600EB0 /* imageScaler.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = imageScaler.glsl; sourceTree = "<group>"; };
+		50DA29552A2CAE4F00600EB0 /* tutorial2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial2.loc; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
 		50EB0D4F29F596DE00770F31 /* infinity.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.prf; sourceTree = "<group>"; };
@@ -443,6 +444,7 @@
 				5047B4E529F82D4500AC38DC /* base.loc */,
 				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				50DA29532A2C876900600EB0 /* tutorial.loc */,
+				50DA29552A2CAE4F00600EB0 /* tutorial2.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";

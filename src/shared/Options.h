@@ -84,6 +84,9 @@ struct Options {
         isize width;
         isize height;
 
+        // Indicates if a normal map should be computed
+        isize depth;
+
     } drillmap;
 
     struct {
@@ -92,7 +95,7 @@ struct Options {
         isize width;
         isize height;
 
-        // Indicates if a normal map should be computed
+        // Indicates if a 3D effect should be applied
         isize depth;
 
         // Path to the downscaling filter

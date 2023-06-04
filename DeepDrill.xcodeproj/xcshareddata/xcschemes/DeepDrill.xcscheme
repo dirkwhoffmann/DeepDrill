@@ -65,7 +65,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "tutorial.loc"
+            argument = "tutorial2.loc"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

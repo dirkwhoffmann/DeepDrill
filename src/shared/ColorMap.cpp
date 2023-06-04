@@ -29,31 +29,23 @@ ColorMap::~ColorMap()
 }
 
 void
-ColorMap::resize(const class DrillMap &map)
+ColorMap::init()
 {
-    resize(map.width, map.height);
-}
-
-void
-ColorMap::resize(isize w, isize h)
-{
-    assert(w >= MIN_IMAGE_WIDTH && w <= MAX_IMAGE_WIDTH);
-    assert(h >= MIN_IMAGE_HEIGHT && h <= MAX_IMAGE_HEIGHT);
-
     // Do not call this function twice
     assert(colorMap.size == 0);
     assert(normalMap.size == 0);
 
+    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
+    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
+
     // Allocate buffers
-    colorMap.alloc(w * h);
-    normalMap.alloc(w * h);
+    colorMap.alloc(mapDim.x * mapDim.y);
+    normalMap.alloc(mapDim.x * mapDim.y);
 
     // Load color palette
     palette.load(opt.colors.palette);
 
     // Create textures
-    auto mapDim = sf::Vector2u(unsigned(w), unsigned(h));
-    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
     initTexture(colorMapTex, sourceRect, mapDim);
     initTexture(normalMapTex, mapDim);
     initRenderTexture(finalTex, targetRect, imageDim);
@@ -114,7 +106,10 @@ ColorMap::compute(const DrillMap &map)
 {
     ProgressIndicator progress("Colorizing", map.height * map.width);
 
-    resize(map.width, map.height);
+    assert(map.width == opt.drillmap.width);
+    assert(map.height == opt.drillmap.height);
+
+    init();
 
     for (isize y = 0; y < map.height; y++) {
         for (isize x = 0; x < map.width; x++) {
