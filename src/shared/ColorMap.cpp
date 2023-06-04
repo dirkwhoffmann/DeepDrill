@@ -164,7 +164,11 @@ ColorMap::compute(const DrillMap &map, Coord c)
     // Colorize normal map
     //
 
-    if (data.iteration == UINT32_MAX) {
+    if (opt.image.depth == 0) {
+
+        normalMap[pos] = 0;
+
+    } else if (data.iteration == UINT32_MAX) {
 
         // Map to zero if the point is a glitch point
         normalMap[pos] = 0;

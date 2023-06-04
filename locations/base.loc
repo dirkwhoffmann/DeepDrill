@@ -8,9 +8,6 @@ imag = -1.1172396839363245916885582764842365153821675295821199843265465854803158
 zoom = 4096
 depth = 300
 
-[perturbation]
-# enabled = false
-
 [approximation]
 coefficients = 10
 

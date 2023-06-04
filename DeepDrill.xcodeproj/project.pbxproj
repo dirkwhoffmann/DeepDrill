@@ -247,6 +247,8 @@
 		50D69A7129E0409E0025DE0D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
 		50D69A7629E2A4630025DE0D /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
+		50DA29532A2C876900600EB0 /* tutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.loc; sourceTree = "<group>"; };
+		50DA29542A2C8D0A00600EB0 /* imageScaler.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = imageScaler.glsl; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EB0D4A29F3E15800770F31 /* debug.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.prf; sourceTree = "<group>"; };
 		50EB0D4F29F596DE00770F31 /* infinity.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity.prf; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				50BEC7352694872A00CCDFA8 /* x.loc */,
 				5047B4E529F82D4500AC38DC /* base.loc */,
 				50BEC72F2694872900CCDFA8 /* spider.loc */,
+				50DA29532A2C876900600EB0 /* tutorial.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				504FE2C52A1CF2A3007A3F04 /* catmull.glsl */,
 				50F8C41129EC3C97008A0B4C /* lambert.glsl */,
 				50B5C7772A29D55700E531CC /* relief.glsl */,
+				50DA29542A2C8D0A00600EB0 /* imageScaler.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

@@ -27,13 +27,13 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["location.depth"] = "500";
 
     // Drill map keys
-    defaults["drillmap.width"] = "0";
-    defaults["drillmap.height"] = "0";
+    defaults["drillmap.width"] = "960";
+    defaults["drillmap.height"] = "540";
 
     // Image keys
     defaults["image.width"] = "960";
     defaults["image.height"] = "540";
-    defaults["image.depth"] = "1";
+    defaults["image.depth"] = "0";
     defaults["image.badpixels"] = "0.001";
 
     // Video keys
