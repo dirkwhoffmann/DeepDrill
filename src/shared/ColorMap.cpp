@@ -40,26 +40,74 @@ ColorMap::resize(isize w, isize h)
     assert(w >= MIN_IMAGE_WIDTH && w <= MAX_IMAGE_WIDTH);
     assert(h >= MIN_IMAGE_HEIGHT && h <= MAX_IMAGE_HEIGHT);
 
-    // Allocate buffers
-    colorMap.alloc(opt.image.width * opt.image.height);
-    normalMap.alloc(opt.image.width * opt.image.height);
+    // Do not call this function twice
+    assert(colorMap.size == 0);
+    assert(normalMap.size == 0);
 
-    // Reload color palette
-    palette.load(opt.colors.palette);
-}
-
-/*
-void
-ColorMap::init()
-{
     // Allocate buffers
     colorMap.alloc(opt.image.width * opt.image.height);
     normalMap.alloc(opt.image.width * opt.image.height);
 
     // Load color palette
     palette.load(opt.colors.palette);
+
+    // Create textures
+    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
+    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
+    initTexture(colorMapTex, sourceRect, mapDim);
+    initTexture(normalMapTex, mapDim);
+    initRenderTexture(finalTex, targetRect, imageDim);
+
+    // Load shaders
+    initShader(scaler, "lambert.glsl"); // TODO: CHANGE TO IMAGE.SCALER
 }
-*/
+
+void
+ColorMap::initTexture(sf::Texture &tex, sf::Vector2u size)
+{
+    if (!tex.create(size.x, size.y)) {
+        throw Exception("Can't create texture");
+    }
+    tex.setSmooth(false);
+}
+
+void
+ColorMap::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size)
+{
+    initTexture(tex, size);
+    rect.setSize(sf::Vector2f(size.x, size.y));
+    rect.setTexture(&tex);
+}
+
+void
+ColorMap::initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size)
+{
+    if (!tex.create(size.x, size.y)) {
+        throw Exception("Can't create render texture");
+    }
+    tex.setSmooth(false);
+}
+
+void
+ColorMap::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size)
+{
+    initRenderTexture(tex, size);
+    rect.setSize(sf::Vector2f(size.x, size.y));
+    rect.setTexture(&tex.getTexture());
+}
+
+void
+ColorMap::initShader(sf::Shader &shader, const string &name)
+{
+    auto path = opt.assets.findAsset(name, Format::GLSL);
+
+    if (path == "") {
+        throw Exception("Can't load fragment shader '" + name + "'");
+    }
+    if (!shader.loadFromFile(path, sf::Shader::Fragment)) {
+        throw Exception("Can't load fragment shader '" + path.string() + "'");
+    }
+}
 
 void
 ColorMap::compute(const DrillMap &map)
@@ -76,6 +124,9 @@ ColorMap::compute(const DrillMap &map)
         if (opt.stop) throw UserInterruptException();
         progress.step(map.width);
     }
+
+    colorMapTex.update((u8 *)colorMap.ptr);
+    normalMapTex.update((u8 *)normalMap.ptr);
 }
 
 void
@@ -135,6 +186,30 @@ ColorMap::compute(const DrillMap &map, Coord c)
 }
 
 void
+ColorMap::compose()
+{
+    ProgressIndicator progress("Composing final image");
+
+    // Setup uniforms
+    auto a = opt.colors.alpha * 3.14159 / 180.0;
+    auto b = opt.colors.beta * 3.14159 / 180.0;
+
+    auto z = std::sin(b);
+    auto l = std::cos(b);
+    auto y = std::sin(a) * l;
+    auto x = std::cos(a) * l;
+
+    scaler.setUniform("lightDir", sf::Vector3f(x, y, z));
+    scaler.setUniform("image", colorMapTex);
+    scaler.setUniform("normal", normalMapTex);
+    finalTex.draw(targetRect, &scaler);
+    finalTex.display();
+
+    // Read back image data
+    final = finalTex.getTexture().copyToImage();
+}
+
+void
 ColorMap::save(const string &path, Format format)
 {
     ProgressIndicator progress("Saving image data");
@@ -144,14 +219,18 @@ ColorMap::save(const string &path, Format format)
     auto width = (int)opt.image.width;
     auto height = (int)opt.image.height;
 
+    /*
     sf::Image sfImage;
     sfImage.create(width, height, (u8 *)colorMap.ptr);
     sfImage.saveToFile(path);
+    */
+    final.saveToFile(path);
 
     if (opt.image.depth) {
 
-        sfImage.create(width, height, (u8 *)normalMap.ptr);
-        sfImage.saveToFile(prefix + "_nrm." + suffix);
+        sf::Image nrmImage;
+        nrmImage.create(width, height, (u8 *)normalMap.ptr);
+        nrmImage.saveToFile(prefix + "_nrm." + suffix);
     }
 }
 

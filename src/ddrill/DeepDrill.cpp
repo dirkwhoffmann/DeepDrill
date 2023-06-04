@@ -148,6 +148,7 @@ DeepDrill::run()
 
         // Run the colorizer
         colorizer.compute(drillMap);
+        colorizer.compose();
         colorizer.save(opt.files.output, outputFormat);
     }
 }

@@ -17,6 +17,8 @@
 #include "Buffer.h"
 #include "Palette.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace dd {
 
 class ColorMap {
@@ -35,6 +37,19 @@ public:
     // The color palette
     Palette palette = Palette(opt);
 
+    // Textures
+    sf::Texture colorMapTex;
+    sf::Texture normalMapTex;
+    sf::RenderTexture finalTex;
+    sf::RectangleShape sourceRect;
+    sf::RectangleShape targetRect;
+
+    // Compute kernels
+    sf::Shader scaler;
+
+    // Final image
+    sf::Image final;
+    
 
     //
     // Initialization
@@ -50,7 +65,11 @@ private:
     void resize(const class DrillMap &map);
     void resize(isize w, isize h);
 
-    // [[deprecated]] void init();
+    void initTexture(sf::Texture &tex, sf::Vector2u size);
+    void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
+    void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
+    void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size);
+    void initShader(sf::Shader &shader, const string &name);
 
     
     //
@@ -59,13 +78,17 @@ private:
 
 public:
 
+    // Computes the colorized drill map and the normal map
     void compute(const class DrillMap &map);
+
+    // Composes the final image
+    void compose();
 
 private:
 
     void compute(const class DrillMap &map, struct Coord c);
 
-    
+
     //
     // Exporting
     //
