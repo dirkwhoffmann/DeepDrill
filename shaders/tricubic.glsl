@@ -10,6 +10,12 @@ uniform vec2 size;
 // Normalized inbetween [0;1)
 uniform float frame;
 
+vec2 zoom(vec2 coord)
+{
+    float s = 1.0 / (1.0 + frame);
+    return s * coord + (0.5 - (0.5 * s));
+}
+
 //
 // From https://stackoverflow.com/questions/13501081/efficient-bicubic-filtering-code-in-glsl
 //
@@ -60,7 +66,7 @@ vec4 bicubic(sampler2D sampler, vec2 texCoords)
 void main()
 {
     // Read texel from the current texture
-    vec2 coord = gl_TexCoord[0].xy;
+    vec2 coord = zoom(gl_TexCoord[0].xy);
     vec4 color1 = bicubic(curr, coord);
 
     // Check if a corresponding texel exists in the next texture

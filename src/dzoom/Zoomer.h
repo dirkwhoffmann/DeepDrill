@@ -18,6 +18,7 @@
 #include "Animated.h"
 #include "DrillMap.h"
 #include "ColorMap.h"
+#include "Filter.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -64,14 +65,24 @@ class Zoomer {
     sf::Shader scaler;
     sf::Shader illuminator;
 
+    // GPU filters
+    Filter illuminationFilter1 = Filter(opt);
+    Filter illuminationFilter2 = Filter(opt);
+    Filter scalingFilter = Filter(opt);
+    
     // The video recorder
     Recorder recorder = Recorder(opt);
 
     // Indicates if we run in record mode or preview mode
     bool recordMode;
 
+    // The currently processed keyframe and inbetween
+    isize keyframe = 0;
+    isize frame = 0;
+
     // Animation parameters
-    Animated w, h;
+    Animated w;
+    Animated h;
 
 public:
 
@@ -92,8 +103,8 @@ public:
 private:
 
     // Called inside the main loop
-    void update(isize keyframe, isize frame);
-    void draw(isize keyframe, isize frame);
+    void update();
+    void draw();
 
     // Sets up shader uniforms
     void setupScalerUniforms(isize keyframe, isize frame);

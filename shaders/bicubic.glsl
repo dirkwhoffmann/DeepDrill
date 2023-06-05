@@ -14,6 +14,12 @@ uniform float frame;
 // From https://stackoverflow.com/questions/13501081/efficient-bicubic-filtering-code-in-glsl
 //
 
+vec2 zoom(vec2 coord)
+{
+    float s = 1.0 / (1.0 + frame);
+    return s * coord + (0.5 - (0.5 * s));
+}
+
 vec4 cubic(float v)
 {
     vec4 n = vec4(1.0, 2.0, 3.0, 4.0) - v;
@@ -58,7 +64,7 @@ vec4 bicubic(sampler2D sampler, vec2 texCoords)
 
 void main()
 {
-    vec2 coord = gl_TexCoord[0].xy;
+    vec2 coord = zoom(gl_TexCoord[0].xy);
     vec4 color1 = bicubic(curr, coord);
     gl_FragColor = gl_Color * color1;
 }

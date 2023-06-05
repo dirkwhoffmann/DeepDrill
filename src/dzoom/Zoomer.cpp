@@ -60,6 +60,11 @@ Zoomer::init()
     // Load shaders
     initShader(scaler, opt.video.scaler);
     initShader(illuminator, opt.video.illuminator);
+
+    // Setup GPU filters
+    illuminationFilter1.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
+    illuminationFilter2.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
+    scalingFilter.init(opt.video.scaler, videoW, videoH);
 }
 
 void
@@ -118,12 +123,12 @@ Zoomer::launch()
     if (recordMode) recorder.startRecording();
 
     // Process all keyframes
-    for (isize keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
+    for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
 
         ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
         // Process all inbetweens
-        for (isize frame = 0; frame < opt.video.inbetweens; frame++) {
+        for (frame = 0; frame < opt.video.inbetweens; frame++) {
 
             // Process all events
             if (!window.isOpen()) throw UserInterruptException();
@@ -134,10 +139,10 @@ Zoomer::launch()
             }
 
             // Update state
-            update(keyframe, frame);
+            update();
 
             // Render frame
-            draw(keyframe, frame);
+            draw();
 
             progress.step(1);
         }
@@ -148,7 +153,7 @@ Zoomer::launch()
 }
 
 void
-Zoomer::update(isize keyframe, isize frame)
+Zoomer::update()
 {
     if (frame == 0) {
 
@@ -156,12 +161,20 @@ Zoomer::update(isize keyframe, isize frame)
         updateLocation(keyframe);
 
         // Set animation start point
+        /*
         w.set(opt.image.width);
         h.set(opt.image.height);
+        */
+        w.set(opt.video.width);
+        h.set(opt.video.height);
 
         // Set animation end point and speed
+        /*
         w.set(opt.image.width / 2.0, opt.video.inbetweens);
         h.set(opt.image.height / 2.0, opt.video.inbetweens);
+        */
+        w.set(opt.video.width / 2.0, opt.video.inbetweens);
+        h.set(opt.video.height / 2.0, opt.video.inbetweens);
 
         // Update window title bar
         string title = "DeepZoom - ";
@@ -176,19 +189,30 @@ Zoomer::update(isize keyframe, isize frame)
         h.move();
     }
 
-    auto newRect = sf::IntRect(int(Coord::center(opt).x - (w.current / 2.0)),
-                               int(Coord::center(opt).y + (h.current / 2.0)),
+    auto newRect = sf::IntRect(int(Coord::center(opt).x / 2 - (w.current / 2.0)),
+                               int(Coord::center(opt).y / 2 + (h.current / 2.0)),
                                int(w.current),
                                int(-h.current));
 
+    /*
+    auto newRect2 = sf::IntRect(int(Coord::center(opt).x - (w.current / 2.0)) / 2,
+                               int(Coord::center(opt).y + (h.current / 2.0)) / 2,
+                               int(w.current) / 2,
+                               int(-h.current) / 2);
+     */
+
     illuminatedRect.setTextureRect(newRect);
     illuminatedRect2.setTextureRect(newRect);
+    // illuminationFilter1.setTextureRect(newRect);
+    // illuminationFilter2.setTextureRect(newRect);
+    // scalingFilter.setTextureRect(newRect);
 }
 
 void
-Zoomer::draw(isize keyframe, isize frame)
+Zoomer::draw()
 {
     // Phase 1: Apply lighting
+    /*
     setupIlluminatorUniforms(keyframe, frame);
 
     illuminator.setUniform("image", source);
@@ -200,16 +224,62 @@ Zoomer::draw(isize keyframe, isize frame)
     illuminator.setUniform("normal", normal2);
     illuminated2.draw(illuminatedRect2, &illuminator);
     illuminated2.display();
+    */
+    illuminationFilter1.apply([this](sf::Shader &shader) {
+
+        // Factor angle stuff out
+        auto a = opt.colors.alpha * 3.14159 / 180.0;
+        auto b = opt.colors.beta * 3.14159 / 180.0;
+
+        auto z = std::sin(b);
+        auto l = std::cos(b);
+        auto y = std::sin(a) * l;
+        auto x = std::cos(a) * l;
+
+        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
+        shader.setUniform("image", source);
+        shader.setUniform("normal", normal);
+    });
+
+    illuminationFilter2.apply([this](sf::Shader &shader) {
+
+        // Factor angle stuff out
+        auto a = opt.colors.alpha * 3.14159 / 180.0;
+        auto b = opt.colors.beta * 3.14159 / 180.0;
+
+        auto z = std::sin(b);
+        auto l = std::cos(b);
+        auto y = std::sin(a) * l;
+        auto x = std::cos(a) * l;
+
+        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
+        shader.setUniform("image", source2);
+        shader.setUniform("normal", normal2);
+    });
 
     // Phase 2: Scale down
+    /*
     setupScalerUniforms(keyframe, frame);
     scaled.draw(scaledRect, &scaler);
     scaled.display();
+    */
+
+    scalingFilter.apply([this](sf::Shader &shader) {
+
+            /*
+        shader.setUniform("curr", illuminated.getTexture());
+        shader.setUniform("next", illuminated2.getTexture());
+             */
+        shader.setUniform("curr", illuminationFilter1.getTexture());
+        shader.setUniform("next", illuminationFilter2.getTexture());
+        shader.setUniform("size", sf::Vector2f(illuminated.getSize()));
+        shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
+    });
 
     // Phase 3: Display the result
 
     window.clear();
-    window.draw(scaledRect);
+    window.draw(scalingFilter.getRect());
     window.display();
 
     if (recordMode) {
