@@ -50,20 +50,20 @@ class Zoomer {
     sf::RectangleShape sourceRect2;
 
     // Texture storing the illuminated current keyframe (computed)
-    sf::RenderTexture illuminated;
-    sf::RectangleShape illuminatedRect;
+    // sf::RenderTexture illuminated;
+    // sf::RectangleShape illuminatedRect;
 
     // Texture storing the illuminated next keyframe (computed)
-    sf::RenderTexture illuminated2;
-    sf::RectangleShape illuminatedRect2;
+    // sf::RenderTexture illuminated2;
+    // sf::RectangleShape illuminatedRect2;
 
     // The downscaled source texture (computed)
-    sf::RenderTexture scaled;
-    sf::RectangleShape scaledRect;
+    // sf::RenderTexture scaled;
+    // sf::RectangleShape scaledRect;
 
     // Compute kernels
-    sf::Shader scaler;
-    sf::Shader illuminator;
+    // sf::Shader scaler;
+    // sf::Shader illuminator;
 
     // GPU filters
     Filter illuminationFilter1 = Filter(opt);
@@ -105,10 +105,6 @@ private:
     // Called inside the main loop
     void update();
     void draw();
-
-    // Sets up shader uniforms
-    void setupScalerUniforms(isize keyframe, isize frame);
-    void setupIlluminatorUniforms(isize keyframe, isize frame);
 
     // Loads a new image file from disk
     void updateTextures(isize nr);

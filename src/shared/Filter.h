@@ -49,9 +49,9 @@ public:
     Filter(const Options &opt) : opt(opt) { };
     void init(const string &shaderName, int w, int h);
 
-    const sf::Texture &getTexture() { return out.getTexture(); }
-    sf::RectangleShape &getRect() { return rect; }
-    void setTextureRect(const sf::IntRect r) { rect.setTextureRect(r); }
+    const sf::Texture &getTexture() const { return out.getTexture(); }
+    const sf::RectangleShape &getRect() const { return rect; }
+    const sf::Vector2u getSize() const { return out.getSize(); }
 
 
     //

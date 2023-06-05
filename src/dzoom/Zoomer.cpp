@@ -53,13 +53,13 @@ Zoomer::init()
     initTexture(normal, imageDim);
     initTexture(source2, sourceRect2, imageDim);
     initTexture(normal2, imageDim);
-    initRenderTexture(illuminated, illuminatedRect, imageDim);
-    initRenderTexture(illuminated2, illuminatedRect2, imageDim);
-    initRenderTexture(scaled, scaledRect, videoDim);
+    // initRenderTexture(illuminated, illuminatedRect, imageDim);
+    // initRenderTexture(illuminated2, illuminatedRect2, imageDim);
+    // initRenderTexture(scaled, scaledRect, videoDim);
 
     // Load shaders
-    initShader(scaler, opt.video.scaler);
-    initShader(illuminator, opt.video.illuminator);
+    // initShader(scaler, opt.video.scaler);
+    // initShader(illuminator, opt.video.illuminator);
 
     // Setup GPU filters
     illuminationFilter1.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
@@ -189,11 +189,12 @@ Zoomer::update()
         h.move();
     }
 
+    /*
     auto newRect = sf::IntRect(int(Coord::center(opt).x / 2 - (w.current / 2.0)),
                                int(Coord::center(opt).y / 2 + (h.current / 2.0)),
                                int(w.current),
                                int(-h.current));
-
+    */
     /*
     auto newRect2 = sf::IntRect(int(Coord::center(opt).x - (w.current / 2.0)) / 2,
                                int(Coord::center(opt).y + (h.current / 2.0)) / 2,
@@ -201,8 +202,8 @@ Zoomer::update()
                                int(-h.current) / 2);
      */
 
-    illuminatedRect.setTextureRect(newRect);
-    illuminatedRect2.setTextureRect(newRect);
+    // illuminatedRect.setTextureRect(newRect);
+    // illuminatedRect2.setTextureRect(newRect);
     // illuminationFilter1.setTextureRect(newRect);
     // illuminationFilter2.setTextureRect(newRect);
     // scalingFilter.setTextureRect(newRect);
@@ -212,19 +213,6 @@ void
 Zoomer::draw()
 {
     // Phase 1: Apply lighting
-    /*
-    setupIlluminatorUniforms(keyframe, frame);
-
-    illuminator.setUniform("image", source);
-    illuminator.setUniform("normal", normal);
-    illuminated.draw(illuminatedRect, &illuminator);
-    illuminated.display();
-
-    illuminator.setUniform("image", source2);
-    illuminator.setUniform("normal", normal2);
-    illuminated2.draw(illuminatedRect2, &illuminator);
-    illuminated2.display();
-    */
     illuminationFilter1.apply([this](sf::Shader &shader) {
 
         // Factor angle stuff out
@@ -258,21 +246,11 @@ Zoomer::draw()
     });
 
     // Phase 2: Scale down
-    /*
-    setupScalerUniforms(keyframe, frame);
-    scaled.draw(scaledRect, &scaler);
-    scaled.display();
-    */
-
     scalingFilter.apply([this](sf::Shader &shader) {
 
-            /*
-        shader.setUniform("curr", illuminated.getTexture());
-        shader.setUniform("next", illuminated2.getTexture());
-             */
         shader.setUniform("curr", illuminationFilter1.getTexture());
         shader.setUniform("next", illuminationFilter2.getTexture());
-        shader.setUniform("size", sf::Vector2f(illuminated.getSize()));
+        shader.setUniform("size", sf::Vector2f(illuminationFilter1.getSize()));
         shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
     });
 
@@ -285,34 +263,11 @@ Zoomer::draw()
     if (recordMode) {
 
         // Read back image data
-        auto image = scaled.getTexture().copyToImage();
+        auto image = scalingFilter.getTexture().copyToImage();
 
         // Record frame
         recorder.record(image);
     }
-}
-
-void
-Zoomer::setupScalerUniforms(isize keyframe, isize frame)
-{
-    scaler.setUniform("curr", illuminated.getTexture());
-    scaler.setUniform("next", illuminated2.getTexture());
-    scaler.setUniform("size", sf::Vector2f(illuminated.getSize()));
-    scaler.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
-}
-
-void
-Zoomer::setupIlluminatorUniforms(isize keyframe, isize frame)
-{
-    auto a = opt.colors.alpha * 3.14159 / 180.0;
-    auto b = opt.colors.beta * 3.14159 / 180.0;
-
-    auto z = std::sin(b);
-    auto l = std::cos(b);
-    auto y = std::sin(a) * l;
-    auto x = std::cos(a) * l;
-
-    illuminator.setUniform("lightDir", sf::Vector3f(x, y, z));
 }
 
 void
