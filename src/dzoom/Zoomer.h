@@ -42,12 +42,10 @@ class Zoomer {
     // Textures storing the current keyframe (read from image file)
     sf::Texture source1;
     sf::Texture normal1;
-    sf::RectangleShape sourceRect1;
 
     // Textures storing the next keyframe (read from image file)
     sf::Texture source2;
     sf::Texture normal2;
-    sf::RectangleShape sourceRect2;
 
     // GPU filters
     Filter illuminator1 = Filter(opt);
@@ -75,7 +73,6 @@ public:
     // Initializers
     void init();
     void initTexture(sf::Texture &tex, sf::Vector2u size);
-    void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
 
     // Main entry point
     void launch();

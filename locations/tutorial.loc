@@ -10,7 +10,7 @@ zoom = 4e23
 depth = 3000
 # zoom = 1
 
-[drillmap]
+[map]
 #width=3840
 #height=2160
 

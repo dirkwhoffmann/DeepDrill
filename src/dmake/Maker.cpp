@@ -71,38 +71,15 @@ Maker::generateProjectFile(vector <string> &skipped)
     // Write header
     writeHeader(os);
 
-    // Write location section
-    os << "[location]" << std::endl;
-    os << "real = " << keys["location.real"] << std::endl;
-    os << "imag = " << keys["location.imag"] << std::endl;
-    os << std::endl;
+    // Write sections
+    writeLocationSection(os);
+    writeMapSection(os);
+    writeImageSection(os);
+    writeColorsSection(os);
+    writeVideoSection(os);
 
-    // Write image section
-    os << "[image]" << std::endl;
-    os << "width = " << opt.image.width << std::endl;
-    os << "height = " << opt.image.height << std::endl;
-    os << std::endl;
-
-    // Write colors section
-    os << "[colors]" << std::endl;
-    os << "mode = " << keys["colors.mode"] << std::endl;
-    os << "colors = " << keys["colors.palette"] << std::endl;
-    os << "scale = " << keys["colors.scale"] << std::endl;
-    os << "alpha = " << keys["colors.alpha"] << std::endl;
-    os << "beta = " << keys["colors.beta"] << std::endl;
-    os << std::endl;
 
     // Write video section
-    os << "[video]" << std::endl;
-    os << "framerate = " << opt.video.frameRate << std::endl;
-    os << "width = " << opt.video.width << std::endl;
-    os << "height = " << opt.video.height << std::endl;
-    os << "keyframes = " << opt.video.keyframes << std::endl;
-    os << "inbetweens = " << opt.video.inbetweens << std::endl;
-    os << "bitrate = " << opt.video.bitrate << std::endl;
-    os << "scaler = " << opt.video.scaler << std::endl;
-    os << "illuminator = " << opt.video.illuminator << std::endl;
-    os << std::endl;
 }
 
 void
@@ -133,9 +110,10 @@ Maker::generateLocationFiles(vector <string> &skipped)
         isize depth = std::min(maxDepth, opt.location.depth);
 
         // Write location section
-        os << "[location]" << std::endl;
-        os << "real = " << opt.location.real << std::endl;
-        os << "imag = " << opt.location.imag << std::endl;
+        writeLocationSection(os);
+        // os << "[location]" << std::endl;
+        // os << "real = " << opt.location.real << std::endl;
+        // os << "imag = " << opt.location.imag << std::endl;
         os << "zoom = " << std::to_string(zoom) << std::endl;
         os << "depth = " << std::to_string(depth) << std::endl;
         os << std::endl;
@@ -158,41 +136,95 @@ Maker::generateProfile(vector <string> &skipped)
 
     // Open output stream
     std::ofstream os(path);
-    
-    // Write header
+
+    // Write sections
     writeHeader(os);
+    writeImageSection(os);
+    writeColorsSection(os);
+    writePerturbationSection(os);
+    writeApproximationSection(os);
+    writeDebugSection(os);
+}
 
-    // Write image section
+void
+Maker::writeLocationSection(std::ofstream &os)
+{
+    os << "[location]" << std::endl;
+    os << "real = " << opt.keys["location.real"] << std::endl;
+    os << "imag = " << opt.keys["location.imag"] << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writeMapSection(std::ofstream &os)
+{
+    os << "[map]" << std::endl;
+    os << "width = " << opt.drillmap.width << std::endl;
+    os << "height = " << opt.drillmap.height << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writeImageSection(std::ofstream &os)
+{
     os << "[image]" << std::endl;
-    os << "width = " << keys["image.width"] << std::endl;
-    os << "height = " << keys["image.height"] << std::endl;
+    os << "width = " << opt.image.width << std::endl;
+    os << "height = " << opt.image.height << std::endl;
     os << std::endl;
+}
 
-    // Write colors section
+void
+Maker::writeColorsSection(std::ofstream &os)
+{
     os << "[colors]" << std::endl;
-    os << "mode = " << keys["colors.mode"] << std::endl;
-    os << "colors = " << keys["colors.palette"] << std::endl;
-    os << "scale = " << keys["colors.scale"] << std::endl;
-    os << "alpha = " << keys["colors.alpha"] << std::endl;
-    os << "beta = " << keys["colors.beta"] << std::endl;
+    os << "mode = " << opt.keys["colors.mode"] << std::endl;
+    os << "colors = " << opt.keys["colors.palette"] << std::endl;
+    os << "scale = " << opt.keys["colors.scale"] << std::endl;
+    os << "alpha = " << opt.keys["colors.alpha"] << std::endl;
+    os << "beta = " << opt.keys["colors.beta"] << std::endl;
     os << std::endl;
+}
 
-    // Write perturbation section
+void
+Maker::writeVideoSection(std::ofstream &os)
+{
+    os << "[video]" << std::endl;
+    os << "framerate = " << opt.video.frameRate << std::endl;
+    os << "width = " << opt.video.width << std::endl;
+    os << "height = " << opt.video.height << std::endl;
+    os << "keyframes = " << opt.video.keyframes << std::endl;
+    os << "inbetweens = " << opt.video.inbetweens << std::endl;
+    os << "bitrate = " << opt.video.bitrate << std::endl;
+    os << "scaler = " << opt.video.scaler << std::endl;
+    os << "illuminator = " << opt.video.illuminator << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writePerturbationSection(std::ofstream &os)
+{
     os << "[perturbation]" << std::endl;
-    os << "enabled = " << keys["perturbation.enabled"] << std::endl;
-    os << "tolerance = " << keys["perturbation.tolerance"] << std::endl;
-    os << "rounds = " << keys["perturbation.rounds"] << std::endl;
+    os << "enabled = " << opt.keys["perturbation.enabled"] << std::endl;
+    os << "tolerance = " << opt.keys["perturbation.tolerance"] << std::endl;
+    os << "rounds = " << opt.keys["perturbation.rounds"] << std::endl;
     os << std::endl;
+}
 
-    // Write series approximation section
+void
+Maker::writeApproximationSection(std::ofstream &os)
+{
     os << "[approximation]" << std::endl;
-    os << "coefficients = " << keys["approximation.coefficients"] << std::endl;
-    os << "tolerance = " << keys["approximation.tolerance"] << std::endl;
+    os << "coefficients = " << opt.keys["approximation.coefficients"] << std::endl;
+    os << "tolerance = " << opt.keys["approximation.tolerance"] << std::endl;
     os << std::endl;
+}
 
-    // Write debug section
+void
+Maker::writeDebugSection(std::ofstream &os)
+{
     os << "[debug]" << std::endl;
-    os << "glitches = " << keys["debug.glitches"] << std::endl;
+    os << "glitches = " << opt.keys["debug.glitches"] << std::endl;
+    os << std::endl;
 }
 
 void

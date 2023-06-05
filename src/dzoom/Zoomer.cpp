@@ -33,14 +33,11 @@ Zoomer::init()
 {
     recordMode = opt.files.output != "";
 
-    auto videoW = unsigned(opt.video.width);
-    auto videoH = unsigned(opt.video.height);
-    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
-    auto videoDim = sf::Vector2u(unsigned(opt.video.width), unsigned(opt.video.height));
+    auto mapRes = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
+    auto vidRes = sf::Vector2u(unsigned(opt.video.width), unsigned(opt.video.height));
 
     // Create the render window
-    auto videoMode = sf::VideoMode(videoW, videoH);
-    window.create(videoMode, "");
+    window.create(sf::VideoMode(vidRes.x, vidRes.y), "");
 
     // Hide the window in batch mode
     if (opt.flags.batch) window.setVisible(false);
@@ -49,15 +46,15 @@ Zoomer::init()
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
     // Create textures
-    initTexture(source1, sourceRect1, imageDim);
-    initTexture(normal1, imageDim);
-    initTexture(source2, sourceRect2, imageDim);
-    initTexture(normal2, imageDim);
+    initTexture(source1, mapRes);
+    initTexture(normal1, mapRes);
+    initTexture(source2, mapRes);
+    initTexture(normal2, mapRes);
 
     // Setup GPU filters
-    illuminator1.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
-    illuminator2.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
-    downscaler.init(opt.video.scaler, videoW, videoH);
+    illuminator1.init(opt.video.illuminator, mapRes);
+    illuminator2.init(opt.video.illuminator, mapRes);
+    downscaler.init(opt.video.scaler, vidRes);
 }
 
 void
@@ -67,14 +64,6 @@ Zoomer::initTexture(sf::Texture &tex, sf::Vector2u size)
         throw Exception("Can't create texture");
     }
     tex.setSmooth(false);
-}
-
-void
-Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size)
-{
-    initTexture(tex, size);
-    rect.setSize(sf::Vector2f(size.x, size.y));
-    rect.setTexture(&tex);
 }
 
 void

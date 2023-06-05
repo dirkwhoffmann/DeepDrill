@@ -17,17 +17,24 @@
 namespace dd {
 
 void
-Filter::init(const string &shaderName, int w, int h)
+Filter::init(const string &shaderName, isize w, isize h)
 {
-    width = w;
-    height = h;
+    init(shaderName, sf::Vector2u(unsigned(w), unsigned(h)));
+
+}
+
+void
+Filter::init(const string &shaderName, sf::Vector2u resolution)
+{
+    width = resolution.x;
+    height = resolution.y;
 
     // Create texture
-    if (!out.create(w, h)) {
+    if (!out.create(resolution.x, resolution.y)) {
         throw Exception("Can't create render texture");
     }
     out.setSmooth(false);
-    rect.setSize(sf::Vector2f(w, h));
+    rect.setSize(sf::Vector2f(resolution));
     rect.setTexture(&out.getTexture());
 
 

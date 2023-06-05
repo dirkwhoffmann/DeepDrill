@@ -4,7 +4,7 @@ imag = 0
 zoom = 1.7
 depth = 800
 
-[drillmap]
+[map]
 #width=3840
 #height=2160
 

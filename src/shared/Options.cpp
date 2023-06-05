@@ -324,12 +324,14 @@ void
 Options::derive()
 {
     // Adjust some default values
-    if (keys.find("image.width") != keys.end()) {
-        defaults["drillmap.width"] = keys["image.width"];
-    }
-    if (keys.find("image.height") != keys.end()) {
-        defaults["drillmap.height"] = keys["image.height"];
-    }
+    /*
+     if (keys.find("image.width") != keys.end()) {
+     defaults["drillmap.width"] = keys["image.width"];
+     }
+     if (keys.find("image.height") != keys.end()) {
+     defaults["drillmap.height"] = keys["image.height"];
+     }
+     */
 
     // Use default values for all missing keys
     for (auto &it : defaults) {

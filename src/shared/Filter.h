@@ -47,7 +47,8 @@ public:
     //
 
     Filter(const Options &opt) : opt(opt) { };
-    void init(const string &shaderName, int w, int h);
+    void init(const string &shaderName, isize w, isize h);
+    void init(const string &shaderName, sf::Vector2u resolution);
 
     const sf::Texture &getTexture() const { return out.getTexture(); }
     const sf::RectangleShape &getRect() const { return rect; }

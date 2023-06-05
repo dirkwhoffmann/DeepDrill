@@ -43,6 +43,15 @@ private:
     void generateProfile(vector <string> &skipped);
     void generateMakefile(vector <string> &skipped);
 
+    void writeLocationSection(std::ofstream &os);
+    void writeMapSection(std::ofstream &os);
+    void writeImageSection(std::ofstream &os);
+    void writeColorsSection(std::ofstream &os);
+    void writeVideoSection(std::ofstream &os);
+    void writePerturbationSection(std::ofstream &os);
+    void writeApproximationSection(std::ofstream &os);
+    void writeDebugSection(std::ofstream &os);
+
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);
     void writeTargets(std::ofstream &os);
