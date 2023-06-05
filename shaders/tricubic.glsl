@@ -7,13 +7,15 @@ uniform sampler2D next;
 // Texture size
 uniform vec2 size;
 
+// Zoom factor
+uniform float zoom;
+
 // Normalized inbetween [0;1)
 uniform float frame;
 
-vec2 zoom(vec2 coord)
+vec2 zoomed(vec2 coord)
 {
-    float s = 1.0 / (1.0 + frame);
-    return s * coord + (0.5 - (0.5 * s));
+    return (coord / zoom) + 0.5 - (0.5 / zoom);
 }
 
 //
@@ -66,7 +68,7 @@ vec4 bicubic(sampler2D sampler, vec2 texCoords)
 void main()
 {
     // Read texel from the current texture
-    vec2 coord = zoom(gl_TexCoord[0].xy);
+    vec2 coord = zoomed(gl_TexCoord[0].xy);
     vec4 color1 = bicubic(curr, coord);
 
     // Check if a corresponding texel exists in the next texture

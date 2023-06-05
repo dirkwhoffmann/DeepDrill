@@ -13,6 +13,7 @@ Palette.cpp
 ProgressIndicator.cpp
 DrillMap.cpp
 ColorMap.cpp
+Filter.cpp
 
 )
 
@@ -38,5 +39,6 @@ Palette.cpp
 ProgressIndicator.cpp
 DrillMap.cpp
 ColorMap.cpp
+Filter.cpp
 
 )

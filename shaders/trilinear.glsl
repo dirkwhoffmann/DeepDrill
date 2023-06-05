@@ -7,8 +7,16 @@ uniform sampler2D next;
 // Texture size
 uniform vec2 size;
 
+// Zoom factor
+uniform float zoom;
+
 // Normalized inbetween [0;1)
 uniform float frame;
+
+vec2 zoomed(vec2 coord)
+{
+    return (coord / zoom) + 0.5 - (0.5 / zoom);
+}
 
 vec4 bilinear(sampler2D sampler, vec2 coord)
 {
@@ -33,7 +41,7 @@ vec4 bilinear(sampler2D sampler, vec2 coord)
 void main()
 {
     // Read texel from the current texture
-    vec2 coord = gl_TexCoord[0].xy;
+    vec2 coord = zoomed(gl_TexCoord[0].xy);
     vec4 color1 = bilinear(curr, coord);
 
     // Check if a corresponding texel exists in the next texture

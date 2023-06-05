@@ -84,6 +84,7 @@ Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u siz
     rect.setTexture(&tex);
 }
 
+/*
 void
 Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size)
 {
@@ -113,6 +114,7 @@ Zoomer::initShader(sf::Shader &shader, const string &name)
         throw Exception("Can't load fragment shader '" + path.string() + "'");
     }
 }
+*/
 
 void
 Zoomer::launch()
@@ -167,6 +169,7 @@ Zoomer::update()
         */
         w.set(opt.video.width);
         h.set(opt.video.height);
+        zoom.set(1.0);
 
         // Set animation end point and speed
         /*
@@ -175,6 +178,7 @@ Zoomer::update()
         */
         w.set(opt.video.width / 2.0, opt.video.inbetweens);
         h.set(opt.video.height / 2.0, opt.video.inbetweens);
+        zoom.set(2.0, opt.video.inbetweens);
 
         // Update window title bar
         string title = "DeepZoom - ";
@@ -187,6 +191,7 @@ Zoomer::update()
 
         w.move();
         h.move();
+        zoom.move();
     }
 
     /*
@@ -251,6 +256,7 @@ Zoomer::draw()
         shader.setUniform("curr", illuminationFilter1.getTexture());
         shader.setUniform("next", illuminationFilter2.getTexture());
         shader.setUniform("size", sf::Vector2f(illuminationFilter1.getSize()));
+        shader.setUniform("zoom", float(zoom.current));
         shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
     });
 

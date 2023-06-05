@@ -81,8 +81,9 @@ class Zoomer {
     isize frame = 0;
 
     // Animation parameters
-    Animated w;
-    Animated h;
+    Animated zoom;
+    Animated w; // DEPRECATED
+    Animated h; // DEPRECATED
 
 public:
 
@@ -93,9 +94,9 @@ public:
     void init();
     void initTexture(sf::Texture &tex, sf::Vector2u size);
     void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
-    void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
-    void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size);
-    void initShader(sf::Shader &shader, const string &name);
+    // void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
+    // void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size);
+    // void initShader(sf::Shader &shader, const string &name);
 
     // Main entry point
     void launch();
