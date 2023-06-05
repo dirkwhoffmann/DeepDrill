@@ -39,36 +39,20 @@ class Zoomer {
     // A colorizer for converting drill maps into images
     ColorMap colorizer = ColorMap(opt);
 
-    // Texture storing the current keyframe (read from image file)
-    sf::Texture source;
-    sf::Texture normal;
-    sf::RectangleShape sourceRect;
+    // Textures storing the current keyframe (read from image file)
+    sf::Texture source1;
+    sf::Texture normal1;
+    sf::RectangleShape sourceRect1;
 
-    // Texture storing the next keyframe (read from image file)
+    // Textures storing the next keyframe (read from image file)
     sf::Texture source2;
     sf::Texture normal2;
     sf::RectangleShape sourceRect2;
 
-    // Texture storing the illuminated current keyframe (computed)
-    // sf::RenderTexture illuminated;
-    // sf::RectangleShape illuminatedRect;
-
-    // Texture storing the illuminated next keyframe (computed)
-    // sf::RenderTexture illuminated2;
-    // sf::RectangleShape illuminatedRect2;
-
-    // The downscaled source texture (computed)
-    // sf::RenderTexture scaled;
-    // sf::RectangleShape scaledRect;
-
-    // Compute kernels
-    // sf::Shader scaler;
-    // sf::Shader illuminator;
-
     // GPU filters
-    Filter illuminationFilter1 = Filter(opt);
-    Filter illuminationFilter2 = Filter(opt);
-    Filter scalingFilter = Filter(opt);
+    Filter illuminator1 = Filter(opt);
+    Filter illuminator2 = Filter(opt);
+    Filter downscaler = Filter(opt);
     
     // The video recorder
     Recorder recorder = Recorder(opt);
@@ -82,8 +66,6 @@ class Zoomer {
 
     // Animation parameters
     Animated zoom;
-    Animated w; // DEPRECATED
-    Animated h; // DEPRECATED
 
 public:
 
@@ -94,9 +76,6 @@ public:
     void init();
     void initTexture(sf::Texture &tex, sf::Vector2u size);
     void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
-    // void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
-    // void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size);
-    // void initShader(sf::Shader &shader, const string &name);
 
     // Main entry point
     void launch();

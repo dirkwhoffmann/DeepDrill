@@ -49,22 +49,15 @@ Zoomer::init()
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
     // Create textures
-    initTexture(source, sourceRect, imageDim);
-    initTexture(normal, imageDim);
+    initTexture(source1, sourceRect1, imageDim);
+    initTexture(normal1, imageDim);
     initTexture(source2, sourceRect2, imageDim);
     initTexture(normal2, imageDim);
-    // initRenderTexture(illuminated, illuminatedRect, imageDim);
-    // initRenderTexture(illuminated2, illuminatedRect2, imageDim);
-    // initRenderTexture(scaled, scaledRect, videoDim);
-
-    // Load shaders
-    // initShader(scaler, opt.video.scaler);
-    // initShader(illuminator, opt.video.illuminator);
 
     // Setup GPU filters
-    illuminationFilter1.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
-    illuminationFilter2.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
-    scalingFilter.init(opt.video.scaler, videoW, videoH);
+    illuminator1.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
+    illuminator2.init(opt.video.illuminator, int(opt.image.width), int(opt.image.height));
+    downscaler.init(opt.video.scaler, videoW, videoH);
 }
 
 void
@@ -83,38 +76,6 @@ Zoomer::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u siz
     rect.setSize(sf::Vector2f(size.x, size.y));
     rect.setTexture(&tex);
 }
-
-/*
-void
-Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size)
-{
-    if (!tex.create(size.x, size.y)) {
-        throw Exception("Can't create render texture");
-    }
-    tex.setSmooth(false);
-}
-
-void
-Zoomer::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size)
-{
-    initRenderTexture(tex, size);
-    rect.setSize(sf::Vector2f(size.x, size.y));
-    rect.setTexture(&tex.getTexture());
-}
-
-void
-Zoomer::initShader(sf::Shader &shader, const string &name)
-{
-    auto path = opt.assets.findAsset(name, Format::GLSL);
-
-    if (path == "") {
-        throw Exception("Can't load fragment shader '" + name + "'");
-    }
-    if (!shader.loadFromFile(path, sf::Shader::Fragment)) {
-        throw Exception("Can't load fragment shader '" + path.string() + "'");
-    }
-}
-*/
 
 void
 Zoomer::launch()
@@ -163,21 +124,9 @@ Zoomer::update()
         updateLocation(keyframe);
 
         // Set animation start point
-        /*
-        w.set(opt.image.width);
-        h.set(opt.image.height);
-        */
-        w.set(opt.video.width);
-        h.set(opt.video.height);
         zoom.set(1.0);
 
         // Set animation end point and speed
-        /*
-        w.set(opt.image.width / 2.0, opt.video.inbetweens);
-        h.set(opt.image.height / 2.0, opt.video.inbetweens);
-        */
-        w.set(opt.video.width / 2.0, opt.video.inbetweens);
-        h.set(opt.video.height / 2.0, opt.video.inbetweens);
         zoom.set(2.0, opt.video.inbetweens);
 
         // Update window title bar
@@ -189,36 +138,15 @@ Zoomer::update()
 
     } else {
 
-        w.move();
-        h.move();
         zoom.move();
     }
-
-    /*
-    auto newRect = sf::IntRect(int(Coord::center(opt).x / 2 - (w.current / 2.0)),
-                               int(Coord::center(opt).y / 2 + (h.current / 2.0)),
-                               int(w.current),
-                               int(-h.current));
-    */
-    /*
-    auto newRect2 = sf::IntRect(int(Coord::center(opt).x - (w.current / 2.0)) / 2,
-                               int(Coord::center(opt).y + (h.current / 2.0)) / 2,
-                               int(w.current) / 2,
-                               int(-h.current) / 2);
-     */
-
-    // illuminatedRect.setTextureRect(newRect);
-    // illuminatedRect2.setTextureRect(newRect);
-    // illuminationFilter1.setTextureRect(newRect);
-    // illuminationFilter2.setTextureRect(newRect);
-    // scalingFilter.setTextureRect(newRect);
 }
 
 void
 Zoomer::draw()
 {
     // Phase 1: Apply lighting
-    illuminationFilter1.apply([this](sf::Shader &shader) {
+    illuminator1.apply([this](sf::Shader &shader) {
 
         // Factor angle stuff out
         auto a = opt.colors.alpha * 3.14159 / 180.0;
@@ -230,11 +158,11 @@ Zoomer::draw()
         auto x = std::cos(a) * l;
 
         shader.setUniform("lightDir", sf::Vector3f(x, y, z));
-        shader.setUniform("image", source);
-        shader.setUniform("normal", normal);
+        shader.setUniform("image", source1);
+        shader.setUniform("normal", normal1);
     });
 
-    illuminationFilter2.apply([this](sf::Shader &shader) {
+    illuminator2.apply([this](sf::Shader &shader) {
 
         // Factor angle stuff out
         auto a = opt.colors.alpha * 3.14159 / 180.0;
@@ -251,11 +179,11 @@ Zoomer::draw()
     });
 
     // Phase 2: Scale down
-    scalingFilter.apply([this](sf::Shader &shader) {
+    downscaler.apply([this](sf::Shader &shader) {
 
-        shader.setUniform("curr", illuminationFilter1.getTexture());
-        shader.setUniform("next", illuminationFilter2.getTexture());
-        shader.setUniform("size", sf::Vector2f(illuminationFilter1.getSize()));
+        shader.setUniform("curr", illuminator1.getTexture());
+        shader.setUniform("next", illuminator2.getTexture());
+        shader.setUniform("size", sf::Vector2f(illuminator1.getSize()));
         shader.setUniform("zoom", float(zoom.current));
         shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
     });
@@ -263,13 +191,13 @@ Zoomer::draw()
     // Phase 3: Display the result
 
     window.clear();
-    window.draw(scalingFilter.getRect());
+    window.draw(downscaler.getRect());
     window.display();
 
     if (recordMode) {
 
         // Read back image data
-        auto image = scalingFilter.getTexture().copyToImage();
+        auto image = downscaler.getTexture().copyToImage();
 
         // Record frame
         recorder.record(image);
@@ -301,8 +229,8 @@ Zoomer::updateTextures(isize nr)
 
         // Create textures
         colorizer.compute(drillMap);
-        source.update((u8 *)colorizer.colorMap.ptr);
-        normal.update((u8 *)colorizer.normalMap.ptr);
+        source1.update((u8 *)colorizer.colorMap.ptr);
+        normal1.update((u8 *)colorizer.normalMap.ptr);
 
         colorizer.compute(drillMap2);
         source2.update((u8 *)colorizer.colorMap.ptr);
