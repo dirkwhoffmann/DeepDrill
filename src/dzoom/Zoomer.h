@@ -36,17 +36,9 @@ class Zoomer {
     DrillMap drillMap = DrillMap(opt);
     DrillMap drillMap2 = DrillMap(opt);
 
-    // Textures storing the current keyframe (read from file)
-    sf::Texture source1;
-    sf::Texture normal1;
-
-    // Textures storing the next keyframe (read from file)
-    sf::Texture source2;
-    sf::Texture normal2;
-
     // GPU filters
-    Filter illuminator1 = Filter(opt);
-    Filter illuminator2 = Filter(opt);
+    // Filter illuminator1 = Filter(opt);
+    // Filter illuminator2 = Filter(opt);
     Filter downscaler = Filter(opt);
     
     // The video recorder

@@ -45,15 +45,7 @@ Zoomer::init()
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
-    // Create textures
-    initTexture(source1, mapRes);
-    initTexture(normal1, mapRes);
-    initTexture(source2, mapRes);
-    initTexture(normal2, mapRes);
-
     // Setup GPU filters
-    illuminator1.init(opt.image.illuminator, mapRes);
-    illuminator2.init(opt.image.illuminator, mapRes);
     downscaler.init(opt.video.scaler, vidRes);
 }
 
@@ -189,19 +181,6 @@ Zoomer::updateTextures(isize nr)
         }
         drillMap2.load(mapFile(nr + 1));
         drillMap2.colorMap.update(drillMap2);
-
-        // Create textures
-
-        /*
-        auto &colorMap1 = drillMap.colorize();
-        source1.update((u8 *)colorMap1.colorMap.ptr);
-        normal1.update((u8 *)colorMap1.normalMap.ptr);
-
-        auto &colorMap2 = drillMap2.colorize();
-        source2.update((u8 *)colorMap2.colorMap.ptr);
-        normal2.update((u8 *)colorMap2.normalMap.ptr);
-        */
-
     }
 }
 
