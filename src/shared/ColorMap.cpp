@@ -204,6 +204,7 @@ ColorMap::computeImage()
     });
 
     // 2. Scale down
+    /*
     downscaler.apply([this](sf::Shader &shader) {
 
         shader.setUniform("curr", illuminator.getTexture());
@@ -211,9 +212,10 @@ ColorMap::computeImage()
         shader.setUniform("zoom", 1.0f);
         shader.setUniform("frame", 0.0f);
     });
+     */
 
     // 3. Read back image data
-    final = downscaler.getTexture().copyToImage();
+    final = illuminator.getTexture().copyToImage();
 
     return final;
 }

@@ -134,54 +134,26 @@ Zoomer::update()
 void
 Zoomer::draw()
 {
-    // Phase 1: Apply lighting
-    illuminator1.apply([this](sf::Shader &shader) {
 
-        // Factor angle stuff out
-        auto a = opt.colors.alpha * 3.14159 / 180.0;
-        auto b = opt.colors.beta * 3.14159 / 180.0;
+    // 1. Colorize
+    drillMap.colorize();
+    drillMap2.colorize();
 
-        auto z = std::sin(b);
-        auto l = std::cos(b);
-        auto y = std::sin(a) * l;
-        auto x = std::cos(a) * l;
-
-        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
-        shader.setUniform("image", source1);
-        shader.setUniform("normal", normal1);
-    });
-
-    illuminator2.apply([this](sf::Shader &shader) {
-
-        // Factor angle stuff out
-        auto a = opt.colors.alpha * 3.14159 / 180.0;
-        auto b = opt.colors.beta * 3.14159 / 180.0;
-
-        auto z = std::sin(b);
-        auto l = std::cos(b);
-        auto y = std::sin(a) * l;
-        auto x = std::cos(a) * l;
-
-        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
-        shader.setUniform("image", source2);
-        shader.setUniform("normal", normal2);
-    });
-
-    // Phase 2: Scale down
+    // 2. Scale down
     downscaler.apply([this](sf::Shader &shader) {
 
-        shader.setUniform("curr", illuminator1.getTexture());
-        shader.setUniform("next", illuminator2.getTexture());
-        shader.setUniform("size", sf::Vector2f(illuminator1.getSize()));
+        shader.setUniform("curr", drillMap.getTexture());
+        shader.setUniform("next", drillMap2.getTexture());
+        shader.setUniform("size", sf::Vector2f(opt.drillmap.width, opt.drillmap.height));
         shader.setUniform("zoom", float(zoom.current));
         shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
     });
 
-    // Phase 3: Display the result
-
+    // 3. Display the result
     window.clear();
     window.draw(downscaler.getRect());
     window.display();
+
 
     if (recordMode) {
 
@@ -210,13 +182,17 @@ Zoomer::updateTextures(isize nr)
             throw FileNotFoundError(mapFile(nr));
         }
         drillMap.load(mapFile(nr));
+        drillMap.colorMap.update(drillMap);
 
         if (!fileExists(mapFile(nr + 1))) {
             throw FileNotFoundError(mapFile(nr + 1));
         }
         drillMap2.load(mapFile(nr + 1));
+        drillMap2.colorMap.update(drillMap2);
 
         // Create textures
+
+        /*
         auto &colorMap1 = drillMap.colorize();
         source1.update((u8 *)colorMap1.colorMap.ptr);
         normal1.update((u8 *)colorMap1.normalMap.ptr);
@@ -224,6 +200,8 @@ Zoomer::updateTextures(isize nr)
         auto &colorMap2 = drillMap2.colorize();
         source2.update((u8 *)colorMap2.colorMap.ptr);
         normal2.update((u8 *)colorMap2.normalMap.ptr);
+        */
+
     }
 }
 

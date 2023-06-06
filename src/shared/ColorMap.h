@@ -91,6 +91,8 @@ private:
 
 public:
 
+    const sf::Texture &getTexture() { return illuminator.getTexture(); }
+
     // Composes the final image
     sf::Image &computeImage();
 
