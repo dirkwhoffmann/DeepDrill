@@ -37,8 +37,8 @@ class Zoomer {
     DrillMap drillMap2 = DrillMap(opt);
 
     // GPU filters
-    // Filter illuminator1 = Filter(opt);
-    // Filter illuminator2 = Filter(opt);
+    Filter illuminator1 = Filter(opt);
+    Filter illuminator2 = Filter(opt);
     Filter downscaler = Filter(opt);
     
     // The video recorder
