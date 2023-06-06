@@ -51,36 +51,13 @@ ColorMap::resize(isize w, isize h)
     initTexture(normalMapTex, mapDim);
     initRenderTexture(finalTex, targetRect, imageDim);
 
-    // Load shaders
-    initShader(scaler, opt.image.scaler);
-}
-
-/*
-void
-ColorMap::init()
-{
-    if (colorMap.size != 0) return;
-
-    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
-    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
-
-    // Allocate buffers
-    colorMap.alloc(mapDim.x * mapDim.y);
-    normalMap.alloc(mapDim.x * mapDim.y);
-
-    // Load color palette
-    palette.load(opt.colors.palette);
-
-    // Create textures
-    initTexture(colorMapTex, sourceRect, mapDim);
-    initTexture(normalMapTex, mapDim);
-    
-    initRenderTexture(finalTex, targetRect, imageDim);
+    // Init GPU filters
+    // illuminator.init(opt.video.illuminator, mapRes);
+    // downscaler.init(opt.video.scaler, vidRes);
 
     // Load shaders
     initShader(scaler, opt.image.scaler);
 }
-*/
 
 void
 ColorMap::initTexture(sf::Texture &tex, sf::Vector2u size)
@@ -205,8 +182,6 @@ ColorMap::update(const DrillMap &map)
 
     colorMapTex.update((u8 *)colorMap.ptr);
     normalMapTex.update((u8 *)normalMap.ptr);
-
-    computeImage();
 }
 
 sf::Image &
@@ -242,22 +217,22 @@ ColorMap::save(const string &path, Format format)
 
     auto prefix = stripSuffix(path);
     auto suffix = extractSuffix(path);
-    auto width = (int)opt.drillmap.width;
-    auto height = (int)opt.drillmap.height;
+    auto w = (int)opt.drillmap.width;
+    auto h = (int)opt.drillmap.height;
 
     final.saveToFile(path);
 
     if (opt.exports.colorMap) {
 
         sf::Image img;
-        img.create(width, height, (u8 *)colorMap.ptr);
+        img.create(w, h, (u8 *)colorMap.ptr);
         img.saveToFile(prefix + "_raw." + suffix);
     }
 
     if (opt.exports.normalMap) {
 
         sf::Image img;
-        img.create(width, height, (u8 *)normalMap.ptr);
+        img.create(w, h, (u8 *)normalMap.ptr);
         img.saveToFile(prefix + "_nrm." + suffix);
     }
 }

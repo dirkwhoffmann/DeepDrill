@@ -52,8 +52,8 @@ Zoomer::init()
     initTexture(normal2, mapRes);
 
     // Setup GPU filters
-    illuminator1.init(opt.video.illuminator, mapRes);
-    illuminator2.init(opt.video.illuminator, mapRes);
+    illuminator1.init(opt.image.illuminator, mapRes);
+    illuminator2.init(opt.image.illuminator, mapRes);
     downscaler.init(opt.video.scaler, vidRes);
 }
 

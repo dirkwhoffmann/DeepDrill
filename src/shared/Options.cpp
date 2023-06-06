@@ -35,6 +35,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["image.width"] = "960";
     defaults["image.height"] = "540";
     defaults["image.depth"] = "1";
+    defaults["image.illuminator"] = "lambert.glsl";
     defaults["image.scaler"] = "imageScaler.glsl";
 
     // Video keys
@@ -45,7 +46,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.inbetweens"] = "0";
     defaults["video.bitrate"] = "4096";
     defaults["video.scaler"] = "tricubic.glsl";
-    defaults["video.illuminator"] = "lambert.glsl";
 
     // Palette keys
     defaults["colors.mode"] = "default";
@@ -125,6 +125,10 @@ Options::parse(string key, string value)
 
         parse(key, value, image.depth, 0, 1);
 
+    } else if (key == "image.illuminator") {
+
+        image.illuminator = assets.findAsset(value, Format::GLSL);
+
     } else if (key == "image.scaler") {
 
         image.scaler = assets.findAsset(value, Format::GLSL);
@@ -160,10 +164,6 @@ Options::parse(string key, string value)
     } else if (key == "video.scaler") {
 
         video.scaler = assets.findAsset(value, Format::GLSL);
-
-    } else if (key == "video.illuminator") {
-
-        video.illuminator = assets.findAsset(value, Format::GLSL);
 
     } else if (key == "colors.mode") {
 

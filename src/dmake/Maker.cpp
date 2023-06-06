@@ -167,6 +167,8 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
+    os << "illuminator = " << opt.image.illuminator << std::endl;
+    os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;
 }
 
@@ -193,7 +195,6 @@ Maker::writeVideoSection(std::ofstream &os)
     os << "inbetweens = " << opt.video.inbetweens << std::endl;
     os << "bitrate = " << opt.video.bitrate << std::endl;
     os << "scaler = " << opt.video.scaler << std::endl;
-    os << "illuminator = " << opt.video.illuminator << std::endl;
     os << std::endl;
 }
 

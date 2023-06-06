@@ -98,6 +98,9 @@ struct Options {
         // Indicates if a 3D effect should be applied
         isize depth;
 
+        // Path to the illumination filter
+        string illuminator;
+
         // Path to the downscaling filter
         string scaler;
 
@@ -123,7 +126,6 @@ struct Options {
 
         // Path to fragment shaders
         string scaler;
-        string illuminator;
 
     } video;
 
