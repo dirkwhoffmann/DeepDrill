@@ -126,11 +126,12 @@ DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
     set(c.x, c.y, MapEntry { iteration, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
 }
 
-sf::Image &
+ColorMap &
 DrillMap::colorize()
 {
     colorMap.update(*this);
-    return colorMap.computeImage();
+    colorMap.computeImage();
+    return colorMap;
 }
 
 void

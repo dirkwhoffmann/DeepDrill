@@ -104,7 +104,7 @@ public:
     // Colorizing
     //
 
-    sf::Image &colorize();
+    ColorMap &colorize();
 
 
     //

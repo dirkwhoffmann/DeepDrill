@@ -36,9 +36,6 @@ class Zoomer {
     DrillMap drillMap = DrillMap(opt);
     DrillMap drillMap2 = DrillMap(opt);
 
-    // Color map
-    ColorMap colorMap = ColorMap(opt);
-
     // Textures storing the current keyframe (read from file)
     sf::Texture source1;
     sf::Texture normal1;
