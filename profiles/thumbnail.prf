@@ -1,10 +1,7 @@
+[map]
+width = 240
+height = 135
+
 [image]
 width = 240
 height = 135
- 
-[perturbation]
-tolerance = 1e-6
-rounds = 10
-
-[approximation]
-coefficients = 5

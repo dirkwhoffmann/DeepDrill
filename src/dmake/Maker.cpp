@@ -62,7 +62,6 @@ Maker::generateProjectFile(vector <string> &skipped)
 {
     ProgressIndicator progress("Generating project file");
 
-    auto &keys = opt.keys;
     auto path = projectDir / (project + ".prj");
 
     // Open output stream
@@ -124,8 +123,6 @@ void
 Maker::generateProfile(vector <string> &skipped)
 {
     ProgressIndicator progress("Generating profile");
-
-    auto &keys = opt.keys;
 
     // Assemble path name
     auto name = project + ".prf";

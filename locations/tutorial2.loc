@@ -2,7 +2,7 @@
 real = -0.7
 imag = 0
 zoom = 1.7
-depth = 800
+depth = 50
 
 [map]
 #width=3840
@@ -11,8 +11,8 @@ depth = 800
 [image]
 #width = 1920
 #height = 1080
-width = 960
-height = 540
+width = 320
+height = 200
 depth = 1
 
 [colors]

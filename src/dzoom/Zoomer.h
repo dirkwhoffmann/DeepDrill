@@ -32,18 +32,18 @@ class Zoomer {
     // The application window
     sf::RenderWindow window;
 
-    // Current drill map (read from map file)
+    // Drill maps (read from map files)
     DrillMap drillMap = DrillMap(opt);
     DrillMap drillMap2 = DrillMap(opt);
 
-    // A colorizer for converting drill maps into images
-    ColorMap colorizer = ColorMap(opt);
+    // Color map
+    ColorMap colorMap = ColorMap(opt);
 
-    // Textures storing the current keyframe (read from image file)
+    // Textures storing the current keyframe (read from file)
     sf::Texture source1;
     sf::Texture normal1;
 
-    // Textures storing the next keyframe (read from image file)
+    // Textures storing the next keyframe (read from file)
     sf::Texture source2;
     sf::Texture normal2;
 

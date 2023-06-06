@@ -1,10 +1,7 @@
-[image]
+[map]
 width = 1920
 height = 1080
 
-[perturbation]
-tolerance = 1e-6
-rounds = 100
-
-[approximation]
-coefficients = 5
+[image]
+width = 1920
+height = 1080

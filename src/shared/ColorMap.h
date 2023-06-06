@@ -40,6 +40,12 @@ public:
     // Textures
     sf::Texture colorMapTex;
     sf::Texture normalMapTex;
+
+    // GPU filters
+    //Filter illuminator = Filter(opt);
+    // Filter downscaler = Filter(opt);
+
+
     sf::RenderTexture finalTex;
     sf::RectangleShape sourceRect;
     sf::RectangleShape targetRect;
@@ -49,7 +55,7 @@ public:
 
     // Final image
     sf::Image final;
-    
+
 
     //
     // Initialization
@@ -59,6 +65,8 @@ public:
 
     ColorMap(const Options &opt) : opt(opt) { };
     ~ColorMap();
+
+    void init(const class DrillMap &map);
 
 private:
 
@@ -76,15 +84,9 @@ private:
 
 public:
 
-    // Computes the colorized drill map and the normal map
-    void compute(const class DrillMap &map);
-
     // Composes the final image
     void compose();
 
-private:
-
-    void compute(const class DrillMap &map, struct Coord c);
 
 
     //
