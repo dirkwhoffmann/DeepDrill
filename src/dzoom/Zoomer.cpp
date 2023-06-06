@@ -197,13 +197,13 @@ Zoomer::updateTextures(isize nr)
             throw FileNotFoundError(mapFile(nr));
         }
         drillMap.load(mapFile(nr));
-        drillMap.colorMap.update(drillMap);
+        drillMap.colorMap.compute(drillMap);
 
         if (!fileExists(mapFile(nr + 1))) {
             throw FileNotFoundError(mapFile(nr + 1));
         }
         drillMap2.load(mapFile(nr + 1));
-        drillMap2.colorMap.update(drillMap2);
+        drillMap2.colorMap.compute(drillMap2);
     }
 }
 

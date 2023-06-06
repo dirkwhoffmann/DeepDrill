@@ -35,31 +35,29 @@ public:
         
     // The colorized drill map
     Buffer <u32> colorMap;
+    sf::Texture colorMapTex;
 
     // The normal map
     Buffer <u32> normalMap;
+    sf::Texture normalMapTex;
 
     // The color palette
     Palette palette = Palette(opt);
 
-    // Textures
-    sf::Texture colorMapTex;
-    sf::Texture normalMapTex;
-
     // GPU filters
-    Filter illuminator = Filter(opt);
-    Filter downscaler = Filter(opt);
+    Filter illuminator = Filter(opt); // DEPRECATED
+    Filter downscaler = Filter(opt); // DEPRECATED
 
 
-    sf::RenderTexture finalTex;
-    sf::RectangleShape sourceRect;
-    sf::RectangleShape targetRect;
+    sf::RenderTexture finalTex; // DEPRECATED
+    sf::RectangleShape sourceRect; // DEPRECATED
+    sf::RectangleShape targetRect; // DEPRECATED
 
     // Compute kernels
-    sf::Shader scaler;
+    sf::Shader scaler; // DEPRECATED
 
     // Final image
-    sf::Image final;
+    sf::Image final; // DEPRECATED
 
 
     //
@@ -72,8 +70,6 @@ public:
     ~ColorMap();
 
     void resize(isize w, isize h);
-
-    void update(const class DrillMap &map);
 
 private:
 
@@ -91,9 +87,11 @@ private:
 
 public:
 
+    void compute(const class DrillMap &map);
+
     const sf::Texture &getTexture() { return illuminator.getTexture(); }
 
-    // Composes the final image
+    // Composes the final image (DEPRECATED)
     sf::Image &computeImage();
 
 
@@ -104,7 +102,7 @@ public:
 
 public:
 
-    void save(const string &path, Format format);
+    void save(const string &path, Format format) const;
 };
 
 }

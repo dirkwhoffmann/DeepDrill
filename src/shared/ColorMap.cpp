@@ -107,7 +107,7 @@ ColorMap::initShader(sf::Shader &shader, const string &name)
 }
 
 void
-ColorMap::update(const DrillMap &map)
+ColorMap::compute(const DrillMap &map)
 {
     ProgressIndicator progress("Colorizing", map.height * map.width);
 
@@ -221,7 +221,7 @@ ColorMap::computeImage()
 }
 
 void
-ColorMap::save(const string &path, Format format)
+ColorMap::save(const string &path, Format format) const
 {
     ProgressIndicator progress("Saving image data");
 

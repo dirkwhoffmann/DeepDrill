@@ -23,6 +23,13 @@ class DeepDrill : public Application {
     // The drill map
     DrillMap drillMap = DrillMap(opt);
 
+    // The color map
+    ColorMap colorMap = ColorMap(opt);
+
+    // GPU filters
+    Filter illuminator = Filter(opt);
+    Filter downscaler = Filter(opt);
+
 
     //
     // Methods from Application
