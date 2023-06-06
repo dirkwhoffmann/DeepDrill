@@ -36,7 +36,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["image.height"] = "540";
     defaults["image.depth"] = "1";
     defaults["image.illuminator"] = "lambert.glsl";
-    defaults["image.scaler"] = "imageScaler.glsl";
+    defaults["image.scaler"] = "nearest.glsl";
 
     // Video keys
     defaults["video.framerate"] = "60";

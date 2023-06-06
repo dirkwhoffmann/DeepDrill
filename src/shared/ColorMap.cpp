@@ -52,8 +52,8 @@ ColorMap::resize(isize w, isize h)
     initRenderTexture(finalTex, targetRect, imageDim);
 
     // Init GPU filters
-    // illuminator.init(opt.video.illuminator, mapRes);
-    // downscaler.init(opt.video.scaler, vidRes);
+    illuminator.init(opt.image.illuminator, mapDim);
+    downscaler.init(opt.image.scaler, imageDim);
 
     // Load shaders
     initShader(scaler, opt.image.scaler);
@@ -187,26 +187,34 @@ ColorMap::update(const DrillMap &map)
 sf::Image &
 ColorMap::computeImage()
 {
-    // ProgressIndicator progress("Composing final image");
+    // 1. Apply lighting
+    illuminator.apply([this](sf::Shader &shader) {
 
-    // Setup uniforms
-    auto a = opt.colors.alpha * 3.14159 / 180.0;
-    auto b = opt.colors.beta * 3.14159 / 180.0;
+        auto a = opt.colors.alpha * 3.14159 / 180.0;
+        auto b = opt.colors.beta * 3.14159 / 180.0;
 
-    auto z = std::sin(b);
-    auto l = std::cos(b);
-    auto y = std::sin(a) * l;
-    auto x = std::cos(a) * l;
+        auto z = std::sin(b);
+        auto l = std::cos(b);
+        auto y = std::sin(a) * l;
+        auto x = std::cos(a) * l;
 
-    scaler.setUniform("size", sf::Vector2f(colorMapTex.getSize()));
-    scaler.setUniform("image", colorMapTex);
-    scaler.setUniform("normal", normalMapTex);
-    scaler.setUniform("lightDir", sf::Vector3f(x, y, z));
-    finalTex.draw(targetRect, &scaler);
-    finalTex.display();
+        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
+        shader.setUniform("image", colorMapTex);
+        shader.setUniform("normal", normalMapTex);
+    });
 
-    // Read back image data
-    final = finalTex.getTexture().copyToImage();
+    // 2. Scale down
+    downscaler.apply([this](sf::Shader &shader) {
+
+        shader.setUniform("curr", illuminator.getTexture());
+        shader.setUniform("size", sf::Vector2f(illuminator.getSize()));
+        shader.setUniform("zoom", 1.0f);
+        shader.setUniform("frame", 0.0f);
+    });
+
+    // 3. Read back image data
+    final = downscaler.getTexture().copyToImage();
+
     return final;
 }
 
