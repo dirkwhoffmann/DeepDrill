@@ -23,9 +23,6 @@ class DeepDrill : public Application {
     // The drill map
     DrillMap drillMap = DrillMap(opt);
 
-    // A colorizer for converting the drill map into an image
-    ColorMap colorMap = ColorMap(opt);
-
 
     //
     // Methods from Application

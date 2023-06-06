@@ -217,11 +217,11 @@ Zoomer::updateTextures(isize nr)
         drillMap2.load(mapFile(nr + 1));
 
         // Create textures
-        colorMap.init(drillMap);
+        colorMap.update(drillMap);
         source1.update((u8 *)colorMap.colorMap.ptr);
         normal1.update((u8 *)colorMap.normalMap.ptr);
 
-        colorMap.init(drillMap2);
+        colorMap.update(drillMap2);
         source2.update((u8 *)colorMap.colorMap.ptr);
         normal2.update((u8 *)colorMap.normalMap.ptr);
     }

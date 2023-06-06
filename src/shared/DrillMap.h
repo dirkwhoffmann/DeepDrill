@@ -15,6 +15,7 @@
 #include "Types.h"
 #include "Buffer.h"
 #include "StandardComplex.h"
+#include "ColorMap.h"
 
 namespace dd {
 
@@ -56,8 +57,12 @@ public:
     // Resolution
     isize width = 0;
     isize height = 0;
-    
+
+    // Map data (TODO: Use Buffer class)
     MapEntry *data = nullptr;
+
+    // Associated color map
+    ColorMap colorMap = ColorMap(opt);
 
 public:
 
@@ -93,6 +98,13 @@ public:
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
     void set(const struct Coord &c, u32 iteration, float lognorm);
+
+
+    //
+    // Colorizing
+    //
+
+    sf::Image &colorize();
 
 
     //

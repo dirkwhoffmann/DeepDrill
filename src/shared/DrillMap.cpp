@@ -47,6 +47,8 @@ DrillMap::resize(isize w, isize h)
     assert(!hasLogNorms());
     assert(!hasDerivates());
     assert(!hasNormals());
+
+    colorMap.resize(w, h);
 }
 
 bool
@@ -122,6 +124,13 @@ void
 DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
 {
     set(c.x, c.y, MapEntry { iteration, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
+}
+
+sf::Image &
+DrillMap::colorize()
+{
+    colorMap.update(*this);
+    return colorMap.computeImage();
 }
 
 void

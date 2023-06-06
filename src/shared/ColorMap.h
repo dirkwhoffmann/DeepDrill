@@ -16,6 +16,7 @@
 #include "Options.h"
 #include "Buffer.h"
 #include "Palette.h"
+#include "Filter.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -25,6 +26,10 @@ class ColorMap {
 
     // Configuration options
     const struct Options &opt;
+
+    // Resolution
+    isize width = 0;
+    isize height = 0;
 
 public:
         
@@ -42,8 +47,8 @@ public:
     sf::Texture normalMapTex;
 
     // GPU filters
-    //Filter illuminator = Filter(opt);
-    // Filter downscaler = Filter(opt);
+    Filter illuminator = Filter(opt);
+    Filter downscaler = Filter(opt);
 
 
     sf::RenderTexture finalTex;
@@ -66,11 +71,13 @@ public:
     ColorMap(const Options &opt) : opt(opt) { };
     ~ColorMap();
 
-    void init(const class DrillMap &map);
+    void resize(isize w, isize h);
+
+    void update(const class DrillMap &map);
 
 private:
 
-    void init();
+    // void init();
     void initTexture(sf::Texture &tex, sf::Vector2u size);
     void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
     void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
@@ -85,7 +92,7 @@ private:
 public:
 
     // Composes the final image
-    void compose();
+    sf::Image &computeImage();
 
 
 
