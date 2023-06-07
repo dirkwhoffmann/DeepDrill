@@ -26,6 +26,9 @@ class Filter {
     // The compute kernel
     sf::Shader shader;
 
+    // List of uniforms
+    vector <string> uniforms;
+    
     // Dimensions of the output texture
     isize width;
     isize height;

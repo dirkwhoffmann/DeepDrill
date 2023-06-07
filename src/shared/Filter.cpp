@@ -20,7 +20,6 @@ void
 Filter::init(const string &shaderName, isize w, isize h)
 {
     init(shaderName, sf::Vector2u(unsigned(w), unsigned(h)));
-
 }
 
 void
@@ -37,7 +36,6 @@ Filter::init(const string &shaderName, sf::Vector2u resolution)
     rect.setSize(sf::Vector2f(resolution));
     rect.setTexture(&out.getTexture());
 
-
     // Load shader
     auto path = opt.assets.findAsset(shaderName, Format::GLSL);
 
@@ -46,6 +44,16 @@ Filter::init(const string &shaderName, sf::Vector2u resolution)
     }
     if (!shader.loadFromFile(path, sf::Shader::Fragment)) {
         throw Exception("Can't load fragment shader '" + path.string() + "'");
+    }
+
+    // Extract all uniforms from the shader source
+    std::ifstream infile(path);
+    std::string line;
+    while (std::getline(infile, line)) {
+        if (line.rfind("uniform", 0) == 0) {
+            line.pop_back();
+            uniforms.push_back(line.substr(line.find_last_of(' ') + 1));
+        }
     }
 }
 
