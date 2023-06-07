@@ -28,7 +28,7 @@ class DeepDrill : public Application {
     Colorizer colorizer = Colorizer(opt);
 
     // The color map
-    ColorMap colorMap = ColorMap(opt);
+    // ColorMap colorMap = ColorMap(opt);
 
 
     //

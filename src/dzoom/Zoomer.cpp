@@ -33,31 +33,15 @@ Zoomer::init()
 {
     recordMode = opt.files.output != "";
 
-    auto mapRes = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
-    auto vidRes = sf::Vector2u(unsigned(opt.video.width), unsigned(opt.video.height));
-
     // Create the render window
-    window.create(sf::VideoMode(vidRes.x, vidRes.y), "");
+    auto mode = sf::VideoMode(unsigned(opt.video.width), unsigned(opt.video.height));
+    window.create(mode, "");
 
     // Hide the window in batch mode
     if (opt.flags.batch) window.setVisible(false);
 
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
-
-    // Setup GPU filters
-    illuminator1.init(opt.image.illuminator, mapRes);
-    illuminator2.init(opt.image.illuminator, mapRes);
-    downscaler.init(opt.video.scaler, vidRes);
-}
-
-void
-Zoomer::initTexture(sf::Texture &tex, sf::Vector2u size)
-{
-    if (!tex.create(size.x, size.y)) {
-        throw Exception("Can't create texture");
-    }
-    tex.setSmooth(false);
 }
 
 void
@@ -128,62 +112,18 @@ Zoomer::update()
 void
 Zoomer::draw()
 {
-    /*
-    auto lightVector = [&]() {
-
-        auto a = opt.colors.alpha * 3.14159 / 180.0;
-        auto b = opt.colors.beta * 3.14159 / 180.0;
-        auto z = std::sin(b);
-        auto l = std::cos(b);
-        auto y = std::sin(a) * l;
-        auto x = std::cos(a) * l;
-
-        return sf::Vector3f(x, y, z);
-    };
-
     // 1. Colorize
-    illuminator1.apply([this, &lightVector](sf::Shader &shader) {
-
-        shader.setUniform("lightDir", lightVector());
-        shader.setUniform("image", drillMap.colorMap.colorMapTex);
-        shader.setUniform("normal", drillMap.colorMap.normalMapTex);
-    });
-    illuminator2.apply([this, &lightVector](sf::Shader &shader) {
-
-        shader.setUniform("lightDir", lightVector());
-        shader.setUniform("image", drillMap2.colorMap.colorMapTex);
-        shader.setUniform("normal", drillMap2.colorMap.normalMapTex);
-    });
-
-    // 2. Scale down
-    downscaler.apply([this](sf::Shader &shader) {
-
-        shader.setUniform("curr", illuminator1.getTexture());
-        shader.setUniform("next", illuminator2.getTexture());
-        shader.setUniform("size", sf::Vector2f(opt.drillmap.width, opt.drillmap.height));
-        shader.setUniform("zoom", float(zoom.current));
-        shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
-    });
-    */
-
-
     colorizer.draw(drillMap.colorMap, drillMap2.colorMap,
                    (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
-    // 3. Display the result
+    // 2. Display the result
     window.clear();
     window.draw(colorizer.videoScaler.getRect());
     window.display();
 
-    if (recordMode) {
-
-        // Read back image data
-        auto image = downscaler.getTexture().copyToImage();
-
-        // Record frame
-        recorder.record(image);
-    }
+    // 3. Record frame
+    if (recordMode) recorder.record(colorizer.image);
 }
 
 void
@@ -203,12 +143,14 @@ Zoomer::updateTextures(isize nr)
             throw FileNotFoundError(mapFile(nr));
         }
         drillMap.load(mapFile(nr));
+        // TODO: Call drillMap.colorize()
         drillMap.colorMap.compute(drillMap);
 
         if (!fileExists(mapFile(nr + 1))) {
             throw FileNotFoundError(mapFile(nr + 1));
         }
         drillMap2.load(mapFile(nr + 1));
+        // TODO: Call drillMap2.colorize()
         drillMap2.colorMap.compute(drillMap2);
     }
 }

@@ -40,11 +40,6 @@ class Zoomer {
     // Colorizer for converting the drill maps into an image
     Colorizer colorizer = Colorizer(opt);
 
-    // GPU filters
-    Filter illuminator1 = Filter(opt); // DEPRECATED
-    Filter illuminator2 = Filter(opt); // DEPRECATED
-    Filter downscaler = Filter(opt); // DEPRECATED
-    
     // The video recorder
     Recorder recorder = Recorder(opt);
 
@@ -65,7 +60,6 @@ public:
 
     // Initializers
     void init();
-    void initTexture(sf::Texture &tex, sf::Vector2u size);
 
     // Main entry point
     void launch();

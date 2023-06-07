@@ -141,20 +141,14 @@ DeepDrill::run()
         }
     }
 
-    // Are we suppoed to create an image file?
+    // Are we supposed to create an image file?
     if (AssetManager::isImageFormat(outputFormat)) {
 
         BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
-        // Create the color map
-
-        // Colorize the image
-        colorMap.compute(drillMap);
-        colorizer.draw(colorMap);
+        // Run the colorizer and save the image to a file
+        colorizer.draw(drillMap);
         colorizer.save(opt.files.output, outputFormat);
-        
-        // colorMap.computeImage();
-        // colorMap.save(opt.files.output, outputFormat);
     }
 }
 

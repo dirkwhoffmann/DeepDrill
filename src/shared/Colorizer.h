@@ -60,6 +60,7 @@ private:
 public:
 
     // Colorizes a still image
+    void draw(DrillMap &map);
     void draw(const ColorMap &map);
 
     // Colorizes a video frame

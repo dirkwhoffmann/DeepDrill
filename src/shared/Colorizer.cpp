@@ -12,6 +12,7 @@
 #include "Colorizer.h"
 #include "Exception.h"
 #include "ProgressIndicator.h"
+#include "DrillMap.h"
 
 namespace dd {
 
@@ -30,6 +31,13 @@ Colorizer::init()
     illuminator2.init(opt.image.illuminator, mapDim);
     downscaler.init(opt.image.scaler, imageDim);
     videoScaler.init(opt.video.scaler, imageDim);
+}
+
+void
+Colorizer::draw(DrillMap &map)
+{
+    auto &colorMap = map.colorize();
+    draw(colorMap);
 }
 
 void
