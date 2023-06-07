@@ -45,15 +45,7 @@ Colorizer::draw(const ColorMap &map)
     // 1. Apply lighting
     illuminator.apply([this, &map](sf::Shader &shader) {
 
-        auto a = opt.colors.alpha * 3.14159 / 180.0;
-        auto b = opt.colors.beta * 3.14159 / 180.0;
-
-        auto z = std::sin(b);
-        auto l = std::cos(b);
-        auto y = std::sin(a) * l;
-        auto x = std::cos(a) * l;
-
-        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
+        shader.setUniform("lightDir", lightVector());
         shader.setUniform("image", map.colorMapTex);
         shader.setUniform("normal", map.normalMapTex);
     });
@@ -74,28 +66,16 @@ Colorizer::draw(const ColorMap &map)
 void
 Colorizer::draw(const ColorMap &map1, ColorMap &map2, float frame, float zoom)
 {
-    auto lightVector = [&]() {
-
-        auto a = opt.colors.alpha * 3.14159 / 180.0;
-        auto b = opt.colors.beta * 3.14159 / 180.0;
-        auto z = std::sin(b);
-        auto l = std::cos(b);
-        auto y = std::sin(a) * l;
-        auto x = std::cos(a) * l;
-
-        return sf::Vector3f(x, y, z);
-    };
-
     init();
 
     // 1. Colorize
-    illuminator.apply([this, &lightVector, &map1](sf::Shader &shader) {
+    illuminator.apply([this, &map1](sf::Shader &shader) {
 
         shader.setUniform("lightDir", lightVector());
         shader.setUniform("image", map1.colorMapTex);
         shader.setUniform("normal", map1.normalMapTex);
     });
-    illuminator2.apply([this, &lightVector, &map2](sf::Shader &shader) {
+    illuminator2.apply([this, &map2](sf::Shader &shader) {
 
         shader.setUniform("lightDir", lightVector());
         shader.setUniform("image", map2.colorMapTex);
@@ -114,6 +94,19 @@ Colorizer::draw(const ColorMap &map1, ColorMap &map2, float frame, float zoom)
 
     // 3. Read back image data
     image = videoScaler.getTexture().copyToImage();
+}
+
+sf::Vector3f
+Colorizer::lightVector()
+{
+    auto a = opt.colors.alpha * 3.14159 / 180.0;
+    auto b = opt.colors.beta * 3.14159 / 180.0;
+    auto z = std::sin(b);
+    auto l = std::cos(b);
+    auto y = std::sin(a) * l;
+    auto x = std::cos(a) * l;
+
+    return sf::Vector3f(x, y, z);
 }
 
 void

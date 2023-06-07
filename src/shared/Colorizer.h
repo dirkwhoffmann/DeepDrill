@@ -65,6 +65,10 @@ public:
     // Colorizes a video frame
     void draw(const ColorMap &map1, ColorMap &map2, float frame, float zoom);
 
+private:
+
+    sf::Vector3f lightVector();
+
 
     //
     // Exporting
