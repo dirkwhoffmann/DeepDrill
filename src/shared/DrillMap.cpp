@@ -129,7 +129,7 @@ DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
 const ColorMap &
 DrillMap::colorize()
 {
-    colorMap.computeImage();
+    // colorMap.computeImage();
     return colorMap;
 }
 

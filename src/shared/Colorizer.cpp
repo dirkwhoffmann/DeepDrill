@@ -18,13 +18,8 @@ namespace dd {
 void
 Colorizer::init()
 {
-    static int init = 0;
-
     // Only initialize once
     if (illuminator.getSize().x != 0) return;
-
-    assert(init == 0);
-    init = 1;
 
     // Get resolutions
     auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));

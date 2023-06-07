@@ -92,7 +92,7 @@ public:
     const sf::Texture &getTexture() { return illuminator.getTexture(); }
 
     // Composes the final image (DEPRECATED)
-    sf::Image &computeImage();
+    // sf::Image &computeImage();
 
 
     //
@@ -101,7 +101,7 @@ public:
 
 public:
 
-    void save(const string &path, Format format) const;
+   //  void save(const string &path, Format format) const;
 };
 
 }
