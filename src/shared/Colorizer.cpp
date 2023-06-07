@@ -30,27 +30,7 @@ Colorizer::init(const string &illuminationFilter, const string &scalingFilter)
     illuminator.init(illuminationFilter, mapDim);
     illuminator2.init(illuminationFilter, mapDim);
     downscaler.init(scalingFilter, imageDim);
-    videoScaler.init(scalingFilter, imageDim);
 }
-
-/*
-void
-Colorizer::init()
-{
-    // Only initialize once
-    if (illuminator.getSize().x != 0) return;
-
-    // Get resolutions
-    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
-    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
-
-    // Init GPU filters
-    illuminator.init(opt.image.illuminator, mapDim);
-    illuminator2.init(opt.image.illuminator, mapDim);
-    downscaler.init(opt.image.scaler, imageDim);
-    videoScaler.init(opt.video.scaler, imageDim);
-}
-*/
 
 void
 Colorizer::draw(DrillMap &map)
@@ -109,7 +89,7 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float z
     });
 
     // 2. Scale down
-    videoScaler.apply([this, &zoom, &frame](sf::Shader &shader) {
+    downscaler.apply([this, &zoom, &frame](sf::Shader &shader) {
 
         shader.setUniform("curr", illuminator.getTexture());
         shader.setUniform("next", illuminator2.getTexture());
@@ -119,7 +99,7 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float z
     });
 
     // 3. Read back image data
-    image = videoScaler.getTexture().copyToImage();
+    image = downscaler.getTexture().copyToImage();
 }
 
 sf::Vector3f

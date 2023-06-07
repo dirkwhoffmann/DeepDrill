@@ -27,13 +27,7 @@ class Colorizer {
     // GPU filters
     Filter illuminator = Filter(opt);
     Filter illuminator2 = Filter(opt);
-
-public:
-    
     Filter downscaler = Filter(opt);
-    Filter videoScaler = Filter(opt);
-
-public:
 
     // Final image
     sf::Image image;
@@ -75,6 +69,11 @@ private:
 
 public:
 
+    // Returns the computed image or it's drawing shape
+    const sf::RectangleShape &getRect() { return downscaler.getRect(); }
+    const sf::Image &getImage() { return image; }
+
+    // Exports the computed image to a file
     void save(const string &path, Format format) const;
 };
 

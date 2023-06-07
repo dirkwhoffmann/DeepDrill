@@ -122,11 +122,11 @@ Zoomer::draw()
 
     // 2. Display the result
     window.clear();
-    window.draw(colorizer.videoScaler.getRect());
+    window.draw(colorizer.getRect());
     window.display();
 
     // 3. Record frame
-    if (recordMode) recorder.record(colorizer.image);
+    if (recordMode) recorder.record(colorizer.getImage());
 }
 
 void
