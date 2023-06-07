@@ -35,21 +35,24 @@ ColorMap::resize(isize w, isize h)
     assert(w >= MIN_MAP_WIDTH && w <= MAX_MAP_WIDTH);
     assert(h >= MIN_MAP_HEIGHT && h <= MAX_MAP_HEIGHT);
 
-    width = w;
-    height = h;
+    if (width != w || height != h) {
 
-    colorMap.resize(width * height);
-    normalMap.resize(width * height);
+        width = w;
+        height = h;
 
-    // Load color palette
-    palette.load(opt.colors.palette);
+        colorMap.resize(width * height);
+        normalMap.resize(width * height);
 
-    // Create textures
-    if (!colorMapTex.create(unsigned(width), unsigned(height))) {
-        throw Exception("Can't create color map texture");
-    }
-    if (!normalMapTex.create(unsigned(width), unsigned(height))) {
-        throw Exception("Can't create normal map texture");
+        // Load color palette
+        palette.load(opt.colors.palette);
+
+        // Create textures
+        if (!colorMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create color map texture");
+        }
+        if (!normalMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create normal map texture");
+        }
     }
 }
 
@@ -63,11 +66,12 @@ ColorMap::compute(const DrillMap &map)
 
     resize(map.width, map.height);
 
-    for (isize y = 0; y < map.height; y++) {
-        for (isize x = 0; x < map.width; x++) {
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
 
             auto data = map.get(x, y);
-            auto pos = (map.height - 1 - y) * map.width + x;
+            // auto pos = (height - 1 - y) * width + x;
+            auto pos = y * width + x;
 
             //
             // Colorize image

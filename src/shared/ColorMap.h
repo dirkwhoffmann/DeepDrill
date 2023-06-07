@@ -54,7 +54,7 @@ public:
     ColorMap(const Options &opt) : opt(opt) { };
     ~ColorMap();
 
-// private:
+private:
 
     void resize(isize w, isize h);
 

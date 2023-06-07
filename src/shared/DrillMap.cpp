@@ -47,8 +47,6 @@ DrillMap::resize(isize w, isize h)
     assert(!hasLogNorms());
     assert(!hasDerivates());
     assert(!hasNormals());
-
-    colorMap.resize(w, h);
 }
 
 bool
