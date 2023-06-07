@@ -101,7 +101,7 @@ Options::parse(string key, string value)
 
     } else if (key == "map.height") {
 
-        parse(key, value, drillmap.height, 135, 3840);
+        parse(key, value, drillmap.height, 120, 3840);
 
     } else if (key == "map.depth") {
 
@@ -329,6 +329,11 @@ Options::derive()
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / drillmap.height;
     pixelDelta = mpfPixelDelta;
+
+    // Perform some sanity checks
+    if (drillmap.width < image.width || drillmap.height < image.height) {
+        throw Exception("Drill map has a lower resolution than the image");
+    }
 }
 
 }

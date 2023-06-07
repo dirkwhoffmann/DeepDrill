@@ -1,3 +1,7 @@
+[map]
+width = 240
+height = 130
+
 [image]
 width = 480
 height = 260
@@ -9,10 +13,3 @@ height = 260
 keyframes = 10
 inbetweens = 143
 bitrate = 8000
-
-[perturbation]
-tolerance = 1e-6
-rounds = 100
-
-[approximation]
-coefficients = 0
