@@ -44,22 +44,6 @@ public:
     // The color palette
     Palette palette = Palette(opt);
 
-    // GPU filters
-    // Filter illuminator = Filter(opt); // DEPRECATED
-    // Filter downscaler = Filter(opt); // DEPRECATED
-
-/*
-    sf::RenderTexture finalTex; // DEPRECATED
-    sf::RectangleShape sourceRect; // DEPRECATED
-    sf::RectangleShape targetRect; // DEPRECATED
-*/
-    
-    // Compute kernels
-    // sf::Shader scaler; // DEPRECATED
-
-    // Final image
-    // sf::Image final; // DEPRECATED
-
 
     //
     // Initialization
@@ -70,39 +54,18 @@ public:
     ColorMap(const Options &opt) : opt(opt) { };
     ~ColorMap();
 
+// private:
+
     void resize(isize w, isize h);
 
-private:
 
-    // void init();
-    void initTexture(sf::Texture &tex, sf::Vector2u size);
-    void initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size);
-    void initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size);
-    void initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size);
-    void initShader(sf::Shader &shader, const string &name);
-
-    
     //
-    // Colorizing the Mandelbrot set
+    // Colorizing
     //
 
 public:
 
     void compute(const class DrillMap &map);
-
-    // const sf::Texture &getTexture() { return illuminator.getTexture(); }
-
-    // Composes the final image (DEPRECATED)
-    // sf::Image &computeImage();
-
-
-    //
-    // Exporting
-    //
-
-public:
-
-   //  void save(const string &path, Format format) const;
 };
 
 }

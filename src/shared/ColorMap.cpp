@@ -45,65 +45,11 @@ ColorMap::resize(isize w, isize h)
     palette.load(opt.colors.palette);
 
     // Create textures
-    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
-    // auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
-    // initTexture(colorMapTex, sourceRect, mapDim);
-    initTexture(colorMapTex, mapDim);
-    initTexture(normalMapTex, mapDim);
-    // initRenderTexture(finalTex, targetRect, imageDim);
-
-    // Init GPU filters
-    // illuminator.init(opt.image.illuminator, mapDim);
-    // downscaler.init(opt.image.scaler, imageDim);
-
-    // Load shaders
-    // initShader(scaler, opt.image.scaler);
-}
-
-void
-ColorMap::initTexture(sf::Texture &tex, sf::Vector2u size)
-{
-    if (!tex.create(size.x, size.y)) {
-        throw Exception("Can't create texture");
+    if (!colorMapTex.create(unsigned(width), unsigned(height))) {
+        throw Exception("Can't create color map texture");
     }
-    tex.setSmooth(false);
-}
-
-void
-ColorMap::initTexture(sf::Texture &tex, sf::RectangleShape &rect, sf::Vector2u size)
-{
-    initTexture(tex, size);
-    rect.setSize(sf::Vector2f(size.x, size.y));
-    rect.setTexture(&tex);
-}
-
-void
-ColorMap::initRenderTexture(sf::RenderTexture &tex, sf::Vector2u size)
-{
-    if (!tex.create(size.x, size.y)) {
-        throw Exception("Can't create render texture");
-    }
-    tex.setSmooth(false);
-}
-
-void
-ColorMap::initRenderTexture(sf::RenderTexture &tex, sf::RectangleShape &rect, sf::Vector2u size)
-{
-    initRenderTexture(tex, size);
-    rect.setSize(sf::Vector2f(size.x, size.y));
-    rect.setTexture(&tex.getTexture());
-}
-
-void
-ColorMap::initShader(sf::Shader &shader, const string &name)
-{
-    auto path = opt.assets.findAsset(name, Format::GLSL);
-
-    if (path == "") {
-        throw Exception("Can't load fragment shader '" + name + "'");
-    }
-    if (!shader.loadFromFile(path, sf::Shader::Fragment)) {
-        throw Exception("Can't load fragment shader '" + path.string() + "'");
+    if (!normalMapTex.create(unsigned(width), unsigned(height))) {
+        throw Exception("Can't create normal map texture");
     }
 }
 
@@ -184,69 +130,5 @@ ColorMap::compute(const DrillMap &map)
     colorMapTex.update((u8 *)colorMap.ptr);
     normalMapTex.update((u8 *)normalMap.ptr);
 }
-
-/*
-sf::Image &
-ColorMap::computeImage()
-{
-    // 1. Apply lighting
-    illuminator.apply([this](sf::Shader &shader) {
-
-        auto a = opt.colors.alpha * 3.14159 / 180.0;
-        auto b = opt.colors.beta * 3.14159 / 180.0;
-
-        auto z = std::sin(b);
-        auto l = std::cos(b);
-        auto y = std::sin(a) * l;
-        auto x = std::cos(a) * l;
-
-        shader.setUniform("lightDir", sf::Vector3f(x, y, z));
-        shader.setUniform("image", colorMapTex);
-        shader.setUniform("normal", normalMapTex);
-    });
-
-    // 2. Scale down
-    downscaler.apply([this](sf::Shader &shader) {
-
-        shader.setUniform("curr", illuminator.getTexture());
-        shader.setUniform("size", sf::Vector2f(illuminator.getSize()));
-        shader.setUniform("zoom", 1.0f);
-        shader.setUniform("frame", 0.0f);
-    });
-
-    // 3. Read back image data
-    final = illuminator.getTexture().copyToImage();
-
-    return final;
-}
-*/
-/*
-void
-ColorMap::save(const string &path, Format format) const
-{
-    ProgressIndicator progress("Saving image data");
-
-    auto prefix = stripSuffix(path);
-    auto suffix = extractSuffix(path);
-    auto w = (int)opt.drillmap.width;
-    auto h = (int)opt.drillmap.height;
-
-    final.saveToFile(path);
-
-    if (opt.exports.colorMap) {
-
-        sf::Image img;
-        img.create(w, h, (u8 *)colorMap.ptr);
-        img.saveToFile(prefix + "_raw." + suffix);
-    }
-
-    if (opt.exports.normalMap) {
-
-        sf::Image img;
-        img.create(w, h, (u8 *)normalMap.ptr);
-        img.saveToFile(prefix + "_nrm." + suffix);
-    }
-}
-*/
 
 }
