@@ -34,7 +34,7 @@ Zoomer::init()
     recordMode = opt.files.output != "";
 
     // Create the render window
-    auto mode = sf::VideoMode(unsigned(opt.video.width), unsigned(opt.video.height));
+    auto mode = sf::VideoMode(unsigned(opt.image.width), unsigned(opt.image.height));
     window.create(mode, "");
 
     // Hide the window in batch mode

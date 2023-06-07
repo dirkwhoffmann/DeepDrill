@@ -32,7 +32,7 @@ Recorder::startRecording()
     }
 
     // Create temporary buffers
-    videoData.alloc(opt.video.width * opt.video.height);
+    videoData.alloc(opt.image.width * opt.image.height);
 
     //
     // Assemble the command line arguments for the video encoder
@@ -51,7 +51,7 @@ Recorder::startRecording()
     cmd += " -r " + std::to_string(60);
 
     // Frame size (width x height)
-    cmd += " -s:v " + std::to_string(opt.video.width) + "x" + std::to_string(opt.video.height);
+    cmd += " -s:v " + std::to_string(opt.image.width) + "x" + std::to_string(opt.image.height);
 
     // Input source (named pipe)
     cmd += " -i " + videoPipe.name;
@@ -84,10 +84,10 @@ Recorder::startRecording()
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;
+        log::cout << log::ralign("Resolution: ");
+        log::cout << opt.image.width << " x " << opt.image.height << log::endl;
         log::cout << log::ralign("Frame rate: ");
         log::cout << opt.video.frameRate << " Hz" << log::endl;
-        log::cout << log::ralign("Resolution: ");
-        log::cout << opt.video.width << " x " << opt.video.height << log::endl;
         log::cout << log::ralign("Keyframes: ");
         log::cout << opt.video.keyframes << log::endl;
         log::cout << log::ralign("Inbetweens: ");
@@ -115,12 +115,12 @@ Recorder::stopRecording()
 void
 Recorder::record(const sf::Image &img)
 {
-    assert(img.getSize().x == opt.video.width);
-    assert(img.getSize().y == opt.video.height);
+    assert(img.getSize().x == opt.image.width);
+    assert(img.getSize().y == opt.image.height);
     assert(videoFFmpeg.isRunning());
     assert(videoPipe.isOpen());
 
-    isize length = sizeof(u32) * opt.video.width * opt.video.height;
+    isize length = sizeof(u32) * opt.image.width * opt.image.height;
 
     u8 *src = (u8 *)img.getPixelsPtr();
     u8 *dst = (u8 *)videoData.ptr;

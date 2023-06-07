@@ -40,8 +40,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Video keys
     defaults["video.framerate"] = "60";
-    defaults["video.width"] = "0";
-    defaults["video.height"] = "0";
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
     defaults["video.bitrate"] = "4096";
@@ -121,6 +119,10 @@ Options::parse(string key, string value)
 
         parse(key, value, image.height, 135, 3840);
 
+        if (image.height % 2 == 1) {
+            throw KeyValueError(key, "Height must be dividable by 2.");
+        }
+
     } else if (key == "image.depth") {
 
         parse(key, value, image.depth, 0, 1);
@@ -136,18 +138,6 @@ Options::parse(string key, string value)
     } else if (key == "video.framerate") {
 
         parse(key, value, video.frameRate, 25, 240);
-
-    } else if (key == "video.width") {
-
-        parse(key, value, video.width, 0, 1920);
-
-    } else if (key == "video.height") {
-
-        parse(key, value, video.height, 0, 1080);
-
-        if (video.height % 2 == 1) {
-            throw KeyValueError(key, "Height must be dividable by 2.");
-        }
 
     } else if (key == "video.keyframes") {
 
@@ -345,6 +335,7 @@ Options::derive()
     auto keyframes = double(video.keyframes);
     auto inbetweens = double(video.inbetweens);
 
+    /*
     if (!video.width) {
         video.width = image.width / 2;     // Width can be even or odd
     }
@@ -352,6 +343,7 @@ Options::derive()
         video.height = image.height / 2;
         video.height += video.height & 1;  // Height must be even
     }
+    */
     if (!video.inbetweens) {
         video.inbetweens = 2 * video.frameRate;
     }
