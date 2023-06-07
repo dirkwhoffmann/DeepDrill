@@ -157,6 +157,7 @@
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		507122172A304EF10013E655 /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		507122182A304EF10013E655 /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
+		5071221B2A3101AA0013E655 /* normalmap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.glsl; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,7 +255,6 @@
 		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
 		50D69A7629E2A4630025DE0D /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		50DA29532A2C876900600EB0 /* tutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.loc; sourceTree = "<group>"; };
-		50DA29542A2C8D0A00600EB0 /* imageScaler.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = imageScaler.glsl; sourceTree = "<group>"; };
 		50DA29552A2CAE4F00600EB0 /* tutorial2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial2.loc; sourceTree = "<group>"; };
 		50DA29562A2CC2B900600EB0 /* tutorial3.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial3.loc; sourceTree = "<group>"; };
 		50DA29572A2CE2B700600EB0 /* Filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 				504FE2C52A1CF2A3007A3F04 /* catmull.glsl */,
 				50F8C41129EC3C97008A0B4C /* lambert.glsl */,
 				50B5C7772A29D55700E531CC /* relief.glsl */,
-				50DA29542A2C8D0A00600EB0 /* imageScaler.glsl */,
+				5071221B2A3101AA0013E655 /* normalmap.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
