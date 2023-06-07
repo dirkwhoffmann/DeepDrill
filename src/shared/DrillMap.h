@@ -105,7 +105,7 @@ public:
     //
 
     ColorMap &getColorMap() { return colorMap; }
-    const sf::Texture &getTexture() { return colorMap.getTexture(); }
+    // const sf::Texture &getTexture() { return colorMap.getTexture(); }
     const ColorMap &colorize();
 
 

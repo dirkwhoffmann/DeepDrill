@@ -46,17 +46,18 @@ ColorMap::resize(isize w, isize h)
 
     // Create textures
     auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
-    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
-    initTexture(colorMapTex, sourceRect, mapDim);
+    // auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
+    // initTexture(colorMapTex, sourceRect, mapDim);
+    initTexture(colorMapTex, mapDim);
     initTexture(normalMapTex, mapDim);
-    initRenderTexture(finalTex, targetRect, imageDim);
+    // initRenderTexture(finalTex, targetRect, imageDim);
 
     // Init GPU filters
-    illuminator.init(opt.image.illuminator, mapDim);
-    downscaler.init(opt.image.scaler, imageDim);
+    // illuminator.init(opt.image.illuminator, mapDim);
+    // downscaler.init(opt.image.scaler, imageDim);
 
     // Load shaders
-    initShader(scaler, opt.image.scaler);
+    // initShader(scaler, opt.image.scaler);
 }
 
 void

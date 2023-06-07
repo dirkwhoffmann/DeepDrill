@@ -45,19 +45,20 @@ public:
     Palette palette = Palette(opt);
 
     // GPU filters
-    Filter illuminator = Filter(opt); // DEPRECATED
-    Filter downscaler = Filter(opt); // DEPRECATED
+    // Filter illuminator = Filter(opt); // DEPRECATED
+    // Filter downscaler = Filter(opt); // DEPRECATED
 
-
+/*
     sf::RenderTexture finalTex; // DEPRECATED
     sf::RectangleShape sourceRect; // DEPRECATED
     sf::RectangleShape targetRect; // DEPRECATED
-
+*/
+    
     // Compute kernels
-    sf::Shader scaler; // DEPRECATED
+    // sf::Shader scaler; // DEPRECATED
 
     // Final image
-    sf::Image final; // DEPRECATED
+    // sf::Image final; // DEPRECATED
 
 
     //
@@ -89,7 +90,7 @@ public:
 
     void compute(const class DrillMap &map);
 
-    const sf::Texture &getTexture() { return illuminator.getTexture(); }
+    // const sf::Texture &getTexture() { return illuminator.getTexture(); }
 
     // Composes the final image (DEPRECATED)
     // sf::Image &computeImage();
