@@ -95,7 +95,6 @@ public:
     sf::Image &computeImage();
 
 
-
     //
     // Exporting
     //

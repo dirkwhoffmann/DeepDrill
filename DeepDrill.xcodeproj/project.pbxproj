@@ -29,6 +29,8 @@
 		5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
 		5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
 		5049969929DF051200B15919 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
+		507122192A304EF10013E655 /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507122172A304EF10013E655 /* Colorizer.cpp */; };
+		5071221A2A304EF10013E655 /* Colorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507122172A304EF10013E655 /* Colorizer.cpp */; };
 		5072FD672A271E36003DE341 /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
 		5072FD6A2A271E4A003DE341 /* DeepMake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD682A271E4A003DE341 /* DeepMake.cpp */; };
 		5072FD6B2A271E69003DE341 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
@@ -153,6 +155,8 @@
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		507122172A304EF10013E655 /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
+		507122182A304EF10013E655 /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -538,6 +542,8 @@
 				50102350269EC70200AC61A8 /* DrillMap.cpp */,
 				50EB497226A00C2A0019078C /* ColorMap.h */,
 				50EB497126A00C2A0019078C /* ColorMap.cpp */,
+				507122182A304EF10013E655 /* Colorizer.h */,
+				507122172A304EF10013E655 /* Colorizer.cpp */,
 				50DA29582A2CE2B700600EB0 /* Filter.h */,
 				50DA29572A2CE2B700600EB0 /* Filter.cpp */,
 			);
@@ -684,6 +690,7 @@
 				5049968229DED17800B15919 /* DeepZoom.cpp in Sources */,
 				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
 				50DA29522A2B6EA000600EB0 /* ColorMap.cpp in Sources */,
+				5071221A2A304EF10013E655 /* Colorizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +745,7 @@
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */,
 				50EB497326A00C2A0019078C /* ColorMap.cpp in Sources */,
+				507122192A304EF10013E655 /* Colorizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

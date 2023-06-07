@@ -26,12 +26,6 @@ class Filter {
     // The compute kernel
     sf::Shader shader;
 
-    // The first input texture (mandatory)
-    sf::Texture in1;
-
-    // The second input texture (optional)
-    sf::Texture in2;
-
     // Dimensions of the output texture
     isize width;
     isize height;
@@ -60,7 +54,6 @@ public:
     //
 
     void apply(std::function<void (sf::Shader&)> setup);
-
 };
 
 }

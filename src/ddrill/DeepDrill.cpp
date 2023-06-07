@@ -146,11 +146,15 @@ DeepDrill::run()
 
         BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
-        // Run the colorizer
+        // Create the color map
+
+        // Colorize the image
         colorMap.compute(drillMap);
-        colorMap.computeImage();
-        // auto &colorMap = drillMap.colorize();
-        colorMap.save(opt.files.output, outputFormat);
+        colorizer.draw(colorMap);
+        colorizer.save(opt.files.output, outputFormat);
+        
+        // colorMap.computeImage();
+        // colorMap.save(opt.files.output, outputFormat);
     }
 }
 
