@@ -26,7 +26,12 @@ class Colorizer {
 
     // GPU filters
     Filter illuminator = Filter(opt);
+    Filter illuminator2 = Filter(opt);
+
+public:
+    
     Filter downscaler = Filter(opt);
+    Filter videoScaler = Filter(opt);
 
 public:
 
@@ -57,8 +62,8 @@ public:
     // Colorizes a still image
     void draw(const ColorMap &map);
 
-    // Colorizes a single video frame
-    // TODO
+    // Colorizes a video frame
+    void draw(const ColorMap &map1, ColorMap &map2, float frame, float zoom);
 
 
     //

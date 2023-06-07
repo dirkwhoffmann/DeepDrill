@@ -18,13 +18,13 @@ namespace dd {
 void
 Colorizer::init()
 {
+    static int init = 0;
+
     // Only initialize once
-    if (image.getSize().x != 0) {
-        printf("ALREADY INITIALIZED\n");
-        return;
-    } else {
-        printf("NOT YET INITIALIZED\n");
-    }
+    if (illuminator.getSize().x != 0) return;
+
+    assert(init == 0);
+    init = 1;
 
     // Get resolutions
     auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
@@ -32,7 +32,9 @@ Colorizer::init()
 
     // Init GPU filters
     illuminator.init(opt.image.illuminator, mapDim);
+    illuminator2.init(opt.image.illuminator, mapDim);
     downscaler.init(opt.image.scaler, imageDim);
+    videoScaler.init(opt.video.scaler, imageDim);
 }
 
 void
@@ -66,7 +68,52 @@ Colorizer::draw(const ColorMap &map)
     });
 
     // 3. Read back image data
-    image = illuminator.getTexture().copyToImage();
+    image = downscaler.getTexture().copyToImage();
+}
+
+void
+Colorizer::draw(const ColorMap &map1, ColorMap &map2, float frame, float zoom)
+{
+    auto lightVector = [&]() {
+
+        auto a = opt.colors.alpha * 3.14159 / 180.0;
+        auto b = opt.colors.beta * 3.14159 / 180.0;
+        auto z = std::sin(b);
+        auto l = std::cos(b);
+        auto y = std::sin(a) * l;
+        auto x = std::cos(a) * l;
+
+        return sf::Vector3f(x, y, z);
+    };
+
+    init();
+
+    // 1. Colorize
+    illuminator.apply([this, &lightVector, &map1](sf::Shader &shader) {
+
+        shader.setUniform("lightDir", lightVector());
+        shader.setUniform("image", map1.colorMapTex);
+        shader.setUniform("normal", map1.normalMapTex);
+    });
+    illuminator2.apply([this, &lightVector, &map2](sf::Shader &shader) {
+
+        shader.setUniform("lightDir", lightVector());
+        shader.setUniform("image", map2.colorMapTex);
+        shader.setUniform("normal", map2.normalMapTex);
+    });
+
+    // 2. Scale down
+    videoScaler.apply([this, &zoom, &frame](sf::Shader &shader) {
+
+        shader.setUniform("curr", illuminator.getTexture());
+        shader.setUniform("next", illuminator2.getTexture());
+        shader.setUniform("size", sf::Vector2f(illuminator.getSize()));
+        shader.setUniform("zoom", zoom);
+        shader.setUniform("frame", frame);
+    });
+
+    // 3. Read back image data
+    image = videoScaler.getTexture().copyToImage();
 }
 
 void

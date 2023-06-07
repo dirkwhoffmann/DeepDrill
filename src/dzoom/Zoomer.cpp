@@ -128,6 +128,7 @@ Zoomer::update()
 void
 Zoomer::draw()
 {
+    /*
     auto lightVector = [&]() {
 
         auto a = opt.colors.alpha * 3.14159 / 180.0;
@@ -163,12 +164,17 @@ Zoomer::draw()
         shader.setUniform("zoom", float(zoom.current));
         shader.setUniform("frame", (float)frame / (float)opt.video.inbetweens);
     });
+    */
+
+
+    colorizer.draw(drillMap.colorMap, drillMap2.colorMap,
+                   (float)frame / (float)opt.video.inbetweens,
+                   float(zoom.current));
 
     // 3. Display the result
     window.clear();
-    window.draw(downscaler.getRect());
+    window.draw(colorizer.videoScaler.getRect());
     window.display();
-
 
     if (recordMode) {
 

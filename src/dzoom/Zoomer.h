@@ -18,6 +18,7 @@
 #include "Animated.h"
 #include "DrillMap.h"
 #include "ColorMap.h"
+#include "Colorizer.h"
 #include "Filter.h"
 
 #include <SFML/Graphics.hpp>
@@ -36,10 +37,13 @@ class Zoomer {
     DrillMap drillMap = DrillMap(opt);
     DrillMap drillMap2 = DrillMap(opt);
 
+    // Colorizer for converting the drill maps into an image
+    Colorizer colorizer = Colorizer(opt);
+
     // GPU filters
-    Filter illuminator1 = Filter(opt);
-    Filter illuminator2 = Filter(opt);
-    Filter downscaler = Filter(opt);
+    Filter illuminator1 = Filter(opt); // DEPRECATED
+    Filter illuminator2 = Filter(opt); // DEPRECATED
+    Filter downscaler = Filter(opt); // DEPRECATED
     
     // The video recorder
     Recorder recorder = Recorder(opt);
