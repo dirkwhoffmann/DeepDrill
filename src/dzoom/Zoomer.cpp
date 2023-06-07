@@ -42,6 +42,9 @@ Zoomer::init()
 
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
+
+    // Initialize the colorizer
+    colorizer.init(opt.image.illuminator, opt.video.scaler);
 }
 
 void

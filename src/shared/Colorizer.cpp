@@ -17,6 +17,24 @@
 namespace dd {
 
 void
+Colorizer::init(const string &illuminationFilter, const string &scalingFilter)
+{
+    // Only initialize once
+    assert(illuminator.getSize().x == 0);
+
+    // Get resolutions
+    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
+    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
+
+    // Init GPU filters
+    illuminator.init(illuminationFilter, mapDim);
+    illuminator2.init(illuminationFilter, mapDim);
+    downscaler.init(scalingFilter, imageDim);
+    videoScaler.init(scalingFilter, imageDim);
+}
+
+/*
+void
 Colorizer::init()
 {
     // Only initialize once
@@ -32,6 +50,7 @@ Colorizer::init()
     downscaler.init(opt.image.scaler, imageDim);
     videoScaler.init(opt.video.scaler, imageDim);
 }
+*/
 
 void
 Colorizer::draw(DrillMap &map)
@@ -43,8 +62,6 @@ Colorizer::draw(DrillMap &map)
 void
 Colorizer::draw(const ColorMap &map)
 {
-    init();
-
     // 1. Apply lighting
     illuminator.apply([this, &map](sf::Shader &shader) {
 
@@ -77,8 +94,6 @@ Colorizer::draw(DrillMap &map1, DrillMap &map2, float frame, float zoom)
 void
 Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float zoom)
 {
-    init();
-
     // 1. Colorize
     illuminator.apply([this, &map1](sf::Shader &shader) {
 

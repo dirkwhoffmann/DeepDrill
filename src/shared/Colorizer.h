@@ -48,10 +48,7 @@ public:
     Colorizer(const Options &opt) : opt(opt) { };
     ~Colorizer() { };
 
-private:
-
-    void init();
-
+    void init(const string &illuminationFilter, const string &scalingFilter);
 
     //
     // Colorizing

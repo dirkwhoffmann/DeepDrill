@@ -147,6 +147,7 @@ DeepDrill::run()
         BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
         // Run the colorizer and save the image to a file
+        colorizer.init(opt.image.illuminator, opt.image.scaler);
         colorizer.draw(drillMap);
         colorizer.save(opt.files.output, outputFormat);
     }
