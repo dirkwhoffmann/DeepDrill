@@ -134,11 +134,9 @@ DeepDrill::run()
         Driller driller(opt, drillMap);
         driller.drill();
 
-        // Are we supposed to save the map file?
-        if (outputFormat == Format::MAP) {
-
-            drillMap.save(opt.files.output);
-        }
+        // Save map file
+        // auto name = stripSuffix(opt.files.output)
+        drillMap.save(stripSuffix(opt.files.output) + ".map");
     }
 
     // Are we supposed to create an image file?
@@ -146,7 +144,6 @@ DeepDrill::run()
 
         BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
 
-        // Run the colorizer and save the image to a file
         colorizer.init(opt.image.illuminator, opt.image.scaler);
         colorizer.draw(drillMap);
         colorizer.save(opt.files.output, outputFormat);

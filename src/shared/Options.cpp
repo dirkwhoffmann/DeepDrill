@@ -26,10 +26,10 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["location.zoom"] = "1.0";
     defaults["location.depth"] = "500";
 
-    // Drill map keys
-    defaults["drillmap.width"] = "960";
-    defaults["drillmap.height"] = "540";
-    defaults["drillmap.depth"] = "1";
+    // Map keys
+    defaults["map.width"] = "960";
+    defaults["map.height"] = "540";
+    defaults["map.depth"] = "1";
 
     // Image keys
     defaults["image.width"] = "960";
@@ -99,15 +99,15 @@ Options::parse(string key, string value)
 
         parse(key, value, location.depth);
 
-    } else if (key == "drillmap.width") {
+    } else if (key == "map.width") {
 
         parse(key, value, drillmap.width, 240, 3840);
 
-    } else if (key == "drillmap.height") {
+    } else if (key == "map.height") {
 
         parse(key, value, drillmap.height, 135, 3840);
 
-    } else if (key == "drillmap.depth") {
+    } else if (key == "map.depth") {
 
         parse(key, value, drillmap.depth, 0, 1);
 
@@ -298,7 +298,7 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
 void
 Options::parse(const string &key, const string &value, ColoringMode &parsed)
 {
-    map <string, ColoringMode> modes = {
+    std::map <string, ColoringMode> modes = {
 
         { "default", ColoringMode::Default },
     };
@@ -313,16 +313,6 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
-    // Adjust some default values
-    /*
-     if (keys.find("image.width") != keys.end()) {
-     defaults["drillmap.width"] = keys["image.width"];
-     }
-     if (keys.find("image.height") != keys.end()) {
-     defaults["drillmap.height"] = keys["image.height"];
-     }
-     */
-
     // Use default values for all missing keys
     for (auto &it : defaults) {
         if (keys.find(it.first) == keys.end()) {
@@ -335,15 +325,6 @@ Options::derive()
     auto keyframes = double(video.keyframes);
     auto inbetweens = double(video.inbetweens);
 
-    /*
-    if (!video.width) {
-        video.width = image.width / 2;     // Width can be even or odd
-    }
-    if (!video.height) {
-        video.height = image.height / 2;
-        video.height += video.height & 1;  // Height must be even
-    }
-    */
     if (!video.inbetweens) {
         video.inbetweens = 2 * video.frameRate;
     }

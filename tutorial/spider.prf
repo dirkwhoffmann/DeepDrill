@@ -5,7 +5,8 @@ height = 260
 #height = 2160
 
 [video]
-keyframes = 75
+#keyframes = 75
+keyframes = 10
 inbetweens = 143
 bitrate = 8000
 

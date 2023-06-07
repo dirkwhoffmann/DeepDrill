@@ -101,6 +101,21 @@ DeepMake::checkCustomArguments()
 void
 DeepMake::run()
 {
+    // Ask for permission if many files would be created
+    auto numFiles = opt.video.keyframes + 3;
+    if (opt.video.keyframes > 100) {
+
+        log::cout << numFiles << " will be created. Do you want to proceed [no]? ";
+        string line; std::getline(std::cin, line);
+
+        if (line != "y" && line != "yes") {
+
+            log::cout << "Aborting" << log::endl;
+            return;
+        }
+        log::cout << log::endl;
+    }
+
     Maker(opt).generate();
 }
 

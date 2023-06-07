@@ -18,6 +18,9 @@ namespace dd {
 
 class DeepMake : public Application {
 
+    isize maxKeyframes = LONG_MAX;
+
+    
     //
     // Methods from Application
     //

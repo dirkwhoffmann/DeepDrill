@@ -73,7 +73,7 @@ Maker::generateProjectFile(vector <string> &skipped)
     // Write sections
     writeLocationSection(os);
     writeMapSection(os);
-    writeImageSection(os);
+    writeImageSection(os, opt.image.width, opt.image.height);
     writeColorsSection(os);
     writeVideoSection(os);
 
@@ -124,6 +124,10 @@ Maker::generateProfile(vector <string> &skipped)
 {
     ProgressIndicator progress("Generating profile");
 
+    // Size of thumbnail images
+    static constexpr isize thumbWidth = 320;
+    static constexpr isize thumbHeight = 200;
+
     // Assemble path name
     auto name = project + ".prf";
     auto path = projectDir / name;
@@ -136,7 +140,7 @@ Maker::generateProfile(vector <string> &skipped)
 
     // Write sections
     writeHeader(os);
-    writeImageSection(os);
+    writeImageSection(os, thumbWidth, thumbHeight);
     writeColorsSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
@@ -155,18 +159,22 @@ Maker::writeLocationSection(std::ofstream &os)
 void
 Maker::writeMapSection(std::ofstream &os)
 {
+    // The drill map resolution must at least be twice the image resolution
+    auto width = std::min(opt.drillmap.width, 2 * opt.image.width);
+    auto height = std::min(opt.drillmap.height, 2 * opt.image.height);
+
     os << "[map]" << std::endl;
-    os << "width = " << opt.drillmap.width << std::endl;
-    os << "height = " << opt.drillmap.height << std::endl;
+    os << "width = " << width << std::endl;
+    os << "height = " << height << std::endl;
     os << std::endl;
 }
 
 void
-Maker::writeImageSection(std::ofstream &os)
+Maker::writeImageSection(std::ofstream &os, isize width, isize height)
 {
     os << "[image]" << std::endl;
-    os << "width = " << opt.image.width << std::endl;
-    os << "height = " << opt.image.height << std::endl;
+    os << "width = " << width << std::endl;
+    os << "height = " << height << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;
@@ -177,7 +185,7 @@ Maker::writeColorsSection(std::ofstream &os)
 {
     os << "[colors]" << std::endl;
     os << "mode = " << opt.keys["colors.mode"] << std::endl;
-    os << "colors = " << opt.keys["colors.palette"] << std::endl;
+    os << "palette = " << opt.keys["colors.palette"] << std::endl;
     os << "scale = " << opt.keys["colors.scale"] << std::endl;
     os << "alpha = " << opt.keys["colors.alpha"] << std::endl;
     os << "beta = " << opt.keys["colors.beta"] << std::endl;
@@ -259,11 +267,11 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "DEEPDRILL  = " << (path / "deepdrill").string() << std::endl;
     os << "DEEPZOOM   = " << (path / "deepzoom").string() << std::endl;
     os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
-    os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
+    // os << "IMAGES     = $(patsubst %.loc,%.png,$(wildcard *_*.loc))" << std::endl;
     os << "VIDEO      = " << project << ".mov" << std::endl;
-    os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
+    // os << "NUM_IMAGES = $(words $(IMAGES))" << std::endl;
     os << "MAPFLAGS   = -b" << std::endl;
-    os << "PNGFLAGS   = -b" << std::endl;
+    // os << "PNGFLAGS   = -b" << std::endl;
     os << std::endl;
 }
 
@@ -271,30 +279,32 @@ void
 Maker::writeTargets(std::ofstream &os)
 {
     // Declare phony targets
-    os << ".PHONY: all maps images clean" << std::endl;
+    os << ".PHONY: all maps clean" << std::endl;
     os << std::endl;
 
     // Write the 'all' target and some sub targets
-    os << "all: images" << std::endl;
+    os << "all: maps" << std::endl;
     os << std::endl;
 
     os << "maps: $(MAPS)" << std::endl;
     os << std::endl;
 
-    os << "images: $(IMAGES) maps" << std::endl;
-    os << std::endl;
+    // os << "images: $(IMAGES) maps" << std::endl;
+    // os << std::endl;
 
     // Write 'map' target
     os << "%.map: %.loc" << std::endl;
     os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf";
-    os << " -o $*.map $*.loc > $*.log" << std::endl;
+    os << " -o $*.png $*.loc > $*.log" << std::endl;
     os << std::endl;
 
     // Write 'png' target
+    /*
     os << "%.png: %.map" << std::endl;
     os << "\t" << "@$(DEEPDRILL) $(PNGFLAGS) -p " << project << ".prf";
     os << " -o $*.png $*.map > /dev/null" << std::endl;
     os << std::endl;
+    */
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;

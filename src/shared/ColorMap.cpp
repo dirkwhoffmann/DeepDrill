@@ -61,9 +61,6 @@ ColorMap::compute(const DrillMap &map)
 {
     ProgressIndicator progress("Colorizing", map.height * map.width);
 
-    assert(map.width == opt.drillmap.width);
-    assert(map.height == opt.drillmap.height);
-
     resize(map.width, map.height);
 
     for (isize y = 0; y < height; y++) {

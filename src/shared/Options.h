@@ -36,10 +36,10 @@ struct Options {
     //
 
     // Default keys
-    map<string,string> defaults;
+    std::map <string,string> defaults;
 
     // User-defined keys
-    map<string,string> keys;
+    std::map <string,string> keys;
 
     struct {
 
