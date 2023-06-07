@@ -138,20 +138,19 @@ Zoomer::updateTextures(isize nr)
 
     {   SILENT
 
-        // Load map files
+        // Load map file of the current keyframe
         if (!fileExists(mapFile(nr))) {
             throw FileNotFoundError(mapFile(nr));
         }
         drillMap.load(mapFile(nr));
-        // TODO: Call drillMap.colorize()
-        drillMap.colorMap.compute(drillMap);
+        drillMap.colorize();
 
+        // Load mapfile of the next frame
         if (!fileExists(mapFile(nr + 1))) {
             throw FileNotFoundError(mapFile(nr + 1));
         }
         drillMap2.load(mapFile(nr + 1));
-        // TODO: Call drillMap2.colorize()
-        drillMap2.colorMap.compute(drillMap2);
+        drillMap2.colorize();
     }
 }
 

@@ -67,7 +67,15 @@ Colorizer::draw(const ColorMap &map)
 }
 
 void
-Colorizer::draw(const ColorMap &map1, ColorMap &map2, float frame, float zoom)
+Colorizer::draw(DrillMap &map1, DrillMap &map2, float frame, float zoom)
+{
+    auto &colorMap1 = map1.colorize();
+    auto &colorMap2 = map2.colorize();
+    draw(colorMap1, colorMap2, frame, zoom);
+}
+
+void
+Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float zoom)
 {
     init();
 
