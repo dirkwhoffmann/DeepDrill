@@ -1,6 +1,2 @@
 [debug]
 glitches = yes
-
-[export]
-colormap = yes
-normalmap = yes

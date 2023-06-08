@@ -158,6 +158,8 @@
 		507122172A304EF10013E655 /* Colorizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colorizer.cpp; sourceTree = "<group>"; };
 		507122182A304EF10013E655 /* Colorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorizer.h; sourceTree = "<group>"; };
 		5071221B2A3101AA0013E655 /* normalmap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.glsl; sourceTree = "<group>"; };
+		5071221C2A31AB260013E655 /* 8K.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 8K.prf; sourceTree = "<group>"; };
+		5071221D2A31AD400013E655 /* 3D.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 3D.prf; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,11 +197,11 @@
 		50BEC717269486C200CCDFA8 /* StandardComplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardComplex.h; sourceTree = "<group>"; };
 		50BEC718269486C200CCDFA8 /* ExtendedComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtendedComplex.cpp; sourceTree = "<group>"; };
 		50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrecisionComplex.cpp; sourceTree = "<group>"; };
-		50BEC723269486E500CCDFA8 /* medium.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = medium.prf; sourceTree = "<group>"; };
-		50BEC724269486E600CCDFA8 /* low.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = low.prf; sourceTree = "<group>"; };
-		50BEC726269486E600CCDFA8 /* ultra.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = ultra.prf; sourceTree = "<group>"; };
-		50BEC727269486E600CCDFA8 /* high.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = high.prf; sourceTree = "<group>"; };
-		50BEC728269486E600CCDFA8 /* thumbnail.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = thumbnail.prf; sourceTree = "<group>"; };
+		50BEC723269486E500CCDFA8 /* HD.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = HD.prf; sourceTree = "<group>"; };
+		50BEC724269486E600CCDFA8 /* SD.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = SD.prf; sourceTree = "<group>"; };
+		50BEC726269486E600CCDFA8 /* 4K.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 4K.prf; sourceTree = "<group>"; };
+		50BEC727269486E600CCDFA8 /* FHD.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = FHD.prf; sourceTree = "<group>"; };
+		50BEC728269486E600CCDFA8 /* LD.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = LD.prf; sourceTree = "<group>"; };
 		50BEC72A2694872900CCDFA8 /* golden_spider.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = golden_spider.loc; sourceTree = "<group>"; };
 		50BEC72B2694872900CCDFA8 /* peanuts.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = peanuts.loc; sourceTree = "<group>"; };
 		50BEC72C2694872900CCDFA8 /* safari.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = safari.loc; sourceTree = "<group>"; };
@@ -396,11 +398,13 @@
 		50BEC721269486D900CCDFA8 /* profiles */ = {
 			isa = PBXGroup;
 			children = (
-				50BEC728269486E600CCDFA8 /* thumbnail.prf */,
-				50BEC724269486E600CCDFA8 /* low.prf */,
-				50BEC723269486E500CCDFA8 /* medium.prf */,
-				50BEC727269486E600CCDFA8 /* high.prf */,
-				50BEC726269486E600CCDFA8 /* ultra.prf */,
+				50BEC728269486E600CCDFA8 /* LD.prf */,
+				50BEC724269486E600CCDFA8 /* SD.prf */,
+				50BEC723269486E500CCDFA8 /* HD.prf */,
+				50BEC727269486E600CCDFA8 /* FHD.prf */,
+				50BEC726269486E600CCDFA8 /* 4K.prf */,
+				5071221C2A31AB260013E655 /* 8K.prf */,
+				5071221D2A31AD400013E655 /* 3D.prf */,
 				50EB0D4A29F3E15800770F31 /* debug.prf */,
 			);
 			path = profiles;

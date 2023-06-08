@@ -37,11 +37,12 @@ class Filter {
     sf::RenderTexture out;
     sf::RectangleShape rect;
 
-public:
 
     //
     // Initializing
     //
+
+public:
 
     Filter(const Options &opt) : opt(opt) { };
     void init(const string &shaderName, isize w, isize h);

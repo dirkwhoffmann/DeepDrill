@@ -29,14 +29,14 @@
 // Constants
 //
 
-static const int MIN_MAP_WIDTH      = 480;
-static const int MIN_MAP_HEIGHT     = 270;
+static const int MIN_MAP_WIDTH      = 256;
+static const int MIN_MAP_HEIGHT     = 144;
 
 static const int MAX_MAP_WIDTH      = 7680;
 static const int MAX_MAP_HEIGHT     = 4320;
 
-static const int MIN_IMAGE_WIDTH    = 480;
-static const int MIN_IMAGE_HEIGHT   = 270;
+static const int MIN_IMAGE_WIDTH    = 256;
+static const int MIN_IMAGE_HEIGHT   = 144;
 
 static const int MAX_IMAGE_WIDTH    = 3840;
 static const int MAX_IMAGE_HEIGHT   = 2160;
