@@ -21,7 +21,11 @@ class Palette {
 
     // Configuration options
     const struct Options &opt;
-    
+
+    // Path to the palette image
+    fs::path path;
+
+    // Color values
     Buffer <double> r;
     Buffer <double> g;
     Buffer <double> b;
@@ -30,7 +34,8 @@ public:
 
     Palette(const Options &options);
 
-    void load(const string &path);
+    const fs::path &getPath() { return path; }
+    void load(const string &filename);
     u32 interpolateABGR(double value);
 };
 

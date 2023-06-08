@@ -39,16 +39,14 @@ Driller::drill()
         log::cout << opt.center << log::endl;
         log::cout << log::ralign("Magnification: ");
         log::cout << opt.location.zoom << log::endl;
-        // log::cout << log::ralign("Pixel delta: ");
-        // log::cout << opt.mpfPixelDelta << log::endl;
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Image size: ");
         log::cout << opt.image.width << " x " << opt.image.height << log::endl;
         log::cout << log::ralign("GMP Precision: ");
         log::cout << mpf_get_default_prec() << " Bit" << log::endl;
-        log::cout << log::ralign("Max rounds: ");
-        log::cout << opt.perturbation.rounds << log::endl;
+        // log::cout << log::ralign("Max rounds: ");
+        // log::cout << opt.perturbation.rounds << log::endl;
         log::cout << log::vspace;
     }
             
@@ -77,7 +75,8 @@ Driller::drill()
         if ((isize)remaining.size() <= threshold) break;
 
         log::cout << log::vspace;
-        log::cout << "Round " << round << ": ";
+        log::cout << "Round " << round;
+        log::cout << " (max " << opt.perturbation.rounds << "): ";
         log::cout << remaining.size() << " points" << log::endl << log::endl;
 
         // Select a reference point

@@ -37,8 +37,8 @@ Filter::init(const string &shaderName, sf::Vector2u resolution)
     rect.setTexture(&out.getTexture());
 
     // Load shader
-    auto path = opt.assets.findAsset(shaderName, Format::GLSL);
-
+    path = opt.assets.findAsset(shaderName, Format::GLSL);
+    
     if (path == "") {
         throw Exception("Can't load fragment shader '" + shaderName + "'");
     }
@@ -97,18 +97,5 @@ Filter::apply()
     out.draw(rect, &shader);
     out.display();
 }
-
-/*
-void
-Filter::apply(std::function<void (sf::Shader&)> setup)
-{
-    // Setup uniforms
-    setup(shader);
-
-    // Apply kernel
-    out.draw(rect, &shader);
-    out.display();
-}
-*/
 
 }

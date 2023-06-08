@@ -106,6 +106,7 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
+    Logger& operator<<(const fs::path &arg);
 };
 
 // Default logger (writes to stdout)

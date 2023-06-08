@@ -24,6 +24,7 @@ class Filter {
     const struct Options &opt;
 
     // The compute kernel
+    fs::path path;
     sf::Shader shader;
 
     // List of uniforms
@@ -48,6 +49,7 @@ public:
     void init(const string &shaderName, isize w, isize h);
     void init(const string &shaderName, sf::Vector2u resolution);
 
+    const fs::path &getPath() const { return path; }
     const sf::Texture &getTexture() const { return out.getTexture(); }
     const sf::RectangleShape &getRect() const { return rect; }
     const sf::Vector2u getSize() const { return out.getSize(); }

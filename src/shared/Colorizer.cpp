@@ -42,21 +42,35 @@ Colorizer::draw(DrillMap &map)
 void
 Colorizer::draw(const ColorMap &map)
 {
-    // 1. Apply lighting
-    illuminator.setUniform("lightDir", lightVector());
-    illuminator.setUniform("image", map.colorMapTex);
-    illuminator.setUniform("normal", map.normalMapTex);
-    illuminator.apply();
+    {
+        ProgressIndicator progress("Running GPU shaders");
 
-    // 2. Scale down
-    downscaler.setUniform("curr", illuminator.getTexture());
-    downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
-    downscaler.setUniform("zoom", 1.0f);
-    downscaler.setUniform("frame", 0.0f);
-    downscaler.apply();
+        // 1. Apply lighting
+        illuminator.setUniform("lightDir", lightVector());
+        illuminator.setUniform("image", map.colorMapTex);
+        illuminator.setUniform("normal", map.normalMapTex);
+        illuminator.apply();
 
-    // 3. Read back image data
-    image = downscaler.getTexture().copyToImage();
+        // 2. Scale down
+        downscaler.setUniform("curr", illuminator.getTexture());
+        downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
+        downscaler.setUniform("zoom", 1.0f);
+        downscaler.setUniform("frame", 0.0f);
+        downscaler.apply();
+
+        // 3. Read back image data
+        image = downscaler.getTexture().copyToImage();
+    }
+    
+    if (opt.flags.verbose) {
+
+        log::cout << log::vspace;
+        log::cout << log::ralign("Illumination filter: ");
+        log::cout << illuminator.getPath() << log::endl;
+        log::cout << log::ralign("Downscaling filter: ");
+        log::cout << downscaler.getPath() << log::endl;
+        log::cout << log::vspace;
+    }
 }
 
 void
@@ -109,7 +123,7 @@ Colorizer::lightVector()
 void
 Colorizer::save(const string &path, Format format) const
 {
-    ProgressIndicator progress("Saving image data");
+    ProgressIndicator progress("Saving image");
 
     image.saveToFile(path);
 }

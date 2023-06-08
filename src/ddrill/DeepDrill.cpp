@@ -135,7 +135,6 @@ DeepDrill::run()
         driller.drill();
 
         // Save map file
-        // auto name = stripSuffix(opt.files.output)
         drillMap.save(stripSuffix(opt.files.output) + ".map");
     }
 

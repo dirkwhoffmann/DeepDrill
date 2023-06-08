@@ -32,12 +32,23 @@ class DeepDrill : public Application {
     // Methods from Application
     //
 
+public:
+
+    void run();
+
+private:
+
     const char *appName() { return "DeepDrill"; }
     void syntax();
     void initialize() { };
     void parseArguments(int argc, char *argv[]);
     void checkCustomArguments();
-    void run();
+
+
+    //
+    // Auxiliary methods
+    //
+
 };
 
 }

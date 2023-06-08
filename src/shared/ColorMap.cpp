@@ -59,7 +59,7 @@ ColorMap::resize(isize w, isize h)
 void
 ColorMap::compute(const DrillMap &map)
 {
-    ProgressIndicator progress("Colorizing", map.height * map.width);
+    ProgressIndicator progress("Computing color map", map.height * map.width);
 
     resize(map.width, map.height);
 
@@ -130,6 +130,18 @@ ColorMap::compute(const DrillMap &map)
 
     colorMapTex.update((u8 *)colorMap.ptr);
     normalMapTex.update((u8 *)normalMap.ptr);
+
+    progress.done();
+
+    if (opt.flags.verbose) {
+
+        log::cout << log::vspace;
+        log::cout << log::ralign("Map size: ");
+        log::cout << width << " x " << height << log::endl;
+        log::cout << log::ralign("Palette: ");
+        log::cout << palette.getPath() << log::endl;
+        log::cout << log::vspace;
+    }
 }
 
 }

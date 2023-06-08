@@ -224,6 +224,13 @@ Logger::operator<<(const Exception& arg)
     return *this;
 }
 
+Logger&
+Logger::operator<<(const fs::path &arg)
+{
+    *this << arg.string();
+    return *this;
+}
+
 Logger log::cout(std::cout);
 
 }
