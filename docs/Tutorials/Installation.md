@@ -39,4 +39,4 @@ Follow the steps below to compile DeepDrill on your machine. The application has
     make -j
     ```
 
-On success, two executables have been build: `deepdrill` and `deepflight`.
+On success, three executables have been build: `deepdrill`, `deepmake`, and `deepzoom`.

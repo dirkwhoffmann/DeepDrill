@@ -102,25 +102,26 @@ DeepDrill::parseArguments(int argc, char *argv[])
 void
 DeepDrill::checkCustomArguments()
 {
-    // The user needs to specify an output file
+    // The user needs to specify at least one output file
     if (outputs.size() < 1) throw SyntaxError("No output file is given");
 
     // The input file must be a location file or a map file
     opt.files.input = assets.findAsset(opt.files.input, { Format::LOC, Format::MAP });
 
-    // The output file must be a map file or an image file
-    AssetManager::assureFormat(opt.files.output, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
+    // The output files must be map files or image files
+    for (auto &it: outputs) {
+        AssetManager::assureFormat(it, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
+    }
 }
 
 void
 DeepDrill::run()
 {
     auto inputFormat = AssetManager::getFormat(opt.files.input);
-    auto outputFormat = AssetManager::getFormat(opt.files.output);
 
     drillMap.resize();
 
-    // Create the drill map
+    // Create or load the drill map
     if (inputFormat == Format::MAP) {
 
         // Load the drill map from disk
@@ -133,19 +134,26 @@ DeepDrill::run()
         // Run the driller
         Driller driller(opt, drillMap);
         driller.drill();
-
-        // Save map file
-        drillMap.save(stripSuffix(opt.files.output) + ".map");
     }
 
-    // Are we supposed to create an image file?
-    if (AssetManager::isImageFormat(outputFormat)) {
+    // Generate outputs
+    for (auto &it : outputs) {
 
-        BatchProgressIndicator progress(opt, "Colorizing", opt.files.output);
+        auto outputFormat = AssetManager::getFormat(it);
 
-        colorizer.init(opt.image.illuminator, opt.image.scaler);
-        colorizer.draw(drillMap);
-        colorizer.save(opt.files.output, outputFormat);
+        if (AssetManager::isImageFormat(outputFormat)) {
+
+            // Create and save image file
+            BatchProgressIndicator progress(opt, "Colorizing", it);
+            colorizer.init(opt.image.illuminator, opt.image.scaler);
+            colorizer.draw(drillMap);
+            colorizer.save(it, outputFormat);
+
+        } else {
+
+            // Save map file
+            drillMap.save(it);
+        }
     }
 }
 

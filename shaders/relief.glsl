@@ -1,7 +1,3 @@
-
-// Sampler for the color image
-uniform sampler2D image;
-
 // Sampler for the normal map
 uniform sampler2D normal;
 
@@ -21,11 +17,15 @@ void main()
     // Normalize our vectors
     vec3 N = normalize(normalMap * 2.0 - 1.0);
     vec3 L = normalize(lightDir);
+    // L = normalize(vec3(-0.5,0.5,0.7));
 
     // Do Lambert
     float lambert = max(dot(N, L), 0.0);
+    // lambert = 0.33 + (0.66 * lambert);
 
     // Modulate
     vec3 final = vec3(lambert, lambert, lambert);
+
     gl_FragColor = gl_Color * vec4(final, 1.0);
+    // gl_FragColor = gl_Color * vec4(lightDir, 1.0);
 }

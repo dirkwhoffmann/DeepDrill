@@ -46,7 +46,7 @@ Colorizer::draw(const ColorMap &map)
         ProgressIndicator progress("Running GPU shaders");
 
         // 1. Apply lighting
-        illuminator.setUniform("lightDir", lightVector());
+        illuminator.shader.setUniform("lightDir", lightVector());
         illuminator.setUniform("image", map.colorMapTex);
         illuminator.setUniform("normal", map.normalMapTex);
         illuminator.apply();
@@ -61,7 +61,7 @@ Colorizer::draw(const ColorMap &map)
         // 3. Read back image data
         image = downscaler.getTexture().copyToImage();
     }
-    
+
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;

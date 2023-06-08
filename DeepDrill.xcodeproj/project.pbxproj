@@ -158,6 +158,8 @@
 		507122202A31CF830013E655 /* seahorse1.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse1.loc; sourceTree = "<group>"; };
 		507122212A31CF990013E655 /* seahorse2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse2.loc; sourceTree = "<group>"; };
 		507122222A31D09C0013E655 /* top.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = top.loc; sourceTree = "<group>"; };
+		507122242A31F5850013E655 /* tutorial2.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial2.prf; sourceTree = "<group>"; };
+		507122252A31F8710013E655 /* tutorial3.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial3.prf; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,6 +570,8 @@
 				507122212A31CF990013E655 /* seahorse2.loc */,
 				50D69A7629E2A4630025DE0D /* seahorse3.loc */,
 				5071221F2A31B6770013E655 /* tutorial1.prf */,
+				507122242A31F5850013E655 /* tutorial2.prf */,
+				507122252A31F8710013E655 /* tutorial3.prf */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";

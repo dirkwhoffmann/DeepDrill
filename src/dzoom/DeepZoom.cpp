@@ -114,6 +114,9 @@ DeepZoom::checkCustomArguments()
     // The input files must be a prj file
     opt.files.input = assets.findAsset(inputs.front(), Format::PRJ);
 
+    // The user must not specify more than one output file
+    if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
+
     if (!outputs.empty()) {
 
         auto output = opt.files.output = outputs.front();

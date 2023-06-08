@@ -24,7 +24,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["location.real"] = "0.0";
     defaults["location.imag"] = "0.0";
     defaults["location.zoom"] = "1.0";
-    defaults["location.depth"] = "500";
+    defaults["location.depth"] = "800";
 
     // Map keys
     defaults["map.width"] = "1920";

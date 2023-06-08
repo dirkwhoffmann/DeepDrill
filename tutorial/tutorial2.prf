@@ -1,0 +1,4 @@
+[image]
+illuminator = normalmap.glsl
+scaler = nearest.glsl
+depth = 1
