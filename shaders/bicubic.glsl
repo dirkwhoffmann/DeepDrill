@@ -10,9 +10,6 @@ uniform vec2 size;
 // Zoom factor
 uniform float zoom;
 
-// Normalized inbetween [0;1)
-uniform float frame;
-
 //
 // From https://stackoverflow.com/questions/13501081/efficient-bicubic-filtering-code-in-glsl
 //

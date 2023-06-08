@@ -27,16 +27,16 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["location.depth"] = "500";
 
     // Map keys
-    defaults["map.width"] = "960";
-    defaults["map.height"] = "540";
+    defaults["map.width"] = "640";
+    defaults["map.height"] = "360";
     defaults["map.depth"] = "1";
 
     // Image keys
-    defaults["image.width"] = "960";
-    defaults["image.height"] = "540";
-    defaults["image.depth"] = "1";
+    defaults["image.width"] = "640";
+    defaults["image.height"] = "360";
+    defaults["image.depth"] = "0";
     defaults["image.illuminator"] = "lambert.glsl";
-    defaults["image.scaler"] = "nearest.glsl";
+    defaults["image.scaler"] = "bicubic.glsl";
 
     // Video keys
     defaults["video.framerate"] = "60";
@@ -301,6 +301,14 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
+    // Adjust some default values
+    if (keys.find("image.width") != keys.end()) {
+        defaults["map.width"] = keys["image.width"];
+    }
+    if (keys.find("image.height") != keys.end()) {
+        defaults["map.height"] = keys["image.height"];
+    }
+
     // Use default values for all missing keys
     for (auto &it : defaults) {
         if (keys.find(it.first) == keys.end()) {

@@ -160,6 +160,8 @@
 		5071221B2A3101AA0013E655 /* normalmap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.glsl; sourceTree = "<group>"; };
 		5071221C2A31AB260013E655 /* 8K.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 8K.prf; sourceTree = "<group>"; };
 		5071221D2A31AD400013E655 /* 3D.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 3D.prf; sourceTree = "<group>"; };
+		5071221E2A31B05F0013E655 /* newtutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = newtutorial.loc; sourceTree = "<group>"; };
+		5071221F2A31B6770013E655 /* newtutorial.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = newtutorial.prf; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -459,6 +461,7 @@
 				50DA29532A2C876900600EB0 /* tutorial.loc */,
 				50DA29552A2CAE4F00600EB0 /* tutorial2.loc */,
 				50DA29562A2CC2B900600EB0 /* tutorial3.loc */,
+				5071221E2A31B05F0013E655 /* newtutorial.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				5047B4F829FD306700AC38DC /* orion.prf */,
 				5047B4F929FD33AC00AC38DC /* peanuts.prf */,
 				5047B4FA29FD349D00AC38DC /* x.prf */,
+				5071221F2A31B6770013E655 /* newtutorial.prf */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";
