@@ -27,13 +27,13 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["location.depth"] = "500";
 
     // Map keys
-    defaults["map.width"] = "640";
-    defaults["map.height"] = "360";
+    defaults["map.width"] = "1920";
+    defaults["map.height"] = "1080";
     defaults["map.depth"] = "1";
 
     // Image keys
-    defaults["image.width"] = "640";
-    defaults["image.height"] = "360";
+    defaults["image.width"] = "1920";
+    defaults["image.height"] = "1080";
     defaults["image.depth"] = "0";
     defaults["image.illuminator"] = "lambert.glsl";
     defaults["image.scaler"] = "bicubic.glsl";
@@ -97,11 +97,11 @@ Options::parse(string key, string value)
 
     } else if (key == "map.width") {
 
-        parse(key, value, drillmap.width, 240, 3840);
+        parse(key, value, drillmap.width, MIN_MAP_WIDTH, MAX_MAP_WIDTH);
 
     } else if (key == "map.height") {
 
-        parse(key, value, drillmap.height, 120, 3840);
+        parse(key, value, drillmap.height, MIN_MAP_HEIGHT, MAX_MAP_HEIGHT);
 
     } else if (key == "map.depth") {
 
@@ -109,11 +109,11 @@ Options::parse(string key, string value)
 
     } else if (key == "image.width") {
 
-        parse(key, value, image.width, 240, 3840);
+        parse(key, value, image.width, MIN_IMAGE_WIDTH, MAX_IMAGE_WIDTH);
 
     } else if (key == "image.height") {
 
-        parse(key, value, image.height, 135, 3840);
+        parse(key, value, image.height, MIN_IMAGE_HEIGHT, MAX_IMAGE_HEIGHT);
 
         if (image.height % 2 == 1) {
             throw KeyValueError(key, "Height must be dividable by 2.");
