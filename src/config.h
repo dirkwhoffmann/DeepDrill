@@ -52,7 +52,8 @@ static const int MAX_VIDEO_HEIGHT   = 1080;
 // Debug settings
 //
 
-static const int REC_DEBUG          = 0; // Video recording
+static const int REC_DEBUG          = 0;    // Video recording
+static const int GPU_DEBUG          = 0;    // GPU filters
 
 
 //

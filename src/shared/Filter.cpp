@@ -57,6 +57,48 @@ Filter::init(const string &shaderName, sf::Vector2u resolution)
     }
 }
 
+bool
+Filter::hasUniform(const string &key)
+{
+    if constexpr (GPU_DEBUG) {
+        return true;
+    } else {
+        return std::find(uniforms.begin(), uniforms.end(), key) != uniforms.end();
+    }
+}
+
+void
+Filter::setUniform(const string &key, float value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
+Filter::setUniform(const string &key, sf::Vector2f value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
+Filter::setUniform(const string &key, sf::Vector3f value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
+Filter::setUniform(const string &key, const sf::Texture &value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
+Filter::apply()
+{
+    out.draw(rect, &shader);
+    out.display();
+}
+
+/*
 void
 Filter::apply(std::function<void (sf::Shader&)> setup)
 {
@@ -67,5 +109,6 @@ Filter::apply(std::function<void (sf::Shader&)> setup)
     out.draw(rect, &shader);
     out.display();
 }
+*/
 
 }

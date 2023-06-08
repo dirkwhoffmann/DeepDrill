@@ -1,14 +1,5 @@
-// Sampler for the color image
-uniform sampler2D image;
-
 // Sampler for the normal map
 uniform sampler2D normal;
-
-// Texture size
-uniform vec2 size;
-
-// Light direction
-uniform vec3 lightDir;
 
 void main()
 {

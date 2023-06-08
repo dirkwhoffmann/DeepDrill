@@ -13,7 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
-#include <functional>
+
 #include <SFML/Graphics.hpp>
 
 namespace dd {
@@ -53,10 +53,25 @@ public:
 
 
     //
+    // Managing uniforms
+    //
+
+public:
+
+    bool hasUniform(const string &name);
+    void setUniform(const string &key, float value);
+    void setUniform(const string &key, sf::Vector2f value);
+    void setUniform(const string &key, sf::Vector3f value);
+    void setUniform(const string &key, const sf::Texture &value);
+
+
+    //
     // Applying
     //
 
-    void apply(std::function<void (sf::Shader&)> setup);
+public:
+
+    void apply();
 };
 
 }

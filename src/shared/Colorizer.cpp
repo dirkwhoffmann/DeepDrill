@@ -43,21 +43,17 @@ void
 Colorizer::draw(const ColorMap &map)
 {
     // 1. Apply lighting
-    illuminator.apply([this, &map](sf::Shader &shader) {
-
-        shader.setUniform("lightDir", lightVector());
-        shader.setUniform("image", map.colorMapTex);
-        shader.setUniform("normal", map.normalMapTex);
-    });
+    illuminator.setUniform("lightDir", lightVector());
+    illuminator.setUniform("image", map.colorMapTex);
+    illuminator.setUniform("normal", map.normalMapTex);
+    illuminator.apply();
 
     // 2. Scale down
-    downscaler.apply([this](sf::Shader &shader) {
-
-        shader.setUniform("curr", illuminator.getTexture());
-        shader.setUniform("size", sf::Vector2f(illuminator.getSize()));
-        shader.setUniform("zoom", 1.0f);
-        shader.setUniform("frame", 0.0f);
-    });
+    downscaler.setUniform("curr", illuminator.getTexture());
+    downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
+    downscaler.setUniform("zoom", 1.0f);
+    downscaler.setUniform("frame", 0.0f);
+    downscaler.apply();
 
     // 3. Read back image data
     image = downscaler.getTexture().copyToImage();
@@ -75,28 +71,23 @@ void
 Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float zoom)
 {
     // 1. Colorize
-    illuminator.apply([this, &map1](sf::Shader &shader) {
+    illuminator.setUniform("lightDir", lightVector());
+    illuminator.setUniform("image", map1.colorMapTex);
+    illuminator.setUniform("normal", map1.normalMapTex);
+    illuminator.apply();
 
-        shader.setUniform("lightDir", lightVector());
-        shader.setUniform("image", map1.colorMapTex);
-        shader.setUniform("normal", map1.normalMapTex);
-    });
-    illuminator2.apply([this, &map2](sf::Shader &shader) {
-
-        shader.setUniform("lightDir", lightVector());
-        shader.setUniform("image", map2.colorMapTex);
-        shader.setUniform("normal", map2.normalMapTex);
-    });
+    illuminator2.setUniform("lightDir", lightVector());
+    illuminator2.setUniform("image", map2.colorMapTex);
+    illuminator2.setUniform("normal", map2.normalMapTex);
+    illuminator2.apply();
 
     // 2. Scale down
-    downscaler.apply([this, &zoom, &frame](sf::Shader &shader) {
-
-        shader.setUniform("curr", illuminator.getTexture());
-        shader.setUniform("next", illuminator2.getTexture());
-        shader.setUniform("size", sf::Vector2f(illuminator.getSize()));
-        shader.setUniform("zoom", zoom);
-        shader.setUniform("frame", frame);
-    });
+    downscaler.setUniform("curr", illuminator.getTexture());
+    downscaler.setUniform("next", illuminator2.getTexture());
+    downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
+    downscaler.setUniform("zoom", zoom);
+    downscaler.setUniform("frame", frame);
+    downscaler.apply();
 
     // 3. Read back image data
     image = downscaler.getTexture().copyToImage();
