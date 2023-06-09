@@ -285,6 +285,8 @@ DrillMap::loadChannel(std::istream &is)
 template<ChannelFormat fmt, typename T> void
 DrillMap::load(std::istream &is, T &raw)
 {
+    static int cnt = 0; // REMOVE ASAP
+
     switch (fmt) {
 
         case FMT_U24_LE:
@@ -310,9 +312,9 @@ DrillMap::load(std::istream &is, T &raw)
         }
         case FMT_FP16_LE:
         {
-            u16 value;
+            i16 value;
             is.read((char *)&value, sizeof(value));
-            raw = (T)value / (T)(1 << 16);
+            raw = (T)value / (T)INT16_MAX;
             break;
         }
         case FMT_FLOAT_LE:
@@ -445,12 +447,12 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
 
         case CHANNEL_NORMALS:
 
-            os << u8(id) << u8(FMT_FLOAT_LE);
+            os << u8(id) << u8(FMT_FP16_LE);
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
 
-                    save <FMT_FLOAT_LE> (os, get(x,y).normal);
+                    save <FMT_FP16_LE> (os, get(x,y).normal);
                 }
             }
             break;
@@ -464,6 +466,8 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
 template<ChannelFormat fmt, typename T> void
 DrillMap::save(std::ostream &os, T raw)
 {
+    static int cnt = 0; // REMOVE ASAP
+
     switch (fmt) {
 
         case FMT_U24_LE:
@@ -486,7 +490,7 @@ DrillMap::save(std::ostream &os, T raw)
         }
         case FMT_FP16_LE:
         {
-            u16 value = (u16)(raw * (T)(1 << 16));
+            i16 value = (i16)(raw * (T)INT16_MAX);
             os.write((char *)&value, sizeof(value));
             break;
         }
