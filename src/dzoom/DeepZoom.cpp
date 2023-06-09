@@ -127,7 +127,7 @@ DeepZoom::checkCustomArguments()
         // The output file must be writable
         std::ofstream file(output, std::ofstream::out);
         if (!file.is_open()) {
-            throw SyntaxError("Can't write to file " + output);
+            throw SyntaxError("Can't write to file " + output.string());
         }
 
         // FFmpeg must be installed
