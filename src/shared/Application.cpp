@@ -81,17 +81,16 @@ Application::setupGmp()
 {
     isize accuracy = 64;
 
-    auto name = opt.files.inputs.front();
-    // auto suffix = extractSuffix(name);
+    auto path = assets.findAsset(opt.files.inputs.front());
 
-    if (AssetManager::getFormat(name) == Format::LOC) {
+    if (AssetManager::getFormat(path) == Format::LOC) {
 
         /* If a location is given, we need to adjust the GMP precision based
          * on the zoom factor. Because we haven't parsed any input file when
          * this function is called, we need to peek this value directly from
          * the location file.
          */
-        Parser::parse(name, [&accuracy](string key, string value) {
+        Parser::parse(path, [&accuracy](string key, string value) {
 
             if (key == "location.zoom") {
 
