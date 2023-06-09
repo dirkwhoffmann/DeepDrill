@@ -21,11 +21,6 @@ class Application {
 
 protected:
 
-    // Extracted command line arguments
-    std::vector <string> inputs;
-    std::vector <string> outputs;
-    std::vector <string> profiles;
-
     // Asset manager
     AssetManager assets;
 

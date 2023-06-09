@@ -31,7 +31,7 @@ Zoomer::Zoomer(Options &o) : opt(o)
 void
 Zoomer::init()
 {
-    recordMode = opt.files.output != "";
+    recordMode = opt.files.outputs.front() != "";
 
     // Create the render window
     auto mode = sf::VideoMode(unsigned(opt.image.width), unsigned(opt.image.height));
@@ -135,7 +135,8 @@ Zoomer::updateTextures(isize nr)
 
     auto mapFile = [&](isize nr) {
 
-        auto path = opt.files.input.parent_path() / opt.files.input.stem();
+        fs::path input = opt.files.inputs.front();
+        fs::path path = input.parent_path() / input.stem();
         return path.string() + "_" + std::to_string(nr) + ".map";
     };
 
@@ -160,7 +161,8 @@ Zoomer::updateTextures(isize nr)
 void
 Zoomer::updateLocation(isize nr)
 {
-    auto path = opt.files.input.parent_path() / opt.files.input.stem();
+    fs::path input = opt.files.inputs.front();
+    fs::path path = input.parent_path() / input.stem();
     string name = path.string() + "_" + std::to_string(nr + 1) + ".loc";
 
     // Read the first location file if this is the first location update

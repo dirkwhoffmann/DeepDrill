@@ -56,11 +56,10 @@ struct Options {
         // Full path to the executable
         fs::path exec;
 
-        // Full path to the input file
-        fs::path input;
-
-        // Full path to the output file
-        fs::path output;
+        // Full paths to input files, output files, and profiles
+        std::vector <string> inputs;
+        std::vector <string> outputs;
+        std::vector <string> profiles;
 
     } files;
 

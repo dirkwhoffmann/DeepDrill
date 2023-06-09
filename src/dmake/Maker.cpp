@@ -300,7 +300,7 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'clean' target
     os << "clean:" << std::endl;
-    os << "\t" << "rm *.mov *.map *.png *.log" << std::endl;
+    os << "\t" << "rm *.mov *.map *.jpg *.log" << std::endl;
     os << std::endl;
 }
 

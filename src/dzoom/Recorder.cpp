@@ -63,7 +63,7 @@ Recorder::startRecording()
     cmd += " -b:v " + std::to_string(opt.video.bitrate) + "k";
 
     // Output file
-    cmd += " -y " + opt.files.output.string();
+    cmd += " -y " + opt.files.outputs.front();
 
     //
     // Launch FFmpeg instance

@@ -85,11 +85,11 @@ DeepZoom::parseArguments(int argc, char *argv[])
                 break;
 
             case 'p':
-                profiles.push_back(makeAbsolutePath(optarg));
+                opt.files.profiles.push_back(makeAbsolutePath(optarg));
                 break;
 
             case 'o':
-                outputs.push_back(makeAbsolutePath(optarg));
+                opt.files.outputs.push_back(makeAbsolutePath(optarg));
                 break;
 
             case ':':
@@ -104,30 +104,30 @@ DeepZoom::parseArguments(int argc, char *argv[])
 
     // Parse all remaining arguments
     while (optind < argc) {
-        inputs.push_back(argv[optind++]);
+        opt.files.inputs.push_back(argv[optind++]);
     }
 }
 
 void
 DeepZoom::checkCustomArguments()
 {
-    // The input files must be a prj file
-    opt.files.input = assets.findAsset(inputs.front(), Format::PRJ);
+    // The input file must be a prj file
+    assets.assureFormat(opt.files.inputs.front(), Format::PRJ);
 
     // The user must not specify more than one output file
-    if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
+    if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
-    if (!outputs.empty()) {
+    if (!opt.files.outputs.empty()) {
 
-        auto output = opt.files.output = outputs.front();
+        auto output = opt.files.outputs.front();
 
         // The output file must be a video file
-        AssetManager::assureFormat(opt.files.output, Format::MPG);
+        AssetManager::assureFormat(output, Format::MPG);
 
         // The output file must be writable
-        std::ofstream file(opt.files.output, std::ofstream::out);
+        std::ofstream file(output, std::ofstream::out);
         if (!file.is_open()) {
-            throw SyntaxError("Can't write to file " + opt.files.output.string());
+            throw SyntaxError("Can't write to file " + output);
         }
 
         // FFmpeg must be installed

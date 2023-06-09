@@ -81,17 +81,17 @@ Application::setupGmp()
 {
     isize accuracy = 64;
 
-    auto name = inputs.front();
-    auto suffix = extractSuffix(name);
+    auto name = opt.files.inputs.front();
+    // auto suffix = extractSuffix(name);
 
-    if (AssetManager::getFormat(opt.files.input) == Format::LOC) {
+    if (AssetManager::getFormat(name) == Format::LOC) {
 
         /* If a location is given, we need to adjust the GMP precision based
          * on the zoom factor. Because we haven't parsed any input file when
          * this function is called, we need to peek this value directly from
          * the location file.
          */
-        Parser::parse(opt.files.input, [&accuracy](string key, string value) {
+        Parser::parse(name, [&accuracy](string key, string value) {
 
             if (key == "location.zoom") {
 
@@ -115,18 +115,17 @@ void
 Application::checkSharedArguments()
 {
     // The user needs to specify a single input
-    if (inputs.size() < 1) throw SyntaxError("No input file is given");
-    if (inputs.size() > 1) throw SyntaxError("More than one input file is given");
-    opt.files.input = inputs.front();
+    if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
+    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
     // All profiles must exist
-    for (auto &it : profiles) (void)assets.findAsset(it, Format::PRF);
+    for (auto &it : opt.files.profiles) (void)assets.findAsset(it, Format::PRF);
 }
 
 void
 Application::readInputs()
 {
-    for (auto &input: inputs) {
+    for (auto &input: opt.files.inputs) {
 
         if (AssetManager::getFormat(input) == Format::MAP) continue;
 
@@ -138,7 +137,7 @@ Application::readInputs()
 void
 Application::readProfiles()
 {
-    for (auto &profile: profiles) {
+    for (auto &profile: opt.files.profiles) {
 
         Parser::parse(assets.findAsset(profile),
                       [this](string k, string v) { opt.parse(k,v); });
