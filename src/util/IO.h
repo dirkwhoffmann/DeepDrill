@@ -57,7 +57,7 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
 
 // Counts files in a directory
 isize countFiles(const string &suffix);
-isize countFiles(const std::filesystem::path &path, const string &suffix);
+isize countFiles(const fs::path &path, const string &suffix);
 
 
 //

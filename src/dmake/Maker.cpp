@@ -20,8 +20,8 @@ namespace dd {
 
 Maker::Maker(Options &o) : opt(o)
 {
-    project = stripSuffix(stripPath(opt.files.input));
-    projectDir = opt.files.output;
+    project = stripSuffix(stripPath(opt.files.inputs.front()));
+    projectDir = opt.files.outputs.front();
 }
 
 void

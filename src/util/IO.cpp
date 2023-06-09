@@ -99,7 +99,7 @@ string makeAbsolutePath(const string &path)
     if (isAbsolutePath(path)) {
         return path;
     } else {
-        return appendPath(std::filesystem::current_path().string(), path);
+        return appendPath(fs::current_path().string(), path);
     }
 }
 
@@ -132,14 +132,14 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
 
 isize countFiles(const string &suffix)
 {
-    return countFiles(std::filesystem::current_path(), suffix); 
+    return countFiles(fs::current_path(), suffix);
 }
 
-isize countFiles(const std::filesystem::path &path, const string &suffix)
+isize countFiles(const fs::path &path, const string &suffix)
 {
     isize count = 0;
 
-    for (const auto &file : std::filesystem::directory_iterator(path)) {
+    for (const auto &file : fs::directory_iterator(path)) {
 
         auto name = file.path().string();
         if(name.substr(name.find_last_of(".") + 1) == suffix) {

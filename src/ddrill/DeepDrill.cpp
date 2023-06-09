@@ -76,11 +76,11 @@ DeepDrill::parseArguments(int argc, char *argv[])
                 break;
 
             case 'p':
-                profiles.push_back(optarg);
+                opt.files.profiles.push_back(optarg);
                 break;
             
             case 'o':
-                outputs.push_back(optarg);
+                opt.files.outputs.push_back(optarg);
                 break;
 
             case ':':
@@ -95,7 +95,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     
     // Parse all remaining arguments
     while (optind < argc) {
-        inputs.push_back(argv[optind++]);
+        opt.files.inputs.push_back(argv[optind++]);
     }
 }
 
@@ -103,13 +103,15 @@ void
 DeepDrill::checkCustomArguments()
 {
     // The user needs to specify at least one output file
-    if (outputs.size() < 1) throw SyntaxError("No output file is given");
+    if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
 
-    // The input file must be a location file or a map file
-    opt.files.input = assets.findAsset(opt.files.input, { Format::LOC, Format::MAP });
+    // Valid input files are map files and locations files
+    for (auto &it: opt.files.inputs) {
+        (void)assets.findAsset(it, { Format::LOC, Format::MAP });
+    }
 
-    // The output files must be map files or image files
-    for (auto &it: outputs) {
+    // Valid output files are map files and image files
+    for (auto &it: opt.files.outputs) {
         AssetManager::assureFormat(it, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
     }
 }
@@ -117,7 +119,8 @@ DeepDrill::checkCustomArguments()
 void
 DeepDrill::run()
 {
-    auto inputFormat = AssetManager::getFormat(opt.files.input);
+    auto input = opt.files.inputs.front();
+    auto inputFormat = AssetManager::getFormat(input);
 
     drillMap.resize();
 
@@ -125,11 +128,11 @@ DeepDrill::run()
     if (inputFormat == Format::MAP) {
 
         // Load the drill map from disk
-        drillMap.load(opt.files.input);
+        drillMap.load(input);
 
     } else {
 
-        BatchProgressIndicator progress(opt, "Drilling",  outputs.front());
+        BatchProgressIndicator progress(opt, "Drilling",  opt.files.outputs.front());
 
         // Run the driller
         Driller driller(opt, drillMap);
@@ -137,7 +140,7 @@ DeepDrill::run()
     }
 
     // Generate outputs
-    for (auto &it : outputs) {
+    for (auto &it : opt.files.outputs) {
 
         auto outputFormat = AssetManager::getFormat(it);
 

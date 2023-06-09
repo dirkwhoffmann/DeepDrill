@@ -26,7 +26,7 @@ class Maker {
     string project;
 
     // Path to the project directory
-    std::filesystem::path projectDir;
+    fs::path projectDir;
 
 public:
     

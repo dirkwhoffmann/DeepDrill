@@ -112,7 +112,7 @@ void
 DeepZoom::checkCustomArguments()
 {
     // The input file must be a prj file
-    assets.assureFormat(opt.files.inputs.front(), Format::PRJ);
+    (void)assets.findAsset(opt.files.inputs.front(), Format::PRJ);
 
     // The user must not specify more than one output file
     if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");

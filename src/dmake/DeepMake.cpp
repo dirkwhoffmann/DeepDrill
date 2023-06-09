@@ -62,11 +62,11 @@ DeepMake::parseArguments(int argc, char *argv[])
                 break;
 
             case 'p':
-                profiles.push_back(optarg);
+                opt.files.profiles.push_back(optarg);
                 break;
 
             case 'o':
-                outputs.push_back(optarg);
+                opt.files.outputs.push_back(optarg);
                 break;
 
             case ':':
@@ -81,7 +81,7 @@ DeepMake::parseArguments(int argc, char *argv[])
 
     // Parse all remaining arguments
     while (optind < argc) {
-        inputs.push_back(argv[optind++]);
+        opt.files.inputs.push_back(argv[optind++]);
     }
 }
 
@@ -89,15 +89,14 @@ void
 DeepMake::checkCustomArguments()
 {
     // The user needs to specify a single output
-    if (outputs.size() < 1) throw SyntaxError("No output file is given");
-    if (outputs.size() > 1) throw SyntaxError("More than one output file is given");
-    if (!outputs.empty()) opt.files.output = outputs.front();
+    if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
+    if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
     // The input must be a location file
-    opt.files.input = assets.findAsset(opt.files.input , Format::LOC);
+    (void)assets.findAsset(opt.files.inputs.front() , Format::LOC);
 
     // The output must be an existing directory
-    opt.files.output = assets.findAsset(opt.files.output, Format::DIR);
+    (void)assets.findAsset(opt.files.outputs.front(), Format::DIR);
 }
 
 void
