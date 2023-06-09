@@ -251,7 +251,7 @@ Driller::slowDrill(const Coord &point)
     }
 
     // This point is inside the Mandelbrot set
-    map.set(point, 0, 0);
+    map.markAsInside(point);
 }
 
 void
@@ -298,7 +298,8 @@ Driller::drill(ReferencePoint &r)
         }
     }
 
-    map.set(r.coord, 0, 0);
+    // This point is inside the Mandelbrot set
+    map.markAsInside(r.coord);
 }
 
 isize
@@ -386,16 +387,6 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         dn.reduce();
         ddn = coeff.a.evaluateDerivate(point, d0, ref.skipped);
         ddn.reduce();
-
-        /*
-        if (point.x == 0 && point.y == 0) {
-            std::cout << "Skipping " << ref.skipped << " iterations" << std::endl;
-            for (int i = 0; i <= ref.skipped; i++) {
-                ExtendedComplex ec = coeff.a.evaluateDerivate(point, d0, i);
-                std::cout <<" Approximated: " << ec << std::endl;
-            }
-        }
-        */
     }
 
     // The depth of the reference point limits how deep we can drill
@@ -415,12 +406,6 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         auto zn = ref.xn[iteration].extended + dn;
         double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
 
-        /*
-        if (point.x == 0 && point.y == 0) {
-            std::cout << "d " << iteration << ": " << " xn: " << zn << " dn: " << ddn << std::endl;
-        }
-        */
-
         // Perform the glitch check
         if (norm < ref.xn[iteration].tolerance) {
             break;
@@ -434,23 +419,21 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
             map.set(point, MapEntry {
                 (u32)iteration,
                 (float)::log(norm),
-                StandardComplex(ddn),       // ddn.asStandardComplex(),
-                StandardComplex(nv) } );    // nv.asStandardComplex() } );
+                StandardComplex(ddn),
+                StandardComplex(nv) } );
             return;
         }
     }
         
     if (limit == opt.location.depth) {
 
-        // This point belongs to the Mandelbrot set
-        map.set(point, 0, 0);
+        // This point is inside the Mandelbrot set
+        map.markAsInside(point);
 
     } else {
 
-        // Experimental
-        map.set(point, UINT32_MAX, 0);
-
         // This point is a glitch point
+        map.markAsGlitch(point);
         glitchPoints.push_back(point);
     }
 }

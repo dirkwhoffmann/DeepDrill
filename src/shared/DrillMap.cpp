@@ -124,6 +124,28 @@ DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
     set(c.x, c.y, MapEntry { iteration, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
 }
 
+void
+DrillMap::markAsInside(const struct Coord &c)
+{
+    set(c.x, c.y, MapEntry {
+        0,
+        INFINITY,
+        StandardComplex(),
+        StandardComplex()
+    } );
+}
+
+void
+DrillMap::markAsGlitch(const struct Coord &c)
+{
+    set(c.x, c.y, MapEntry {
+        UINT32_MAX,
+        NAN,
+        StandardComplex(),
+        StandardComplex()
+    } );
+}
+
 const ColorMap &
 DrillMap::colorize()
 {
@@ -285,8 +307,6 @@ DrillMap::loadChannel(std::istream &is)
 template<ChannelFormat fmt, typename T> void
 DrillMap::load(std::istream &is, T &raw)
 {
-    static int cnt = 0; // REMOVE ASAP
-
     switch (fmt) {
 
         case FMT_U24_LE:
@@ -466,8 +486,6 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
 template<ChannelFormat fmt, typename T> void
 DrillMap::save(std::ostream &os, T raw)
 {
-    static int cnt = 0; // REMOVE ASAP
-
     switch (fmt) {
 
         case FMT_U24_LE:
