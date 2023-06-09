@@ -129,7 +129,7 @@ DeepDrill::run()
 
     } else {
 
-        BatchProgressIndicator progress(opt, "Drilling", opt.files.output);
+        BatchProgressIndicator progress(opt, "Drilling",  outputs.front());
 
         // Run the driller
         Driller driller(opt, drillMap);
@@ -144,7 +144,6 @@ DeepDrill::run()
         if (AssetManager::isImageFormat(outputFormat)) {
 
             // Create and save image file
-            BatchProgressIndicator progress(opt, "Colorizing", it);
             colorizer.init(opt.image.illuminator, opt.image.scaler);
             colorizer.draw(drillMap);
             colorizer.save(it, outputFormat);

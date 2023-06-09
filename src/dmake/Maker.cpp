@@ -44,6 +44,12 @@ Maker::generate()
         }
     };
 
+    // Adjust some settings
+
+    // The drill map resolution must at least be twice the image resolution
+    opt.drillmap.width = std::min(opt.drillmap.width, 2 * opt.image.width);
+    opt.drillmap.height = std::min(opt.drillmap.height, 2 * opt.image.height);
+
     generateProjectFile(skipped);
     reportSkippedFiles();
 
@@ -76,9 +82,6 @@ Maker::generateProjectFile(vector <string> &skipped)
     writeImageSection(os, opt.image.width, opt.image.height);
     writeColorsSection(os);
     writeVideoSection(os);
-
-
-    // Write video section
 }
 
 void
@@ -110,9 +113,6 @@ Maker::generateLocationFiles(vector <string> &skipped)
 
         // Write location section
         writeLocationSection(os);
-        // os << "[location]" << std::endl;
-        // os << "real = " << opt.location.real << std::endl;
-        // os << "imag = " << opt.location.imag << std::endl;
         os << "zoom = " << std::to_string(zoom) << std::endl;
         os << "depth = " << std::to_string(depth) << std::endl;
         os << std::endl;
@@ -140,6 +140,7 @@ Maker::generateProfile(vector <string> &skipped)
 
     // Write sections
     writeHeader(os);
+    writeMapSection(os);
     writeImageSection(os, thumbWidth, thumbHeight);
     writeColorsSection(os);
     writePerturbationSection(os);
@@ -159,13 +160,9 @@ Maker::writeLocationSection(std::ofstream &os)
 void
 Maker::writeMapSection(std::ofstream &os)
 {
-    // The drill map resolution must at least be twice the image resolution
-    auto width = std::min(opt.drillmap.width, 2 * opt.image.width);
-    auto height = std::min(opt.drillmap.height, 2 * opt.image.height);
-
     os << "[map]" << std::endl;
-    os << "width = " << width << std::endl;
-    os << "height = " << height << std::endl;
+    os << "width = " << opt.drillmap.width << std::endl;
+    os << "height = " << opt.drillmap.height << std::endl;
     os << std::endl;
 }
 
@@ -289,22 +286,11 @@ Maker::writeTargets(std::ofstream &os)
     os << "maps: $(MAPS)" << std::endl;
     os << std::endl;
 
-    // os << "images: $(IMAGES) maps" << std::endl;
-    // os << std::endl;
-
     // Write 'map' target
     os << "%.map: %.loc" << std::endl;
     os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf";
-    os << " -o $*.png $*.loc > $*.log" << std::endl;
+    os << " -o $*.map -o $*.jpg $*.loc > $*.log" << std::endl;
     os << std::endl;
-
-    // Write 'png' target
-    /*
-    os << "%.png: %.map" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(PNGFLAGS) -p " << project << ".prf";
-    os << " -o $*.png $*.map > /dev/null" << std::endl;
-    os << std::endl;
-    */
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
