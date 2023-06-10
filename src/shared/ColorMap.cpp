@@ -135,11 +135,13 @@ ColorMap::compute(const DrillMap &map)
 
     if (opt.flags.verbose) {
 
+        auto path = palette.getPath();
+
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Palette: ");
-        log::cout << palette.getPath() << log::endl;
+        log::cout << (path != "" ? path : "not specified") << log::endl;
         log::cout << log::vspace;
     }
 }

@@ -9,14 +9,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "Coefficients.h"
+#include "Approximator.h"
 #include "ProgressIndicator.h"
 #include "ExtendedComplex.h"
+#include "Options.h"
 
 namespace dd {
 
 void
-CoeffArray::resize(isize newRows, isize newCols)
+Coefficients::resize(isize newRows, isize newCols)
 {
     if (coeff) delete[] coeff;
 
@@ -27,14 +28,14 @@ CoeffArray::resize(isize newRows, isize newCols)
 }
 
 ExtendedComplex *
-CoeffArray::operator [] (const isize &index) const
+Coefficients::operator [] (const isize &index) const
 {
     assert(index < rows);
     return coeff + (index * cols);
 }
 
 ExtendedComplex
-CoeffArray::evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
+Coefficients::evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
 {
     ExtendedComplex *c = (*this)[iteration];
     ExtendedComplex approx = c[cols - 1];
@@ -56,7 +57,7 @@ CoeffArray::evaluate(const Coord &coord, const ExtendedComplex &delta, isize ite
 }
 
 ExtendedComplex
-CoeffArray::evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
+Coefficients::evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
 {
     ExtendedComplex *c = (*this)[iteration];
     ExtendedComplex approx = c[cols - 1];
@@ -76,14 +77,14 @@ CoeffArray::evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, i
 }
 
 void
-Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
+Approximator::compute(ReferencePoint &ref, isize numCoeff, isize depth)
 {
     assert(numCoeff >= 2 && numCoeff <= 64);
 
     auto limit = std::min(depth, (isize)ref.xn.size());
 
     ProgressIndicator progress("Computing coefficients", limit);
-    
+
     a.resize(depth, numCoeff);
 
     // Based on the formulas from:
@@ -91,14 +92,14 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
 
     a[0][0] = ExtendedComplex(1, 0);
     for (isize i = 1; i < limit; i++) {
-        
+
         assert(i < (isize)ref.xn.size());
         a[i][0] = a[i-1][0] * ref.xn[i-1].extended * (double)2;
         a[i][0] += ExtendedComplex(1.0, 0.0);
         a[i][0].reduce();
 
         for (isize j = 1; j < numCoeff; j++) {
-            
+
             a[i][j] = a[i-1][j] * ref.xn[i-1].extended * (double)2;
             a[i][j].reduce();
 
@@ -107,10 +108,34 @@ Coefficients::compute(ReferencePoint &ref, isize numCoeff, isize depth)
                 a[i][j].reduce();
             }
         }
-        
+
         // Update the progress counter
         if (i % 1024 == 0) progress.step(1024);
     }
+
+    progress.done();
+
+    if (opt.flags.verbose) {
+
+        log::cout << log::vspace;
+        log::cout << log::ralign("Coefficients: ");
+        log::cout << opt.approximation.coefficients << log::endl;
+        log::cout << log::ralign("Approximation tolerance: ");
+        log::cout << opt.approximation.tolerance << log::endl;
+        log::cout << log::vspace;
+    }
+}
+
+ExtendedComplex
+Approximator::evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
+{
+    return a.evaluate(coord, delta, iteration);
+}
+
+ExtendedComplex
+Approximator::evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const
+{
+    return a.evaluateDerivate(coord, delta, iteration);
 }
 
 }

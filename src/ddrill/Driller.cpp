@@ -40,13 +40,13 @@ Driller::drill()
         log::cout << log::ralign("Magnification: ");
         log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Map size: ");
-        log::cout << width << " x " << height << log::endl;
+        log::cout << width << " x " << height;
+        log::cout << (opt.drillmap.depth ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::ralign("Image size: ");
-        log::cout << opt.image.width << " x " << opt.image.height << log::endl;
+        log::cout << opt.image.width << " x " << opt.image.height;
+        log::cout << (opt.image.depth ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::ralign("GMP Precision: ");
         log::cout << mpf_get_default_prec() << " Bit" << log::endl;
-        // log::cout << log::ralign("Max rounds: ");
-        // log::cout << opt.perturbation.rounds << log::endl;
         log::cout << log::vspace;
     }
             
@@ -76,7 +76,8 @@ Driller::drill()
 
         log::cout << log::vspace;
         log::cout << "Round " << round;
-        log::cout << " (max " << opt.perturbation.rounds << "): ";
+        if (opt.flags.verbose) log::cout << " / " << opt.perturbation.rounds;
+        log::cout << ": ";
         log::cout << remaining.size() << " points" << log::endl << log::endl;
 
         // Select a reference point
@@ -103,7 +104,7 @@ Driller::drill()
         if (opt.approximation.coefficients > 0) {
         
             // Compute the coefficients
-            coeff.compute(ref, opt.approximation.coefficients, opt.location.depth);
+            approximator.compute(ref, opt.approximation.coefficients, opt.location.depth);
 
             // Pick the probe points
             pickProbePoints(probePoints);
@@ -114,10 +115,6 @@ Driller::drill()
             if (opt.flags.verbose) {
 
                 log::cout << log::vspace;
-                log::cout << log::ralign("Coefficients: ");
-                log::cout << opt.approximation.coefficients << log::endl;
-                log::cout << log::ralign("Tolerance: ");
-                log::cout << opt.approximation.tolerance << log::endl;
                 log::cout << log::ralign("Skippable iterations: ");
                 log::cout << ref.skipped << log::endl;
                 log::cout << log::vspace;
@@ -340,7 +337,7 @@ Driller::drillProbePoint(Coord &probe)
         dn += d0;
         dn.reduce();
                 
-        auto approx = coeff.a.evaluate(probe, d0, iteration);
+        auto approx = approximator.evaluate(probe, d0, iteration);
         auto error = (approx - dn).norm() / dn.norm();
         error.reduce();
 
@@ -383,9 +380,9 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     // Skip some iterations if possible
     if (ref.skipped) {
 
-        dn = coeff.a.evaluate(point, d0, ref.skipped);
+        dn = approximator.evaluate(point, d0, ref.skipped);
         dn.reduce();
-        ddn = coeff.a.evaluateDerivate(point, d0, ref.skipped);
+        ddn = approximator.evaluateDerivate(point, d0, ref.skipped);
         ddn.reduce();
     }
 

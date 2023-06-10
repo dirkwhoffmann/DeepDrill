@@ -13,7 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
-#include "Coefficients.h"
+#include "Approximator.h"
 #include "Coord.h"
 #include "DrillMap.h"
 #include "ReferencePoint.h"
@@ -43,7 +43,7 @@ class Driller {
     //
     
     // Computed coefficients
-    Coefficients coeff;
+    Approximator approximator = Approximator(opt);
     
     // The probe points
     vector <Coord> probePoints;

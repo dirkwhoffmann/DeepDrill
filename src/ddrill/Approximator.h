@@ -17,7 +17,7 @@
 
 namespace dd {
 
-class CoeffArray {
+class Coefficients {
 
     isize rows = 0;
     isize cols = 0;
@@ -31,17 +31,41 @@ public:
     ExtendedComplex evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const;
 };
 
-class Coefficients {
+class Approximator {
+
+    // Configuration options
+    const struct Options &opt;
+
+    // Coefficient array
+    Coefficients a;
+
+
+    //
+    // Initializing
+    //
 
 public:
 
-    // Coefficients
-    CoeffArray a;
-    
+    Approximator(const Options &opt) : opt(opt) { };
+
+
+    //
+    // Computing
+    //
+
 public:
-    
-    // Computes all coefficients
+
     void compute(ReferencePoint &ref, isize num, isize depth);
+
+
+    //
+    // Evaluating
+    //
+
+public:
+
+    ExtendedComplex evaluate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const;
+    ExtendedComplex evaluateDerivate(const Coord &coord, const ExtendedComplex &delta, isize iteration) const;
 };
 
 }

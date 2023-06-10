@@ -1,8 +1,0 @@
-[image]
-illuminator = relief.glsl
-scaler = nearest.glsl
-depth = 1
-
-[colors]
-alpha = 45
-beta = 65

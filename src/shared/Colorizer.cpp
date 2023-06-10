@@ -123,9 +123,22 @@ Colorizer::lightVector()
 void
 Colorizer::save(const string &path, Format format) const
 {
-    ProgressIndicator progress("Saving image");
+    {
+        ProgressIndicator progress("Saving image");
 
-    image.saveToFile(path);
+        image.saveToFile(path);
+    }
+    if (opt.flags.verbose) {
+
+        auto size = image.getSize();
+
+        log::cout << log::vspace;
+        log::cout << log::ralign("File name: ");
+        log::cout << path << log::endl;
+        log::cout << log::ralign("Image size: ");
+        log::cout << isize(size.x) << " x " << isize(size.y) << log::endl;
+        log::cout << log::vspace;
+    }
 }
 
 }

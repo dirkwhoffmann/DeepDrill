@@ -358,11 +358,6 @@ Options::derive()
     // Compute the distance between two pixels on the complex plane
     mpfPixelDelta = mpf_class(4.0) / location.zoom / drillmap.height;
     pixelDelta = mpfPixelDelta;
-
-    // Perform some sanity checks
-    if (drillmap.width < image.width || drillmap.height < image.height) {
-        throw Exception("Drill map has a lower resolution than the image");
-    }
 }
 
 }

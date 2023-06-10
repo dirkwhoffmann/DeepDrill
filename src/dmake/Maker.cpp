@@ -295,7 +295,7 @@ Maker::writeTargets(std::ofstream &os)
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
     os << "\t" << "@$(DEEPZOOM) $(MOVFLAGS) " << project << ".prj";
-    os << " -o $(VIDEO)";
+    os << " -o $(VIDEO)" << std::endl;
     os << std::endl;
 
     // Write 'clean' target

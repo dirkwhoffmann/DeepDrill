@@ -52,7 +52,7 @@
 		5072FD7E2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
 		50AE096429FE7E0A005E4D3E /* Animated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE096329FE7E0A005E4D3E /* Animated.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
-		50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */; };
+		50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Approximator.cpp */; };
 		50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 		50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FA269486A900CCDFA8 /* Options.cpp */; };
 		50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
@@ -154,12 +154,9 @@
 		5071221C2A31AB260013E655 /* 8K.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 8K.prf; sourceTree = "<group>"; };
 		5071221D2A31AD400013E655 /* 3D.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 3D.prf; sourceTree = "<group>"; };
 		5071221E2A31B05F0013E655 /* newtutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = newtutorial.loc; sourceTree = "<group>"; };
-		5071221F2A31B6770013E655 /* tutorial1.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial1.prf; sourceTree = "<group>"; };
 		507122202A31CF830013E655 /* seahorse1.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse1.loc; sourceTree = "<group>"; };
 		507122212A31CF990013E655 /* seahorse2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse2.loc; sourceTree = "<group>"; };
 		507122222A31D09C0013E655 /* top.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = top.loc; sourceTree = "<group>"; };
-		507122242A31F5850013E655 /* tutorial2.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial2.prf; sourceTree = "<group>"; };
-		507122252A31F8710013E655 /* tutorial3.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial3.prf; sourceTree = "<group>"; };
 		507122262A3250920013E655 /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		507122272A3381E40013E655 /* normalmap.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.prf; sourceTree = "<group>"; };
 		507122282A3386DE0013E655 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
@@ -175,10 +172,10 @@
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
 		50B5C7772A29D55700E531CC /* relief.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.glsl; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
-		50BEC6EF269486A800CCDFA8 /* Coefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coefficients.h; sourceTree = "<group>"; };
+		50BEC6EF269486A800CCDFA8 /* Approximator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Approximator.h; sourceTree = "<group>"; };
 		50BEC6F0269486A800CCDFA8 /* Driller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driller.cpp; sourceTree = "<group>"; };
 		50BEC6F1269486A800CCDFA8 /* ProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressIndicator.h; sourceTree = "<group>"; };
-		50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coefficients.cpp; sourceTree = "<group>"; };
+		50BEC6F2269486A900CCDFA8 /* Approximator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Approximator.cpp; sourceTree = "<group>"; };
 		50BEC6F3269486A900CCDFA8 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		50BEC6F5269486A900CCDFA8 /* DeepDrill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeepDrill.h; sourceTree = "<group>"; };
 		50BEC6F6269486A900CCDFA8 /* Coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coord.cpp; sourceTree = "<group>"; };
@@ -356,8 +353,8 @@
 				50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
-				50BEC6EF269486A800CCDFA8 /* Coefficients.h */,
-				50BEC6F2269486A900CCDFA8 /* Coefficients.cpp */,
+				50BEC6EF269486A800CCDFA8 /* Approximator.h */,
+				50BEC6F2269486A900CCDFA8 /* Approximator.cpp */,
 				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
 				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
 			);
@@ -574,9 +571,6 @@
 				507122202A31CF830013E655 /* seahorse1.loc */,
 				507122212A31CF990013E655 /* seahorse2.loc */,
 				50D69A7629E2A4630025DE0D /* seahorse3.loc */,
-				5071221F2A31B6770013E655 /* tutorial1.prf */,
-				507122242A31F5850013E655 /* tutorial2.prf */,
-				507122252A31F8710013E655 /* tutorial3.prf */,
 				507122262A3250920013E655 /* spider.prf */,
 			);
 			path = tutorial;
@@ -759,7 +753,7 @@
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
 				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
-				50BEC702269486AA00CCDFA8 /* Coefficients.cpp in Sources */,
+				50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */,
 				50EB497326A00C2A0019078C /* ColorMap.cpp in Sources */,
 				507122192A304EF10013E655 /* Colorizer.cpp in Sources */,
 			);
