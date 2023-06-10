@@ -154,8 +154,8 @@ std::ostream& operator<<(std::ostream& os, const Time& value)
 
     auto hsec = usec / (1000LL * 10LL);
     auto sec  = usec / (1000LL * 1000LL);
-    auto min  = sec  / (1000LL * 1000LL * 60LL);
-    auto hrs  = min  / (1000LL * 1000LL * 60LL * 60LL);
+    auto min  = usec / (1000LL * 1000LL * 60LL);
+    auto hrs  = usec / (1000LL * 1000LL * 60LL * 60LL);
 
     hsec %= 100;
     sec  %= 60;

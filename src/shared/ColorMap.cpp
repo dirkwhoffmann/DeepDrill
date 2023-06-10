@@ -74,12 +74,12 @@ ColorMap::compute(const DrillMap &map)
             // Colorize image
             //
 
-            if (isnan(data.lognorm)) {
+            if (data.iteration == UINT32_MAX) {
 
                 // Map to a black or to a debug color if the point is a glitch point
                 colorMap[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
 
-            } else if (isinf(data.lognorm)) {
+            } else if (data.iteration == 0) {
 
                 // Map to a black if the point belongs to the mandelbrot set
                 colorMap[pos] = 0xFF000000;

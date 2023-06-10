@@ -22,6 +22,7 @@ DeepDrill User's Manual
    Tutorials/Colors
    Tutorials/3D
    Tutorials/ZoomVideos
+   Tutorials/Debug
 
 .. toctree::
    :maxdepth: 1

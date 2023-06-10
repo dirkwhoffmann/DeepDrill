@@ -1,0 +1,7 @@
+[image]
+illuminator = relief.glsl
+depth = 1
+
+[colors]
+alpha = 45
+beta = 65
