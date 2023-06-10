@@ -75,6 +75,24 @@ Options::version()
 }
 
 void
+Options::parse(string keyvalue)
+{
+    // Seek the '=' symbol
+    auto pos = keyvalue.find("=");
+    if (pos == std::string::npos) throw SyntaxError("Parse error");
+
+    // Split string
+    auto key = keyvalue.substr(0, pos);
+    auto value = keyvalue.substr(pos + 1, std::string::npos);
+
+    // Convert the key to lower case
+    std::transform(key.begin(), key.end(), key.begin(),
+                   [](unsigned char ch){ return std::tolower(ch); });
+
+    parse(key, value);
+}
+
+void
 Options::parse(string key, string value)
 {
     keys[key] = value;
@@ -301,6 +319,9 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
+    // Apply overrides
+    for (auto &it : overrides) parse(it);
+
     // Adjust some default values
     if (keys.find("image.width") != keys.end()) {
         defaults["map.width"] = keys["image.width"];

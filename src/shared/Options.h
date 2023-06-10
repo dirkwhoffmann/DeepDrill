@@ -35,6 +35,9 @@ struct Options {
     // Key-value pairs (unparsed)
     //
 
+    // Keys specified at the command line
+    std::vector <string> overrides;
+
     // Default keys
     std::map <string,string> defaults;
 
@@ -206,6 +209,7 @@ public:
     // Parsing key-value pairs
     //
 
+    void parse(string keyvalue);
     void parse(string key, string value);
     void derive();
 

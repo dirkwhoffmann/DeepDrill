@@ -46,7 +46,7 @@ private:
     // Reads all profiles
     void readProfiles();
 
-    
+
     //
     // Methods provided by subclasses
     //

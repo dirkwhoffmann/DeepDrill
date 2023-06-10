@@ -28,6 +28,7 @@ DeepMake::syntax()
     log::cout << "deepmake [-a <path>] [-p <profile>] -o <output> <input>" << log::endl;
     log::cout << log::endl;
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
+    log::cout << "       -c or --config    Configures a single key-value pair" << log::endl;
     log::cout << "       -p or --profile   Customize settings" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;
 }
@@ -38,6 +39,7 @@ DeepMake::parseArguments(int argc, char *argv[])
     static struct option long_options[] = {
 
         { "assets",   required_argument, NULL, 'a' },
+        { "config",   required_argument, NULL, 'c' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
@@ -52,13 +54,17 @@ DeepMake::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
 
-        int arg = getopt_long(argc, argv, ":a:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":a:c:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
 
             case 'a':
                 assets.addSearchPath(optarg);
+                break;
+
+            case 'c':
+                opt.overrides.push_back(optarg);
                 break;
 
             case 'p':
