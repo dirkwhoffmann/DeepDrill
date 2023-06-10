@@ -147,7 +147,7 @@ struct Options {
     struct {
 
         // Indicates if perturbation should be used
-        bool enabled;
+        bool enable;
 
         // Tolerance used for glitch detection
         double tolerance;
@@ -161,6 +161,9 @@ struct Options {
     } perturbation;
     
     struct {
+
+        // Indicates if series approximation should be used
+        bool enable;
 
         // Number of coefficients used in series approximation
         isize coefficients;

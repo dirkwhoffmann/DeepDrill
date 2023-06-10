@@ -31,7 +31,7 @@ Zoomer::Zoomer(Options &o) : opt(o)
 void
 Zoomer::init()
 {
-    recordMode = opt.files.outputs.front() != "";
+    recordMode = !opt.files.outputs.empty();
 
     // Create the render window
     auto mode = sf::VideoMode(unsigned(opt.image.width), unsigned(opt.image.height));

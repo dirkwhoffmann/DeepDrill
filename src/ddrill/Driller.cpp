@@ -62,7 +62,7 @@ Driller::drill()
     }
 
     // Use the standard algorithm if perturbation is disabled
-    if (!opt.perturbation.enabled) {
+    if (!opt.perturbation.enable) {
 
         slowDrill(remaining);
         return;
@@ -101,7 +101,7 @@ Driller::drill()
         }
         
         // If series approximation is enabled...
-        if (opt.approximation.coefficients > 0) {
+        if (opt.approximation.enable) {
         
             // Compute the coefficients
             approximator.compute(ref, opt.approximation.coefficients, opt.location.depth);

@@ -53,12 +53,13 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["colors.beta"] = "45";
 
     // Perturbation keys
-    defaults["perturbation.enabled"] = "yes";
+    defaults["perturbation.enable"] = "yes";
     defaults["perturbation.tolerance"] = "1e-6";
     defaults["perturbation.badpixels"] = "0.001";
     defaults["perturbation.rounds"] = "50";
 
     // Approximation keys
+    defaults["approximation.enable"] = "yes";
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
 
@@ -199,9 +200,9 @@ Options::parse(string key, string value)
             throw KeyValueError(key, "Angle out of range");
         }
 
-    } else if (key == "perturbation.enabled") {
+    } else if (key == "perturbation.enable") {
 
-        parse(key, value, perturbation.enabled);
+        parse(key, value, perturbation.enable);
 
     } else if (key == "perturbation.tolerance") {
 
@@ -214,6 +215,10 @@ Options::parse(string key, string value)
     } else if (key == "perturbation.rounds") {
 
         parse(key, value, perturbation.rounds);
+
+    } else if (key == "approximation.enable") {
+
+        parse(key, value, approximation.enable);
 
     } else if (key == "approximation.coefficients") {
 

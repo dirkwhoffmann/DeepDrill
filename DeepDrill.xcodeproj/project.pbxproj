@@ -160,6 +160,7 @@
 		507122262A3250920013E655 /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		507122272A3381E40013E655 /* normalmap.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.prf; sourceTree = "<group>"; };
 		507122282A3386DE0013E655 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
+		507122292A34A0DC0013E655 /* nice.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = nice.loc; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -572,6 +573,7 @@
 				507122212A31CF990013E655 /* seahorse2.loc */,
 				50D69A7629E2A4630025DE0D /* seahorse3.loc */,
 				507122262A3250920013E655 /* spider.prf */,
+				507122292A34A0DC0013E655 /* nice.loc */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";
