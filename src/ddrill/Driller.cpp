@@ -111,7 +111,11 @@ Driller::drill()
             
             // Drill the probe points
             ref.skipped = drillProbePoints(probePoints);
-            
+
+            // Make sure that at least one iteration of the main loop is executed
+            if (ref.skipped == isize(ref.xn.size())) ref.skipped -= 2;
+            if (ref.skipped < 0) ref.skipped = 0;
+
             if (opt.flags.verbose) {
 
                 log::cout << log::vspace;
@@ -223,12 +227,6 @@ Driller::slowDrill(const Coord &point)
         xn += x0;
         xn.reduce();
 
-        /*
-        if (point.x == 0 && point.y == 0) {
-            std::cout << iteration << ": " << " xn: " << xn << " dn: " << dn << std::endl;
-        }
-        */
-
         auto norm = xn.norm().asDouble();
 
         // Perform the escape check
@@ -265,7 +263,7 @@ Driller::drill(ReferencePoint &r)
         
     for (isize i = 1; i < opt.location.depth; i++) {
 
-        // Compute derivate
+        // Compute derivative
         dn *= z * 2.0;
         dn += d0;
         
@@ -375,20 +373,20 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
     ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
     ExtendedComplex ddn = dd0;
 
+    // The depth of the reference point limits how deep we can drill
+    isize limit = ref.xn.size();
+
     isize iteration = ref.skipped;
 
     // Skip some iterations if possible
     if (ref.skipped) {
 
-        dn = approximator.evaluate(point, d0, ref.skipped);
+        dn = approximator.evaluate(point, d0, iteration);
         dn.reduce();
-        ddn = approximator.evaluateDerivate(point, d0, ref.skipped);
+        ddn = approximator.evaluateDerivate(point, d0, iteration);
         ddn.reduce();
     }
 
-    // The depth of the reference point limits how deep we can drill
-    isize limit = ref.xn.size();
-            
     // Enter the main loop
     while (++iteration < limit) {
 

@@ -205,7 +205,7 @@ void
 Maker::writePerturbationSection(std::ofstream &os)
 {
     os << "[perturbation]" << std::endl;
-    os << "enable = " << opt.keys["perturbation.enabled"] << std::endl;
+    os << "enable = " << opt.keys["perturbation.enable"] << std::endl;
     os << "tolerance = " << opt.keys["perturbation.tolerance"] << std::endl;
     os << "rounds = " << opt.keys["perturbation.rounds"] << std::endl;
     os << std::endl;
@@ -215,7 +215,7 @@ void
 Maker::writeApproximationSection(std::ofstream &os)
 {
     os << "[approximation]" << std::endl;
-    os << "enable = " << opt.keys["approximation.enabled"] << std::endl;
+    os << "enable = " << opt.keys["approximation.enable"] << std::endl;
     os << "coefficients = " << opt.keys["approximation.coefficients"] << std::endl;
     os << "tolerance = " << opt.keys["approximation.tolerance"] << std::endl;
     os << std::endl;
