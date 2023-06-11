@@ -156,9 +156,13 @@ Maker::writeLocationSection(std::ofstream &os)
 void
 Maker::writeMapSection(std::ofstream &os)
 {
+    // The DrillMap resolution must be at leas twice the image resolution
+    auto width = std::max(opt.drillmap.width, opt.image.width * 2);
+    auto height = std::max(opt.drillmap.height, opt.image.height * 2);
+
     os << "[map]" << std::endl;
-    os << "width = " << opt.drillmap.width << std::endl;
-    os << "height = " << opt.drillmap.height << std::endl;
+    os << "width = " << width << std::endl;
+    os << "height = " << height << std::endl;
     os << std::endl;
 }
 

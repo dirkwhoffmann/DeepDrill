@@ -61,7 +61,7 @@ void main()
 
     } else {
 
-        float scale = 1.0;
+        float scale = 0.4;
         vec3 hsv = rgb2hsv(diffuseColor.rgb);
         hsv.z *= (lambert * scale) + 1.0 - 0.5 * scale;
         final = hsv2rgb(hsv);
