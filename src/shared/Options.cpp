@@ -352,7 +352,9 @@ Options::derive()
         video.inbetweens = 2 * video.frameRate;
     }
     if (!video.keyframes) {
-        video.keyframes = isize(std::ceil(std::log2(location.zoom.get_d())));
+
+        auto zoom = ExtendedDouble(location.zoom);
+        video.keyframes = isize(std::ceil(zoom.log2().asDouble()));
     }
 
     // Derive the video length

@@ -176,6 +176,12 @@ struct ExtendedDouble {
         return result;
     }
 
+    inline ExtendedDouble log2() const {
+
+        ExtendedDouble result = ExtendedDouble(std::log2(mantissa) + exponent);
+        return result;
+    }
+
     
     //
     // Comparing
