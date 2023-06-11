@@ -402,57 +402,7 @@
 			path = workinprogress;
 			sourceTree = "<group>";
 		};
-		5072FD5A2A271DC3003DE341 /* dmake */ = {
-			isa = PBXGroup;
-			children = (
-				5072FD5B2A271DE8003DE341 /* CMakeLists.txt */,
-				5072FD692A271E4A003DE341 /* DeepMake.h */,
-				5072FD682A271E4A003DE341 /* DeepMake.cpp */,
-				50EB497526A067850019078C /* Maker.h */,
-				50EB497426A067850019078C /* Maker.cpp */,
-			);
-			path = dmake;
-			sourceTree = "<group>";
-		};
-		50BEC70B269486B400CCDFA8 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				505EB93629D73E62008DE5BB /* CMakeLists.txt */,
-				50BEC70F269486C100CCDFA8 /* Types.h */,
-				5049969C29DFFC8000B15919 /* Animated.h */,
-				50AE096329FE7E0A005E4D3E /* Animated.cpp */,
-				50D69A7129E0409E0025DE0D /* Buffer.h */,
-				50D69A7229E041510025DE0D /* Buffer.cpp */,
-				50BEC70D269486C100CCDFA8 /* Chrono.h */,
-				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
-				500655E726957C8400982789 /* Parser.h */,
-				500655E626957C8400982789 /* Parser.cpp */,
-				50102345269DBEF000AC61A8 /* Exception.h */,
-				50102344269DBEF000AC61A8 /* Exception.cpp */,
-				50102348269DC4F500AC61A8 /* IO.h */,
-				50102347269DC4F500AC61A8 /* IO.cpp */,
-			);
-			path = util;
-			sourceTree = "<group>";
-		};
-		50BEC721269486D900CCDFA8 /* profiles */ = {
-			isa = PBXGroup;
-			children = (
-				50BEC728269486E600CCDFA8 /* LD.prf */,
-				50BEC724269486E600CCDFA8 /* SD.prf */,
-				50BEC723269486E500CCDFA8 /* HD.prf */,
-				50BEC727269486E600CCDFA8 /* FHD.prf */,
-				50BEC726269486E600CCDFA8 /* 4K.prf */,
-				5071221C2A31AB260013E655 /* 8K.prf */,
-				5071221D2A31AD400013E655 /* 3D.prf */,
-				507122282A3386DE0013E655 /* relief.prf */,
-				50EB0D4A29F3E15800770F31 /* debug.prf */,
-				507122272A3381E40013E655 /* normalmap.prf */,
-			);
-			path = profiles;
-			sourceTree = "<group>";
-		};
-		50BEC7292694870100CCDFA8 /* locations */ = {
+		5071224E2A35D0640013E655 /* yarndley */ = {
 			isa = PBXGroup;
 			children = (
 				50BEC7472694872C00CCDFA8 /* 11_dimensions.loc */,
@@ -531,6 +481,67 @@
 				5071224D2A35C8A80013E655 /* wfs_extended.loc */,
 				50BEC74A2694872C00CCDFA8 /* wfs_mb.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
+			);
+			path = yarndley;
+			sourceTree = "<group>";
+		};
+		5072FD5A2A271DC3003DE341 /* dmake */ = {
+			isa = PBXGroup;
+			children = (
+				5072FD5B2A271DE8003DE341 /* CMakeLists.txt */,
+				5072FD692A271E4A003DE341 /* DeepMake.h */,
+				5072FD682A271E4A003DE341 /* DeepMake.cpp */,
+				50EB497526A067850019078C /* Maker.h */,
+				50EB497426A067850019078C /* Maker.cpp */,
+			);
+			path = dmake;
+			sourceTree = "<group>";
+		};
+		50BEC70B269486B400CCDFA8 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				505EB93629D73E62008DE5BB /* CMakeLists.txt */,
+				50BEC70F269486C100CCDFA8 /* Types.h */,
+				5049969C29DFFC8000B15919 /* Animated.h */,
+				50AE096329FE7E0A005E4D3E /* Animated.cpp */,
+				50D69A7129E0409E0025DE0D /* Buffer.h */,
+				50D69A7229E041510025DE0D /* Buffer.cpp */,
+				50BEC70D269486C100CCDFA8 /* Chrono.h */,
+				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
+				500655E726957C8400982789 /* Parser.h */,
+				500655E626957C8400982789 /* Parser.cpp */,
+				50102345269DBEF000AC61A8 /* Exception.h */,
+				50102344269DBEF000AC61A8 /* Exception.cpp */,
+				50102348269DC4F500AC61A8 /* IO.h */,
+				50102347269DC4F500AC61A8 /* IO.cpp */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		50BEC721269486D900CCDFA8 /* profiles */ = {
+			isa = PBXGroup;
+			children = (
+				50BEC728269486E600CCDFA8 /* LD.prf */,
+				50BEC724269486E600CCDFA8 /* SD.prf */,
+				50BEC723269486E500CCDFA8 /* HD.prf */,
+				50BEC727269486E600CCDFA8 /* FHD.prf */,
+				50BEC726269486E600CCDFA8 /* 4K.prf */,
+				5071221C2A31AB260013E655 /* 8K.prf */,
+				5071221D2A31AD400013E655 /* 3D.prf */,
+				507122282A3386DE0013E655 /* relief.prf */,
+				50EB0D4A29F3E15800770F31 /* debug.prf */,
+				507122272A3381E40013E655 /* normalmap.prf */,
+			);
+			path = profiles;
+			sourceTree = "<group>";
+		};
+		50BEC7292694870100CCDFA8 /* locations */ = {
+			isa = PBXGroup;
+			children = (
+				507122222A31D09C0013E655 /* top.loc */,
+				507122292A34A0DC0013E655 /* nice.loc */,
+				5071222A2A34BB650013E655 /* nice2.loc */,
+				5071224E2A35D0640013E655 /* yarndley */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -628,14 +639,11 @@
 		50EB0D4C29F57D0200770F31 /* tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				507122222A31D09C0013E655 /* top.loc */,
-				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				507122202A31CF830013E655 /* seahorse1.loc */,
 				507122212A31CF990013E655 /* seahorse2.loc */,
 				50D69A7629E2A4630025DE0D /* seahorse3.loc */,
+				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				507122262A3250920013E655 /* spider.prf */,
-				507122292A34A0DC0013E655 /* nice.loc */,
-				5071222A2A34BB650013E655 /* nice2.loc */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";

@@ -22,6 +22,7 @@ AssetManager::AssetManager()
     auto repo = fs::path(__FILE__).parent_path().parent_path().parent_path();
 
     paths.push_back(repo / "locations");
+    paths.push_back(repo / "locations" / "yarndley");
     paths.push_back(repo / "tutorial");
     paths.push_back(repo / "profiles");
     paths.push_back(repo / "palettes");
