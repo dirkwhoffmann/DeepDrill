@@ -195,6 +195,21 @@
 		5071224B2A35C76F0013E655 /* verstoppertje.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = verstoppertje.loc; sourceTree = "<group>"; };
 		5071224C2A35C7B30013E655 /* virus.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = virus.loc; sourceTree = "<group>"; };
 		5071224D2A35C8A80013E655 /* wfs_extended.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wfs_extended.loc; sourceTree = "<group>"; };
+		5071224F2A35D7320013E655 /* wiki1.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki1.loc; sourceTree = "<group>"; };
+		507122512A35D82F0013E655 /* wiki2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki2.loc; sourceTree = "<group>"; };
+		507122522A35D8B30013E655 /* wiki3.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki3.loc; sourceTree = "<group>"; };
+		507122532A35D8FD0013E655 /* wiki4.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki4.loc; sourceTree = "<group>"; };
+		507122542A35D93F0013E655 /* wiki5.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki5.loc; sourceTree = "<group>"; };
+		507122552A35DA050013E655 /* wiki6.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki6.loc; sourceTree = "<group>"; };
+		507122562A35DA540013E655 /* wiki8.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki8.loc; sourceTree = "<group>"; };
+		507122572A35DAC80013E655 /* wiki7.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki7.loc; sourceTree = "<group>"; };
+		507122582A35DC1B0013E655 /* wiki9.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki9.loc; sourceTree = "<group>"; };
+		507122592A35DC630013E655 /* wiki10.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki10.loc; sourceTree = "<group>"; };
+		5071225A2A35DCC80013E655 /* wiki11.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki11.loc; sourceTree = "<group>"; };
+		5071225B2A35DD710013E655 /* wiki12.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki12.loc; sourceTree = "<group>"; };
+		5071225C2A35DDFE0013E655 /* wiki13.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki13.loc; sourceTree = "<group>"; };
+		5071225D2A35DE940013E655 /* wiki14.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wiki14.loc; sourceTree = "<group>"; };
+		5071225E2A35DF0E0013E655 /* start.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = start.loc; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -485,6 +500,28 @@
 			path = yarndley;
 			sourceTree = "<group>";
 		};
+		507122502A35D73E0013E655 /* wiki */ = {
+			isa = PBXGroup;
+			children = (
+				5071225E2A35DF0E0013E655 /* start.loc */,
+				5071224F2A35D7320013E655 /* wiki1.loc */,
+				507122512A35D82F0013E655 /* wiki2.loc */,
+				507122522A35D8B30013E655 /* wiki3.loc */,
+				507122532A35D8FD0013E655 /* wiki4.loc */,
+				507122542A35D93F0013E655 /* wiki5.loc */,
+				507122552A35DA050013E655 /* wiki6.loc */,
+				507122572A35DAC80013E655 /* wiki7.loc */,
+				507122562A35DA540013E655 /* wiki8.loc */,
+				507122582A35DC1B0013E655 /* wiki9.loc */,
+				507122592A35DC630013E655 /* wiki10.loc */,
+				5071225A2A35DCC80013E655 /* wiki11.loc */,
+				5071225B2A35DD710013E655 /* wiki12.loc */,
+				5071225C2A35DDFE0013E655 /* wiki13.loc */,
+				5071225D2A35DE940013E655 /* wiki14.loc */,
+			);
+			path = wiki;
+			sourceTree = "<group>";
+		};
 		5072FD5A2A271DC3003DE341 /* dmake */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,6 +579,7 @@
 				507122292A34A0DC0013E655 /* nice.loc */,
 				5071222A2A34BB650013E655 /* nice2.loc */,
 				5071224E2A35D0640013E655 /* yarndley */,
+				507122502A35D73E0013E655 /* wiki */,
 			);
 			path = locations;
 			sourceTree = "<group>";

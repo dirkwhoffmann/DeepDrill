@@ -23,6 +23,7 @@ AssetManager::AssetManager()
 
     paths.push_back(repo / "locations");
     paths.push_back(repo / "locations" / "yarndley");
+    paths.push_back(repo / "locations" / "wiki");
     paths.push_back(repo / "tutorial");
     paths.push_back(repo / "profiles");
     paths.push_back(repo / "palettes");
