@@ -158,8 +158,6 @@
 		507122262A3250920013E655 /* spider.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.prf; sourceTree = "<group>"; };
 		507122272A3381E40013E655 /* normalmap.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.prf; sourceTree = "<group>"; };
 		507122282A3386DE0013E655 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
-		507122292A34A0DC0013E655 /* nice.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = nice.loc; sourceTree = "<group>"; };
-		5071222A2A34BB650013E655 /* nice2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = nice2.loc; sourceTree = "<group>"; };
 		5071222B2A35ABA50013E655 /* adventurous_forest.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = adventurous_forest.loc; sourceTree = "<group>"; };
 		5071222C2A35ACF00013E655 /* all_seeing_eye.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = all_seeing_eye.loc; sourceTree = "<group>"; };
 		5071222D2A35AE880013E655 /* e1000.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1000.loc; sourceTree = "<group>"; };
@@ -576,8 +574,6 @@
 			isa = PBXGroup;
 			children = (
 				507122222A31D09C0013E655 /* top.loc */,
-				507122292A34A0DC0013E655 /* nice.loc */,
-				5071222A2A34BB650013E655 /* nice2.loc */,
 				5071224E2A35D0640013E655 /* yarndley */,
 				507122502A35D73E0013E655 /* wiki */,
 			);
