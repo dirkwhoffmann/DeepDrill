@@ -185,8 +185,11 @@ struct Options {
     // Derived values
     //
 
-    // The center coordinate
+    // Center coordinate in precision format
     PrecisionComplex center;
+
+    // Bounding box in precision format
+    mpf_class x0, y0, x1, y1;
 
     // Distance between two adjacent pixels
     mpf_class mpfPixelDeltaX;

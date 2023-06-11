@@ -56,16 +56,16 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
     while(std::getline(stream, input)) {
 
         line++;
-        
+
+        // Remove comments
+        input = input.substr(0, input.find("#"));
+
         // Remove white spaces
         trim(input);
                 
         // Ignore empty lines
         if (input == "") continue;
-        
-        // Ignore comments
-        if (input.substr(0,1) == "#") continue;
-                
+                        
         // Check if this line contains a section marker
         if (input.front() == '[' && input.back() == ']') {
         

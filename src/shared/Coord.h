@@ -28,23 +28,27 @@ struct Coord {
     Coord(isize nx, isize ny) : x((i16)nx), y((i16)ny) { };
     Coord(double nx, double ny) : x(i16(std::round(nx))), y(i16(std::round(ny))) { };
 
-    bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
-    
+
+    //
+    // Locating
+    //
+
+    static Coord ul(const struct Options &opt);
+    static Coord ur(const struct Options &opt);
+    static Coord ll(const struct Options &opt);
+    static Coord lr(const struct Options &opt);
     static Coord center(const struct Options &opt);
-    
-    
-    //
-    // Converting locations
-    //
-    
+
     // Translates the coordinate to it's location on the complex plane
     PrecisionComplex translate(const struct Options &opt) const;
 
 
     //
-    // Computing
+    // Calculating
     //
-    
+
+    bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
+
     inline Coord &operator-=(const Coord &other) {
     
         x -= other.x;

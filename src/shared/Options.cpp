@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Options.h"
+#include "Coord.h"
 #include "Exception.h"
 #include "IO.h"
 #include "Logger.h"
@@ -357,12 +358,18 @@ Options::derive()
     // Derive the video length
     duration = isize(std::round(keyframes * inbetweens / frameRate));
 
-    // Compute the center coordinate
-    center = PrecisionComplex(location.real, location.imag);
-
     // Compute the distance between two pixels on the complex plane
     mpfPixelDeltaX = mpfPixelDeltaY = mpf_class(4.0) / location.zoom / drillmap.height;
     pixelDeltaX = pixelDeltaY = mpfPixelDeltaY;
+
+    // Derive coordinates
+    center = PrecisionComplex(location.real, location.imag);
+    auto x0y0 = Coord::ul(*this).translate(*this);
+    auto x1y1 = Coord::lr(*this).translate(*this);
+    x0 = x0y0.re;
+    y0 = x0y0.im;
+    x1 = x1y1.re;
+    y1 = x1y1.im;
 }
 
 }

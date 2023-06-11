@@ -15,6 +15,30 @@
 namespace dd {
 
 Coord
+Coord::ul(const struct Options &opt)
+{
+    return Coord(0L, 0L);
+}
+
+Coord
+Coord::ur(const struct Options &opt)
+{
+    return Coord(opt.drillmap.width - 1, 0);
+}
+
+Coord
+Coord::ll(const struct Options &opt)
+{
+    return Coord(0, opt.drillmap.height - 1);
+}
+
+Coord
+Coord::lr(const struct Options &opt)
+{
+    return Coord(opt.drillmap.width - 1, opt.drillmap.height - 1);
+}
+
+Coord
 Coord::center(const Options &opt)
 {
     return Coord(opt.drillmap.width / 2, opt.drillmap.height / 2);

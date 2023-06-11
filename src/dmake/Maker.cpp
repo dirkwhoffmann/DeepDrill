@@ -79,7 +79,7 @@ Maker::generateProjectFile(vector <string> &skipped)
     // Write sections
     writeLocationSection(os);
     writeMapSection(os);
-    writeImageSection(os, opt.image.width, opt.image.height);
+    writeImageSection(os);
     writeColorsSection(os);
     writeVideoSection(os);
 }
@@ -124,10 +124,6 @@ Maker::generateProfile(vector <string> &skipped)
 {
     ProgressIndicator progress("Generating profile");
 
-    // Size of thumbnail images
-    static constexpr isize thumbWidth = 320;
-    static constexpr isize thumbHeight = 200;
-
     // Assemble path name
     auto name = project + ".prf";
     auto path = projectDir / name;
@@ -141,7 +137,7 @@ Maker::generateProfile(vector <string> &skipped)
     // Write sections
     writeHeader(os);
     writeMapSection(os);
-    writeImageSection(os, thumbWidth, thumbHeight);
+    writePreviewImageSection(os);
     writeColorsSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
@@ -167,11 +163,22 @@ Maker::writeMapSection(std::ofstream &os)
 }
 
 void
-Maker::writeImageSection(std::ofstream &os, isize width, isize height)
+Maker::writeImageSection(std::ofstream &os)
 {
     os << "[image]" << std::endl;
-    os << "width = " << width << std::endl;
-    os << "height = " << height << std::endl;
+    os << "width = " << opt.image.width << std::endl;
+    os << "height = " << opt.image.height << std::endl;
+    os << "illuminator = " << opt.image.illuminator << std::endl;
+    os << "scaler = " << opt.image.scaler << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writePreviewImageSection(std::ofstream &os)
+{
+    os << "[image]" << std::endl;
+    os << "width = 320    # Preview image width" << std::endl;
+    os << "height = 200   # Preview image height" << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;

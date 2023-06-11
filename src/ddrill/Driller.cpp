@@ -37,6 +37,10 @@ Driller::drill()
         log::cout << log::vspace;
         log::cout << log::ralign("Center: ");
         log::cout << opt.center << log::endl;
+        log::cout << log::ralign("Upper left: (");
+        log::cout << opt.x0.get_d() << "," << opt.y0.get_d() << ")" << log::endl;
+        log::cout << log::ralign("Lower right: (");
+        log::cout << opt.x1.get_d() << "," << opt.y1.get_d() << ")" << log::endl;
         log::cout << log::ralign("Magnification: ");
         log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Map size: ");
