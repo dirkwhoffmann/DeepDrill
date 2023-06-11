@@ -103,6 +103,14 @@ DeepDrill::parseArguments(int argc, char *argv[])
     while (optind < argc) {
         opt.files.inputs.push_back(argv[optind++]);
     }
+
+    // Add default outputs if none are given
+    if (opt.files.outputs.empty() && !opt.files.inputs.empty()) {
+
+        auto name = stripSuffix(opt.files.inputs.front());
+        opt.files.outputs.push_back(name + ".map");
+        opt.files.outputs.push_back(name + ".jpg");
+    }
 }
 
 void

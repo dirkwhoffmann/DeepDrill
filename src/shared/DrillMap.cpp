@@ -376,7 +376,7 @@ DrillMap::save(std::ostream &os)
     bool saveIterations = true;
     bool saveLognorms = true;
     bool saveDerivatives = false;
-    bool saveNormals = true;
+    bool saveNormals = opt.drillmap.depth == 1;
 
     {
         ProgressIndicator progress("Saving map file");

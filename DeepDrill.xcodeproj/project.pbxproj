@@ -119,7 +119,6 @@
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5047B4E129F812F700AC38DC /* Palette.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
 		5047B4E229F812F700AC38DC /* Palette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
-		5047B4E529F82D4500AC38DC /* base.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = base.loc; sourceTree = "<group>"; };
 		5047B4E629F8EFE800AC38DC /* ultrafrac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ultrafrac.png; sourceTree = "<group>"; };
 		5047B4E729F9623500AC38DC /* candy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = candy.png; sourceTree = "<group>"; };
 		5047B4E829F9624100AC38DC /* dolomiti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dolomiti.png; sourceTree = "<group>"; };
@@ -153,7 +152,6 @@
 		5071221B2A3101AA0013E655 /* normalmap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.glsl; sourceTree = "<group>"; };
 		5071221C2A31AB260013E655 /* 8K.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 8K.prf; sourceTree = "<group>"; };
 		5071221D2A31AD400013E655 /* 3D.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 3D.prf; sourceTree = "<group>"; };
-		5071221E2A31B05F0013E655 /* newtutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = newtutorial.loc; sourceTree = "<group>"; };
 		507122202A31CF830013E655 /* seahorse1.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse1.loc; sourceTree = "<group>"; };
 		507122212A31CF990013E655 /* seahorse2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse2.loc; sourceTree = "<group>"; };
 		507122222A31D09C0013E655 /* top.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = top.loc; sourceTree = "<group>"; };
@@ -162,6 +160,41 @@
 		507122282A3386DE0013E655 /* relief.prf */ = {isa = PBXFileReference; lastKnownFileType = text; path = relief.prf; sourceTree = "<group>"; };
 		507122292A34A0DC0013E655 /* nice.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = nice.loc; sourceTree = "<group>"; };
 		5071222A2A34BB650013E655 /* nice2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = nice2.loc; sourceTree = "<group>"; };
+		5071222B2A35ABA50013E655 /* adventurous_forest.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = adventurous_forest.loc; sourceTree = "<group>"; };
+		5071222C2A35ACF00013E655 /* all_seeing_eye.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = all_seeing_eye.loc; sourceTree = "<group>"; };
+		5071222D2A35AE880013E655 /* e1000.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1000.loc; sourceTree = "<group>"; };
+		5071222E2A35AF4D0013E655 /* e1016.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1016.loc; sourceTree = "<group>"; };
+		5071222F2A35AFAF0013E655 /* e1086.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1086.loc; sourceTree = "<group>"; };
+		507122302A35AFEA0013E655 /* e1121.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1121.loc; sourceTree = "<group>"; };
+		507122312A35B0220013E655 /* e113.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e113.loc; sourceTree = "<group>"; };
+		507122322A35B05D0013E655 /* e1200.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1200.loc; sourceTree = "<group>"; };
+		507122332A35B0BA0013E655 /* e1298.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e1298.loc; sourceTree = "<group>"; };
+		507122342A35BC920013E655 /* e50.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e50.loc; sourceTree = "<group>"; };
+		507122352A35BCD30013E655 /* e533.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e533.loc; sourceTree = "<group>"; };
+		507122362A35BD230013E655 /* e634.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e634.loc; sourceTree = "<group>"; };
+		507122372A35BD560013E655 /* e8000.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e8000.loc; sourceTree = "<group>"; };
+		507122382A35BD950013E655 /* e890.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = e890.loc; sourceTree = "<group>"; };
+		507122392A35BE7B0013E655 /* glitch_test_7.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = glitch_test_7.loc; sourceTree = "<group>"; };
+		5071223A2A35BEBF0013E655 /* heaven.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = heaven.loc; sourceTree = "<group>"; };
+		5071223B2A35C0D40013E655 /* magic.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = magic.loc; sourceTree = "<group>"; };
+		5071223C2A35C1070013E655 /* mitosis.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = mitosis.loc; sourceTree = "<group>"; };
+		5071223D2A35C16D0013E655 /* mitosis2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = mitosis2.loc; sourceTree = "<group>"; };
+		5071223E2A35C1B70013E655 /* nr_fail.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = nr_fail.loc; sourceTree = "<group>"; };
+		5071223F2A35C2700013E655 /* rug.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = rug.loc; sourceTree = "<group>"; };
+		507122402A35C2E50013E655 /* spiral.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = spiral.loc; sourceTree = "<group>"; };
+		507122412A35C3B80013E655 /* ssssss.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = ssssss.loc; sourceTree = "<group>"; };
+		507122422A35C43F0013E655 /* test.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.loc; sourceTree = "<group>"; };
+		507122432A35C4700013E655 /* test2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.loc; sourceTree = "<group>"; };
+		507122442A35C49C0013E655 /* test3.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = test3.loc; sourceTree = "<group>"; };
+		507122452A35C4CB0013E655 /* test4.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = test4.loc; sourceTree = "<group>"; };
+		507122462A35C50A0013E655 /* test5.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = test5.loc; sourceTree = "<group>"; };
+		507122472A35C5600013E655 /* test6.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = test6.loc; sourceTree = "<group>"; };
+		507122482A35C5A70013E655 /* the_complexity_of_a_line.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = the_complexity_of_a_line.loc; sourceTree = "<group>"; };
+		507122492A35C6AE0013E655 /* tick_tock.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tick_tock.loc; sourceTree = "<group>"; };
+		5071224A2A35C7220013E655 /* uranium.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = uranium.loc; sourceTree = "<group>"; };
+		5071224B2A35C76F0013E655 /* verstoppertje.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = verstoppertje.loc; sourceTree = "<group>"; };
+		5071224C2A35C7B30013E655 /* virus.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = virus.loc; sourceTree = "<group>"; };
+		5071224D2A35C8A80013E655 /* wfs_extended.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = wfs_extended.loc; sourceTree = "<group>"; };
 		5072FD582A2718BD003DE341 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		5072FD5B2A271DE8003DE341 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5072FD602A271E29003DE341 /* DeepMake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepMake; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -245,7 +278,7 @@
 		50BEC7512694872D00CCDFA8 /* lya.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lya.loc; sourceTree = "<group>"; };
 		50BEC7522694872D00CCDFA8 /* glitch_test_2.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitch_test_2.loc; sourceTree = "<group>"; };
 		50BEC7532694872D00CCDFA8 /* hard.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard.loc; sourceTree = "<group>"; };
-		50BEC7542694872D00CCDFA8 /* 1e14.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1e14.loc; sourceTree = "<group>"; };
+		50BEC7542694872D00CCDFA8 /* e14.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = e14.loc; sourceTree = "<group>"; };
 		50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepDrill.entitlements; sourceTree = "<group>"; };
 		50CF8E4E2694848800887FFC /* DeepDrill */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DeepDrill; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D69A6729E01C6A0025DE0D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -258,9 +291,6 @@
 		50D69A7129E0409E0025DE0D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
 		50D69A7629E2A4630025DE0D /* seahorse3.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse3.loc; sourceTree = "<group>"; };
-		50DA29532A2C876900600EB0 /* tutorial.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial.loc; sourceTree = "<group>"; };
-		50DA29552A2CAE4F00600EB0 /* tutorial2.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial2.loc; sourceTree = "<group>"; };
-		50DA29562A2CC2B900600EB0 /* tutorial3.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = tutorial3.loc; sourceTree = "<group>"; };
 		50DA29572A2CE2B700600EB0 /* Filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		50DA29582A2CE2B700600EB0 /* Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		50EB0D4829EE609400770F31 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -425,14 +455,28 @@
 		50BEC7292694870100CCDFA8 /* locations */ = {
 			isa = PBXGroup;
 			children = (
-				50BEC7542694872D00CCDFA8 /* 1e14.loc */,
 				50BEC7472694872C00CCDFA8 /* 11_dimensions.loc */,
+				5071222B2A35ABA50013E655 /* adventurous_forest.loc */,
+				5071222C2A35ACF00013E655 /* all_seeing_eye.loc */,
 				50BEC7482694872C00CCDFA8 /* dinosaur_fossils.loc */,
-				50BEC74E2694872C00CCDFA8 /* dragon_detail.loc */,
 				50BEC72D2694872900CCDFA8 /* dragon.loc */,
+				50BEC74E2694872C00CCDFA8 /* dragon_detail.loc */,
+				5071222D2A35AE880013E655 /* e1000.loc */,
 				50BEC7442694872B00CCDFA8 /* e10000.loc */,
+				5071222E2A35AF4D0013E655 /* e1016.loc */,
+				5071222F2A35AFAF0013E655 /* e1086.loc */,
+				507122302A35AFEA0013E655 /* e1121.loc */,
+				507122312A35B0220013E655 /* e113.loc */,
+				507122322A35B05D0013E655 /* e1200.loc */,
+				507122332A35B0BA0013E655 /* e1298.loc */,
+				50BEC7542694872D00CCDFA8 /* e14.loc */,
 				50BEC74B2694872C00CCDFA8 /* e22522.loc */,
+				507122342A35BC920013E655 /* e50.loc */,
 				50BEC7452694872B00CCDFA8 /* e52465.loc */,
+				507122352A35BCD30013E655 /* e533.loc */,
+				507122362A35BD230013E655 /* e634.loc */,
+				507122372A35BD560013E655 /* e8000.loc */,
+				507122382A35BD950013E655 /* e890.loc */,
 				50BEC7392694872A00CCDFA8 /* evolution_trees.loc */,
 				50BEC7312694872900CCDFA8 /* flake.loc */,
 				50BEC74F2694872C00CCDFA8 /* floral_fantasy.loc */,
@@ -442,11 +486,17 @@
 				50BEC7462694872C00CCDFA8 /* glitch_test_4.loc */,
 				50BEC7322694872A00CCDFA8 /* glitch_test_5.loc */,
 				50BEC73A2694872A00CCDFA8 /* glitch_test_6.loc */,
+				507122392A35BE7B0013E655 /* glitch_test_7.loc */,
 				50BEC72A2694872900CCDFA8 /* golden_spider.loc */,
 				50BEC7532694872D00CCDFA8 /* hard.loc */,
+				5071223A2A35BEBF0013E655 /* heaven.loc */,
 				50BEC74D2694872C00CCDFA8 /* infinity.loc */,
 				50BEC7372694872A00CCDFA8 /* long.loc */,
 				50BEC7512694872D00CCDFA8 /* lya.loc */,
+				5071223B2A35C0D40013E655 /* magic.loc */,
+				5071223C2A35C1070013E655 /* mitosis.loc */,
+				5071223D2A35C16D0013E655 /* mitosis2.loc */,
+				5071223E2A35C1B70013E655 /* nr_fail.loc */,
 				50BEC7502694872D00CCDFA8 /* olbaid1.loc */,
 				50BEC7402694872B00CCDFA8 /* olbaid2.loc */,
 				50BEC7432694872B00CCDFA8 /* olbaid3.loc */,
@@ -456,22 +506,31 @@
 				50BEC7492694872C00CCDFA8 /* opus2.loc */,
 				50BEC74C2694872C00CCDFA8 /* orion.loc */,
 				50BEC72B2694872900CCDFA8 /* peanuts.loc */,
+				5071223F2A35C2700013E655 /* rug.loc */,
 				50BEC72C2694872900CCDFA8 /* safari.loc */,
 				50BEC72E2694872900CCDFA8 /* seahorse.loc */,
+				507122402A35C2E50013E655 /* spiral.loc */,
+				507122412A35C3B80013E655 /* ssssss.loc */,
 				50BEC7332694872A00CCDFA8 /* super_dense.loc */,
+				507122422A35C43F0013E655 /* test.loc */,
+				507122432A35C4700013E655 /* test2.loc */,
+				507122442A35C49C0013E655 /* test3.loc */,
+				507122452A35C4CB0013E655 /* test4.loc */,
+				507122462A35C50A0013E655 /* test5.loc */,
+				507122472A35C5600013E655 /* test6.loc */,
+				507122482A35C5A70013E655 /* the_complexity_of_a_line.loc */,
 				50BEC73D2694872B00CCDFA8 /* threads_colour.loc */,
+				507122492A35C6AE0013E655 /* tick_tock.loc */,
 				50BEC7342694872A00CCDFA8 /* triangle.loc */,
-				50BEC74A2694872C00CCDFA8 /* wfs_mb.loc */,
+				5071224A2A35C7220013E655 /* uranium.loc */,
+				5071224B2A35C76F0013E655 /* verstoppertje.loc */,
+				5071224C2A35C7B30013E655 /* virus.loc */,
 				50BEC7302694872900CCDFA8 /* wfs.loc */,
 				50BEC73E2694872B00CCDFA8 /* wfs2.loc */,
 				50BEC73C2694872B00CCDFA8 /* wfs4.loc */,
+				5071224D2A35C8A80013E655 /* wfs_extended.loc */,
+				50BEC74A2694872C00CCDFA8 /* wfs_mb.loc */,
 				50BEC7352694872A00CCDFA8 /* x.loc */,
-				5047B4E529F82D4500AC38DC /* base.loc */,
-				50BEC72F2694872900CCDFA8 /* spider.loc */,
-				50DA29532A2C876900600EB0 /* tutorial.loc */,
-				50DA29552A2CAE4F00600EB0 /* tutorial2.loc */,
-				50DA29562A2CC2B900600EB0 /* tutorial3.loc */,
-				5071221E2A31B05F0013E655 /* newtutorial.loc */,
 			);
 			path = locations;
 			sourceTree = "<group>";
@@ -570,6 +629,7 @@
 			isa = PBXGroup;
 			children = (
 				507122222A31D09C0013E655 /* top.loc */,
+				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				507122202A31CF830013E655 /* seahorse1.loc */,
 				507122212A31CF990013E655 /* seahorse2.loc */,
 				50D69A7629E2A4630025DE0D /* seahorse3.loc */,

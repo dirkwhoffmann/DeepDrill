@@ -43,7 +43,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
-    defaults["video.bitrate"] = "4096";
+    defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 
     // Palette keys

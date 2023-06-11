@@ -1,0 +1,8 @@
+# Taken from the Rust fractal core project by Jack Yarndley
+# https://github.com/rust-fractal/rust-fractal-core
+
+[location]
+real = -1.56318556267521478377676605909004280
+imag = 5.42078881950933560642290867713978732e-19
+zoom = 3.602879701896314E16
+depth = 1000
