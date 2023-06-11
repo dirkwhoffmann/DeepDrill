@@ -112,7 +112,7 @@ DeepMake::run()
     auto numFiles = opt.video.keyframes + 3;
     if (opt.video.keyframes > 100) {
 
-        log::cout << numFiles << " will be created. Do you want to proceed [no]? ";
+        log::cout << numFiles << " files will be created. Do you want to proceed [no]? ";
         string line; std::getline(std::cin, line);
 
         if (line != "y" && line != "yes") {

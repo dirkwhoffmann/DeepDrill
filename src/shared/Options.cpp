@@ -361,8 +361,8 @@ Options::derive()
     center = PrecisionComplex(location.real, location.imag);
 
     // Compute the distance between two pixels on the complex plane
-    mpfPixelDelta = mpf_class(4.0) / location.zoom / drillmap.height;
-    pixelDelta = mpfPixelDelta;
+    mpfPixelDeltaX = mpfPixelDeltaY = mpf_class(4.0) / location.zoom / drillmap.height;
+    pixelDeltaX = pixelDeltaY = mpfPixelDeltaY;
 }
 
 }

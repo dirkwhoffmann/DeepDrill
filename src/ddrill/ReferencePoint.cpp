@@ -52,8 +52,8 @@ ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const
     auto dy = other.y - coord.y;
         
     // Compute the delta location on the complex plain
-    auto dxc = opt.pixelDelta * dx;
-    auto dyc = opt.pixelDelta * dy;
+    auto dxc = opt.pixelDeltaX * dx;
+    auto dyc = opt.pixelDeltaY * dy;
      
     auto result = ExtendedComplex(dxc, dyc);
     result.reduce();

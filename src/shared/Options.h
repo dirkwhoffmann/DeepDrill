@@ -189,8 +189,10 @@ struct Options {
     PrecisionComplex center;
 
     // Distance between two adjacent pixels
-    mpf_class mpfPixelDelta;
-    ExtendedDouble pixelDelta;
+    mpf_class mpfPixelDeltaX;
+    mpf_class mpfPixelDeltaY;
+    ExtendedDouble pixelDeltaX;
+    ExtendedDouble pixelDeltaY;
 
     // Video duration in seconds
     isize duration;

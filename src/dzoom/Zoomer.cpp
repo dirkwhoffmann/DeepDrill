@@ -176,9 +176,6 @@ Zoomer::updateLocation(isize nr)
     // Read the next location file if existent
     if (fileExists(name)) {
 
-        auto oldCenter = opt.center;
-        auto oldPixelDelta = opt.mpfPixelDelta;
-
         Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
         opt.derive();
     }

@@ -26,8 +26,8 @@ Coord::translate(const Options &opt) const
     auto c = center(opt);
     
     // Compute the pixel distance to the center
-    auto dx = opt.mpfPixelDelta * (x - c.x);
-    auto dy = opt.mpfPixelDelta * (y - c.y);
+    auto dx = opt.mpfPixelDeltaX * (x - c.x);
+    auto dy = opt.mpfPixelDeltaY * (y - c.y);
 
     return opt.center + PrecisionComplex(dx, dy);
 }
