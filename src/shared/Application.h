@@ -32,6 +32,9 @@ public:
     // Main entry point
     int main(int argc, char *argv[]);
 
+    // Returns a version string
+    static string version();
+
 private:
 
     // Sets up the GMP library

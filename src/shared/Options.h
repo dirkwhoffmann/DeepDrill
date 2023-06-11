@@ -209,9 +209,6 @@ public:
 
     Options(const AssetManager &assets);
 
-    // Returns a version string for this release
-    static string version();
-
 
     //
     // Parsing key-value pairs

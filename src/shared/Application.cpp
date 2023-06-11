@@ -21,7 +21,7 @@ Application::main(int argc, char **argv)
 {
     try {
 
-        log::cout << appName() << " " << Options::version();
+        log::cout << appName() << " " << version();
         log::cout << " - (C)opyright Dirk W. Hoffmann";
         log::cout << log::endl << log::endl;
 
@@ -141,6 +141,15 @@ Application::readProfiles()
         Parser::parse(assets.findAsset(profile),
                       [this](string k, string v) { opt.parse(k,v); });
     }
+}
+
+string
+Application::version()
+{
+    return
+    std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR) +
+    (VER_BETA > 0 ? "b" + std::to_string(VER_BETA) : "") +
+    (releaseBuild ? "" : " [DEBUG BUILD]");
 }
 
 }

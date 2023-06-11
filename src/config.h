@@ -22,7 +22,7 @@
 #define VER_BETA  1
 
 // Uncomment this setting in a release build
-// #define RELEASEBUILD
+#define RELEASEBUILD
 
 
 //

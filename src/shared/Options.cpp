@@ -68,14 +68,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["debug.glitches"] = "no";
 }
 
-string
-Options::version()
-{
-    return
-    std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR) +
-    (VER_BETA > 0 ? "b" + std::to_string(VER_BETA) : "");
-}
-
 void
 Options::parse(string keyvalue)
 {
