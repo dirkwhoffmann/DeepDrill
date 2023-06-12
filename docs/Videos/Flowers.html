@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Debugging the Toolchain &#8212; DeepDrill 2.0</title>
+    <title>Flowers &#8212; DeepDrill 2.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The Mandelbrot Set" href="../Theory/MandelbrotSet.html" />
-    <link rel="prev" title="Computing Zoom Videos" href="ZoomVideos.html" />
+    <link rel="next" title="Configuration Options" href="../References/Options.html" />
+    <link rel="prev" title="X" href="X.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -60,7 +60,7 @@
           </div>
           <div class="title">
             <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
-            <a class="top" href="#">Debugging the Toolchain</a>
+            <a class="top" href="#">Flowers</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="ZoomVideos.html" class="nav-icon previous" title="previous:&#13;Computing Zoom Videos" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="X.html" class="nav-icon previous" title="previous:&#13;X" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="../Theory/MandelbrotSet.html" class="nav-icon next" title="next:&#13;The Mandelbrot Set" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="../References/Options.html" class="nav-icon next" title="next:&#13;Configuration Options" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="ZoomVideos.html" aria-label="Previous topic" >
+      <a class="previous" href="X.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing Zoom Videos
+            X
           </span>
         </div>
       </a>
-      <a class="next" href="../Theory/MandelbrotSet.html" aria-label="Next topic" >
+      <a class="next" href="../References/Options.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            The Mandelbrot Set
+            Configuration Options
           </span>
         </div>
         <div class="icon">
@@ -120,77 +120,35 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="debugging-the-toolchain">
-<h1>Debugging the Toolchain<a class="headerlink" href="#debugging-the-toolchain" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial you will learn how to retrieve debug information while computing still images or videos.</p>
-<section id="generating-verbose-output">
-<h2>Generating Verbose Output<a class="headerlink" href="#generating-verbose-output" title="Permalink to this heading">¶</a></h2>
-<p>The easiest way to retrieve more information about what’s going on during a computation is to specify the <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> (<code class="docutils literal notranslate"><span class="pre">-v</span></code>) option at the command line. E.g., if we repeat the computation of the mandelbrot set we’ve done ealier, we get the following, more informative output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deepdrill</span> <span class="o">-</span><span class="n">v</span> <span class="n">top</span><span class="o">.</span><span class="n">loc</span> <span class="o">-</span><span class="n">o</span> <span class="n">top</span><span class="o">.</span><span class="n">map</span>
+<section class="tex2jax_ignore mathjax_ignore" id="flowers">
+<h1>Flowers<a class="headerlink" href="#flowers" title="Permalink to this heading">¶</a></h1>
+<p>Created with DeepDrill 2.0b1</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dNWzz-BignM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<section id="location-file">
+<h2>Location file<a class="headerlink" href="#location-file" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Taken from the Rust fractal core project by Jack Yarndley</span>
+<span class="c1"># https://github.com/rust-fractal/rust-fractal-core</span>
 
-<span class="n">DeepDrill</span> <span class="mf">2.0</span><span class="n">b1</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
-
-                        <span class="n">Center</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.7</span> <span class="o">+</span> <span class="mi">0</span><span class="n">i</span>
-                 <span class="n">Magnification</span><span class="p">:</span> <span class="mf">0.85</span><span class="n">b1</span>
-                      <span class="n">Map</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1920</span> <span class="n">x</span> <span class="mi">1080</span>
-                    <span class="n">Image</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1920</span> <span class="n">x</span> <span class="mi">1080</span>
-                 <span class="n">GMP</span> <span class="n">Precision</span><span class="p">:</span> <span class="mi">128</span> <span class="n">Bit</span>
-
-<span class="n">Round</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">max</span> <span class="mi">50</span><span class="p">):</span> <span class="mi">2073600</span> <span class="n">points</span>
-
-     <span class="n">Computing</span> <span class="n">reference</span> <span class="n">orbit</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-
-               <span class="n">Reference</span> <span class="n">point</span><span class="p">:</span> <span class="p">(</span><span class="mi">960</span><span class="p">,</span><span class="mi">540</span><span class="p">)</span>
-        <span class="n">Perturbation</span> <span class="n">tolerance</span><span class="p">:</span> <span class="mf">1e-06</span>
-                 <span class="n">Maximum</span> <span class="n">depth</span><span class="p">:</span> <span class="mi">1000</span>
-                  <span class="n">Actual</span> <span class="n">depth</span><span class="p">:</span> <span class="mi">1000</span>
-
-        <span class="n">Computing</span> <span class="n">coefficients</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-         <span class="n">Checking</span> <span class="n">probe</span> <span class="n">points</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-
-                  <span class="n">Coefficients</span><span class="p">:</span> <span class="mi">5</span>
-                     <span class="n">Tolerance</span><span class="p">:</span> <span class="mf">1e-12</span>
-          <span class="n">Skippable</span> <span class="n">iterations</span><span class="p">:</span> <span class="mi">0</span>
-
-        <span class="n">Computing</span> <span class="n">delta</span> <span class="n">orbits</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">6.27</span> <span class="n">sec</span>
-
-                      <span class="n">Glitches</span><span class="p">:</span> <span class="mi">0</span>
-
-               <span class="n">Saving</span> <span class="nb">map</span> <span class="n">file</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.08</span> <span class="n">sec</span>
-
-                      <span class="n">Map</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1920</span> <span class="n">x</span> <span class="mi">1080</span>
-              <span class="n">Iteration</span> <span class="n">counts</span><span class="p">:</span> <span class="n">Saved</span>
-                      <span class="n">Lognorms</span><span class="p">:</span> <span class="n">Saved</span>
-                   <span class="n">Derivatives</span><span class="p">:</span> <span class="n">Not</span> <span class="n">saved</span>
-                       <span class="n">Normals</span><span class="p">:</span> <span class="n">Saved</span>
-
-<span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">6.37</span> <span class="n">sec</span>
+<span class="p">[</span><span class="n">location</span><span class="p">]</span>
+<span class="n">real</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.76910833040747728089230624355777848356006391186234006507787883404189297159859080844234601990886820204375798539711744042815186207867460953613415842432757944592767829349335811233344529101414256593211862449597012320484442182435300186806636928772790198745922046142684209058217860629186666350353426119156588068800663472823306396040025965062872111452567447461778249159612483961826938045120616222919425540724435314735525341255820663672868054494834304368733487681716181154843412847462148699796875704432080579735378707932099259943340496912407404389999999999999999999998</span>
+<span class="n">imag</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.00902068805707261760036093598494762011230558467412386688972791981712911000027307032573465274857726041164197728426795343558667918574806252145218561840172051237592827928284001732546143539590034733383167886737270960837393773203586137673223357330612418801177955434724672703229251690060990669896274784498860242840497701851849033318045752945025236339275315448898727818174162698044355889583608736485127229946909629832632750839622459160046934443901886226621505107842448159935017841941045354364042323342824193503392819832038805610324279071648713679999999999999999999998</span>
+<span class="n">zoom</span> <span class="o">=</span> <span class="mf">4.00000000000E533</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="mi">120000</span>
 </pre></div>
 </div>
 </section>
-<section id="highlighting-glitch-points">
-<h2>Highlighting Glitch Points<a class="headerlink" href="#highlighting-glitch-points" title="Permalink to this heading">¶</a></h2>
-<p>To enable additional debug options, you may pass in profile <code class="docutils literal notranslate"><span class="pre">debug.prf</span></code>. This profile looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">debug</span><span class="p">]</span>
-<span class="n">glitches</span> <span class="o">=</span> <span class="n">yes</span>
+<section id="profile">
+<h2>Profile<a class="headerlink" href="#profile" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="p">[</span><span class="n">colors</span><span class="p">]</span>
+<span class="n">palette</span> <span class="o">=</span> <span class="n">dolomiti</span><span class="o">.</span><span class="n">png</span>
+
+<span class="p">[</span><span class="n">video</span><span class="p">]</span>
+<span class="n">keyframes</span> <span class="o">=</span> <span class="mi">300</span>
 </pre></div>
 </div>
-<p>By using this profile, DeepDrill will colorize all glitch points in red. For more information about glitch points, please refer to the mathematical background section.</p>
-<p>As of the writing of this document, option <code class="docutils literal notranslate"><span class="pre">glitches</span></code> is the only available option in the <code class="docutils literal notranslate"><span class="pre">debug</span></code> section. Other options are likely to come in the future once the tool chain matures.</p>
-</section>
-<section id="debugging-spatial-image-generation">
-<h2>Debugging Spatial Image Generation<a class="headerlink" href="#debugging-spatial-image-generation" title="Permalink to this heading">¶</a></h2>
-<p>To generate 3D effects, DeepDrill computes a normal map internally. This map can be made visible by applying profile <code class="docutils literal notranslate"><span class="pre">normalmap.prf</span></code>. This profile instructs DeepDrill to utilize a special GPU filter which translaties the normal map data into RGB values:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>image<span class="o">]</span>
-<span class="nv">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
-<span class="nv">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>normalmap.glsl
-</pre></div>
-</div>
-<p>Running DeepDrill with this profile results in the following image:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>normalmap.jpg<span class="w"> </span>-p<span class="w"> </span>normalmap.prf<span class="w"> </span>top.loc
-</pre></div>
-</div>
-<p><img alt="Normal Map" src="../_images/normalmap.jpg" /></p>
 </section>
 </section>
 
@@ -212,13 +170,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Debugging the Toolchain</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Colors.html">Colorizing Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/3D.html">Adding 3D Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -227,12 +185,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="FirstFlight.html">First flight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SecondFlight.html">Second flight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fossile.html">Fossile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="X.html">X</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flowers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
@@ -251,22 +209,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="ZoomVideos.html" aria-label="Previous topic" >
+      <a class="previous" href="X.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing Zoom Videos
+            X
           </span>
         </div>
       </a>
-      <a class="next" href="../Theory/MandelbrotSet.html" aria-label="Next topic" >
+      <a class="next" href="../References/Options.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            The Mandelbrot Set
+            Configuration Options
           </span>
         </div>
         <div class="icon">
@@ -279,7 +237,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Tutorials/Debug.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/Videos/Flowers.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

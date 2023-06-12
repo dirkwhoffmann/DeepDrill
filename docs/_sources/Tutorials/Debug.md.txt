@@ -45,7 +45,7 @@ Round 1 (max 50): 2073600 points
                        Normals: Saved
 
 Total time: 6.37 sec
-``
+```
 
 ## Highlighting Glitch Points 
 

@@ -1,6 +1,6 @@
-.. image:: https://dirkwhoffmann.github.io/DeepDrill/images/x-youtube.png
+.. image:: images/youtube-flowers.jpg
    :width: 100 %
-   :target: https://youtu.be/6bk-HDSilGE
+   :target: https://youtu.be/dNWzz-BignM
    :align: center
    :alt: Banner
 
@@ -40,6 +40,7 @@ DeepDrill User's Manual
    Videos/SecondFlight
    Videos/Fossile
    Videos/X
+   Videos/Flowers
 
 .. toctree::
    :maxdepth: 1
