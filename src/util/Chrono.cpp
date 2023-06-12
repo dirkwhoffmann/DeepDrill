@@ -290,14 +290,6 @@ Clock::Clock()
     start = Time::now();
 }
 
-void
-Clock::updateElapsed()
-{
-    auto now = Time::now();
-    if (!paused) elapsed += now - start;
-    start = now;
-}
-
 Time
 Clock::getElapsedTime()
 {
@@ -306,31 +298,34 @@ Clock::getElapsedTime()
 }
 
 Time
-Clock::stop()
+Clock::updateElapsed()
 {
-    updateElapsed();
-    paused = true;
+    auto now = Time::now();
+    if (!paused) elapsed += now - start;
+    start = now;
+
     return elapsed;
 }
 
 Time
-Clock::go()
+Clock::set(bool newPaused)
 {
-    updateElapsed();
-    paused = false;
-    return elapsed;
+    auto result = updateElapsed();
+
+    paused = newPaused;
+
+    return result;
 }
 
 Time
-Clock::restart()
+Clock::set(bool newPaused, Time newStart, Time newElapsed)
 {
-    updateElapsed();
-    auto result = elapsed;
+    auto result = updateElapsed();
 
-    start = Time::now();
-    elapsed = 0;
-    paused = false;
-    
+    start = newStart;
+    elapsed = newElapsed;
+    paused = newPaused;
+
     return result;
 }
 

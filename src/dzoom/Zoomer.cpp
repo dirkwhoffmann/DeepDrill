@@ -60,6 +60,10 @@ Zoomer::launch()
 
         ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
+        updateClock.reset();
+        renderClock.reset();
+        recordClock.reset();
+
         // Process all inbetweens
         for (frame = 0; frame < opt.video.inbetweens; frame++) {
 
@@ -72,12 +76,39 @@ Zoomer::launch()
             }
 
             // Update state
+            updateClock.go();
             update();
+            updateClock.stop();
 
             // Render frame
+            renderClock.go();
             draw();
+            renderClock.stop();
+
+            // Record frame
+            recordClock.go();
+            record();
+            recordClock.stop();
 
             progress.step(1);
+        }
+
+        progress.done();
+
+        if (opt.flags.verbose) {
+
+            log::cout << log::vspace;
+            log::cout << log::ralign("Update: ");
+            log::cout << updateClock.getElapsedTime() << log::endl;
+            log::cout << log::ralign("Render: ");
+            log::cout << renderClock.getElapsedTime() << log::endl;
+
+            if (recordMode) {
+
+                log::cout << log::ralign("Record: ");
+                log::cout << recordClock.getElapsedTime() << log::endl;
+            }
+            log::cout << log::vspace;
         }
     }
 
@@ -115,18 +146,24 @@ Zoomer::update()
 void
 Zoomer::draw()
 {
-    // 1. Colorize
+    // Colorize
     colorizer.draw(drillMap.colorMap, drillMap2.colorMap,
                    (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
-    // 2. Display the result
+    // Display the result
     window.clear();
     window.draw(colorizer.getRect());
     window.display();
+}
 
-    // 3. Record frame
-    if (recordMode) recorder.record(colorizer.getImage());
+void
+Zoomer::record()
+{
+    if (recordMode) {
+
+        recorder.record(colorizer.getImage());
+    }
 }
 
 void
@@ -161,6 +198,7 @@ Zoomer::updateTextures(isize nr)
 void
 Zoomer::updateLocation(isize nr)
 {
+    /*
     fs::path input = opt.files.inputs.front();
     fs::path path = input.parent_path() / input.stem();
     string name = path.string() + "_" + std::to_string(nr + 1) + ".loc";
@@ -179,6 +217,7 @@ Zoomer::updateLocation(isize nr)
         Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
         opt.derive();
     }
+    */
 }
 
 }

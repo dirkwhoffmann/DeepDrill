@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Chrono.h"
 #include "Coord.h"
 #include "Recorder.h"
 #include "Animated.h"
@@ -53,6 +54,11 @@ class Zoomer {
     // Animation parameters
     Animated zoom;
 
+    // Stop watches
+    Clock updateClock;
+    Clock renderClock;
+    Clock recordClock;
+
 public:
 
     // Constructor
@@ -69,6 +75,7 @@ private:
     // Called inside the main loop
     void update();
     void draw();
+    void record();
 
     // Loads a new image file from disk
     void updateTextures(isize nr);

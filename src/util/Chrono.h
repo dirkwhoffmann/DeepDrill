@@ -70,8 +70,6 @@ class Clock {
     
     bool paused = false;
 
-    void updateElapsed();
-
 public:
     
     Clock();
@@ -81,9 +79,16 @@ public:
     bool isPaused() const { return paused; }
     bool isRunning() const { return !paused; }
     
-    Time stop();
-    Time go();
-    Time restart();
+    Time stop() { return set(true); }
+    Time go() { return set(false); }
+    Time reset() { return set(true, Time::now(), 0); }
+    Time restart() { return set(false, Time::now(), 0); }
+
+private:
+
+    Time updateElapsed();
+    Time set(bool newPaused);
+    Time set(bool newPaused, Time newStart, Time newElapsed);
 };
 
 }
