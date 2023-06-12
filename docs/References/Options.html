@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Configuration Options &#8212; DeepDrill 1.1</title>
+    <title>Configuration Options &#8212; DeepDrill 2.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -60,7 +59,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 1.1</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
             <a class="top" href="#">Configuration Options</a>
           </div>
           <div class="buttons">
@@ -128,10 +127,6 @@
 <span class="n">width</span> <span class="o">=</span> <span class="mi">960</span>
 <span class="n">height</span> <span class="o">=</span> <span class="mi">540</span>
 
-<span class="p">[</span><span class="n">video</span><span class="p">]</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mi">480</span>
-<span class="n">height</span> <span class="o">=</span> <span class="mi">270</span>
-
 <span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
 <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
 <span class="n">rounds</span> <span class="o">=</span> <span class="mi">50</span>
@@ -160,28 +155,37 @@
 </li>
 </ul>
 </section>
+<section id="section-map">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[map]</span></code><a class="headerlink" href="#section-map" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p>
+<p>The horizontal resolution of the drill map. If this key is not specified, the drill map’s width will match the image width.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p>
+<p>The vertical resolution of the drill map. If this key is not specified, the drill map’s height will match the image height.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p>
+<p>Possible values are 0 and 1. If set to 1, a normal map will be written to the <code class="docutils literal notranslate"><span class="pre">.map</span></code> file.</p>
+</li>
+</ul>
+</section>
 <section id="section-image">
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[image]</span></code><a class="headerlink" href="#section-image" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p>
-<p>The horizontal image resolution.</p>
+<p>The horizontal resolution of the image.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p>
-<p>The vertical image resolution.</p>
+<p>The vertical resolution of the image.</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">badpixels</span></code></p>
-<p>Percentage of pixels that are allowed to be miscolored.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p>
+<p>Possible values are 0 and 1. If set to 1, a normal map will be utilized to generate a spatial effect.</p>
 </li>
-</ul>
-</section>
-<section id="section-palette">
-<h3>Section <code class="docutils literal notranslate"><span class="pre">[palette]</span></code><a class="headerlink" href="#section-palette" title="Permalink to this heading">¶</a></h3>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">colors</span></code></p>
-<p>Assign this key the path to an image file in order to use a custom color palette. DeepDrill will derive the color palette from the uppermost horizontal line of the image.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">illuminator</span></code></p>
+<p>Path to a GLSL shader. The illumination shader is the first of two GPU shaders. It derives the RGB value for each pixel and applies a lighting model.</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p>
-<p>An optional scaling factor that can be used to stretch or shrink the color palette.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">scaler</span></code></p>
+<p>Path to a GLSL shader. The scaler shader is the second of two GPU shaders. It scales the internal image down to the final image.</p>
 </li>
 </ul>
 </section>
@@ -191,36 +195,70 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">framerate</span></code></p>
 <p>Frames per second of the computed video.</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p>
-<p>Horizontal video resolution. By default, half of the image resolution is used as video resolution. Doing so ensures that keyframes can be scaled without loss of quality.</p>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p>
-<p>Vertical video resolution. By default, half of the image resolution is used as video resolution. Doing so ensures that keyframes can be scaled without loss of quality.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">keyframes</span></code></p>
+<p>Number of keyframes of the final video. If this key is not specified, DeepDrill derives the number of keyframes based on the zoom factor given in the location section.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">inbetweens</span></code></p>
 <p>Number of interpolated frames between two keyframes. By default, this value is assigned twice the frame rate. Consequently, each keyframe is displayed for 2 seconds.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitrate</span></code></p>
+<p>This value is passed to the FFmpeg backend.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scaler</span></code></p>
+<p>If a video is produced, this downscaler is utilized instead of the one specified in the image section.</p>
+</li>
+</ul>
+</section>
+<section id="section-colors">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[colors]</span></code><a class="headerlink" href="#section-colors" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">palette</span></code></p>
+<p>Path to an image file storing the color palette. DeepDrill will derive the color palette from the uppermost horizontal line of the image.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p>
+<p>An optional scaling factor that can be used to stretch or shrink the color palette.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code>, <code class="docutils literal notranslate"><span class="pre">beta</span></code></p>
+<p>These two values define the direction of the light vector. They only take effect if spatial images are computed, i.e., if <code class="docutils literal notranslate"><span class="pre">depth</span></code> is set to 1 in the image section.</p>
 </li>
 </ul>
 </section>
 <section id="section-perturbation">
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[perturbation]</span></code><a class="headerlink" href="#section-perturbation" title="Permalink to this heading">¶</a></h3>
 <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p>
+<p>Indicates if perturbation should be used to calculate the image. If set to false, DeepDrill falls back to the (very slow) standard algorithm.</p>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p>
 <p>This value is used by the perturbation algorithm. Please refer to the “Theory” section for details.</p>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">badpixels</span></code></p>
+<p>Percentage of pixels that are allowed to be miscolored.</p>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rounds</span></code></p>
-<p>This value is used by the perturbation algorithm. Please refer to the “Theory” section for details.</p>
+<p>This value is used by the perturbation algorithm. Please refer to the <em>Theory</em> section for details.</p>
 </li>
 </ul>
 </section>
 <section id="section-approximation">
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[approximation]</span></code><a class="headerlink" href="#section-approximation" title="Permalink to this heading">¶</a></h3>
 <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p>
+<p>Indicates if series approximation should be used to calculate the image. If set to false, the iteration always starts at 0. Please refer to the <em>Theory</em> section for details.</p>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">coefficients</span></code></p>
-<p>This value is used by the series approximation algorithm. Please refer to the “Theory” section for details.</p>
+<p>This value is used by the series approximation algorithm. Please refer to the <em>Theory</em> section for details.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p>
-<p>This value is used by the series approximation algorithm. Please refer to the “Theory” section for details.</p>
+<p>This value is used by the series approximation algorithm. Please refer to the <em>Theory</em> section for details.</p>
+</li>
+</ul>
+</section>
+<section id="section-debug">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[debug]</span></code><a class="headerlink" href="#section-debug" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">glitches</span></code></p>
+<p>if set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, glitch points are highlighted in red in the final image. It’s main purpose is to debug the glitch detection algorithm.</p>
 </li>
 </ul>
 </section>
@@ -249,7 +287,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/Colors.html">Colorizing Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/3D.html">Adding 3D Effects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -307,7 +347,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023, Dirk W. Hoffmann.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../_sources/References/Options.md.txt" rel="nofollow">Show Source</a>.
     </footer>

@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Colorizing Images &#8212; DeepDrill 1.1</title>
+    <title>Colorizing Images &#8212; DeepDrill 2.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -18,7 +17,7 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Computing Zoom Videos" href="ZoomVideos.html" />
+    <link rel="next" title="Adding 3D Effects" href="3D.html" />
     <link rel="prev" title="Computing Still Images" href="StillImages.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,7 +59,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 1.1</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
             <a class="top" href="#">Colorizing Images</a>
           </div>
           <div class="buttons">
@@ -86,7 +85,7 @@
       <a href="StillImages.html" class="nav-icon previous" title="previous:&#13;Computing Still Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="ZoomVideos.html" class="nav-icon next" title="next:&#13;Computing Zoom Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="3D.html" class="nav-icon next" title="next:&#13;Adding 3D Effects" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
@@ -103,11 +102,11 @@
           </span>
         </div>
       </a>
-      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
+      <a class="next" href="3D.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing Zoom Videos
+            Adding 3D Effects
           </span>
         </div>
         <div class="icon">
@@ -124,21 +123,15 @@
 <section class="tex2jax_ignore mathjax_ignore" id="colorizing-images">
 <h1>Colorizing Images<a class="headerlink" href="#colorizing-images" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial you will learn how to recolor images.</p>
-<p>By default, DeepDrill creates images with a predefined color palette and other standard settings. Settings can be altered by specifying one or more profiles (<code class="docutils literal notranslate"><span class="pre">.prf</span></code> files) at the command line.</p>
-<p>To create our example image with different colors, we setup a custom profile named <code class="docutils literal notranslate"><span class="pre">colors.prf</span></code> with the following content:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">palette</span><span class="p">]</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">vulcano</span><span class="o">.</span><span class="n">png</span>
-<span class="n">scale</span> <span class="o">=</span> <span class="mf">1.75</span>
+<p>By default, images are created with a predefined color palette. To following call instructs DeepDrill to apply different coloring:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>image.map<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>vulcano.png<span class="w"> </span>-c<span class="w"> </span>colors.scale<span class="o">=</span><span class="m">3</span>.0<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>
 </pre></div>
 </div>
-<p>The first key specifies the color pattern. The second key is a scaling factor that determines how fast the color pattern repeats.</p>
-<p>In the next step, we instruct DeepDrill to create a png image from the map file generated in the previous tutorial. Our custom profile is passed to DeepDrill with the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>spider.png<span class="w"> </span>-p<span class="w"> </span>colors.prf<span class="w"> </span>spider.map
-</pre></div>
-</div>
-<p>Now, the image is now created in the following form:</p>
-<p><img alt="DeepDrill Cover Image" src="../_images/spider-vulcano.png" /></p>
-<p>As you have seen above, the color palette is specified in the form of an image file. For simplicity, there are no restrictions on the format of the image. DeepDrill composes the color palette from the pixels of the first horizontal line. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images will result in slightly smoother color transitions.</p>
+<p>This results in the following image:</p>
+<p><img alt="Recolored Mandelbrot set" src="../_images/recolored1.jpg" /></p>
+<p>As it was shown above, the color palette is specified in the form of an image file. For simplicity, there are no restrictions on the format of the image. DeepDrill composes the color palette from the pixels of the first horizontal line. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images will result in slightly smoother color transitions.</p>
+<p>In addition, DeepDrill provides a key called <code class="docutils literal notranslate"><span class="pre">colors.scale</span></code> which controls how fast the palette repeats. The following examples shows the effect:</p>
+<p><img alt="Recolored Mandelbrot set" src="../_images/recolored2.jpg" /></p>
 <section id="predefined-palettes">
 <h2>Predefined palettes<a class="headerlink" href="#predefined-palettes" title="Permalink to this heading">¶</a></h2>
 <p>DeepDrill offers the following predefined color palettes:</p>
@@ -164,6 +157,23 @@
 <img alt="ultrafrac palette" src="../_images/ultrafrac.png" /></p>
 <p><em>vulcano</em>
 <img alt="vulcano palette" src="../_images/vulcano.png" /></p>
+<p>The following example show a recolored version of one the images that were computed in the previous tutorial.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.loc<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-o<span class="w"> </span>seahorse1.map<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>ruby.png
+</pre></div>
+</div>
+<p><img alt="prism recolored" src="../_images/recolored3.jpg" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>lindor.png
+</pre></div>
+</div>
+<p><img alt="prism recolored" src="../_images/recolored4.jpg" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>dolomiti.png
+</pre></div>
+</div>
+<p><img alt="prism recolored" src="../_images/recolored5.jpg" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>ice.png
+</pre></div>
+</div>
+<p><img alt="prism recolored" src="../_images/recolored6.jpg" /></p>
 </section>
 </section>
 
@@ -189,7 +199,9 @@
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Colorizing Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -232,11 +244,11 @@
           </span>
         </div>
       </a>
-      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
+      <a class="next" href="3D.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing Zoom Videos
+            Adding 3D Effects
           </span>
         </div>
         <div class="icon">
@@ -247,7 +259,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023, Dirk W. Hoffmann.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../_sources/Tutorials/Colors.md.txt" rel="nofollow">Show Source</a>.
     </footer>

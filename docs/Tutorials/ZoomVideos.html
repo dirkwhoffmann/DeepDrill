@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Computing Zoom Videos &#8212; DeepDrill 1.1</title>
+    <title>Computing Zoom Videos &#8212; DeepDrill 2.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -18,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The Mandelbrot Set" href="../Theory/MandelbrotSet.html" />
-    <link rel="prev" title="Colorizing Images" href="Colors.html" />
+    <link rel="next" title="Debugging the Toolchain" href="Debug.html" />
+    <link rel="prev" title="Adding 3D Effects" href="3D.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -60,7 +59,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 1.1</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
             <a class="top" href="#">Computing Zoom Videos</a>
           </div>
           <div class="buttons">
@@ -83,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="Colors.html" class="nav-icon previous" title="previous:&#13;Colorizing Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="3D.html" class="nav-icon previous" title="previous:&#13;Adding 3D Effects" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="../Theory/MandelbrotSet.html" class="nav-icon next" title="next:&#13;The Mandelbrot Set" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Debug.html" class="nav-icon next" title="next:&#13;Debugging the Toolchain" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Colors.html" aria-label="Previous topic" >
+      <a class="previous" href="3D.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Colorizing Images
+            Adding 3D Effects
           </span>
         </div>
       </a>
-      <a class="next" href="../Theory/MandelbrotSet.html" aria-label="Next topic" >
+      <a class="next" href="Debug.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            The Mandelbrot Set
+            Debugging the Toolchain
           </span>
         </div>
         <div class="icon">
@@ -124,49 +123,43 @@
 <section class="tex2jax_ignore mathjax_ignore" id="computing-zoom-videos">
 <h1>Computing Zoom Videos<a class="headerlink" href="#computing-zoom-videos" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial, you’ll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following  video which is available on Youtube:</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ph3vJASDVaE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-</iframe>
-<p>Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, DeepDrill is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images. In the last phase, DeepFlight is utilized to assemble the final video by calculating intermediate frames.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ayc5bE9nmTA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<p>Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, <code class="docutils literal notranslate"><span class="pre">deepmake</span></code> is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images via seperate invocations to <code class="docutils literal notranslate"><span class="pre">deepdrill</span></code>. In the last phase, <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code> is executed to assemble the final video by calculating intermediate frames.</p>
 <section id="setting-up-the-workflow">
-<h2>Setting up the workflow<a class="headerlink" href="#setting-up-the-workflow" title="Permalink to this heading">¶</a></h2>
+<h2>Setting Up the Workflow<a class="headerlink" href="#setting-up-the-workflow" title="Permalink to this heading">¶</a></h2>
 <p>Out first task is to create an empty project directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>project
 </pre></div>
 </div>
-<p>To set up a workflow in this directory, we start DeepDrill with the <code class="docutils literal notranslate"><span class="pre">-m</span></code> option:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-m<span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>spider.loc
+<p>To set up a workflow in this directory, we launch <code class="docutils literal notranslate"><span class="pre">deepmake</span></code> with the following options:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepmake<span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>spider.loc
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeepDrill</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeepMake</span> <span class="mf">2.0</span><span class="n">b1</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
 
-     <span class="n">Generating</span> <span class="n">project</span> <span class="n">file</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-   <span class="n">Generating</span> <span class="n">location</span> <span class="n">files</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.04</span> <span class="n">sec</span>
-          <span class="n">Generating</span> <span class="n">profile</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-         <span class="n">Generating</span> <span class="n">Makefile</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+       <span class="n">Generating</span> <span class="n">project</span> <span class="n">file</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+  <span class="n">Generating</span> <span class="mi">75</span> <span class="n">location</span> <span class="n">files</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+            <span class="n">Generating</span> <span class="n">profile</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+           <span class="n">Generating</span> <span class="n">Makefile</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
 
-<span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.05</span> <span class="n">sec</span>
+<span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.01</span> <span class="n">sec</span>
 </pre></div>
 </div>
-<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">spider.prf</span></code> before setting up the workflow. Besides others, this profile defines the following keys:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mi">3840</span>
-<span class="n">height</span> <span class="o">=</span> <span class="mi">2160</span>
-
-<span class="p">[</span><span class="n">video</span><span class="p">]</span>
+<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">spider.prf</span></code> before setting up the workflow. This profile defines the following keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">video</span><span class="p">]</span>
 <span class="n">keyframes</span> <span class="o">=</span> <span class="mi">75</span>
 <span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">143</span>
 <span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
 </pre></div>
 </div>
-<p>The first two keys specify the resolution of the keyframe images. The resolution of the generated video will be half the size. Hence, a video with a standard HD resolution of 1920 x 1080 pixels will be produced.</p>
-<p>The next key specifies the number of keyframes to calculate, and the third key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes.</p>
+<p>The first key specifies the number of keyframes to calculate, and the second key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes.</p>
 <p>Let’s take a closer look at the files DeepDrill created in the project directory:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">spider.prj</span></code>
 This file contains several key-value pairs which will be picked up later by <code class="docutils literal notranslate"><span class="pre">deepflight</span></code> to assemble the final video.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">spider.prf</span></code>
 This profile is used for calculating keyframes. It is composed out of the profiles that were passed in as command line arguments when the workflow was set up.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">spider_0.loc</span></code> to <code class="docutils literal notranslate"><span class="pre">spider_74.loc</span></code>
+<li><p><code class="docutils literal notranslate"><span class="pre">spider_0.loc</span></code> to <code class="docutils literal notranslate"><span class="pre">spider_75.loc</span></code>
 These position files contain the coordinates and zoom factors for each keyframe.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Makefile</span></code>
 This is a standard Makefile that automatically calculates all keyframe images. In the next section we will take a closer look at its contents.</p></li>
@@ -175,56 +168,48 @@ This is a standard Makefile that automatically calculates all keyframe images. I
 <section id="computing-all-keyframes">
 <h2>Computing all keyframes<a class="headerlink" href="#computing-all-keyframes" title="Permalink to this heading">¶</a></h2>
 <p>For our tutorial project, DeepDrill has created the following Makefile:</p>
-<div class="highlight-Make notranslate"><div class="highlight"><pre><span></span><span class="nv">DEEPDRILL</span><span class="w">  </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepdrill
-<span class="nv">DEEPFLIGHT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepflight
+<div class="highlight-Make notranslate"><div class="highlight"><pre><span></span><span class="c"># Generated by DeepDrill 2.0b1 on Fri Jun  9 06:57:53 2023</span>
+<span class="c"># </span>
+<span class="c"># Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de</span>
+<span class="c"># Licensed under the GNU General Public License v3</span>
+
+<span class="nv">DEEPDRILL</span><span class="w">  </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepdrill
+<span class="nv">DEEPZOOM</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepzoom
 <span class="nv">MAPS</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span>%.loc,%.map,<span class="k">$(</span>wildcard<span class="w"> </span>*_*.loc<span class="k">))</span>
-<span class="nv">IMAGES</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span>%.loc,%.png,<span class="k">$(</span>wildcard<span class="w"> </span>*_*.loc<span class="k">))</span>
 <span class="nv">VIDEO</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>spider.mov
-<span class="nv">NUM_IMAGES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>words<span class="w"> </span><span class="k">$(</span>IMAGES<span class="k">))</span>
 <span class="nv">MAPFLAGS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-b
-<span class="nv">PNGFLAGS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-b
 
-<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">maps</span> <span class="n">images</span> <span class="n">clean</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">maps</span> <span class="n">clean</span>
 
-<span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="n">images</span>
+<span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="n">maps</span>
 
 <span class="nf">maps</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">MAPS</span><span class="k">)</span>
 
-<span class="nf">images</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">IMAGES</span><span class="k">)</span> <span class="n">maps</span>
-
 <span class="nf">%.map</span><span class="o">:</span><span class="w"> </span>%.<span class="n">loc</span>
-<span class="w">        </span>@<span class="k">$(</span>DEEPDRILL<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MAPFLAGS<span class="k">)</span><span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.map<span class="w"> </span><span class="nv">$*</span>.loc<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$*</span>.log
-
-<span class="nf">%.png</span><span class="o">:</span><span class="w"> </span>%.<span class="n">map</span>
-<span class="w">        </span>@<span class="k">$(</span>DEEPDRILL<span class="k">)</span><span class="w"> </span><span class="k">$(</span>PNGFLAGS<span class="k">)</span><span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.png<span class="w"> </span><span class="nv">$*</span>.map<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+<span class="w">  </span>@<span class="k">$(</span>DEEPDRILL<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MAPFLAGS<span class="k">)</span><span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.map<span class="w"> </span>-o<span class="w"> </span><span class="nv">$*</span>.jpg<span class="w"> </span><span class="nv">$*</span>.loc<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$*</span>.log
 
 <span class="nf">$(VIDEO)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">IMAGES</span><span class="k">)</span>
-<span class="w">        </span>@<span class="k">$(</span>DEEPFLIGHT<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MOVFLAGS<span class="k">)</span><span class="w"> </span>spider.prj<span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>VIDEO<span class="k">)</span>
+<span class="w">  </span>@<span class="k">$(</span>DEEPZOOM<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MOVFLAGS<span class="k">)</span><span class="w"> </span>spider.prj<span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>VIDEO<span class="k">)</span>
+
 <span class="nf">clean</span><span class="o">:</span>
-<span class="w">        </span>rm<span class="w"> </span>*.mov<span class="w"> </span>*.map<span class="w"> </span>*.png<span class="w"> </span>*.log
+<span class="w">  </span>rm<span class="w"> </span>*.mov<span class="w"> </span>*.map<span class="w"> </span>*.png<span class="w"> </span>*.log
 </pre></div>
 </div>
-<p>The Makefile defines two major goals: One is to create the map files from the location files and the other is to convert the map files into images. To create the images, we simply change to the project directory and run the Make utility:</p>
+<p>The Makefile defines two major goals: One is to create the map files from the location files and the other one is to compose the final video. To create all map files, we change to the project directory and run the Make utility:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>project
-make<span class="w"> </span>-j
+make<span class="w"> </span>-j4
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option is optional. If it is specified, the Make utility runs several jobs in parallel, which significantly reduces total calculation time.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option instructs Make to run multiple jobs in parallel, four jobs in this case. Although this option is not mandatory, its use is strongly recommended as it significantly reduces the overall computation time.</p>
 <p>Depending on the performance of your machine, it may take a while to calculate all images. After successful completion, the project directory contains a map file and an image file for each keyframe.</p>
 </section>
 <section id="assembling-the-zoom-video">
-<h2>Assembling the zoom video<a class="headerlink" href="#assembling-the-zoom-video" title="Permalink to this heading">¶</a></h2>
+<h2>Assembling the Zoom Video<a class="headerlink" href="#assembling-the-zoom-video" title="Permalink to this heading">¶</a></h2>
 <p>The final step is to combine all the keyframes into a zoom video by calling <code class="docutils literal notranslate"><span class="pre">make</span></code> with the <code class="docutils literal notranslate"><span class="pre">spider.mov</span></code> target as argument:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>spider.mov<span class="w"> </span>
 </pre></div>
 </div>
-<p>This target executes a separate tool called <code class="docutils literal notranslate"><span class="pre">deepflight</span></code> which stiches together all previously computed keyframes. After completion, the file `spider.mov was created, which contains the final video:
-<a class="reference external" href="https://www.youtube.com/watch?v=Ph3vJASDVaE"><img alt="Youtube screenshot" src="../_images/spider-youtube.png" /></a></p>
-</section>
-<section id="creating-the-second-video">
-<h2>Creating the second video<a class="headerlink" href="#creating-the-second-video" title="Permalink to this heading">¶</a></h2>
-<p>The second tutorial video can be created with the same workflow. You’ll find the corresponding location file in <code class="docutils literal notranslate"><span class="pre">tutorial/infinity.loc</span></code> and a predefined profile in <code class="docutils literal notranslate"><span class="pre">tutorial/infinity.prf</span></code>. The second video is about three times as long as the first one and many keyframes need more computation time. On an avarage machine, it may take a few hours to create the entire video.</p>
-<p><a class="reference external" href="https://www.youtube.com/watch?v=OcXcHgwJ33g"><img alt="Youtube screenshot" src="../_images/infinity-youtube.png" /></a></p>
+<p>This target executes a separate tool called <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code> which stiches together all previously computed keyframes. After completion, file <code class="docutils literal notranslate"><span class="pre">spider.mov</span></code> will be created, which contains the final video.</p>
 </section>
 </section>
 
@@ -250,7 +235,9 @@ make<span class="w"> </span>-j
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -282,22 +269,22 @@ make<span class="w"> </span>-j
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Colors.html" aria-label="Previous topic" >
+      <a class="previous" href="3D.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Colorizing Images
+            Adding 3D Effects
           </span>
         </div>
       </a>
-      <a class="next" href="../Theory/MandelbrotSet.html" aria-label="Next topic" >
+      <a class="next" href="Debug.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            The Mandelbrot Set
+            Debugging the Toolchain
           </span>
         </div>
         <div class="icon">
@@ -308,7 +295,7 @@ make<span class="w"> </span>-j
 
     <footer role="contentinfo">
       &#169; Copyright 2023, Dirk W. Hoffmann.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../_sources/Tutorials/ZoomVideos.md.txt" rel="nofollow">Show Source</a>.
     </footer>

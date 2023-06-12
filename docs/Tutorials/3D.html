@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Series Approximation &#8212; DeepDrill 2.0</title>
+    <title>Adding 3D Effects &#8212; DeepDrill 2.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -13,14 +13,12 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script defer src="../_static/insipid.js"></script>
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="First flight" href="../Videos/FirstFlight.html" />
-    <link rel="prev" title="Perturbation Theory" href="Perturbation.html" />
+    <link rel="next" title="Computing Zoom Videos" href="ZoomVideos.html" />
+    <link rel="prev" title="Colorizing Images" href="Colors.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -62,7 +60,7 @@
           </div>
           <div class="title">
             <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
-            <a class="top" href="#">Series Approximation</a>
+            <a class="top" href="#">Adding 3D Effects</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -84,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="Perturbation.html" class="nav-icon previous" title="previous:&#13;Perturbation Theory" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="Colors.html" class="nav-icon previous" title="previous:&#13;Colorizing Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="../Videos/FirstFlight.html" class="nav-icon next" title="next:&#13;First flight" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="ZoomVideos.html" class="nav-icon next" title="next:&#13;Computing Zoom Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Perturbation.html" aria-label="Previous topic" >
+      <a class="previous" href="Colors.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Perturbation Theory
+            Colorizing Images
           </span>
         </div>
       </a>
-      <a class="next" href="../Videos/FirstFlight.html" aria-label="Next topic" >
+      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            First flight
+            Computing Zoom Videos
           </span>
         </div>
         <div class="icon">
@@ -122,62 +120,39 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="series-approximation">
-<h1>Series Approximation<a class="headerlink" href="#series-approximation" title="Permalink to this heading">¶</a></h1>
-<p>The basic idea of series approximation is to express the delta quantity <span class="math notranslate nohighlight">\(\Delta_n\)</span> in form of an infinite series that can be used to quickly approximate <span class="math notranslate nohighlight">\(\Delta_n\)</span> by evaluating a limited number of initial terms. If the approximation turns out to be sufficiently accurate for large <span class="math notranslate nohighlight">\(n\)</span>, a considerable speed up can be achieved, because it is then no longer necessary to compute <span class="math notranslate nohighlight">\(\Delta_n\)</span> by iteration.</p>
-<p>In the example of K. I. Martin the series is composed out of three initial terms and a residual term. Writing <span class="math notranslate nohighlight">\(\delta\)</span> for <span class="math notranslate nohighlight">\(\Delta_0\)</span> Martin’s equation looks like this:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\Delta_n = A_n \delta + B_n \delta^2 + C_n \delta^3 + \text{o}(\delta^4)
-\end{align*}\]</div>
-<p>In generalized terms, this series can be written down like so:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\Delta_n = a_{1,n} \delta + a_{2,n} \delta^2 + a_{3,n} \delta^3 + \ldots + a_{k,n} \delta^k + \text{o}(\delta^{k+1}) \tag{1} 
-\end{align*}\]</div>
-<p>If the residual term <span class="math notranslate nohighlight">\(\text{o}(\delta^{k+1})\)</span> is sufficiently small, this formula can be utilized to approximate <span class="math notranslate nohighlight">\(\Delta_n\)</span>:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\Delta_n \approx a_{1,n} \delta + a_{2,n} \delta^2 + a_{3,n} \delta^3 + \ldots + a_{k,n} \delta^k \tag{2}
-\end{align*}\]</div>
-<p>In practice, this approach works very well in many cases: The residual term often remains small for substantial time until it exceeds a given error threshold. In such a case, we can speed up the computation of a delta orbit by skipping a large initial segment. This means that instead of computing</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\Delta_0, \Delta_1, \Delta_2, \ldots
-\end{align*}\]</div>
-<p>the series</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\Delta_m, \Delta_{m+1}, \Delta_{m+2}, \ldots \tag{3}
-\end{align*}\]</div>
-<p>is computed where <span class="math notranslate nohighlight">\(m\)</span> denotes the largest value of <span class="math notranslate nohighlight">\(n\)</span> for which <span class="math notranslate nohighlight">\((2)\)</span> is sufficiently accurate. In many cases, a large enough initial piece can be skipped that only a small fraction of the iterations need be performed that would have been necessary without series approximation.</p>
-<p>For applying series approximation in practice, we need determine up to which value equation (<span class="math notranslate nohighlight">\(2\)</span>) is sufficiently accurate. The common solution is to use a certain set of <em>probe points</em>. For each of these points, the delta orbit is generated by iteration and compared to the values obtained by series approximation. If the relative error exceeds a certain threshold, calculation is aborted. The test point which exceeds the error threshold first, defines the value of <span class="math notranslate nohighlight">\(m\)</span> in equation <span class="math notranslate nohighlight">\((3)\)</span>.</p>
-<p>We are missing one last piece of the puzzle. So far, we have dealt with <span class="math notranslate nohighlight">\((1)\)</span> as an abstract formula, assuming that the coefficients <span class="math notranslate nohighlight">\(a_{1,n}, a_{2,n}, a_{3,n} \ldots\)</span> have already been calculated. We still need to find a way to calculate these coefficients. <span class="math notranslate nohighlight">\(n = 0\)</span> is the easy case. Substituting <span class="math notranslate nohighlight">\(n\)</span> by <span class="math notranslate nohighlight">\(0\)</span> in <span class="math notranslate nohighlight">\((1)\)</span> reveals:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-a_{1,n} &amp;= 1 \nonumber \\
-a_{j,n} &amp;= 0 \;\;\text{for}\;\; j \geq 2 \nonumber
-\end{align*}\]</div>
-<p>For <span class="math notranslate nohighlight">\(n \geq 1\)</span> we find the answer by applying the delta iteration scheme to:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\Delta_n = \sum_{j = 1}^{k} a_{j,n} \delta^j
-\end{align*}\]</div>
-<p>This result in:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\sum_{j = 1}^{k} a_{j,n+1} \delta^j 
-&amp;= \Delta_{n+1} \\
-&amp;= 2 x_n \Delta_n +  \Delta_n^2 + \Delta_0 \\
-&amp;= 2 x_n \Bigl(\; \sum_{j = 1}^{k} a_{j,n} \delta^j\; \Bigr) + \Bigl(\; \sum_{j = 1}^{k} a_{j,n} \delta^j \; \Bigr)^2 + \delta \\
-&amp;= \sum_{j = 1}^{k} 2 x_n a_{j,n} \delta^j + \sum_{i = 1}^{k}\sum_{j = 1}^{k} a_{i,n} a_{j,n} \delta^{i+j} + \delta 
-\end{align*}\]</div>
-<p>Comparing of coefficients reveals the relationships we are looking for:</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-a_{1,n+1} &amp;=  2 x_n a_{1,n} + 1 \nonumber \\
-a_{j,n+1} &amp;=  2 x_n a_{j,n} + \sum_{i = 1}^{k} a_{i,n} a_{k - i,n} \;\;\text{for}\;\; j \geq 2 \nonumber
-\end{align*}\]</div>
+<section class="tex2jax_ignore mathjax_ignore" id="adding-3d-effects">
+<h1>Adding 3D Effects<a class="headerlink" href="#adding-3d-effects" title="Permalink to this heading">¶</a></h1>
+<p>In this tutorial you will learn how to create spatial images.</p>
+<p>The easiest way to add a 3D effect in DeepDrill is to pass in the 3D profile:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>top.map<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-p<span class="w"> </span>3D.prf<span class="w"> </span>top.loc
+</pre></div>
+</div>
+<p><img alt="3D Mandelbrot Image" src="../_images/3D_1.jpg" /></p>
+<p>The contents of the 3D profile is rather simple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="p">[</span><span class="n">colors</span><span class="p">]</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">45</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">45</span>
+</pre></div>
+</div>
+<p>The first key instructs DeepDrill to mix the synthesized RGB pixels with depth information from a normal map. The latter two keys define the direction of the light vector.</p>
+<p>Another profile for computing spatial images is <code class="docutils literal notranslate"><span class="pre">relief.prf</span></code>. In addition to what the 3D profile does, it selects a special GPU filter called <code class="docutils literal notranslate"><span class="pre">relief.glsl</span></code>. This filter ignores the color information and translates the normal map directly into a grey-scale image:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>image<span class="o">]</span>
+<span class="nv">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>relief.glsl
+<span class="nv">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+
+<span class="o">[</span>colors<span class="o">]</span>
+<span class="nv">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">45</span>
+<span class="nv">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">65</span>
+</pre></div>
+</div>
+<p>Running DeepDrill with the profile results in the following image:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-p<span class="w"> </span>relief.prf<span class="w"> </span>top.map
+</pre></div>
+</div>
+<p><img alt="Mandelbrot Relief" src="../_images/relief.jpg" /></p>
 </section>
 
             <div class="clearer"></div>
@@ -198,19 +173,19 @@ a_{j,n+1} &amp;=  2 x_n a_{j,n} + \sum_{i = 1}^{k} a_{i,n} a_{k - i,n} \;\;\text
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Colors.html">Colorizing Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/3D.html">Adding 3D effects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Quality.html">Improving image quality</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding 3D Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="MandelbrotSet.html">The Mandelbrot Set</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Perturbation.html">Perturbation Theory</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Series Approximation</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/MandelbrotSet.html">The Mandelbrot Set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Videos</span></p>
 <ul>
@@ -236,22 +211,22 @@ a_{j,n+1} &amp;=  2 x_n a_{j,n} + \sum_{i = 1}^{k} a_{i,n} a_{k - i,n} \;\;\text
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Perturbation.html" aria-label="Previous topic" >
+      <a class="previous" href="Colors.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Perturbation Theory
+            Colorizing Images
           </span>
         </div>
       </a>
-      <a class="next" href="../Videos/FirstFlight.html" aria-label="Next topic" >
+      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            First flight
+            Computing Zoom Videos
           </span>
         </div>
         <div class="icon">
@@ -264,7 +239,7 @@ a_{j,n+1} &amp;=  2 x_n a_{j,n} + \sum_{i = 1}^{k} a_{i,n} a_{k - i,n} \;\;\text
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Theory/SeriesApproximation.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/Tutorials/3D.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

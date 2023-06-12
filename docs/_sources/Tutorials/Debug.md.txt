@@ -1,0 +1,73 @@
+# Debugging the Toolchain
+
+In this tutorial you will learn how to retrieve debug information while computing still images or videos.
+
+## Generating Verbose Output
+
+The easiest way to retrieve more information about what's going on during a computation is to specify the `--verbose` (`-v`) option at the command line. E.g., if we repeat the computation of the mandelbrot set we've done ealier, we get the following, more informative output: 
+```
+./deepdrill -v top.loc -o top.map
+
+DeepDrill 2.0b1 - (C)opyright Dirk W. Hoffmann
+
+                        Center: -0.7 + 0i
+                 Magnification: 0.85b1
+                      Map size: 1920 x 1080
+                    Image size: 1920 x 1080
+                 GMP Precision: 128 Bit
+
+Round 1 (max 50): 2073600 points
+
+     Computing reference orbit: ................................. 0.00 sec
+
+               Reference point: (960,540)
+        Perturbation tolerance: 1e-06
+                 Maximum depth: 1000
+                  Actual depth: 1000
+
+        Computing coefficients: ................................. 0.00 sec
+         Checking probe points: ................................. 0.00 sec
+
+                  Coefficients: 5
+                     Tolerance: 1e-12
+          Skippable iterations: 0
+
+        Computing delta orbits: ................................. 6.27 sec
+
+                      Glitches: 0
+
+               Saving map file: ................................. 0.08 sec
+
+                      Map size: 1920 x 1080
+              Iteration counts: Saved
+                      Lognorms: Saved
+                   Derivatives: Not saved
+                       Normals: Saved
+
+Total time: 6.37 sec
+``
+
+## Highlighting Glitch Points 
+
+To enable additional debug options, you may pass in profile `debug.prf`. This profile looks like this: 
+```
+[debug]
+glitches = yes
+```
+By using this profile, DeepDrill will colorize all glitch points in red. For more information about glitch points, please refer to the mathematical background section.
+
+As of the writing of this document, option `glitches` is the only available option in the `debug` section. Other options are likely to come in the future once the tool chain matures. 
+
+## Debugging Spatial Image Generation
+
+To generate 3D effects, DeepDrill computes a normal map internally. This map can be made visible by applying profile `normalmap.prf`. This profile instructs DeepDrill to utilize a special GPU filter which translaties the normal map data into RGB values:
+```bash
+[image]
+depth = 1
+illuminator = normalmap.glsl
+```
+Running DeepDrill with this profile results in the following image: 
+```bash
+./deepdrill -v -o normalmap.jpg -p normalmap.prf top.loc
+```
+![Normal Map](images/normalmap.jpg "Normal Map")
