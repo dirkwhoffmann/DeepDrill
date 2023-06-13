@@ -27,6 +27,9 @@ protected:
     // Config options
     Options opt = Options(assets);
 
+    // Stop watch for measuring total execution time
+    Clock stopWatch;
+
 public:
 
     // Main entry point

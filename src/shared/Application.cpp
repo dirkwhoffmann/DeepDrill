@@ -47,9 +47,6 @@ Application::main(int argc, char **argv)
         // Deduce missing options
         opt.derive();
 
-        // Start a stop watch
-        Clock stopWatch;
-
         // Run the application
         run();
 

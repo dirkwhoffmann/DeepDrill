@@ -173,6 +173,7 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
+    os << "depth = " << opt.image.depth << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;
@@ -184,6 +185,7 @@ Maker::writePreviewImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = 320    # Preview image width" << std::endl;
     os << "height = 200   # Preview image height" << std::endl;
+    os << "depth = " << opt.image.depth << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;

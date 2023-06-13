@@ -109,7 +109,7 @@ void
 DeepMake::run()
 {
     // Determine the number of computed files
-    auto numFiles = opt.video.keyframes + 3;
+    auto numFiles = opt.video.keyframes + 4;
 
     // Ask for permisson
     log::cout << numFiles << " files will be created. Do you want to proceed [no]? ";
@@ -122,6 +122,7 @@ DeepMake::run()
     }
     log::cout << log::endl;
 
+    stopWatch.restart();
     Maker(opt).generate();
 }
 
