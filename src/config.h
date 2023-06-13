@@ -19,7 +19,7 @@
 // Version number
 #define VER_MAJOR 2
 #define VER_MINOR 0
-#define VER_BETA  1
+#define VER_BETA  0
 
 // Uncomment this setting in a release build
 #define RELEASEBUILD

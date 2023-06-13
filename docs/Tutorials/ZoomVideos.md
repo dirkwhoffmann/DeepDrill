@@ -1,6 +1,6 @@
 # Computing Zoom Videos
 
-In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following  video which is available on Youtube:
+In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill toolchain. In particular, we are going to compute the following video:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ayc5bE9nmTA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -8,15 +8,15 @@ Unlike calculating still images, creating a zoom video requires a much more soph
 
 ## Setting Up the Workflow
 
-Out first task is to create an empty project directory:
-```bash
+We start by creating an empty project directory:
+```shell
 mkdir project
 ```
 To set up a workflow in this directory, we launch `deepmake` with the following options:
-```bash
+```shell
 ./deepmake -p spider.prf -o project spider.loc
 ```
-```
+```none
 DeepMake 2.0b1 - (C)opyright Dirk W. Hoffmann
 
        Generating project file: ................................. 0.00 sec

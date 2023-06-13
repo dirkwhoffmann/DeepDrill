@@ -317,9 +317,6 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
-    // Apply overrides
-    for (auto &it : overrides) parse(it);
-
     // Adjust some default values
     if (keys.find("image.width") != keys.end()) {
         defaults["map.width"] = keys["image.width"];
@@ -333,6 +330,11 @@ Options::derive()
         if (keys.find(it.first) == keys.end()) {
             parse(it.first, it.second);
         }
+    }
+
+    // Apply overrides
+    for (auto &it : overrides) {
+        parse(it);
     }
 
     // Derive unspecified video parameters
