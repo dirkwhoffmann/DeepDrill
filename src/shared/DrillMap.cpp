@@ -146,6 +146,38 @@ DrillMap::markAsGlitch(const struct Coord &c)
     } );
 }
 
+void
+DrillMap::markAsRejected(const struct Coord &c)
+{
+    set(c.x, c.y, MapEntry {
+        0,
+        INFINITY,
+        StandardComplex(),
+        StandardComplex()
+    } );
+}
+
+void
+DrillMap::getMesh(isize numx, isize numy, std::vector <Coord> &mesh)
+{
+    // The coordinate system is superimposed with an equidistant mesh.
+    // The density of the mesh is controlled by the 'numx' and 'numy'.
+    // The minimum value is 2 which produces a mesh that comprises the four
+    // corner points.
+
+    mesh.clear();
+
+    for (isize i = 0; i < numx; i++) {
+        for (isize j = 0; j < numy; j++) {
+
+            auto x = (width - 1) * ((double)i / (double)(numx - 1));
+            auto y = (height - 1) * ((double)j / (double)(numy - 1));
+
+            mesh.push_back(Coord(x,y));
+        }
+    }
+}
+
 const ColorMap &
 DrillMap::colorize()
 {

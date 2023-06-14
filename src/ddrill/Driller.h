@@ -72,7 +72,10 @@ private:
     //
     // Picking points
     //
-    
+
+    // Collect all drill locations
+    void collectCoordinates(vector<dd::Coord> &remaining);
+
     // Picks a reference point
     ReferencePoint pickReference(const vector<Coord> &glitches);
 

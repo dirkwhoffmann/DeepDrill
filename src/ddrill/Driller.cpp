@@ -58,12 +58,7 @@ Driller::drill()
     isize threshold = width * height * opt.perturbation.badpixels;
         
     // Collect all pixel coordinates to be drilled at
-    for (isize y = 0; y < height; y++) {
-        for (isize x = 0; x < width; x++) {
-            
-            remaining.push_back(Coord(x,y));
-        }
-    }
+    collectCoordinates(remaining);
 
     // Use the standard algorithm if perturbation is disabled
     if (!opt.perturbation.enable) {
@@ -141,6 +136,77 @@ Driller::drill()
             log::cout << log::vspace;
         }        
     }
+}
+
+void
+Driller::collectCoordinates(vector<dd::Coord> &remaining)
+{
+    auto inCardioid = [&](PrecisionComplex &c) {
+
+        mpf_class r1 = c.re + 1.0;
+        mpf_class ii = c.im * c.im;
+        return (r1 * r1 + ii < 0.0625);
+    };
+
+    auto inBulb = [&](PrecisionComplex &c) {
+
+        mpf_class ii = c.im * c.im;
+        mpf_class p = c.re - 0.25;
+        mpf_class q = p * p + ii;
+
+        return q * (q + p) < ii * 0.25;
+    };
+
+    auto width = opt.drillmap.width;
+    auto height = opt.drillmap.height;
+
+    ProgressIndicator progress("Collecting drill coordinates", width * height);
+
+    // Superimpose the drill map with a mesh
+    std::vector<Coord> mesh; map.getMesh(4, 4, mesh);
+
+    // Test if at least one mesh point belongs to the bulb or the cardioid
+    bool hit = false;
+    for (const auto &it : mesh) {
+
+        auto c = it.translate(opt);
+        hit |= inCardioid(c);
+        hit |= inBulb(c);
+    }
+
+    // Collect all drill coordinates
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
+
+            if (hit) {
+
+                auto c = Coord(x,y).translate(opt);
+                if (inCardioid(c) || inBulb(c)) {
+
+                    // map.markAsRejected(Coord(x,y));
+                    map.markAsGlitch(Coord(x,y)); // GLITCH FOR DEBUGGING
+                    continue;
+                }
+            }
+            remaining.push_back(Coord(x,y));
+        }
+        progress.step(width);
+    }
+
+    if (opt.flags.verbose) {
+
+        isize total = width * height;
+        isize skipped = total - remaining.size();
+        double percentage = 100.0 * skipped / total;
+
+        progress.done();
+        log::cout << log::vspace;
+        log::cout << log::ralign("Skipped locations: ");
+        log::cout << skipped;
+        if (skipped) log::cout << " (" << isize(percentage) << "%)";
+        log::cout << log::endl << log::vspace;
+    }
+
 }
 
 ReferencePoint

@@ -100,6 +100,8 @@ public:
     void set(const struct Coord &c, u32 iteration, float lognorm);
     void markAsInside(const struct Coord &c);
     void markAsGlitch(const struct Coord &c);
+    void markAsRejected(const struct Coord &c);
+    void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints);
 
 
     //
