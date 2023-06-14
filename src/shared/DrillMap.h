@@ -39,7 +39,7 @@ enum ChannelFormat {
 
 struct MapEntry {
 
-    u32 iteration;
+    i32 iteration;
     float lognorm;
 
     // Experimental
@@ -97,7 +97,7 @@ public:
     MapEntry &get(const struct Coord &c) const;
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
-    void set(const struct Coord &c, u32 iteration, float lognorm);
+    void set(const struct Coord &c, i32 iteration, float lognorm);
     void markAsInside(const struct Coord &c);
     void markAsGlitch(const struct Coord &c);
     void markAsRejected(const struct Coord &c);

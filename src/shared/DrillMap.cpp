@@ -119,7 +119,7 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
 }
 
 void
-DrillMap::set(const struct Coord &c, u32 iteration, float lognorm)
+DrillMap::set(const struct Coord &c, i32 iteration, float lognorm)
 {
     set(c.x, c.y, MapEntry { iteration, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
 }
@@ -139,7 +139,7 @@ void
 DrillMap::markAsGlitch(const struct Coord &c)
 {
     set(c.x, c.y, MapEntry {
-        UINT32_MAX,
+        INT32_MAX,
         NAN,
         StandardComplex(),
         StandardComplex()

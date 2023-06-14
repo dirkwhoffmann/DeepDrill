@@ -307,7 +307,7 @@ Driller::slowDrill(const Coord &point)
             u.normalize();
 
             map.set(point, MapEntry {
-                (u32)iteration,
+                (i32)iteration,
                 (float)::log(norm),
                 StandardComplex(dn),
                 StandardComplex(u) } );
@@ -352,7 +352,7 @@ Driller::drill(ReferencePoint &r)
             nv.normalize();
 
             r.escaped = true;
-            map.set(r.coord, MapEntry { (u32)i, (float)::log(norm), StandardComplex(dn), StandardComplex(nv) } );
+            map.set(r.coord, MapEntry { (i32)i, (float)::log(norm), StandardComplex(dn), StandardComplex(nv) } );
             return;
         }
         
@@ -482,7 +482,7 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
             auto nv = zn / ddn;
             nv.normalize();
             map.set(point, MapEntry {
-                (u32)iteration,
+                (i32)iteration,
                 (float)::log(norm),
                 StandardComplex(ddn),
                 StandardComplex(nv) } );
