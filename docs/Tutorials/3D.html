@@ -123,32 +123,36 @@
 <section class="tex2jax_ignore mathjax_ignore" id="adding-3d-effects">
 <h1>Adding 3D Effects<a class="headerlink" href="#adding-3d-effects" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial you will learn how to create spatial images.</p>
-<p>The easiest way to add a 3D effect in DeepDrill is to pass in the 3D profile:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>top.map<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-p<span class="w"> </span>3D.prf<span class="w"> </span>top.loc
+<p>The easiest way to add a 3D effect in DeepDrill is to pass in the 3D profile which defines three key-value pairs:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
+<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+
+<span class="k">[colors]</span>
+<span class="na">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">45</span>
+<span class="na">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">65</span>
+</pre></div>
+</div>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">image.depth</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> instructs DeepDrill to mix the synthesized RGB pixels with depth information from a normal map. Running DeepDrill with this profile results in the following image:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.map -o top.jpg -p 3D.prf top.loc
 </pre></div>
 </div>
 <p><img alt="3D Mandelbrot Image" src="../_images/3D_1.jpg" /></p>
-<p>The contents of the 3D profile is rather simple:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="p">[</span><span class="n">colors</span><span class="p">]</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">beta</span> <span class="o">=</span> <span class="mi">45</span>
+<p>The latter two key-value pairs define the direction of the light vector. <code class="docutils literal notranslate"><span class="pre">alpha</span></code> specifies the direction of the incoming light on the xy plane. <code class="docutils literal notranslate"><span class="pre">beta</span></code> defines the inclination of the light source. Decreasing this angle increases the 3D effect:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.jpg -p 3D.prf top.map -c colors.beta=30
 </pre></div>
 </div>
-<p>The first key instructs DeepDrill to mix the synthesized RGB pixels with depth information from a normal map. The latter two keys define the direction of the light vector.</p>
-<p>Another profile for computing spatial images is <code class="docutils literal notranslate"><span class="pre">relief.prf</span></code>. In addition to what the 3D profile does, it selects a special GPU filter called <code class="docutils literal notranslate"><span class="pre">relief.glsl</span></code>. This filter ignores the color information and translates the normal map directly into a grey-scale image:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>image<span class="o">]</span>
-<span class="nv">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>relief.glsl
-<span class="nv">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<p><img alt="3D Mandelbrot Image" src="../_images/3D_2.jpg" /></p>
+<p>Another predefined profile for computing spatial images is <code class="docutils literal notranslate"><span class="pre">relief.prf</span></code>. In addition to the options of the 3D profile, it selects a special GPU filter called <code class="docutils literal notranslate"><span class="pre">relief.glsl</span></code>. This filter ignores the color information and converts the normal map directly into a grayscale image:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
+<span class="na">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">relief.glsl</span>
+<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
 
-<span class="o">[</span>colors<span class="o">]</span>
-<span class="nv">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">45</span>
-<span class="nv">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">65</span>
+<span class="k">[colors]</span>
+<span class="na">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">45</span>
+<span class="na">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">65</span>
 </pre></div>
 </div>
-<p>Running DeepDrill with the profile results in the following image:</p>
+<p>Running DeepDrill with this profile yields the following result:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-p<span class="w"> </span>relief.prf<span class="w"> </span>top.map
 </pre></div>
 </div>
@@ -193,6 +197,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>

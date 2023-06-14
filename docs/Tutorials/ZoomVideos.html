@@ -122,41 +122,53 @@
             
 <section class="tex2jax_ignore mathjax_ignore" id="computing-zoom-videos">
 <h1>Computing Zoom Videos<a class="headerlink" href="#computing-zoom-videos" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial, you’ll learn how to create Mandelbrot zoom videos using the DeepDrill tool chain. In particular, we are going to compute the following  video which is available on Youtube:</p>
+<p>In this tutorial, you’ll learn how to create Mandelbrot zoom videos using the DeepDrill toolchain. In particular, we are going to compute the following video:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ayc5bE9nmTA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Unlike calculating still images, creating a zoom video requires a much more sophisticated workflow. For example, multiple keyframes must be calculated and stitched together in the right way. To simplify the process, video creation has been divided into three phases. In the first phase, <code class="docutils literal notranslate"><span class="pre">deepmake</span></code> is used to create a Makefile and a larger number of input files. In the second phase, the Makefile is executed to compute all keyframe images via seperate invocations to <code class="docutils literal notranslate"><span class="pre">deepdrill</span></code>. In the last phase, <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code> is executed to assemble the final video by calculating intermediate frames.</p>
 <section id="setting-up-the-workflow">
 <h2>Setting Up the Workflow<a class="headerlink" href="#setting-up-the-workflow" title="Permalink to this heading">¶</a></h2>
-<p>Out first task is to create an empty project directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>project
+<p>We start by creating an empty project directory:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>project
 </pre></div>
 </div>
 <p>To set up a workflow in this directory, we launch <code class="docutils literal notranslate"><span class="pre">deepmake</span></code> with the following options:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepmake<span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>spider.loc
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepmake<span class="w"> </span>-p<span class="w"> </span>spider.prf<span class="w"> </span>-o<span class="w"> </span>project<span class="w"> </span>spider.loc
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeepMake</span> <span class="mf">2.0</span><span class="n">b1</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
+<p>The application first tells you how many files will be created and asks for your permission to proceed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>DeepMake 2.0 - (C)opyright Dirk W. Hoffmann
 
-       <span class="n">Generating</span> <span class="n">project</span> <span class="n">file</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-  <span class="n">Generating</span> <span class="mi">75</span> <span class="n">location</span> <span class="n">files</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-            <span class="n">Generating</span> <span class="n">profile</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-           <span class="n">Generating</span> <span class="n">Makefile</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+79 files will be created. Do you want to proceed [no]? 
+</pre></div>
+</div>
+<p>After confirming with <code class="docutils literal notranslate"><span class="pre">yes</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">deepmake</span></code> generates all files:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepMake 2.0 - (C)opyright Dirk W. Hoffmann
 
-<span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.01</span> <span class="n">sec</span>
+79 files will be created. Do you want to proceed [no]? yes
+
+       Generating project file: ................................. 0.00 sec
+  Generating 75 location files: ................................. 0.01 sec
+            Generating profile: ................................. 0.00 sec
+           Generating Makefile: ................................. 0.00 sec
+
+Total time: 0.01 sec
 </pre></div>
 </div>
-<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">spider.prf</span></code> before setting up the workflow. This profile defines the following keys:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">video</span><span class="p">]</span>
-<span class="n">keyframes</span> <span class="o">=</span> <span class="mi">75</span>
-<span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">143</span>
-<span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
+<p>If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in <code class="docutils literal notranslate"><span class="pre">spider.loc</span></code> with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in <code class="docutils literal notranslate"><span class="pre">spider.prf</span></code> before setting up the workflow. This profile defines the following key-value pairs:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
+<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+
+<span class="k">[video]</span>
+<span class="na">keyframes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">75</span>
+<span class="na">inbetweens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">143</span>
+<span class="na">bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">8000</span>
 </pre></div>
 </div>
-<p>The first key specifies the number of keyframes to calculate, and the second key specifies how many frames to insert between two consecutive keyframes. If the video was recorded at 60 Hz, a value of 60 results in a delay of one second between two keyframes. In our case, a value of 143 is given. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of about 3 minutes.</p>
+<p>The first key specifies the number of keyframes to calculate, and the second key specifies how many frames to insert between two consecutive keyframes. If the video were recorded at 60 Hz, a value of 60 would result in a delay of one second between two keyframes. In our case, a value of 143 is specified. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of a little more than 3 minutes.</p>
 <p>Let’s take a closer look at the files DeepDrill created in the project directory:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">spider.prj</span></code>
-This file contains several key-value pairs which will be picked up later by <code class="docutils literal notranslate"><span class="pre">deepflight</span></code> to assemble the final video.</p></li>
+This file contains several key-value pairs which will be picked up later by <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code> to assemble the final video.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">spider.prf</span></code>
 This profile is used for calculating keyframes. It is composed out of the profiles that were passed in as command line arguments when the workflow was set up.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">spider_0.loc</span></code> to <code class="docutils literal notranslate"><span class="pre">spider_75.loc</span></code>
@@ -168,7 +180,7 @@ This is a standard Makefile that automatically calculates all keyframe images. I
 <section id="computing-all-keyframes">
 <h2>Computing all keyframes<a class="headerlink" href="#computing-all-keyframes" title="Permalink to this heading">¶</a></h2>
 <p>For our tutorial project, DeepDrill has created the following Makefile:</p>
-<div class="highlight-Make notranslate"><div class="highlight"><pre><span></span><span class="c"># Generated by DeepDrill 2.0b1 on Fri Jun  9 06:57:53 2023</span>
+<div class="highlight-Make notranslate"><div class="highlight"><pre><span></span><span class="c"># Generated by DeepDrill 2.0 on Tue Jun 13 18:19:24 2023</span>
 <span class="c"># </span>
 <span class="c"># Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de</span>
 <span class="c"># Licensed under the GNU General Public License v3</span>
@@ -177,7 +189,7 @@ This is a standard Makefile that automatically calculates all keyframe images. I
 <span class="nv">DEEPZOOM</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>/Users/hoff/tmp/dd/./deepzoom
 <span class="nv">MAPS</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span>%.loc,%.map,<span class="k">$(</span>wildcard<span class="w"> </span>*_*.loc<span class="k">))</span>
 <span class="nv">VIDEO</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>spider.mov
-<span class="nv">MAPFLAGS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-b
+<span class="nv">MAPFLAGS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-b<span class="w"> </span>-v
 
 <span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">maps</span> <span class="n">clean</span>
 
@@ -192,21 +204,40 @@ This is a standard Makefile that automatically calculates all keyframe images. I
 <span class="w">  </span>@<span class="k">$(</span>DEEPZOOM<span class="k">)</span><span class="w"> </span><span class="k">$(</span>MOVFLAGS<span class="k">)</span><span class="w"> </span>spider.prj<span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>VIDEO<span class="k">)</span>
 
 <span class="nf">clean</span><span class="o">:</span>
-<span class="w">  </span>rm<span class="w"> </span>*.mov<span class="w"> </span>*.map<span class="w"> </span>*.png<span class="w"> </span>*.log
+<span class="w">  </span>rm<span class="w"> </span>*.mov<span class="w"> </span>*.map<span class="w"> </span>*.jpg<span class="w"> </span>*.log
 </pre></div>
 </div>
 <p>The Makefile defines two major goals: One is to create the map files from the location files and the other one is to compose the final video. To create all map files, we change to the project directory and run the Make utility:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>project
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>project
 make<span class="w"> </span>-j4
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option instructs Make to run multiple jobs in parallel, four jobs in this case. Although this option is not mandatory, its use is strongly recommended as it significantly reduces the overall computation time.</p>
-<p>Depending on the performance of your machine, it may take a while to calculate all images. After successful completion, the project directory contains a map file and an image file for each keyframe.</p>
+<p>Depending on the performance of your machine, it may take a while to calculate all images. DeepDrill informs about the current progress by outputting brief status information:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[0%] 0/76: Drilling spider_0.map ...
+[0%] 0/76: Drilling spider_11.map ...
+[0%] 0/76: Drilling spider_10.map ...
+[0%] 0/76: Drilling spider_1.map ...
+[0%] 0/76: Created spider_10.map (3.47 sec)
+[1%] 1/76: Created spider_11.map (3.49 sec)
+[2%] 2/76: Drilling spider_12.map ...
+[2%] 2/76: Drilling spider_13.map ...
+[2%] 2/76: Created spider_12.map (3.23 sec)
+[3%] 3/76: Created spider_13.map (3.29 sec)
+...
+</pre></div>
+</div>
+<p>Another way to obtain information about the current progress is to launch <code class="docutils literal notranslate"><span class="pre">htop</span></code>in a seperate terminal window. <code class="docutils literal notranslate"><span class="pre">htop</span></code> is available for all Unix-like operating systems and reports detailed information about all running processes:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>htop<span class="w"> </span>
+</pre></div>
+</div>
+<p><img alt="htop" src="../_images/htop.png" /></p>
+<p>After successful completion, the project directory contains a map file and an image file for each keyframe.</p>
 </section>
 <section id="assembling-the-zoom-video">
 <h2>Assembling the Zoom Video<a class="headerlink" href="#assembling-the-zoom-video" title="Permalink to this heading">¶</a></h2>
 <p>The final step is to combine all the keyframes into a zoom video by calling <code class="docutils literal notranslate"><span class="pre">make</span></code> with the <code class="docutils literal notranslate"><span class="pre">spider.mov</span></code> target as argument:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>spider.mov<span class="w"> </span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>spider.mov<span class="w"> </span>
 </pre></div>
 </div>
 <p>This target executes a separate tool called <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code> which stiches together all previously computed keyframes. After completion, file <code class="docutils literal notranslate"><span class="pre">spider.mov</span></code> will be created, which contains the final video.</p>
@@ -251,6 +282,7 @@ make<span class="w"> </span>-j4
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>

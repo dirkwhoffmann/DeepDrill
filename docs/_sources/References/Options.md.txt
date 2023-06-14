@@ -2,7 +2,7 @@
 
 DeepDrill is configured by specifying one or more profiles as command line parameters. Each profile contains a certain number of key-value pairs organized in sections. A typical profile looks like this:
 
-```
+```INI
 [image]
 width = 960
 height = 540
@@ -41,11 +41,11 @@ Each option is briefly explained below:
 
 - `width`
   
-  The horizontal resolution of the drill map. If this key is not specified, the drill map's width will match the image width.
+  The horizontal resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image width.
 
 - `height` 
 
-  The vertical resolution of the drill map. If this key is not specified, the drill map's height will match the image height.
+  The vertical resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image height.
 
 - `depth` 
 
@@ -63,25 +63,25 @@ Each option is briefly explained below:
 
 - `depth` 
 
-  Possible values are 0 and 1. If set to 1, a normal map will be utilized to generate a spatial effect. 
+  Possible values are 0 and 1. If set to 1, a spatial effect will be generated from the normal map. 
 
 - `illuminator` 
 
-  Path to a GLSL shader. The illumination shader is the first of two GPU shaders. It derives the RGB value for each pixel and applies a lighting model.
+  Path to a GLSL shader. The illuminator is the first of two GPU shaders. It derives the RGB value for each pixel and applies a lighting model.
 
 - `scaler` 
 
-  Path to a GLSL shader. The scaler shader is the second of two GPU shaders. It scales the internal image down to the final image.
+  Path to a GLSL shader. The scaler is the second of two GPU shaders. It scales the internal image down to the final image.
 
 ### Section `[video]`
 
 - `framerate`
 
-  Frames per second of the computed video.
+  Frames per second of the computed video. By default, videos with 60 fps are computed to match the frame rate of standard TFTs.
 
 - `keyframes`
 
-  Number of keyframes of the final video. If this key is not specified, DeepDrill derives the number of keyframes based on the zoom factor given in the location section.
+  Number of keyframes of the final video. If this key is not specified, DeepDrill derives the number from the zoom factor given in the location section.
 
 - `inbetweens`
 
@@ -89,11 +89,11 @@ Each option is briefly explained below:
 
 - `bitrate`
   
-  This value is passed to the FFmpeg backend. 
+  This value is passed directly to the FFmpeg backend. Higher values result in better image quality.
 
 - `scaler` 
 
-  If a video is produced, this downscaler is utilized instead of the one specified in the image section. 
+  Path to a GLSL shader. If a video is created, this downscaler is used instead of the one specified in the image section. 
 
 ### Section `[colors]`
 
@@ -117,7 +117,7 @@ Each option is briefly explained below:
 
 - `tolerance`
 
-  This value is used by the perturbation algorithm. Please refer to the "Theory" section for details. 
+  This value is used by the perturbation algorithm. Please refer to the *Theory* section for details. 
 
 - `badpixels`
 
@@ -145,5 +145,5 @@ Each option is briefly explained below:
 
 - `glitches`
 
-  if set to `true`, glitch points are highlighted in red in the final image. It's main purpose is to debug the glitch detection algorithm.
+  If set to `true`, glitch points are marked red in the final image. It's main purpose is to debug the glitch detection algorithm.
   

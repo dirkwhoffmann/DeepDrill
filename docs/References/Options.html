@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="External links" href="Links.html" />
-    <link rel="prev" title="X" href="../Videos/X.html" />
+    <link rel="prev" title="Flowers" href="../Videos/Flowers.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -82,7 +82,7 @@
       </div>
     </header>
     <nav>
-      <a href="../Videos/X.html" class="nav-icon previous" title="previous:&#13;X" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="../Videos/Flowers.html" class="nav-icon previous" title="previous:&#13;Flowers" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
       <a href="Links.html" class="nav-icon next" title="next:&#13;External links" aria-label="Next topic" accesskey="N" tabindex="-1">
@@ -91,14 +91,14 @@
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="../Videos/X.html" aria-label="Previous topic" >
+      <a class="previous" href="../Videos/Flowers.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            X
+            Flowers
           </span>
         </div>
       </a>
@@ -123,16 +123,16 @@
 <section class="tex2jax_ignore mathjax_ignore" id="configuration-options">
 <h1>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this heading">¶</a></h1>
 <p>DeepDrill is configured by specifying one or more profiles as command line parameters. Each profile contains a certain number of key-value pairs organized in sections. A typical profile looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mi">960</span>
-<span class="n">height</span> <span class="o">=</span> <span class="mi">540</span>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
+<span class="na">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">960</span>
+<span class="na">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">540</span>
 
-<span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
-<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
-<span class="n">rounds</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="k">[perturbation]</span>
+<span class="na">tolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1e-6</span>
+<span class="na">rounds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">50</span>
 
-<span class="p">[</span><span class="n">approximation</span><span class="p">]</span>
-<span class="n">coefficients</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">[approximation]</span>
+<span class="na">coefficients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5</span>
 </pre></div>
 </div>
 <p>Each option is briefly explained below:</p>
@@ -159,10 +159,10 @@
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[map]</span></code><a class="headerlink" href="#section-map" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p>
-<p>The horizontal resolution of the drill map. If this key is not specified, the drill map’s width will match the image width.</p>
+<p>The horizontal resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image width.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p>
-<p>The vertical resolution of the drill map. If this key is not specified, the drill map’s height will match the image height.</p>
+<p>The vertical resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image height.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p>
 <p>Possible values are 0 and 1. If set to 1, a normal map will be written to the <code class="docutils literal notranslate"><span class="pre">.map</span></code> file.</p>
@@ -179,13 +179,13 @@
 <p>The vertical resolution of the image.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p>
-<p>Possible values are 0 and 1. If set to 1, a normal map will be utilized to generate a spatial effect.</p>
+<p>Possible values are 0 and 1. If set to 1, a spatial effect will be generated from the normal map.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">illuminator</span></code></p>
-<p>Path to a GLSL shader. The illumination shader is the first of two GPU shaders. It derives the RGB value for each pixel and applies a lighting model.</p>
+<p>Path to a GLSL shader. The illuminator is the first of two GPU shaders. It derives the RGB value for each pixel and applies a lighting model.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scaler</span></code></p>
-<p>Path to a GLSL shader. The scaler shader is the second of two GPU shaders. It scales the internal image down to the final image.</p>
+<p>Path to a GLSL shader. The scaler is the second of two GPU shaders. It scales the internal image down to the final image.</p>
 </li>
 </ul>
 </section>
@@ -193,19 +193,19 @@
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[video]</span></code><a class="headerlink" href="#section-video" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">framerate</span></code></p>
-<p>Frames per second of the computed video.</p>
+<p>Frames per second of the computed video. By default, videos with 60 fps are computed to match the frame rate of standard TFTs.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">keyframes</span></code></p>
-<p>Number of keyframes of the final video. If this key is not specified, DeepDrill derives the number of keyframes based on the zoom factor given in the location section.</p>
+<p>Number of keyframes of the final video. If this key is not specified, DeepDrill derives the number from the zoom factor given in the location section.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">inbetweens</span></code></p>
 <p>Number of interpolated frames between two keyframes. By default, this value is assigned twice the frame rate. Consequently, each keyframe is displayed for 2 seconds.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bitrate</span></code></p>
-<p>This value is passed to the FFmpeg backend.</p>
+<p>This value is passed directly to the FFmpeg backend. Higher values result in better image quality.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scaler</span></code></p>
-<p>If a video is produced, this downscaler is utilized instead of the one specified in the image section.</p>
+<p>Path to a GLSL shader. If a video is created, this downscaler is used instead of the one specified in the image section.</p>
 </li>
 </ul>
 </section>
@@ -230,7 +230,7 @@
 <p>Indicates if perturbation should be used to calculate the image. If set to false, DeepDrill falls back to the (very slow) standard algorithm.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p>
-<p>This value is used by the perturbation algorithm. Please refer to the “Theory” section for details.</p>
+<p>This value is used by the perturbation algorithm. Please refer to the <em>Theory</em> section for details.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">badpixels</span></code></p>
 <p>Percentage of pixels that are allowed to be miscolored.</p>
@@ -258,7 +258,7 @@
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[debug]</span></code><a class="headerlink" href="#section-debug" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">glitches</span></code></p>
-<p>if set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, glitch points are highlighted in red in the final image. It’s main purpose is to debug the glitch detection algorithm.</p>
+<p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, glitch points are marked red in the final image. It’s main purpose is to debug the glitch detection algorithm.</p>
 </li>
 </ul>
 </section>
@@ -303,6 +303,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="current">
@@ -321,14 +322,14 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="../Videos/X.html" aria-label="Previous topic" >
+      <a class="previous" href="../Videos/Flowers.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            X
+            Flowers
           </span>
         </div>
       </a>

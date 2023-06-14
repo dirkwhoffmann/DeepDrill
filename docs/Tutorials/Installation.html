@@ -122,10 +122,11 @@
             
 <section class="tex2jax_ignore mathjax_ignore" id="build-instructions">
 <h1>Build instructions<a class="headerlink" href="#build-instructions" title="Permalink to this heading">¶</a></h1>
-<p>Follow the steps below to compile DeepDrill on your machine. The application has been designed to run on macOS and common Linux distributions such as Ubuntu or Mint.</p>
+<p>In this tutorial, you will learn how to download, compile, and install the DeepDrill toolchain.</p>
+<p>DeepDrill is a Unix-style C++ application and should be compatible with most Unix-style operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.</p>
 <ul>
 <li><p><strong>Step 1: Install third-party libraries</strong></p>
-<p>To compile the DeepDrill tool chain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, DeepFlight executes FFmpeg at runtime.</p>
+<p>To compile the DeepDrill toolchain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, FFmpeg needs to be installed on your machine. It is executed by DeepZoom at runtime.</p>
 <ul>
 <li><p>Option 1: Install with Homebrew</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>gmp
@@ -149,7 +150,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 </div>
 </li>
 <li><p><strong>Step 3: Compile the source code</strong></p>
-<p>Compiling the application requires CMake and a standard C++ tool chain to be installed:</p>
+<p>Compiling the application requires CMake and a standard C++ toolchain to be installed:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>DeepDrill
 mkdir<span class="w"> </span>build
 <span class="nb">cd</span><span class="w"> </span>build
@@ -159,7 +160,7 @@ make<span class="w"> </span>-j
 </div>
 </li>
 </ul>
-<p>On success, three executables have been build: <code class="docutils literal notranslate"><span class="pre">deepdrill</span></code>, <code class="docutils literal notranslate"><span class="pre">deepmake</span></code>, and <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code>.</p>
+<p>The buid process creates three executables: <code class="docutils literal notranslate"><span class="pre">deepdrill</span></code>, <code class="docutils literal notranslate"><span class="pre">deepmake</span></code>, and <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code>.</p>
 </section>
 
             <div class="clearer"></div>
@@ -200,6 +201,7 @@ make<span class="w"> </span>-j
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>

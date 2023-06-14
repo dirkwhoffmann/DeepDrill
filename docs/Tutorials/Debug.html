@@ -122,68 +122,72 @@
             
 <section class="tex2jax_ignore mathjax_ignore" id="debugging-the-toolchain">
 <h1>Debugging the Toolchain<a class="headerlink" href="#debugging-the-toolchain" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial you will learn how to retrieve debug information while computing still images or videos.</p>
+<p>In this tutorial you will learn how to get detailed information about the calculation process while creating images or videos.</p>
 <section id="generating-verbose-output">
 <h2>Generating Verbose Output<a class="headerlink" href="#generating-verbose-output" title="Permalink to this heading">¶</a></h2>
-<p>The easiest way to retrieve more information about what’s going on during a computation is to specify the <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> (<code class="docutils literal notranslate"><span class="pre">-v</span></code>) option at the command line. E.g., if we repeat the computation of the mandelbrot set we’ve done ealier, we get the following, more informative output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deepdrill</span> <span class="o">-</span><span class="n">v</span> <span class="n">top</span><span class="o">.</span><span class="n">loc</span> <span class="o">-</span><span class="n">o</span> <span class="n">top</span><span class="o">.</span><span class="n">map</span>
+<p>The easiest way to get more information about the currently performed computation is to specify the <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> (<code class="docutils literal notranslate"><span class="pre">-v</span></code>) option on the command line. For example, if we repeat the calculation of the Mandelbrot set that we performed before, we will get the following, more informative output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -v top.loc -o top.map
 
-<span class="n">DeepDrill</span> <span class="mf">2.0</span><span class="n">b1</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">opyright</span> <span class="n">Dirk</span> <span class="n">W</span><span class="o">.</span> <span class="n">Hoffmann</span>
+DeepDrill 2.0 - (C)opyright Dirk W. Hoffmann
 
-                        <span class="n">Center</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.7</span> <span class="o">+</span> <span class="mi">0</span><span class="n">i</span>
-                 <span class="n">Magnification</span><span class="p">:</span> <span class="mf">0.85</span><span class="n">b1</span>
-                      <span class="n">Map</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1920</span> <span class="n">x</span> <span class="mi">1080</span>
-                    <span class="n">Image</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1920</span> <span class="n">x</span> <span class="mi">1080</span>
-                 <span class="n">GMP</span> <span class="n">Precision</span><span class="p">:</span> <span class="mi">128</span> <span class="n">Bit</span>
+                        Center: -0.7 + 0i
+                   Upper left: (-2.7915,-1.17647)
+                  Lower right: (1.38932,1.17429)
+                 Magnification: 0.85b1
+                      Map size: 1920 x 1080 (3D)
+                    Image size: 1920 x 1080 (2D)
+                 GMP Precision: 128 Bit
 
-<span class="n">Round</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">max</span> <span class="mi">50</span><span class="p">):</span> <span class="mi">2073600</span> <span class="n">points</span>
+Round 1 / 50: 2073600 points
 
-     <span class="n">Computing</span> <span class="n">reference</span> <span class="n">orbit</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+     Computing reference orbit: ................................. 0.00 sec
 
-               <span class="n">Reference</span> <span class="n">point</span><span class="p">:</span> <span class="p">(</span><span class="mi">960</span><span class="p">,</span><span class="mi">540</span><span class="p">)</span>
-        <span class="n">Perturbation</span> <span class="n">tolerance</span><span class="p">:</span> <span class="mf">1e-06</span>
-                 <span class="n">Maximum</span> <span class="n">depth</span><span class="p">:</span> <span class="mi">1000</span>
-                  <span class="n">Actual</span> <span class="n">depth</span><span class="p">:</span> <span class="mi">1000</span>
+               Reference point: (960,540)
+        Perturbation tolerance: 1e-06
+                 Maximum depth: 1000
+                  Actual depth: 1000
 
-        <span class="n">Computing</span> <span class="n">coefficients</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
-         <span class="n">Checking</span> <span class="n">probe</span> <span class="n">points</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.00</span> <span class="n">sec</span>
+        Computing coefficients: ................................. 0.00 sec
 
-                  <span class="n">Coefficients</span><span class="p">:</span> <span class="mi">5</span>
-                     <span class="n">Tolerance</span><span class="p">:</span> <span class="mf">1e-12</span>
-          <span class="n">Skippable</span> <span class="n">iterations</span><span class="p">:</span> <span class="mi">0</span>
+                  Coefficients: 5
+       Approximation tolerance: 1e-12
 
-        <span class="n">Computing</span> <span class="n">delta</span> <span class="n">orbits</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">6.27</span> <span class="n">sec</span>
+         Checking probe points: ................................. 0.00 sec
 
-                      <span class="n">Glitches</span><span class="p">:</span> <span class="mi">0</span>
+          Skippable iterations: 0
 
-               <span class="n">Saving</span> <span class="nb">map</span> <span class="n">file</span><span class="p">:</span> <span class="o">.................................</span> <span class="mf">0.08</span> <span class="n">sec</span>
+        Computing delta orbits: ................................. 6.23 sec
 
-                      <span class="n">Map</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1920</span> <span class="n">x</span> <span class="mi">1080</span>
-              <span class="n">Iteration</span> <span class="n">counts</span><span class="p">:</span> <span class="n">Saved</span>
-                      <span class="n">Lognorms</span><span class="p">:</span> <span class="n">Saved</span>
-                   <span class="n">Derivatives</span><span class="p">:</span> <span class="n">Not</span> <span class="n">saved</span>
-                       <span class="n">Normals</span><span class="p">:</span> <span class="n">Saved</span>
+                      Glitches: 0
 
-<span class="n">Total</span> <span class="n">time</span><span class="p">:</span> <span class="mf">6.37</span> <span class="n">sec</span>
+               Saving map file: ................................. 0.07 sec
+
+                      Map size: 1920 x 1080
+              Iteration counts: Saved
+                      Lognorms: Saved
+                   Derivatives: Not saved
+                       Normals: Saved
+
+Total time: 6.38 sec
 </pre></div>
 </div>
 </section>
 <section id="highlighting-glitch-points">
 <h2>Highlighting Glitch Points<a class="headerlink" href="#highlighting-glitch-points" title="Permalink to this heading">¶</a></h2>
-<p>To enable additional debug options, you may pass in profile <code class="docutils literal notranslate"><span class="pre">debug.prf</span></code>. This profile looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">debug</span><span class="p">]</span>
-<span class="n">glitches</span> <span class="o">=</span> <span class="n">yes</span>
+<p>To enable additional debug options, you may pass in profile <code class="docutils literal notranslate"><span class="pre">debug.prf</span></code>. This profile contains the following definitions:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[debug]</span>
+<span class="na">glitches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">yes</span>
 </pre></div>
 </div>
-<p>By using this profile, DeepDrill will colorize all glitch points in red. For more information about glitch points, please refer to the mathematical background section.</p>
-<p>As of the writing of this document, option <code class="docutils literal notranslate"><span class="pre">glitches</span></code> is the only available option in the <code class="docutils literal notranslate"><span class="pre">debug</span></code> section. Other options are likely to come in the future once the tool chain matures.</p>
+<p>By setting <code class="docutils literal notranslate"><span class="pre">debug.glitches</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>, DeepDrill will colorize all glitch points in red. For more information about glitch points, please refer to the mathematical background section.</p>
+<p>At the time of writing, the <code class="docutils literal notranslate"><span class="pre">glitches</span></code> option is the only available option in the <code class="docutils literal notranslate"><span class="pre">debug</span></code> section. Other options are likely to come in the future as the toolchain matures.</p>
 </section>
-<section id="debugging-spatial-image-generation">
-<h2>Debugging Spatial Image Generation<a class="headerlink" href="#debugging-spatial-image-generation" title="Permalink to this heading">¶</a></h2>
-<p>To generate 3D effects, DeepDrill computes a normal map internally. This map can be made visible by applying profile <code class="docutils literal notranslate"><span class="pre">normalmap.prf</span></code>. This profile instructs DeepDrill to utilize a special GPU filter which translaties the normal map data into RGB values:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>image<span class="o">]</span>
-<span class="nv">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
-<span class="nv">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>normalmap.glsl
+<section id="exporting-normal-maps">
+<h2>Exporting Normal Maps<a class="headerlink" href="#exporting-normal-maps" title="Permalink to this heading">¶</a></h2>
+<p>To create 3D effects, DeepDrill calculates a normal map internally. This map can be made visible by applying the <code class="docutils literal notranslate"><span class="pre">normalmap.prf</span></code> profile. The profile instructs DeepDrill to use a special GPU filter that converts the normal map data into RGB values:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
+<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">normalmap.glsl</span>
 </pre></div>
 </div>
 <p>Running DeepDrill with this profile results in the following image:</p>

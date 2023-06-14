@@ -122,19 +122,21 @@
             
 <section class="tex2jax_ignore mathjax_ignore" id="colorizing-images">
 <h1>Colorizing Images<a class="headerlink" href="#colorizing-images" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial you will learn how to recolor images.</p>
-<p>By default, images are created with a predefined color palette. To following call instructs DeepDrill to apply different coloring:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>image.map<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>vulcano.png<span class="w"> </span>-c<span class="w"> </span>colors.scale<span class="o">=</span><span class="m">3</span>.0<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>
+<p>In this tutorial you will learn how to colorize Mandelbrot images with different color palettes.</p>
+<p>By default, images are created with a predefined color palette. The following call instructs DeepDrill to use a different palette.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill image.map -o image.jpg -c colors.palette=vulcano.png 
 </pre></div>
 </div>
-<p>This results in the following image:</p>
 <p><img alt="Recolored Mandelbrot set" src="../_images/recolored1.jpg" /></p>
-<p>As it was shown above, the color palette is specified in the form of an image file. For simplicity, there are no restrictions on the format of the image. DeepDrill composes the color palette from the pixels of the first horizontal line. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images will result in slightly smoother color transitions.</p>
+<p>As shown above, the color palette is specified in the form of an image file. For simplicity, there are no restrictions on the format of the image. DeepDrill composes the color palette from the pixels of the first horizontal line and ignores all other lines. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images result in slightly smoother color transitions.</p>
 <p>In addition, DeepDrill provides a key called <code class="docutils literal notranslate"><span class="pre">colors.scale</span></code> which controls how fast the palette repeats. The following examples shows the effect:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill image.map -c colors.palette=vulcano.png -c colors.scale=3.0 -o image.jpg 
+</pre></div>
+</div>
 <p><img alt="Recolored Mandelbrot set" src="../_images/recolored2.jpg" /></p>
 <section id="predefined-palettes">
 <h2>Predefined palettes<a class="headerlink" href="#predefined-palettes" title="Permalink to this heading">¶</a></h2>
-<p>DeepDrill offers the following predefined color palettes:</p>
+<p>In the example shown above we have used palette image <code class="docutils literal notranslate"><span class="pre">vulcano.png</span></code> which is one of several predefined palettes. The images below give an overview of the available palettes. Since you can pass any image file as a palette image, you can easily colorize your images with a self-made palette:</p>
 <p><em>default</em>
 <img alt="Default palette" src="../_images/default.png" /></p>
 <p><em>candy</em>
@@ -157,7 +159,7 @@
 <img alt="ultrafrac palette" src="../_images/ultrafrac.png" /></p>
 <p><em>vulcano</em>
 <img alt="vulcano palette" src="../_images/vulcano.png" /></p>
-<p>The following example show a recolored version of one the images that were computed in the previous tutorial.</p>
+<p>The following additional examples show recolored versions of one of the images we calculated in the previous tutorial.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.loc<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-o<span class="w"> </span>seahorse1.map<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>ruby.png
 </pre></div>
 </div>
@@ -215,6 +217,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
