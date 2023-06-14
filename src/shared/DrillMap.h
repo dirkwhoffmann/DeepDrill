@@ -29,12 +29,12 @@ enum ChannelID {
 
 enum ChannelFormat {
 
-    FMT_U24_LE,
-    FMT_U32_LE,
-    FMT_U64_LE,
-    FMT_FP16_LE,
-    FMT_FLOAT_LE,
-    FMT_DOUBLE_LE
+    FMT_I16,
+    FMT_I24,
+    FMT_I32,
+    FMT_FP16,
+    FMT_FLOAT,
+    FMT_DOUBLE
 };
 
 struct MapEntry {

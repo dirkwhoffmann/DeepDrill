@@ -265,9 +265,9 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
-                        case FMT_U24_LE: load<FMT_U24_LE> (is, get(x,y).iteration); break;
-                        case FMT_U32_LE: load<FMT_U32_LE> (is, get(x,y).iteration); break;
-                        case FMT_U64_LE: load<FMT_U64_LE> (is, get(x,y).iteration); break;
+                        case FMT_I16: load <FMT_I16> (is, get(x,y).iteration); break;
+                        case FMT_I24: load <FMT_I24> (is, get(x,y).iteration); break;
+                        case FMT_I32: load <FMT_I32> (is, get(x,y).iteration); break;
 
                         default:
                             throw Exception("Invalid data format");
@@ -283,9 +283,9 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
-                        case FMT_FP16_LE: load<FMT_FP16_LE> (is, get(x,y).lognorm); break;
-                        case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).lognorm); break;
-                        case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).lognorm); break;
+                        case FMT_FP16: load <FMT_FP16> (is, get(x,y).lognorm); break;
+                        case FMT_FLOAT: load <FMT_FLOAT> (is, get(x,y).lognorm); break;
+                        case FMT_DOUBLE: load <FMT_DOUBLE> (is, get(x,y).lognorm); break;
 
                         default:
                             throw Exception("Invalid data format");
@@ -301,9 +301,9 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
-                        case FMT_FP16_LE: load<FMT_FP16_LE> (is, get(x,y).derivative); break;
-                        case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).derivative); break;
-                        case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).derivative); break;
+                        case FMT_FP16: load <FMT_FP16> (is, get(x,y).derivative); break;
+                        case FMT_FLOAT: load <FMT_FLOAT> (is, get(x,y).derivative); break;
+                        case FMT_DOUBLE: load <FMT_DOUBLE> (is, get(x,y).derivative); break;
 
                         default:
                             throw Exception("Invalid data format");
@@ -319,9 +319,9 @@ DrillMap::loadChannel(std::istream &is)
 
                     switch (ChannelFormat(fmt)) {
 
-                        case FMT_FP16_LE: load<FMT_FP16_LE> (is, get(x,y).normal); break;
-                        case FMT_FLOAT_LE: load<FMT_FLOAT_LE> (is, get(x,y).normal); break;
-                        case FMT_DOUBLE_LE: load<FMT_DOUBLE_LE> (is, get(x,y).normal); break;
+                        case FMT_FP16: load <FMT_FP16> (is, get(x,y).normal); break;
+                        case FMT_FLOAT: load <FMT_FLOAT> (is, get(x,y).normal); break;
+                        case FMT_DOUBLE: load <FMT_DOUBLE> (is, get(x,y).normal); break;
 
                         default:
                             throw Exception("Invalid data format");
@@ -339,44 +339,49 @@ DrillMap::loadChannel(std::istream &is)
 template<ChannelFormat fmt, typename T> void
 DrillMap::load(std::istream &is, T &raw)
 {
+    u8 bytes[8];
+
     switch (fmt) {
 
-        case FMT_U24_LE:
-        {
-            u32 value = 0;
-            is.read((char *)&value, 3);
-            raw = (T)value;
+        case FMT_I16:
+
+            is.read((char *)&bytes, 2);
+            raw = (T)(((i64)(i8)bytes[1] << 8) +
+                      (bytes[0]));
             break;
-        }
-        case FMT_U32_LE:
-        {
-            u32 value;
-            is.read((char *)&value, sizeof(value));
-            raw = (T)value;
+
+        case FMT_I24:
+
+            is.read((char *)&bytes, 3);
+            raw = (T)(((i64)(i8)bytes[2] << 16) +
+                      (bytes[1] << 8) +
+                      (bytes[0]));
             break;
-        }
-        case FMT_U64_LE:
-        {
-            u64 value;
-            is.read((char *)&value, sizeof(value));
-            raw = (T)value;
+
+        case FMT_I32:
+
+            is.read((char *)&bytes, 4);
+            raw = (T)(((i64)(i8)bytes[3] << 24) +
+                      (bytes[2] << 16) +
+                      (bytes[1] << 8) +
+                      (bytes[0]));
             break;
-        }
-        case FMT_FP16_LE:
+
+        case FMT_FP16:
         {
             i16 value;
             is.read((char *)&value, sizeof(value));
             raw = (T)value / (T)INT16_MAX;
             break;
         }
-        case FMT_FLOAT_LE:
+        case FMT_FLOAT:
         {
             float value;
             is.read((char *)&value, sizeof(value));
             raw = (T)value;
             break;
         }
-        case FMT_DOUBLE_LE:
+        case FMT_DOUBLE:
         {
             double value;
             is.read((char *)&value, sizeof(value));
@@ -462,49 +467,68 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
     switch (id) {
 
         case CHANNEL_ITCOUNTS:
+        {
+            if (opt.drillmap.depth < (1 << 15)) {
 
-            os << u8(id) << u8(FMT_U32_LE);
+                os << u8(id) << u8(FMT_I16);
+                for (isize y = 0; y < height; y++) {
+                    for (isize x = 0; x < width; x++) {
+                        save <FMT_I16> (os, get(x,y).iteration);
+                    }
+                }
 
-            for (isize y = 0; y < height; y++) {
-                for (isize x = 0; x < width; x++) {
+            } else if (opt.drillmap.depth < (1 << 23)) {
 
-                    save <FMT_U32_LE> (os, get(x,y).iteration);
+                os << u8(id) << u8(FMT_I24);
+                for (isize y = 0; y < height; y++) {
+                    for (isize x = 0; x < width; x++) {
+                        save <FMT_I24> (os, get(x,y).iteration);
+                    }
+                }
+
+            } else {
+
+                os << u8(id) << u8(FMT_I32);
+                for (isize y = 0; y < height; y++) {
+                    for (isize x = 0; x < width; x++) {
+                        save <FMT_I32> (os, get(x,y).iteration);
+                    }
                 }
             }
             break;
-
+        }
         case CHANNEL_LOGNORMS:
 
-            os << u8(id) << u8(FMT_FLOAT_LE);
+            os << u8(id) << u8(FMT_FLOAT);
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
 
-                    save <FMT_FLOAT_LE> (os, get(x,y).lognorm);
+                    save <FMT_FLOAT> (os, get(x,y).lognorm);
                 }
             }
             break;
 
         case CHANNEL_DERIVATIVES:
 
-            os << u8(id) << u8(FMT_FLOAT_LE);
+            os << u8(id) << u8(FMT_FLOAT);
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
 
-                    save <FMT_FLOAT_LE> (os, get(x,y).derivative);
+                    save <FMT_FLOAT> (os, get(x,y).derivative);
                 }
             }
             break;
 
         case CHANNEL_NORMALS:
 
-            os << u8(id) << u8(FMT_FP16_LE);
+            os << u8(id) << u8(FMT_FP16);
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
 
-                    save <FMT_FP16_LE> (os, get(x,y).normal);
+                    save <FMT_FP16> (os, get(x,y).normal);
                 }
             }
             break;
@@ -518,39 +542,47 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
 template<ChannelFormat fmt, typename T> void
 DrillMap::save(std::ostream &os, T raw)
 {
+    u8 bytes[8];
+
     switch (fmt) {
 
-        case FMT_U24_LE:
-        {
-            u32 value = (u32)raw;
-            os.write((char *)&value, 3);
+        case FMT_I16:
+
+            bytes[0] = ((u64)raw >> 0)  & 0xFF;
+            bytes[1] = ((u64)raw >> 8)  & 0xFF;
+            os.write((char *)bytes, 2);
             break;
-        }
-        case FMT_U32_LE:
-        {
-            u32 value = (u32)raw;
-            os.write((char *)&value, sizeof(value));
+
+        case FMT_I24:
+
+            bytes[0] = ((u64)raw >> 0)  & 0xFF;
+            bytes[1] = ((u64)raw >> 8)  & 0xFF;
+            bytes[2] = ((u64)raw >> 16) & 0xFF;
+            os.write((char *)bytes, 3);
             break;
-        }
-        case FMT_U64_LE:
-        {
-            u64 value = (u64)raw;
-            os.write((char *)&value, sizeof(value));
+
+        case FMT_I32:
+
+            bytes[0] = ((u64)raw >> 0)  & 0xFF;
+            bytes[1] = ((u64)raw >> 8)  & 0xFF;
+            bytes[2] = ((u64)raw >> 16) & 0xFF;
+            bytes[3] = ((u64)raw >> 24) & 0xFF;
+            os.write((char *)bytes, 4);
             break;
-        }
-        case FMT_FP16_LE:
+
+        case FMT_FP16:
         {
             i16 value = (i16)(raw * (T)INT16_MAX);
             os.write((char *)&value, sizeof(value));
             break;
         }
-        case FMT_FLOAT_LE:
+        case FMT_FLOAT:
         {
             float value = (float)raw;
             os.write((char *)&value, sizeof(value));
             break;
         }
-        case FMT_DOUBLE_LE:
+        case FMT_DOUBLE:
         {
             double value = (double)raw;
             os.write((char *)&value, sizeof(value));

@@ -74,7 +74,7 @@ ColorMap::compute(const DrillMap &map)
             // Colorize image
             //
 
-            if (data.iteration == UINT32_MAX) {
+            if (data.iteration == INT32_MAX) {
 
                 // Map to a black or to a debug color if the point is a glitch point
                 colorMap[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
@@ -103,7 +103,7 @@ ColorMap::compute(const DrillMap &map)
 
                 normalMap[pos] = 0;
 
-            } else if (data.iteration == UINT32_MAX) {
+            } else if (data.iteration == INT32_MAX) {
 
                 // Map to zero if the point is a glitch point
                 normalMap[pos] = 0;
