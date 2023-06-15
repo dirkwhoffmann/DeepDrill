@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "DrillMap.h"
+#include "Application.h"
 #include "Coord.h"
 #include "Exception.h"
 #include "IO.h"
@@ -258,10 +259,19 @@ DrillMap::loadHeader(std::istream &is)
         throw Exception("Not a valid map file. Invalid header.");
     }
 
-    // Version number
-    u8 major; is >> major;
-    u8 minor; is >> minor;
-    u8 beta;  is >> beta;
+    // Version number and map format
+    u8 major;       is >> major;
+    u8 minor;       is >> minor;
+    u8 subminor;    is >> subminor;
+    u8 beta;        is >> beta;
+    u8 format;      is >> format;
+
+    // Only proceed if the mapfile format is understood
+    if (format != MAP_FORMAT) {
+        throw Exception("The mapfile is incompatible with this release. It has been generated with DeepDrill " +
+                        Application::version(major, minor, subminor, beta) +
+                        ".");
+    }
 
     // Width and height
     is.read((char *)&width, sizeof(width));
@@ -495,7 +505,9 @@ DrillMap::saveHeader(std::ostream &os)
     // Version number
     os << u8(VER_MAJOR);
     os << u8(VER_MINOR);
+    os << u8(VER_SUBMINOR);
     os << u8(VER_BETA);
+    os << u8(MAP_FORMAT);
 
     // Width and height
     os.write((char *)&width, sizeof(width));

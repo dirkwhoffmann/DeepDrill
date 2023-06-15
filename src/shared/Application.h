@@ -37,6 +37,7 @@ public:
 
     // Returns a version string
     static string version();
+    static string version(isize major, isize minor, isize subminor, isize beta);
 
 private:
 

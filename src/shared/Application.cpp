@@ -143,10 +143,21 @@ Application::readProfiles()
 string
 Application::version()
 {
-    return
-    std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR) +
-    (VER_BETA > 0 ? "b" + std::to_string(VER_BETA) : "") +
-    (releaseBuild ? "" : " [DEBUG BUILD]");
+    auto result = version(VER_MAJOR, VER_MINOR, VER_SUBMINOR, VER_BETA);
+    if (!releaseBuild) result += " [DEBUG BUILD]";
+
+    return result;
+}
+
+string
+Application::version(isize major, isize minor, isize subminor, isize beta)
+{
+    auto result = std::to_string(major) + "." + std::to_string(minor);
+
+    if (subminor) result += "." + std::to_string(subminor);
+    if (beta) result += "b" + std::to_string(beta);
+
+    return result;
 }
 
 }
