@@ -89,6 +89,9 @@ struct Options {
         // Indicates if a normal map should be computed
         isize depth;
 
+        // Indicates if map files should be compressed before saving
+        bool compress;
+        
     } drillmap;
 
     struct {

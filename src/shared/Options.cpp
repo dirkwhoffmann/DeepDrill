@@ -31,6 +31,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["map.width"] = "1920";
     defaults["map.height"] = "1080";
     defaults["map.depth"] = "1";
+    defaults["map.compress"] = "true";
 
     // Image keys
     defaults["image.width"] = "1920";
@@ -120,6 +121,10 @@ Options::parse(string key, string value)
     } else if (key == "map.depth") {
 
         parse(key, value, drillmap.depth, 0, 1);
+
+    } else if (key == "map.compress") {
+
+        parse(key, value, drillmap.compress);
 
     } else if (key == "image.width") {
 

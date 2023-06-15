@@ -201,26 +201,34 @@ DrillMap::load(const string &path)
 void
 DrillMap::load(std::istream &is)
 {
-    {
-        ProgressIndicator progress("Loading map file");
+    ProgressIndicator progress1("Loading map file");
 
-        // Load header
-        loadHeader(is);
+    // Load header
+    loadHeader(is);
 
-        // Adjust the map size
-        resize(width, height);
+    // Adjust the map size
+    resize(width, height);
 
-        Compressor compressor(width * height * sizeof(MapEntry));
+    // The next byte indicates if the map is compressed
+    u8 compressed; is >> compressed;
 
-        // Load the rest of the file
-        compressor << is;
+    // Load the rest of the file
+    Compressor compressor(width * height * sizeof(MapEntry));
+    compressor << is;
+    progress1.done();
 
-        // Uncompress data
+    // Uncompress the channel data if needed
+    if (compressed) {
+
+        ProgressIndicator progress2("Uncompressing map file");
         compressor.uncompressData();
-
-        // Extract all channels
-        while (!compressor.eof()) { loadChannel(compressor); }
     }
+
+
+    // Extract all channels
+    ProgressIndicator progress3("Extracting channels");
+    while (!compressor.eof()) { loadChannel(compressor); }
+    progress3.done();
 
     if (opt.flags.verbose) {
 
@@ -423,24 +431,22 @@ DrillMap::save(std::ostream &os)
     bool saveDerivatives = false;
     bool saveNormals = opt.drillmap.depth == 1;
 
-    {
-        ProgressIndicator progress("Saving map file");
+    ProgressIndicator progress1("Preparing map file");
 
-        // Write header
-        saveHeader(os);
+    // Write header
+    saveHeader(os);
 
-        // Write channels
-        Compressor compressor(width * height * sizeof(MapEntry));
-        if (saveIterations) saveChannel(compressor, CHANNEL_ITCOUNTS);
-        if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORMS);
-        if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVES);
-        if (saveNormals) saveChannel(compressor, CHANNEL_NORMALS);
+    // The next byte indicates if channel data is compressed
+    os << u8(opt.drillmap.compress);
 
-        compressor.compressData();
+    // Generate channels
+    Compressor compressor(width * height * sizeof(MapEntry));
+    if (saveIterations) saveChannel(compressor, CHANNEL_ITCOUNTS);
+    if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORMS);
+    if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVES);
+    if (saveNormals) saveChannel(compressor, CHANNEL_NORMALS);
+    progress1.done();
 
-        compressor >> os;
-    }
-    
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;
@@ -456,6 +462,28 @@ DrillMap::save(std::ostream &os)
         log::cout << (saveNormals ? "Saved" : "Not saved") << log::endl;
         log::cout << log::vspace;
     }
+
+    if (opt.drillmap.compress) {
+
+        ProgressIndicator progress2("Compression map file");
+
+        auto oldSize = compressor.size();
+        compressor.compressData();
+        auto newSize = compressor.size();
+        progress2.done();
+
+        if (opt.flags.verbose) {
+
+            log::cout << log::vspace;
+            log::cout << log::ralign("Reduction: ");
+            log::cout << isize(double(oldSize) / double(newSize)) << log::endl;
+            log::cout << log::vspace;
+        }
+    }
+
+    ProgressIndicator progress3("Saving map file");
+    compressor >> os;
+    progress3.done();
 }
 
 void

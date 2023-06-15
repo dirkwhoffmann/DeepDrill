@@ -31,6 +31,7 @@ public:
     ~Compressor() { };
 
     bool eof();
+    isize size() { return (isize)buffer.size(); }
 
     Compressor& operator<<(const i8 &value) { write(value); return *this; }
     Compressor& operator<<(const u8 &value) { write(value); return *this; }
