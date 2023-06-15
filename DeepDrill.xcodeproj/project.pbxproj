@@ -50,6 +50,10 @@
 		5072FD7C2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
 		5072FD7D2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
 		5072FD7E2A272EF8003DE341 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5072FD7A2A272EF8003DE341 /* Application.cpp */; };
+		50A09C732A3AE81C00845EE7 /* miniz.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C712A3AE81C00845EE7 /* miniz.c */; settings = {COMPILER_FLAGS = "-Wno-comma"; }; };
+		50A09C742A3AE81C00845EE7 /* miniz.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C712A3AE81C00845EE7 /* miniz.c */; settings = {COMPILER_FLAGS = "-Wno-comma"; }; };
+		50A09C772A3AF9C700845EE7 /* Compressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C752A3AF9C700845EE7 /* Compressor.cpp */; };
+		50A09C782A3AF9C700845EE7 /* Compressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C752A3AF9C700845EE7 /* Compressor.cpp */; };
 		50AE096429FE7E0A005E4D3E /* Animated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE096329FE7E0A005E4D3E /* Animated.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Approximator.cpp */; };
@@ -215,6 +219,10 @@
 		5072FD692A271E4A003DE341 /* DeepMake.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeepMake.h; sourceTree = "<group>"; };
 		5072FD7A2A272EF8003DE341 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		5072FD7B2A272EF8003DE341 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		50A09C712A3AE81C00845EE7 /* miniz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = miniz.c; sourceTree = "<group>"; };
+		50A09C722A3AE81C00845EE7 /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
+		50A09C752A3AF9C700845EE7 /* Compressor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compressor.cpp; sourceTree = "<group>"; };
+		50A09C762A3AF9C700845EE7 /* Compressor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Compressor.h; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -549,6 +557,10 @@
 				50102344269DBEF000AC61A8 /* Exception.cpp */,
 				50102348269DC4F500AC61A8 /* IO.h */,
 				50102347269DC4F500AC61A8 /* IO.cpp */,
+				50A09C762A3AF9C700845EE7 /* Compressor.h */,
+				50A09C752A3AF9C700845EE7 /* Compressor.cpp */,
+				50A09C712A3AE81C00845EE7 /* miniz.c */,
+				50A09C722A3AE81C00845EE7 /* miniz.h */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -797,11 +809,13 @@
 				5049968929DED32B00B15919 /* Exception.cpp in Sources */,
 				5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */,
 				5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */,
+				50A09C782A3AF9C700845EE7 /* Compressor.cpp in Sources */,
 				5049969929DF051200B15919 /* StandardComplex.cpp in Sources */,
 				5049969529DF04F500B15919 /* Options.cpp in Sources */,
 				5049968C29DED33200B15919 /* ProgressIndicator.cpp in Sources */,
 				5047B50029FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				5049968829DED32900B15919 /* Parser.cpp in Sources */,
+				50A09C742A3AE81C00845EE7 /* miniz.c in Sources */,
 				50DA29512A2B583100600EB0 /* DrillMap.cpp in Sources */,
 				5049968229DED17800B15919 /* DeepZoom.cpp in Sources */,
 				50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */,
@@ -852,12 +866,14 @@
 				50102349269DC4F500AC61A8 /* IO.cpp in Sources */,
 				50BEC704269486AA00CCDFA8 /* Coord.cpp in Sources */,
 				50BEC706269486AA00CCDFA8 /* Options.cpp in Sources */,
+				50A09C772A3AF9C700845EE7 /* Compressor.cpp in Sources */,
 				50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */,
 				50BEC71D269486C200CCDFA8 /* Chrono.cpp in Sources */,
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
 				50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
 				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
+				50A09C732A3AE81C00845EE7 /* miniz.c in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */,
 				50EB497326A00C2A0019078C /* ColorMap.cpp in Sources */,

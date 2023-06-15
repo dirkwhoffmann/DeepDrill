@@ -13,6 +13,7 @@
 #include "Driller.h"
 #include "ColorMap.h"
 #include "ProgressIndicator.h"
+#include "Compressor.h"
 
 #include <getopt.h>
 

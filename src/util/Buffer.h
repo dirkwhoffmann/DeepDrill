@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "miniz.h"
 
 namespace dd {
 
