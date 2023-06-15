@@ -370,9 +370,9 @@ DrillMap::load(Compressor &is, T &raw)
         }
         case FMT_I24:
         {
-            i32 value;
-            is >> value;
-            raw = (T)value;
+            u8 b[3];
+            is >> b[2]; is >> b[1]; is >> b[0];
+            raw = T(((i32)(i8)b[2] << 16) + (b[1] << 8) + b[0]);
             break;
         }
         case FMT_I32:
@@ -476,7 +476,7 @@ DrillMap::save(std::ostream &os)
 
             log::cout << log::vspace;
             log::cout << log::ralign("Reduction: ");
-            log::cout << isize(double(oldSize) / double(newSize)) << log::endl;
+            log::cout << isize(100.0 * newSize / oldSize) << "%" << log::endl;
             log::cout << log::vspace;
         }
     }
@@ -570,9 +570,11 @@ DrillMap::save(Compressor &os, T raw)
             os << (i16)raw;
             break;
 
-        case FMT_I24: // DEPRECATED
+        case FMT_I24:
 
-            os << (i32)raw;
+            os << (u8)((i32)raw >> 16);
+            os << (u8)((i32)raw >> 8);
+            os << (u8)((i32)raw);
             break;
 
         case FMT_I32:

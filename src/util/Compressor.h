@@ -17,8 +17,6 @@
 namespace dd {
 
 class Compressor {
-
-public: // REMOVE
     
     isize capacity = 0;
     isize ptr = 0;
