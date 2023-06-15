@@ -141,6 +141,18 @@ Driller::drill()
 void
 Driller::collectCoordinates(vector<dd::Coord> &remaining)
 {
+    /* This function collects all drill coordinates while filtering out all
+     * coordinates that belong to the main bulb or the cardioid (for which
+     * a simple inside/outside test exists). The following strategy is applied:
+     *
+     * The map area is superimposed with a grid. For each grid coordiate,
+     * bulb and cardioid checking is performed. If at least one pixel belongs
+     * to the bulb or the cardioid, the check is repeated for all pixels (which
+     * may take some seconds depending on the map size). If the test is
+     * negative for all points of the mesh, it is assumed that the drill area
+     * does not intercept the bulb or the cardioid. In this case, all locations
+     * need to be drilled.
+     */
     auto inCardioid = [&](PrecisionComplex &c) {
 
         mpf_class r1 = c.re + 1.0;
