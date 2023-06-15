@@ -210,8 +210,22 @@ DrillMap::load(std::istream &is)
         // Adjust the map size
         resize(width, height);
 
-        // Read channels
-        while (is.peek() != EOF) { loadChannel(is); }
+        Compressor compressor(width * height * sizeof(MapEntry));
+
+        // Load the rest of the file
+        compressor << is;
+
+        for (isize i = 0; i < 16; i++) {
+            printf("%02X ", compressor.buffer[i]);
+        }
+        printf("\n");
+
+        // Uncompress data
+        // compressor.uncompressData();
+
+        // Extract all channels
+        // while (is.peek() != EOF) { loadChannel(is); }
+        while (!compressor.eof()) { loadChannel(compressor); }
     }
 
     if (opt.flags.verbose) {
@@ -253,13 +267,15 @@ DrillMap::loadHeader(std::istream &is)
 }
 
 void
-DrillMap::loadChannel(std::istream &is)
+DrillMap::loadChannel(Compressor &is)
 {
     u8 id, fmt;
 
     is >> id;
     is >> fmt;
 
+    printf("Loading channel with id %d ...\n", id);
+    
     switch (ChannelID(id)) {
 
         case CHANNEL_ITCOUNTS:
@@ -338,57 +354,77 @@ DrillMap::loadChannel(std::istream &is)
 
             throw Exception("Invalid channel ID: " + std::to_string(id));
     }
+
+    printf("Done\n");
 }
 
 template<ChannelFormat fmt, typename T> void
-DrillMap::load(std::istream &is, T &raw)
+DrillMap::load(Compressor &is, T &raw)
 {
-    u8 bytes[8];
-
     switch (fmt) {
 
         case FMT_I16:
-
-            is.read((char *)&bytes, 2);
-            raw = (T)(((i64)(i8)bytes[1] << 8) +
-                      (bytes[0]));
+        {
+            i16 value;
+            is >> value;
+            raw = (T)value;
+            /*
+             is.read((char *)&bytes, 2);
+             raw = (T)(((i64)(i8)bytes[1] << 8) +
+             (bytes[0]));
+             */
             break;
-
+        }
         case FMT_I24:
-
+        {
+            i32 value;
+            is >> value;
+            raw = (T)value;
+            /*
             is.read((char *)&bytes, 3);
             raw = (T)(((i64)(i8)bytes[2] << 16) +
                       (bytes[1] << 8) +
                       (bytes[0]));
+            */
             break;
-
+        }
         case FMT_I32:
-
-            is.read((char *)&bytes, 4);
-            raw = (T)(((i64)(i8)bytes[3] << 24) +
-                      (bytes[2] << 16) +
-                      (bytes[1] << 8) +
-                      (bytes[0]));
-            break;
-
+        {
+            i32 value;
+            is >> value;
+            raw = (T)value;
+            /*
+             is.read((char *)&bytes, 4);
+             raw = (T)(((i64)(i8)bytes[3] << 24) +
+             (bytes[2] << 16) +
+             (bytes[1] << 8) +
+             (bytes[0]));
+             break;
+             */
+        }
         case FMT_FP16:
         {
             i16 value;
-            is.read((char *)&value, sizeof(value));
+            is >> value;
+            // is.read((char *)&value, sizeof(value));
             raw = (T)value / (T)INT16_MAX;
             break;
         }
         case FMT_FLOAT:
         {
             float value;
-            is.read((char *)&value, sizeof(value));
+            is >> value;
+            // is.read((char *)&value, sizeof(value));
             raw = (T)value;
             break;
         }
         case FMT_DOUBLE:
         {
             double value;
+            is >> value;
+            /*
             is.read((char *)&value, sizeof(value));
+            */
             raw = (T)value;
             break;
         }
@@ -396,7 +432,7 @@ DrillMap::load(std::istream &is, T &raw)
 }
 
 template<ChannelFormat fmt> void
-DrillMap::load(std::istream &is, StandardComplex &raw)
+DrillMap::load(Compressor &is, StandardComplex &raw)
 {
     load <fmt> (is, raw.re);
     load <fmt> (is, raw.im);
@@ -425,11 +461,20 @@ DrillMap::save(std::ostream &os)
         // Write header
         saveHeader(os);
 
+        Compressor compressor(width * height * sizeof(MapEntry));
+
         // Write channels
-        if (saveIterations) saveChannel(os, CHANNEL_ITCOUNTS);
-        if (saveLognorms) saveChannel(os, CHANNEL_LOGNORMS);
-        if (saveDerivatives) saveChannel(os, CHANNEL_DERIVATIVES);
-        if (saveNormals) saveChannel(os, CHANNEL_NORMALS);
+        if (saveIterations) saveChannel(compressor, CHANNEL_ITCOUNTS);
+        if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORMS);
+        if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVES);
+        if (saveNormals) saveChannel(compressor, CHANNEL_NORMALS);
+
+        compressor >> os;
+
+        for (isize i = 0; i < 16; i++) {
+            printf("%02X ", compressor.buffer[i]);
+        }
+        printf("\n");
     }
     
     if (opt.flags.verbose) {
@@ -466,7 +511,7 @@ DrillMap::saveHeader(std::ostream &os)
 }
 
 void
-DrillMap::saveChannel(std::ostream &os, ChannelID id)
+DrillMap::saveChannel(Compressor &os, ChannelID id)
 {
     switch (id) {
 
@@ -544,59 +589,69 @@ DrillMap::saveChannel(std::ostream &os, ChannelID id)
 }
 
 template<ChannelFormat fmt, typename T> void
-DrillMap::save(std::ostream &os, T raw)
+DrillMap::save(Compressor &os, T raw)
 {
-    u8 bytes[8];
-
     switch (fmt) {
 
         case FMT_I16:
 
+            os << (i16)raw;
+            /*
             bytes[0] = ((u64)raw >> 0)  & 0xFF;
             bytes[1] = ((u64)raw >> 8)  & 0xFF;
             os.write((char *)bytes, 2);
+            */
             break;
 
-        case FMT_I24:
+        case FMT_I24: // DEPRECATED
 
+            os << (i32)raw;
+            /*
             bytes[0] = ((u64)raw >> 0)  & 0xFF;
             bytes[1] = ((u64)raw >> 8)  & 0xFF;
             bytes[2] = ((u64)raw >> 16) & 0xFF;
             os.write((char *)bytes, 3);
+            */
             break;
 
         case FMT_I32:
 
+            os << (i32)raw;
+            /*
             bytes[0] = ((u64)raw >> 0)  & 0xFF;
             bytes[1] = ((u64)raw >> 8)  & 0xFF;
             bytes[2] = ((u64)raw >> 16) & 0xFF;
             bytes[3] = ((u64)raw >> 24) & 0xFF;
             os.write((char *)bytes, 4);
+            */
             break;
 
         case FMT_FP16:
         {
             i16 value = (i16)(raw * (T)INT16_MAX);
-            os.write((char *)&value, sizeof(value));
+            os << value;
+            // os.write((char *)&value, sizeof(value));
             break;
         }
         case FMT_FLOAT:
         {
             float value = (float)raw;
-            os.write((char *)&value, sizeof(value));
+            os << value;
+            // os.write((char *)&value, sizeof(value));
             break;
         }
         case FMT_DOUBLE:
         {
             double value = (double)raw;
-            os.write((char *)&value, sizeof(value));
+            os << value;
+            // os.write((char *)&value, sizeof(value));
             break;
         }
     }
 }
 
 template<ChannelFormat fmt> void
-DrillMap::save(std::ostream &os, const StandardComplex &raw)
+DrillMap::save(Compressor &os, const StandardComplex &raw)
 {
     save <fmt> (os, raw.re);
     save <fmt> (os, raw.im);

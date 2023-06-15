@@ -9,6 +9,7 @@ Chrono.cpp
 Exception.cpp
 IO.cpp
 Parser.cpp
+Compressor.cpp
 miniz.c
 
 )
@@ -31,6 +32,7 @@ Chrono.cpp
 Exception.cpp
 IO.cpp
 Parser.cpp
+Compressor.cpp
 miniz.c
 
 )

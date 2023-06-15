@@ -15,6 +15,42 @@
 
 namespace dd {
 
+bool
+Compressor::eof()
+{
+    printf("ptr = %zd size = %zu\n", ptr, buffer.size());
+    return ptr == isize(buffer.size());
+}
+
+Compressor&
+Compressor::operator<<(std::istream &is)
+{
+    // Determine the number of bytes to read
+    std::streamsize current = is.tellg();
+    printf("Current position = %ld\n", current);
+    is.seekg(0, std::ios::end);
+    std::streamsize last = is.tellg();
+    printf("Last position = %ld\n", last);
+    is.seekg(current);
+    auto size = last - current;
+    printf("Reading in %ld bytes\n", size);
+
+    // Read data
+    buffer.resize(size);
+    if (!is.read((char *)buffer.data(), size)) {
+        throw Exception("Compressor: Can't read from stream");
+    }
+
+    return *this;
+}
+
+Compressor&
+Compressor::operator>>(std::ostream &os)
+{
+    os.write((char *)buffer.data(), buffer.size());
+    return *this;
+}
+
 void
 Compressor::compressData()
 {

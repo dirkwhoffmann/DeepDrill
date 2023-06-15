@@ -18,6 +18,8 @@ namespace dd {
 
 class Compressor {
 
+public: // REMOVE
+    
     isize capacity = 0;
     isize ptr = 0;
 
@@ -28,6 +30,8 @@ public:
     Compressor(isize capacity) : capacity(capacity) { }
     ~Compressor() { };
 
+    bool eof();
+
     Compressor& operator<<(const i8 &value) { write(value); return *this; }
     Compressor& operator<<(const u8 &value) { write(value); return *this; }
     Compressor& operator<<(const i16 &value) { write(value); return *this; }
@@ -36,6 +40,7 @@ public:
     Compressor& operator<<(const u32 &value) { write(value); return *this; }
     Compressor& operator<<(const float &value) { write(value); return *this; }
     Compressor& operator<<(const double &value) { write(value); return *this; }
+    Compressor& operator<<(std::istream &is);
 
     Compressor& operator>>(i8 &value) { read(value); return *this; }
     Compressor& operator>>(u8 &value) { read(value); return *this; }
@@ -45,9 +50,7 @@ public:
     Compressor& operator>>(u32 &value) { read(value); return *this; }
     Compressor& operator>>(float &value) { read(value); return *this; }
     Compressor& operator>>(double &value) { read(value); return *this; }
-
-    // Compressor& operator<<(std::istream &is)
-    // Compressor& operator>>(std::ostream &os);
+    Compressor& operator>>(std::ostream &os);
 
     void compressData();
     void uncompressData();

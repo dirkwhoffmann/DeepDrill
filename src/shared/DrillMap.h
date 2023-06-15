@@ -16,6 +16,7 @@
 #include "Buffer.h"
 #include "StandardComplex.h"
 #include "ColorMap.h"
+#include "Compressor.h"
 
 namespace dd {
 
@@ -143,13 +144,13 @@ public:
 private:
 
     void loadHeader(std::istream &is);
-    void loadChannel(std::istream &is);
-    template<ChannelFormat fmt, typename T> void load(std::istream &is, T &raw);
-    template<ChannelFormat fmt> void load(std::istream &is, u32 &raw) { load <fmt, u32> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, u64 &raw) { load <fmt, u64> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, float &raw) { load <fmt, float> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, double &raw) { load <fmt, double> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, StandardComplex &raw);
+    void loadChannel(Compressor &is);
+    template<ChannelFormat fmt, typename T> void load(Compressor &is, T &raw);
+    template<ChannelFormat fmt> void load(Compressor &is, u32 &raw) { load <fmt, u32> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, u64 &raw) { load <fmt, u64> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, float &raw) { load <fmt, float> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, double &raw) { load <fmt, double> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, StandardComplex &raw);
 
     
     //
@@ -164,13 +165,13 @@ public:
 private:
 
     void saveHeader(std::ostream &os);
-    void saveChannel(std::ostream &os, ChannelID id);
-    template<ChannelFormat fmt, typename T> void save(std::ostream &os, T raw);
-    template<ChannelFormat fmt> void save(std::ostream &os, u32 raw) { save <fmt, u32> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, u64 raw) { save <fmt, u64> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, float raw) { save <fmt, float> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, double raw) { save <fmt, double> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, const StandardComplex &raw);
+    void saveChannel(Compressor &os, ChannelID id);
+    template<ChannelFormat fmt, typename T> void save(Compressor &os, T raw);
+    template<ChannelFormat fmt> void save(Compressor &os, u32 raw) { save <fmt, u32> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, u64 raw) { save <fmt, u64> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, float raw) { save <fmt, float> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, double raw) { save <fmt, double> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, const StandardComplex &raw);
 };
 
 }
