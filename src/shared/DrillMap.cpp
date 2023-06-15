@@ -50,7 +50,7 @@ DrillMap::resize(isize w, isize h)
 }
 
 bool
-DrillMap::hasIterations()
+DrillMap::hasIterations() const
 {
     for (isize i = 0; i < width * height; i++) {
         if (data[i].iteration) return true;
@@ -59,7 +59,7 @@ DrillMap::hasIterations()
 }
 
 bool
-DrillMap::hasLogNorms()
+DrillMap::hasLogNorms() const
 {
     for (isize i = 0; i < width * height; i++) {
         if (data[i].lognorm) return true;
@@ -68,7 +68,7 @@ DrillMap::hasLogNorms()
 }
 
 bool
-DrillMap::hasDerivates()
+DrillMap::hasDerivates() const
 {
     for (isize i = 0; i < width * height; i++) {
         if (data[i].derivative != StandardComplex(0,0)) return true;
@@ -77,12 +77,43 @@ DrillMap::hasDerivates()
 }
 
 bool
-DrillMap::hasNormals()
+DrillMap::hasNormals() const
 {
     for (isize i = 0; i < width * height; i++) {
         if (data[i].normal != StandardComplex(0,0)) return true;
     }
     return false;
+}
+
+bool
+DrillMap::isOutside(const struct Coord &c) const
+{
+    return get(c).iteration > 0;
+}
+
+bool
+DrillMap::isRejected(const struct Coord &c) const
+{
+    return get(c).iteration == POINT_REJECTED;
+}
+
+bool
+DrillMap::isPeriodic(const struct Coord &c) const
+{
+    return get(c).iteration == POINT_PERIODIC;
+}
+
+bool
+DrillMap::isGlitch(const struct Coord &c) const
+{
+    return get(c).iteration == POINT_GLITCH;
+}
+
+bool
+DrillMap::isInside(const struct Coord &c) const
+{
+    auto it = get(c).iteration;
+    return it == POINT_MAX_DEPTH || it == POINT_REJECTED || it == POINT_PERIODIC;
 }
 
 MapEntry *
@@ -125,36 +156,9 @@ DrillMap::set(const struct Coord &c, i32 iteration, float lognorm)
 }
 
 void
-DrillMap::markAsInside(const struct Coord &c)
+DrillMap::markAsInside(const struct Coord &c, PointType type)
 {
-    set(c.x, c.y, MapEntry {
-        0,
-        INFINITY,
-        StandardComplex(),
-        StandardComplex()
-    } );
-}
-
-void
-DrillMap::markAsGlitch(const struct Coord &c)
-{
-    set(c.x, c.y, MapEntry {
-        INT32_MAX,
-        NAN,
-        StandardComplex(),
-        StandardComplex()
-    } );
-}
-
-void
-DrillMap::markAsRejected(const struct Coord &c)
-{
-    set(c.x, c.y, MapEntry {
-        0,
-        INFINITY,
-        StandardComplex(),
-        StandardComplex()
-    } );
+    set(c.x, c.y, MapEntry { type, 0.0, StandardComplex(), StandardComplex() } );
 }
 
 void

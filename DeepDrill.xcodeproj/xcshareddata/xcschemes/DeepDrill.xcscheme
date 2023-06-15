@@ -81,12 +81,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p x.prf "
+            argument = "-c debug.glitches=true"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p 3D.prf"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p medium.prf"

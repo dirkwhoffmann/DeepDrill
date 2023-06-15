@@ -66,6 +66,8 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Debug keys
     defaults["debug.glitches"] = "no";
+    defaults["debug.rejected"] = "no";
+    defaults["debug.periodic"] = "no";
 }
 
 void
@@ -224,6 +226,14 @@ Options::parse(string key, string value)
     } else if (key == "debug.glitches") {
 
         parse(key, value, debug.glitches);
+
+    } else if (key == "debug.rejected") {
+
+        parse(key, value, debug.rejected);
+
+    } else if (key == "debug.periodic") {
+
+        parse(key, value, debug.periodic);
 
     } else {
 

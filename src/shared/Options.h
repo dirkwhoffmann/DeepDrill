@@ -175,8 +175,14 @@ struct Options {
 
     struct {
 
-        // Highlight glitches in texture
+        // Highlight glitch points in texture
         bool glitches;
+
+        // Highlight rejected points in texture
+        bool rejected;
+
+        // Highlight periodic points in texture
+        bool periodic;
 
     } debug;
 

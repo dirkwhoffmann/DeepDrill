@@ -19,6 +19,14 @@
 
 namespace dd {
 
+enum PointType : i32 {
+
+    POINT_MAX_DEPTH = 0,    // Point is inside M (didn't escape)
+    POINT_REJECTED = -1,    // Point is inside M (in bulb or cardioid)
+    POINT_PERIODIC = -2,    // Point is inside M (finite orbit)
+    POINT_GLITCH   = -3     // Unresolved (glitch point)
+};
+
 enum ChannelID {
 
     CHANNEL_ITCOUNTS,
@@ -82,10 +90,17 @@ public:
     // Analyzing
     //
 
-    bool hasIterations();
-    bool hasLogNorms();
-    bool hasDerivates();
-    bool hasNormals();
+    bool hasIterations() const;
+    bool hasLogNorms() const;
+    bool hasDerivates() const;
+    bool hasNormals() const;
+
+    bool isInside(const struct Coord &c) const;
+    bool isOutside(const struct Coord &c) const;
+    bool isGlitch(const struct Coord &c) const;
+    bool hasMaxDepth(const struct Coord &c) const;
+    bool isRejected(const struct Coord &c) const;
+    bool isPeriodic(const struct Coord &c) const;
 
 
     //
@@ -95,12 +110,15 @@ public:
     MapEntry *operator [] (const isize &) const;
     MapEntry &get(isize w, isize h) const;
     MapEntry &get(const struct Coord &c) const;
+
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
     void set(const struct Coord &c, i32 iteration, float lognorm);
-    void markAsInside(const struct Coord &c);
-    void markAsGlitch(const struct Coord &c);
-    void markAsRejected(const struct Coord &c);
+    void markAsInside(const struct Coord &c, PointType type = POINT_MAX_DEPTH);
+    void markAsGlitch(const struct Coord &c) { markAsInside(c, POINT_GLITCH); }
+    void markAsRejected(const struct Coord &c) { markAsInside(c, POINT_REJECTED); }
+    void markAsPeriodic(const struct Coord &c)  { markAsInside(c, POINT_PERIODIC); }
+
     void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints);
 
 

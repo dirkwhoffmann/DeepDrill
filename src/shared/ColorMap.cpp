@@ -66,25 +66,15 @@ ColorMap::compute(const DrillMap &map)
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
 
+            auto c = Coord(x,y);
             auto data = map.get(x, y);
-            // auto pos = (height - 1 - y) * width + x;
             auto pos = y * width + x;
 
             //
             // Colorize image
             //
 
-            if (data.iteration == INT32_MAX) {
-
-                // Map to a black or to a debug color if the point is a glitch point
-                colorMap[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
-
-            } else if (data.iteration == 0) {
-
-                // Map to a black if the point belongs to the mandelbrot set
-                colorMap[pos] = 0xFF000000;
-
-            } else {
+            if (map.isOutside(c)) {
 
                 double sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
                 sl *= .0025;
@@ -93,27 +83,29 @@ ColorMap::compute(const DrillMap &map)
                 sl *= opt.colors.scale;
 
                 colorMap[pos] = palette.interpolateABGR(sl);
+
+            } else if (opt.debug.glitches && map.isGlitch(c)) {
+
+                colorMap[pos] = 0xFF0000FF;
+
+            } else if (opt.debug.rejected && map.isRejected(c)) {
+
+                colorMap[pos] = 0xFF00FFFF;
+
+            } else if (opt.debug.periodic && map.isPeriodic(c)) {
+
+                colorMap[pos] = 0xFFFF00FF;
+
+            } else {
+
+                colorMap[pos] = 0xFF000000;
             }
 
             //
             // Colorize normal map
             //
 
-            if (opt.image.depth == 0) {
-
-                normalMap[pos] = 0;
-
-            } else if (data.iteration == INT32_MAX) {
-
-                // Map to zero if the point is a glitch point
-                normalMap[pos] = 0;
-
-            } else if (data.iteration == 0) {
-
-                // Map to zero if the point belongs to the mandelbrot set
-                normalMap[pos] = 0;
-
-            } else {
+            if (map.isOutside(c)) {
 
                 auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
                 auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
@@ -121,6 +113,10 @@ ColorMap::compute(const DrillMap &map)
                 auto a = 255.0;
 
                 normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
+
+            } else if (opt.image.depth == 0) {
+
+                normalMap[pos] = 0;
             }
         }
 

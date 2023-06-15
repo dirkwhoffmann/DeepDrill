@@ -183,8 +183,7 @@ Driller::collectCoordinates(vector<dd::Coord> &remaining)
                 auto c = Coord(x,y).translate(opt);
                 if (inCardioid(c) || inBulb(c)) {
 
-                    // map.markAsRejected(Coord(x,y));
-                    map.markAsGlitch(Coord(x,y)); // GLITCH FOR DEBUGGING
+                    map.markAsRejected(Coord(x,y));
                     continue;
                 }
             }
