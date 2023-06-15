@@ -18,35 +18,59 @@ namespace dd {
 
 class Compressor {
 
-    std::vector<u8> uncompressed;
-    std::vector<u8> compressed;
+    isize capacity = 0;
+    isize ptr = 0;
+
+    std::vector<u8> buffer;
 
 public:
 
-    Compressor();
+    Compressor(isize capacity) : capacity(capacity) { }
     ~Compressor() { };
 
-    Compressor& operator<<(const u8 &value);
-    Compressor& operator<<(const u16 &value);
-    Compressor& operator<<(const u32 &value);
-    Compressor& operator<<(const float &value);
-    Compressor& operator<<(const double &value);
-    Compressor& operator<<(std::istream &is);
-    Compressor& operator>>(std::ostream &os);
+    Compressor& operator<<(const i8 &value) { write(value); return *this; }
+    Compressor& operator<<(const u8 &value) { write(value); return *this; }
+    Compressor& operator<<(const i16 &value) { write(value); return *this; }
+    Compressor& operator<<(const u16 &value) { write(value); return *this; }
+    Compressor& operator<<(const i32 &value) { write(value); return *this; }
+    Compressor& operator<<(const u32 &value) { write(value); return *this; }
+    Compressor& operator<<(const float &value) { write(value); return *this; }
+    Compressor& operator<<(const double &value) { write(value); return *this; }
+
+    Compressor& operator>>(i8 &value) { read(value); return *this; }
+    Compressor& operator>>(u8 &value) { read(value); return *this; }
+    Compressor& operator>>(i16 &value) { read(value); return *this; }
+    Compressor& operator>>(u16 &value) { read(value); return *this; }
+    Compressor& operator>>(i32 &value) { read(value); return *this; }
+    Compressor& operator>>(u32 &value) { read(value); return *this; }
+    Compressor& operator>>(float &value) { read(value); return *this; }
+    Compressor& operator>>(double &value) { read(value); return *this; }
+
+    // Compressor& operator<<(std::istream &is)
+    // Compressor& operator>>(std::ostream &os);
+
+    void compressData();
+    void uncompressData();
+
+private:
+
+    template <typename T> void write(T value) {
+
+        u8 *p = (u8 *)&value;
+
+        for (isize i = 0; i < isizeof(T); i++) {
+            buffer.push_back(p[i]);
+        }
+    }
+    
+    template <typename T> void read(T &value) {
+
+        u8 *p = (u8 *)&value;
+
+        for (isize i = 0; i < isizeof(T); i++) {
+            p[i] = buffer[ptr++];
+        }
+    }
 };
 
-class Uncompressor {
-
-    std::vector<u8> uncompressed;
-    std::vector<u8> compressed;
-
-public:
-
-    Uncompressor(isize capacity);
-    ~Uncompressor() { };
-
-    Uncompressor& operator<<(std::istream &is);
-    Uncompressor& operator>>(std::ostream &os);
-};
 }
-

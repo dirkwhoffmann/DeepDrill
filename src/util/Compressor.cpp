@@ -15,61 +15,63 @@
 
 namespace dd {
 
-Compressor::Compressor()
+void
+Compressor::compressData()
 {
+    // Create a second buffer
+    std::vector <u8> target(capacity);
+    printf("Capacity of seconf buffer: %zu\n", target.size());
 
-}
+    auto bufferLen = mz_ulong(buffer.size());
+    auto targetLen = mz_ulong(target.size());
 
-Compressor&
-Compressor::operator<<(const u8 &value)
-{
-    uncompressed.push_back(value);
-
-    return *this;
-}
-
-Compressor&
-Compressor::operator<<(const u16 &value)
-{
-    uncompressed.push_back(u8(value >> 0));
-    uncompressed.push_back(u8(value >> 8));
-
-    return *this;
-}
-
-Compressor&
-Compressor::operator<<(const u32 &value)
-{
-    uncompressed.push_back(u8(value >> 0));
-    uncompressed.push_back(u8(value >> 8));
-    uncompressed.push_back(u8(value >> 16));
-    uncompressed.push_back(u8(value >> 24));
-
-    return *this;
-}
-
-Compressor&
-Compressor::operator<<(const float &value)
-{
-    u8 *p = (u8 *)&value;
-
-    for (isize i = 0; i < isizeof(float); i++) {
-        uncompressed.push_back(p[i]);
+    // Run the compressor
+    auto result = mz_compress(target.data(), &targetLen, buffer.data(), bufferLen);
+    if (result != MZ_OK) {
+        throw Exception("Compression failed with error code " + std::to_string(result));
     }
-    return *this;
+
+    printf("After compression: %lu bytes\n", targetLen);
+
+    // Resize the target buffer to it's actual size
+    target.resize(targetLen);
+
+    // Replace original data with compressed data
+    buffer.swap(target);
+
+    printf("Buffer length is now %zu bytes\n", buffer.size());
+
 }
 
-Compressor&
-Compressor::operator<<(const double &value)
+void
+Compressor::uncompressData()
 {
-    u8 *p = (u8 *)&value;
+    // Create a second buffer
+    std::vector <u8> target(capacity);
+    printf("Uncompress: Capacity of second buffer: %zu\n", target.size());
 
-    for (isize i = 0; i < isizeof(double); i++) {
-        uncompressed.push_back(p[i]);
+    auto bufferLen = mz_ulong(buffer.size());
+    auto targetLen = mz_ulong(target.size());
+
+    // Run the uncompressor
+    auto result = mz_uncompress(target.data(), &targetLen, buffer.data(), bufferLen);
+    if (result != MZ_OK) {
+        throw Exception("Uncompression failed with error code " + std::to_string(result));
     }
-    return *this;
+
+    printf("After uncompression: %lu bytes\n", targetLen);
+
+    // Resize the target buffer to it's actual size
+    target.resize(targetLen);
+
+    // Replace original data with compressed data
+    buffer.swap(target);
+
+    printf("Buffer length is now %zu bytes\n", buffer.size());
 }
 
+
+/*
 Compressor&
 Compressor::operator<<(std::istream &is)
 {
@@ -113,48 +115,6 @@ Compressor::operator>>(std::ostream &os)
 
     return *this;
 }
-
-Uncompressor::Uncompressor(isize capacity)
-{
-    uncompressed.resize(capacity);
-}
-
-Uncompressor&
-Uncompressor::operator<<(std::istream &is)
-{
-    // Adjust the buffer size
-    is.seekg(0, std::ios::end);
-    std::streamsize size = is.tellg();
-    is.seekg(0, std::ios::beg);
-    compressed.resize(size);
-
-    // Read data
-    if (!is.read((char *)compressed.data(), size)) {
-        throw Exception("Uncompressor: Can't read from stream");
-    }
-
-    return *this;
-}
-
-Uncompressor&
-Uncompressor::operator>>(std::ostream &os)
-{
-    auto srcLen = mz_ulong(compressed.size());
-    auto dstLen = mz_ulong(uncompressed.size());
-
-    // Run the uncompressor
-    auto result = mz_uncompress(uncompressed.data(), &dstLen, compressed.data(), srcLen);
-
-    if (result != MZ_OK) {
-        throw Exception("Uncompressor: mz_uncompress failed with error code " + std::to_string(result));
-    }
-
-    printf("After uncompression: %lu bytes\n", dstLen);
-
-    // Write uncompressed data to stream
-    os.write((char *)uncompressed.data(), dstLen);
-
-    return *this;
-}
+*/
 
 }
