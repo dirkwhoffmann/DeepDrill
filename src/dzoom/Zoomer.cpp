@@ -81,20 +81,10 @@ Zoomer::launch()
                     window.close();
             }
 
-            // Update state
-            updateClock.go();
+            //Perform main tasks
             update();
-            updateClock.stop();
-
-            // Render frame
-            renderClock.go();
             draw();
-            renderClock.stop();
-
-            // Record frame
-            recordClock.go();
             record();
-            recordClock.stop();
 
             progress.step(1);
         }
@@ -132,7 +122,12 @@ Zoomer::update()
 
         // Preload the next texture in the background
         loadResult = std::async([this]() {
-            return loadMapFile(keyframe + 2);
+
+            updateClock.go();
+            auto result = loadMapFile(keyframe + 2);
+            updateClock.stop();
+
+            return result;
         });
 
         // Set animation start point
@@ -157,6 +152,8 @@ Zoomer::update()
 void
 Zoomer::draw()
 {
+    renderClock.go();
+
     // Colorize
     colorizer.draw(drillMap[(keyframe + 0) % 3].colorMap,
                    drillMap[(keyframe + 1) % 3].colorMap,
@@ -167,6 +164,8 @@ Zoomer::draw()
     window.clear();
     window.draw(colorizer.getRect());
     window.display();
+
+    renderClock.stop();
 }
 
 void
@@ -174,7 +173,9 @@ Zoomer::record()
 {
     if (recordMode) {
 
+        recordClock.go();
         recorder.record(colorizer.getImage());
+        recordClock.stop();
     }
 }
 
