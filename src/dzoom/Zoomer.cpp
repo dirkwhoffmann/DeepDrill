@@ -18,6 +18,8 @@
 #include "ProgressIndicator.h"
 
 #include <SFML/Graphics.hpp>
+#include <thread>
+#include <future>
 
 namespace fs = std::filesystem;
 
@@ -55,8 +57,12 @@ Zoomer::launch()
     // Start FFmpeg
     if (recordMode) recorder.startRecording();
 
+    // Load the textures of the first two keyframes
+    preloadTexture(0, 0);
+    preloadTexture(1, 1);
+
     // Process all keyframes
-    for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
+    for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++, current = (current + 1) % 3) {
 
         ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
@@ -110,6 +116,9 @@ Zoomer::launch()
             }
             log::cout << log::vspace;
         }
+
+        // Wait for the async map file loader to finish
+        (void)preloaderResult.get();
     }
 
     // Stop FFmpeg
@@ -121,8 +130,7 @@ Zoomer::update()
 {
     if (frame == 0) {
 
-        updateTextures(keyframe);
-        updateLocation(keyframe);
+        preloadTextureAsync(keyframe + 2);
 
         // Set animation start point
         zoom.set(1.0);
@@ -147,7 +155,8 @@ void
 Zoomer::draw()
 {
     // Colorize
-    colorizer.draw(drillMap.colorMap, drillMap2.colorMap,
+    colorizer.draw(drillMap[current].colorMap,
+                   drillMap[(current + 1) % 3].colorMap,
                    (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
@@ -166,58 +175,34 @@ Zoomer::record()
     }
 }
 
-void
-Zoomer::updateTextures(isize nr)
+int
+Zoomer::preloadTextureAsync(isize nr)
 {
+    preloaderResult = std::async([this, nr]() {
 
-    auto mapFile = [&](isize nr) {
+        // Preload the next texture
+        preloadTexture(nr, current + 2);
 
-        fs::path input = opt.files.inputs.front();
-        fs::path path = input.parent_path() / input.stem();
-        return path.string() + "_" + std::to_string(nr) + ".map";
-    };
+        return 1;
+    });
 
-    {   SILENT
-
-        // Load map file of the current keyframe
-        if (!fileExists(mapFile(nr))) {
-            throw FileNotFoundError(mapFile(nr));
-        }
-        drillMap.load(mapFile(nr));
-        drillMap.colorize();
-
-        // Load mapfile of the next frame
-        if (!fileExists(mapFile(nr + 1))) {
-            throw FileNotFoundError(mapFile(nr + 1));
-        }
-        drillMap2.load(mapFile(nr + 1));
-        drillMap2.colorize();
-    }
+    return 1;
 }
 
 void
-Zoomer::updateLocation(isize nr)
+Zoomer::preloadTexture(isize keyframe, isize slot)
 {
-    /*
     fs::path input = opt.files.inputs.front();
     fs::path path = input.parent_path() / input.stem();
-    string name = path.string() + "_" + std::to_string(nr + 1) + ".loc";
+    string mapFile = path.string() + "_" + std::to_string(keyframe) + ".map";
 
-    // Read the first location file if this is the first location update
-    if (nr == 0) {
+    {   SILENT
 
-        string name = path.string() + "_0.loc";
-        Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
-        opt.derive();
+        if (!fileExists(mapFile)) throw FileNotFoundError(mapFile);
+
+        drillMap[slot % 3].load(mapFile);
+        drillMap[slot % 3].colorize();
     }
-
-    // Read the next location file if existent
-    if (fileExists(name)) {
-
-        Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
-        opt.derive();
-    }
-    */
 }
 
 }
