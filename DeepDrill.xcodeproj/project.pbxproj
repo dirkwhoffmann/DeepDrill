@@ -54,6 +54,7 @@
 		50A09C742A3AE81C00845EE7 /* miniz.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C712A3AE81C00845EE7 /* miniz.c */; settings = {COMPILER_FLAGS = "-Wno-comma"; }; };
 		50A09C772A3AF9C700845EE7 /* Compressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C752A3AF9C700845EE7 /* Compressor.cpp */; };
 		50A09C782A3AF9C700845EE7 /* Compressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C752A3AF9C700845EE7 /* Compressor.cpp */; };
+		50A09C7B2A3C5BFE00845EE7 /* SlowDriller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C792A3C5BFE00845EE7 /* SlowDriller.cpp */; };
 		50AE096429FE7E0A005E4D3E /* Animated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE096329FE7E0A005E4D3E /* Animated.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Approximator.cpp */; };
@@ -223,6 +224,8 @@
 		50A09C722A3AE81C00845EE7 /* miniz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miniz.h; sourceTree = "<group>"; };
 		50A09C752A3AF9C700845EE7 /* Compressor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compressor.cpp; sourceTree = "<group>"; };
 		50A09C762A3AF9C700845EE7 /* Compressor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Compressor.h; sourceTree = "<group>"; };
+		50A09C792A3C5BFE00845EE7 /* SlowDriller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlowDriller.cpp; sourceTree = "<group>"; };
+		50A09C7A2A3C5BFE00845EE7 /* SlowDriller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlowDriller.h; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -404,6 +407,8 @@
 				505EB93429D73E42008DE5BB /* CMakeLists.txt */,
 				50BEC6F5269486A900CCDFA8 /* DeepDrill.h */,
 				50BEC700269486AA00CCDFA8 /* DeepDrill.cpp */,
+				50A09C7A2A3C5BFE00845EE7 /* SlowDriller.h */,
+				50A09C792A3C5BFE00845EE7 /* SlowDriller.cpp */,
 				50BEC6ED269486A800CCDFA8 /* Driller.h */,
 				50BEC6F0269486A800CCDFA8 /* Driller.cpp */,
 				50BEC6EF269486A800CCDFA8 /* Approximator.h */,
@@ -872,6 +877,7 @@
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
 				50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
+				50A09C7B2A3C5BFE00845EE7 /* SlowDriller.cpp in Sources */,
 				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				50A09C732A3AE81C00845EE7 /* miniz.c in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,

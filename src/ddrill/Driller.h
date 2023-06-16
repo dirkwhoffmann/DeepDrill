@@ -67,11 +67,12 @@ public:
     // Computes the drill map (main entry point)
     void drill();
         
-private:
 
     //
     // Picking points
     //
+
+private:
 
     // Collect all drill locations
     void collectCoordinates(vector<dd::Coord> &remaining);
@@ -84,20 +85,11 @@ private:
 
 
     //
-    // Drilling points with the standard algorithm (for debugging)
-    //
-
-    // Drills a collection of points
-    void slowDrill(const vector<Coord> &remaining);
-
-    // Drills a single of point
-    void slowDrill(const Coord &point);
-
-
-    //
     // Drilling points with perturbation and series approximation
     //
 
+private:
+    
     // Drills a reference point
     void drill(ReferencePoint &ref);
     

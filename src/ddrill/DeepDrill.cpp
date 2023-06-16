@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepDrill.h"
+#include "SlowDriller.h"
 #include "Driller.h"
 #include "ColorMap.h"
 #include "ProgressIndicator.h"
@@ -150,8 +151,16 @@ DeepDrill::run()
         BatchProgressIndicator progress(opt, "Drilling",  opt.files.outputs.front());
 
         // Run the driller
-        Driller driller(opt, drillMap);
-        driller.drill();
+        if (opt.perturbation.enable) {
+
+            Driller driller(opt, drillMap);
+            driller.drill();
+
+        } else {
+
+            SlowDriller driller(opt, drillMap);
+            driller.drill();
+        }
     }
 
     log::cout << log::vspace << "Drilling completed" << log::endl << log::endl;

@@ -60,13 +60,6 @@ Driller::drill()
     // Collect all pixel coordinates to be drilled at
     collectCoordinates(remaining);
 
-    // Use the standard algorithm if perturbation is disabled
-    if (!opt.perturbation.enable) {
-
-        slowDrill(remaining);
-        return;
-    }
-
     // Enter the main loop
     for (isize round = 1; round <= opt.perturbation.rounds; round++) {
 
@@ -264,70 +257,6 @@ Driller::pickProbePoints(vector <Coord> &probes)
 
     probes.clear();
     map.getMesh(sampling, sampling, probes);
-}
-
-void
-Driller::slowDrill(const vector<Coord> &remaining)
-{
-    ProgressIndicator progress("Running the standard algo", remaining.size());
-
-    for (unsigned int i = 0; i < remaining.size(); i++) {
-
-        slowDrill(remaining[i]);
-
-        if (opt.stop) throw UserInterruptException();
-        progress.step(1);
-    }
-}
-
-void
-Driller::slowDrill(const Coord &point)
-{
-    /*
-    auto p = ReferencePoint(opt, point);
-    drill(p);
-    */
-
-    auto x0 = ExtendedComplex(point.translate(opt));
-    auto xn = x0;
-
-    auto d0 = ExtendedComplex(1, 0);
-    auto dn = d0;
-
-    isize limit = opt.location.depth;
-    isize iteration = 0;
-
-    // Enter the main loop
-    while (++iteration < limit) {
-
-        dn *= xn * 2.0;
-        dn += d0;
-        dn.reduce();
-
-        xn *= xn;
-        xn += x0;
-        xn.reduce();
-
-        auto norm = xn.norm().asDouble();
-
-        // Perform the escape check
-        if (norm >= 256) {
-
-            // This point is outside the Mandelbrot set
-            auto u = xn / dn;
-            u.normalize();
-
-            map.set(point, MapEntry {
-                (i32)iteration,
-                (float)::log(norm),
-                StandardComplex(dn),
-                StandardComplex(u) } );
-            return;
-        }
-    }
-
-    // This point is inside the Mandelbrot set
-    map.markAsInside(point);
 }
 
 void
