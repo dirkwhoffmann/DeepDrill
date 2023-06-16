@@ -36,13 +36,13 @@ struct Options {
     //
 
     // Keys specified at the command line
-    std::vector <string> overrides;
+    std::vector<string> overrides;
 
     // Default keys
-    std::map <string,string> defaults;
+    std::map<string,string> defaults;
 
     // User-defined keys
-    std::map <string,string> keys;
+    std::map<string,string> keys;
 
     struct {
 
@@ -60,9 +60,9 @@ struct Options {
         fs::path exec;
 
         // Full paths to input files, output files, and profiles
-        std::vector <fs::path> inputs;
-        std::vector <fs::path> outputs;
-        std::vector <fs::path> profiles;
+        std::vector<fs::path> inputs;
+        std::vector<fs::path> outputs;
+        std::vector<fs::path> profiles;
 
     } files;
 

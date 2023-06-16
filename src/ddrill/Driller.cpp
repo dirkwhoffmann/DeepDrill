@@ -26,8 +26,8 @@ Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
 void
 Driller::drill()
 {    
-    vector<Coord> remaining;
-    vector<Coord> glitches;
+    std::vector<Coord> remaining;
+    std::vector<Coord> glitches;
 
     auto width = opt.drillmap.width;
     auto height = opt.drillmap.height;
@@ -110,7 +110,7 @@ Driller::drill()
 }
 
 void
-Driller::collectCoordinates(vector<dd::Coord> &remaining)
+Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
 {
     /* This function collects all drill coordinates while filtering out all
      * coordinates that belong to the main bulb or the cardioid (for which
@@ -204,7 +204,7 @@ Driller::collectCoordinates(vector<dd::Coord> &remaining)
 }
 
 ReferencePoint
-Driller::pickReference(const vector<Coord> &glitches)
+Driller::pickReference(const std::vector<Coord> &glitches)
 {
     // Current strategy: In the first round, the center is used as reference
     // point. In all other rounds, the reference point is selected randomly
@@ -224,7 +224,7 @@ Driller::pickReference(const vector<Coord> &glitches)
 }
 
 void
-Driller::pickProbePoints(vector <Coord> &probes)
+Driller::pickProbePoints(std::vector<Coord> &probes)
 {
     // Current strategy: The image canvas is superimposed with an equidistant
     // mesh. The density of the mesh is controlled by the 'sampling' parameter.
@@ -286,7 +286,7 @@ Driller::drill(ReferencePoint &r)
 }
 
 isize
-Driller::drillProbePoints(vector <Coord> &probes)
+Driller::drillProbePoints(std::vector<Coord> &probes)
 {
     ProgressIndicator progress("Checking probe points", probes.size());
     
@@ -335,7 +335,7 @@ Driller::drillProbePoint(Coord &probe)
 }
 
 void
-Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
+Driller::drill(const std::vector<Coord> &remaining, std::vector<Coord> &glitches)
 {
     ProgressIndicator progress("Computing delta orbits", remaining.size());
     
@@ -350,7 +350,7 @@ Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
 }
 
 void
-Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
+Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 {
     // If point is the reference point, there is nothing to do
     if (point == ref.coord) return;

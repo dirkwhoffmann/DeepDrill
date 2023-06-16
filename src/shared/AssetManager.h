@@ -22,13 +22,13 @@ enum class Format { NONE, BMP, DIR, GLSL, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
 class AssetManager {
 
     // Assets search paths
-    vector <fs::path> paths;
+    std::vector<fs::path> paths;
 
 public:
 
     static Format getFormat(const string &path);
     static void assureFormat(const fs::path &name, Format format);
-    static void assureFormat(const fs::path &name, vector <Format> formats);
+    static void assureFormat(const fs::path &name, std::vector<Format> formats);
     static bool isImageFormat(Format format);
     static bool isVideoFormat(Format format);
 
@@ -52,7 +52,7 @@ public:
 
     fs::path findAsset(const fs::path &name) const;
     fs::path findAsset(const fs::path &name, Format format) const;
-    fs::path findAsset(const fs::path &name, vector <Format> formats) const;
+    fs::path findAsset(const fs::path &name, std::vector<Format> formats) const;
 };
 
 }

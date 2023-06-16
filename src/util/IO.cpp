@@ -183,13 +183,13 @@ isize numDirectoryItems(const string &path)
 std::vector<string>
 files(const string &path, const string &suffix)
 {
-    std::vector <string> suffixes;
+    std::vector<string> suffixes;
     if (suffix != "") suffixes.push_back(suffix);
 
     return files(path, suffixes);
 }
 
-std::vector<string> files(const string &path, std::vector <string> &suffixes)
+std::vector<string> files(const string &path, std::vector<string> &suffixes)
 {
     std::vector<string> result;
     

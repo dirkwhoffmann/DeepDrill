@@ -28,7 +28,7 @@ Maker::Maker(Options &o) : opt(o)
 void
 Maker::generate()
 {
-    vector <string> skipped;
+    std::vector <string> skipped;
 
     auto reportSkippedFiles = [&]() {
 
@@ -65,7 +65,7 @@ Maker::generate()
 }
 
 void
-Maker::generateProjectFile(vector <string> &skipped)
+Maker::generateProjectFile(std::vector <string> &skipped)
 {
     ProgressIndicator progress("Generating project file");
 
@@ -86,7 +86,7 @@ Maker::generateProjectFile(vector <string> &skipped)
 }
 
 void
-Maker::generateLocationFiles(vector <string> &skipped)
+Maker::generateLocationFiles(std::vector <string> &skipped)
 {
     ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
 
@@ -121,7 +121,7 @@ Maker::generateLocationFiles(vector <string> &skipped)
 }
 
 void
-Maker::generateProfile(vector <string> &skipped)
+Maker::generateProfile(std::vector <string> &skipped)
 {
     ProgressIndicator progress("Generating profile");
 
@@ -244,7 +244,7 @@ Maker::writeDebugSection(std::ofstream &os)
 }
 
 void
-Maker::generateMakefile(vector <string> &skipped)
+Maker::generateMakefile(std::vector <string> &skipped)
 {
     ProgressIndicator progress("Generating Makefile");
 

@@ -46,7 +46,7 @@ class Driller {
     Approximator approximator = Approximator(opt);
     
     // The probe points
-    vector <Coord> probePoints;
+    std::vector<Coord> probePoints;
     
     
     //
@@ -75,13 +75,13 @@ public:
 private:
 
     // Collect all drill locations
-    void collectCoordinates(vector<dd::Coord> &remaining);
+    void collectCoordinates(std::vector<dd::Coord> &remaining);
 
     // Picks a reference point
-    ReferencePoint pickReference(const vector<Coord> &glitches);
+    ReferencePoint pickReference(const std::vector<Coord> &glitches);
 
     // Picks a collection of probe points
-    void pickProbePoints(vector <Coord> &probes);
+    void pickProbePoints(std::vector<Coord> &probes);
 
 
     //
@@ -94,16 +94,16 @@ private:
     void drill(ReferencePoint &ref);
     
     // Drills a collection of probe points
-    isize drillProbePoints(vector <Coord> &probes);
+    isize drillProbePoints(std::vector<Coord> &probes);
 
     // Drills a single probe point
     isize drillProbePoint(Coord &probe);
 
     // Drills a collection of delta points
-    void drill(const vector<Coord> &remaining, vector<Coord> &glitchPoints);
+    void drill(const std::vector<Coord> &remaining, std::vector<Coord> &glitchPoints);
 
     // Drills a single delta point
-    void drill(const Coord &point, vector<Coord> &glitchPoints);
+    void drill(const Coord &point, std::vector<Coord> &glitchPoints);
 };
 
 }

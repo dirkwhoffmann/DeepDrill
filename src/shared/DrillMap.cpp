@@ -163,7 +163,7 @@ DrillMap::markAsInside(const struct Coord &c, PointType type)
 }
 
 void
-DrillMap::getMesh(isize numx, isize numy, std::vector <Coord> &mesh)
+DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh)
 {
     // The coordinate system is superimposed with an equidistant mesh.
     // The density of the mesh is controlled by the 'numx' and 'numy'.

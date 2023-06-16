@@ -17,7 +17,7 @@ namespace dd {
 void
 SlowDriller::drill()
 {
-    vector<Coord> remaining;
+    std::vector<Coord> remaining;
 
     auto width = opt.drillmap.width;
     auto height = opt.drillmap.height;
@@ -32,7 +32,7 @@ SlowDriller::drill()
 }
 
 void
-SlowDriller::drill(const vector<Coord> &remaining)
+SlowDriller::drill(const std::vector<Coord> &remaining)
 {
     ProgressIndicator progress("Running the legacy driller", remaining.size());
 

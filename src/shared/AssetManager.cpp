@@ -59,17 +59,17 @@ AssetManager::getFormat(const string &path) {
 void
 AssetManager::assureFormat(const fs::path &name, Format format)
 {
-    assureFormat(name, vector <Format> { format });
+    assureFormat(name, std::vector<Format> { format });
 }
 
 void
-AssetManager::assureFormat(const fs::path &name, vector <Format> formats)
+AssetManager::assureFormat(const fs::path &name, std::vector<Format> formats)
 {
     auto format = getFormat(name);
 
     if (std::find(formats.begin(), formats.end(), format) == formats.end()) {
 
-        vector <string> s;
+        std::vector<string> s;
         for (const auto &it : formats) {
 
             switch(it) {
@@ -131,11 +131,11 @@ AssetManager::findAsset(const fs::path &name) const
 fs::path
 AssetManager::findAsset(const fs::path &name, Format format) const
 {
-    return findAsset(name, vector <Format> { format });
+    return findAsset(name, std::vector<Format> { format });
 }
 
 fs::path
-AssetManager::findAsset(const fs::path &name, vector <Format> formats) const
+AssetManager::findAsset(const fs::path &name, std::vector<Format> formats) const
 {
     assureFormat(name, formats);
     return findAsset(name);

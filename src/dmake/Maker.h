@@ -38,10 +38,10 @@ public:
     
 private:
 
-    void generateProjectFile(vector <string> &skipped);
-    void generateLocationFiles(vector <string> &skipped);
-    void generateProfile(vector <string> &skipped);
-    void generateMakefile(vector <string> &skipped);
+    void generateProjectFile(std::vector <string> &skipped);
+    void generateLocationFiles(std::vector <string> &skipped);
+    void generateProfile(std::vector <string> &skipped);
+    void generateMakefile(std::vector <string> &skipped);
 
     void writeLocationSection(std::ofstream &os);
     void writeMapSection(std::ofstream &os);

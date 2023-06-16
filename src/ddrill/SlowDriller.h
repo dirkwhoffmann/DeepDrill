@@ -48,7 +48,7 @@ public:
 private:
 
     // Drills a collection of points
-    void drill(const vector<Coord> &remaining);
+    void drill(const std::vector<Coord> &remaining);
 
     // Drills a single of point
     void drill(const Coord &point);

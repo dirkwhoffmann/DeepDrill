@@ -51,7 +51,7 @@ void
 Compressor::compressData()
 {
     // Create a second buffer
-    std::vector <u8> target(capacity);
+    std::vector<u8> target(capacity);
 
     auto bufferLen = mz_ulong(buffer.size());
     auto targetLen = mz_ulong(target.size());
@@ -73,7 +73,7 @@ void
 Compressor::uncompressData()
 {
     // Create a second buffer
-    std::vector <u8> target(capacity);
+    std::vector<u8> target(capacity);
 
     auto bufferLen = mz_ulong(buffer.size());
     auto targetLen = mz_ulong(target.size());
