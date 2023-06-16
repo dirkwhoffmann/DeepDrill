@@ -32,28 +32,6 @@ Driller::drill()
     auto width = opt.drillmap.width;
     auto height = opt.drillmap.height;
 
-    if (opt.flags.verbose) {
-        
-        log::cout << log::vspace;
-        log::cout << log::ralign("Center: ");
-        log::cout << opt.center << log::endl;
-        log::cout << log::ralign("Upper left: (");
-        log::cout << opt.x0.get_d() << "," << opt.y0.get_d() << ")" << log::endl;
-        log::cout << log::ralign("Lower right: (");
-        log::cout << opt.x1.get_d() << "," << opt.y1.get_d() << ")" << log::endl;
-        log::cout << log::ralign("Magnification: ");
-        log::cout << opt.location.zoom << log::endl;
-        log::cout << log::ralign("Map size: ");
-        log::cout << width << " x " << height;
-        log::cout << (opt.drillmap.depth ? " (3D)" : " (2D)") << log::endl;
-        log::cout << log::ralign("Image size: ");
-        log::cout << opt.image.width << " x " << opt.image.height;
-        log::cout << (opt.image.depth ? " (3D)" : " (2D)") << log::endl;
-        log::cout << log::ralign("GMP Precision: ");
-        log::cout << mpf_get_default_prec() << " Bit" << log::endl;
-        log::cout << log::vspace;
-    }
-            
     // Determine the number of tolerated glitched pixels
     isize threshold = width * height * opt.perturbation.badpixels;
         
