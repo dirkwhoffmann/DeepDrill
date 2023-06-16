@@ -250,20 +250,8 @@ Driller::pickProbePoints(vector <Coord> &probes)
     
     static const isize sampling = 2;
 
-    isize width = opt.drillmap.width - 1;
-    isize height = opt.drillmap.height - 1;
-    
     probes.clear();
-    
-    for (isize i = 0; i < sampling; i++) {
-        for (isize j = 0; j < sampling; j++) {
-            
-            auto x = width * ((double)i / (double)(sampling - 1));
-            auto y = height * ((double)j / (double)(sampling - 1));
-            
-            probes.push_back(Coord(x,y));
-        }
-    }
+    map.getMesh(sampling, sampling, probes);
 }
 
 void
