@@ -54,9 +54,12 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
 
-    // Period check keys
+    // Area checking keys
+    defaults["areacheck.enable"] = "yes";
+
+    // Period checking keys
     defaults["periodcheck.enable"] = "yes";
-    defaults["periodcheck.tolerance"] = "1e-12";
+    defaults["periodcheck.tolerance"] = "1e-17";
 
     // Perturbation keys
     defaults["perturbation.enable"] = "yes";
@@ -203,6 +206,10 @@ Options::parse(string key, string value)
         if (colors.beta < 0.0 || colors.beta >= 360.0) {
             throw KeyValueError(key, "Angle out of range");
         }
+
+    } else if (key == "areacheck.enable") {
+
+        parse(key, value, areacheck.enable);
 
     } else if (key == "periodcheck.enable") {
 

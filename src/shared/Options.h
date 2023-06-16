@@ -178,6 +178,13 @@ struct Options {
 
     struct {
 
+        // Indicates if area checking is enabled
+        bool enable;
+
+    } areacheck;
+
+    struct {
+
         // Indicates if period checking is enabled
         bool enable;
 

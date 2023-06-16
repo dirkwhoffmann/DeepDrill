@@ -172,7 +172,19 @@ Driller::collectCoordinates(vector<dd::Coord> &remaining)
     auto width = opt.drillmap.width;
     auto height = opt.drillmap.height;
 
-    ProgressIndicator progress("Collecting drill coordinates", width * height);
+    // If area checking if disabled, drill everywhere
+    if (!opt.areacheck.enable) {
+
+        for (isize y = 0; y < height; y++) {
+            for (isize x = 0; x < width; x++) {
+                remaining.push_back(Coord(x,y));
+            }
+        }
+        return;
+    }
+
+    // Perform the area check
+    ProgressIndicator progress("Running the area check", width * height);
 
     // Superimpose the drill map with a mesh
     std::vector<Coord> mesh; map.getMesh(4, 4, mesh);
