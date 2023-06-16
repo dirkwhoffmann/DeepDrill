@@ -60,7 +60,7 @@ class Zoomer {
     Clock recordClock;
 
     // Synchronization object for the async map file loader
-    std::future<int> preloaderResult;
+    std::future<bool> loadResult;
 
 public:
 
@@ -81,8 +81,7 @@ private:
     void record();
 
     // Loads a new map file from disk
-    int preloadTextureAsync(isize nr);
-    void preloadTexture(isize nr);
+    bool loadMapFile(isize nr);
 };
 
 }

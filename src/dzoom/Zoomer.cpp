@@ -58,8 +58,8 @@ Zoomer::launch()
     if (recordMode) recorder.startRecording();
 
     // Load the textures of the first two keyframes
-    preloadTexture(0);
-    preloadTexture(1);
+    (void)loadMapFile(0);
+    (void)loadMapFile(1);
 
     // Process all keyframes
     for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
@@ -118,7 +118,7 @@ Zoomer::launch()
         }
 
         // Wait for the async map file loader to finish
-        (void)preloaderResult.get();
+        (void)loadResult.get();
     }
 
     // Stop FFmpeg
@@ -130,7 +130,10 @@ Zoomer::update()
 {
     if (frame == 0) {
 
-        preloadTextureAsync(keyframe + 2);
+        // Preload the next texture in the background
+        loadResult = std::async([this]() {
+            return loadMapFile(keyframe + 2);
+        });
 
         // Set animation start point
         zoom.set(1.0);
@@ -175,22 +178,8 @@ Zoomer::record()
     }
 }
 
-int
-Zoomer::preloadTextureAsync(isize nr)
-{
-    preloaderResult = std::async([this, nr]() {
-
-        // Preload the next texture
-        preloadTexture(nr);
-
-        return 1;
-    });
-
-    return 1;
-}
-
-void
-Zoomer::preloadTexture(isize nr)
+bool
+Zoomer::loadMapFile(isize nr)
 {
     fs::path input = opt.files.inputs.front();
     fs::path path = input.parent_path() / input.stem();
@@ -203,6 +192,8 @@ Zoomer::preloadTexture(isize nr)
         drillMap[nr % 3].load(mapFile);
         drillMap[nr % 3].colorize();
     }
+    
+    return true;
 }
 
 }
