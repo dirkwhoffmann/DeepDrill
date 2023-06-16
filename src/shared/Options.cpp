@@ -54,6 +54,10 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
 
+    // Period check keys
+    defaults["periodcheck.enable"] = "yes";
+    defaults["periodcheck.tolerance"] = "1e-12";
+
     // Perturbation keys
     defaults["perturbation.enable"] = "yes";
     defaults["perturbation.tolerance"] = "1e-6";
@@ -68,7 +72,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Debug keys
     defaults["debug.glitches"] = "no";
     defaults["debug.rejected"] = "no";
-    defaults["debug.periodic"] = "no";
+    defaults["debug.periodic"] = "yes";
 }
 
 void
@@ -199,6 +203,14 @@ Options::parse(string key, string value)
         if (colors.beta < 0.0 || colors.beta >= 360.0) {
             throw KeyValueError(key, "Angle out of range");
         }
+
+    } else if (key == "periodcheck.enable") {
+
+        parse(key, value, periodcheck.enable);
+
+    } else if (key == "periodcheck.tolerance") {
+
+        parse(key, value, periodcheck.tolerance);
 
     } else if (key == "perturbation.enable") {
 

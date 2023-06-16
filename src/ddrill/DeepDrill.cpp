@@ -134,43 +134,6 @@ DeepDrill::checkCustomArguments()
 void
 DeepDrill::run()
 {
-    // REMOVE ASAP
-    /*
-    Compressor compressor(1024);
-
-    compressor << i8(-42);
-    compressor << u8(2);
-    compressor << i16(-2);
-    compressor << u16(2);
-    compressor << i32(-43);
-    compressor << u32(43);
-    compressor << 2.25f;
-    compressor << 32.125;
-
-    i8 v1;
-    u8 v2;
-    i16 v3;
-    u16 v4;
-    i32 v5;
-    u32 v6;
-    float v7;
-    double v8;
-
-    compressor.compressData();
-    compressor.uncompressData();
-
-    compressor >> v1;
-    compressor >> v2;
-    compressor >> v3;
-    compressor >> v4;
-    compressor >> v5;
-    compressor >> v6;
-    compressor >> v7;
-    compressor >> v8;
-
-    printf("%d %d %d %d %d %d %f %f", v1, v2, v3, v4, v5, v6, v7, v8);
-    */
-
     auto input = opt.files.inputs.front();
     auto inputFormat = AssetManager::getFormat(input);
 
@@ -190,6 +153,8 @@ DeepDrill::run()
         Driller driller(opt, drillMap);
         driller.drill();
     }
+
+    log::cout << log::vspace << "Drilling completed" << log::endl << log::endl;
 
     // Generate outputs
     for (auto &it : opt.files.outputs) {

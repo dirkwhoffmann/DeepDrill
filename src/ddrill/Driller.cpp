@@ -433,9 +433,9 @@ Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
 void
 Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 {
-    // If point is the reference point, then there is nothing to do
+    // If point is the reference point, there is nothing to do
     if (point == ref.coord) return;
-    
+
     ExtendedComplex d0 = ref.deltaLocation(opt, point);
     ExtendedComplex dn = d0;
 
@@ -456,6 +456,10 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         ddn.reduce();
     }
 
+    // Prepare for period checking
+    ExtendedComplex p = dn;
+    isize nextUpdate = iteration + 16;
+
     // Enter the main loop
     while (++iteration < limit) {
 
@@ -472,9 +476,23 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
 
         // Perform the glitch check
         if (norm < ref.xn[iteration].tolerance) {
-            break;
+
+            map.markAsGlitch(point);
+            glitchPoints.push_back(point);
+            return;
         }
-        
+
+        // Perform the period check
+        double deltap = (dn - p).norm().asDouble();
+        if (deltap < opt.periodcheck.tolerance && opt.periodcheck.enable) {
+            map.markAsPeriodic(point);
+            return;
+        }
+        if (iteration == nextUpdate) {
+            p = dn;
+            nextUpdate *= 1.5;
+        }
+
         // Perform the escape check
         if (norm >= 256) {
 
@@ -489,17 +507,8 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         }
     }
         
-    if (limit == opt.location.depth) {
-
-        // This point is inside the Mandelbrot set
-        map.markAsInside(point);
-
-    } else {
-
-        // This point is a glitch point
-        map.markAsGlitch(point);
-        glitchPoints.push_back(point);
-    }
+    // This point is (likely) inside the Mandelbrot set
+    map.markAsInside(point);
 }
 
 }

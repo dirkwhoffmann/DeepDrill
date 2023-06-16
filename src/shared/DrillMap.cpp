@@ -475,7 +475,7 @@ DrillMap::save(std::ostream &os)
 
     if (opt.drillmap.compress) {
 
-        ProgressIndicator progress2("Compression map file");
+        ProgressIndicator progress2("Compressing map file");
 
         auto oldSize = compressor.size();
         compressor.compressData();

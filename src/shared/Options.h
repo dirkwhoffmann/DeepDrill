@@ -178,6 +178,16 @@ struct Options {
 
     struct {
 
+        // Indicates if period checking is enabled
+        bool enable;
+
+        // Tolerance for equality checks
+        double tolerance;
+
+    } periodcheck;
+
+    struct {
+
         // Highlight glitch points in texture
         bool glitches;
 
