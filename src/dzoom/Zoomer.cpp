@@ -58,11 +58,11 @@ Zoomer::launch()
     if (recordMode) recorder.startRecording();
 
     // Load the textures of the first two keyframes
-    preloadTexture(0, 0);
-    preloadTexture(1, 1);
+    preloadTexture(0);
+    preloadTexture(1);
 
     // Process all keyframes
-    for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++, current = (current + 1) % 3) {
+    for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
 
         ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
@@ -155,8 +155,8 @@ void
 Zoomer::draw()
 {
     // Colorize
-    colorizer.draw(drillMap[current].colorMap,
-                   drillMap[(current + 1) % 3].colorMap,
+    colorizer.draw(drillMap[(keyframe + 0) % 3].colorMap,
+                   drillMap[(keyframe + 1) % 3].colorMap,
                    (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
@@ -181,7 +181,7 @@ Zoomer::preloadTextureAsync(isize nr)
     preloaderResult = std::async([this, nr]() {
 
         // Preload the next texture
-        preloadTexture(nr, current + 2);
+        preloadTexture(nr);
 
         return 1;
     });
@@ -190,18 +190,18 @@ Zoomer::preloadTextureAsync(isize nr)
 }
 
 void
-Zoomer::preloadTexture(isize keyframe, isize slot)
+Zoomer::preloadTexture(isize nr)
 {
     fs::path input = opt.files.inputs.front();
     fs::path path = input.parent_path() / input.stem();
-    string mapFile = path.string() + "_" + std::to_string(keyframe) + ".map";
+    string mapFile = path.string() + "_" + std::to_string(nr) + ".map";
 
     {   SILENT
 
         if (!fileExists(mapFile)) throw FileNotFoundError(mapFile);
 
-        drillMap[slot % 3].load(mapFile);
-        drillMap[slot % 3].colorize();
+        drillMap[nr % 3].load(mapFile);
+        drillMap[nr % 3].colorize();
     }
 }
 
