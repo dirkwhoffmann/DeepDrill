@@ -493,13 +493,14 @@ DrillMap::save(std::ostream &os)
         auto oldSize = compressor.size();
         compressor.compressData();
         auto newSize = compressor.size();
+        auto saved = oldSize - newSize;
         progress2.done();
 
         if (opt.flags.verbose) {
 
             log::cout << log::vspace;
-            log::cout << log::ralign("Reduction: ");
-            log::cout << isize(100.0 * newSize / oldSize) << "%" << log::endl;
+            log::cout << log::ralign("Size reduction: ");
+            log::cout << saved << " Bytes (" << isize(100.0 * saved / oldSize) << "%)" << log::endl;
             log::cout << log::vspace;
         }
     }
