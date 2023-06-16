@@ -20,7 +20,20 @@
 
 namespace dd {
 
-enum PointType : i32 {
+enum DrillResult : i8 {
+
+    DR_UNPROCESSED,
+    DR_ESCAPED,
+    DR_MAX_DEPTH_REACHED,
+    DR_IN_BULB,
+    DR_IN_CARDIOID,
+    DR_PERIODIC,
+    DR_ATTRACTED,
+    DR_GLITCH,
+};
+
+/*
+enum PointType : i32 { // DEPRECATED
 
     POINT_MAX_DEPTH = 0,    // Point is inside M (didn't escape)
     POINT_REJECTED  = -1,   // Point is inside M (in bulb or cardioid)
@@ -28,9 +41,11 @@ enum PointType : i32 {
     POINT_ATTRACTED = -3,   // Point is inside M (derivation close to zero)
     POINT_GLITCH    = -4    // Unresolved (glitch point)
 };
+*/
 
 enum ChannelID {
 
+    CHANNEL_DRILLRESULT,
     CHANNEL_ITCOUNTS,
     CHANNEL_LOGNORMS,
     CHANNEL_DERIVATIVES,
@@ -39,6 +54,7 @@ enum ChannelID {
 
 enum ChannelFormat {
 
+    FMT_I8,
     FMT_I16,
     FMT_I24,
     FMT_I32,
@@ -49,10 +65,9 @@ enum ChannelFormat {
 
 struct MapEntry {
 
+    DrillResult result;
     i32 iteration;
     float lognorm;
-
-    // Experimental
     StandardComplex derivative;
     StandardComplex normal;
 };
@@ -92,17 +107,11 @@ public:
     // Analyzing
     //
 
+    bool hasDrillResults() const;
     bool hasIterations() const;
     bool hasLogNorms() const;
     bool hasDerivates() const;
     bool hasNormals() const;
-
-    bool isInside(const struct Coord &c) const;
-    bool isOutside(const struct Coord &c) const;
-    bool isGlitch(const struct Coord &c) const { return get(c).iteration == POINT_GLITCH; }
-    bool isRejected(const struct Coord &c) const { return get(c).iteration == POINT_REJECTED; }
-    bool isPeriodic(const struct Coord &c) const { return get(c).iteration == POINT_PERIODIC; }
-    bool isAttracted(const struct Coord &c) const { return get(c).iteration == POINT_ATTRACTED; }
 
     
     //
@@ -116,10 +125,7 @@ public:
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
     void set(const struct Coord &c, i32 iteration, float lognorm);
-    void markAsInside(const struct Coord &c, PointType type = POINT_MAX_DEPTH);
-    void markAsGlitch(const struct Coord &c) { markAsInside(c, POINT_GLITCH); }
-    void markAsRejected(const struct Coord &c) { markAsInside(c, POINT_REJECTED); }
-    void markAsPeriodic(const struct Coord &c)  { markAsInside(c, POINT_PERIODIC); }
+    void set(const struct Coord &c, DrillResult dr, i32 it = 0);
 
     void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints);
 
@@ -129,7 +135,6 @@ public:
     //
 
     ColorMap &getColorMap() { return colorMap; }
-    // const sf::Texture &getTexture() { return colorMap.getTexture(); }
     const ColorMap &colorize();
 
 

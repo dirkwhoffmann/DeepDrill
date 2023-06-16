@@ -51,6 +51,15 @@ DrillMap::resize(isize w, isize h)
 }
 
 bool
+DrillMap::hasDrillResults() const
+{
+    for (isize i = 0; i < width * height; i++) {
+        if (data[i].result) return true;
+    }
+    return false;
+}
+
+bool
 DrillMap::hasIterations() const
 {
     for (isize i = 0; i < width * height; i++) {
@@ -84,19 +93,6 @@ DrillMap::hasNormals() const
         if (data[i].normal != StandardComplex(0,0)) return true;
     }
     return false;
-}
-
-bool
-DrillMap::isOutside(const struct Coord &c) const
-{
-    return get(c).iteration > 0;
-}
-
-bool
-DrillMap::isInside(const struct Coord &c) const
-{
-    auto it = get(c).iteration;
-    return it == POINT_MAX_DEPTH || it == POINT_REJECTED || it == POINT_PERIODIC;
 }
 
 MapEntry *
@@ -133,16 +129,24 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
 }
 
 void
-DrillMap::set(const struct Coord &c, i32 iteration, float lognorm)
+DrillMap::set(const struct Coord &c, i32 it, float lognorm)
 {
-    set(c.x, c.y, MapEntry { iteration, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
+    set(c.x, c.y, MapEntry { DR_ESCAPED, it, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
 }
 
+void
+DrillMap::set(const struct Coord &c, DrillResult dr, i32 it)
+{
+    set(c.x, c.y, MapEntry { dr, it, 0.0, StandardComplex(), StandardComplex() } );
+}
+
+/*
 void
 DrillMap::markAsInside(const struct Coord &c, PointType type)
 {
     set(c.x, c.y, MapEntry { type, 0.0, StandardComplex(), StandardComplex() } );
 }
+*/
 
 void
 DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh)
@@ -218,6 +222,8 @@ DrillMap::load(std::istream &is)
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
+        log::cout << log::ralign("Drill results: ");
+        log::cout << (hasDrillResults() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Iteration counts: ");
         log::cout << (hasIterations() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Lognorms: ");
@@ -270,6 +276,19 @@ DrillMap::loadChannel(Compressor &is)
 
     switch (ChannelID(id)) {
 
+        case CHANNEL_DRILLRESULT:
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+
+                    i8 value;
+                    load <FMT_I8> (is, value);
+                    get(x,y).result = DrillResult(value);
+
+                }
+            }
+            break;
+
         case CHANNEL_ITCOUNTS:
 
             for (isize y = 0; y < height; y++) {
@@ -277,6 +296,7 @@ DrillMap::loadChannel(Compressor &is)
 
                     switch (ChannelFormat(fmt)) {
 
+                        case FMT_I8:  load <FMT_I8>  (is, get(x,y).iteration); break;
                         case FMT_I16: load <FMT_I16> (is, get(x,y).iteration); break;
                         case FMT_I24: load <FMT_I24> (is, get(x,y).iteration); break;
                         case FMT_I32: load <FMT_I32> (is, get(x,y).iteration); break;
@@ -353,6 +373,13 @@ DrillMap::load(Compressor &is, T &raw)
 {
     switch (fmt) {
 
+        case FMT_I8:
+        {
+            i8 value;
+            is >> value;
+            raw = (T)value;
+            break;
+        }
         case FMT_I16:
         {
             i16 value;
@@ -418,6 +445,7 @@ DrillMap::save(const string &path)
 void
 DrillMap::save(std::ostream &os)
 {
+    bool saveDrillResults = true;
     bool saveIterations = true;
     bool saveLognorms = true;
     bool saveDerivatives = false;
@@ -433,6 +461,7 @@ DrillMap::save(std::ostream &os)
 
     // Generate channels
     Compressor compressor(width * height * sizeof(MapEntry));
+    if (saveDrillResults) saveChannel(compressor, CHANNEL_DRILLRESULT);
     if (saveIterations) saveChannel(compressor, CHANNEL_ITCOUNTS);
     if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORMS);
     if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVES);
@@ -444,6 +473,8 @@ DrillMap::save(std::ostream &os)
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
+        log::cout << log::ralign("Drill results: ");
+        log::cout << (saveDrillResults ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Iteration counts: ");
         log::cout << (saveIterations ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Lognorms: ");
@@ -500,6 +531,17 @@ void
 DrillMap::saveChannel(Compressor &os, ChannelID id)
 {
     switch (id) {
+
+        case CHANNEL_DRILLRESULT:
+
+            os << u8(id) << u8(FMT_I8);
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    save <FMT_I8> (os, i8(get(x,y).result));
+                }
+            }
+            break;
 
         case CHANNEL_ITCOUNTS:
 
@@ -558,6 +600,11 @@ template<ChannelFormat fmt, typename T> void
 DrillMap::save(Compressor &os, T raw)
 {
     switch (fmt) {
+
+        case FMT_I8:
+
+            os << (i8)raw;
+            break;
 
         case FMT_I16:
 

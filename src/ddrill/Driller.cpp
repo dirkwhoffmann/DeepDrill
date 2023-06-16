@@ -176,9 +176,15 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
             if (hit) {
 
                 auto c = Coord(x,y).translate(opt);
-                if (inCardioid(c) || inBulb(c)) {
 
-                    map.markAsRejected(Coord(x,y));
+                if (inCardioid(c)) {
+
+                    map.set(Coord(x,y), DR_IN_CARDIOID);
+                    continue;
+                }
+                if (inBulb(c)) {
+
+                    map.set(Coord(x,y), DR_IN_BULB);
                     continue;
                 }
             }
@@ -270,7 +276,7 @@ Driller::drill(ReferencePoint &r)
             nv.normalize();
 
             r.escaped = true;
-            map.set(r.coord, MapEntry { (i32)i, (float)::log(norm), StandardComplex(dn), StandardComplex(nv) } );
+            map.set(r.coord, MapEntry { DR_ESCAPED, (i32)i, (float)::log(norm), StandardComplex(dn), StandardComplex(nv) } );
             return;
         }
         
@@ -282,7 +288,8 @@ Driller::drill(ReferencePoint &r)
     }
 
     // This point is inside the Mandelbrot set
-    map.markAsInside(r.coord);
+    map.set(r.coord, DR_MAX_DEPTH_REACHED, i32(opt.location.depth));
+    // map.markAsInside(r.coord);
 }
 
 isize
@@ -396,7 +403,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Perform the glitch check
         if (norm < ref.xn[iteration].tolerance) {
 
-            map.markAsGlitch(point);
+            map.set(point, DR_GLITCH, iteration);
+            // map.markAsGlitch(point);
             glitchPoints.push_back(point);
             return;
         }
@@ -404,7 +412,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Perform the period check
         double deltap = (dn - p).norm().asDouble();
         if (deltap < opt.periodcheck.tolerance && opt.periodcheck.enable) {
-            map.markAsPeriodic(point);
+            map.set(point, DR_PERIODIC, i32(iteration));
+            // map.markAsPeriodic(point);
             return;
         }
         if (iteration == nextUpdate) {
@@ -418,6 +427,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
             auto nv = zn / ddn;
             nv.normalize();
             map.set(point, MapEntry {
+                DR_ESCAPED,
                 (i32)iteration,
                 (float)::log(norm),
                 StandardComplex(ddn),
@@ -427,7 +437,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     }
         
     // This point is (likely) inside the Mandelbrot set
-    map.markAsInside(point);
+    map.set(point, DR_MAX_DEPTH_REACHED, i32(limit));
+    // map.markAsInside(point);
 }
 
 }

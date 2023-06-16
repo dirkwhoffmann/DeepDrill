@@ -74,49 +74,63 @@ ColorMap::compute(const DrillMap &map)
             // Colorize image
             //
 
-            if (map.isOutside(c)) {
+            double sl;
 
-                double sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
-                sl *= .0025;
-                // sl = 2.7 + sl * 30.0;
-                sl *= 30.0;
-                sl *= opt.colors.scale;
+            switch (map.get(c).result) {
 
-                colorMap[pos] = palette.interpolateABGR(sl);
+                case DR_ESCAPED:
 
-            } else if (map.isGlitch(c)) {
+                    sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
+                    sl *= .0025;
+                    // sl = 2.7 + sl * 30.0;
+                    sl *= 30.0;
+                    sl *= opt.colors.scale;
 
-                colorMap[pos] = opt.perturbation.color.abgr;
+                    colorMap[pos] = palette.interpolateABGR(sl);
+                    break;
 
-            } else if (map.isRejected(c)) {
+                case DR_GLITCH:
 
-                colorMap[pos] = opt.areacheck.color.abgr;
+                    colorMap[pos] = opt.perturbation.color.abgr;
+                    break;
 
-            } else if (map.isPeriodic(c)) {
+                case DR_IN_BULB:
+                case DR_IN_CARDIOID:
 
-                colorMap[pos] = opt.periodcheck.color.abgr;
+                    colorMap[pos] = opt.areacheck.color.abgr;
+                    break;
 
-            } else {
+                case DR_PERIODIC:
 
-                colorMap[pos] = 0xFF000000;
+                    colorMap[pos] = opt.periodcheck.color.abgr;
+                    break;
+
+                default:
+
+                    colorMap[pos] = 0xFF000000;
+                    break;
             }
 
             //
             // Colorize normal map
             //
 
-            if (map.isOutside(c)) {
+            switch (map.get(c).result) {
 
-                auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
-                auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
-                auto b = 255.0;
-                auto a = 255.0;
+                case DR_ESCAPED:
+                {
+                    auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
+                    auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
+                    auto b = 255.0;
+                    auto a = 255.0;
 
-                normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
+                    normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
+                    break;
+                }
+                default:
 
-            } else if (opt.image.depth == 0) {
-
-                normalMap[pos] = 0;
+                    normalMap[pos] = 0;
+                    break;
             }
         }
 
