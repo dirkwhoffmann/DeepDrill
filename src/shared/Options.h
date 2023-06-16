@@ -20,7 +20,12 @@
 
 namespace dd {
 
-enum class ColoringMode { Default };
+struct Color { u32 abgr; };
+
+enum class ColoringMode
+{
+    Default
+};
 
 struct Options {
 
@@ -161,6 +166,9 @@ struct Options {
         // Maximum number of rounds
         isize rounds;
 
+        // Color for glitch points
+        Color color;
+
     } perturbation;
     
     struct {
@@ -181,7 +189,23 @@ struct Options {
         // Indicates if area checking is enabled
         bool enable;
 
+        // Color used for points with a positive area check
+        Color color;
+
     } areacheck;
+
+    struct {
+
+        // Indicates if attractor checking is enabled
+        bool enable;
+
+        // Tolerance for equality checks
+        double tolerance;
+
+        // Color used for points with a positive attractor check
+        Color color;
+
+    } attractorcheck;
 
     struct {
 
@@ -190,6 +214,9 @@ struct Options {
 
         // Tolerance for equality checks
         double tolerance;
+
+        // Color unsed for points with a positive period check
+        Color color;
 
     } periodcheck;
 
@@ -252,6 +279,7 @@ private:
     void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
+    void parse(const string &key, const string &value, Color &parsed);
     void parse(const string &key, const string &value, ColoringMode &parsed);
 };
 

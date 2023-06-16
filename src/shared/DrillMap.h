@@ -23,9 +23,10 @@ namespace dd {
 enum PointType : i32 {
 
     POINT_MAX_DEPTH = 0,    // Point is inside M (didn't escape)
-    POINT_REJECTED = -1,    // Point is inside M (in bulb or cardioid)
-    POINT_PERIODIC = -2,    // Point is inside M (finite orbit)
-    POINT_GLITCH   = -3     // Unresolved (glitch point)
+    POINT_REJECTED  = -1,   // Point is inside M (in bulb or cardioid)
+    POINT_PERIODIC  = -2,   // Point is inside M (finite orbit)
+    POINT_ATTRACTED = -3,   // Point is inside M (derivation close to zero)
+    POINT_GLITCH    = -4    // Unresolved (glitch point)
 };
 
 enum ChannelID {
@@ -98,12 +99,12 @@ public:
 
     bool isInside(const struct Coord &c) const;
     bool isOutside(const struct Coord &c) const;
-    bool isGlitch(const struct Coord &c) const;
-    bool hasMaxDepth(const struct Coord &c) const;
-    bool isRejected(const struct Coord &c) const;
-    bool isPeriodic(const struct Coord &c) const;
+    bool isGlitch(const struct Coord &c) const { return get(c).iteration == POINT_GLITCH; }
+    bool isRejected(const struct Coord &c) const { return get(c).iteration == POINT_REJECTED; }
+    bool isPeriodic(const struct Coord &c) const { return get(c).iteration == POINT_PERIODIC; }
+    bool isAttracted(const struct Coord &c) const { return get(c).iteration == POINT_ATTRACTED; }
 
-
+    
     //
     // Accessing
     //

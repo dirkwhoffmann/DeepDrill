@@ -56,16 +56,24 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Area checking keys
     defaults["areacheck.enable"] = "yes";
+    defaults["areacheck.color"] = "black";
+
+    // Attractor checking keys
+    defaults["attractorcheck.enable"] = "yes";
+    defaults["attractorcheck.tolerance"] = "1e-17";
+    defaults["attractorcheck.color"] = "black";
 
     // Period checking keys
     defaults["periodcheck.enable"] = "yes";
     defaults["periodcheck.tolerance"] = "1e-17";
+    defaults["periodcheck.color"] = "black";
 
     // Perturbation keys
     defaults["perturbation.enable"] = "yes";
     defaults["perturbation.tolerance"] = "1e-6";
     defaults["perturbation.badpixels"] = "0.001";
     defaults["perturbation.rounds"] = "50";
+    defaults["perturbation.color"] = "black";
 
     // Approximation keys
     defaults["approximation.enable"] = "yes";
@@ -73,9 +81,9 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["approximation.tolerance"] = "1e-12";
 
     // Debug keys
-    defaults["debug.glitches"] = "no";
-    defaults["debug.rejected"] = "no";
-    defaults["debug.periodic"] = "yes";
+    defaults["debug.glitches"] = "no";    // DEPRECATED
+    defaults["debug.rejected"] = "no";    // DEPRECATED
+    defaults["debug.periodic"] = "yes";   // DEPRECATED
 }
 
 void
@@ -211,6 +219,22 @@ Options::parse(string key, string value)
 
         parse(key, value, areacheck.enable);
 
+    } else if (key == "areacheck.color") {
+
+        parse(key, value, areacheck.color);
+
+    } else if (key == "attractorcheck.enable") {
+
+        parse(key, value, attractorcheck.enable);
+
+    } else if (key == "attractorcheck.tolerance") {
+
+        parse(key, value, attractorcheck.tolerance);
+
+    } else if (key == "attractorcheck.color") {
+
+        parse(key, value, attractorcheck.color);
+
     } else if (key == "periodcheck.enable") {
 
         parse(key, value, periodcheck.enable);
@@ -218,6 +242,10 @@ Options::parse(string key, string value)
     } else if (key == "periodcheck.tolerance") {
 
         parse(key, value, periodcheck.tolerance);
+
+    } else if (key == "periodcheck.color") {
+
+        parse(key, value, periodcheck.color);
 
     } else if (key == "perturbation.enable") {
 
@@ -234,6 +262,10 @@ Options::parse(string key, string value)
     } else if (key == "perturbation.rounds") {
 
         parse(key, value, perturbation.rounds);
+
+    } else if (key == "perturbation.color") {
+
+        parse(key, value, perturbation.color);
 
     } else if (key == "approximation.enable") {
 
@@ -328,6 +360,25 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
 {
     try {
         parsed = mpf_class(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Options::parse(const string &key, const string &value, Color &parsed)
+{
+    std::map <string, u32> modes = {
+
+        { "black",  0x000000 },
+        { "red",    0x0000FF },
+        { "blue",   0xFF0000 },
+        { "green",  0x00FF00 },
+        { "yellow", 0x00FFFF }
+    };
+
+    try {
+        parsed.abgr = modes.at(lowercased(value)) | 0xFF000000;
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }

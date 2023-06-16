@@ -93,24 +93,6 @@ DrillMap::isOutside(const struct Coord &c) const
 }
 
 bool
-DrillMap::isRejected(const struct Coord &c) const
-{
-    return get(c).iteration == POINT_REJECTED;
-}
-
-bool
-DrillMap::isPeriodic(const struct Coord &c) const
-{
-    return get(c).iteration == POINT_PERIODIC;
-}
-
-bool
-DrillMap::isGlitch(const struct Coord &c) const
-{
-    return get(c).iteration == POINT_GLITCH;
-}
-
-bool
 DrillMap::isInside(const struct Coord &c) const
 {
     auto it = get(c).iteration;

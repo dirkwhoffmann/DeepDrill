@@ -84,17 +84,17 @@ ColorMap::compute(const DrillMap &map)
 
                 colorMap[pos] = palette.interpolateABGR(sl);
 
-            } else if (opt.debug.glitches && map.isGlitch(c)) {
+            } else if (map.isGlitch(c)) {
 
-                colorMap[pos] = 0xFF0000FF;
+                colorMap[pos] = opt.perturbation.color.abgr;
 
-            } else if (opt.debug.rejected && map.isRejected(c)) {
+            } else if (map.isRejected(c)) {
 
-                colorMap[pos] = 0xFF00FFFF;
+                colorMap[pos] = opt.areacheck.color.abgr;
 
-            } else if (opt.debug.periodic && map.isPeriodic(c)) {
+            } else if (map.isPeriodic(c)) {
 
-                colorMap[pos] = 0xFFFF00FF;
+                colorMap[pos] = opt.periodcheck.color.abgr;
 
             } else {
 
