@@ -115,10 +115,6 @@ public:
 
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
-    /*
-    void set(const struct Coord &c, i32 iteration, float lognorm);
-    void set(const struct Coord &c, DrillResult dr, i32 it = 0);
-    */
 
     void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints);
 

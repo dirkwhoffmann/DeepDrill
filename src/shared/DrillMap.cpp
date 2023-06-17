@@ -83,20 +83,6 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
     set(c.x, c.y, entry);
 }
 
-/*
-void
-DrillMap::set(const struct Coord &c, i32 it, float lognorm)
-{
-    set(c.x, c.y, MapEntry { DR_ESCAPED, it, (float)::log(lognorm), StandardComplex(), StandardComplex() } );
-}
-
-void
-DrillMap::set(const struct Coord &c, DrillResult dr, i32 it)
-{
-    set(c.x, c.y, MapEntry { dr, it, 0.0, StandardComplex(), StandardComplex() } );
-}
-*/
-
 void
 DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh)
 {
@@ -167,34 +153,43 @@ void
 DrillMap::analyze() const
 {
     struct {
+
         isize total = 0;
         isize interior = 0;
         isize exterior = 0;
         isize unprocessed = 0;
         isize glitches = 0;
+
     } spots;
 
     struct {
+
         isize total = 0;
         isize bulb = 0;
         isize cartioid = 0;
         isize approximations = 0;
         isize periods = 0;
         isize attractors = 0;
+
     } optspots;
 
     struct {
+
         isize total = 0;
         isize interior = 0;
         isize exterior = 0;
+
     } iterations;
 
     struct {
+
         isize total = 0;
         isize bulb = 0;
         isize cartioid = 0;
+        isize approximations = 0;
         isize periods = 0;
         isize attractors = 0;
+
     } saved;
 
     auto total = width * height;
@@ -207,6 +202,21 @@ DrillMap::analyze() const
             for (isize x = 0; x < width; x++) {
 
                 auto &entry = get(Coord(x,y));
+
+                isize skipped = entry.first ? entry.last - entry.first : 0;
+                assert(skipped >= 0);
+                bool optspot = !!skipped;
+                optspots.approximations += !!skipped;
+                saved.approximations += skipped;
+
+                /*
+                if (entry.first) {
+
+                    optspots.approximations++;
+                    saved.approximations += entry.last - entry.first;
+                    assert(entry.last >= entry.first);
+                }
+                */
 
                 switch(entry.result) {
 
@@ -235,9 +245,9 @@ DrillMap::analyze() const
 
                     case DR_IN_BULB:
 
+                        optspot = true;
                         spots.total++;
                         spots.interior++;
-                        optspots.total++;
                         optspots.bulb++;
                         iterations.total += depth;
                         iterations.interior += depth;
@@ -247,9 +257,9 @@ DrillMap::analyze() const
 
                     case DR_IN_CARDIOID:
 
+                        optspot = true;
                         spots.total++;
                         spots.interior++;
-                        optspots.total++;
                         optspots.cartioid++;
                         iterations.total += depth;
                         iterations.interior += depth;
@@ -259,9 +269,9 @@ DrillMap::analyze() const
 
                     case DR_PERIODIC:
 
+                        optspot = true;
                         spots.total++;
                         spots.interior++;
-                        optspots.total++;
                         optspots.periods++;
                         iterations.total += depth;
                         iterations.interior += depth;
@@ -271,9 +281,9 @@ DrillMap::analyze() const
 
                     case DR_ATTRACTED:
 
+                        optspot = true;
                         spots.total++;
                         spots.interior++;
-                        optspots.total++;
                         optspots.attractors++;
                         iterations.total += depth;
                         iterations.interior += depth;
@@ -287,15 +297,19 @@ DrillMap::analyze() const
                         spots.glitches++;
                         break;
                 }
+
+                if (optspot) optspots.total++;
             }
             progress.step(width);
         }
     }
 
-    auto perc = [&total](isize x) {
+    auto format = [&](isize x) {
+
+        usize digits = std::log10(iterations.total) + 1;
 
         string result = std::to_string(x);
-        result = std::string(10 - std::min(usize(10), result.length()), ' ') + result;
+        result = std::string(digits - std::min(digits, result.length()), ' ') + result;
 
         auto p = isize(std::round(10000.0 * double(x) / double(total)));
         auto q1 = std::to_string(p / 100);
@@ -312,31 +326,31 @@ DrillMap::analyze() const
     log::cout << "           Drill locations: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(spots.total) << log::endl;
-    log::cout << log::ralign("Interior: ");
-    log::cout << perc(spots.interior) << log::endl;
-    log::cout << log::ralign("Exterior: ");
-    log::cout << perc(spots.exterior) << log::endl;
+    log::cout << format(spots.total) << log::endl;
     log::cout << log::ralign("Unprocessed: ");
-    log::cout << perc(spots.unprocessed) << log::endl;
+    log::cout << format(spots.unprocessed) << log::endl;
+    log::cout << log::ralign("Interior: ");
+    log::cout << format(spots.interior) << log::endl;
+    log::cout << log::ralign("Exterior: ");
+    log::cout << format(spots.exterior) << log::endl;
     log::cout << log::ralign("Glitches: ");
-    log::cout << perc(spots.glitches) << log::endl;
+    log::cout << format(spots.glitches) << log::endl;
 
     log::cout << log::vspace;
     log::cout << "           Locations with applied optimizations: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(optspots.total) << log::endl;
+    log::cout << format(optspots.total) << log::endl;
     log::cout << log::ralign("Main bulb filter: ");
-    log::cout << perc(optspots.bulb) << log::endl;
+    log::cout << format(optspots.bulb) << log::endl;
     log::cout << log::ralign("Cartioid filter: ");
-    log::cout << perc(optspots.cartioid) << log::endl;
+    log::cout << format(optspots.cartioid) << log::endl;
     log::cout << log::ralign("Series approximation: ");
-    log::cout << perc(optspots.approximations) << " (TODO)" << log::endl;
+    log::cout << format(optspots.approximations) << log::endl;
     log::cout << log::ralign("Period detection: ");
-    log::cout << perc(optspots.periods) << log::endl;
+    log::cout << format(optspots.periods) << log::endl;
     log::cout << log::ralign("Attractor detection: ");
-    log::cout << perc(optspots.attractors) << log::endl;
+    log::cout << format(optspots.attractors) << log::endl;
 
     total = iterations.total;
 
@@ -344,27 +358,27 @@ DrillMap::analyze() const
     log::cout << "           Iteration counts: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(iterations.total) << log::endl;
+    log::cout << format(iterations.total) << log::endl;
     log::cout << log::ralign("Interior: ");
-    log::cout << perc(iterations.interior) << log::endl;
+    log::cout << format(iterations.interior) << log::endl;
     log::cout << log::ralign("Exterior: ");
-    log::cout << perc(iterations.exterior) << log::endl;
+    log::cout << format(iterations.exterior) << log::endl;
 
     log::cout << log::vspace;
     log::cout << "           Skipped iterations: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(saved.total) << log::endl;
+    log::cout << format(saved.total) << log::endl;
     log::cout << log::ralign("Main bulb filter: ");
-    log::cout << perc(saved.bulb) << log::endl;
+    log::cout << format(saved.bulb) << log::endl;
     log::cout << log::ralign("Cartioid filter: ");
-    log::cout << perc(saved.cartioid) << log::endl;
+    log::cout << format(saved.cartioid) << log::endl;
     log::cout << log::ralign("Series approximation: ");
-    log::cout << "TODO" << log::endl;
+    log::cout << format(saved.approximations) << log::endl;
     log::cout << log::ralign("Period detection: ");
-    log::cout << perc(saved.periods) << log::endl;
+    log::cout << format(saved.periods) << log::endl;
     log::cout << log::ralign("Attractor detection: ");
-    log::cout << perc(saved.attractors) << log::endl;
+    log::cout << format(saved.attractors) << log::endl;
     log::cout << log::endl;
 }
 
