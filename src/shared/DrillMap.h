@@ -60,7 +60,7 @@ struct MapEntry {
     i32 first;
 
     // Last executed iteration
-    i32 iteration;
+    i32 last;
 
     // What is the best format to save here
     float lognorm;

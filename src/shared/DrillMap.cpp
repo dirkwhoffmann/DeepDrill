@@ -131,7 +131,7 @@ bool
 DrillMap::hasIterations() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (data[i].iteration) return true;
+        if (data[i].last) return true;
     }
     return false;
 }
@@ -220,17 +220,17 @@ DrillMap::analyze() const
 
                         spots.total++;
                         spots.exterior++;
-                        iterations.total += entry.iteration;
-                        iterations.exterior += entry.iteration;
+                        iterations.total += entry.last;
+                        iterations.exterior += entry.last;
                         break;
 
                     case DR_MAX_DEPTH_REACHED:
 
                         spots.total++;
                         spots.interior++;
-                        iterations.total += entry.iteration;
-                        iterations.interior += entry.iteration;
-                        assert(entry.iteration == depth);
+                        iterations.total += entry.last;
+                        iterations.interior += entry.last;
+                        assert(entry.last == depth);
                         break;
 
                     case DR_IN_BULB:
@@ -265,8 +265,8 @@ DrillMap::analyze() const
                         optspots.periods++;
                         iterations.total += depth;
                         iterations.interior += depth;
-                        saved.total += depth - entry.iteration;
-                        saved.periods += depth - entry.iteration;
+                        saved.total += depth - entry.last;
+                        saved.periods += depth - entry.last;
                         break;
 
                     case DR_ATTRACTED:
@@ -277,8 +277,8 @@ DrillMap::analyze() const
                         optspots.attractors++;
                         iterations.total += depth;
                         iterations.interior += depth;
-                        saved.total += depth - entry.iteration;
-                        saved.attractors += depth - entry.iteration;
+                        saved.total += depth - entry.last;
+                        saved.attractors += depth - entry.last;
                         break;
 
                     case DR_GLITCH:
@@ -495,10 +495,10 @@ DrillMap::loadChannel(Compressor &is)
 
                     switch (ChannelFormat(fmt)) {
 
-                        case FMT_I8:  load <FMT_I8>  (is, get(x,y).iteration); break;
-                        case FMT_I16: load <FMT_I16> (is, get(x,y).iteration); break;
-                        case FMT_I24: load <FMT_I24> (is, get(x,y).iteration); break;
-                        case FMT_I32: load <FMT_I32> (is, get(x,y).iteration); break;
+                        case FMT_I8:  load <FMT_I8>  (is, get(x,y).last); break;
+                        case FMT_I16: load <FMT_I16> (is, get(x,y).last); break;
+                        case FMT_I24: load <FMT_I24> (is, get(x,y).last); break;
+                        case FMT_I32: load <FMT_I32> (is, get(x,y).last); break;
 
                         default:
                             throw Exception("Invalid data format");
@@ -749,7 +749,7 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_I32> (os, get(x,y).iteration);
+                    save <FMT_I32> (os, get(x,y).last);
                 }
             }
             break;

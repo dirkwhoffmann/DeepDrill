@@ -80,7 +80,7 @@ ColorMap::compute(const DrillMap &map)
 
                 case DR_ESCAPED:
 
-                    sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
+                    sl = (double(data.last) - log2(data.lognorm)) + 4.0;
                     sl *= .0025;
                     // sl = 2.7 + sl * 30.0;
                     sl *= 30.0;

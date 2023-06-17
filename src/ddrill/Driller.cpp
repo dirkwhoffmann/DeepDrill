@@ -278,12 +278,11 @@ Driller::drill(ReferencePoint &r)
 
             r.escaped = true;
             map.set(r.coord, MapEntry {
-                .result = DR_ESCAPED,
-                .first = 0,
-                .iteration = (i32)i,
-                .lognorm = (float)::log(norm),
+                .result     = DR_ESCAPED,
+                .last       = (i32)i,
+                .lognorm    = (float)::log(norm),
                 .derivative = StandardComplex(dn),
-                .normal = StandardComplex(nv) } );
+                .normal     = StandardComplex(nv) } );
             return;
         }
         
@@ -296,8 +295,8 @@ Driller::drill(ReferencePoint &r)
 
     // This point is inside the Mandelbrot set
     map.set(r.coord, MapEntry {
-        .result = DR_MAX_DEPTH_REACHED,
-        .iteration = (i32)opt.location.depth });
+        .result     = DR_MAX_DEPTH_REACHED,
+        .last       = (i32)opt.location.depth });
 }
 
 isize
@@ -414,7 +413,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
             map.set(point, MapEntry {
                 .result     = DR_GLITCH,
                 .first      = (i32)ref.skipped,
-                .iteration  = (i32)iteration } );
+                .last       = (i32)iteration } );
             glitchPoints.push_back(point);
             return;
         }
@@ -425,7 +424,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
             map.set(point, MapEntry {
                 .result     = DR_PERIODIC,
                 .first      = (i32)ref.skipped,
-                .iteration  = (i32)iteration } );
+                .last       = (i32)iteration } );
             return;
         }
         if (iteration == nextUpdate) {
@@ -441,7 +440,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
             map.set(point, MapEntry {
                 .result     = DR_ESCAPED,
                 .first      = (i32)ref.skipped,
-                .iteration  = (i32)iteration,
+                .last       = (i32)iteration,
                 .lognorm    = (float)::log(norm),
                 .derivative = StandardComplex(ddn),
                 .normal     = StandardComplex(nv) } );
@@ -453,7 +452,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     map.set(point, MapEntry {
         .result     = DR_MAX_DEPTH_REACHED,
         .first      = (i32)ref.skipped,
-        .iteration  = (i32)iteration
+        .last       = (i32)iteration
     } );
 }
 
