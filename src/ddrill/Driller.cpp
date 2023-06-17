@@ -193,6 +193,7 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
         progress.step(width);
     }
 
+    /*
     if (opt.flags.verbose) {
 
         isize total = width * height;
@@ -206,7 +207,7 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
         if (skipped) log::cout << " (" << isize(percentage) << "%)";
         log::cout << log::endl << log::vspace;
     }
-
+    */
 }
 
 ReferencePoint

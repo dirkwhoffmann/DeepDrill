@@ -165,37 +165,39 @@ void
 DrillMap::analyze() const
 {
     struct {
-        isize unprocessed = 0;
-        isize glitches = 0;
+        isize total = 0;
         isize interior = 0;
         isize exterior = 0;
-        isize iterations = 0;
-    } general;
+        isize unprocessed = 0;
+        isize glitches = 0;
+    } spots;
 
     struct {
-        isize count = 0;
-        isize savedIterations = 0;
-    } approx;
+        isize total = 0;
+        isize bulb = 0;
+        isize cartioid = 0;
+        isize approximations = 0;
+        isize periods = 0;
+        isize attractors = 0;
+    } optspots;
 
     struct {
-        isize bulbCount = 0;
-        isize savedBulbIterations = 0;
-        isize cartioidCount = 0;
-        isize savedCartioidIterations = 0;
-    } area;
+        isize total = 0;
+        isize interior = 0;
+        isize exterior = 0;
+    } iterations;
 
     struct {
-        isize count = 0;
-        isize savedIterations = 0;
-    } period;
-
-    struct {
-        isize count = 0;
-        isize savedIterations = 0;
-    } attractor;
+        isize total = 0;
+        isize bulb = 0;
+        isize cartioid = 0;
+        isize periods = 0;
+        isize attractors = 0;
+    } saved;
 
     auto total = width * height;
     auto depth = opt.location.depth;
+
 
     {   ProgressIndicator progress("Analyzing drill map", total);
 
@@ -207,72 +209,93 @@ DrillMap::analyze() const
                 switch(entry.result) {
 
                     case DR_UNPROCESSED:
-                        general.unprocessed++;
+
+                        spots.total++;
+                        spots.unprocessed++;
                         break;
 
                     case DR_ESCAPED:
-                        general.exterior++;
-                        general.iterations += entry.iteration;
+
+                        spots.total++;
+                        spots.exterior++;
+                        iterations.total += entry.iteration;
+                        iterations.exterior += entry.iteration;
                         break;
 
                     case DR_MAX_DEPTH_REACHED:
-                        general.interior++;
-                        general.iterations += entry.iteration;
+
+                        spots.total++;
+                        spots.interior++;
+                        iterations.total += entry.iteration;
+                        iterations.interior += entry.iteration;
                         assert(entry.iteration == depth);
                         break;
 
                     case DR_IN_BULB:
-                        general.interior++;
-                        general.iterations += depth;
-                        area.bulbCount++;
-                        area.savedBulbIterations += depth;
+
+                        spots.total++;
+                        spots.interior++;
+                        optspots.total++;
+                        optspots.bulb++;
+                        iterations.total += depth;
+                        iterations.interior += depth;
+                        saved.total += depth;
+                        saved.bulb += depth;
                         break;
 
                     case DR_IN_CARDIOID:
-                        general.interior++;
-                        general.iterations += depth;
-                        area.cartioidCount++;
-                        area.savedCartioidIterations += depth;
+
+                        spots.total++;
+                        spots.interior++;
+                        optspots.total++;
+                        optspots.cartioid++;
+                        iterations.total += depth;
+                        iterations.interior += depth;
+                        saved.total += depth;
+                        saved.cartioid += depth;
                         break;
 
                     case DR_PERIODIC:
-                        general.interior++;
-                        general.iterations += depth;
-                        period.count++;
-                        period.savedIterations += depth - entry.iteration;
+
+                        spots.total++;
+                        spots.interior++;
+                        optspots.total++;
+                        optspots.periods++;
+                        iterations.total += depth;
+                        iterations.interior += depth;
+                        saved.total += depth - entry.iteration;
+                        saved.periods += depth - entry.iteration;
                         break;
 
                     case DR_ATTRACTED:
-                        general.interior++;
-                        general.iterations += depth;
-                        attractor.count++;
-                        attractor.savedIterations += depth - entry.iteration;
+
+                        spots.total++;
+                        spots.interior++;
+                        optspots.total++;
+                        optspots.attractors++;
+                        iterations.total += depth;
+                        iterations.interior += depth;
+                        saved.total += depth - entry.iteration;
+                        saved.attractors += depth - entry.iteration;
                         break;
 
                     case DR_GLITCH:
-                        general.glitches++;
-                        break;
 
+                        spots.total++;
+                        spots.glitches++;
+                        break;
                 }
             }
             progress.step(width);
         }
     }
 
-    auto drilled = total - area.bulbCount - area.cartioidCount;
-    auto saved =
-    area.savedBulbIterations +
-    area.savedCartioidIterations +
-    period.savedIterations +
-    attractor.savedIterations +
-    approx.savedIterations;
-
-    auto perc = [](isize x, isize y) {
+    auto perc = [&total](isize x) {
 
         string result = std::to_string(x);
         result = std::string(10 - std::min(usize(10), result.length()), ' ') + result;
 
-        auto p = isize(std::round(10000.0 * double(x) / double(y)));
+        auto p = isize(std::round(10000.0 * double(x) / double(total)));
         auto q1 = std::to_string(p / 100);
         auto q2 = std::to_string(p % 100);
         q1 = std::string(3 - std::min(usize(3), q1.length()), ' ') + q1;
@@ -284,99 +307,63 @@ DrillMap::analyze() const
     };
 
     log::cout << log::vspace;
-    log::cout << "           Drill spots: " << log::endl;
+    log::cout << "           Drill locations: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(total, total) << log::endl;
+    log::cout << perc(spots.total) << log::endl;
     log::cout << log::ralign("Interior: ");
-    log::cout << perc(general.interior, total) << log::endl;
+    log::cout << perc(spots.interior) << log::endl;
     log::cout << log::ralign("Exterior: ");
-    log::cout << perc(general.exterior, total) << log::endl;
+    log::cout << perc(spots.exterior) << log::endl;
     log::cout << log::ralign("Unprocessed: ");
-    log::cout << perc(general.unprocessed, total) << log::endl;
+    log::cout << perc(spots.unprocessed) << log::endl;
     log::cout << log::ralign("Glitches: ");
-    log::cout << perc(general.glitches, total) << log::endl;
+    log::cout << perc(spots.glitches) << log::endl;
 
     log::cout << log::vspace;
-    log::cout << "           Optimized spots: " << log::endl;
+    log::cout << "           Locations with applied optimizations: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << "TODO" << log::endl;
+    log::cout << perc(optspots.total) << log::endl;
     log::cout << log::ralign("Main bulb filter: ");
-    log::cout << perc(area.bulbCount, total) << log::endl;
+    log::cout << perc(optspots.bulb) << log::endl;
     log::cout << log::ralign("Cartioid filter: ");
-    log::cout << perc(area.cartioidCount, total) << log::endl;
+    log::cout << perc(optspots.cartioid) << log::endl;
     log::cout << log::ralign("Series approximation: ");
-    log::cout << "TODO" << log::endl;
+    log::cout << perc(optspots.approximations) << " (TODO)" << log::endl;
     log::cout << log::ralign("Period detection: ");
-    log::cout << perc(period.count, total) << log::endl;
+    log::cout << perc(optspots.periods) << log::endl;
     log::cout << log::ralign("Attractor detection: ");
-    log::cout << perc(attractor.count, total) << log::endl;
+    log::cout << perc(optspots.attractors) << log::endl;
 
-    total = general.iterations;
+    total = iterations.total;
 
     log::cout << log::vspace;
-    log::cout << "           Iterations: " << log::endl;
+    log::cout << "           Iteration counts: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(general.iterations, total) << log::endl;
+    log::cout << perc(iterations.total) << log::endl;
     log::cout << log::ralign("Interior: ");
-    log::cout << "TODO" << log::endl;
+    log::cout << perc(iterations.interior) << log::endl;
     log::cout << log::ralign("Exterior: ");
-    log::cout << "TODO" << log::endl;
+    log::cout << perc(iterations.exterior) << log::endl;
 
     log::cout << log::vspace;
-    log::cout << "           Optimized iterations: " << log::endl;
+    log::cout << "           Skipped iterations: " << log::endl;
     log::cout << log::endl;
     log::cout << log::ralign("Total: ");
-    log::cout << perc(saved, total) << log::endl;
+    log::cout << perc(saved.total) << log::endl;
     log::cout << log::ralign("Main bulb filter: ");
-    log::cout << perc(area.savedBulbIterations, total) << log::endl;
+    log::cout << perc(saved.bulb) << log::endl;
     log::cout << log::ralign("Cartioid filter: ");
-    log::cout << perc(area.savedCartioidIterations, total) << log::endl;
+    log::cout << perc(saved.cartioid) << log::endl;
     log::cout << log::ralign("Series approximation: ");
     log::cout << "TODO" << log::endl;
     log::cout << log::ralign("Period detection: ");
-    log::cout << perc(period.savedIterations, total) << log::endl;
+    log::cout << perc(saved.periods) << log::endl;
     log::cout << log::ralign("Attractor detection: ");
-    log::cout << perc(attractor.savedIterations, total) << log::endl;
+    log::cout << perc(saved.attractors) << log::endl;
     log::cout << log::endl;
-
-
-    /*
-    log::cout << log::ralign("In main bulb: ");
-    log::cout << perc(area.bulbCount, total) << log::endl;
-    log::cout << log::ralign("In cartioid: ");
-    log::cout << perc(area.cartioidCount, total) << log::endl;
-
-    log::cout << log::endl;
-    log::cout << "Period checking:" << log::endl << log::endl;
-    log::cout << log::ralign("Pixels with positive period check: ");
-    log::cout << period.count << perc(period.count, drilled) << log::endl;
-    log::cout << log::ralign("Saved iterations: ");
-    log::cout << period.savedIterations << log::endl;
-
-    log::cout << log::endl;
-    log::cout << "Attractor checking:" << log::endl << log::endl;
-    log::cout << log::ralign("Pixels with positive attractor check: ");
-    log::cout << attractor.count << perc(attractor.count, drilled) << log::endl;
-    log::cout << log::ralign("Saved iterations: ");
-    log::cout << attractor.savedIterations << log::endl;
-
-    log::cout << log::endl;
-    log::cout << "Series approximation:" << log::endl << log::endl;
-    log::cout << log::ralign("Pixels with skipped iterations: ");
-    log::cout << "TODO" << log::endl;
-    log::cout << log::ralign("Saved iterations: ");
-    log::cout << "TODO" << log::endl;
-
-    log::cout << log::endl;
-    log::cout << "Summary:" << log::endl << log::endl;
-    log::cout << log::ralign("Total iterations: ");
-    log::cout << general.iterations << log::endl;
-    log::cout << log::ralign("Saved iterations: ");
-    log::cout << saved << perc(saved, general.iterations) << log::endl;
-     */
 }
 
 const ColorMap &
