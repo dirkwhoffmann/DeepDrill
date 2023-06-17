@@ -78,17 +78,21 @@ SlowDriller::drill(const Coord &point)
             u.normalize();
 
             map.set(point, MapEntry {
-                DR_ESCAPED,
-                (i32)iteration,
-                (float)::log(norm),
-                StandardComplex(dn),
-                StandardComplex(u) } );
+                .result     = DR_ESCAPED,
+                // .first      = 0,
+                .iteration  = (i32)iteration,
+                .lognorm    = (float)::log(norm),
+                .derivative = StandardComplex(dn),
+                .normal     = StandardComplex(u) } );
             return;
         }
     }
 
     // This point is inside the Mandelbrot set
-    map.set(point, DR_MAX_DEPTH_REACHED, (i32)iteration);
+    map.set(point, MapEntry {
+        .result     = DR_MAX_DEPTH_REACHED,
+        .first      = 0,
+        .iteration  = (i32)iteration } );
 }
 
 }

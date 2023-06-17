@@ -83,6 +83,7 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
     set(c.x, c.y, entry);
 }
 
+/*
 void
 DrillMap::set(const struct Coord &c, i32 it, float lognorm)
 {
@@ -94,6 +95,7 @@ DrillMap::set(const struct Coord &c, DrillResult dr, i32 it)
 {
     set(c.x, c.y, MapEntry { dr, it, 0.0, StandardComplex(), StandardComplex() } );
 }
+*/
 
 void
 DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh)

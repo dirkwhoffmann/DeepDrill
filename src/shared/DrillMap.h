@@ -32,17 +32,6 @@ enum DrillResult : i8 {
     DR_GLITCH,
 };
 
-/*
-enum PointType : i32 { // DEPRECATED
-
-    POINT_MAX_DEPTH = 0,    // Point is inside M (didn't escape)
-    POINT_REJECTED  = -1,   // Point is inside M (in bulb or cardioid)
-    POINT_PERIODIC  = -2,   // Point is inside M (finite orbit)
-    POINT_ATTRACTED = -3,   // Point is inside M (derivation close to zero)
-    POINT_GLITCH    = -4    // Unresolved (glitch point)
-};
-*/
-
 enum ChannelID {
 
     CHANNEL_DRILLRESULT,
@@ -66,9 +55,20 @@ enum ChannelFormat {
 struct MapEntry {
 
     DrillResult result;
+
+    // First executed iteration
+    i32 first;
+
+    // Last executed iteration
     i32 iteration;
+
+    // What is the best format to save here
     float lognorm;
+
+    // Derivative
     StandardComplex derivative;
+
+    // Normal vector
     StandardComplex normal;
 };
 
@@ -115,8 +115,10 @@ public:
 
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
+    /*
     void set(const struct Coord &c, i32 iteration, float lognorm);
     void set(const struct Coord &c, DrillResult dr, i32 it = 0);
+    */
 
     void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints);
 
