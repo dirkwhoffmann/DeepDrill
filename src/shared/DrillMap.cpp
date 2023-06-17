@@ -203,20 +203,10 @@ DrillMap::analyze() const
 
                 auto &entry = get(Coord(x,y));
 
-                isize skipped = entry.first ? entry.last - entry.first : 0;
-                assert(skipped >= 0);
-                bool optspot = !!skipped;
-                optspots.approximations += !!skipped;
-                saved.approximations += skipped;
-
-                /*
-                if (entry.first) {
-
-                    optspots.approximations++;
-                    saved.approximations += entry.last - entry.first;
-                    assert(entry.last >= entry.first);
-                }
-                */
+                bool optspot = !!entry.first;
+                optspots.approximations += !!entry.first;
+                saved.approximations += entry.first;
+                saved.total += entry.first;
 
                 switch(entry.result) {
 

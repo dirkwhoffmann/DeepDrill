@@ -184,10 +184,7 @@ DeepDrill::run()
             driller.drill();
         }
 
-        log::cout << log::vspace << "Drilling completed." << log::endl << log::endl;
-
-        // Analyze the drill map
-        if (opt.flags.verbose) drillMap.analyze();
+        log::cout << log::vspace << "Preparing output:" << log::endl << log::endl;
     }
 
     // Generate outputs
@@ -207,6 +204,13 @@ DeepDrill::run()
             // Save map file
             drillMap.save(it);
         }
+    }
+
+    // Analyze the drill map
+    if (inputFormat != Format::MAP && opt.flags.verbose) {
+
+        log::cout << log::vspace << "Summary:" << log::endl << log::endl;
+        drillMap.analyze();
     }
 }
 
