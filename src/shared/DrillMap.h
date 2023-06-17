@@ -89,12 +89,12 @@ public:
     // Associated color map
     ColorMap colorMap = ColorMap(opt);
 
-public:
-
 
     //
     // Initializing
     //
+
+public:
 
     DrillMap(const Options &opt) : opt(opt) { };
     ~DrillMap();
@@ -104,19 +104,10 @@ public:
 
 
     //
-    // Analyzing
-    //
-
-    bool hasDrillResults() const;
-    bool hasIterations() const;
-    bool hasLogNorms() const;
-    bool hasDerivates() const;
-    bool hasNormals() const;
-
-    
-    //
     // Accessing
     //
+
+public:
 
     MapEntry *operator [] (const isize &) const;
     MapEntry &get(isize w, isize h) const;
@@ -131,8 +122,26 @@ public:
 
 
     //
+    // Analyzing
+    //
+
+public:
+
+    bool hasDrillResults() const;
+    bool hasIterations() const;
+    bool hasLogNorms() const;
+    bool hasDerivates() const;
+    bool hasNormals() const;
+
+    void analyze() const;
+
+
+
+    //
     // Colorizing
     //
+
+public:
 
     ColorMap &getColorMap() { return colorMap; }
     const ColorMap &colorize();

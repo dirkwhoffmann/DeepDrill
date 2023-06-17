@@ -403,7 +403,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Perform the glitch check
         if (norm < ref.xn[iteration].tolerance) {
 
-            map.set(point, DR_GLITCH, iteration);
+            map.set(point, DR_GLITCH, (i32)iteration);
             // map.markAsGlitch(point);
             glitchPoints.push_back(point);
             return;

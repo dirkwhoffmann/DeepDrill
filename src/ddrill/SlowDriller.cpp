@@ -88,7 +88,7 @@ SlowDriller::drill(const Coord &point)
     }
 
     // This point is inside the Mandelbrot set
-    map.set(point, DR_MAX_DEPTH_REACHED, iteration);
+    map.set(point, DR_MAX_DEPTH_REACHED, (i32)iteration);
 }
 
 }

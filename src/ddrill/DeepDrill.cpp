@@ -184,7 +184,10 @@ DeepDrill::run()
             driller.drill();
         }
 
-        log::cout << log::vspace << "Drilling completed" << log::endl << log::endl;
+        log::cout << log::vspace << "Drilling completed." << log::endl << log::endl;
+
+        // Analyze the drill map
+        if (opt.flags.verbose) drillMap.analyze();
     }
 
     // Generate outputs

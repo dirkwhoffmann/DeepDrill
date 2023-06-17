@@ -112,7 +112,7 @@ ColorMap::compute(const DrillMap &map)
             }
 
             //
-            // Colorize normal map
+            // Generate normal map
             //
 
             switch (map.get(c).result) {
