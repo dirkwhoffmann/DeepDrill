@@ -79,11 +79,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["approximation.enable"] = "yes";
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
-
-    // Debug keys
-    defaults["debug.glitches"] = "no";    // DEPRECATED
-    defaults["debug.rejected"] = "no";    // DEPRECATED
-    defaults["debug.periodic"] = "yes";   // DEPRECATED
 }
 
 void
@@ -108,6 +103,12 @@ void
 Options::parse(string key, string value)
 {
     keys[key] = value;
+
+    // Get the range of keyframes this key-value pair applies to
+    auto range = stripRange(key);
+
+    // Only proceed if the keyframe is in range
+    if (keyframe < range.first || keyframe > range.second) return;
 
     if (key == "location.real") {
 
@@ -279,22 +280,40 @@ Options::parse(string key, string value)
 
         parse(key, value, approximation.tolerance);
 
-    } else if (key == "debug.glitches") {
-
-        parse(key, value, debug.glitches);
-
-    } else if (key == "debug.rejected") {
-
-        parse(key, value, debug.rejected);
-
-    } else if (key == "debug.periodic") {
-
-        parse(key, value, debug.periodic);
-
     } else {
 
         throw KeyValueError(key, "Unexpected key");
     }
+}
+
+std::pair<isize, isize>
+Options::stripRange(string &key)
+{
+    isize first = 0;
+    isize last = LONG_MAX;
+
+    try {
+
+        if (auto pos1 = key.find("."); pos1 != std::string::npos) {
+
+            auto range = key.substr(0, pos1);
+
+            if (auto pos2 = range.find("-"); pos2 != std::string::npos) {
+
+                first = std::stol(range.substr(0, pos2));
+                last = std::stol(range.substr(pos2 + 1, std::string::npos));
+
+            } else {
+
+                first = last = std::stol(range.substr(0, pos1));
+            }
+
+            key = key.substr(pos1 + 1, std::string::npos);
+        }
+
+    } catch (...) { };
+
+    return { first, last };
 }
 
 void

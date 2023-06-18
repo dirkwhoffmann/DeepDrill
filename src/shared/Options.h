@@ -32,6 +32,9 @@ struct Options {
     // Reference to the asset manager
     const AssetManager &assets;
 
+    // Number of the currently computed keyframe (for key filtering)
+    isize keyframe = 0;
+
     // Set to true to abort the computation
     bool stop = false;
 
@@ -223,13 +226,13 @@ struct Options {
     struct {
 
         // Highlight glitch points in texture
-        bool glitches;
+        [[deprecated]] bool glitches;
 
         // Highlight rejected points in texture
-        bool rejected;
+        [[deprecated]] bool rejected;
 
         // Highlight periodic points in texture
-        bool periodic;
+        [[deprecated]] bool periodic;
 
     } debug;
 
@@ -272,6 +275,8 @@ public:
     void derive();
 
 private:
+
+    std::pair<isize, isize> stripRange(string &key);
 
     void parse(const string &key, const string &value, string &parsed);
     void parse(const string &key, const string &value, bool &parsed);
