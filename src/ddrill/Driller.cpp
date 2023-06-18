@@ -361,25 +361,32 @@ Driller::drill(const std::vector<Coord> &remaining, std::vector<Coord> &glitches
 void
 Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 {
-    // If point is the reference point, there is nothing to do
+    // If this point is the reference point, there is nothing to do
     if (point == ref.coord) return;
-
-    ExtendedComplex d0 = ref.deltaLocation(opt, point);
-    ExtendedComplex dn = d0;
-
-    ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
-    ExtendedComplex ddn = dd0;
-
-    // Experimental
-    ExtendedComplex derz0 = ExtendedComplex(1.0, 0.0);
-    ExtendedComplex derzn = derz0;
 
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
 
+    // Determine the iteration to start with
     isize iteration = ref.skipped;
 
-    // Skip some iterations if possible
+    // Setup orbit parameters
+    ExtendedComplex d0 = ref.deltaLocation(opt, point);
+    ExtendedComplex dn = d0;
+
+    // Setup derivation parameters (df/dc)
+    ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex ddn = dd0;
+
+    // Setup derivation parameters (df/dz)
+    ExtendedComplex derz0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex derzn = derz0;
+
+    // Prepare for period checking
+    ExtendedComplex p = dn;
+    isize nextUpdate = iteration + 16;
+
+    // Perform series approximation if applicable
     if (ref.skipped) {
 
         dn = approximator.evaluate(point, d0, iteration);
@@ -388,11 +395,10 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         ddn.reduce();
     }
 
-    // Prepare for period checking
-    ExtendedComplex p = dn;
-    isize nextUpdate = iteration + 16;
+    //
+    // Main loop
+    //
 
-    // Enter the main loop
     while (++iteration < limit) {
 
         ddn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
@@ -409,35 +415,52 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         auto zn = ref.xn[iteration].extended + dn;
         double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
 
-        // Perform the glitch check
+        //
+        // Glitch check
+        //
+
         if (norm < ref.xn[iteration].tolerance) {
             break;
-       }
-
-        // Perform the period check
-        double deltap = (dn - p).norm().asDouble();
-        if (deltap < opt.periodcheck.tolerance && opt.periodcheck.enable) {
-            map.set(point, MapEntry {
-                .result     = DR_PERIODIC,
-                .first      = (i32)ref.skipped,
-                .last       = (i32)iteration } );
-            return;
-        }
-        if (iteration == nextUpdate) {
-            p = dn;
-            nextUpdate *= 1.5;
         }
 
-        // Perform the attractor check
-        if (derzn.norm().asDouble() < opt.attractorcheck.tolerance && opt.attractorcheck.enable) {
-            map.set(point, MapEntry {
-                .result     = DR_ATTRACTED,
-                .first      = (i32)ref.skipped,
-                .last       = (i32)iteration } );
-            return;
+        //
+        // Period check
+        //
+
+        if (opt.periodcheck.enable) {
+
+            if ((dn - p).norm().asDouble() < opt.periodcheck.tolerance) {
+                map.set(point, MapEntry {
+                    .result     = DR_PERIODIC,
+                    .first      = (i32)ref.skipped,
+                    .last       = (i32)iteration } );
+                return;
+            }
+            if (iteration == nextUpdate) {
+                p = dn;
+                nextUpdate *= 1.5;
+            }
         }
 
-        // Perform the escape check
+        //
+        // Attractor check
+        //
+
+        if (opt.attractorcheck.enable) {
+
+            if (derzn.norm().asDouble() < opt.attractorcheck.tolerance) {
+                map.set(point, MapEntry {
+                    .result     = DR_ATTRACTED,
+                    .first      = (i32)ref.skipped,
+                    .last       = (i32)iteration } );
+                return;
+            }
+        }
+
+        //
+        // Escape check
+        //
+
         if (norm >= 256) {
 
             auto nv = zn / ddn;
@@ -453,9 +476,13 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         }
     }
 
+    // If we have drilled up to the maximum depth, the point is (likely) inside
+    // the Mandelbrot set. If not, we have to consider this point a glitch
+    // point temporarily. Computation has to be repeated with a different
+    // reference poin with a larger depth.
+
     if (limit == opt.location.depth) {
 
-        // This point is (likely) inside the Mandelbrot set
         map.set(point, MapEntry {
             .result     = DR_MAX_DEPTH_REACHED,
             .first      = (i32)ref.skipped,
@@ -463,7 +490,6 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 
     } else {
 
-        // This point is a glitch point
         map.set(point, MapEntry {
             .result     = DR_GLITCH,
             .first      = (i32)ref.skipped,
