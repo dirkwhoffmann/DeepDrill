@@ -105,6 +105,11 @@ ColorMap::compute(const DrillMap &map)
                     colorMap[pos] = opt.periodcheck.color.abgr;
                     break;
 
+                case DR_ATTRACTED:
+
+                    colorMap[pos] = opt.attractorcheck.color.abgr;
+                    break;
+
                 default:
 
                     colorMap[pos] = 0xFF000000;

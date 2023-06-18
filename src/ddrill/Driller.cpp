@@ -132,6 +132,8 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
      * does not intercept the bulb or the cardioid. In this case, all locations
      * need to be drilled.
      */
+
+    // TODO: MOVE TO DrillMap class
     auto inCardioid = [&](PrecisionComplex &c) {
 
         mpf_class r1 = c.re + 1.0;
@@ -139,6 +141,7 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
         return (r1 * r1 + ii < 0.0625);
     };
 
+    // TODO: MOVE TO DrillMap class
     auto inBulb = [&](PrecisionComplex &c) {
 
         mpf_class ii = c.im * c.im;
@@ -200,22 +203,6 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
         }
         progress.step(width);
     }
-
-    /*
-    if (opt.flags.verbose) {
-
-        isize total = width * height;
-        isize skipped = total - remaining.size();
-        double percentage = 100.0 * skipped / total;
-
-        progress.done();
-        log::cout << log::vspace;
-        log::cout << log::ralign("Skipped locations: ");
-        log::cout << skipped;
-        if (skipped) log::cout << " (" << isize(percentage) << "%)";
-        log::cout << log::endl << log::vspace;
-    }
-    */
 }
 
 ReferencePoint
@@ -383,6 +370,10 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
     ExtendedComplex ddn = dd0;
 
+    // Experimental
+    ExtendedComplex derz0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex derzn = derz0;
+
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
 
@@ -408,6 +399,9 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         ddn += dd0;
         ddn.reduce();
 
+        derzn *= ref.xn[iteration - 1].extended2 + (derzn * 2.0);
+        derzn.reduce();
+
         dn *= ref.xn[iteration - 1].extended2 + dn;
         dn += d0;
         dn.reduce();
@@ -432,6 +426,15 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         if (iteration == nextUpdate) {
             p = dn;
             nextUpdate *= 1.5;
+        }
+
+        // Perform the attractor check
+        if (derzn.norm().asDouble() < opt.attractorcheck.tolerance && opt.attractorcheck.enable) {
+            map.set(point, MapEntry {
+                .result     = DR_ATTRACTED,
+                .first      = (i32)ref.skipped,
+                .last       = (i32)iteration } );
+            return;
         }
 
         // Perform the escape check
