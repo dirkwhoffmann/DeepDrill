@@ -65,7 +65,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Period checking keys
     defaults["periodcheck.enable"] = "yes";
-    defaults["periodcheck.tolerance"] = "1e-34";
+    defaults["periodcheck.tolerance"] = "1e-74";
     defaults["periodcheck.color"] = "black";
 
     // Perturbation keys
