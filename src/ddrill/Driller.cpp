@@ -34,7 +34,43 @@ Driller::drill()
 
     // Determine the number of tolerated glitched pixels
     isize threshold = width * height * opt.perturbation.badpixels;
-        
+
+    if (opt.flags.verbose) {
+
+        log::cout << log::vspace;
+        log::cout << log::ralign("Center: ");
+        log::cout << opt.center << log::endl;
+        log::cout << log::ralign("Upper left: ");
+        log::cout << (opt.x0 >= 0.0 ? " " : "") << PrecisionComplex(opt.x0, opt.y0) << log::endl;
+        log::cout << log::ralign("Lower right: ");
+        log::cout << (opt.x1 >= 0.0 ? " " : "") << PrecisionComplex(opt.x1, opt.y1) << log::endl;
+        log::cout << log::ralign("Magnification: ");
+        log::cout << opt.location.zoom << log::endl;
+        log::cout << log::ralign("Drill depth: ");
+        log::cout << opt.location.depth << log::endl;
+        log::cout << log::ralign("Precision: ");
+        log::cout << mpf_get_default_prec() << " Bit" << log::endl;
+        log::cout << log::endl;
+        log::cout << log::ralign("Map size: ");
+        log::cout << opt.drillmap.width << " x " << opt.drillmap.height;
+        log::cout << (opt.drillmap.depth ? " (3D)" : " (2D)") << log::endl;
+        log::cout << log::ralign("Image size: ");
+        log::cout << opt.image.width << " x " << opt.image.height;
+        log::cout << (opt.image.depth ? " (3D)" : " (2D)") << log::endl;
+        log::cout << log::endl;
+        log::cout << log::ralign("Perturbation: ");
+        log::cout << opt.perturbation.enable << log::endl;
+        log::cout << log::ralign("Series approximation: ");
+        log::cout << opt.approximation.enable << log::endl;
+        log::cout << log::ralign("Area checking: ");
+        log::cout << opt.areacheck.enable << log::endl;
+        log::cout << log::ralign("Period checking: ");
+        log::cout << opt.periodcheck.enable << log::endl;
+        log::cout << log::ralign("Attractor checking: ");
+        log::cout << opt.attractorcheck.enable << log::endl;
+        log::cout << log::vspace;
+    }
+
     // Collect all pixel coordinates to be drilled at
     collectCoordinates(remaining);
 
