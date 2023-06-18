@@ -164,11 +164,6 @@ Logger::operator<<(const StandardComplex& arg)
 
         blanks = 0;
         stream << arg;
-        /*
-        stream << "(" << arg.re;
-        stream << "," << arg.im << "i";
-        stream << ")";
-        */
     }
     return *this;
 }
@@ -192,11 +187,6 @@ Logger::operator<<(const ExtendedComplex& arg)
 
         blanks = 0;
         stream << arg;
-        /*
-        stream << "(" << arg.mantissa.re;
-        stream << "," << arg.mantissa.im << "i";
-        stream << ")" << "b" << arg.exponent;
-        */
     }
     return *this;
 }
@@ -208,11 +198,6 @@ Logger::operator<<(const PrecisionComplex& arg)
 
         blanks = 0;
         stream << arg;
-        /*
-        stream << "(" << arg.re;
-        stream << "," << arg.im << "i";
-        stream << ")";
-        */
     }
     return *this;
 }

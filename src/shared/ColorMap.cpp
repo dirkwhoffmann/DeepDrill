@@ -115,22 +115,18 @@ ColorMap::compute(const DrillMap &map)
             // Generate normal map
             //
 
-            switch (map.get(c).result) {
+            if (opt.image.depth == 1 && map.get(c).result == DR_ESCAPED) {
 
-                case DR_ESCAPED:
-                {
-                    auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
-                    auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
-                    auto b = 255.0;
-                    auto a = 255.0;
+                auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
+                auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
+                auto b = 255.0;
+                auto a = 255.0;
 
-                    normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
-                    break;
-                }
-                default:
+                normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
 
-                    normalMap[pos] = 0;
-                    break;
+            } else {
+
+                normalMap[pos] = 0;
             }
         }
 

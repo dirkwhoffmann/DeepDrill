@@ -48,7 +48,7 @@ Driller::drill()
         log::cout << "Round " << round;
         if (opt.flags.verbose) log::cout << " / " << opt.perturbation.rounds;
         log::cout << ": ";
-        log::cout << remaining.size() << " points" << log::endl << log::endl;
+        log::cout << remaining.size() << " points remaining" << log::endl << log::endl;
 
         // Select a reference point
         ref = pickReference(glitches);
@@ -106,6 +106,14 @@ Driller::drill()
             log::cout << glitches.size() << log::endl;
             log::cout << log::vspace;
         }        
+    }
+
+    if (opt.flags.verbose) {
+
+        log::cout << log::vspace;
+        log::cout << "All rounds completed: ";
+        log::cout << (isize)remaining.size() << " unresolved points";
+        log::cout << log::endl << log::endl;
     }
 }
 
