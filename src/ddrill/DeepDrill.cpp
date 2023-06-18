@@ -34,7 +34,6 @@ DeepDrill::syntax()
     log::cout << "       -b or --batch     Run in batch mode" << log::endl;
     log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
-    log::cout << "       -c or --config    Configures a single key-value pair" << log::endl;
     log::cout << "       -p or --profile   Customize settings" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;
 }
@@ -47,7 +46,6 @@ DeepDrill::parseArguments(int argc, char *argv[])
         { "verbose",  no_argument,       NULL, 'v' },
         { "batch",    no_argument,       NULL, 'b' },
         { "assets",   required_argument, NULL, 'a' },
-        { "config",   required_argument, NULL, 'c' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
@@ -62,7 +60,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vba:c:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vba:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -77,10 +75,6 @@ DeepDrill::parseArguments(int argc, char *argv[])
 
             case 'a':
                 assets.addSearchPath(optarg);
-                break;
-
-            case 'c':
-                opt.overrides.push_back(optarg);
                 break;
 
             case 'p':
@@ -101,9 +95,16 @@ DeepDrill::parseArguments(int argc, char *argv[])
         }
     }
     
-    // Parse all remaining arguments
+    // Parse remaining arguments
     while (optind < argc) {
-        opt.files.inputs.push_back(argv[optind++]);
+
+        string arg = argv[optind++];
+
+        if (arg.find('=') != std::string::npos) {
+            opt.overrides.push_back(arg);
+        } else {
+            opt.files.inputs.push_back(arg);
+        }
     }
 
     // Add default outputs if none are given

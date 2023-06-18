@@ -83,8 +83,9 @@ public:
     // Resolution
     isize width = 0;
     isize height = 0;
-
-    // Map data (TODO: Use Buffer class)
+    isize depth = 0;
+    
+    // Map data (TODO: Use std::vector<MapEntry>)
     MapEntry *data = nullptr;
 
     // Associated color map
@@ -101,7 +102,7 @@ public:
     ~DrillMap();
 
     void resize();
-    void resize(isize w, isize h);
+    void resize(isize w, isize h, isize d);
 
 
     //

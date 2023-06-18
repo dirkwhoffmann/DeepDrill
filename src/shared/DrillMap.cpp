@@ -29,11 +29,11 @@ DrillMap::~DrillMap()
 void
 DrillMap::resize()
 {
-    resize(opt.drillmap.width, opt.drillmap.height);
+    resize(opt.drillmap.width, opt.drillmap.height, opt.drillmap.depth);
 }
 
 void
-DrillMap::resize(isize w, isize h)
+DrillMap::resize(isize w, isize h, isize d)
 {
     assert(w >= MIN_MAP_WIDTH && w <= MAX_MAP_WIDTH);
     assert(h >= MIN_MAP_HEIGHT && h <= MAX_MAP_HEIGHT);
@@ -42,6 +42,8 @@ DrillMap::resize(isize w, isize h)
     
     width = w;
     height = h;
+    depth = d;
+
     data = new MapEntry[w * h] ();
 
     assert(!hasIterations());
@@ -397,7 +399,7 @@ DrillMap::load(std::istream &is)
     loadHeader(is);
 
     // Adjust the map size
-    resize(width, height);
+    resize(width, height, depth);
 
     // The next byte indicates if the map is compressed
     u8 compressed; is >> compressed;
@@ -450,32 +452,31 @@ DrillMap::loadHeader(std::istream &is)
         throw Exception("Not a valid map file. Invalid header.");
     }
 
-    // Version number and map format
+    // Read version number and map format
     u8 major;       is >> major;
     u8 minor;       is >> minor;
     u8 subminor;    is >> subminor;
     u8 beta;        is >> beta;
     u8 format;      is >> format;
 
-    // Only proceed if the mapfile format is understood
+    // Check check map format
     if (format != MAP_FORMAT) {
         throw Exception("The mapfile is incompatible with this release. It has been generated with DeepDrill " +
                         Application::version(major, minor, subminor, beta) +
                         ".");
     }
 
-    // Width and height
+    // Read map dimensions
     is.read((char *)&width, sizeof(width));
     is.read((char *)&height, sizeof(height));
+    is.read((char *)&depth, sizeof(depth));
 }
 
 void
 DrillMap::loadChannel(Compressor &is)
 {
-    u8 id, fmt;
-
-    is >> id;
-    is >> fmt;
+    u8 id;  is >> id;
+    u8 fmt; is >> fmt;
 
     auto loadInt = [&]() {
 
@@ -718,19 +719,20 @@ DrillMap::save(std::ostream &os)
 void
 DrillMap::saveHeader(std::ostream &os)
 {
-    // Magic bytes
+    // Write magic bytes
     os.write("DeepDrill", 9);
 
-    // Version number
+    // Write version number and map format
     os << u8(VER_MAJOR);
     os << u8(VER_MINOR);
     os << u8(VER_SUBMINOR);
     os << u8(VER_BETA);
     os << u8(MAP_FORMAT);
 
-    // Width and height
+    // Write map dimensions
     os.write((char *)&width, sizeof(width));
     os.write((char *)&height, sizeof(height));
+    os.write((char *)&depth, sizeof(depth));
 }
 
 void

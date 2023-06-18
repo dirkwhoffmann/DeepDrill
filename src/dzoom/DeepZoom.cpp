@@ -54,7 +54,6 @@ DeepZoom::parseArguments(int argc, char *argv[])
         { "verbose",  no_argument,       NULL, 'v' },
         { "batch",    no_argument,       NULL, 'b' },
         { "assets",   required_argument, NULL, 'a' },
-        { "config",   required_argument, NULL, 'c' },
         { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
@@ -69,7 +68,7 @@ DeepZoom::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
 
-        int arg = getopt_long(argc, argv, ":vba:c:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vba:p:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -84,10 +83,6 @@ DeepZoom::parseArguments(int argc, char *argv[])
 
             case 'a':
                 assets.addSearchPath(optarg);
-                break;
-
-            case 'c':
-                opt.overrides.push_back(optarg);
                 break;
 
             case 'p':
@@ -108,9 +103,16 @@ DeepZoom::parseArguments(int argc, char *argv[])
         }
     }
 
-    // Parse all remaining arguments
+    // Parse remaining arguments
     while (optind < argc) {
-        opt.files.inputs.push_back(argv[optind++]);
+
+        string arg = argv[optind++];
+
+        if (arg.find('=') != std::string::npos) {
+            opt.overrides.push_back(arg);
+        } else {
+            opt.files.inputs.push_back(arg);
+        }
     }
 }
 
