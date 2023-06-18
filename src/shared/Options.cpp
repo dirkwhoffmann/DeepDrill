@@ -60,7 +60,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Attractor checking keys
     defaults["attractorcheck.enable"] = "yes";
-    defaults["attractorcheck.tolerance"] = "1e-17";
+    defaults["attractorcheck.tolerance"] = "1e-34";
     defaults["attractorcheck.color"] = "black";
 
     // Period checking keys

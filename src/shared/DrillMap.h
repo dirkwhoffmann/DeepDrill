@@ -32,15 +32,6 @@ enum DrillResult : i8 {
     DR_GLITCH,
 };
 
-enum ChannelID {
-
-    CHANNEL_DRILLRESULT,
-    CHANNEL_ITCOUNTS,
-    CHANNEL_LOGNORMS,
-    CHANNEL_DERIVATIVES,
-    CHANNEL_NORMALS
-};
-
 enum ChannelFormat {
 
     FMT_I8,
@@ -50,6 +41,16 @@ enum ChannelFormat {
     FMT_FP16,
     FMT_FLOAT,
     FMT_DOUBLE
+};
+
+enum ChannelID {
+
+    CHANNEL_RESULT,
+    CHANNEL_FIRST,
+    CHANNEL_LAST,
+    CHANNEL_LOGNORM,
+    CHANNEL_DERIVATIVE,
+    CHANNEL_NORMAL
 };
 
 struct MapEntry {
@@ -163,7 +164,6 @@ private:
     template<ChannelFormat fmt> void load(Compressor &is, u64 &raw) { load <fmt, u64> (is, raw); }
     template<ChannelFormat fmt> void load(Compressor &is, float &raw) { load <fmt, float> (is, raw); }
     template<ChannelFormat fmt> void load(Compressor &is, double &raw) { load <fmt, double> (is, raw); }
-    template<ChannelFormat fmt> void load(Compressor &is, StandardComplex &raw);
 
     
     //
@@ -184,7 +184,6 @@ private:
     template<ChannelFormat fmt> void save(Compressor &os, u64 raw) { save <fmt, u64> (os, raw); }
     template<ChannelFormat fmt> void save(Compressor &os, float raw) { save <fmt, float> (os, raw); }
     template<ChannelFormat fmt> void save(Compressor &os, double raw) { save <fmt, double> (os, raw); }
-    template<ChannelFormat fmt> void save(Compressor &os, const StandardComplex &raw);
 };
 
 }

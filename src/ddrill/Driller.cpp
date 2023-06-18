@@ -405,7 +405,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         ddn += dd0;
         ddn.reduce();
 
-        derzn *= ref.xn[iteration - 1].extended2 + (derzn * 2.0);
+        derzn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
         derzn.reduce();
 
         dn *= ref.xn[iteration - 1].extended2 + dn;

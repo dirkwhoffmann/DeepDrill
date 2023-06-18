@@ -477,90 +477,95 @@ DrillMap::loadChannel(Compressor &is)
     is >> id;
     is >> fmt;
 
+    auto loadInt = [&]() {
+
+        i64 value;
+
+        switch (ChannelFormat(fmt)) {
+
+            case FMT_I8:  load <FMT_I8>  (is, value); break;
+            case FMT_I16: load <FMT_I16> (is, value); break;
+            case FMT_I24: load <FMT_I24> (is, value); break;
+            case FMT_I32: load <FMT_I32> (is, value); break;
+
+            default:
+                throw Exception("Invalid data format");
+        }
+
+        return value;
+    };
+
+    auto loadFloat = [&]() {
+
+        double value;
+
+        switch (ChannelFormat(fmt)) {
+
+            case FMT_FP16: load <FMT_FP16> (is, value); break;
+            case FMT_FLOAT: load <FMT_FLOAT> (is, value); break;
+            case FMT_DOUBLE: load <FMT_DOUBLE> (is, value); break;
+
+            default:
+                throw Exception("Invalid data format");
+        }
+
+        return value;
+    };
+
     switch (ChannelID(id)) {
 
-        case CHANNEL_DRILLRESULT:
+        case CHANNEL_RESULT:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
-                    i8 value;
-                    load <FMT_I8> (is, value);
-                    get(x,y).result = DrillResult(value);
-
+                    get(x,y).result = DrillResult(loadInt());
                 }
             }
             break;
 
-        case CHANNEL_ITCOUNTS:
+        case CHANNEL_FIRST:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
-                    switch (ChannelFormat(fmt)) {
-
-                        case FMT_I8:  load <FMT_I8>  (is, get(x,y).last); break;
-                        case FMT_I16: load <FMT_I16> (is, get(x,y).last); break;
-                        case FMT_I24: load <FMT_I24> (is, get(x,y).last); break;
-                        case FMT_I32: load <FMT_I32> (is, get(x,y).last); break;
-
-                        default:
-                            throw Exception("Invalid data format");
-                    }
+                    get(x,y).first = u32(loadInt());
                 }
             }
             break;
 
-        case CHANNEL_LOGNORMS:
+        case CHANNEL_LAST:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
-                    switch (ChannelFormat(fmt)) {
-
-                        case FMT_FP16: load <FMT_FP16> (is, get(x,y).lognorm); break;
-                        case FMT_FLOAT: load <FMT_FLOAT> (is, get(x,y).lognorm); break;
-                        case FMT_DOUBLE: load <FMT_DOUBLE> (is, get(x,y).lognorm); break;
-
-                        default:
-                            throw Exception("Invalid data format");
-                    }
+                    get(x,y).last = u32(loadInt());
                 }
             }
             break;
 
-        case CHANNEL_DERIVATIVES:
+        case CHANNEL_LOGNORM:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
-                    switch (ChannelFormat(fmt)) {
-
-                        case FMT_FP16: load <FMT_FP16> (is, get(x,y).derivative); break;
-                        case FMT_FLOAT: load <FMT_FLOAT> (is, get(x,y).derivative); break;
-                        case FMT_DOUBLE: load <FMT_DOUBLE> (is, get(x,y).derivative); break;
-
-                        default:
-                            throw Exception("Invalid data format");
-                    }
+                    get(x,y).lognorm = float(loadFloat());
                 }
             }
             break;
 
-        case CHANNEL_NORMALS:
+        case CHANNEL_DERIVATIVE:
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
+                    get(x,y).derivative.re = double(loadFloat());
+                    get(x,y).derivative.im = double(loadFloat());
+                }
+            }
+            break;
 
-                    switch (ChannelFormat(fmt)) {
+        case CHANNEL_NORMAL:
 
-                        case FMT_FP16: load <FMT_FP16> (is, get(x,y).normal); break;
-                        case FMT_FLOAT: load <FMT_FLOAT> (is, get(x,y).normal); break;
-                        case FMT_DOUBLE: load <FMT_DOUBLE> (is, get(x,y).normal); break;
-
-                        default:
-                            throw Exception("Invalid data format");
-                    }
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    get(x,y).normal.re = double(loadFloat());
+                    get(x,y).normal.im = double(loadFloat());
                 }
             }
             break;
@@ -629,13 +634,6 @@ DrillMap::load(Compressor &is, T &raw)
     }
 }
 
-template<ChannelFormat fmt> void
-DrillMap::load(Compressor &is, StandardComplex &raw)
-{
-    load <fmt> (is, raw.re);
-    load <fmt> (is, raw.im);
-}
-
 void
 DrillMap::save(const string &path)
 {
@@ -649,27 +647,30 @@ void
 DrillMap::save(std::ostream &os)
 {
     bool saveDrillResults = true;
-    bool saveIterations = true;
+    bool saveFirst = true;
+    bool saveLast = true;
     bool saveLognorms = true;
     bool saveDerivatives = false;
     bool saveNormals = opt.drillmap.depth == 1;
 
-    ProgressIndicator progress1("Preparing map file");
-
-    // Write header
-    saveHeader(os);
-
-    // The next byte indicates if channel data is compressed
-    os << u8(opt.drillmap.compress);
-
-    // Generate channels
     Compressor compressor(width * height * sizeof(MapEntry));
-    if (saveDrillResults) saveChannel(compressor, CHANNEL_DRILLRESULT);
-    if (saveIterations) saveChannel(compressor, CHANNEL_ITCOUNTS);
-    if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORMS);
-    if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVES);
-    if (saveNormals) saveChannel(compressor, CHANNEL_NORMALS);
-    progress1.done();
+
+    {   ProgressIndicator progress1("Preparing map file");
+
+        // Write header
+        saveHeader(os);
+
+        // The next byte indicates if channel data is compressed
+        os << u8(opt.drillmap.compress);
+
+        // Generate channels
+        if (saveDrillResults) saveChannel(compressor, CHANNEL_RESULT);
+        if (saveFirst) saveChannel(compressor, CHANNEL_FIRST);
+        if (saveLast) saveChannel(compressor, CHANNEL_LAST);
+        if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORM);
+        if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVE);
+        if (saveNormals) saveChannel(compressor, CHANNEL_NORMAL);
+    }
 
     if (opt.flags.verbose) {
 
@@ -679,7 +680,9 @@ DrillMap::save(std::ostream &os)
         log::cout << log::ralign("Drill results: ");
         log::cout << (saveDrillResults ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Iteration counts: ");
-        log::cout << (saveIterations ? "Saved" : "Not saved") << log::endl;
+        log::cout << (saveLast ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::ralign("Skipped interations: ");
+        log::cout << (saveFirst ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Lognorms: ");
         log::cout << (saveLognorms ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Derivatives: ");
@@ -710,7 +713,6 @@ DrillMap::save(std::ostream &os)
 
     ProgressIndicator progress3("Saving map file");
     compressor >> os;
-    progress3.done();
 }
 
 void
@@ -736,10 +738,9 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
 {
     switch (id) {
 
-        case CHANNEL_DRILLRESULT:
+        case CHANNEL_RESULT:
 
             os << u8(id) << u8(FMT_I8);
-
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     save <FMT_I8> (os, i8(get(x,y).result));
@@ -747,10 +748,19 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             }
             break;
 
-        case CHANNEL_ITCOUNTS:
+        case CHANNEL_FIRST:
 
             os << u8(id) << u8(FMT_I32);
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    save <FMT_I32> (os, get(x,y).first);
+                }
+            }
+            break;
 
+        case CHANNEL_LAST:
+
+            os << u8(id) << u8(FMT_I32);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     save <FMT_I32> (os, get(x,y).last);
@@ -758,38 +768,34 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             }
             break;
 
-        case CHANNEL_LOGNORMS:
+        case CHANNEL_LOGNORM:
 
             os << u8(id) << u8(FMT_FLOAT);
-
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
                     save <FMT_FLOAT> (os, get(x,y).lognorm);
                 }
             }
             break;
 
-        case CHANNEL_DERIVATIVES:
+        case CHANNEL_DERIVATIVE:
 
             os << u8(id) << u8(FMT_FLOAT);
-
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
-                    save <FMT_FLOAT> (os, get(x,y).derivative);
+                    save <FMT_FLOAT> (os, get(x,y).derivative.re);
+                    save <FMT_FLOAT> (os, get(x,y).derivative.im);
                 }
             }
             break;
 
-        case CHANNEL_NORMALS:
+        case CHANNEL_NORMAL:
 
             os << u8(id) << u8(FMT_FP16);
-
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-
-                    save <FMT_FP16> (os, get(x,y).normal);
+                    save <FMT_FP16> (os, get(x,y).normal.re);
+                    save <FMT_FP16> (os, get(x,y).normal.im);
                 }
             }
             break;
@@ -846,13 +852,6 @@ DrillMap::save(Compressor &os, T raw)
             break;
         }
     }
-}
-
-template<ChannelFormat fmt> void
-DrillMap::save(Compressor &os, const StandardComplex &raw)
-{
-    save <fmt> (os, raw.re);
-    save <fmt> (os, raw.im);
 }
 
 }
