@@ -65,7 +65,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "top.loc"
+            argument = "experimental.loc"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -81,11 +81,11 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-c areacheck.enable=false"
+            argument = "areacheck.enable=false"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-c periodcheck.enable=false"
+            argument = "periodcheck.enable=false"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

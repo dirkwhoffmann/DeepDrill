@@ -286,8 +286,17 @@ Options::parse(string key, string value)
     }
 }
 
+/*
+bool
+Options::hasRange(const string &key)
+{
+    auto range = getRange(key);
+    return range.first != 0 || range.second != LONG_MAX;
+}
+*/
+
 std::pair<isize, isize>
-Options::stripRange(string &key)
+Options::getRange(const string &key)
 {
     isize first = 0;
     isize last = LONG_MAX;
@@ -307,13 +316,23 @@ Options::stripRange(string &key)
 
                 first = last = std::stol(range.substr(0, pos1));
             }
-
-            key = key.substr(pos1 + 1, std::string::npos);
         }
 
     } catch (...) { };
 
     return { first, last };
+}
+
+std::pair<isize, isize>
+Options::stripRange(string &key)
+{
+    auto range = getRange(key);
+
+    if (range.first != 0 || range.second != LONG_MAX) {
+        key = key.substr(0, key.find("."));
+    }
+
+    return range;
 }
 
 void

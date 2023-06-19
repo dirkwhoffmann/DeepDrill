@@ -51,7 +51,7 @@ private:
     void writeVideoSection(std::ofstream &os);
     void writePerturbationSection(std::ofstream &os);
     void writeApproximationSection(std::ofstream &os);
-    void writeDebugSection(std::ofstream &os);
+    void writeOverrideSection(std::ofstream &os);
 
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);

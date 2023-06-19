@@ -142,7 +142,7 @@ Maker::generateProfile(std::vector <string> &skipped)
     writeColorsSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
-    writeDebugSection(os);
+    writeOverrideSection(os);
 }
 
 void
@@ -236,11 +236,18 @@ Maker::writeApproximationSection(std::ofstream &os)
 }
 
 void
-Maker::writeDebugSection(std::ofstream &os)
+Maker::writeOverrideSection(std::ofstream &os)
 {
-    os << "[debug]" << std::endl;
-    os << "glitches = " << opt.keys["debug.glitches"] << std::endl;
+    /*
+    os << "[]" << std::endl;
+
+    for (auto &it : opt.keys) {
+        if (opt.hasRange(it.first)) {
+            os << it.first << "=" << it.second << std::endl;
+        }
+    }
     os << std::endl;
+    */
 }
 
 void

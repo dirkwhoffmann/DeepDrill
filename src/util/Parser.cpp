@@ -21,7 +21,7 @@
 namespace dd {
 
 void
-Parser::parse(const string &path, std::function<void(string,string)>callback)
+Parser::parse(const string &path, std::function<void(string,string)>callback, isize nr)
 {
     auto name = extractName(path);
     auto fs = std::ifstream(path);
@@ -30,7 +30,7 @@ Parser::parse(const string &path, std::function<void(string,string)>callback)
         throw Exception("Failed to open file " + path + ".");
     }
  
-    try { parse(fs, callback); } catch (ParseError &e) {
+    try { parse(fs, callback, nr); } catch (ParseError &e) {
 
         e.file = name;
         throw;
@@ -38,16 +38,16 @@ Parser::parse(const string &path, std::function<void(string,string)>callback)
 }
 
 void
-Parser::parse(std::ifstream &stream, std::function<void(string,string)>callback)
+Parser::parse(std::ifstream &stream, std::function<void(string,string)>callback, isize nr)
 {
     std::stringstream ss;
     ss << stream.rdbuf();
     
-    parse(ss, callback);
+    parse(ss, callback, nr);
 }
 
 void
-Parser::parse(std::stringstream &stream, std::function<void(string,string)>callback)
+Parser::parse(std::stringstream &stream, std::function<void(string,string)>callback, isize nr)
 {
     isize line = 0;
     string input;
@@ -61,7 +61,8 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
         input = input.substr(0, input.find("#"));
 
         // Remove white spaces
-        trim(input);
+        input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
+        // trim(input);
                 
         // Ignore empty lines
         if (input == "") continue;
@@ -79,15 +80,47 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
             
             auto key = input.substr(0, pos);
             auto value = input.substr(pos + 1, std::string::npos);
-            
+
+            isize start = 0;
+            isize stop = LONG_MAX;
+
+            // Check if the key-value pair has a prefix
+            if (auto pos2 = key.find(":"); pos2 != std::string::npos) {
+
+                auto prefix = key.substr(0, pos2);
+                key = key.substr(pos2 + 1, std::string::npos);
+
+                try {
+
+                    // Check if the prefix specifies a range
+                    if (auto pos3 = prefix.find("-"); pos3 != std::string::npos) {
+
+                        start = stol(prefix.substr(0, pos3));
+                        stop = stol(prefix.substr(pos3 + 1, std::string::npos));
+
+
+                    } else {
+
+                        start = stol(prefix);
+                        stop = start;
+                    }
+
+                } catch (...) {
+                    throw ParseError(Exception("Invalid prefix: " + prefix), line);
+                }
+            }
+
+            // Perform the range check
+            if (nr < start || nr > stop) continue;
+
             // Remove white spaces
-            trim(key);
-            trim(value);
+            // trim(key);
+            // trim(value);
             
             // Convert the key to lower case
             tolower(key);
             
-            // Add the key-value pair
+            // Process the key-value pair
             try {
                 callback(section + "." + key ,value);
             } catch (const Exception &e) {
@@ -97,7 +130,7 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
         }
         
         throw ParseError(SyntaxError("Parse error"), line);
-    }    
+    }
 }
 
 void

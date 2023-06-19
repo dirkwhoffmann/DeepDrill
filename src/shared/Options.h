@@ -274,6 +274,8 @@ public:
     void parse(string key, string value);
     void derive();
 
+    std::pair<isize, isize> getRange(const string &key);
+
 private:
 
     std::pair<isize, isize> stripRange(string &key);

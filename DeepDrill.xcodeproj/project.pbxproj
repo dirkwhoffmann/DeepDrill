@@ -226,6 +226,7 @@
 		50A09C762A3AF9C700845EE7 /* Compressor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Compressor.h; sourceTree = "<group>"; };
 		50A09C792A3C5BFE00845EE7 /* SlowDriller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlowDriller.cpp; sourceTree = "<group>"; };
 		50A09C7A2A3C5BFE00845EE7 /* SlowDriller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlowDriller.h; sourceTree = "<group>"; };
+		50A09C7C2A40365000845EE7 /* experimental.loc */ = {isa = PBXFileReference; lastKnownFileType = text; path = experimental.loc; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -695,6 +696,7 @@
 				50D69A7629E2A4630025DE0D /* seahorse3.loc */,
 				50BEC72F2694872900CCDFA8 /* spider.loc */,
 				507122262A3250920013E655 /* spider.prf */,
+				50A09C7C2A40365000845EE7 /* experimental.loc */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";

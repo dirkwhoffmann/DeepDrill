@@ -21,9 +21,9 @@ class Parser {
     
 public:
     
-    static void parse(const string &path, std::function<void(string,string)>callback);
-    static void parse(std::ifstream &stream, std::function<void(string,string)>callback);
-    static void parse(std::stringstream &stream, std::function<void(string,string)>callback);
+    static void parse(const string &path, std::function<void(string,string)>callback, isize nr = 0);
+    static void parse(std::ifstream &stream, std::function<void(string,string)>callback, isize nr = 0);
+    static void parse(std::stringstream &stream, std::function<void(string,string)>callback, isize nr = 0);
 
 private:
     
