@@ -195,8 +195,8 @@ DrillMap::analyze() const
     } saved;
 
     auto total = width * height;
-    auto depth = opt.location.depth;
-
+    // auto depth = opt.location.depth;  // TODO: REMOVE: NO LONGER NEEDED
+    assert(depth == opt.location.depth); // TODO: REMOVE
 
     {   ProgressIndicator progress("Analyzing drill map", total);
 

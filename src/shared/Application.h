@@ -39,6 +39,12 @@ public:
     static string version();
     static string version(isize major, isize minor, isize subminor, isize beta);
 
+    // Reads all input files
+    void readInputs(isize keyframe = 0);
+
+    // Reads all profiles
+    void readProfiles(isize keyframe = 0);
+
 private:
 
     // Sets up the GMP library
@@ -46,12 +52,6 @@ private:
 
     // Performs some common command line arguments checks
     void checkSharedArguments();
-
-    // Reads all input files
-    void readInputs();
-
-    // Reads all profiles
-    void readProfiles();
 
 
     //

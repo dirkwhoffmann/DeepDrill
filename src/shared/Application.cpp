@@ -119,24 +119,26 @@ Application::checkSharedArguments()
 }
 
 void
-Application::readInputs()
+Application::readInputs(isize keyframe)
 {
     for (auto &input: opt.files.inputs) {
 
         if (AssetManager::getFormat(input) == Format::MAP) continue;
 
         Parser::parse(assets.findAsset(input),
-                      [this](string k, string v) { opt.parse(k,v); });
+                      [this](string k, string v) { opt.parse(k, v); },
+                      keyframe);
     }
 }
 
 void
-Application::readProfiles()
+Application::readProfiles(isize keyframe)
 {
     for (auto &profile: opt.files.profiles) {
 
         Parser::parse(assets.findAsset(profile),
-                      [this](string k, string v) { opt.parse(k,v); });
+                      [this](string k, string v) { opt.parse(k, v); },
+                      keyframe);
     }
 }
 

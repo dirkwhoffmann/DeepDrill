@@ -18,7 +18,10 @@
 namespace dd {
 
 class Maker {
-    
+
+    // Refeference to the application
+    class Application &app;
+
     // Configuration options
     struct Options &opt;
 
@@ -31,7 +34,7 @@ class Maker {
 public:
     
     // Constructor
-    Maker(Options &opt);
+    Maker(Application &app, Options &opt);
     
     // Main entry point
     void generate(); 
@@ -40,7 +43,7 @@ private:
 
     void generateProjectFile(std::vector <string> &skipped);
     void generateLocationFiles(std::vector <string> &skipped);
-    void generateProfile(std::vector <string> &skipped);
+    // void generateProfile(std::vector <string> &skipped);
     void generateMakefile(std::vector <string> &skipped);
 
     void writeLocationSection(std::ofstream &os);
