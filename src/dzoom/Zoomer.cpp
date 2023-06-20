@@ -70,10 +70,10 @@ Zoomer::launch()
     for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
 
         log::cout << log::vspace;
-        log::cout << "Computing transition " + std::to_string(keyframe) << ": ";
+        log::cout << "Zooming from keyframe " << std::to_string(keyframe);
+        log::cout << " to keyframe " << std::to_string(keyframe + 1) << ": ";
         log::cout << std::to_string(opt.video.inbetweens) << " inbetweens";
         log::cout << log::endl << log::endl;
-        // ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
         updateClock.reset();
         renderClock.reset();
@@ -131,6 +131,10 @@ Zoomer::update()
 
         // Preload the next texture in the background
         loadResult = std::async([this]() {
+
+            if (keyframe + 2 > opt.video.keyframes) {
+                return false;
+            }
 
             updateClock.go();
             auto result = loadMapFile(keyframe + 2);
