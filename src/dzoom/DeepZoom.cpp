@@ -54,7 +54,6 @@ DeepZoom::parseArguments(int argc, char *argv[])
         { "verbose",  no_argument,       NULL, 'v' },
         { "batch",    no_argument,       NULL, 'b' },
         { "assets",   required_argument, NULL, 'a' },
-        { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
     };
@@ -68,7 +67,7 @@ DeepZoom::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
 
-        int arg = getopt_long(argc, argv, ":vba:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vba:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -83,10 +82,6 @@ DeepZoom::parseArguments(int argc, char *argv[])
 
             case 'a':
                 assets.addSearchPath(optarg);
-                break;
-
-            case 'p':
-                opt.files.profiles.push_back(makeAbsolutePath(optarg));
                 break;
 
             case 'o':
@@ -110,6 +105,8 @@ DeepZoom::parseArguments(int argc, char *argv[])
 
         if (arg.find('=') != std::string::npos) {
             opt.overrides.push_back(arg);
+        } else if (AssetManager::getFormat(arg) == Format::INI){
+            opt.files.inifiles.push_back(arg);
         } else {
             opt.files.inputs.push_back(arg);
         }
@@ -119,8 +116,16 @@ DeepZoom::parseArguments(int argc, char *argv[])
 void
 DeepZoom::checkCustomArguments()
 {
-    // The input file must be a prj file
-    (void)assets.findAsset(opt.files.inputs.front(), Format::PRJ);
+    // A single input file must be given
+    // if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
+    // if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
+
+    // Exactly one ini file needs to be given
+    if (opt.files.inifiles.size() < 1) throw SyntaxError("No INI file is given");
+    if (opt.files.inifiles.size() > 1) throw SyntaxError("More than one INI file is given");
+
+    // The input file must the prefix of an ini file
+    // (void)assets.findAsset(opt.files.inputs.front().string() + ".ini", Format::INI);
 
     // The user must not specify more than one output file
     if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");

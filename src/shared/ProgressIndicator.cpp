@@ -104,7 +104,7 @@ void
 BatchProgressIndicator::prefix(Logger &logger)
 {
     auto cnt1 = countFiles(extractSuffix(file));
-    auto cnt2 = countFiles("loc");
+    auto cnt2 = countFiles("ini") - 1;
     auto percent = isize(100.0 * cnt1 / cnt2);
 
     logger << log::blue << "[" << percent << "%] ";

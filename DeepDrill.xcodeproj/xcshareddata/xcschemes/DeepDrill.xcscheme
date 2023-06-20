@@ -66,7 +66,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "experimental.loc"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o /Users/hoff/tmp/garbage.png"
@@ -94,7 +94,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p SD.prf"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p high.prf "

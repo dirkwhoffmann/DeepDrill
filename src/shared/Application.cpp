@@ -39,10 +39,11 @@ Application::main(int argc, char **argv)
         setupGmp();
 
         // Read input files
-        readInputs();
+        // readInputs();
 
         // Customize settings
-        readProfiles();
+        readIniFiles();
+        readProfiles(); // REMOVE
 
         // Deduce missing options
         opt.derive();
@@ -78,15 +79,15 @@ Application::setupGmp()
 {
     isize accuracy = 64;
 
-    auto path = assets.findAsset(opt.files.inputs.front());
+    /* To initialize GMP appropriately, we need to know the zoom factor.
+     * Because we haven't parsed any input file when this function is called,
+     * we need to peek this value directly from the ini files.
+     */
 
-    if (AssetManager::getFormat(path) == Format::LOC) {
+    for (auto &it : opt.files.inifiles) {
 
-        /* If a location is given, we need to adjust the GMP precision based
-         * on the zoom factor. Because we haven't parsed any input file when
-         * this function is called, we need to peek this value directly from
-         * the location file.
-         */
+        auto path = assets.findAsset(it);
+
         Parser::parse(path, [&accuracy](string key, string value) {
 
             if (key == "location.zoom") {
@@ -110,12 +111,14 @@ Application::setupGmp()
 void
 Application::checkSharedArguments()
 {
+    /*
     // The user needs to specify a single input
-    if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
+    // if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
     if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
     // All profiles must exist
     for (auto &it : opt.files.profiles) (void)assets.findAsset(it, Format::PRF);
+    */
 }
 
 void
@@ -126,6 +129,17 @@ Application::readInputs(isize keyframe)
         if (AssetManager::getFormat(input) == Format::MAP) continue;
 
         Parser::parse(assets.findAsset(input),
+                      [this](string k, string v) { opt.parse(k, v); },
+                      keyframe);
+    }
+}
+
+void
+Application::readIniFiles(isize keyframe)
+{
+    for (auto &inifile: opt.files.inifiles) {
+
+        Parser::parse(assets.findAsset(inifile),
                       [this](string k, string v) { opt.parse(k, v); },
                       keyframe);
     }

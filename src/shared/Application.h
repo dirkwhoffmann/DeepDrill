@@ -42,8 +42,11 @@ public:
     // Reads all input files
     void readInputs(isize keyframe = 0);
 
+    // Reads all init files
+    void readIniFiles(isize keyframe = 0);
+
     // Reads all profiles
-    void readProfiles(isize keyframe = 0);
+    void readProfiles(isize keyframe = 0); // DEPRECATED
 
 private:
 

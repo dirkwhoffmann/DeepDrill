@@ -58,13 +58,22 @@ Zoomer::launch()
     if (recordMode) recorder.startRecording();
 
     // Load the textures of the first two keyframes
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 0" << log::endl << log::endl;
     (void)loadMapFile(0);
+
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 1" << log::endl << log::endl;
     (void)loadMapFile(1);
 
     // Process all keyframes
     for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
 
-        ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
+        log::cout << log::vspace;
+        log::cout << "Computing transition " + std::to_string(keyframe) << ": ";
+        log::cout << std::to_string(opt.video.inbetweens) << " inbetweens";
+        log::cout << log::endl << log::endl;
+        // ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
 
         updateClock.reset();
         renderClock.reset();
@@ -86,10 +95,10 @@ Zoomer::launch()
             draw();
             record();
 
-            progress.step(1);
+            // progress.step(1);
         }
 
-        progress.done();
+        // progress.done();
 
         if (opt.flags.verbose) {
 
@@ -182,13 +191,11 @@ Zoomer::record()
 bool
 Zoomer::loadMapFile(isize nr)
 {
-    fs::path input = opt.files.inputs.front();
+    fs::path input = opt.files.inifiles.front();
     fs::path path = input.parent_path() / input.stem();
     string mapFile = path.string() + "_" + std::to_string(nr) + ".map";
 
-    {   SILENT
-
-        if (!fileExists(mapFile)) throw FileNotFoundError(mapFile);
+    {   // SILENT
 
         drillMap[nr % 3].load(mapFile);
         drillMap[nr % 3].colorize();

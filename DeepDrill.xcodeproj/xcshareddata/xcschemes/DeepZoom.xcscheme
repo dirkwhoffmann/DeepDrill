@@ -53,14 +53,14 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-v"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/tmp/dd/project/ssssss.prj"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/spider.prj"
+            argument = "/Users/hoff/tmp/dd/project/experimental.ini"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

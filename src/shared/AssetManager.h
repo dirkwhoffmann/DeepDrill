@@ -17,7 +17,8 @@
 
 namespace dd {
 
-enum class Format { NONE, BMP, DIR, GLSL, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
+// enum class Format { NONE, BMP, DIR, GLSL, INI, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
+enum class Format { NONE, BMP, DIR, GLSL, INI, JPG, MAP, MPG, PNG };
 
 class AssetManager {
 

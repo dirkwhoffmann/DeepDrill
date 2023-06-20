@@ -195,8 +195,7 @@ DrillMap::analyze() const
     } saved;
 
     auto total = width * height;
-    // auto depth = opt.location.depth;  // TODO: REMOVE: NO LONGER NEEDED
-    assert(depth == opt.location.depth); // TODO: REMOVE
+    auto limit = opt.location.depth;
 
     {   ProgressIndicator progress("Analyzing drill map", total);
 
@@ -232,7 +231,7 @@ DrillMap::analyze() const
                         spots.interior++;
                         iterations.total += entry.last;
                         iterations.interior += entry.last;
-                        assert(entry.last == depth);
+                        assert(entry.last == limit);
                         break;
 
                     case DR_IN_BULB:
@@ -241,10 +240,10 @@ DrillMap::analyze() const
                         spots.total++;
                         spots.interior++;
                         optspots.bulb++;
-                        iterations.total += depth;
-                        iterations.interior += depth;
-                        saved.total += depth;
-                        saved.bulb += depth;
+                        iterations.total += limit;
+                        iterations.interior += limit;
+                        saved.total += limit;
+                        saved.bulb += limit;
                         break;
 
                     case DR_IN_CARDIOID:
@@ -253,10 +252,10 @@ DrillMap::analyze() const
                         spots.total++;
                         spots.interior++;
                         optspots.cartioid++;
-                        iterations.total += depth;
-                        iterations.interior += depth;
-                        saved.total += depth;
-                        saved.cartioid += depth;
+                        iterations.total += limit;
+                        iterations.interior += limit;
+                        saved.total += limit;
+                        saved.cartioid += limit;
                         break;
 
                     case DR_PERIODIC:
@@ -265,10 +264,10 @@ DrillMap::analyze() const
                         spots.total++;
                         spots.interior++;
                         optspots.periods++;
-                        iterations.total += depth;
-                        iterations.interior += depth;
-                        saved.total += depth - entry.last;
-                        saved.periods += depth - entry.last;
+                        iterations.total += limit;
+                        iterations.interior += limit;
+                        saved.total += limit - entry.last;
+                        saved.periods += limit - entry.last;
                         break;
 
                     case DR_ATTRACTED:
@@ -277,10 +276,10 @@ DrillMap::analyze() const
                         spots.total++;
                         spots.interior++;
                         optspots.attractors++;
-                        iterations.total += depth;
-                        iterations.interior += depth;
-                        saved.total += depth - entry.last;
-                        saved.attractors += depth - entry.last;
+                        iterations.total += limit;
+                        iterations.interior += limit;
+                        saved.total += limit - entry.last;
+                        saved.attractors += limit - entry.last;
                         break;
 
                     case DR_GLITCH:

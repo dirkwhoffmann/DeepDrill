@@ -95,12 +95,14 @@ DeepMake::parseArguments(int argc, char *argv[])
 void
 DeepMake::checkCustomArguments()
 {
-    // The user needs to specify a single output
+    // A single output file must be given
     if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
     if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
-    // The input must be a location file
-    (void)assets.findAsset(opt.files.inputs.front() , Format::LOC);
+    // There must be no other inputs, but INI files
+    for (auto &it: opt.files.inputs) {
+        (void)assets.findAsset(it, Format::INI);
+    }
 
     // The output must be an existing directory
     (void)assets.findAsset(opt.files.outputs.front(), Format::DIR);

@@ -29,12 +29,11 @@ void
 DeepDrill::syntax()
 {
     log::cout << "Usage: ";
-    log::cout << "deepdrill [-bv] [-a <path>] [-c <keyvalue>] [-p <profile>] -o <output> <input>" << log::endl;
+    log::cout << "deepdrill [-bv] [-a <path>] -o <output> [<keyvalue>] <inputs>" << log::endl;
     log::cout << log::endl;
     log::cout << "       -b or --batch     Run in batch mode" << log::endl;
     log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
-    log::cout << "       -p or --profile   Customize settings" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;
 }
 
@@ -46,7 +45,6 @@ DeepDrill::parseArguments(int argc, char *argv[])
         { "verbose",  no_argument,       NULL, 'v' },
         { "batch",    no_argument,       NULL, 'b' },
         { "assets",   required_argument, NULL, 'a' },
-        { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
     };
@@ -60,7 +58,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
     // Parse all options
     while (1) {
         
-        int arg = getopt_long(argc, argv, ":vba:p:o:", long_options, NULL);
+        int arg = getopt_long(argc, argv, ":vba:o:", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
@@ -77,10 +75,6 @@ DeepDrill::parseArguments(int argc, char *argv[])
                 assets.addSearchPath(optarg);
                 break;
 
-            case 'p':
-                opt.files.profiles.push_back(optarg);
-                break;
-            
             case 'o':
                 opt.files.outputs.push_back(optarg);
                 break;
@@ -102,32 +96,39 @@ DeepDrill::parseArguments(int argc, char *argv[])
 
         if (arg.find('=') != std::string::npos) {
             opt.overrides.push_back(arg);
+        } else if (AssetManager::getFormat(arg) == Format::INI){
+            opt.files.inifiles.push_back(arg);
         } else {
             opt.files.inputs.push_back(arg);
         }
     }
 
     // Add default outputs if none are given
+    /*
     if (opt.files.outputs.empty() && !opt.files.inputs.empty()) {
 
         auto name = stripSuffix(opt.files.inputs.front());
         opt.files.outputs.push_back(name + ".map");
         opt.files.outputs.push_back(name + ".jpg");
     }
+    */
 }
 
 void
 DeepDrill::checkCustomArguments()
 {
-    // The user needs to specify at least one output file
+    // At most one input file must be given
+    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
+
+    // At least one output file must be given
     if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
 
-    // Valid input files are map files and locations files
+    // Check input file formats
     for (auto &it: opt.files.inputs) {
-        (void)assets.findAsset(it, { Format::LOC, Format::MAP });
+        (void)assets.findAsset(it, Format::MAP);
     }
 
-    // Valid output files are map files and image files
+    // Check output file formats
     for (auto &it: opt.files.outputs) {
         AssetManager::assureFormat(it, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
     }
@@ -136,35 +137,49 @@ DeepDrill::checkCustomArguments()
 void
 DeepDrill::run()
 {
-    auto input = opt.files.inputs.front();
-    auto inputFormat = AssetManager::getFormat(input);
-
     drillMap.resize();
 
-    // Create or load the drill map
-    if (inputFormat == Format::MAP) {
+    if (!opt.files.inputs.empty()) {
 
         // Load the drill map from disk
-        drillMap.load(input);
+        drillMap.load(opt.files.inputs.front());
+
+        // Generate outputs
+        generateOutputs();
 
     } else {
 
         BatchProgressIndicator progress(opt, "Drilling",  opt.files.outputs.front());
 
         // Run the driller
-        if (opt.perturbation.enable) {
+        runDriller();
 
-            Driller driller(opt, drillMap);
-            driller.drill();
+        // Generate outputs
+        generateOutputs();
 
-        } else {
-
-            SlowDriller driller(opt, drillMap);
-            driller.drill();
-        }
+        // Analyze the drill map
+        if (opt.flags.verbose) drillMap.analyze();
     }
+}
 
-    // Generate outputs
+void
+DeepDrill::runDriller()
+{
+    if (opt.perturbation.enable) {
+
+        Driller driller(opt, drillMap);
+        driller.drill();
+
+    } else {
+
+        SlowDriller driller(opt, drillMap);
+        driller.drill();
+    }
+}
+
+void
+DeepDrill::generateOutputs()
+{
     for (auto &it : opt.files.outputs) {
 
         auto outputFormat = AssetManager::getFormat(it);
@@ -181,13 +196,6 @@ DeepDrill::run()
             // Save map file
             drillMap.save(it);
         }
-    }
-
-    // Analyze the drill map
-    if (inputFormat != Format::MAP && opt.flags.verbose) {
-
-        // log::cout << log::vspace << "Finalizing" << log::endl << log::endl;
-        drillMap.analyze();
     }
 }
 

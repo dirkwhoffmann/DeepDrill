@@ -144,13 +144,10 @@ Driller::drill()
         }        
     }
 
-    if (opt.flags.verbose) {
-
-        log::cout << log::vspace;
-        log::cout << "All rounds completed: ";
-        log::cout << (isize)remaining.size() << " unresolved points";
-        log::cout << log::endl << log::endl;
-    }
+    log::cout << log::vspace;
+    log::cout << "All rounds completed: ";
+    log::cout << (isize)remaining.size() << " unresolved points remaining";
+    log::cout << log::endl << log::endl;
 }
 
 void

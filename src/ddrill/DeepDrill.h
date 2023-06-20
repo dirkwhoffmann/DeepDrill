@@ -49,6 +49,8 @@ private:
     // Auxiliary methods
     //
 
+    void runDriller();
+    void generateOutputs();
 };
 
 }

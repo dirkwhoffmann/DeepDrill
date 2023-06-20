@@ -45,13 +45,11 @@ AssetManager::getFormat(const string &path) {
     auto suffix = extractSuffix(path);
     if (suffix == "bmp") return Format::BMP;
     if (suffix == "glsl") return Format::GLSL;
+    if (suffix == "ini") return Format::INI;
     if (suffix == "jpg") return Format::JPG;
-    if (suffix == "loc") return Format::LOC;
     if (suffix == "map") return Format::MAP;
     if (suffix == "mpg" || suffix == "mov") return Format::MPG;
     if (suffix == "png") return Format::PNG;
-    if (suffix == "prf") return Format::PRF;
-    if (suffix == "prj") return Format::PRJ;
 
     return Format::NONE;
 }
@@ -76,13 +74,11 @@ AssetManager::assureFormat(const fs::path &name, std::vector<Format> formats)
 
                 case Format::BMP: s.push_back(".bmp"); break;
                 case Format::GLSL: s.push_back(".glsl"); break;
+                case Format::INI: s.push_back(".ini"); break;
                 case Format::JPG: s.push_back(".jpg"); break;
-                case Format::LOC: s.push_back(".loc"); break;
                 case Format::MAP: s.push_back(".map"); break;
                 case Format::MPG: s.push_back(".mpg"); s.push_back(".mov"); break;
                 case Format::PNG: s.push_back(".png"); break;
-                case Format::PRF: s.push_back(".prf"); break;
-                case Format::PRJ: s.push_back(".prj"); break;
 
                 default:
                     assert(false);

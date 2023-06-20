@@ -42,7 +42,8 @@ public:
 private:
 
     void generateProjectFile(std::vector <string> &skipped);
-    void generateLocationFiles(std::vector <string> &skipped);
+    void generateIniFiles(std::vector <string> &skipped);
+    void generateIniFile(isize nr, std::vector <string> &skipped);
     // void generateProfile(std::vector <string> &skipped);
     void generateMakefile(std::vector <string> &skipped);
 
@@ -54,7 +55,9 @@ private:
     void writeVideoSection(std::ofstream &os);
     void writePerturbationSection(std::ofstream &os);
     void writeApproximationSection(std::ofstream &os);
-    void writeOverrideSection(std::ofstream &os);
+    void writeAreacheckSection(std::ofstream &os);
+    void writePeriodcheckSection(std::ofstream &os);
+    void writeAttractorcheckSection(std::ofstream &os);
 
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);
