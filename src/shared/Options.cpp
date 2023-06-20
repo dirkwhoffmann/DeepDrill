@@ -431,6 +431,8 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
+    printf("Options::derive()\n");
+
     // Adjust some default values
     if (keys.find("image.width") != keys.end()) {
         defaults["map.width"] = keys["image.width"];
@@ -474,12 +476,8 @@ Options::derive()
 
     // Derive coordinates
     center = PrecisionComplex(location.real, location.imag);
-    auto x0y0 = Coord::ul(*this).translate(*this);
-    auto x1y1 = Coord::lr(*this).translate(*this);
-    x0 = x0y0.re;
-    y0 = x0y0.im;
-    x1 = x1y1.re;
-    y1 = x1y1.im;
+    ul = Coord::ul(*this).translate(*this);
+    lr = Coord::lr(*this).translate(*this);
 }
 
 }

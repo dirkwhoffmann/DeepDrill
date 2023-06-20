@@ -65,8 +65,8 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "experimental.loc"
-            isEnabled = "NO">
+            argument = "experimental.ini"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o /Users/hoff/tmp/garbage.png"

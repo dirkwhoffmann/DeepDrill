@@ -31,7 +31,7 @@ protected:
     Clock stopWatch;
 
 public:
-
+    
     // Main entry point
     int main(int argc, char *argv[]);
 
@@ -53,9 +53,6 @@ private:
     // Sets up the GMP library
     void setupGmp();
 
-    // Performs some common command line arguments checks
-    void checkSharedArguments();
-
 
     //
     // Methods provided by subclasses
@@ -74,7 +71,7 @@ private:
     virtual void parseArguments(int argc, char *argv[]) = 0;
 
     // Checks all command line arguments for consistency
-    virtual void checkCustomArguments() = 0;
+    virtual void checkArguments() = 0;
 
     // Main method
     virtual void run() = 0;

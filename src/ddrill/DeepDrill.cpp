@@ -115,7 +115,7 @@ DeepDrill::parseArguments(int argc, char *argv[])
 }
 
 void
-DeepDrill::checkCustomArguments()
+DeepDrill::checkArguments()
 {
     // At most one input file must be given
     if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");

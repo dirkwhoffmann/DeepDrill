@@ -42,7 +42,7 @@ private:
     void syntax();
     void initialize() { };
     void parseArguments(int argc, char *argv[]);
-    void checkCustomArguments();
+    void checkArguments();
 
 
     //

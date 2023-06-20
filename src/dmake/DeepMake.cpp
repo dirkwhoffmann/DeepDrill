@@ -93,7 +93,7 @@ DeepMake::parseArguments(int argc, char *argv[])
 }
 
 void
-DeepMake::checkCustomArguments()
+DeepMake::checkArguments()
 {
     // A single output file must be given
     if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");

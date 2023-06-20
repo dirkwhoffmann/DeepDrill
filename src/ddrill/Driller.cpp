@@ -37,19 +37,24 @@ Driller::drill()
 
     if (opt.flags.verbose) {
 
+        assert(opt.center.re.get_prec() == opt.center.im.get_prec());
+        assert(opt.ul.re.get_prec() == opt.ul.im.get_prec());
+        assert(opt.lr.re.get_prec() == opt.lr.im.get_prec());
+
         log::cout << log::vspace;
         log::cout << log::ralign("Center: ");
-        log::cout << opt.center << log::endl;
+        log::cout << (opt.center.re >= 0.0 ? " " : "") << opt.center;
+        log::cout << " (" << opt.center.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Upper left: ");
-        log::cout << (opt.x0 >= 0.0 ? " " : "") << PrecisionComplex(opt.x0, opt.y0) << log::endl;
+        log::cout << (opt.ul.re >= 0.0 ? " " : "") << opt.ul;
+        log::cout << " (" << opt.ul.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Lower right: ");
-        log::cout << (opt.x1 >= 0.0 ? " " : "") << PrecisionComplex(opt.x1, opt.y1) << log::endl;
+        log::cout << (opt.lr.re >= 0.0 ? " " : "") << opt.lr;
+        log::cout << " (" << opt.lr.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Magnification: ");
         log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Drill depth: ");
         log::cout << opt.location.depth << log::endl;
-        log::cout << log::ralign("Precision: ");
-        log::cout << mpf_get_default_prec() << " Bit" << log::endl;
         log::cout << log::endl;
         log::cout << log::ralign("Map size: ");
         log::cout << opt.drillmap.width << " x " << opt.drillmap.height;

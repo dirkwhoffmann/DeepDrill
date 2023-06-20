@@ -19,6 +19,8 @@ namespace dd {
 int
 Application::main(int argc, char **argv)
 {
+    mpf_set_default_prec(128);
+
     try {
 
         log::cout << appName() << " " << version();
@@ -32,18 +34,14 @@ Application::main(int argc, char **argv)
         parseArguments(argc, argv);
 
         // Check arguments for consistency
-        checkSharedArguments();
-        checkCustomArguments();
-
-        // Setup the GMP library
-        setupGmp();
-
-        // Read input files
-        // readInputs();
+        checkArguments();
 
         // Customize settings
         readIniFiles();
         readProfiles(); // REMOVE
+
+        // Setup the GMP library
+        setupGmp();
 
         // Deduce missing options
         opt.derive();
@@ -77,20 +75,47 @@ Application::main(int argc, char **argv)
 void
 Application::setupGmp()
 {
+
     isize accuracy = 64;
 
-    /* To initialize GMP appropriately, we need to know the zoom factor.
-     * Because we haven't parsed any input file when this function is called,
-     * we need to peek this value directly from the ini files.
-     */
+    // Derive GMP precision from the zoom factor
+    long exponent = 0;
+    mpf_get_d_2exp(&exponent, opt.location.zoom.get_mpf_t());
+    accuracy = exponent + 64;
+
+    // Set the new precision
+    mpf_set_default_prec(accuracy);
+
+    // Resize the GMP location variable
+    opt.location.real.set_prec(accuracy);
+    opt.location.imag.set_prec(accuracy);
+
+    // Parse the location again to make use of the new precision
+    opt.parse("location.real", opt.keys["location.real"]);
+    opt.parse("location.imag", opt.keys["location.imag"]);
+}
+
+/*
+void
+Application::setupGmp()
+{
+    isize accuracy = 64;
+
+    // To initialize GMP appropriately, we need to know the zoom factor.
+    // Because we haven't parsed any input file when this function is called,
+    // we need to peek this value directly from the ini files.
+
+    printf("Precision of re: %ld\n", opt.location.real.get_prec());
 
     for (auto &it : opt.files.inifiles) {
 
         auto path = assets.findAsset(it);
 
-        Parser::parse(path, [&accuracy](string key, string value) {
+        Parser::parse(path, [&accuracy, this](string key, string value) {
 
             if (key == "location.zoom") {
+
+                printf("Found zoom key\n");
 
                 try {
 
@@ -98,6 +123,9 @@ Application::setupGmp()
                     auto zoom = mpf_class(value);
                     mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
                     accuracy = exponent + 64;
+                    printf("accuracy = %ld\n", accuracy);
+
+                    printf("New precision of re: %ld\n", opt.location.real.get_prec());
                     return;
 
                 } catch (...) { }
@@ -107,19 +135,7 @@ Application::setupGmp()
 
     mpf_set_default_prec(accuracy);
 }
-
-void
-Application::checkSharedArguments()
-{
-    /*
-    // The user needs to specify a single input
-    // if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
-    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
-
-    // All profiles must exist
-    for (auto &it : opt.files.profiles) (void)assets.findAsset(it, Format::PRF);
-    */
-}
+*/
 
 void
 Application::readInputs(isize keyframe)

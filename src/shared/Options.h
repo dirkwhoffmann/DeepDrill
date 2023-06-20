@@ -246,7 +246,8 @@ struct Options {
     PrecisionComplex center;
 
     // Bounding box in precision format
-    mpf_class x0, y0, x1, y1;
+    PrecisionComplex ul;
+    PrecisionComplex lr;
 
     // Distance between two adjacent pixels
     mpf_class mpfPixelDeltaX;

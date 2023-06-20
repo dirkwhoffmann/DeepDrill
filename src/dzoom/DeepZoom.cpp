@@ -114,7 +114,7 @@ DeepZoom::parseArguments(int argc, char *argv[])
 }
 
 void
-DeepZoom::checkCustomArguments()
+DeepZoom::checkArguments()
 {
     // A single input file must be given
     // if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");

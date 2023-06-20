@@ -26,7 +26,7 @@ class DeepZoom : public Application {
     void syntax();
     void initialize();
     void parseArguments(int argc, char *argv[]);
-    void checkCustomArguments();
+    void checkArguments();
     void run();
 };
 
