@@ -70,57 +70,7 @@ DeepZoom::parseArguments(int argc, char *argv[])
         { NULL,       0,                 NULL,  0  }
     };
 
-    // Don't print the default error messages
-    opterr = 0;
-
-    // Remember the path to the executable
-    opt.files.exec = makeAbsolutePath(argv[0]);
-    
-    // Parse all options
-    while (1) {
-
-        int arg = getopt_long(argc, argv, ":vba:o:", long_options, NULL);
-        if (arg == -1) break;
-
-        switch (arg) {
-
-            case 'v':
-                opt.flags.verbose = true;
-                break;
-
-            case 'b':
-                opt.flags.batch = true;
-                break;
-
-            case 'a':
-                assets.addSearchPath(optarg);
-                break;
-
-            case 'o':
-                opt.files.outputs.push_back(makeAbsolutePath(optarg));
-                break;
-
-            case ':':
-                throw SyntaxError("Missing argument for option '" +
-                                  string(argv[optind - 1]) + "'");
-
-            default:
-                throw SyntaxError("Invalid option '" +
-                                  string(argv[optind - 1]) + "'");
-        }
-    }
-
-    // Parse remaining arguments
-    while (optind < argc) {
-
-        string arg = argv[optind++];
-
-        if (arg.find('=') != std::string::npos) {
-            opt.overrides.push_back(arg);
-        } else {
-            opt.files.inputs.push_back(arg);
-        }
-    }
+    Application::parseArguments(argc, argv, ":vba:o:", long_options);
 }
 
 void
@@ -138,9 +88,6 @@ DeepZoom::checkArguments()
     if (!opt.files.outputs.empty()) {
 
         auto output = opt.files.outputs.front();
-
-        // The output file must be a video file
-        AssetManager::assureFormat(output, Format::MPG);
 
         // The output file must be writable
         std::ofstream file(output, std::ofstream::out);
