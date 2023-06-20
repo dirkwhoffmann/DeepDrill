@@ -40,9 +40,8 @@ AssetManager::addSearchPath(const fs::path &path)
 Format
 AssetManager::getFormat(const string &path) {
 
-    if (isDirectory(path)) return Format::DIR;
-
     auto suffix = extractSuffix(path);
+
     if (suffix == "bmp") return Format::BMP;
     if (suffix == "glsl") return Format::GLSL;
     if (suffix == "ini") return Format::INI;
@@ -50,6 +49,7 @@ AssetManager::getFormat(const string &path) {
     if (suffix == "map") return Format::MAP;
     if (suffix == "mpg" || suffix == "mov") return Format::MPG;
     if (suffix == "png") return Format::PNG;
+    if (isDirectory(path)) return Format::DIR;
 
     return Format::NONE;
 }

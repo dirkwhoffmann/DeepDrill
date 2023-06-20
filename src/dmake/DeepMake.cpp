@@ -12,7 +12,7 @@
 #include "DeepMake.h"
 #include "Maker.h"
 
-#include <getopt.h>
+// #include <getopt.h>
 
 int main(int argc, char *argv[])
 {
@@ -59,10 +59,6 @@ DeepMake::parseArguments(int argc, char *argv[])
 
             case 'a':
                 assets.addSearchPath(optarg);
-                break;
-
-            case 'p':
-                opt.files.profiles.push_back(optarg);
                 break;
 
             case 'o':

@@ -151,7 +151,7 @@ Driller::drill()
 
     log::cout << log::vspace;
     log::cout << "All rounds completed: ";
-    log::cout << (isize)remaining.size() << " unresolved points remaining";
+    log::cout << (isize)remaining.size() << " unresolved";
     log::cout << log::endl << log::endl;
 }
 

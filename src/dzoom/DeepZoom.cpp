@@ -12,7 +12,7 @@
 #include "DeepZoom.h"
 #include "Zoomer.h"
 
-#include <getopt.h>
+// #include <getopt.h>
 
 int main(int argc, char *argv[])
 {
@@ -44,6 +44,18 @@ DeepZoom::initialize()
 
     // Initialize FFmpeg
     FFmpeg::init();
+}
+
+bool
+DeepZoom::isAcceptedInputFormat(Format format) const
+{
+    return format == Format::INI;
+}
+
+bool
+DeepZoom::isAcceptedOutputFormat(Format format) const
+{
+    return AssetManager::isVideoFormat(format);
 }
 
 void
@@ -105,8 +117,6 @@ DeepZoom::parseArguments(int argc, char *argv[])
 
         if (arg.find('=') != std::string::npos) {
             opt.overrides.push_back(arg);
-        } else if (AssetManager::getFormat(arg) == Format::INI){
-            opt.files.inifiles.push_back(arg);
         } else {
             opt.files.inputs.push_back(arg);
         }
@@ -116,18 +126,13 @@ DeepZoom::parseArguments(int argc, char *argv[])
 void
 DeepZoom::checkArguments()
 {
+    auto iniFiles = opt.getInputs(Format::INI);
+
     // A single input file must be given
-    // if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
-    // if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
+    if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
+    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
-    // Exactly one ini file needs to be given
-    if (opt.files.inifiles.size() < 1) throw SyntaxError("No INI file is given");
-    if (opt.files.inifiles.size() > 1) throw SyntaxError("More than one INI file is given");
-
-    // The input file must the prefix of an ini file
-    // (void)assets.findAsset(opt.files.inputs.front().string() + ".ini", Format::INI);
-
-    // The user must not specify more than one output file
+    // At most one output file must be given
     if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
     if (!opt.files.outputs.empty()) {

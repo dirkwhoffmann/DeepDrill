@@ -195,7 +195,7 @@ Zoomer::record()
 bool
 Zoomer::loadMapFile(isize nr)
 {
-    fs::path input = opt.files.inifiles.front();
+    fs::path input = opt.files.inputs.front();
     fs::path path = input.parent_path() / input.stem();
     string mapFile = path.string() + "_" + std::to_string(nr) + ".map";
 

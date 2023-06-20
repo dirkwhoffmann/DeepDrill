@@ -81,6 +81,28 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["approximation.tolerance"] = "1e-12";
 }
 
+std::vector <fs::path>
+Options::getInputs(Format format)
+{
+    std::vector <fs::path> result;
+
+    for (const auto &it : files.inputs) {
+        if (AssetManager::getFormat(it) == format) result.push_back(it);
+    }
+    return result;
+}
+
+std::vector <fs::path>
+Options::getOutputs(Format format)
+{
+    std::vector <fs::path> result;
+
+    for (const auto &it : files.outputs) {
+        if (AssetManager::getFormat(it) == format) result.push_back(it);
+    }
+    return result;
+}
+
 void
 Options::parse(string keyvalue)
 {
@@ -431,8 +453,6 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 void
 Options::derive()
 {
-    printf("Options::derive()\n");
-
     // Adjust some default values
     if (keys.find("image.width") != keys.end()) {
         defaults["map.width"] = keys["image.width"];

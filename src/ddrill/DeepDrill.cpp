@@ -16,7 +16,7 @@
 #include "ProgressIndicator.h"
 #include "Compressor.h"
 
-#include <getopt.h>
+// #include <getopt.h>
 
 int main(int argc, char *argv[])
 {
@@ -37,6 +37,18 @@ DeepDrill::syntax()
     log::cout << "       -o or --output    Output file" << log::endl;
 }
 
+bool
+DeepDrill::isAcceptedInputFormat(Format format) const
+{
+    return format == Format::MAP || format == Format::INI;
+}
+
+bool
+DeepDrill::isAcceptedOutputFormat(Format format) const
+{
+    return format == Format::MAP || AssetManager::isImageFormat(format);
+}
+
 void
 DeepDrill::parseArguments(int argc, char *argv[])
 {
@@ -49,89 +61,17 @@ DeepDrill::parseArguments(int argc, char *argv[])
         { NULL,       0,                 NULL,  0  }
     };
 
-    // Don't print the default error messages
-    opterr = 0;
-    
-    // Remember the path to the DeppDrill executable
-    opt.files.exec = makeAbsolutePath(argv[0]);
-
-    // Parse all options
-    while (1) {
-        
-        int arg = getopt_long(argc, argv, ":vba:o:", long_options, NULL);
-        if (arg == -1) break;
-
-        switch (arg) {
-                
-            case 'v':
-                opt.flags.verbose = true;
-                break;
-                
-            case 'b':
-                opt.flags.batch = true;
-                break;
-
-            case 'a':
-                assets.addSearchPath(optarg);
-                break;
-
-            case 'o':
-                opt.files.outputs.push_back(optarg);
-                break;
-
-            case ':':
-                throw SyntaxError("Missing argument for option '" +
-                                  string(argv[optind - 1]) + "'");
-                
-            default:
-                throw SyntaxError("Invalid option '" +
-                                  string(argv[optind - 1]) + "'");
-        }
-    }
-    
-    // Parse remaining arguments
-    while (optind < argc) {
-
-        string arg = argv[optind++];
-
-        if (arg.find('=') != std::string::npos) {
-            opt.overrides.push_back(arg);
-        } else if (AssetManager::getFormat(arg) == Format::INI){
-            opt.files.inifiles.push_back(arg);
-        } else {
-            opt.files.inputs.push_back(arg);
-        }
-    }
-
-    // Add default outputs if none are given
-    /*
-    if (opt.files.outputs.empty() && !opt.files.inputs.empty()) {
-
-        auto name = stripSuffix(opt.files.inputs.front());
-        opt.files.outputs.push_back(name + ".map");
-        opt.files.outputs.push_back(name + ".jpg");
-    }
-    */
+    Application::parseArguments(argc, argv, ":vba:o:", long_options);
 }
 
 void
 DeepDrill::checkArguments()
 {
-    // At most one input file must be given
-    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
+    // At most one map file must be given
+    if (opt.getInputs(Format::MAP).size() > 1) throw SyntaxError("More than one map file is given");
 
     // At least one output file must be given
     if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
-
-    // Check input file formats
-    for (auto &it: opt.files.inputs) {
-        (void)assets.findAsset(it, Format::MAP);
-    }
-
-    // Check output file formats
-    for (auto &it: opt.files.outputs) {
-        AssetManager::assureFormat(it, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
-    }
 }
 
 void
@@ -139,10 +79,10 @@ DeepDrill::run()
 {
     drillMap.resize();
 
-    if (!opt.files.inputs.empty()) {
+    if (!opt.getInputs(Format::MAP).empty()) {
 
         // Load the drill map from disk
-        drillMap.load(opt.files.inputs.front());
+        drillMap.load(opt.getInputs(Format::MAP).front());
 
         // Generate outputs
         generateOutputs();

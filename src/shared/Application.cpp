@@ -14,12 +14,17 @@
 #include "Logger.h"
 #include "Parser.h"
 
+// #include <getopt.h>
+
 namespace dd {
 
 int
 Application::main(int argc, char **argv)
 {
     mpf_set_default_prec(128);
+
+    this->argc = argc;
+    this->argv = argv;
 
     try {
 
@@ -38,7 +43,6 @@ Application::main(int argc, char **argv)
 
         // Customize settings
         readIniFiles();
-        readProfiles(); // REMOVE
 
         // Setup the GMP library
         setupGmp();
@@ -95,78 +99,86 @@ Application::setupGmp()
     opt.parse("location.imag", opt.keys["location.imag"]);
 }
 
-/*
 void
-Application::setupGmp()
+Application::parseArguments(int argc, char *argv[], const char *optstr, const option *longopts)
 {
-    isize accuracy = 64;
+    // Don't print the default error messages
+    opterr = 0;
 
-    // To initialize GMP appropriately, we need to know the zoom factor.
-    // Because we haven't parsed any input file when this function is called,
-    // we need to peek this value directly from the ini files.
+    // Remember the path to the DeppDrill executable
+    opt.files.exec = makeAbsolutePath(argv[0]);
 
-    printf("Precision of re: %ld\n", opt.location.real.get_prec());
+    // Parse all options
+    while (1) {
 
-    for (auto &it : opt.files.inifiles) {
+        int arg = getopt_long(argc, argv, optstr, longopts, NULL);
+        if (arg == -1) break;
 
-        auto path = assets.findAsset(it);
+        switch (arg) {
 
-        Parser::parse(path, [&accuracy, this](string key, string value) {
+            case 'v':
+                opt.flags.verbose = true;
+                break;
 
-            if (key == "location.zoom") {
+            case 'b':
+                opt.flags.batch = true;
+                break;
 
-                printf("Found zoom key\n");
+            case 'a':
+                assets.addSearchPath(optarg);
+                break;
 
-                try {
+            case 'o':
+                opt.files.outputs.push_back(optarg);
+                break;
 
-                    long exponent = 0;
-                    auto zoom = mpf_class(value);
-                    mpf_get_d_2exp(&exponent, zoom.get_mpf_t());
-                    accuracy = exponent + 64;
-                    printf("accuracy = %ld\n", accuracy);
+            case ':':
+                throw SyntaxError("Missing argument for option '" +
+                                  string(argv[optind - 1]) + "'");
 
-                    printf("New precision of re: %ld\n", opt.location.real.get_prec());
-                    return;
-
-                } catch (...) { }
-            }
-        });
+            default:
+                throw SyntaxError("Invalid option '" +
+                                  string(argv[optind - 1]) + "'");
+        }
     }
 
-    mpf_set_default_prec(accuracy);
-}
-*/
+    // Parse remaining arguments
+    while (optind < argc) {
 
-void
-Application::readInputs(isize keyframe)
-{
-    for (auto &input: opt.files.inputs) {
+        string arg = argv[optind++];
 
-        if (AssetManager::getFormat(input) == Format::MAP) continue;
+        if (arg.find('=') != std::string::npos) {
+            opt.overrides.push_back(arg);
+        } else {
+            opt.files.inputs.push_back(arg);
+        }
+    }
 
-        Parser::parse(assets.findAsset(input),
-                      [this](string k, string v) { opt.parse(k, v); },
-                      keyframe);
+    // Check types
+    printf("Inputs:\n");
+    for (const auto &it : opt.files.inputs) {
+        printf("  %s\n", it.c_str());
+        if (!isAcceptedInputFormat(AssetManager::getFormat(it))) {
+            throw Exception(it.string() + ": Invalid input format");
+        }
+    }
+    printf("Outputs:\n");
+    for (const auto &it : opt.files.outputs) {
+        printf("  %s\n", it.c_str());
+        if (!isAcceptedOutputFormat(AssetManager::getFormat(it))) {
+            throw Exception(it.string() + ": Invalid output format");
+        }
     }
 }
 
 void
 Application::readIniFiles(isize keyframe)
 {
-    for (auto &inifile: opt.files.inifiles) {
+    auto iniFiles = opt.getInputs(Format::INI);
 
-        Parser::parse(assets.findAsset(inifile),
-                      [this](string k, string v) { opt.parse(k, v); },
-                      keyframe);
-    }
-}
+    for (auto &it: iniFiles) {
 
-void
-Application::readProfiles(isize keyframe)
-{
-    for (auto &profile: opt.files.profiles) {
-
-        Parser::parse(assets.findAsset(profile),
+        Parser::parse(assets.findAsset(it),
                       [this](string k, string v) { opt.parse(k, v); },
                       keyframe);
     }

@@ -15,11 +15,16 @@
 #include "Options.h"
 #include "Logger.h"
 
+#include <getopt.h>
+
 namespace dd {
 
 class Application {
 
 protected:
+
+    int argc;
+    char **argv;
 
     // Asset manager
     AssetManager assets;
@@ -45,19 +50,23 @@ public:
     // Reads all init files
     void readIniFiles(isize keyframe = 0);
 
-    // Reads all profiles
-    void readProfiles(isize keyframe = 0); // DEPRECATED
-
 private:
 
     // Sets up the GMP library
     void setupGmp();
+
+protected:
+
+    // Parses all command line arguments
+    void parseArguments(int argc, char *argv[], const char *optstr, const option *longopts);
 
 
     //
     // Methods provided by subclasses
     //
 
+private:
+    
     // Returns the app name
     virtual const char *appName() = 0;
 
@@ -66,6 +75,10 @@ private:
 
     // Performs some basic initialization on program launch
     virtual void initialize() = 0;
+
+    // Checks whether a certain format is a valid input or output format
+    virtual bool isAcceptedInputFormat(Format format) const = 0;
+    virtual bool isAcceptedOutputFormat(Format format) const = 0;
 
     // Parses all command line arguments
     virtual void parseArguments(int argc, char *argv[]) = 0;

@@ -28,6 +28,8 @@ class DeepMake : public Application {
     const char *appName() { return "DeepMake"; }
     void syntax();
     void initialize() { };
+    bool isAcceptedInputFormat(Format format) const { return true; }
+    bool isAcceptedOutputFormat(Format format) const { return true; }
     void parseArguments(int argc, char *argv[]);
     void checkArguments();
     void run();

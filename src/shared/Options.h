@@ -67,11 +67,9 @@ struct Options {
         // Full path to the executable
         fs::path exec;
 
-        // Full paths to input files, output files, and profiles
-        std::vector<fs::path> inifiles;
+        // Full paths to input and output files
         std::vector<fs::path> inputs;
         std::vector<fs::path> outputs;
-        std::vector<fs::path> profiles; // DEPRECATED
 
     } files;
 
@@ -224,19 +222,6 @@ struct Options {
 
     } periodcheck;
 
-    struct {
-
-        // Highlight glitch points in texture
-        [[deprecated]] bool glitches;
-
-        // Highlight rejected points in texture
-        [[deprecated]] bool rejected;
-
-        // Highlight periodic points in texture
-        [[deprecated]] bool periodic;
-
-    } debug;
-
 
     //
     // Derived values
@@ -266,6 +251,14 @@ struct Options {
 public:
 
     Options(const AssetManager &assets);
+
+
+    //
+    // Handling input and output files
+    //
+
+    std::vector <fs::path> getInputs(Format format);
+    std::vector <fs::path> getOutputs(Format format);
 
 
     //

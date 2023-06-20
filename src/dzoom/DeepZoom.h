@@ -25,6 +25,8 @@ class DeepZoom : public Application {
     const char *appName() { return "DeepZoom"; }
     void syntax();
     void initialize();
+    bool isAcceptedInputFormat(Format format) const;
+    bool isAcceptedOutputFormat(Format format) const;
     void parseArguments(int argc, char *argv[]);
     void checkArguments();
     void run();

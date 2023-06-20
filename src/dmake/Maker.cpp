@@ -96,9 +96,7 @@ Maker::generateIniFiles(std::vector <string> &skipped)
 
     for (isize nr = 0; nr <= opt.video.keyframes; nr++) {
 
-        app.readInputs(nr);
-        app.readProfiles(nr);
-
+        // app.readInputs(nr);
         generateIniFile(nr, skipped);
     }
 }
