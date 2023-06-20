@@ -286,15 +286,6 @@ Options::parse(string key, string value)
     }
 }
 
-/*
-bool
-Options::hasRange(const string &key)
-{
-    auto range = getRange(key);
-    return range.first != 0 || range.second != LONG_MAX;
-}
-*/
-
 std::pair<isize, isize>
 Options::getRange(const string &key)
 {

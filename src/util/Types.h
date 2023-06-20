@@ -12,11 +12,13 @@
 #pragma once
 
 #include "config.h"
-#include <sys/types.h>
 
 //
 // Integers
 //
+
+#include <sys/types.h>
+#include <climits>
 
 // Signed integers
 typedef signed char        i8;
