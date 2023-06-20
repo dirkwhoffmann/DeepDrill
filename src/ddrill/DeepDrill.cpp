@@ -58,6 +58,12 @@ DeepDrill::syntax()
     log::cout << "       -o or --output    Output file" << log::endl;
 }
 
+void
+DeepDrill::initialize()
+{
+
+};
+
 bool
 DeepDrill::isAcceptedInputFormat(Format format) const
 {

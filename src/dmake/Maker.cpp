@@ -28,20 +28,38 @@ Maker::Maker(Application &app, Options &opt) : app(app), opt(opt)
 void
 Maker::generate()
 {
-    std::vector <string> skipped;
+    auto printReport = [&]() {
 
-    auto reportSkippedFiles = [&]() {
-
-        if (!skipped.empty()) {
+        if (!report.empty() && opt.flags.verbose) {
 
             log::cout << log::vspace;
-            for (auto &it : skipped) {
 
-                log::cout << log::purple << log::bold << log::ralign("Skipping file: ") << log::light;
-                log::cout << log::normal << it << " already exists" << log::endl;
+            for (auto &it : report) {
+
+                switch (it.second) {
+
+                    case Action::CREATED:
+
+                        log::cout << log::purple << log::bold << log::ralign("Created: ");
+                        log::cout << it.first << log::light << log::endl;
+                        break;
+
+                    case Action::SKIPPED:
+
+                        log::cout << log::green << log::bold << log::ralign("Skipped: ");
+                        log::cout << it.first << log::light << log::endl;
+                        break;
+
+                    case Action::MODIFIED:
+
+                        log::cout << log::red << log::bold << log::ralign("Updated: ");
+                        log::cout << it.first << log::light << log::endl;
+                        break;
+                }
             }
             log::cout << log::vspace;
-            skipped = { };
+
+            report = { };
         }
     };
 
@@ -51,32 +69,26 @@ Maker::generate()
     opt.drillmap.width = std::min(opt.drillmap.width, 2 * opt.image.width);
     opt.drillmap.height = std::min(opt.drillmap.height, 2 * opt.image.height);
 
-    generateProjectFile(skipped);
-    reportSkippedFiles();
+    generateProjectFile();
+    printReport();
 
-    generateIniFiles(skipped);
-    reportSkippedFiles();
+    generateIniFiles();
+    printReport();
 
-    // generateProfile(skipped);
-    // reportSkippedFiles();
-
-    generateMakefile(skipped);
-    reportSkippedFiles();
+    generateMakefile();
+    printReport();
 }
 
 void
-Maker::generateProjectFile(std::vector <string> &skipped)
+Maker::generateProjectFile()
 {
     ProgressIndicator progress("Generating project file");
 
     auto name = project + ".ini";
-    auto path = projectDir / name;
-
-    // Only proceed if file does not exist yet
-    if (fileExists(path)) { skipped.push_back(name); return; }
+    auto temp = fs::temp_directory_path() / name;
 
     // Open output stream
-    std::ofstream os(path);
+    std::ofstream os(temp);
 
     // Write header
     writeHeader(os);
@@ -87,34 +99,33 @@ Maker::generateProjectFile(std::vector <string> &skipped)
     writeImageSection(os);
     writeColorsSection(os);
     writeVideoSection(os);
+
+    copy(temp, projectDir / name);
 }
 
 void
-Maker::generateIniFiles(std::vector <string> &skipped)
+Maker::generateIniFiles()
 {
     ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
 
     for (isize nr = 0; nr <= opt.video.keyframes; nr++) {
 
-        // app.readInputs(nr);
-        generateIniFile(nr, skipped);
+        app.readIniFiles(nr);
+        generateIniFile(nr);
     }
 }
 
 void
-Maker::generateIniFile(isize nr, std::vector <string> &skipped)
+Maker::generateIniFile(isize nr)
 {
     double zoom = exp2(nr);
 
     // Assemble path name
     auto name = (project + "_" + std::to_string(nr) + ".ini");
-    auto path = projectDir / name;
-
-    // Only proceed if file does not exist yet
-    if (fileExists(path)) { skipped.push_back(name); return; }
+    auto temp = fs::temp_directory_path() / name;
 
     // Open output stream
-    std::ofstream os(path);
+    std::ofstream os(temp);
     os.precision(mpf_get_default_prec());
 
     // Write header
@@ -138,6 +149,8 @@ Maker::generateIniFile(isize nr, std::vector <string> &skipped)
     writeAreacheckSection(os);
     writePeriodcheckSection(os);
     writeAttractorcheckSection(os);
+
+    copy(temp, projectDir / name);
 }
 
 void
@@ -260,17 +273,23 @@ Maker::writeAttractorcheckSection(std::ofstream &os)
 }
 
 void
-Maker::generateMakefile(std::vector <string> &skipped)
+Maker::generateMakefile()
 {
     ProgressIndicator progress("Generating Makefile");
 
+    // Assemble path name
+    auto name = "Makefile";
+    auto temp = fs::temp_directory_path() / name;
+
     // Open output stream
-    std::ofstream os(projectDir / "Makefile");
+    std::ofstream os(temp);
 
     // Write sections
     writeHeader(os);
     writeDefinitions(os);
     writeTargets(os);
+
+    copy(temp, projectDir / name);
 }
 
 void
@@ -326,6 +345,25 @@ Maker::writeTargets(std::ofstream &os)
     os << "clean:" << std::endl;
     os << "\t" << "rm *.mov *.map *.jpg *.log" << std::endl;
     os << std::endl;
+}
+
+void
+Maker::copy(const fs::path &from, const fs::path &to)
+{
+    if (!fs::exists(to)) {
+
+        report.push_back( { to, Action::CREATED } );
+        fs::copy(from, to);
+
+    } else if (!compareFiles(from, to)) {
+
+        report.push_back( { to, Action::MODIFIED } );
+        fs::copy(from, to, std::filesystem::copy_options::overwrite_existing);
+
+    } else {
+
+        // report.push_back( { to, Action::SKIPPED } );
+    }
 }
 
 }

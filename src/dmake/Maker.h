@@ -31,6 +31,10 @@ class Maker {
     // Path to the project directory
     fs::path projectDir;
 
+    // File tracker
+    enum class Action { CREATED, SKIPPED, MODIFIED };
+    std::vector <std::pair<fs::path, Action>> report;
+
 public:
     
     // Constructor
@@ -41,11 +45,10 @@ public:
     
 private:
 
-    void generateProjectFile(std::vector <string> &skipped);
-    void generateIniFiles(std::vector <string> &skipped);
-    void generateIniFile(isize nr, std::vector <string> &skipped);
-    // void generateProfile(std::vector <string> &skipped);
-    void generateMakefile(std::vector <string> &skipped);
+    void generateProjectFile();
+    void generateIniFiles();
+    void generateIniFile(isize nr);
+    void generateMakefile();
 
     void writeLocationSection(std::ofstream &os);
     void writeMapSection(std::ofstream &os);
@@ -62,6 +65,8 @@ private:
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);
     void writeTargets(std::ofstream &os);
+
+    void copy(const fs::path &from, const fs::path &to);
 };
 
 }

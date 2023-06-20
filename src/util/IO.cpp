@@ -271,6 +271,26 @@ bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size)
     return loadFile(path + "/" + name, bufptr, size);
 }
 
+bool compareFiles(const fs::path &path1, const fs::path &path2)
+{
+    std::ifstream stream1(path1, std::ifstream::binary|std::ifstream::ate);
+    std::ifstream stream2(path2, std::ifstream::binary|std::ifstream::ate);
+
+    if (stream1.fail() || stream2.fail()) {
+        return false;
+    }
+
+    if (stream1.tellg() != stream2.tellg()) {
+        return false;
+    }
+
+    stream1.seekg(0, std::ifstream::beg);
+    stream2.seekg(0, std::ifstream::beg);
+    return std::equal(std::istreambuf_iterator<char>(stream1.rdbuf()),
+                      std::istreambuf_iterator<char>(),
+                      std::istreambuf_iterator<char>(stream2.rdbuf()));
+}
+
 isize
 streamLength(std::istream &stream)
 {

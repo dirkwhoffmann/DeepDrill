@@ -24,7 +24,7 @@ namespace dd {
 const char *
 DeepMake::optstring()
 {
-    return ":a:o:";
+    return ":va:o:";
 }
 
 const option *
@@ -32,6 +32,7 @@ DeepMake::longopts()
 {
     static struct option long_options[] = {
 
+        { "verbose",  no_argument,       NULL, 'v' },
         { "assets",   required_argument, NULL, 'a' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
@@ -44,8 +45,9 @@ void
 DeepMake::syntax()
 {
     log::cout << "Usage: ";
-    log::cout << "deepmake [-a <path>] [-p <profile>] -o <output> <input>" << log::endl;
+    log::cout << "deepmake [-v] [-a <path>] [-p <profile>] -o <output> <input>" << log::endl;
     log::cout << log::endl;
+    log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
     log::cout << "       -p or --profile   Customize settings" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;

@@ -154,12 +154,12 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
     // Check types
     for (const auto &it : opt.files.inputs) {
         if (!isAcceptedInputFormat(AssetManager::getFormat(it))) {
-            throw Exception(it.string() + ": Invalid input format");
+            throw SyntaxError(it.string() + ": Invalid input format");
         }
     }
     for (const auto &it : opt.files.outputs) {
         if (!isAcceptedOutputFormat(AssetManager::getFormat(it))) {
-            throw Exception(it.string() + ": Invalid output format");
+            throw SyntaxError(it.string() + ": Invalid output format");
         }
     }
 }

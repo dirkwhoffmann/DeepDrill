@@ -42,7 +42,7 @@ private:
     const char *optstring();
     const option *longopts();
     void syntax();
-    void initialize() { };
+    void initialize();
     bool isAcceptedInputFormat(Format format) const;
     bool isAcceptedOutputFormat(Format format) const;
     void checkArguments();

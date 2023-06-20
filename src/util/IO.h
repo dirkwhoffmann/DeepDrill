@@ -84,9 +84,12 @@ std::vector<string> files(const string &path, std::vector<string> &suffixes);
 bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len);
 
-// Loads a file from disk
+// Loads a file
 bool loadFile(const string &path, u8 **bufptr, isize *size);
 bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size);
+
+// Compares two files
+bool compareFiles(const fs::path &path1, const fs::path &path2);
 
 
 //

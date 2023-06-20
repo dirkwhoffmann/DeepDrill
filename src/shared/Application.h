@@ -77,12 +77,9 @@ private:
     // Performs some basic initialization on program launch
     virtual void initialize() = 0;
 
-    // Checks whether a certain format is a valid input or output format
+    // Checks the input and output file formats for validity
     virtual bool isAcceptedInputFormat(Format format) const = 0;
     virtual bool isAcceptedOutputFormat(Format format) const = 0;
-
-    // Parses all command line arguments
-    // virtual void parseArguments(int argc, char *argv[]) = 0;
 
     // Checks all command line arguments for consistency
     virtual void checkArguments() = 0;
