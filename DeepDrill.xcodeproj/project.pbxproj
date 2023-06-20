@@ -226,6 +226,7 @@
 		50A09C792A3C5BFE00845EE7 /* SlowDriller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlowDriller.cpp; sourceTree = "<group>"; };
 		50A09C7A2A3C5BFE00845EE7 /* SlowDriller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlowDriller.h; sourceTree = "<group>"; };
 		50A09C7C2A40365000845EE7 /* experimental.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = experimental.ini; sourceTree = "<group>"; };
+		50A09C7D2A420C4700845EE7 /* DeepMake.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepMake.entitlements; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -619,6 +620,7 @@
 		50CF8E452694848800887FFC = {
 			isa = PBXGroup;
 			children = (
+				50A09C7D2A420C4700845EE7 /* DeepMake.entitlements */,
 				5049968D29DED3BC00B15919 /* DeepZoom.entitlements */,
 				50BEC7592694876B00CCDFA8 /* DeepDrill.entitlements */,
 				5010234A269DDE6D00AC61A8 /* src */,
@@ -949,6 +951,7 @@
 		5072FD652A271E29003DE341 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DeepMake.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -966,6 +969,7 @@
 		5072FD662A271E29003DE341 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DeepMake.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
 				ENABLE_HARDENED_RUNTIME = YES;

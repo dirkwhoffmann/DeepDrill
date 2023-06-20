@@ -350,6 +350,10 @@ Maker::writeTargets(std::ofstream &os)
 void
 Maker::copy(const fs::path &from, const fs::path &to)
 {
+    /*
+    fs::copy(to, to.string() + "_orig", std::filesystem::copy_options::overwrite_existing);
+    fs::copy(from, to.string() + "_new", std::filesystem::copy_options::overwrite_existing);
+    */
     if (!fs::exists(to)) {
 
         report.push_back( { to, Action::CREATED } );

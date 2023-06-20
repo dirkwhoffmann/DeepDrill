@@ -113,10 +113,6 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
             // Perform the range check
             if (nr < start || nr > stop) continue;
 
-            // Remove white spaces
-            // trim(key);
-            // trim(value);
-            
             // Convert the key to lower case
             tolower(key);
             
