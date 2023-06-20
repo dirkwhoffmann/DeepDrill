@@ -21,6 +21,27 @@ int main(int argc, char *argv[])
 
 namespace dd {
 
+const char *
+DeepZoom::optstring()
+{
+    return ":vba:o:";
+}
+
+const option *
+DeepZoom::longopts()
+{
+    static struct option long_options[] = {
+
+        { "verbose",  no_argument,       NULL, 'v' },
+        { "batch",    no_argument,       NULL, 'b' },
+        { "assets",   required_argument, NULL, 'a' },
+        { "output",   required_argument, NULL, 'o' },
+        { NULL,       0,                 NULL,  0  }
+    };
+
+    return long_options;
+}
+
 void
 DeepZoom::syntax()
 {
@@ -56,21 +77,6 @@ bool
 DeepZoom::isAcceptedOutputFormat(Format format) const
 {
     return AssetManager::isVideoFormat(format);
-}
-
-void
-DeepZoom::parseArguments(int argc, char *argv[])
-{
-    static struct option long_options[] = {
-
-        { "verbose",  no_argument,       NULL, 'v' },
-        { "batch",    no_argument,       NULL, 'b' },
-        { "assets",   required_argument, NULL, 'a' },
-        { "output",   required_argument, NULL, 'o' },
-        { NULL,       0,                 NULL,  0  }
-    };
-
-    Application::parseArguments(argc, argv, ":vba:o:", long_options);
 }
 
 void

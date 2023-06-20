@@ -25,6 +25,27 @@ int main(int argc, char *argv[])
 
 namespace dd {
 
+const char *
+DeepDrill::optstring()
+{
+    return ":vba:o:";
+}
+
+const option *
+DeepDrill::longopts()
+{
+    static struct option long_options[] = {
+
+        { "batch",    no_argument,       NULL, 'b' },
+        { "verbose",  no_argument,       NULL, 'v' },
+        { "assets",   required_argument, NULL, 'a' },
+        { "output",   required_argument, NULL, 'o' },
+        { NULL,       0,                 NULL,  0  }
+    };
+
+    return long_options;
+}
+
 void
 DeepDrill::syntax()
 {
@@ -47,21 +68,6 @@ bool
 DeepDrill::isAcceptedOutputFormat(Format format) const
 {
     return format == Format::MAP || AssetManager::isImageFormat(format);
-}
-
-void
-DeepDrill::parseArguments(int argc, char *argv[])
-{
-    static struct option long_options[] = {
-        
-        { "verbose",  no_argument,       NULL, 'v' },
-        { "batch",    no_argument,       NULL, 'b' },
-        { "assets",   required_argument, NULL, 'a' },
-        { "output",   required_argument, NULL, 'o' },
-        { NULL,       0,                 NULL,  0  }
-    };
-
-    Application::parseArguments(argc, argv, ":vba:o:", long_options);
 }
 
 void

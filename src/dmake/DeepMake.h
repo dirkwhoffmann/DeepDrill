@@ -26,11 +26,12 @@ class DeepMake : public Application {
     //
 
     const char *appName() { return "DeepMake"; }
+    const char *optstring();
+    const option *longopts();
     void syntax();
     void initialize() { };
     bool isAcceptedInputFormat(Format format) const { return format == Format::INI; }
     bool isAcceptedOutputFormat(Format format) const { return format == Format::DIR; }
-    void parseArguments(int argc, char *argv[]);
     void checkArguments();
     void run();
 };

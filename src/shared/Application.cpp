@@ -19,12 +19,9 @@
 namespace dd {
 
 int
-Application::main(int argc, char **argv)
+Application::main(int argc, char *argv[])
 {
     mpf_set_default_prec(128);
-
-    this->argc = argc;
-    this->argv = argv;
 
     try {
 
@@ -36,7 +33,7 @@ Application::main(int argc, char **argv)
         initialize();
         
         // Parse command line arguments
-        parseArguments(argc, argv);
+        parseArguments(argc, argv, optstring(), longopts());
 
         // Check arguments for consistency
         checkArguments();
@@ -155,16 +152,12 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
     }
 
     // Check types
-    printf("Inputs:\n");
     for (const auto &it : opt.files.inputs) {
-        printf("  %s\n", it.c_str());
         if (!isAcceptedInputFormat(AssetManager::getFormat(it))) {
             throw Exception(it.string() + ": Invalid input format");
         }
     }
-    printf("Outputs:\n");
     for (const auto &it : opt.files.outputs) {
-        printf("  %s\n", it.c_str());
         if (!isAcceptedOutputFormat(AssetManager::getFormat(it))) {
             throw Exception(it.string() + ": Invalid output format");
         }

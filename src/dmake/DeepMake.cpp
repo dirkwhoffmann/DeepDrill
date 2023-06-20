@@ -21,6 +21,25 @@ int main(int argc, char *argv[])
 
 namespace dd {
 
+const char *
+DeepMake::optstring()
+{
+    return ":a:o:";
+}
+
+const option *
+DeepMake::longopts()
+{
+    static struct option long_options[] = {
+
+        { "assets",   required_argument, NULL, 'a' },
+        { "output",   required_argument, NULL, 'o' },
+        { NULL,       0,                 NULL,  0  }
+    };
+
+    return long_options;
+}
+
 void
 DeepMake::syntax()
 {
@@ -30,19 +49,6 @@ DeepMake::syntax()
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
     log::cout << "       -p or --profile   Customize settings" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;
-}
-
-void
-DeepMake::parseArguments(int argc, char *argv[])
-{
-    static struct option long_options[] = {
-
-        { "assets",   required_argument, NULL, 'a' },
-        { "output",   required_argument, NULL, 'o' },
-        { NULL,       0,                 NULL,  0  }
-    };
-
-    Application::parseArguments(argc, argv, ":a:o:", long_options);
 }
 
 void

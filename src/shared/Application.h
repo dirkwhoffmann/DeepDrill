@@ -23,9 +23,6 @@ class Application {
 
 protected:
 
-    int argc;
-    char **argv;
-
     // Asset manager
     AssetManager assets;
 
@@ -70,6 +67,10 @@ private:
     // Returns the app name
     virtual const char *appName() = 0;
 
+    // Returns the getopt command line parameters
+    virtual const char *optstring() = 0;
+    virtual const struct option *longopts() = 0;
+
     // Prints the command line syntax
     virtual void syntax() = 0;
 
@@ -81,7 +82,7 @@ private:
     virtual bool isAcceptedOutputFormat(Format format) const = 0;
 
     // Parses all command line arguments
-    virtual void parseArguments(int argc, char *argv[]) = 0;
+    // virtual void parseArguments(int argc, char *argv[]) = 0;
 
     // Checks all command line arguments for consistency
     virtual void checkArguments() = 0;
