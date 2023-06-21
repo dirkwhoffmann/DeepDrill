@@ -114,23 +114,17 @@ Options::parse(string keyvalue)
     auto key = keyvalue.substr(0, pos);
     auto value = keyvalue.substr(pos + 1, std::string::npos);
 
-    // Convert the key to lower case
-    std::transform(key.begin(), key.end(), key.begin(),
-                   [](unsigned char ch){ return std::tolower(ch); });
-
     parse(key, value);
 }
 
 void
 Options::parse(string key, string value)
 {
+    // Convert the key to lower case
+    std::transform(key.begin(), key.end(), key.begin(),
+                   [](unsigned char ch){ return std::tolower(ch); });
+
     keys[key] = value;
-
-    // Get the range of keyframes this key-value pair applies to
-    auto range = stripRange(key);
-
-    // Only proceed if the keyframe is in range
-    if (keyframe < range.first || keyframe > range.second) return;
 
     if (key == "location.real") {
 
@@ -306,46 +300,6 @@ Options::parse(string key, string value)
 
         throw KeyValueError(key, "Unexpected key");
     }
-}
-
-std::pair<isize, isize>
-Options::getRange(const string &key)
-{
-    isize first = 0;
-    isize last = LONG_MAX;
-
-    try {
-
-        if (auto pos1 = key.find("."); pos1 != std::string::npos) {
-
-            auto range = key.substr(0, pos1);
-
-            if (auto pos2 = range.find("-"); pos2 != std::string::npos) {
-
-                first = std::stol(range.substr(0, pos2));
-                last = std::stol(range.substr(pos2 + 1, std::string::npos));
-
-            } else {
-
-                first = last = std::stol(range);
-            }
-        }
-
-    } catch (...) { };
-
-    return { first, last };
-}
-
-std::pair<isize, isize>
-Options::stripRange(string &key)
-{
-    auto range = getRange(key);
-
-    if (range.first != 0 || range.second != LONG_MAX) {
-        key = key.substr(0, key.find("."));
-    }
-
-    return range;
 }
 
 void

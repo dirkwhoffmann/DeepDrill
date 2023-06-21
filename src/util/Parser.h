@@ -26,7 +26,10 @@ public:
     static void parse(std::stringstream &stream, std::function<void(string,string)>callback, isize nr = 0);
 
 private:
-    
+
+    static std::pair<isize, isize> getRange(string &key, bool strip = false);
+    static std::pair<isize, isize> stripRange(string &key) { return getRange(key, true); }
+
     static void ltrim(string &s);
     static void rtrim(string &s);
     static void trim(string &s);

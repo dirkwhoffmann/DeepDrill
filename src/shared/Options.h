@@ -33,7 +33,7 @@ struct Options {
     const AssetManager &assets;
 
     // Number of the currently computed keyframe (for key filtering)
-    isize keyframe = 0;
+    [[deprecated]] isize keyframe = 0;
 
     // Set to true to abort the computation
     bool stop = false;
@@ -270,11 +270,7 @@ public:
     void applyDefaults();
     void derive();
 
-    std::pair<isize, isize> getRange(const string &key);
-
 private:
-
-    std::pair<isize, isize> stripRange(string &key);
 
     void parse(const string &key, const string &value, string &parsed);
     void parse(const string &key, const string &value, bool &parsed);

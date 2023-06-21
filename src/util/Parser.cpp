@@ -52,81 +52,92 @@ Parser::parse(std::stringstream &stream, std::function<void(string,string)>callb
     isize line = 0;
     string input;
     string section;
-    
-    while(std::getline(stream, input)) {
 
-        line++;
+    try {
 
-        // Remove comments
-        input = input.substr(0, input.find("#"));
+        while(std::getline(stream, input)) {
 
-        // Remove white spaces
-        input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
-        // trim(input);
-                
-        // Ignore empty lines
-        if (input == "") continue;
-                        
-        // Check if this line contains a section marker
-        if (input.front() == '[' && input.back() == ']') {
-        
-            section = input.substr(1, input.size() - 2);
-            tolower(section);
-            continue;
-        }
-        
-        // Check if this line is a key-value pair
-        if (auto pos = input.find("="); pos != std::string::npos) {
-            
-            auto key = input.substr(0, pos);
-            auto value = input.substr(pos + 1, std::string::npos);
+            line++;
 
-            isize start = 0;
-            isize stop = LONG_MAX;
+            // Remove comments
+            input = input.substr(0, input.find("#"));
 
-            // Check if the key-value pair has a prefix
-            if (auto pos2 = key.find(":"); pos2 != std::string::npos) {
+            // Remove white spaces
+            input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
+            // trim(input);
 
-                auto prefix = key.substr(0, pos2);
-                key = key.substr(pos2 + 1, std::string::npos);
+            // Ignore empty lines
+            if (input == "") continue;
 
-                try {
+            // Check if this line contains a section marker
+            if (input.front() == '[' && input.back() == ']') {
 
-                    // Check if the prefix specifies a range
-                    if (auto pos3 = prefix.find("-"); pos3 != std::string::npos) {
+                section = input.substr(1, input.size() - 2);
+                tolower(section);
+                continue;
+            }
 
-                        start = stol(prefix.substr(0, pos3));
-                        stop = stol(prefix.substr(pos3 + 1, std::string::npos));
+            // Check if this line is a key-value pair
+            if (auto pos = input.find("="); pos != std::string::npos) {
 
+                auto key = input.substr(0, pos);
+                auto value = input.substr(pos + 1, std::string::npos);
 
-                    } else {
+                // Get the range of keyframes this key-value pair applies to
+                auto range = stripRange(key);
 
-                        start = stol(prefix);
-                        stop = start;
+                if (nr >= range.first && nr <= range.second) {
+
+                    // Process the key-value pair
+                    try {
+                        callback(section + "." + key ,value);
+                    } catch (const Exception &e) {
+                        throw ParseError(e, line);
                     }
-
-                } catch (...) {
-                    throw ParseError(Exception("Invalid prefix: " + prefix), line);
                 }
+                continue;
             }
 
-            // Perform the range check
-            if (nr < start || nr > stop) continue;
-
-            // Convert the key to lower case
-            tolower(key);
-            
-            // Process the key-value pair
-            try {
-                callback(section + "." + key ,value);
-            } catch (const Exception &e) {
-                throw ParseError(e, line);
-            }
-            continue;
+            throw SyntaxError("Parse error");
         }
-        
-        throw ParseError(SyntaxError("Parse error"), line);
+
+    } catch (Exception &e) {
+
+        throw ParseError(e, line);
     }
+}
+
+std::pair<isize, isize>
+Parser::getRange(string &key, bool strip)
+{
+    isize first = 0;
+    isize last = LONG_MAX;
+
+    if (auto pos1 = key.find(":"); pos1 != std::string::npos) {
+
+        try {
+
+            auto range = key.substr(0, pos1);
+            if (auto pos2 = range.find("-"); pos2 != std::string::npos) {
+
+                first = std::stol(range.substr(0, pos2));
+                last = std::stol(range.substr(pos2 + 1, std::string::npos));
+
+            } else {
+
+                first = last = std::stol(range);
+            }
+
+        } catch (...) {
+            throw Exception(key + " is not a valid range.");
+        };
+
+        if (strip) {
+            key = key.substr(pos1 + 1, std::string::npos);
+        }
+    }
+
+    return { first, last };
 }
 
 void
