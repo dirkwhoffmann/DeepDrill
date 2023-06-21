@@ -451,7 +451,7 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
 }
 
 void
-Options::derive()
+Options::applyDefaults()
 {
     // Adjust some default values
     if (keys.find("image.width") != keys.end()) {
@@ -472,7 +472,11 @@ Options::derive()
     for (auto &it : overrides) {
         parse(it);
     }
+}
 
+void
+Options::derive()
+{
     // Derive unspecified video parameters
     auto frameRate = double(video.frameRate);
     auto keyframes = double(video.keyframes);

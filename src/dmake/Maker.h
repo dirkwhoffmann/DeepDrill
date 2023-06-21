@@ -45,6 +45,15 @@ public:
     
 private:
 
+    // Filenames
+    fs::path iniFile() { return "deepzoom.ini"; }
+    fs::path movFile() { return "deepzoom.mov"; }
+    fs::path rawFile(isize i) { return "keyframe_" + std::to_string(i); }
+    fs::path iniFile(isize i) { return rawFile(i).string() + ".ini"; }
+    fs::path mapFile(isize i) { return rawFile(i).string() + ".map"; }
+    fs::path imgFile(isize i) { return rawFile(i).string() + ".jpg"; }
+
+    // Generators
     void generateProjectFile();
     void generateIniFiles();
     void generateIniFile(isize nr);
@@ -53,7 +62,6 @@ private:
     void writeLocationSection(std::ofstream &os);
     void writeMapSection(std::ofstream &os);
     void writeImageSection(std::ofstream &os);
-    void writePreviewImageSection(std::ofstream &os);
     void writeColorsSection(std::ofstream &os);
     void writeVideoSection(std::ofstream &os);
     void writePerturbationSection(std::ofstream &os);

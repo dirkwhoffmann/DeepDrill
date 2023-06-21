@@ -41,6 +41,9 @@ Application::main(int argc, char *argv[])
         // Customize settings
         readIniFiles();
 
+        // Use default values for all unspecified options
+        opt.applyDefaults();
+
         // Setup the GMP library
         setupGmp();
 

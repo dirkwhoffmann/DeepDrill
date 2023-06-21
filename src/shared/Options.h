@@ -267,6 +267,7 @@ public:
 
     void parse(string keyvalue);
     void parse(string key, string value);
+    void applyDefaults();
     void derive();
 
     std::pair<isize, isize> getRange(const string &key);

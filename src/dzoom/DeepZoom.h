@@ -25,10 +25,11 @@ class DeepZoom : public Application {
     const char *appName() { return "DeepZoom"; }
     const char *optstring();
     const option *longopts();
-    void syntax();
-    void initialize();
     bool isAcceptedInputFormat(Format format) const;
     bool isAcceptedOutputFormat(Format format) const;
+
+    void syntax();
+    void initialize();
     void checkArguments();
     void run();
 };

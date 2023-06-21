@@ -82,10 +82,9 @@ Maker::generate()
 void
 Maker::generateProjectFile()
 {
-    ProgressIndicator progress("Generating project file");
+    ProgressIndicator progress("Generating zoomer ini file");
 
-    auto name = project + ".ini";
-    auto temp = fs::temp_directory_path() / name;
+    auto temp = fs::temp_directory_path() / iniFile();
 
     // Open output stream
     std::ofstream os(temp);
@@ -100,13 +99,13 @@ Maker::generateProjectFile()
     writeColorsSection(os);
     writeVideoSection(os);
 
-    copy(temp, projectDir / name);
+    copy(temp, projectDir / iniFile());
 }
 
 void
 Maker::generateIniFiles()
 {
-    ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
+    ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " ini files");
 
     for (isize nr = 0; nr <= opt.video.keyframes; nr++) {
 
@@ -121,8 +120,7 @@ Maker::generateIniFile(isize nr)
     double zoom = exp2(nr);
 
     // Assemble path name
-    auto name = (project + "_" + std::to_string(nr) + ".ini");
-    auto temp = fs::temp_directory_path() / name;
+    auto temp = fs::temp_directory_path() / iniFile(nr);
 
     // Open output stream
     std::ofstream os(temp);
@@ -142,7 +140,7 @@ Maker::generateIniFile(isize nr)
     os << std::endl;
 
     writeMapSection(os);
-    writePreviewImageSection(os);
+    writeImageSection(os);
     writeColorsSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
@@ -150,7 +148,7 @@ Maker::generateIniFile(isize nr)
     writePeriodcheckSection(os);
     writeAttractorcheckSection(os);
 
-    copy(temp, projectDir / name);
+    copy(temp, projectDir / iniFile(nr));
 }
 
 void
@@ -181,18 +179,6 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
-    os << "depth = " << opt.image.depth << std::endl;
-    os << "illuminator = " << opt.image.illuminator << std::endl;
-    os << "scaler = " << opt.image.scaler << std::endl;
-    os << std::endl;
-}
-
-void
-Maker::writePreviewImageSection(std::ofstream &os)
-{
-    os << "[image] # Preview image" << std::endl;
-    os << "width = 320" << std::endl;
-    os << "height = 200" << std::endl;
     os << "depth = " << opt.image.depth << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
@@ -278,8 +264,7 @@ Maker::generateMakefile()
     ProgressIndicator progress("Generating Makefile");
 
     // Assemble path name
-    auto name = "Makefile";
-    auto temp = fs::temp_directory_path() / name;
+    auto temp = fs::temp_directory_path() / "Makefile";
 
     // Open output stream
     std::ofstream os(temp);
@@ -289,7 +274,7 @@ Maker::generateMakefile()
     writeDefinitions(os);
     writeTargets(os);
 
-    copy(temp, projectDir / name);
+    copy(temp, projectDir / "Makefile");
 }
 
 void
@@ -310,8 +295,7 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "DEEPDRILL  = " << (path / "deepdrill").string() << std::endl;
     os << "DEEPZOOM   = " << (path / "deepzoom").string() << std::endl;
     os << "MAPS       = $(patsubst %.ini,%.map,$(wildcard *_*.ini))" << std::endl;
-    os << "VIDEO      = " << project << ".mov" << std::endl;
-    os << "MAPFLAGS   = -b -v" << std::endl;
+    os << "VIDEO      = " << movFile().string() << std::endl;
     os << std::endl;
 }
 
@@ -331,13 +315,19 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'map' target
     os << "%.map: %.ini" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS)";
-    os << " -o $*.map -o $*.jpg $*.ini > $*.log" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) -b -v";
+    os << " $*.ini -o $*.map -o $*_preview.jpg image.width=320 image.height=200 > $*.log" << std::endl;
+    os << std::endl;
+
+    // Write 'jpg' target
+    os << "%.jpg: %.map" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) -v";
+    os << " $*.ini $*.map -o $*.jpg" << std::endl;
     os << std::endl;
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
-    os << "\t" << "@$(DEEPZOOM) $(MOVFLAGS) " << project << ".ini";
+    os << "\t" << "@$(DEEPZOOM) " << iniFile();
     os << " -o $(VIDEO)" << std::endl;
     os << std::endl;
 
@@ -350,10 +340,6 @@ Maker::writeTargets(std::ofstream &os)
 void
 Maker::copy(const fs::path &from, const fs::path &to)
 {
-    /*
-    fs::copy(to, to.string() + "_orig", std::filesystem::copy_options::overwrite_existing);
-    fs::copy(from, to.string() + "_new", std::filesystem::copy_options::overwrite_existing);
-    */
     if (!fs::exists(to)) {
 
         report.push_back( { to, Action::CREATED } );
@@ -366,7 +352,7 @@ Maker::copy(const fs::path &from, const fs::path &to)
 
     } else {
 
-        // report.push_back( { to, Action::SKIPPED } );
+        report.push_back( { to, Action::SKIPPED } );
     }
 }
 

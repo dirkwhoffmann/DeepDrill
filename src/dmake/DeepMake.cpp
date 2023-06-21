@@ -71,14 +71,18 @@ DeepMake::run()
     auto numFiles = opt.video.keyframes + 3;
 
     // Ask for permisson
-    log::cout << numFiles << " files will be created. Do you want to proceed [no]? ";
-    string line; std::getline(std::cin, line);
+    log::cout << numFiles << " files will be created. Do you want to proceed [yn]? ";
 
-    if (line != "y" && line != "yes") {
+    while (1) {
 
-        log::cout << "Aborting" << log::endl;
-        return;
+        string s; std::getline(std::cin, s);
+
+        if (s == "y" || s == "yes") break;
+        if (s == "n" || s == "no") return;
+
+        std::cout << '\a';
     }
+
     log::cout << log::endl;
 
     stopWatch.restart();
