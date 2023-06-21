@@ -14,6 +14,7 @@
 #include "config.h"
 #include "Types.h"
 #include "IO.h"
+#include "gmpxx.h"
 
 namespace dd {
 
@@ -56,7 +57,7 @@ private:
     // Generators
     void generateProjectFile();
     void generateIniFiles();
-    void generateIniFile(isize nr);
+    void generateIniFile(isize nr, const mpf_class &zoom);
     void generateMakefile();
 
     void writeLocationSection(std::ofstream &os);

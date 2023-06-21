@@ -40,7 +40,7 @@ Maker::generate()
 
                     case Action::CREATED:
 
-                        log::cout << log::purple << log::bold << log::ralign("Created: ");
+                        log::cout << log::red << log::bold << log::ralign("Created: ");
                         log::cout << it.first << log::light << log::endl;
                         break;
 
@@ -107,17 +107,21 @@ Maker::generateIniFiles()
 {
     ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " ini files");
 
-    for (isize nr = 0; nr <= opt.video.keyframes; nr++) {
+    mpf_class zoom = 1.0;
+
+    for (isize nr = 0; nr <= opt.video.keyframes; nr++, zoom *= 2.0) {
 
         app.readIniFiles(nr);
-        generateIniFile(nr);
+        generateIniFile(nr, zoom);
     }
 }
 
 void
-Maker::generateIniFile(isize nr)
+Maker::generateIniFile(isize nr, const mpf_class &zoom)
 {
-    double zoom = exp2(nr);
+    // Overwrite zoom level
+    std::stringstream ss; ss << zoom;
+    opt.keys["location.zoom"] = ss.str();
 
     // Assemble path name
     auto temp = fs::temp_directory_path() / iniFile(nr);
@@ -129,16 +133,8 @@ Maker::generateIniFile(isize nr)
     // Write header
     writeHeader(os);
 
-    // Limit depth
-    isize maxDepth = 1000 * (nr + 1);
-    isize depth = std::min(maxDepth, opt.location.depth);
-
     // Write location section
     writeLocationSection(os);
-    os << "zoom = " << std::to_string(zoom) << std::endl;
-    os << "depth = " << std::to_string(depth) << std::endl;
-    os << std::endl;
-
     writeMapSection(os);
     writeImageSection(os);
     writeColorsSection(os);
@@ -157,6 +153,8 @@ Maker::writeLocationSection(std::ofstream &os)
     os << "[location]" << std::endl;
     os << "real = " << opt.keys["location.real"] << std::endl;
     os << "imag = " << opt.keys["location.imag"] << std::endl;
+    os << "zoom = " << opt.keys["location.zoom"] << std::endl;
+    os << "depth = " << opt.keys["location.depth"] << std::endl;
     os << std::endl;
 }
 
