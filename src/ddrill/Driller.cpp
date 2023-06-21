@@ -160,34 +160,16 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
 {
     /* This function collects all drill coordinates while filtering out all
      * coordinates that belong to the main bulb or the cardioid (for which
-     * a simple inside/outside test exists). The following strategy is applied:
+     * simple inside/outside tests exist).
      *
-     * The map area is superimposed with a grid. For each grid coordiate,
-     * bulb and cardioid checking is performed. If at least one pixel belongs
-     * to the bulb or the cardioid, the check is repeated for all pixels (which
-     * may take some seconds depending on the map size). If the test is
-     * negative for all points of the mesh, it is assumed that the drill area
-     * does not intercept the bulb or the cardioid. In this case, all locations
-     * need to be drilled.
+     * Strategy: The map area is superimposed with a grid. For each grid
+     * coordiate, bulb and cardioid checking is performed. If at least one
+     * pixel belongs to the bulb or the cardioid, the check is repeated for all
+     * pixels (which may take some seconds depending on the map size). If the
+     * test is negative for all points of the mesh, it is assumed that the
+     * drill area does not intercept the bulb or the cardioid. In this case,
+     * all locations need to be drilled.
      */
-
-    // TODO: MOVE TO DrillMap class
-    auto inCardioid = [&](PrecisionComplex &c) {
-
-        mpf_class r1 = c.re + 1.0;
-        mpf_class ii = c.im * c.im;
-        return (r1 * r1 + ii < 0.0625);
-    };
-
-    // TODO: MOVE TO DrillMap class
-    auto inBulb = [&](PrecisionComplex &c) {
-
-        mpf_class ii = c.im * c.im;
-        mpf_class p = c.re - 0.25;
-        mpf_class q = p * p + ii;
-
-        return q * (q + p) < ii * 0.25;
-    };
 
     auto width = opt.drillmap.width;
     auto height = opt.drillmap.height;
@@ -207,15 +189,15 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
     ProgressIndicator progress("Running the area check", width * height);
 
     // Superimpose the drill map with a mesh
-    std::vector<Coord> mesh; map.getMesh(4, 4, mesh);
+    std::vector<Coord> mesh; map.getMesh(8, 8, mesh);
 
     // Test if at least one mesh point belongs to the bulb or the cardioid
     bool hit = false;
     for (const auto &it : mesh) {
 
         auto c = it.translate(opt);
-        hit |= inCardioid(c);
-        hit |= inBulb(c);
+        hit |= c.inCardioid();
+        hit |= c.inMainBulb();
     }
 
     // Collect all drill coordinates
@@ -226,12 +208,12 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
 
                 auto c = Coord(x,y).translate(opt);
 
-                if (inCardioid(c)) {
+                if (c.inCardioid()) {
 
                     map.set(x, y, MapEntry { .result = DR_IN_CARDIOID });
                     continue;
                 }
-                if (inBulb(c)) {
+                if (c.inMainBulb()) {
 
                     map.set(x, y, MapEntry { .result = DR_IN_BULB });
                     continue;

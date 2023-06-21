@@ -129,8 +129,11 @@ public:
     // Measuring
     //
 
+    // Translates a coordinate into a complex number and vice versa
     PrecisionComplex translate(const Coord &coord) const;
     Coord translate(const PrecisionComplex &coord) const;
+
+    // Returns the coordinates of a mesh covering the drill map
     void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints) const;
 
 
