@@ -38,13 +38,17 @@ DrillMap::resize(isize w, isize h, isize d)
     assert(w >= MIN_MAP_WIDTH && w <= MAX_MAP_WIDTH);
     assert(h >= MIN_MAP_HEIGHT && h <= MAX_MAP_HEIGHT);
 
-    if (data) delete [] data;
-    
     width = w;
     height = h;
     depth = d;
 
+    if (data) delete [] data;
     data = new MapEntry[w * h] ();
+
+    mpfPixelDeltaX = mpf_class(4.0) / opt.location.zoom / height;
+    mpfPixelDeltaY = mpfPixelDeltaX;
+    pixelDeltaX = mpfPixelDeltaY;
+    pixelDeltaY = mpfPixelDeltaY;
 
     assert(!hasIterations());
     assert(!hasLogNorms());
@@ -85,8 +89,33 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
     set(c.x, c.y, entry);
 }
 
+PrecisionComplex
+DrillMap::translate(const Coord &coord) const
+{
+    auto center = Coord(width / 2, height / 2);
+
+    // Compute the pixel distance to the center
+    auto dx = mpfPixelDeltaX * (coord.x - center.x);
+    auto dy = mpfPixelDeltaY * (coord.y - center.y);
+
+    return opt.center + PrecisionComplex(dx, dy);
+}
+
+Coord
+DrillMap::translate(const PrecisionComplex &coord) const
+{
+    auto center = Coord(width / 2, height / 2);
+
+    // Compute the distance to the center
+    auto dxy = coord - opt.center;
+    mpf_class dx = dxy.re / mpfPixelDeltaX;
+    mpf_class dy = dxy.re / mpfPixelDeltaX;
+
+    return center + Coord(dx.get_si(), dy.get_si());
+}
+
 void
-DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh)
+DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh) const
 {
     // The coordinate system is superimposed with an equidistant mesh.
     // The density of the mesh is controlled by the 'numx' and 'numy'.

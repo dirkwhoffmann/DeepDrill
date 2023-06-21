@@ -49,15 +49,27 @@ struct Coord {
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
 
-    inline Coord &operator-=(const Coord &other) {
+    inline Coord &operator+=(const Coord &other) {
     
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+    
+    inline Coord operator+(const Coord &other) const {
+        
+        return Coord { (i16)(x + other.x), (i16)(y + other.y) };
+    }
+
+    inline Coord &operator-=(const Coord &other) {
+
         x -= other.x;
         y -= other.y;
         return *this;
     }
-    
+
     inline Coord operator-(const Coord &other) const {
-        
+
         return Coord { (i16)(x - other.x), (i16)(y - other.y) };
     }
 

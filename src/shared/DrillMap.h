@@ -84,7 +84,13 @@ public:
     isize width = 0;
     isize height = 0;
     isize depth = 0;
-    
+
+    // Distance between adjacent pixels
+    mpf_class mpfPixelDeltaX;
+    mpf_class mpfPixelDeltaY;
+    ExtendedDouble pixelDeltaX;
+    ExtendedDouble pixelDeltaY;
+
     // Map data (TODO: Use std::vector<MapEntry>)
     MapEntry *data = nullptr;
 
@@ -118,7 +124,14 @@ public:
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
 
-    void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints);
+
+    //
+    // Measuring
+    //
+
+    PrecisionComplex translate(const Coord &coord) const;
+    Coord translate(const PrecisionComplex &coord) const;
+    void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints) const;
 
 
     //
@@ -132,9 +145,7 @@ public:
     bool hasLogNorms() const;
     bool hasDerivates() const;
     bool hasNormals() const;
-
     void analyze() const;
-
 
 
     //
