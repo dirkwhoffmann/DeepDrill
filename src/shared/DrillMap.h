@@ -92,7 +92,8 @@ public:
     ExtendedDouble pixelDeltaY;
 
     // Map data (TODO: Use std::vector<MapEntry>)
-    MapEntry *data = nullptr;
+    // MapEntry *data = nullptr;
+    std::vector<MapEntry> data;
 
     // Associated color map
     ColorMap colorMap = ColorMap(opt);
@@ -105,7 +106,7 @@ public:
 public:
 
     DrillMap(const Options &opt) : opt(opt) { };
-    ~DrillMap();
+    // ~DrillMap() { };
 
     void resize();
     void resize(isize w, isize h, isize d);
@@ -117,9 +118,12 @@ public:
 
 public:
 
-    MapEntry *operator [] (const isize &) const;
-    MapEntry &get(isize w, isize h) const;
-    MapEntry &get(const struct Coord &c) const;
+    MapEntry *operator [] (const isize &);
+    const MapEntry *operator [] (const isize &) const;
+    MapEntry &get(isize w, isize h);
+    const MapEntry &get(isize w, isize h) const;
+    MapEntry &get(const struct Coord &c);
+    const MapEntry &get(const struct Coord &c) const;
 
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);

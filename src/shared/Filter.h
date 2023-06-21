@@ -19,8 +19,6 @@
 namespace dd {
 
 class Filter {
-
-public: // REMOVE ASAP
     
     // Configuration options
     const struct Options &opt;

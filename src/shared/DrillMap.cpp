@@ -21,11 +21,6 @@
 
 namespace dd {
 
-DrillMap::~DrillMap()
-{
-    delete [] data;
-}
-
 void
 DrillMap::resize()
 {
@@ -42,8 +37,9 @@ DrillMap::resize(isize w, isize h, isize d)
     height = h;
     depth = d;
 
-    if (data) delete [] data;
-    data = new MapEntry[w * h] ();
+    data.resize(w * h);
+    // if (data) delete [] data;
+    // data = new MapEntry[w * h] ();
 
     mpfPixelDeltaX = mpf_class(4.0) / opt.location.zoom / height;
     mpfPixelDeltaY = mpfPixelDeltaX;
@@ -57,20 +53,36 @@ DrillMap::resize(isize w, isize h, isize d)
 }
 
 MapEntry *
+DrillMap::operator [] (const isize &index)
+{
+    return data.data() + (index * width);
+}
+
+const MapEntry *
 DrillMap::operator [] (const isize &index) const
 {
-    assert(index < height);
-    return data + (index * width);
+    return data.data() + (index * width);
 }
 
 MapEntry &
+DrillMap::get(isize w, isize h)
+{
+    return data[h * width + w];
+}
+
+const MapEntry &
 DrillMap::get(isize w, isize h) const
 {
-    assert(data != nullptr && w < width && h < height);
     return data[h * width + w];
 }
 
 MapEntry &
+DrillMap::get(const struct Coord &c)
+{
+    return get(c.x, c.y);
+}
+
+const MapEntry &
 DrillMap::get(const struct Coord &c) const
 {
     return get(c.x, c.y);
@@ -79,7 +91,7 @@ DrillMap::get(const struct Coord &c) const
 void
 DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
-    assert(data != nullptr && w < width && h < height);
+    assert(w < width && h < height);
     data[h * width + w] = entry;
 }
 
