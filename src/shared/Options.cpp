@@ -327,7 +327,7 @@ Options::getRange(const string &key)
 
             } else {
 
-                first = last = std::stol(range.substr(0, pos1));
+                first = last = std::stol(range);
             }
         }
 
