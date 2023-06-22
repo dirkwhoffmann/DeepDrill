@@ -497,7 +497,7 @@ DrillMap::loadHeader(std::istream &is)
     u8 minor;       is >> minor;
     u8 subminor;    is >> subminor;
     u8 beta;        is >> beta;
-    u8 format;      is >> format;
+    u32 format;     is >> format;
 
     // Check check map format
     if (format != MAP_FORMAT) {
@@ -767,7 +767,7 @@ DrillMap::saveHeader(std::ostream &os)
     os << u8(VER_MINOR);
     os << u8(VER_SUBMINOR);
     os << u8(VER_BETA);
-    os << u8(MAP_FORMAT);
+    os << u32(MAP_FORMAT);
 
     // Write map dimensions
     os.write((char *)&width, sizeof(width));

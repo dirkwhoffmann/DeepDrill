@@ -21,7 +21,7 @@
 namespace dd {
 
 void
-Parser::parse(const string &path, std::function<void(string,string)>callback, isize nr)
+Parser::parse(const string &path, Callback callback, isize nr)
 {
     auto name = extractName(path);
     auto fs = std::ifstream(path);
@@ -38,7 +38,7 @@ Parser::parse(const string &path, std::function<void(string,string)>callback, is
 }
 
 void
-Parser::parse(std::ifstream &stream, std::function<void(string,string)>callback, isize nr)
+Parser::parse(std::ifstream &stream, Callback callback, isize nr)
 {
     std::stringstream ss;
     ss << stream.rdbuf();
@@ -47,7 +47,7 @@ Parser::parse(std::ifstream &stream, std::function<void(string,string)>callback,
 }
 
 void
-Parser::parse(std::stringstream &stream, std::function<void(string,string)>callback, isize nr)
+Parser::parse(std::stringstream &stream, Callback callback, isize nr)
 {
     isize line = 0;
     string input;

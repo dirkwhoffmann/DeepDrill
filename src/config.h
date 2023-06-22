@@ -24,7 +24,7 @@
 #define VER_BETA        1
 
 // Mapfile format
-#define MAP_FORMAT      1
+#define MAP_FORMAT      210
 
 // Uncomment this setting in a release build
 // #define RELEASEBUILD
