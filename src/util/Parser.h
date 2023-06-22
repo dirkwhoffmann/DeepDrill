@@ -23,18 +23,19 @@ class Parser {
 
 public:
     
-    static void parse(const string &path, Callback callback, isize nr = 0);
+    static void parse(const fs::path &path, Callback callback, isize nr = 0);
     static void parse(std::ifstream &stream, Callback callback, isize nr = 0);
     static void parse(std::stringstream &stream, Callback callback, isize nr = 0);
 
 private:
 
-    static std::pair<isize, isize> getRange(string &key, bool strip = false);
-    static std::pair<isize, isize> stripRange(string &key) { return getRange(key, true); }
+    static std::pair<isize,isize> getRange(string &key, bool strip = false);
+    static std::pair<isize,isize> stripRange(string &key) { return getRange(key, true); }
 
     static void ltrim(string &s);
     static void rtrim(string &s);
     static void trim(string &s);
+    static void erase(string &s, char c);
     static void tolower(string &s);
 };
 

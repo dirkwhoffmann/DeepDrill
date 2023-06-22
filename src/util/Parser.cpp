@@ -21,13 +21,13 @@
 namespace dd {
 
 void
-Parser::parse(const string &path, Callback callback, isize nr)
+Parser::parse(const fs::path &path, Callback callback, isize nr)
 {
     auto name = extractName(path);
     auto fs = std::ifstream(path);
 
     if (!fs.is_open()) {
-        throw Exception("Failed to open file " + path + ".");
+        throw Exception("Failed to open file " + path.string() + ".");
     }
  
     try { parse(fs, callback, nr); } catch (ParseError &e) {
@@ -63,8 +63,7 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
             input = input.substr(0, input.find("#"));
 
             // Remove white spaces
-            input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
-            // trim(input);
+            erase(input, ' ');
 
             // Ignore empty lines
             if (input == "") continue;
@@ -125,11 +124,12 @@ Parser::getRange(string &key, bool strip)
 
             } else {
 
-                first = last = std::stol(range);
+                first = std::stol(range);
+                last = first;
             }
 
         } catch (...) {
-            throw Exception(key + " is not a valid range.");
+            throw Exception(key + " is not a valid frame range.");
         };
 
         if (strip) {
@@ -160,6 +160,12 @@ Parser::trim(string &s)
 {
     ltrim(s);
     rtrim(s);
+}
+
+void
+Parser::erase(string &s, char c)
+{
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
 }
 
 void
