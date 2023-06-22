@@ -110,7 +110,7 @@ Maker::generateIniFiles()
 
     for (isize nr = 0; nr <= opt.video.keyframes; nr++, zoom *= 2.0) {
 
-        app.readIniFiles(nr);
+        app.readConfigFiles(nr);
         generateIniFile(nr, zoom);
     }
 }

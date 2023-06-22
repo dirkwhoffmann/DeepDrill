@@ -27,7 +27,7 @@ Application::main(int argc, char *argv[])
         log::cout << " - (C)opyright Dirk W. Hoffmann";
         log::cout << log::endl << log::endl;
 
-        // Perform some app specific initialization
+        // Perform app specific initializations
         initialize();
         
         // Parse command line arguments
@@ -65,13 +65,33 @@ Application::main(int argc, char *argv[])
     return 0;
 }
 
+string
+Application::version()
+{
+    auto result = version(VER_MAJOR, VER_MINOR, VER_SUBMINOR, VER_BETA);
+    if (!releaseBuild) result += " [DEBUG BUILD]";
+
+    return result;
+}
+
+string
+Application::version(isize major, isize minor, isize subminor, isize beta)
+{
+    auto result = std::to_string(major) + "." + std::to_string(minor);
+
+    if (subminor) result += "." + std::to_string(subminor);
+    if (beta) result += "b" + std::to_string(beta);
+
+    return result;
+}
+
 void
 Application::configure()
 {
     // Read in all configuration files
-    readIniFiles();
+    readConfigFiles();
 
-    // Use default values for all options that are still undefined
+    // Assign default values to all options that are still undefined
     opt.applyDefaults();
 
     // Setup the GMP library
@@ -84,10 +104,12 @@ Application::configure()
 void
 Application::setupGmp()
 {
-
     isize accuracy = 64;
 
-    // Derive GMP precision from the zoom factor
+    /* Current strategy: The GMP precision is derived from the zoom factor by
+     * adding the exponent of the zoom factor to the default precision. Better
+     * strategies are likely to exist. Any advice is highly appreciated.
+     */
     long exponent = 0;
     mpf_get_d_2exp(&exponent, opt.location.zoom.get_mpf_t());
     accuracy = exponent + 64;
@@ -147,7 +169,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
         }
     }
 
-    // Parse remaining arguments
+    // Parse all remaining arguments
     while (optind < argc) {
 
         string arg = argv[optind++];
@@ -159,7 +181,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
         }
     }
 
-    // Check types
+    // Check file types
     for (const auto &it : opt.files.inputs) {
         if (!isAcceptedInputFormat(AssetManager::getFormat(it))) {
             throw SyntaxError(it.string() + ": Invalid input format");
@@ -173,7 +195,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
 }
 
 void
-Application::readIniFiles(isize keyframe)
+Application::readConfigFiles(isize keyframe)
 {
     auto iniFiles = opt.getInputs(Format::INI);
 
@@ -183,26 +205,6 @@ Application::readIniFiles(isize keyframe)
                       [this](string k, string v) { opt.parse(k, v); },
                       keyframe);
     }
-}
-
-string
-Application::version()
-{
-    auto result = version(VER_MAJOR, VER_MINOR, VER_SUBMINOR, VER_BETA);
-    if (!releaseBuild) result += " [DEBUG BUILD]";
-
-    return result;
-}
-
-string
-Application::version(isize major, isize minor, isize subminor, isize beta)
-{
-    auto result = std::to_string(major) + "." + std::to_string(minor);
-
-    if (subminor) result += "." + std::to_string(subminor);
-    if (beta) result += "b" + std::to_string(beta);
-
-    return result;
 }
 
 }

@@ -120,7 +120,6 @@ AssetManager::findAsset(const fs::path &name) const
         }
     }
 
-    // File not found
     throw FileNotFoundError(name);
 }
 

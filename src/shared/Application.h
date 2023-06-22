@@ -42,7 +42,7 @@ public:
     static string version(isize major, isize minor, isize subminor, isize beta);
 
     // Reads all ini files
-    void readIniFiles(isize keyframe = 0);
+    void readConfigFiles(isize keyframe = 0);
 
 private:
 
@@ -67,14 +67,14 @@ private:
     // Returns the app name
     virtual const char *appName() = 0;
 
-    // Returns the getopt command line parameters
+    // Returns the argument strings required by getopt
     virtual const char *optstring() = 0;
     virtual const struct option *longopts() = 0;
 
     // Prints the command line syntax
     virtual void syntax() = 0;
 
-    // Performs some basic initialization on program launch
+    // Performs all initializations required on program launch
     virtual void initialize() = 0;
 
     // Checks the input and output file formats for validity
@@ -84,7 +84,7 @@ private:
     // Checks all command line arguments for consistency
     virtual void checkArguments() = 0;
 
-    // Main method
+    // Runs the application (main method)
     virtual void run() = 0;
 };
 
