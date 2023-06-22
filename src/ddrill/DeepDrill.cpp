@@ -45,7 +45,7 @@ DeepDrill::longopts() const
 }
 
 void
-DeepDrill::syntax()
+DeepDrill::syntax() const
 {
     log::cout << "Usage: ";
     log::cout << "deepdrill [-bv] [-a <path>] -o <output> [<keyvalue>] <inputs>" << log::endl;

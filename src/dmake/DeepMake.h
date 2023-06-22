@@ -28,7 +28,7 @@ class DeepMake : public Application {
     bool isAcceptedInputFormat(Format format) const { return format == Format::INI; }
     bool isAcceptedOutputFormat(Format format) const { return format == Format::DIR; }
 
-    void syntax();
+    void syntax() const;
     void initialize() { };
     void checkArguments();
     void run();

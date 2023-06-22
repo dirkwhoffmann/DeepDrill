@@ -41,7 +41,7 @@ DeepZoom::longopts() const
 }
 
 void
-DeepZoom::syntax()
+DeepZoom::syntax() const
 {
     log::cout << "Usage: ";
     log::cout << "deepzoom [-bv] [-o <output>] <input>" << log::endl;

@@ -72,7 +72,7 @@ private:
     virtual const struct option *longopts() const = 0;
 
     // Prints the command line syntax
-    virtual void syntax() = 0;
+    virtual void syntax() const = 0;
 
     // Performs all initializations required on program launch
     virtual void initialize() = 0;

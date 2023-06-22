@@ -44,7 +44,7 @@ private:
     bool isAcceptedInputFormat(Format format) const;
     bool isAcceptedOutputFormat(Format format) const;
 
-    void syntax();
+    void syntax() const;
     void initialize() { };
     void checkArguments();
 

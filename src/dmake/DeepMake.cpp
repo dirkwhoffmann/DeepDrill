@@ -40,7 +40,7 @@ DeepMake::longopts() const
 }
 
 void
-DeepMake::syntax()
+DeepMake::syntax() const
 {
     log::cout << "Usage: ";
     log::cout << "deepmake [-v] [-a <path>] -o <output> <inputs>" << log::endl;
