@@ -10,7 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "ReferencePoint.h"
-#include "Options.h"
+#include "DrillMap.h"
 #include "ProgressIndicator.h"
 #include "PrecisionComplex.h"
 #include "StandardComplex.h"
@@ -53,15 +53,15 @@ ReferencePoint::ReferencePoint(const Options &opt, Coord c)
 */
 
 ExtendedComplex
-ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const
+ReferencePoint::deltaLocation(const DrillMap &map, const Coord &other) const
 {
     // Compute the pixel offset
     auto dx = other.x - coord.x;
     auto dy = other.y - coord.y;
         
     // Compute the delta location on the complex plain
-    auto dxc = opt.pixelDeltaX * dx;
-    auto dyc = opt.pixelDeltaY * dy;
+    auto dxc = map.pixelDeltaX * dx;
+    auto dyc = map.pixelDeltaY * dy;
      
     auto result = ExtendedComplex(dxc, dyc);
     result.reduce();
