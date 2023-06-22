@@ -30,20 +30,6 @@ struct Coord {
 
 
     //
-    // Locating
-    //
-
-    static Coord ul(const struct Options &opt);
-    static Coord ur(const struct Options &opt);
-    static Coord ll(const struct Options &opt);
-    static Coord lr(const struct Options &opt);
-    static Coord center(const struct Options &opt);
-
-    // Translates the coordinate to it's location on the complex plane
-    // PrecisionComplex translate(const struct Options &opt) const;
-
-
-    //
     // Calculating
     //
 

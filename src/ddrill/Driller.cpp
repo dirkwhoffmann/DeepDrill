@@ -239,15 +239,12 @@ Driller::pickReference(const std::vector<Coord> &glitches)
 
     if (firstRound) {
 
-        auto coord = Coord::center(opt);
-        // return ReferencePoint(opt, Coord::center(opt));
+        auto coord = Coord(map.width / 2, map.height / 2);
         return ReferencePoint(coord, map.translate(coord));
 
     } else {
         
-        auto index = rand() % glitches.size();
-        auto coord = glitches[index];
-        // return ReferencePoint(opt, glitches[index]);
+        auto coord = glitches[rand() % glitches.size()];
         return ReferencePoint(coord, map.translate(coord));
     }
 }

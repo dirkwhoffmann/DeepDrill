@@ -32,7 +32,7 @@ struct Options {
     // Reference to the asset manager
     const AssetManager &assets;
 
-    // Set to true to abort the computation
+    // Set to true to interrupt the application
     bool stop = false;
 
 
@@ -40,14 +40,14 @@ struct Options {
     // Key-value pairs (unparsed)
     //
 
-    // Keys specified at the command line
-    std::vector<string> overrides;
-
     // Default keys
     std::map<string,string> defaults;
 
-    // User-defined keys
+    // Keys read from configuration files
     std::map<string,string> keys;
+
+    // Keys specified at the command line
+    std::vector<string> overrides;
 
     struct {
 
@@ -64,7 +64,7 @@ struct Options {
         // Full path to the executable
         fs::path exec;
 
-        // Full paths to input and output files
+        // Full paths to the input and output files
         std::vector<fs::path> inputs;
         std::vector<fs::path> outputs;
 
@@ -79,7 +79,7 @@ struct Options {
         // Magnification
         mpf_class zoom;
         
-        // Maximum iterations count
+        // Maximum number of iterations
         isize depth;
 
     } location;
@@ -93,7 +93,7 @@ struct Options {
         // Indicates if a normal map should be computed
         isize depth;
 
-        // Indicates if map files should be compressed before saving
+        // Indicates if map files should be saved in compressed format
         bool compress;
         
     } drillmap;
@@ -104,14 +104,14 @@ struct Options {
         isize width;
         isize height;
 
-        // Indicates if a 3D effect should be applied
+        // Indicates if an illumination effect should be applied
         isize depth;
 
         // Path to the illumination filter
-        string illuminator;
+        fs::path illuminator;
 
-        // Path to the downscaling filter
-        string scaler;
+        // Path to the image downscaling filter
+        fs::path scaler;
 
     } image;
 
@@ -129,8 +129,8 @@ struct Options {
         // Bitrate
         isize bitrate;
 
-        // Path to fragment shaders
-        string scaler;
+        // Path to the video downscaling filter
+        fs::path scaler;
 
     } video;
 
@@ -140,7 +140,7 @@ struct Options {
         ColoringMode mode;
         
         // Path to the palette image
-        string palette;
+        fs::path palette;
 
         // Scaling factor
         double scale;
@@ -153,26 +153,26 @@ struct Options {
     
     struct {
 
-        // Indicates if perturbation should be used
+        // Indicates if perturbation should be utilized
         bool enable;
 
         // Tolerance used for glitch detection
         double tolerance;
 
-        // Fraction of pixels that are allowed to have a wrong color
+        // Fraction of pixels that are allowed to be miscolored
         double badpixels;
 
         // Maximum number of rounds
         isize rounds;
 
-        // Color for glitch points
+        // Color used for glitch points
         Color color;
 
     } perturbation;
     
     struct {
 
-        // Indicates if series approximation should be used
+        // Indicates if series approximation should be utilized
         bool enable;
 
         // Number of coefficients used in series approximation
@@ -185,7 +185,7 @@ struct Options {
 
     struct {
 
-        // Indicates if area checking is enabled
+        // Indicates if area checking should be applied
         bool enable;
 
         // Color used for points with a positive area check
@@ -195,7 +195,7 @@ struct Options {
 
     struct {
 
-        // Indicates if attractor checking is enabled
+        // Indicates if attractor checking should be applied
         bool enable;
 
         // Tolerance for equality checks
@@ -208,7 +208,7 @@ struct Options {
 
     struct {
 
-        // Indicates if period checking is enabled
+        // Indicates if period checking should be applied
         bool enable;
 
         // Tolerance for equality checks

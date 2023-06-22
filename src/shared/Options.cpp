@@ -54,6 +54,18 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
 
+    // Perturbation keys
+    defaults["perturbation.enable"] = "yes";
+    defaults["perturbation.tolerance"] = "1e-6";
+    defaults["perturbation.badpixels"] = "0.001";
+    defaults["perturbation.rounds"] = "50";
+    defaults["perturbation.color"] = "black";
+
+    // Approximation keys
+    defaults["approximation.enable"] = "yes";
+    defaults["approximation.coefficients"] = "5";
+    defaults["approximation.tolerance"] = "1e-12";
+
     // Area checking keys
     defaults["areacheck.enable"] = "yes";
     defaults["areacheck.color"] = "black";
@@ -67,18 +79,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["periodcheck.enable"] = "yes";
     defaults["periodcheck.tolerance"] = "1e-74";
     defaults["periodcheck.color"] = "black";
-
-    // Perturbation keys
-    defaults["perturbation.enable"] = "yes";
-    defaults["perturbation.tolerance"] = "1e-6";
-    defaults["perturbation.badpixels"] = "0.001";
-    defaults["perturbation.rounds"] = "50";
-    defaults["perturbation.color"] = "black";
-
-    // Approximation keys
-    defaults["approximation.enable"] = "yes";
-    defaults["approximation.coefficients"] = "5";
-    defaults["approximation.tolerance"] = "1e-12";
 }
 
 std::vector <fs::path>
