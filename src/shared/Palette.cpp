@@ -22,9 +22,9 @@ Palette::Palette(const Options &opt) : opt(opt)
 {
     static constexpr isize size = 2048;
 
-    r.alloc(size);
-    g.alloc(size);
-    b.alloc(size);
+    r.resize(size);
+    g.resize(size);
+    b.resize(size);
 
     /* Create default palette
      *
@@ -56,9 +56,9 @@ Palette::load(const string &filename)
 
         auto size = img.getSize();
 
-        r.alloc(size.x);
-        g.alloc(size.x);
-        b.alloc(size.x);
+        r.resize(size.x);
+        g.resize(size.x);
+        b.resize(size.x);
 
         for (unsigned x = 0; x < size.x; x++) {
 
@@ -74,7 +74,7 @@ Palette::load(const string &filename)
 u32
 Palette::interpolateABGR(double value)
 {
-    auto size = r.size;
+    auto size = r.size();
 
     auto scaled = value * size / (2 * 3.14159);
     auto frac = fmod(scaled, 1.0);

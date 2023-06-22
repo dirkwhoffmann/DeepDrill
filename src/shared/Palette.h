@@ -13,7 +13,6 @@
 
 #include "config.h"
 #include "Types.h"
-#include "Buffer.h"
 
 namespace dd {
 
@@ -26,9 +25,9 @@ class Palette {
     fs::path path;
 
     // Color values
-    Buffer <double> r;
-    Buffer <double> g;
-    Buffer <double> b;
+    std::vector <double> r;
+    std::vector <double> g;
+    std::vector <double> b;
 
 public:
 
