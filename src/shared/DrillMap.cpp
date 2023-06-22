@@ -37,14 +37,17 @@ DrillMap::resize(isize w, isize h, isize d)
     height = h;
     depth = d;
 
-    data.resize(w * h);
-    // if (data) delete [] data;
-    // data = new MapEntry[w * h] ();
-
+    center = PrecisionComplex(opt.location.real, opt.location.imag);
     mpfPixelDeltaX = mpf_class(4.0) / opt.location.zoom / height;
     mpfPixelDeltaY = mpfPixelDeltaX;
     pixelDeltaX = mpfPixelDeltaY;
     pixelDeltaY = mpfPixelDeltaY;
+
+    ul = translate(Coord());
+    lr = translate(Coord(width - 1, height -1));
+
+    data.resize(w * h);
+    data = { };
 
     assert(!hasIterations());
     assert(!hasLogNorms());
@@ -104,26 +107,26 @@ DrillMap::set(const struct Coord &c, const MapEntry &entry)
 PrecisionComplex
 DrillMap::translate(const Coord &coord) const
 {
-    auto center = Coord(width / 2, height / 2);
+    auto c = Coord(width / 2, height / 2);
 
     // Compute the pixel distance to the center
-    auto dx = mpfPixelDeltaX * (coord.x - center.x);
-    auto dy = mpfPixelDeltaY * (coord.y - center.y);
+    auto dx = mpfPixelDeltaX * (coord.x - c.x);
+    auto dy = mpfPixelDeltaY * (coord.y - c.y);
 
-    return opt.center + PrecisionComplex(dx, dy);
+    return center + PrecisionComplex(dx, dy);
 }
 
 Coord
 DrillMap::translate(const PrecisionComplex &coord) const
 {
-    auto center = Coord(width / 2, height / 2);
+    auto c = Coord(width / 2, height / 2);
 
     // Compute the distance to the center
     auto dxy = coord - opt.center;
     mpf_class dx = dxy.re / mpfPixelDeltaX;
     mpf_class dy = dxy.re / mpfPixelDeltaX;
 
-    return center + Coord(dx.get_si(), dy.get_si());
+    return c + Coord(dx.get_si(), dy.get_si());
 }
 
 void

@@ -32,9 +32,6 @@ struct Options {
     // Reference to the asset manager
     const AssetManager &assets;
 
-    // Number of the currently computed keyframe (for key filtering)
-    [[deprecated]] isize keyframe = 0;
-
     // Set to true to abort the computation
     bool stop = false;
 
@@ -229,10 +226,6 @@ struct Options {
 
     // Center coordinate in precision format
     PrecisionComplex center;
-
-    // Bounding box in precision format
-    PrecisionComplex ul;
-    PrecisionComplex lr;
 
     // Distance between two adjacent pixels
     mpf_class mpfPixelDeltaX;

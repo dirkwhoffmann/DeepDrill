@@ -454,8 +454,6 @@ Options::derive()
 
     // Derive coordinates
     center = PrecisionComplex(location.real, location.imag);
-    ul = Coord::ul(*this).translate(*this);
-    lr = Coord::lr(*this).translate(*this);
 }
 
 }

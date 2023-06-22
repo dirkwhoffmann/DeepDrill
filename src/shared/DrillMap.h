@@ -84,14 +84,20 @@ public:
     isize height = 0;
     isize depth = 0;
 
+    // The center coordinate
+    PrecisionComplex center;
+
+    // Bounding box
+    PrecisionComplex ul;
+    PrecisionComplex lr;
+
     // Distance between adjacent pixels
     mpf_class mpfPixelDeltaX;
     mpf_class mpfPixelDeltaY;
     ExtendedDouble pixelDeltaX;
     ExtendedDouble pixelDeltaY;
 
-    // Map data (TODO: Use std::vector<MapEntry>)
-    // MapEntry *data = nullptr;
+    // Map data
     std::vector<MapEntry> data;
 
     // Associated color map

@@ -16,6 +16,8 @@
 #include "Options.h"
 #include "ProgressIndicator.h"
 
+#include <random>
+
 namespace dd {
 
 Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
@@ -38,19 +40,21 @@ Driller::drill()
     if (opt.flags.verbose) {
 
         assert(opt.center.re.get_prec() == opt.center.im.get_prec());
-        assert(opt.ul.re.get_prec() == opt.ul.im.get_prec());
-        assert(opt.lr.re.get_prec() == opt.lr.im.get_prec());
+
+        assert(map.center.re.get_prec() == map.center.im.get_prec());
+        assert(map.ul.re.get_prec() == map.ul.im.get_prec());
+        assert(map.lr.re.get_prec() == map.lr.im.get_prec());
 
         log::cout << log::vspace;
         log::cout << log::ralign("Center: ");
-        log::cout << (opt.center.re >= 0.0 ? " " : "") << opt.center;
-        log::cout << " (" << opt.center.re.get_prec() << " bit)" << log::endl;
+        log::cout << (map.center.re >= 0.0 ? " " : "") << map.center;
+        log::cout << " (" << map.center.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Upper left: ");
-        log::cout << (opt.ul.re >= 0.0 ? " " : "") << opt.ul;
-        log::cout << " (" << opt.ul.re.get_prec() << " bit)" << log::endl;
+        log::cout << (map.ul.re >= 0.0 ? " " : "") << map.ul;
+        log::cout << " (" << map.ul.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Lower right: ");
-        log::cout << (opt.lr.re >= 0.0 ? " " : "") << opt.lr;
-        log::cout << " (" << opt.lr.re.get_prec() << " bit)" << log::endl;
+        log::cout << (map.lr.re >= 0.0 ? " " : "") << map.lr;
+        log::cout << " (" << map.lr.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Magnification: ");
         log::cout << opt.location.zoom << log::endl;
         log::cout << log::ralign("Drill depth: ");
@@ -195,7 +199,8 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
     bool hit = false;
     for (const auto &it : mesh) {
 
-        auto c = it.translate(opt);
+        // auto c = it.translate(opt);
+        auto c = map.translate(it);
         hit |= c.inCardioid();
         hit |= c.inMainBulb();
     }
@@ -206,7 +211,7 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
 
             if (hit) {
 
-                auto c = Coord(x,y).translate(opt);
+                auto c = map.translate(Coord(x,y));
 
                 if (c.inCardioid()) {
 
@@ -236,12 +241,16 @@ Driller::pickReference(const std::vector<Coord> &glitches)
 
     if (firstRound) {
 
-        return ReferencePoint(opt, Coord::center(opt));
+        auto coord = Coord::center(opt);
+        // return ReferencePoint(opt, Coord::center(opt));
+        return ReferencePoint(coord, map.translate(coord));
 
     } else {
         
         auto index = rand() % glitches.size();
-        return ReferencePoint(opt, glitches[index]);
+        auto coord = glitches[index];
+        // return ReferencePoint(opt, glitches[index]);
+        return ReferencePoint(coord, map.translate(coord));
     }
 }
 

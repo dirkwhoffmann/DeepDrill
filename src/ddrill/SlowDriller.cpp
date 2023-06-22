@@ -48,7 +48,8 @@ SlowDriller::drill(const std::vector<Coord> &remaining)
 void
 SlowDriller::drill(const Coord &point)
 {
-    auto x0 = ExtendedComplex(point.translate(opt));
+    // auto x0 = ExtendedComplex(point.translate(opt));
+    auto x0 = ExtendedComplex(map.translate(point));
     auto xn = x0;
 
     auto d0 = ExtendedComplex(1, 0);

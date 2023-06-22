@@ -38,11 +38,19 @@ ReferenceIteration::ReferenceIteration(PrecisionComplex z, PrecisionComplex dz, 
     this->derivative = dz;
 }
 
+ReferencePoint::ReferencePoint(Coord c, const PrecisionComplex &pc)
+{
+    this->coord = c;
+    this->location = pc;
+}
+
+/*
 ReferencePoint::ReferencePoint(const Options &opt, Coord c)
 {
     this->coord = c;
     this->location = c.translate(opt);
 }
+*/
 
 ExtendedComplex
 ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const

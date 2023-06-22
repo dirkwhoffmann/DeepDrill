@@ -40,7 +40,7 @@ struct Coord {
     static Coord center(const struct Options &opt);
 
     // Translates the coordinate to it's location on the complex plane
-    PrecisionComplex translate(const struct Options &opt) const;
+    // PrecisionComplex translate(const struct Options &opt) const;
 
 
     //

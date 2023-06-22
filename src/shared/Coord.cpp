@@ -44,6 +44,7 @@ Coord::center(const Options &opt)
     return Coord(opt.drillmap.width / 2, opt.drillmap.height / 2);
 }
 
+/*
 PrecisionComplex
 Coord::translate(const Options &opt) const
 {
@@ -55,6 +56,7 @@ Coord::translate(const Options &opt) const
 
     return opt.center + PrecisionComplex(dx, dy);
 }
+*/
 
 std::ostream& operator<<(std::ostream& os, const Coord& value)
 {
