@@ -13,7 +13,6 @@
 
 #include "config.h"
 #include "Types.h"
-#include "Buffer.h"
 #include "StandardComplex.h"
 #include "ColorMap.h"
 #include "Compressor.h"

@@ -15,7 +15,6 @@
 #include "Types.h"
 #include "FFmpeg.h"
 #include "NamedPipe.h"
-// #include "Buffer.h"
 
 #include <SFML/Graphics.hpp>
 

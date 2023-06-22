@@ -14,7 +14,6 @@
 #include "config.h"
 #include "Types.h"
 #include "Options.h"
-// #include "Buffer.h"
 #include "Palette.h"
 #include "Filter.h"
 

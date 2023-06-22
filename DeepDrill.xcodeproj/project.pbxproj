@@ -38,7 +38,6 @@
 		5072FD6D2A271E70003DE341 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 		5072FD6E2A271E72003DE341 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5030F11226A2BCCF009A53B3 /* Logger.cpp */; };
 		5072FD6F2A271E75003DE341 /* ProgressIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6FB269486A900CCDFA8 /* ProgressIndicator.cpp */; };
-		5072FD712A271EE2003DE341 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		5072FD722A271EE4003DE341 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC715269486C200CCDFA8 /* Chrono.cpp */; };
 		5072FD732A271EE7003DE341 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500655E626957C8400982789 /* Parser.cpp */; };
 		5072FD742A271EE9003DE341 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102344269DBEF000AC61A8 /* Exception.cpp */; };
@@ -71,12 +70,10 @@
 		50D69A6A29E037160025DE0D /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6829E037160025DE0D /* FFmpeg.cpp */; };
 		50D69A6D29E03E2C0025DE0D /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6B29E03E2C0025DE0D /* Recorder.cpp */; };
 		50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A6E29E03F940025DE0D /* NamedPipe.cpp */; };
-		50D69A7329E041510025DE0D /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50DA29512A2B583100600EB0 /* DrillMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50102350269EC70200AC61A8 /* DrillMap.cpp */; };
 		50DA29522A2B6EA000600EB0 /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* ColorMap.cpp */; };
 		50DA29592A2CE2B700600EB0 /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DA29572A2CE2B700600EB0 /* Filter.cpp */; };
 		50DA295A2A2CE2B700600EB0 /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DA29572A2CE2B700600EB0 /* Filter.cpp */; };
-		50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D69A7229E041510025DE0D /* Buffer.cpp */; };
 		50EB497326A00C2A0019078C /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497126A00C2A0019078C /* ColorMap.cpp */; };
 		50F8C41029E583D3008A0B4C /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F6269486A900CCDFA8 /* Coord.cpp */; };
 /* End PBXBuildFile section */
@@ -313,8 +310,6 @@
 		50D69A6C29E03E2C0025DE0D /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		50D69A6E29E03F940025DE0D /* NamedPipe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipe.cpp; sourceTree = "<group>"; };
 		50D69A6F29E03F940025DE0D /* NamedPipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipe.h; sourceTree = "<group>"; };
-		50D69A7129E0409E0025DE0D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
-		50D69A7229E041510025DE0D /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
 		50D69A7629E2A4630025DE0D /* seahorse3.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = seahorse3.ini; sourceTree = "<group>"; };
 		50DA29572A2CE2B700600EB0 /* Filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		50DA29582A2CE2B700600EB0 /* Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
@@ -553,8 +548,6 @@
 				50BEC70F269486C100CCDFA8 /* Types.h */,
 				5049969C29DFFC8000B15919 /* Animated.h */,
 				50AE096329FE7E0A005E4D3E /* Animated.cpp */,
-				50D69A7129E0409E0025DE0D /* Buffer.h */,
-				50D69A7229E041510025DE0D /* Buffer.cpp */,
 				50BEC70D269486C100CCDFA8 /* Chrono.h */,
 				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
 				500655E726957C8400982789 /* Parser.h */,
@@ -811,7 +804,6 @@
 				50AE096429FE7E0A005E4D3E /* Animated.cpp in Sources */,
 				5049968B29DED33000B15919 /* Logger.cpp in Sources */,
 				50D69A7029E03F940025DE0D /* NamedPipe.cpp in Sources */,
-				50D69A7329E041510025DE0D /* Buffer.cpp in Sources */,
 				5049968729DED32700B15919 /* Chrono.cpp in Sources */,
 				5049968929DED32B00B15919 /* Exception.cpp in Sources */,
 				5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */,
@@ -851,7 +843,6 @@
 				5072FD672A271E36003DE341 /* Maker.cpp in Sources */,
 				5072FD782A27201C003DE341 /* ExtendedComplex.cpp in Sources */,
 				5072FD7E2A272EF8003DE341 /* Application.cpp in Sources */,
-				5072FD712A271EE2003DE341 /* Buffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -877,7 +868,6 @@
 				50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */,
 				50BEC71D269486C200CCDFA8 /* Chrono.cpp in Sources */,
 				50102346269DBEF000AC61A8 /* Exception.cpp in Sources */,
-				50EB0D4929F055DC00770F31 /* Buffer.cpp in Sources */,
 				50BEC71F269486C200CCDFA8 /* ExtendedComplex.cpp in Sources */,
 				50A09C7B2A3C5BFE00845EE7 /* SlowDriller.cpp in Sources */,
 				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
