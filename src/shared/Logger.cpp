@@ -70,6 +70,13 @@ Logger::operator<<(const string &arg)
 }
 
 Logger&
+Logger::operator<<(const fs::path &arg)
+{
+    *this << arg.string();
+    return *this;
+}
+
+Logger&
 Logger::operator<<(const char &arg)
 {
     if (!silent) {
@@ -206,13 +213,6 @@ Logger&
 Logger::operator<<(const Exception& arg)
 {
     arg.what(*this);
-    return *this;
-}
-
-Logger&
-Logger::operator<<(const fs::path &arg)
-{
-    *this << arg.string();
     return *this;
 }
 

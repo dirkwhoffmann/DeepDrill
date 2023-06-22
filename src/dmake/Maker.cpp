@@ -21,7 +21,6 @@ namespace dd {
 
 Maker::Maker(Application &app, Options &opt) : app(app), opt(opt)
 {
-    project = stripSuffix(stripPath(opt.files.inputs.front()));
     projectDir = opt.files.outputs.front();
 }
 
@@ -331,7 +330,7 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'clean' target
     os << "clean:" << std::endl;
-    os << "\t" << "rm *.mov *.map *.jpg *.log" << std::endl;
+    os << "\t" << "@rm *.mov *.map *.jpg *.log" << std::endl;
     os << std::endl;
 }
 

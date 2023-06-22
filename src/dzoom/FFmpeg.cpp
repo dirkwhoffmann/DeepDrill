@@ -14,14 +14,14 @@
 
 namespace dd {
 
-std::vector<string> FFmpeg::paths;
-string FFmpeg::exec;
+std::vector<fs::path> FFmpeg::paths;
+fs::path FFmpeg::exec;
 
 void
 FFmpeg::init()
 {
-    auto add = [&](const string &path) {
-        if (getSizeOfFile(path) > 0 && !FORCE_NO_FFMPEG) {
+    auto add = [&](const fs::path &path) {
+        if (fs::exists(path) && !FORCE_NO_FFMPEG) {
             paths.push_back(path);
         }
     };
@@ -61,7 +61,7 @@ FFmpeg::setExecPath(const string &path)
 bool
 FFmpeg::available()
 {
-    return getSizeOfFile(exec) > 0;
+    return fs::exists(exec);
 }
 
 bool

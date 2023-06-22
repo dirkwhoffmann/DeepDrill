@@ -35,58 +35,31 @@ string lowercased(const string& s);
 string uppercased(const string& s);
 
 // Extracts a certain component from a path
-string extractPath(const string &path);
-string extractName(const string &path);
-string extractSuffix(const string &path);
+// string extractPath(const string &path);
+// string extractName(const string &path);
+// string extractSuffix(const string &path);
 
 // Strips a certain component from a path
-string stripPath(const string &path);
-string stripName(const string &path);
-string stripSuffix(const string &path);
-
-// Concatenates two path segments
-string appendPath(const string &path, const string &path2);
-
-// Checks if a string starts with '/'
-bool isAbsolutePath(const string &path);
-string makeAbsolutePath(const string &path);
+// string stripPath(const string &path);
+// string stripName(const string &path);
+// string stripSuffix(const string &path);
 
 // Joins a vector of strings
 string join(const std::vector<string> &v, const string &delim1);
 string join(const std::vector<string> &v, const string &delim1, const string &delim2);
 
 // Counts files in a directory
-isize countFiles(const string &suffix);
-isize countFiles(const fs::path &path, const string &suffix);
+isize countFiles(const fs::path &suffix);
+isize countFiles(const fs::path &path, const fs::path &suffix);
 
 
 //
 // Handling files
 //
 
-// Returns the size of a file in bytes
-isize getSizeOfFile(const string &path);
-
-// Checks if a file exists
-bool fileExists(const string &path);
-
-// Checks if a path points to a directory
-bool isDirectory(const string &path);
-
-// Returns the number of files in a directory
-isize numDirectoryItems(const string &path);
-
-// Returns a list of files in a directory
-std::vector<string> files(const string &path, const string &suffix = "");
-std::vector<string> files(const string &path, std::vector<string> &suffixes);
-
 // Checks the header signature (magic bytes) of a stream or buffer
 bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len);
-
-// Loads a file
-bool loadFile(const string &path, u8 **bufptr, isize *size);
-bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size);
 
 // Compares two files
 bool compareFiles(const fs::path &path1, const fs::path &path2);
@@ -95,8 +68,6 @@ bool compareFiles(const fs::path &path1, const fs::path &path2);
 //
 // Handling streams
 //
-
-isize streamLength(std::istream &stream);
 
 struct dec {
     

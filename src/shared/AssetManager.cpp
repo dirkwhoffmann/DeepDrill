@@ -38,18 +38,18 @@ AssetManager::addSearchPath(const fs::path &path)
 
 
 Format
-AssetManager::getFormat(const string &path) {
+AssetManager::getFormat(const fs::path &path) {
 
-    auto suffix = extractSuffix(path);
+    auto ext = path.extension();
 
-    if (suffix == "bmp") return Format::BMP;
-    if (suffix == "glsl") return Format::GLSL;
-    if (suffix == "ini") return Format::INI;
-    if (suffix == "jpg") return Format::JPG;
-    if (suffix == "map") return Format::MAP;
-    if (suffix == "mpg" || suffix == "mov") return Format::MPG;
-    if (suffix == "png") return Format::PNG;
-    if (isDirectory(path)) return Format::DIR;
+    if (ext == ".bmp") return Format::BMP;
+    if (ext == ".glsl") return Format::GLSL;
+    if (ext == ".ini") return Format::INI;
+    if (ext == ".jpg") return Format::JPG;
+    if (ext == ".map") return Format::MAP;
+    if (ext == ".mpg" || ext == ".mov") return Format::MPG;
+    if (ext == ".png") return Format::PNG;
+    if (fs::is_directory(path)) return Format::DIR;
 
     return Format::NONE;
 }
@@ -112,11 +112,11 @@ AssetManager::findAsset(const fs::path &name) const
     if (name != "") {
 
         // Search the file at the specified path
-        if (fileExists(name)) return name;
+        if (fs::exists(name)) return name;
 
         // Search the file in the assets directories
         for (const auto &it : paths) {
-            if (fileExists(it / name)) return it / name;
+            if (fs::exists(it / name)) return it / name;
         }
     }
 

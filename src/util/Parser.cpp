@@ -23,7 +23,6 @@ namespace dd {
 void
 Parser::parse(const fs::path &path, Callback callback, isize nr)
 {
-    auto name = extractName(path);
     auto fs = std::ifstream(path);
 
     if (!fs.is_open()) {
@@ -32,7 +31,7 @@ Parser::parse(const fs::path &path, Callback callback, isize nr)
  
     try { parse(fs, callback, nr); } catch (ParseError &e) {
 
-        e.file = name;
+        e.path = path.filename();
         throw;
     }
 }

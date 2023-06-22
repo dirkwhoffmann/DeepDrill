@@ -36,7 +36,7 @@ public:
     static fs::path imgFile(isize i) { return rawFile(i).string() + ".jpg"; }
 
     // File formats
-    static Format getFormat(const string &path);
+    static Format getFormat(const fs::path &path);
     static void assureFormat(const fs::path &name, Format format);
     static void assureFormat(const fs::path &name, std::vector<Format> formats);
     static bool isImageFormat(Format format);

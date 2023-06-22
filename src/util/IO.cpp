@@ -30,6 +30,7 @@ string uppercased(const string& s)
     return result;
 }
 
+/*
 string extractPath(const string &s)
 {
     auto idx = s.rfind('/');
@@ -77,31 +78,7 @@ string stripSuffix(const string &s)
     auto len = idx != string::npos ? idx : string::npos;
     return s.substr(pos, len);
 }
-
-string appendPath(const string &path, const string &path2)
-{
-    if (path.empty()) {
-        return path2;
-    }
-    if (path.back() == '/') {
-        return path + path2;
-    }
-    return path + "/" + path2;
-}
-
-bool isAbsolutePath(const string &path)
-{
-    return !path.empty() && path.front() == '/';
-}
-
-string makeAbsolutePath(const string &path)
-{
-    if (isAbsolutePath(path)) {
-        return path;
-    } else {
-        return appendPath(fs::current_path().string(), path);
-    }
-}
+*/
 
 string join(const std::vector<string> &v, const string &delim1)
 {
@@ -130,95 +107,23 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
     return result;
 }
 
-isize countFiles(const string &suffix)
+isize countFiles(const fs::path &suffix)
 {
     return countFiles(fs::current_path(), suffix);
 }
 
-isize countFiles(const fs::path &path, const string &suffix)
+isize countFiles(const fs::path &path, const fs::path &suffix)
 {
     isize count = 0;
 
     for (const auto &file : fs::directory_iterator(path)) {
 
-        auto name = file.path().string();
-        if(name.substr(name.find_last_of(".") + 1) == suffix) {
+        if (file.path().extension() == suffix) {
             count++;
         }
     }
 
     return count;
-}
-
-bool fileExists(const string &path)
-{
-    return getSizeOfFile(path) >= 0;
-}
-
-bool isDirectory(const string &path)
-{
-    struct stat fileProperties;
-    
-    if (stat(path.c_str(), &fileProperties) != 0)
-        return false;
-    
-    return S_ISDIR(fileProperties.st_mode);
-}
-
-isize numDirectoryItems(const string &path)
-{
-    isize count = 0;
-    
-    if (DIR *dir = opendir(path.c_str())) {
-        
-        struct dirent *dp;
-        while ((dp = readdir(dir))) {
-            if (dp->d_name[0] != '.') count++;
-        }
-    }
-    
-    return count;
-}
-
-std::vector<string>
-files(const string &path, const string &suffix)
-{
-    std::vector<string> suffixes;
-    if (suffix != "") suffixes.push_back(suffix);
-
-    return files(path, suffixes);
-}
-
-std::vector<string> files(const string &path, std::vector<string> &suffixes)
-{
-    std::vector<string> result;
-    
-    if (DIR *dir = opendir(path.c_str())) {
-        
-        struct dirent *dp;
-        while ((dp = readdir(dir))) {
-            
-            string name = dp->d_name;
-            string suffix = lowercased(extractSuffix(name));
-            
-            if (std::find(suffixes.begin(), suffixes.end(), suffix) != suffixes.end()) {
-                result.push_back(name);
-            }
-        }
-    }
-    
-    return result;
-}
-
-isize
-getSizeOfFile(const string &path)
-{
-    struct stat fileProperties;
-        
-    if (stat(path.c_str(), &fileProperties) != 0)
-        return -1;
-    
-    return (isize)fileProperties.st_size;
 }
 
 bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len)
@@ -250,27 +155,6 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, isize len)
     return true;
 }
 
-bool loadFile(const string &path, u8 **bufptr, isize *size)
-{
-    assert(bufptr); assert(size);
-
-    std::ifstream stream(path);
-    if (!stream.is_open()) return false;
-    
-    usize len = streamLength(stream);
-    u8 *buf = new u8[len];
-    stream.read((char *)buf, len);
-    
-    *bufptr = buf;
-    *size = len;
-    return true;
-}
-
-bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size)
-{
-    return loadFile(path + "/" + name, bufptr, size);
-}
-
 bool compareFiles(const fs::path &path1, const fs::path &path2)
 {
     std::ifstream stream1(path1, std::ifstream::binary|std::ifstream::ate);
@@ -289,19 +173,6 @@ bool compareFiles(const fs::path &path1, const fs::path &path2)
     return std::equal(std::istreambuf_iterator<char>(stream1.rdbuf()),
                       std::istreambuf_iterator<char>(),
                       std::istreambuf_iterator<char>(stream2.rdbuf()));
-}
-
-isize
-streamLength(std::istream &stream)
-{
-    auto cur = stream.tellg();
-    stream.seekg(0, std::ios::beg);
-    auto beg = stream.tellg();
-    stream.seekg(0, std::ios::end);
-    auto end = stream.tellg();
-    stream.seekg(cur, std::ios::beg);
-    
-    return (isize)(end - beg);
 }
 
 std::ostream &

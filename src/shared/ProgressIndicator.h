@@ -51,14 +51,14 @@ private:
 class BatchProgressIndicator {
 
     string msg;
-    string file;
+    fs::path path;
 
     // Stop watch
     Clock clock;
 
 public:
 
-    BatchProgressIndicator(const struct Options &opt, const string &msg, const string &file);
+    BatchProgressIndicator(const struct Options &opt, const string &msg, const fs::path &path);
     ~BatchProgressIndicator();
 
 private:

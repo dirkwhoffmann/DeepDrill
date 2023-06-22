@@ -106,7 +106,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
     opterr = 0;
 
     // Remember the path to the DeppDrill executable
-    opt.files.exec = makeAbsolutePath(argv[0]);
+    opt.files.exec = fs::absolute(argv[0]);
 
     // Parse all options
     while (1) {

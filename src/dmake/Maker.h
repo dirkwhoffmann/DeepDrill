@@ -26,9 +26,6 @@ class Maker {
     // Configuration options
     struct Options &opt;
 
-    // Name of the project
-    string project;
-
     // Path to the project directory
     fs::path projectDir;
 

@@ -93,6 +93,7 @@ public:
     Logger& operator<<(const log::Bold &arg) {  *this << "\033[1m"; return *this; }
     Logger& operator<<(const log::Light &arg) { *this << "\033[0m"; return *this; }
     Logger& operator<<(const string &arg);
+    Logger& operator<<(const fs::path &arg);
     Logger& operator<<(const char &arg);
     Logger& operator<<(const char *arg);
     Logger& operator<<(const bool &arg);
@@ -106,7 +107,6 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
-    Logger& operator<<(const fs::path &arg);
 };
 
 // Default logger (writes to stdout)

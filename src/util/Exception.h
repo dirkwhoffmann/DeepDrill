@@ -69,12 +69,12 @@ struct ParseError : Exception {
     isize line;
 
     // File in which the error occurred
-    string file;
+    fs::path path;
 
     ParseError(const Exception &exception, isize line) :
-    exception(exception), line(line), file("") { }
-    ParseError(const Exception &exception,  isize line, const string &file) :
-    exception(exception), line(line), file(file) { }
+    exception(exception), line(line), path("") { }
+    ParseError(const Exception &exception,  isize line, const fs::path &path) :
+    exception(exception), line(line), path(path) { }
 
     void what(const class Logger &logger) const override;
 };
