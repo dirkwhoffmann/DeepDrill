@@ -15,7 +15,7 @@
 #include "Types.h"
 #include "FFmpeg.h"
 #include "NamedPipe.h"
-#include "Buffer.h"
+// #include "Buffer.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -43,7 +43,7 @@ class Recorder {
     //
     
     // Temporary data storage
-    Buffer<u32> videoData;
+    std::vector <u32> videoData;
 
 
     //

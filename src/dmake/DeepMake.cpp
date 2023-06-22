@@ -45,11 +45,10 @@ void
 DeepMake::syntax()
 {
     log::cout << "Usage: ";
-    log::cout << "deepmake [-v] [-a <path>] [-p <profile>] -o <output> <input>" << log::endl;
+    log::cout << "deepmake [-v] [-a <path>] -o <output> <inputs>" << log::endl;
     log::cout << log::endl;
     log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
-    log::cout << "       -p or --profile   Customize settings" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;
 }
 
@@ -70,23 +69,24 @@ DeepMake::run()
     // Determine the number of computed files
     auto numFiles = opt.video.keyframes + 3;
 
-    // Ask for permisson
-    log::cout << numFiles << " files will be created. Do you want to proceed [yn]? ";
+    auto askForPermission = [&numFiles]() {
 
-    while (1) {
+        while (1) {
 
-        string s; std::getline(std::cin, s);
+            log::cout << numFiles << " files will be created. Do you want to proceed [y]? ";
 
-        if (s == "y" || s == "yes") break;
-        if (s == "n" || s == "no") return;
+            string s; std::getline(std::cin, s);
 
-        std::cout << '\a';
-    }
+            if (s == "y" || s == "yes" || s == "") return true;
+            if (s == "n" || s == "no") return false;
 
-    log::cout << log::endl;
+            std::cout << '\a';
+        }
+    };
 
+    auto permission = askForPermission();
     stopWatch.restart();
-    Maker(*this, opt).generate();
+    if (permission) Maker(*this, opt).generate();
 }
 
 }

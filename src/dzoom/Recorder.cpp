@@ -32,7 +32,7 @@ Recorder::startRecording()
     }
 
     // Create temporary buffers
-    videoData.alloc(opt.image.width * opt.image.height);
+    videoData.resize(opt.image.width * opt.image.height);
 
     //
     // Assemble the command line arguments for the video encoder
@@ -123,12 +123,12 @@ Recorder::record(const sf::Image &img)
     isize length = sizeof(u32) * opt.image.width * opt.image.height;
 
     u8 *src = (u8 *)img.getPixelsPtr();
-    u8 *dst = (u8 *)videoData.ptr;
+    u8 *dst = (u8 *)videoData.data();
 
     std::memcpy(dst, src, length);
 
     // Feed the video pipe
-    isize written = videoPipe.write((u8 *)videoData.ptr, length);
+    isize written = videoPipe.write((u8 *)videoData.data(), length);
 
     if (written != length) {
         throw Exception("FFmpeg: Failed to write frame\n");

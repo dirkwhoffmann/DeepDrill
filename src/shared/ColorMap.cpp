@@ -24,11 +24,6 @@
 
 namespace dd {
 
-ColorMap::~ColorMap()
-{
-
-}
-
 void
 ColorMap::resize(isize w, isize h)
 {
@@ -139,8 +134,8 @@ ColorMap::compute(const DrillMap &map)
         progress.step(map.width);
     }
 
-    colorMapTex.update((u8 *)colorMap.ptr);
-    normalMapTex.update((u8 *)normalMap.ptr);
+    colorMapTex.update((u8 *)colorMap.data());
+    normalMapTex.update((u8 *)normalMap.data());
 
     progress.done();
 

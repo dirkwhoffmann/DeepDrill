@@ -195,16 +195,12 @@ Zoomer::record()
 bool
 Zoomer::loadMapFile(isize nr)
 {
-    fs::path input = opt.files.inputs.front();
-    fs::path path = input.parent_path() / input.stem();
-    string mapFile = path.string() + "_" + std::to_string(nr) + ".map";
+    fs::path path = opt.files.inputs.front();
+    fs::path file = path / AssetManager::mapFile(nr);
 
-    {   // SILENT
+    drillMap[nr % 3].load(file);
+    drillMap[nr % 3].colorize();
 
-        drillMap[nr % 3].load(mapFile);
-        drillMap[nr % 3].colorize();
-    }
-    
     return true;
 }
 

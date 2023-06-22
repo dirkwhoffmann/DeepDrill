@@ -84,7 +84,7 @@ Maker::generateProjectFile()
 {
     ProgressIndicator progress("Generating zoomer ini file");
 
-    auto temp = fs::temp_directory_path() / iniFile();
+    auto temp = fs::temp_directory_path() / AssetManager::iniFile();
 
     // Open output stream
     std::ofstream os(temp);
@@ -99,7 +99,7 @@ Maker::generateProjectFile()
     writeColorsSection(os);
     writeVideoSection(os);
 
-    copy(temp, projectDir / iniFile());
+    copy(temp, projectDir / AssetManager::iniFile());
 }
 
 void
@@ -124,7 +124,7 @@ Maker::generateIniFile(isize nr, const mpf_class &zoom)
     opt.keys["location.zoom"] = ss.str();
 
     // Assemble path name
-    auto temp = fs::temp_directory_path() / iniFile(nr);
+    auto temp = fs::temp_directory_path() / AssetManager::iniFile(nr);
 
     // Open output stream
     std::ofstream os(temp);
@@ -144,7 +144,7 @@ Maker::generateIniFile(isize nr, const mpf_class &zoom)
     writePeriodcheckSection(os);
     writeAttractorcheckSection(os);
 
-    copy(temp, projectDir / iniFile(nr));
+    copy(temp, projectDir / AssetManager::iniFile(nr));
 }
 
 void
@@ -293,7 +293,7 @@ Maker::writeDefinitions(std::ofstream &os)
     os << "DEEPDRILL  = " << (path / "deepdrill").string() << std::endl;
     os << "DEEPZOOM   = " << (path / "deepzoom").string() << std::endl;
     os << "MAPS       = $(patsubst %.ini,%.map,$(wildcard *_*.ini))" << std::endl;
-    os << "VIDEO      = " << movFile().string() << std::endl;
+    os << "VIDEO      = " << AssetManager::movFile().string() << std::endl;
     os << std::endl;
 }
 
@@ -325,7 +325,7 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
-    os << "\t" << "@$(DEEPZOOM) " << iniFile();
+    os << "\t" << "@$(DEEPZOOM) " << AssetManager::iniFile();
     os << " -o $(VIDEO)" << std::endl;
     os << std::endl;
 

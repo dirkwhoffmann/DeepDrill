@@ -27,6 +27,15 @@ class AssetManager {
 
 public:
 
+    // Filenames
+    static fs::path iniFile() { return "deepzoom.ini"; }
+    static fs::path movFile() { return "deepzoom.mov"; }
+    static fs::path rawFile(isize i) { return "keyframe_" + std::to_string(i); }
+    static fs::path iniFile(isize i) { return rawFile(i).string() + ".ini"; }
+    static fs::path mapFile(isize i) { return rawFile(i).string() + ".map"; }
+    static fs::path imgFile(isize i) { return rawFile(i).string() + ".jpg"; }
+
+    // File formats
     static Format getFormat(const string &path);
     static void assureFormat(const fs::path &name, Format format);
     static void assureFormat(const fs::path &name, std::vector<Format> formats);
