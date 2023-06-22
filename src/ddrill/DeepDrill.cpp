@@ -16,8 +16,6 @@
 #include "ProgressIndicator.h"
 #include "Compressor.h"
 
-// #include <getopt.h>
-
 int main(int argc, char *argv[])
 {
     return dd::DeepDrill().main(argc, argv);
@@ -26,13 +24,13 @@ int main(int argc, char *argv[])
 namespace dd {
 
 const char *
-DeepDrill::optstring()
+DeepDrill::optstring() const
 {
     return ":vba:o:";
 }
 
 const option *
-DeepDrill::longopts()
+DeepDrill::longopts() const
 {
     static struct option long_options[] = {
 
@@ -57,12 +55,6 @@ DeepDrill::syntax()
     log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
     log::cout << "       -o or --output    Output file" << log::endl;
 }
-
-void
-DeepDrill::initialize()
-{
-
-};
 
 bool
 DeepDrill::isAcceptedInputFormat(Format format) const

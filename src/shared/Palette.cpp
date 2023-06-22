@@ -46,13 +46,13 @@ Palette::Palette(const Options &opt) : opt(opt)
 }
 
 void
-Palette::load(const string &filename)
+Palette::load(const fs::path &path)
 {
     sf::Image img;
 
-    path = filename;
+    imagePath = path;
     
-    if (path != "" && img.loadFromFile(path)) {
+    if (imagePath != "" && img.loadFromFile(imagePath)) {
 
         auto size = img.getSize();
 

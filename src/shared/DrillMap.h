@@ -54,6 +54,7 @@ enum ChannelID {
 
 struct MapEntry {
 
+    // Drill outcome
     DrillResult result;
 
     // First executed iteration
@@ -79,7 +80,7 @@ public:
     // Configuration options
     const struct Options &opt;
 
-    // Resolution
+    // Map resolution
     isize width = 0;
     isize height = 0;
     isize depth = 0;
@@ -111,7 +112,6 @@ public:
 public:
 
     DrillMap(const Options &opt) : opt(opt) { };
-    // ~DrillMap() { };
 
     void resize();
     void resize(isize w, isize h, isize d);
@@ -134,12 +134,18 @@ public:
 
 
     //
-    // Measuring
+    // Locating
     //
 
     // Translates a coordinate into a complex number and vice versa
     PrecisionComplex translate(const Coord &coord) const;
     Coord translate(const PrecisionComplex &coord) const;
+
+    // Computes the distance of coordinate from another coordinate
+    ExtendedComplex distance(const Coord &coord, const Coord &other) const;
+
+    // Computes the distance from the center
+    ExtendedComplex distance(const Coord &coord) const;
 
     // Returns the coordinates of a mesh covering the drill map
     void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints) const;
@@ -183,10 +189,10 @@ private:
     void loadHeader(std::istream &is);
     void loadChannel(Compressor &is);
     template<ChannelFormat fmt, typename T> void load(Compressor &is, T &raw);
-    template<ChannelFormat fmt> void load(Compressor &is, u32 &raw) { load <fmt, u32> (is, raw); }
-    template<ChannelFormat fmt> void load(Compressor &is, u64 &raw) { load <fmt, u64> (is, raw); }
-    template<ChannelFormat fmt> void load(Compressor &is, float &raw) { load <fmt, float> (is, raw); }
-    template<ChannelFormat fmt> void load(Compressor &is, double &raw) { load <fmt, double> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, u32 &raw) { load <fmt,u32> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, u64 &raw) { load <fmt,u64> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, float &raw) { load <fmt,float> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, double &raw) { load <fmt,double> (is, raw); }
 
     
     //
@@ -203,10 +209,10 @@ private:
     void saveHeader(std::ostream &os);
     void saveChannel(Compressor &os, ChannelID id);
     template<ChannelFormat fmt, typename T> void save(Compressor &os, T raw);
-    template<ChannelFormat fmt> void save(Compressor &os, u32 raw) { save <fmt, u32> (os, raw); }
-    template<ChannelFormat fmt> void save(Compressor &os, u64 raw) { save <fmt, u64> (os, raw); }
-    template<ChannelFormat fmt> void save(Compressor &os, float raw) { save <fmt, float> (os, raw); }
-    template<ChannelFormat fmt> void save(Compressor &os, double raw) { save <fmt, double> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, u32 raw) { save <fmt,u32> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, u64 raw) { save <fmt,u64> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, float raw) { save <fmt,float> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, double raw) { save <fmt,double> (os, raw); }
 };
 
 }

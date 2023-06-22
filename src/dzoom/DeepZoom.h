@@ -22,9 +22,9 @@ class DeepZoom : public Application {
     // Methods from Application
     //
 
-    const char *appName() { return "DeepZoom"; }
-    const char *optstring();
-    const option *longopts();
+    const char *appName() const { return "DeepZoom"; }
+    const char *optstring() const;
+    const option *longopts() const;
     bool isAcceptedInputFormat(Format format) const;
     bool isAcceptedOutputFormat(Format format) const;
 

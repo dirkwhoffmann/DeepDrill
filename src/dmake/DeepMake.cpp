@@ -12,8 +12,6 @@
 #include "DeepMake.h"
 #include "Maker.h"
 
-// #include <getopt.h>
-
 int main(int argc, char *argv[])
 {
     return dd::DeepMake().main(argc, argv);
@@ -22,13 +20,13 @@ int main(int argc, char *argv[])
 namespace dd {
 
 const char *
-DeepMake::optstring()
+DeepMake::optstring() const
 {
     return ":va:o:";
 }
 
 const option *
-DeepMake::longopts()
+DeepMake::longopts() const
 {
     static struct option long_options[] = {
 

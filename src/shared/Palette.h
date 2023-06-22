@@ -22,7 +22,7 @@ class Palette {
     const struct Options &opt;
 
     // Path to the palette image
-    fs::path path;
+    fs::path imagePath;
 
     // Color values
     std::vector <double> r;
@@ -33,8 +33,8 @@ public:
 
     Palette(const Options &options);
 
-    const fs::path &getPath() { return path; }
-    void load(const string &filename);
+    const fs::path &getPath() { return imagePath; }
+    void load(const fs::path &path);
     u32 interpolateABGR(double value);
 };
 

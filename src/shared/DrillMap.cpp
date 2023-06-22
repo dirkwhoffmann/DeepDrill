@@ -129,6 +129,29 @@ DrillMap::translate(const PrecisionComplex &coord) const
     return c + Coord(dx.get_si(), dy.get_si());
 }
 
+ExtendedComplex
+DrillMap::distance(const Coord &coord, const Coord &other) const
+{
+    // Compute the pixel offset
+    auto dx = coord.x - other.x;
+    auto dy = coord.y - other.y;
+
+    // Compute the delta location on the complex plain
+    auto dxc = pixelDeltaX * dx;
+    auto dyc = pixelDeltaY * dy;
+
+    auto result = ExtendedComplex(dxc, dyc);
+    result.reduce();
+
+    return result;
+}
+
+ExtendedComplex
+DrillMap::distance(const Coord &coord) const
+{
+    return distance(coord, Coord(width / 2, height / 2));
+}
+
 void
 DrillMap::getMesh(isize numx, isize numy, std::vector<Coord> &mesh) const
 {
@@ -458,7 +481,6 @@ DrillMap::load(std::istream &is)
         ProgressIndicator progress2("Uncompressing map file");
         compressor.uncompressData();
     }
-
 
     // Extract all channels
     ProgressIndicator progress3("Extracting channels");

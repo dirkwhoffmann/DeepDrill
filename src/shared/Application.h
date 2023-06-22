@@ -26,7 +26,7 @@ protected:
     // Asset manager
     AssetManager assets;
 
-    // Config options
+    // Configuration options
     Options opt = Options(assets);
 
     // Stop watch for measuring the total execution time
@@ -65,11 +65,11 @@ protected:
 private:
     
     // Returns the app name
-    virtual const char *appName() = 0;
+    virtual const char *appName() const = 0;
 
     // Returns the argument strings required by getopt
-    virtual const char *optstring() = 0;
-    virtual const struct option *longopts() = 0;
+    virtual const char *optstring() const = 0;
+    virtual const struct option *longopts() const = 0;
 
     // Prints the command line syntax
     virtual void syntax() = 0;

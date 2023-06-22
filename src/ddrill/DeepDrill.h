@@ -38,14 +38,14 @@ public:
 
 private:
 
-    const char *appName() { return "DeepDrill"; }
-    const char *optstring();
-    const option *longopts();
+    const char *appName() const { return "DeepDrill"; }
+    const char *optstring() const;
+    const option *longopts() const;
     bool isAcceptedInputFormat(Format format) const;
     bool isAcceptedOutputFormat(Format format) const;
 
     void syntax();
-    void initialize();
+    void initialize() { };
     void checkArguments();
 
 

@@ -13,12 +13,9 @@
 
 #include "config.h"
 #include "Types.h"
-#include <fcntl.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <sys/stat.h>
-#include <unistd.h>
 
 namespace dd {
 

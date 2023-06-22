@@ -17,17 +17,14 @@
 namespace dd {
 
 class DeepMake : public Application {
-
-    isize maxKeyframes = LONG_MAX;
-
     
     //
     // Methods from Application
     //
 
-    const char *appName() { return "DeepMake"; }
-    const char *optstring();
-    const option *longopts();
+    const char *appName() const { return "DeepMake"; }
+    const char *optstring() const;
+    const option *longopts() const;
     bool isAcceptedInputFormat(Format format) const { return format == Format::INI; }
     bool isAcceptedOutputFormat(Format format) const { return format == Format::DIR; }
 

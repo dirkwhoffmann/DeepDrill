@@ -69,13 +69,14 @@ class Logger {
     isize blanks = 0;
     
     // Indicates if all output should be omitted
-    bool silent = false;
+    int muted = 0;
 
 public:
 
     Logger(std::ostream &stream) : stream(stream) { };
 
-    void setSilent(bool value) { silent = value; }
+    void mute() { muted++; }
+    void unmute() { muted--; }
     
     Logger& operator<<(const log::Endl &arg);
     Logger& operator<<(const log::VSpace &arg);
@@ -112,20 +113,4 @@ public:
 // Default logger (writes to stdout)
 namespace log { extern class Logger cout; }
 
-class Silence
-{
-    Logger &logger;
-    bool silent;
-
-public:
-    
-    Silence(Logger &logger) : logger(logger), silent(logger.silent) {
-        logger.setSilent(true);
-    }
-    ~Silence() {
-        logger.setSilent(silent);
-    }
-};
-
-#define SILENT Silence s(log::cout);
 }

@@ -84,7 +84,7 @@ private:
 
 
     //
-    // Drilling points with perturbation and series approximation
+    // Drilling points
     //
 
 private:

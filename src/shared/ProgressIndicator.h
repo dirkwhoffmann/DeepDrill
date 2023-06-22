@@ -52,8 +52,6 @@ class BatchProgressIndicator {
 
     string msg;
     fs::path path;
-
-    // Stop watch
     Clock clock;
 
 public:

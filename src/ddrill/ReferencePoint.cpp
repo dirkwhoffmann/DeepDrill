@@ -44,21 +44,4 @@ ReferencePoint::ReferencePoint(Coord c, const PrecisionComplex &pc)
     this->location = pc;
 }
 
-ExtendedComplex
-ReferencePoint::deltaLocation(const DrillMap &map, const Coord &other) const
-{
-    // Compute the pixel offset
-    auto dx = other.x - coord.x;
-    auto dy = other.y - coord.y;
-        
-    // Compute the delta location on the complex plain
-    auto dxc = map.pixelDeltaX * dx;
-    auto dyc = map.pixelDeltaY * dy;
-     
-    auto result = ExtendedComplex(dxc, dyc);
-    result.reduce();
-    
-    return result;
-}
-
 }

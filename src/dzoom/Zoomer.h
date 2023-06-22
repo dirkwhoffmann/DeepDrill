@@ -44,7 +44,7 @@ class Zoomer {
     // The video recorder
     Recorder recorder = Recorder(opt);
 
-    // Indicates if we run in record mode or preview mode
+    // Indicates if the application runs in record mode or preview mode
     bool recordMode;
 
     // The currently processed keyframe and inbetween
@@ -59,12 +59,12 @@ class Zoomer {
     Clock renderClock;
     Clock recordClock;
 
-    // Synchronization object for the async map file loader
+    // Synchronizer for the async map file loader
     std::future<bool> loadResult;
 
 public:
 
-    // Constructor
+    // Constructors
     Zoomer(Options &opt);
 
     // Initializers

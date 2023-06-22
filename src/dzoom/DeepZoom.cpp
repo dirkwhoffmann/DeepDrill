@@ -12,8 +12,6 @@
 #include "DeepZoom.h"
 #include "Zoomer.h"
 
-// #include <getopt.h>
-
 int main(int argc, char *argv[])
 {
     return dd::DeepZoom().main(argc, argv);
@@ -22,13 +20,13 @@ int main(int argc, char *argv[])
 namespace dd {
 
 const char *
-DeepZoom::optstring()
+DeepZoom::optstring() const
 {
     return ":vba:o:";
 }
 
 const option *
-DeepZoom::longopts()
+DeepZoom::longopts() const
 {
     static struct option long_options[] = {
 

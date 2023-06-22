@@ -18,7 +18,7 @@ namespace dd {
 Logger&
 Logger::operator<<(const log::Endl &arg)
 {
-    if (!silent) {
+    if (!muted) {
         
         blanks++;
         stream << std::endl;
@@ -29,7 +29,7 @@ Logger::operator<<(const log::Endl &arg)
 Logger&
 Logger::operator<<(const log::VSpace &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         if (blanks < 2) *this << log::endl;
         if (blanks < 2) *this << log::endl;
@@ -40,7 +40,7 @@ Logger::operator<<(const log::VSpace &arg)
 Logger&
 Logger::operator<<(const log::Flush &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         stream.flush();
     }
@@ -50,7 +50,7 @@ Logger::operator<<(const log::Flush &arg)
 Logger&
 Logger::operator<<(const log::ralign &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << std::right << std::setw(32) << arg.str;
@@ -61,7 +61,7 @@ Logger::operator<<(const log::ralign &arg)
 Logger&
 Logger::operator<<(const string &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -79,7 +79,7 @@ Logger::operator<<(const fs::path &arg)
 Logger&
 Logger::operator<<(const char &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -90,7 +90,7 @@ Logger::operator<<(const char &arg)
 Logger&
 Logger::operator<<(const char *arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -101,7 +101,7 @@ Logger::operator<<(const char *arg)
 Logger&
 Logger::operator<<(const bool &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << (arg ? "yes" : "no");
@@ -112,7 +112,7 @@ Logger::operator<<(const bool &arg)
 Logger&
 Logger::operator<<(const isize &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -123,7 +123,7 @@ Logger::operator<<(const isize &arg)
 Logger&
 Logger::operator<<(const usize &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -134,7 +134,7 @@ Logger::operator<<(const usize &arg)
 Logger&
 Logger::operator<<(const double &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -145,7 +145,7 @@ Logger::operator<<(const double &arg)
 Logger&
 Logger::operator<<(const Time &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -156,7 +156,7 @@ Logger::operator<<(const Time &arg)
 Logger&
 Logger::operator<<(const Coord &arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << "(" << arg.x << "," << arg.y << ")";
@@ -167,7 +167,7 @@ Logger::operator<<(const Coord &arg)
 Logger&
 Logger::operator<<(const StandardComplex& arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -178,7 +178,7 @@ Logger::operator<<(const StandardComplex& arg)
 Logger&
 Logger::operator<<(const ExtendedDouble& arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg.mantissa << "b" << arg.exponent;
@@ -190,7 +190,7 @@ Logger::operator<<(const ExtendedDouble& arg)
 Logger&
 Logger::operator<<(const ExtendedComplex& arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;
@@ -201,7 +201,7 @@ Logger::operator<<(const ExtendedComplex& arg)
 Logger&
 Logger::operator<<(const PrecisionComplex& arg)
 {
-    if (!silent) {
+    if (!muted) {
 
         blanks = 0;
         stream << arg;

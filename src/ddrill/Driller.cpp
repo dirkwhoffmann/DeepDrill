@@ -340,7 +340,7 @@ Driller::drillProbePoints(std::vector<Coord> &probes)
 isize
 Driller::drillProbePoint(Coord &probe)
 {
-    ExtendedComplex d0 = ref.deltaLocation(map, probe);
+    ExtendedComplex d0 = map.distance(probe, ref.coord);
     ExtendedComplex dn = d0;
 
     isize iteration = 0;
@@ -395,7 +395,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     isize iteration = ref.skipped;
 
     // Setup orbit parameters
-    ExtendedComplex d0 = ref.deltaLocation(map, point);
+    ExtendedComplex d0 = map.distance(point, ref.coord);
     ExtendedComplex dn = d0;
 
     // Setup derivation parameters (df/dc)
