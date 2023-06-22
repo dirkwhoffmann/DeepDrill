@@ -21,7 +21,7 @@ class Compressor {
     isize capacity = 0;
     isize ptr = 0;
 
-    std::vector<u8> buffer;
+    std::vector <u8> buffer;
 
 public:
 

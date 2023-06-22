@@ -13,60 +13,35 @@
 
 #include "config.h"
 #include "Types.h"
-#include <dirent.h>
 #include <fcntl.h>
-#include <istream>
-#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <vector>
 
 namespace dd {
 
+
 //
-// Handling file names
+// String utilities
 //
-
-// Changes the capitalization of a string
-string lowercased(const string& s);
-string uppercased(const string& s);
-
-// Extracts a certain component from a path
-// string extractPath(const string &path);
-// string extractName(const string &path);
-// string extractSuffix(const string &path);
-
-// Strips a certain component from a path
-// string stripPath(const string &path);
-// string stripName(const string &path);
-// string stripSuffix(const string &path);
 
 // Joins a vector of strings
 string join(const std::vector<string> &v, const string &delim1);
 string join(const std::vector<string> &v, const string &delim1, const string &delim2);
 
-// Counts files in a directory
-isize countFiles(const fs::path &suffix);
-isize countFiles(const fs::path &path, const fs::path &suffix);
-
 
 //
-// Handling files
+// File utilitis
 //
-
-// Checks the header signature (magic bytes) of a stream or buffer
-bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len);
-bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len);
 
 // Compares two files
 bool compareFiles(const fs::path &path1, const fs::path &path2);
 
 
 //
-// Handling streams
+// Stream utilities
 //
 
 struct dec {

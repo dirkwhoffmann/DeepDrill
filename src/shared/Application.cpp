@@ -14,8 +14,6 @@
 #include "Logger.h"
 #include "Parser.h"
 
-// #include <getopt.h>
-
 namespace dd {
 
 int
@@ -38,17 +36,8 @@ Application::main(int argc, char *argv[])
         // Check arguments for consistency
         checkArguments();
 
-        // Customize settings
-        readIniFiles();
-
-        // Use default values for all unspecified options
-        opt.applyDefaults();
-
-        // Setup the GMP library
-        setupGmp();
-
-        // Deduce missing options
-        opt.derive();
+        // Prepare the application to run
+        configure();
 
         // Run the application
         run();
@@ -74,6 +63,22 @@ Application::main(int argc, char *argv[])
     }
 
     return 0;
+}
+
+void
+Application::configure()
+{
+    // Read in all configuration files
+    readIniFiles();
+
+    // Use default values for all options that are still undefined
+    opt.applyDefaults();
+
+    // Setup the GMP library
+    setupGmp();
+
+    // Deduce missing options
+    opt.derive();
 }
 
 void

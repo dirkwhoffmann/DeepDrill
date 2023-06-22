@@ -383,7 +383,7 @@ Options::parse(const string &key, const string &value, Color &parsed)
     };
 
     try {
-        parsed.abgr = modes.at(lowercased(value)) | 0xFF000000;
+        parsed.abgr = modes.at(value) | 0xFF000000;
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }
@@ -398,7 +398,7 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
     };
 
     try {
-        parsed = modes.at(lowercased(value));
+        parsed = modes.at(value);
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }

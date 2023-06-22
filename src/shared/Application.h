@@ -29,7 +29,7 @@ protected:
     // Config options
     Options opt = Options(assets);
 
-    // Stop watch for measuring total execution time
+    // Stop watch for measuring the total execution time
     Clock stopWatch;
 
 public:
@@ -41,14 +41,14 @@ public:
     static string version();
     static string version(isize major, isize minor, isize subminor, isize beta);
 
-    // Reads all input files
-    void readInputs(isize keyframe = 0);
-
-    // Reads all init files
+    // Reads all ini files
     void readIniFiles(isize keyframe = 0);
 
 private:
 
+    // Configures the application (called in main)
+    void configure();
+    
     // Sets up the GMP library
     void setupGmp();
 

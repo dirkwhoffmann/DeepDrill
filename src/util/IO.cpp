@@ -16,70 +16,6 @@
 
 namespace dd {
 
-string lowercased(const string& s)
-{
-    string result;
-    for (auto c : s) { result += tolower(c); }
-    return result;
-}
-
-string uppercased(const string& s)
-{
-    string result;
-    for (auto c : s) { result += toupper(c); }
-    return result;
-}
-
-/*
-string extractPath(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = 0;
-    auto len = idx != string::npos ? idx + 1 : 0;
-    return s.substr(pos, len);
-}
-
-string extractName(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = idx != string::npos ? idx + 1 : 0;
-    auto len = string::npos;
-    return s.substr(pos, len);
-}
-
-string extractSuffix(const string &s)
-{
-    auto idx = s.rfind('.');
-    auto pos = idx != string::npos ? idx + 1 : 0;
-    auto len = string::npos;
-    return s.substr(pos, len);
-}
-
-string stripPath(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = idx != string::npos ? idx + 1 : 0;
-    auto len = string::npos;
-    return s.substr(pos, len);
-}
-
-string stripName(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = 0;
-    auto len = idx != string::npos ? idx : 0;
-    return s.substr(pos, len);
-}
-
-string stripSuffix(const string &s)
-{
-    auto idx = s.rfind('.');
-    auto pos = 0;
-    auto len = idx != string::npos ? idx : string::npos;
-    return s.substr(pos, len);
-}
-*/
-
 string join(const std::vector<string> &v, const string &delim1)
 {
     return join(v, delim1, delim1);
@@ -105,54 +41,6 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
     }
 
     return result;
-}
-
-isize countFiles(const fs::path &suffix)
-{
-    return countFiles(fs::current_path(), suffix);
-}
-
-isize countFiles(const fs::path &path, const fs::path &suffix)
-{
-    isize count = 0;
-
-    for (const auto &file : fs::directory_iterator(path)) {
-
-        if (file.path().extension() == suffix) {
-            count++;
-        }
-    }
-
-    return count;
-}
-
-bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len)
-{
-    stream.seekg(0, std::ios::beg);
-    
-    for (isize i = 0; i < len; i++) {
-        int c = stream.get();
-        if (c != (int)header[i]) {
-            stream.seekg(0, std::ios::beg);
-            return false;
-        }
-    }
-    stream.seekg(0, std::ios::beg);
-    return true;
-}
-
-bool
-matchingBufferHeader(const u8 *buffer, const u8 *header, isize len)
-{
-    assert(buffer != nullptr);
-    assert(header != nullptr);
-    
-    for (isize i = 0; i < len; i++) {
-        if (header[i] != buffer[i])
-            return false;
-    }
-
-    return true;
 }
 
 bool compareFiles(const fs::path &path1, const fs::path &path2)

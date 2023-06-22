@@ -32,7 +32,14 @@ struct ExtendedDouble {
     ExtendedDouble(double m, long e) : mantissa(m), exponent(e) { }
     ExtendedDouble(double m);
     ExtendedDouble(const mpf_class &value);
-    
+
+
+    //
+    // Printing
+    //
+
+    friend std::ostream& operator<<(std::ostream& os, const ExtendedDouble& d);
+
     
     //
     // Converting
