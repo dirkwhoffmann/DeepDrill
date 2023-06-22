@@ -124,7 +124,6 @@ public:
     const MapEntry &get(isize w, isize h) const;
     MapEntry &get(const struct Coord &c);
     const MapEntry &get(const struct Coord &c) const;
-
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
 

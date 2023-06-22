@@ -79,13 +79,13 @@ DrillMap::get(isize w, isize h) const
 MapEntry &
 DrillMap::get(const struct Coord &c)
 {
-    return get(c.x, c.y);
+    return data[c.y * width + c.x];
 }
 
 const MapEntry &
 DrillMap::get(const struct Coord &c) const
 {
-    return get(c.x, c.y);
+    return data[c.y * width + c.x];
 }
 
 void
