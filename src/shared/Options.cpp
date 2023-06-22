@@ -432,11 +432,8 @@ void
 Options::derive()
 {
     // Derive unspecified video parameters
-    auto frameRate = double(video.frameRate);
-    auto keyframes = double(video.keyframes);
-    auto inbetweens = double(video.inbetweens);
-
     if (!video.inbetweens) {
+
         video.inbetweens = 2 * video.frameRate;
     }
     if (!video.keyframes) {
@@ -444,16 +441,6 @@ Options::derive()
         auto zoom = ExtendedDouble(location.zoom);
         video.keyframes = isize(std::ceil(zoom.log2().asDouble()));
     }
-
-    // Derive the video length
-    duration = isize(std::round(keyframes * inbetweens / frameRate));
-
-    // Compute the distance between two pixels on the complex plane
-    mpfPixelDeltaX = mpfPixelDeltaY = mpf_class(4.0) / location.zoom / drillmap.height;
-    pixelDeltaX = pixelDeltaY = mpfPixelDeltaY;
-
-    // Derive coordinates
-    center = PrecisionComplex(location.real, location.imag);
 }
 
 }

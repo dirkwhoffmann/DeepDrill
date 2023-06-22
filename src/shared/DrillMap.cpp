@@ -122,7 +122,7 @@ DrillMap::translate(const PrecisionComplex &coord) const
     auto c = Coord(width / 2, height / 2);
 
     // Compute the distance to the center
-    auto dxy = coord - opt.center;
+    auto dxy = coord -  center;
     mpf_class dx = dxy.re / mpfPixelDeltaX;
     mpf_class dy = dxy.re / mpfPixelDeltaX;
 

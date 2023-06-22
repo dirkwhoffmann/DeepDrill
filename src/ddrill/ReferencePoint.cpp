@@ -44,14 +44,6 @@ ReferencePoint::ReferencePoint(Coord c, const PrecisionComplex &pc)
     this->location = pc;
 }
 
-/*
-ReferencePoint::ReferencePoint(const Options &opt, Coord c)
-{
-    this->coord = c;
-    this->location = c.translate(opt);
-}
-*/
-
 ExtendedComplex
 ReferencePoint::deltaLocation(const DrillMap &map, const Coord &other) const
 {

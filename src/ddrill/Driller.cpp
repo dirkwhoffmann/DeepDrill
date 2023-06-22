@@ -39,8 +39,6 @@ Driller::drill()
 
     if (opt.flags.verbose) {
 
-        assert(opt.center.re.get_prec() == opt.center.im.get_prec());
-
         assert(map.center.re.get_prec() == map.center.im.get_prec());
         assert(map.ul.re.get_prec() == map.ul.im.get_prec());
         assert(map.lr.re.get_prec() == map.lr.im.get_prec());

@@ -221,23 +221,6 @@ struct Options {
 
 
     //
-    // Derived values
-    //
-
-    // Center coordinate in precision format
-    PrecisionComplex center;
-
-    // Distance between two adjacent pixels
-    mpf_class mpfPixelDeltaX;
-    mpf_class mpfPixelDeltaY;
-    ExtendedDouble pixelDeltaX;
-    ExtendedDouble pixelDeltaY;
-
-    // Video duration in seconds
-    isize duration;
-
-
-    //
     // Initialization
     //
 
