@@ -82,12 +82,21 @@ Palette::loadTextureImage(const fs::path &path)
     }
 }
 
-u32
-Palette::interpolateABGR(double value) const
+double
+Palette::overlayOpacity() const
 {
+    return texture.getSize().x ? opt.colors.opacity : 0.0;
+}
+
+u32
+Palette::interpolateABGR(struct MapEntry &entry) const
+{
+    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
+    sl *= opt.colors.scale;
+
     auto size = r.size();
 
-    auto scaled = value * size / (2 * 3.14159);
+    auto scaled = sl * size / (2 * 3.14159);
     auto frac = fmod(scaled, 1.0);
 
     auto r1 = r[(isize(scaled) + 0) % size];
@@ -122,28 +131,5 @@ Palette::readTextureImage(struct MapEntry &entry) const
     auto color = texture.getPixel(unsigned(px), unsigned(py));
     return 255 << 24 | color.b << 16 | color.g << 8 | color.r;
 }
-
-/*
-u32
-Palette::readTextureImage(double re, double im, double nre, double nim, double x, double y, double sl)
-{
-    const double PI = 3.141592653589793238;
-
-    auto size = texture.getSize();
-
-    auto scaled = sl * size.y * 5.0; //  / (2 * 3.14159);
-    auto py = isize(scaled) % size.y;
-    // auto arg = (StandardComplex(x,y).arg() + PI) / (2 * PI);
-    auto arg = (StandardComplex(nre,nim).arg() + PI) / (2 * PI);
-
-    auto px = isize(arg * size.x * 5.0) % size.x; //  / (2 * 3.14159);
-    if (py < 0) py += size.y;
-    if (px < 0) px += size.x;
-
-    auto color = texture.getPixel(unsigned(px), unsigned(py));
-
-    return 255 << 24 | color.b << 16 | color.g << 8 | color.r;
-}
-*/
 
 }

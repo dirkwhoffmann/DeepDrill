@@ -58,7 +58,7 @@ ColorMap::compute(const DrillMap &map)
     switch (opt.colors.mode) {
 
         case ColoringMode::Default:     compute <ColoringMode::Default> (map); break;
-        case ColoringMode::Textured:    compute <ColoringMode::Textured> (map); break;
+        // case ColoringMode::Textured:    compute <ColoringMode::Textured> (map); break;
     }
 }
 
@@ -69,6 +69,8 @@ ColorMap::compute(const DrillMap &map)
 
     // Resize to the size of the drill map
     resize(map.width, map.height);
+
+    auto opacity = palette.overlayOpacity();
 
     // Colorize all pixels
     for (isize y = 0; y < height; y++) {
@@ -82,26 +84,21 @@ ColorMap::compute(const DrillMap &map)
             // Colorize image
             //
 
-            double sl;
-
             switch (map.get(c).result) {
 
                 case DR_ESCAPED:
 
                     if constexpr (M == ColoringMode::Default) {
 
-                        sl = (double(data.last) - log2(data.lognorm)) + 4.0;
-                        sl *= .0025;
-                        // sl = 2.7 + sl * 30.0;
-                        sl *= 30.0;
-                        sl *= opt.colors.scale;
+                        GpuColor color = palette.interpolateABGR(data);
 
-                        colorMap[pos] = palette.interpolateABGR(sl);
-                    }
+                        if (opacity != 0.0) {
 
-                    if constexpr (M == ColoringMode::Textured) {
+                            GpuColor texColor = palette.readTextureImage(data);
+                            color = color.mix(texColor, opacity);
+                        }
 
-                        colorMap[pos] = palette.readTextureImage(data);
+                        colorMap[pos] = color;
                     }
                     break;
 
@@ -128,7 +125,7 @@ ColorMap::compute(const DrillMap &map)
 
                 default:
 
-                    colorMap[pos] = 0xFF000000;
+                    colorMap[pos] = GpuColor::black;
                     break;
             }
 

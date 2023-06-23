@@ -26,7 +26,7 @@ namespace dd {
 enum class ColoringMode
 {
     Default,
-    Textured
+    // Textured
 };
 
 struct Options {
@@ -150,6 +150,9 @@ struct Options {
         // Scaling factor
         double scale;
 
+        // Texture opacity
+        double opacity;
+
         // Light vector direction
         double alpha;
         double beta;
@@ -258,6 +261,7 @@ private:
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
     void parse(const string &key, const string &value, double &parsed);
+    void parse(const string &key, const string &value, double &parsed, double min, double max);
     void parse(const string &key, const string &value, mpf_class &parsed);
     void parse(const string &key, const string &value, GpuColor &parsed);
     void parse(const string &key, const string &value, ColoringMode &parsed);

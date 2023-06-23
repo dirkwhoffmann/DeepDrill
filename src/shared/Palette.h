@@ -28,7 +28,7 @@ class Palette {
     std::vector <double> g;
     std::vector <double> b;
 
-    // Tesselation image
+    // Overlay image
     sf::Image texture;
 
 public:
@@ -38,8 +38,8 @@ public:
     void loadPaletteImage(const fs::path &path);
     void loadTextureImage(const fs::path &path);
 
-    u32 interpolateABGR(double value) const;
-//    u32 readTextureImage(double re, double im, double nre, double nim, double x, double y, double sl);
+    double overlayOpacity() const;
+    u32 interpolateABGR(struct MapEntry &entry) const;
     u32 readTextureImage(struct MapEntry &entry) const;
 };
 

@@ -48,11 +48,12 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 
-    // Palette keys
+    // Color keys
     defaults["colors.mode"] = "default";
     defaults["colors.palette"] = "";
-    defaults["colors.texture"] = "bluegradient.jpg";
+    defaults["colors.texture"] = "";
     defaults["colors.scale"] = "1.0";
+    defaults["colors.opacity"] = "1.0";
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
 
@@ -227,6 +228,10 @@ Options::parse(string key, string value)
 
         parse(key, value, colors.scale);
 
+    } else if (key == "colors.opacity") {
+
+        parse(key, value, colors.opacity, 0.0, 1.0);
+
     } else if (key == "colors.alpha") {
 
         parse(key, value, colors.alpha);
@@ -372,6 +377,21 @@ Options::parse(const string &key, const string &value, double &parsed)
 }
 
 void
+Options::parse(const string &key, const string &value, double &parsed, double min, double max)
+{
+    parse(key, value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be <= " + std::to_string(max));
+    }
+}
+
+void
 Options::parse(const string &key, const string &value, mpf_class &parsed)
 {
     try {
@@ -409,7 +429,7 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
     std::map <string, ColoringMode> modes = {
 
         { "default", ColoringMode::Default },
-        { "textured", ColoringMode::Textured }
+        // { "textured", ColoringMode::Textured }
     };
 
     try {
