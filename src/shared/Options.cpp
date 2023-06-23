@@ -51,7 +51,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Palette keys
     defaults["colors.mode"] = "default";
     defaults["colors.palette"] = "";
-    defaults["colors.texture"] = "ring.png";
+    defaults["colors.texture"] = "bluegradient.jpg";
     defaults["colors.scale"] = "1.0";
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";

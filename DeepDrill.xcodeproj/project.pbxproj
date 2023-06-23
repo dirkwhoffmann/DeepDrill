@@ -54,6 +54,9 @@
 		50A09C772A3AF9C700845EE7 /* Compressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C752A3AF9C700845EE7 /* Compressor.cpp */; };
 		50A09C782A3AF9C700845EE7 /* Compressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C752A3AF9C700845EE7 /* Compressor.cpp */; };
 		50A09C7B2A3C5BFE00845EE7 /* SlowDriller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C792A3C5BFE00845EE7 /* SlowDriller.cpp */; };
+		50A09C882A45D62300845EE7 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C862A45D62300845EE7 /* Colors.cpp */; };
+		50A09C892A45D62300845EE7 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C862A45D62300845EE7 /* Colors.cpp */; };
+		50A09C8A2A45D62300845EE7 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A09C862A45D62300845EE7 /* Colors.cpp */; };
 		50AE096429FE7E0A005E4D3E /* Animated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE096329FE7E0A005E4D3E /* Animated.cpp */; };
 		50BEC701269486AA00CCDFA8 /* Driller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F0269486A800CCDFA8 /* Driller.cpp */; };
 		50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC6F2269486A900CCDFA8 /* Approximator.cpp */; };
@@ -230,6 +233,8 @@
 		50A09C832A45CEB600845EE7 /* greengradient.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greengradient.jpg; sourceTree = "<group>"; };
 		50A09C842A45CEB600845EE7 /* lava.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lava.jpg; sourceTree = "<group>"; };
 		50A09C852A45CEB600845EE7 /* redgradient.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = redgradient.jpg; sourceTree = "<group>"; };
+		50A09C862A45D62300845EE7 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
+		50A09C872A45D62300845EE7 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -551,10 +556,10 @@
 			isa = PBXGroup;
 			children = (
 				50A09C812A45CEB600845EE7 /* bluegradient.jpg */,
-				50A09C802A45CEB600845EE7 /* elvish.jpg */,
 				50A09C832A45CEB600845EE7 /* greengradient.jpg */,
-				50A09C842A45CEB600845EE7 /* lava.jpg */,
 				50A09C852A45CEB600845EE7 /* redgradient.jpg */,
+				50A09C802A45CEB600845EE7 /* elvish.jpg */,
+				50A09C842A45CEB600845EE7 /* lava.jpg */,
 				50A09C822A45CEB600845EE7 /* wood.jpg */,
 			);
 			path = textures;
@@ -569,6 +574,8 @@
 				50AE096329FE7E0A005E4D3E /* Animated.cpp */,
 				50BEC70D269486C100CCDFA8 /* Chrono.h */,
 				50BEC715269486C200CCDFA8 /* Chrono.cpp */,
+				50A09C872A45D62300845EE7 /* Colors.h */,
+				50A09C862A45D62300845EE7 /* Colors.cpp */,
 				500655E726957C8400982789 /* Parser.h */,
 				500655E626957C8400982789 /* Parser.cpp */,
 				50102345269DBEF000AC61A8 /* Exception.h */,
@@ -814,6 +821,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50DA295A2A2CE2B700600EB0 /* Filter.cpp in Sources */,
+				50A09C892A45D62300845EE7 /* Colors.cpp in Sources */,
 				5049968A29DED32E00B15919 /* IO.cpp in Sources */,
 				5049969629DF050B00B15919 /* ExtendedComplex.cpp in Sources */,
 				5072FD7D2A272EF8003DE341 /* Application.cpp in Sources */,
@@ -853,6 +861,7 @@
 				5072FD6B2A271E69003DE341 /* Options.cpp in Sources */,
 				5072FD772A272019003DE341 /* ExtendedDouble.cpp in Sources */,
 				5072FD722A271EE4003DE341 /* Chrono.cpp in Sources */,
+				50A09C8A2A45D62300845EE7 /* Colors.cpp in Sources */,
 				5072FD792A272020003DE341 /* PrecisionComplex.cpp in Sources */,
 				5072FD6E2A271E72003DE341 /* Logger.cpp in Sources */,
 				5072FD6D2A271E70003DE341 /* Coord.cpp in Sources */,
@@ -873,6 +882,7 @@
 				50BEC709269486AA00CCDFA8 /* ReferencePoint.cpp in Sources */,
 				5030F11426A2BCCF009A53B3 /* Logger.cpp in Sources */,
 				5072FD7C2A272EF8003DE341 /* Application.cpp in Sources */,
+				50A09C882A45D62300845EE7 /* Colors.cpp in Sources */,
 				50DA29592A2CE2B700600EB0 /* Filter.cpp in Sources */,
 				50BEC707269486AA00CCDFA8 /* ProgressIndicator.cpp in Sources */,
 				50BEC70A269486AA00CCDFA8 /* DeepDrill.cpp in Sources */,
