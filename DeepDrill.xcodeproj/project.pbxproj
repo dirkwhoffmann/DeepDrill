@@ -224,7 +224,12 @@
 		50A09C7A2A3C5BFE00845EE7 /* SlowDriller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlowDriller.h; sourceTree = "<group>"; };
 		50A09C7C2A40365000845EE7 /* experimental.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = experimental.ini; sourceTree = "<group>"; };
 		50A09C7D2A420C4700845EE7 /* DeepMake.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepMake.entitlements; sourceTree = "<group>"; };
-		50A09C7E2A44EDEC00845EE7 /* ring.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ring.png; sourceTree = "<group>"; };
+		50A09C802A45CEB600845EE7 /* elvish.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = elvish.jpg; sourceTree = "<group>"; };
+		50A09C812A45CEB600845EE7 /* bluegradient.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bluegradient.jpg; sourceTree = "<group>"; };
+		50A09C822A45CEB600845EE7 /* wood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wood.jpg; sourceTree = "<group>"; };
+		50A09C832A45CEB600845EE7 /* greengradient.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greengradient.jpg; sourceTree = "<group>"; };
+		50A09C842A45CEB600845EE7 /* lava.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lava.jpg; sourceTree = "<group>"; };
+		50A09C852A45CEB600845EE7 /* redgradient.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = redgradient.jpg; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -545,7 +550,12 @@
 		50A09C7F2A44EDF600845EE7 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				50A09C7E2A44EDEC00845EE7 /* ring.png */,
+				50A09C812A45CEB600845EE7 /* bluegradient.jpg */,
+				50A09C802A45CEB600845EE7 /* elvish.jpg */,
+				50A09C832A45CEB600845EE7 /* greengradient.jpg */,
+				50A09C842A45CEB600845EE7 /* lava.jpg */,
+				50A09C852A45CEB600845EE7 /* redgradient.jpg */,
+				50A09C822A45CEB600845EE7 /* wood.jpg */,
 			);
 			path = textures;
 			sourceTree = "<group>";
