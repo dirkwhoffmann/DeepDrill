@@ -91,6 +91,7 @@ struct GpuColor {
     GpuColor(u64 v) : rawValue(u32(v)) {}
     GpuColor(u8 r, u8 g, u8 b);
     GpuColor(const RgbColor &c);
+    GpuColor(const YuvColor &c) : GpuColor(RgbColor(c)) { }
 
     u8 r() const { return u8(rawValue       & 0xFF); }
     u8 g() const { return u8(rawValue >> 8  & 0xFF); }
@@ -105,6 +106,8 @@ struct GpuColor {
     static const GpuColor yellow;
     static const GpuColor magenta;
     static const GpuColor cyan;
+
+    operator u32() const { return rawValue; }
 
     bool operator==(const GpuColor &rhs) const {
         return rawValue == rhs.rawValue;

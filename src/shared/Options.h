@@ -14,13 +14,14 @@
 #include "config.h"
 #include "Types.h"
 #include "AssetManager.h"
+#include "Colors.h"
 #include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
 namespace dd {
 
-struct Color { u32 abgr; };
+// struct Color { u32 abgr; };
 
 enum class ColoringMode
 {
@@ -170,7 +171,7 @@ struct Options {
         isize rounds;
 
         // Color used for glitch points
-        Color color;
+        GpuColor color;
 
     } perturbation;
     
@@ -193,7 +194,7 @@ struct Options {
         bool enable;
 
         // Color used for points with a positive area check
-        Color color;
+        GpuColor color;
 
     } areacheck;
 
@@ -206,7 +207,7 @@ struct Options {
         double tolerance;
 
         // Color used for points with a positive attractor check
-        Color color;
+        GpuColor color;
 
     } attractorcheck;
 
@@ -219,7 +220,7 @@ struct Options {
         double tolerance;
 
         // Color unsed for points with a positive period check
-        Color color;
+        GpuColor color;
 
     } periodcheck;
 
@@ -258,7 +259,7 @@ private:
     void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
     void parse(const string &key, const string &value, double &parsed);
     void parse(const string &key, const string &value, mpf_class &parsed);
-    void parse(const string &key, const string &value, Color &parsed);
+    void parse(const string &key, const string &value, GpuColor &parsed);
     void parse(const string &key, const string &value, ColoringMode &parsed);
 };
 

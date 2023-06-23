@@ -107,23 +107,23 @@ ColorMap::compute(const DrillMap &map)
 
                 case DR_GLITCH:
 
-                    colorMap[pos] = opt.perturbation.color.abgr;
+                    colorMap[pos] = opt.perturbation.color;
                     break;
 
                 case DR_IN_BULB:
                 case DR_IN_CARDIOID:
 
-                    colorMap[pos] = opt.areacheck.color.abgr;
+                    colorMap[pos] = opt.areacheck.color;
                     break;
 
                 case DR_PERIODIC:
 
-                    colorMap[pos] = opt.periodcheck.color.abgr;
+                    colorMap[pos] = opt.periodcheck.color;
                     break;
 
                 case DR_ATTRACTED:
 
-                    colorMap[pos] = opt.attractorcheck.color.abgr;
+                    colorMap[pos] = opt.attractorcheck.color;
                     break;
 
                 default:

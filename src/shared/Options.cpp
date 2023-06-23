@@ -382,19 +382,22 @@ Options::parse(const string &key, const string &value, mpf_class &parsed)
 }
 
 void
-Options::parse(const string &key, const string &value, Color &parsed)
+Options::parse(const string &key, const string &value, GpuColor &parsed)
 {
-    std::map <string, u32> modes = {
+    std::map <string, GpuColor> modes = {
 
-        { "black",  0x000000 },
-        { "red",    0x0000FF },
-        { "blue",   0xFF0000 },
-        { "green",  0x00FF00 },
-        { "yellow", 0x00FFFF }
+        { "black",      GpuColor::black     },
+        { "white",      GpuColor::white     },
+        { "red",        GpuColor::red       },
+        { "green",      GpuColor::green     },
+        { "blue",       GpuColor::blue      },
+        { "yellow",     GpuColor::yellow    },
+        { "magenta",    GpuColor::magenta   },
+        { "cyan",       GpuColor::cyan      }
     };
 
     try {
-        parsed.abgr = modes.at(value) | 0xFF000000;
+        parsed = modes.at(value);
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }
