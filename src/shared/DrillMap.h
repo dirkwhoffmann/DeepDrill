@@ -63,9 +63,12 @@ struct MapEntry {
     // Last executed iteration
     i32 last;
 
-    // What is the best format to save here
+    // Shall we save this directly or compute it?
     float lognorm;
 
+    // Last iteration value before the escape check hit
+    StandardComplex zn;
+    
     // Derivative
     StandardComplex derivative;
 

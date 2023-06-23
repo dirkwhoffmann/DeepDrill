@@ -27,6 +27,7 @@ AssetManager::AssetManager()
     paths.push_back(repo / "tutorial");
     paths.push_back(repo / "profiles");
     paths.push_back(repo / "palettes");
+    paths.push_back(repo / "textures");
     paths.push_back(repo / "shaders");
 }
 

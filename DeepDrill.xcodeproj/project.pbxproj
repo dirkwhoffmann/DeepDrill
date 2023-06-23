@@ -224,6 +224,7 @@
 		50A09C7A2A3C5BFE00845EE7 /* SlowDriller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlowDriller.h; sourceTree = "<group>"; };
 		50A09C7C2A40365000845EE7 /* experimental.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = experimental.ini; sourceTree = "<group>"; };
 		50A09C7D2A420C4700845EE7 /* DeepMake.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepMake.entitlements; sourceTree = "<group>"; };
+		50A09C7E2A44EDEC00845EE7 /* ring.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ring.png; sourceTree = "<group>"; };
 		50AE096229FE5220005E4D3E /* ruby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ruby.png; sourceTree = "<group>"; };
 		50AE096329FE7E0A005E4D3E /* Animated.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animated.cpp; sourceTree = "<group>"; };
 		50AE096529FEA4ED005E4D3E /* lindor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lindor.png; sourceTree = "<group>"; };
@@ -541,6 +542,14 @@
 			path = dmake;
 			sourceTree = "<group>";
 		};
+		50A09C7F2A44EDF600845EE7 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				50A09C7E2A44EDEC00845EE7 /* ring.png */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
 		50BEC70B269486B400CCDFA8 /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -621,6 +630,7 @@
 				50EB0D4C29F57D0200770F31 /* tutorial */,
 				50BEC721269486D900CCDFA8 /* profiles */,
 				50BEC7562694873C00CCDFA8 /* palettes */,
+				50A09C7F2A44EDF600845EE7 /* textures */,
 				50D69A7429E177D50025DE0D /* shaders */,
 				50CF8E4F2694848800887FFC /* Products */,
 			);

@@ -14,6 +14,8 @@
 #include "config.h"
 #include "Types.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace dd {
 
 class Palette {
@@ -21,21 +23,24 @@ class Palette {
     // Configuration options
     const struct Options &opt;
 
-    // Path to the palette image
-    fs::path imagePath;
-
     // Color values
     std::vector <double> r;
     std::vector <double> g;
     std::vector <double> b;
 
+    // Tesselation image
+    sf::Image texture;
+
 public:
 
     Palette(const Options &options);
 
-    const fs::path &getPath() { return imagePath; }
-    void load(const fs::path &path);
-    u32 interpolateABGR(double value);
+    void loadPaletteImage(const fs::path &path);
+    void loadTextureImage(const fs::path &path);
+
+    u32 interpolateABGR(double value) const;
+//    u32 readTextureImage(double re, double im, double nre, double nim, double x, double y, double sl);
+    u32 readTextureImage(struct MapEntry &entry) const;
 };
 
 }

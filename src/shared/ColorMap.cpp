@@ -38,8 +38,9 @@ ColorMap::resize(isize w, isize h)
         colorMap.resize(width * height);
         normalMap.resize(width * height);
 
-        // Load color palette
-        palette.load(opt.colors.palette);
+        // Load palette images
+        palette.loadPaletteImage(opt.colors.palette);
+        palette.loadTextureImage(opt.colors.texture);
 
         // Create textures
         if (!colorMapTex.create(unsigned(width), unsigned(height))) {
@@ -54,10 +55,22 @@ ColorMap::resize(isize w, isize h)
 void
 ColorMap::compute(const DrillMap &map)
 {
+    switch (opt.colors.mode) {
+
+        case ColoringMode::Default:     compute <ColoringMode::Default> (map); break;
+        case ColoringMode::Textured:    compute <ColoringMode::Textured> (map); break;
+    }
+}
+
+template <ColoringMode M> void
+ColorMap::compute(const DrillMap &map)
+{
     ProgressIndicator progress("Computing color map", map.height * map.width);
 
+    // Resize to the size of the drill map
     resize(map.width, map.height);
 
+    // Colorize all pixels
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
 
@@ -75,13 +88,21 @@ ColorMap::compute(const DrillMap &map)
 
                 case DR_ESCAPED:
 
-                    sl = (double(data.last) - log2(data.lognorm)) + 4.0;
-                    sl *= .0025;
-                    // sl = 2.7 + sl * 30.0;
-                    sl *= 30.0;
-                    sl *= opt.colors.scale;
+                    if constexpr (M == ColoringMode::Default) {
 
-                    colorMap[pos] = palette.interpolateABGR(sl);
+                        sl = (double(data.last) - log2(data.lognorm)) + 4.0;
+                        sl *= .0025;
+                        // sl = 2.7 + sl * 30.0;
+                        sl *= 30.0;
+                        sl *= opt.colors.scale;
+
+                        colorMap[pos] = palette.interpolateABGR(sl);
+                    }
+
+                    if constexpr (M == ColoringMode::Textured) {
+
+                        colorMap[pos] = palette.readTextureImage(data);
+                    }
                     break;
 
                 case DR_GLITCH:
@@ -110,6 +131,7 @@ ColorMap::compute(const DrillMap &map)
                     colorMap[pos] = 0xFF000000;
                     break;
             }
+
 
             //
             // Generate normal map
@@ -141,13 +163,13 @@ ColorMap::compute(const DrillMap &map)
 
     if (opt.flags.verbose) {
 
-        auto path = palette.getPath();
-
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Palette: ");
-        log::cout << (path != "" ? path : "not specified") << log::endl;
+        log::cout << (opt.colors.palette != "" ? opt.colors.palette : "not specified") << log::endl;
+        log::cout << log::ralign("Texture: ");
+        log::cout << (opt.colors.texture != "" ? opt.colors.texture : "not specified") << log::endl;
         log::cout << log::vspace;
     }
 }

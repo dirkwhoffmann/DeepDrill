@@ -64,6 +64,7 @@ private:
 public:
 
     void compute(const class DrillMap &map);
+    template <ColoringMode> void compute(const class DrillMap &map);
 };
 
 }

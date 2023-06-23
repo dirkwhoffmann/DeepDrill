@@ -13,6 +13,7 @@
 #include "Exception.h"
 #include "IO.h"
 #include "Options.h"
+#include "DrillMap.h"
 #include <tgmath.h>
 #include <SFML/Graphics.hpp>
 
@@ -46,13 +47,11 @@ Palette::Palette(const Options &opt) : opt(opt)
 }
 
 void
-Palette::load(const fs::path &path)
+Palette::loadPaletteImage(const fs::path &path)
 {
     sf::Image img;
 
-    imagePath = path;
-    
-    if (imagePath != "" && img.loadFromFile(imagePath)) {
+    if (path != "" && img.loadFromFile(path)) {
 
         auto size = img.getSize();
 
@@ -71,8 +70,20 @@ Palette::load(const fs::path &path)
     }
 }
 
+void
+Palette::loadTextureImage(const fs::path &path)
+{
+    if (path == "") return;
+
+    if (texture.loadFromFile(path)) {
+        // printf("Loaded texture image %s\n", path.c_str());
+    } else {
+        printf("Failed to load texture image %s\n", path.c_str());
+    }
+}
+
 u32
-Palette::interpolateABGR(double value)
+Palette::interpolateABGR(double value) const
 {
     auto size = r.size();
 
@@ -91,5 +102,48 @@ Palette::interpolateABGR(double value)
 
     return  255 << 24 | u8(mb) << 16 | u8(mg) << 8 | u8(mr);
 }
+
+u32
+Palette::readTextureImage(struct MapEntry &entry) const
+{
+    const double PI = 3.141592653589793238;
+
+    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
+    sl *= opt.colors.scale;
+
+    auto size = texture.getSize();
+
+    auto arg = (entry.normal.arg() + PI) / (2 * PI);
+    auto px = isize(arg * size.x * 5.0) % size.x;
+    auto py = isize(sl * size.y * 5.0) % size.y;
+    if (py < 0) py += size.y;
+    if (px < 0) px += size.x;
+
+    auto color = texture.getPixel(unsigned(px), unsigned(py));
+    return 255 << 24 | color.b << 16 | color.g << 8 | color.r;
+}
+
+/*
+u32
+Palette::readTextureImage(double re, double im, double nre, double nim, double x, double y, double sl)
+{
+    const double PI = 3.141592653589793238;
+
+    auto size = texture.getSize();
+
+    auto scaled = sl * size.y * 5.0; //  / (2 * 3.14159);
+    auto py = isize(scaled) % size.y;
+    // auto arg = (StandardComplex(x,y).arg() + PI) / (2 * PI);
+    auto arg = (StandardComplex(nre,nim).arg() + PI) / (2 * PI);
+
+    auto px = isize(arg * size.x * 5.0) % size.x; //  / (2 * 3.14159);
+    if (py < 0) py += size.y;
+    if (px < 0) px += size.x;
+
+    auto color = texture.getPixel(unsigned(px), unsigned(py));
+
+    return 255 << 24 | color.b << 16 | color.g << 8 | color.r;
+}
+*/
 
 }

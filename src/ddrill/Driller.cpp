@@ -437,7 +437,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         dn.reduce();
 
         auto zn = ref.xn[iteration].extended + dn;
-        double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
+        double norm = zn.norm().asDouble();
 
         //
         // Glitch check
@@ -485,7 +485,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Escape check
         //
 
-        if (norm >= 256) {
+        if (norm >= 512) {
+        // if (norm >= 4.9) {
 
             auto nv = zn / ddn;
             nv.normalize();
@@ -493,6 +494,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
                 .result     = DR_ESCAPED,
                 .first      = (i32)ref.skipped,
                 .last       = (i32)iteration,
+                .zn         = StandardComplex(zn),
                 .lognorm    = (float)::log(norm),
                 .derivative = StandardComplex(ddn),
                 .normal     = StandardComplex(nv) } );

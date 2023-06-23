@@ -14,6 +14,7 @@
 #include "Exception.h"
 #include "IO.h"
 #include "Logger.h"
+#include "Parser.h"
 
 namespace dd {
 
@@ -50,6 +51,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Palette keys
     defaults["colors.mode"] = "default";
     defaults["colors.palette"] = "";
+    defaults["colors.texture"] = "ring.png";
     defaults["colors.scale"] = "1.0";
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
@@ -123,6 +125,9 @@ Options::parse(string key, string value)
     // Convert the key to lower case
     std::transform(key.begin(), key.end(), key.begin(),
                    [](unsigned char ch){ return std::tolower(ch); });
+
+    // Strip quotation marks
+    value.erase(remove(value.begin(), value.end(), '\"'), value.end());
 
     keys[key] = value;
 
@@ -210,6 +215,12 @@ Options::parse(string key, string value)
 
         if (value != "") {
             colors.palette = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+        }
+
+    } else if (key == "colors.texture") {
+
+        if (value != "") {
+            colors.texture = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
         }
 
     } else if (key == "colors.scale") {
@@ -395,6 +406,7 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
     std::map <string, ColoringMode> modes = {
 
         { "default", ColoringMode::Default },
+        { "textured", ColoringMode::Textured }
     };
 
     try {

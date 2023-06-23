@@ -24,7 +24,8 @@ struct Color { u32 abgr; };
 
 enum class ColoringMode
 {
-    Default
+    Default,
+    Textured
 };
 
 struct Options {
@@ -141,6 +142,9 @@ struct Options {
         
         // Path to the palette image
         fs::path palette;
+
+        // Path to the texture image
+        fs::path texture;
 
         // Scaling factor
         double scale;
