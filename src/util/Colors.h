@@ -25,11 +25,12 @@ struct RgbColor {
     double r;
     double g;
     double b;
+    double a;
 
-    RgbColor() : r(0), g(0), b(0) {}
-    RgbColor(double r, double g, double b) : r(r), g(g), b(b) {}
-    RgbColor(u8 r, u8 g, u8 b) : r(r / 255.0), g(g / 255.0), b(b / 255.0) {}
-    RgbColor(u32 abgr) : RgbColor(u8(abgr), u8(abgr >> 8), u8(abgr >> 16)) {}
+    RgbColor() : r(0.0), g(0.0), b(0.0), a(1.0) {}
+    RgbColor(double r, double g, double b, double a = 1.0) : r(r), g(g), b(b), a(a) {}
+    RgbColor(u8 r, u8 g, u8 b, u8 a = 255) : r(r / 255.0), g(g / 255.0), b(b / 255.0), a(a / 255.0) {}
+    RgbColor(u32 abgr) : RgbColor(u8(abgr), u8(abgr >> 8), u8(abgr >> 16), u8(abgr >> 24)) {}
     RgbColor(const YuvColor &c);
     RgbColor(const GpuColor &c);
 
@@ -43,7 +44,7 @@ struct RgbColor {
     static const RgbColor cyan;
 
     bool operator==(const RgbColor &rhs) const {
-        return r == rhs.r && g == rhs.g && b == rhs.b;
+        return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a;
     }
 
     RgbColor mix(const RgbColor &other, double weight) const;
@@ -56,11 +57,12 @@ struct YuvColor {
     double y;
     double u;
     double v;
+    double a;
 
-    YuvColor() : y(0), u(0), v(0) { }
-    YuvColor(double y, double u, double v) : y(y), u(u), v(v) { }
-    YuvColor(u8 y, u8 u, u8 v) : y(y / 255.0), u(u / 255.0), v(v / 255.0) { }
-    YuvColor(u32 abgr) : YuvColor(u8(abgr), u8(abgr >> 8), u8(abgr >> 16)) {}
+    YuvColor() : y(0.0), u(0.0), v(0.0), a(1.0) { }
+    YuvColor(double y, double u, double v, double a = 1.0) : y(y), u(u), v(v), a(a) { }
+    YuvColor(u8 y, u8 u, u8 v, u8 a = 255) : y(y / 255.0), u(u / 255.0), v(v / 255.0), a(a / 255.0) { }
+    YuvColor(u32 abgr) : YuvColor(u8(abgr), u8(abgr >> 8), u8(abgr >> 16), u8(abgr >> 24)) {}
     YuvColor(const RgbColor &c);
     YuvColor(const GpuColor &c) : YuvColor(RgbColor(c)) { }
 
@@ -89,7 +91,7 @@ struct GpuColor {
     GpuColor() : rawValue(0) {}
     GpuColor(u32 v) : rawValue(v) {}
     GpuColor(u64 v) : rawValue(u32(v)) {}
-    GpuColor(u8 r, u8 g, u8 b);
+    GpuColor(u8 r, u8 g, u8 b, u8 a = 255);
     GpuColor(const RgbColor &c);
     GpuColor(const YuvColor &c) : GpuColor(RgbColor(c)) { }
 

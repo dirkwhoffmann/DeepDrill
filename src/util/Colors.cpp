@@ -22,6 +22,7 @@ RgbColor::RgbColor(const GpuColor &c)
     r = (c.rawValue & 0xFF) / 255.0;
     g = ((c.rawValue >> 8) & 0xFF) / 255.0;
     b = ((c.rawValue >> 16) & 0xFF) / 255.0;
+    a = ((c.rawValue >> 24) & 0xFF) / 255.0;
 }
 
 RgbColor::RgbColor(const YuvColor &c)
@@ -29,20 +30,20 @@ RgbColor::RgbColor(const YuvColor &c)
     r = c.y + 1.140 * c.v;
     g = c.y - 0.395 * c.u - 0.581 * c.v;
     b = c.y + 2.032 * c.u;
+    a = c.a;
 }
 
 RgbColor
 RgbColor::mix(const RgbColor &other, double weight) const
 {
-    assert(other.r <= 1.0);
-    assert(other.g <= 1.0);
-    assert(other.b <= 1.0);
+    assert(weight >= 0 && weight <= 1.0);
 
-    double newR = r + (other.r - r) * weight;
-    double newG = g + (other.g - g) * weight;
-    double newB = b + (other.b - b) * weight;
+    double newR = r + (other.r - r) * weight * other.a;
+    double newG = g + (other.g - g) * weight * other.a;
+    double newB = b + (other.b - b) * weight * other.a;
+    double newA = a;
 
-    return RgbColor(newR, newG, newB);
+    return RgbColor(newR, newG, newB, newA);
 }
 
 const RgbColor RgbColor::black(0.0, 0.0, 0.0);
@@ -64,6 +65,7 @@ YuvColor::YuvColor(const RgbColor &c)
     y =  0.299 * c.r + 0.587 * c.g + 0.114 * c.b;
     u = -0.147 * c.r - 0.289 * c.g + 0.436 * c.b;
     v =  0.615 * c.r - 0.515 * c.g - 0.100 * c.b;
+    a = c.a;
 }
 
 const YuvColor YuvColor::black(RgbColor::black);
@@ -89,17 +91,16 @@ YuvColor::mix(const YuvColor &other, double weight) const
 
 GpuColor::GpuColor(const RgbColor &c)
 {
-    auto a = 255;
     auto r = u8(c.r * 255);
     auto g = u8(c.g * 255);
     auto b = u8(c.b * 255);
+    auto a = u8(c.a * 255);
 
     rawValue = u32(a << 24 | b << 16 | g << 8 | r);
 }
 
-GpuColor::GpuColor(u8 r, u8 g, u8 b)
+GpuColor::GpuColor(u8 r, u8 g, u8 b, u8 a)
 {
-    auto a = 255;
     rawValue = u32(a << 24 | b << 16 | g << 8 | r);
 }
 
