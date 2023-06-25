@@ -27,7 +27,7 @@ namespace log {
 struct Endl { };
 struct VSpace { };
 struct Flush { };
-struct ralign { string str; ralign(const string s) : str(s) { } };
+struct ralign { string s; int w; ralign(const string s, int w = 32) : s(s), w(w) { } };
 struct Normal { };
 struct Black { };
 struct Red { };

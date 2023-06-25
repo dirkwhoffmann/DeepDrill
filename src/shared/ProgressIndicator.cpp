@@ -117,13 +117,15 @@ BatchProgressIndicator::prefix(Logger &logger)
         auto iniFile = file;
         auto mapFile = iniFile.replace_extension(".map");
         total += 1;
-
+        done += isOlderThan(iniFile, mapFile);
+        /*
         if (fs::exists(mapFile)) {
 
             auto iniDate = fs::last_write_time(iniFile).time_since_epoch();
             auto mapDate = fs::last_write_time(mapFile).time_since_epoch();
             done += isize(mapDate >= iniDate);
         }
+        */
     }
 
     if (total) {

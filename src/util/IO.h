@@ -36,6 +36,9 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
 // Compares two files
 bool compareFiles(const fs::path &path1, const fs::path &path2);
 
+// Compares the modification dates of two files
+bool isOlderThan(const fs::path &path1, const fs::path &path2);
+
 
 //
 // Stream utilities

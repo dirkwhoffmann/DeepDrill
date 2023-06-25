@@ -120,6 +120,8 @@
 		50102348269DC4F500AC61A8 /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
 		50102350269EC70200AC61A8 /* DrillMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DrillMap.cpp; sourceTree = "<group>"; };
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
+		5012111C2A4707890012A4B7 /* textured.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = textured.ini; sourceTree = "<group>"; };
+		5012111D2A47266B0012A4B7 /* mordor.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = mordor.ini; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5047B4E129F812F700AC38DC /* Palette.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 				507122282A3386DE0013E655 /* relief.ini */,
 				50EB0D4A29F3E15800770F31 /* debug.ini */,
 				507122272A3381E40013E655 /* normalmap.ini */,
+				5012111C2A4707890012A4B7 /* textured.ini */,
 			);
 			path = profiles;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				50D69A7629E2A4630025DE0D /* seahorse3.ini */,
 				50BEC72F2694872900CCDFA8 /* spider.ini */,
 				50A09C7C2A40365000845EE7 /* experimental.ini */,
+				5012111D2A47266B0012A4B7 /* mordor.ini */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";

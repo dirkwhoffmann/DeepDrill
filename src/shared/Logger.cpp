@@ -53,7 +53,7 @@ Logger::operator<<(const log::ralign &arg)
     if (!muted) {
 
         blanks = 0;
-        stream << std::right << std::setw(32) << arg.str;
+        stream << std::right << std::setw(arg.w) << arg.s;
     }
     return *this;
 }

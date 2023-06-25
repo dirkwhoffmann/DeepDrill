@@ -63,6 +63,18 @@ bool compareFiles(const fs::path &path1, const fs::path &path2)
                       std::istreambuf_iterator<char>(stream2.rdbuf()));
 }
 
+bool isOlderThan(const fs::path &path1, const fs::path &path2)
+{
+    if (fs::exists(path1) && fs::exists(path2)) {
+
+        auto date1 = fs::last_write_time(path1).time_since_epoch();
+        auto date2 = fs::last_write_time(path2).time_since_epoch();
+        return date1 < date2;
+    }
+
+    return false;
+}
+
 std::ostream &
 dec::operator()(std::ostream &os) const
 {

@@ -53,7 +53,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["colors.palette"] = "";
     defaults["colors.texture"] = "";
     defaults["colors.scale"] = "1.0";
-    defaults["colors.opacity"] = "1.0";
+    defaults["colors.opacity"] = "0.5";
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
 

@@ -64,27 +64,45 @@ DeepMake::checkArguments()
 void
 DeepMake::run()
 {
-    // Determine the number of computed files
-    auto numFiles = opt.video.keyframes + 3;
-
-    auto askForPermission = [&numFiles]() {
-
-        while (1) {
-
-            log::cout << numFiles << " files will be created. Do you want to proceed [y]? ";
-
-            string s; std::getline(std::cin, s);
-
-            if (s == "y" || s == "yes" || s == "") return true;
-            if (s == "n" || s == "no") return false;
-
-            std::cout << '\a';
-        }
+    // Collect paths to all files that need to be created, skipped or modified
+    std::vector <fs::path> create;
+    std::vector <fs::path> skipOrModify;
+    auto add = [&](const fs::path &path) {
+        fs::exists(path) ? skipOrModify.push_back(path) : create.push_back(path);
     };
+    auto project = opt.files.outputs.front();
+    add(project / "Makefile");
+    add(project / AssetManager::iniFile());
+    for (isize i = 0; i < opt.video.keyframes; i++) {
+        add(project / AssetManager::iniFile(i));
+    }
 
-    auto permission = askForPermission();
-    stopWatch.restart();
-    if (permission) Maker(*this, opt).generate();
+    log::cout << log::vspace;
+    log::cout << log::ralign(std::to_string(create.size()), 5);
+    log::cout << " files will be created. " << log::endl;
+    log::cout << log::ralign(std::to_string(skipOrModify.size()), 5);
+    log::cout << " files will be skipped or modified." << log::endl;
+    log::cout << log::endl;
+
+    while (1) {
+
+        log::cout << "Do you want to proceed [y]? ";
+
+        string s; std::getline(std::cin, s);
+        stopWatch.restart();
+
+        if (s == "y" || s == "yes" || s == "") {
+
+            Maker(*this, opt).generate();
+            return;
+        }
+        if (s == "n" || s == "no") {
+
+            return;
+        }
+
+        std::cout << '\a';
+    }
 }
 
 }
