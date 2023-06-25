@@ -188,7 +188,9 @@ Maker::writeColorsSection(std::ofstream &os)
     os << "[colors]" << std::endl;
     os << "mode = " << opt.keys["colors.mode"] << std::endl;
     os << "palette = " << opt.keys["colors.palette"] << std::endl;
+    os << "texture = " << opt.keys["colors.texture"] << std::endl;
     os << "scale = " << opt.keys["colors.scale"] << std::endl;
+    os << "opacity = " << opt.keys["colors.opacity"] << std::endl;
     os << "alpha = " << opt.keys["colors.alpha"] << std::endl;
     os << "beta = " << opt.keys["colors.beta"] << std::endl;
     os << std::endl;

@@ -32,7 +32,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["map.width"] = "1920";
     defaults["map.height"] = "1080";
     defaults["map.depth"] = "1";
-    defaults["map.compress"] = "true";
+    defaults["map.compress"] = "yes";
 
     // Image keys
     defaults["image.width"] = "1920";

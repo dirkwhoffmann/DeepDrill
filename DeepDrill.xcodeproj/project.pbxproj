@@ -122,6 +122,15 @@
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		5012111C2A4707890012A4B7 /* textured.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = textured.ini; sourceTree = "<group>"; };
 		5012111D2A47266B0012A4B7 /* mordor.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = mordor.ini; sourceTree = "<group>"; };
+		5012111E2A4825530012A4B7 /* blocks.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blocks.jpg; sourceTree = "<group>"; };
+		5012111F2A4825CB0012A4B7 /* bricks.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bricks.jpg; sourceTree = "<group>"; };
+		501211202A482D810012A4B7 /* bubbles.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bubbles.jpg; sourceTree = "<group>"; };
+		501211212A482D8C0012A4B7 /* water.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = water.jpg; sourceTree = "<group>"; };
+		501211222A4838590012A4B7 /* font.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = font.jpg; sourceTree = "<group>"; };
+		501211232A4838620012A4B7 /* wave.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wave.jpg; sourceTree = "<group>"; };
+		501211242A4838730012A4B7 /* sandstone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sandstone.jpg; sourceTree = "<group>"; };
+		501211252A4848690012A4B7 /* electricity.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = electricity.jpg; sourceTree = "<group>"; };
+		501211262A4848710012A4B7 /* fire.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fire.jpg; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5047B4E129F812F700AC38DC /* Palette.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
@@ -560,9 +569,18 @@
 				50A09C812A45CEB600845EE7 /* bluegradient.jpg */,
 				50A09C832A45CEB600845EE7 /* greengradient.jpg */,
 				50A09C852A45CEB600845EE7 /* redgradient.jpg */,
+				5012111E2A4825530012A4B7 /* blocks.jpg */,
 				50A09C802A45CEB600845EE7 /* elvish.jpg */,
 				50A09C842A45CEB600845EE7 /* lava.jpg */,
+				5012111F2A4825CB0012A4B7 /* bricks.jpg */,
 				50A09C822A45CEB600845EE7 /* wood.jpg */,
+				501211202A482D810012A4B7 /* bubbles.jpg */,
+				501211252A4848690012A4B7 /* electricity.jpg */,
+				501211262A4848710012A4B7 /* fire.jpg */,
+				501211242A4838730012A4B7 /* sandstone.jpg */,
+				501211212A482D8C0012A4B7 /* water.jpg */,
+				501211232A4838620012A4B7 /* wave.jpg */,
+				501211222A4838590012A4B7 /* font.jpg */,
 			);
 			path = textures;
 			sourceTree = "<group>";

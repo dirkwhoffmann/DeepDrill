@@ -87,11 +87,7 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
                 if (nr >= range.first && nr <= range.second) {
 
                     // Process the key-value pair
-                    try {
-                        callback(section + "." + key ,value);
-                    } catch (const Exception &e) {
-                        throw ParseError(e, line);
-                    }
+                    callback(section + "." + key ,value);
                 }
                 continue;
             }

@@ -24,6 +24,7 @@ DeepDrill User's Manual
 .. toctree::
    :maxdepth: 1
    :caption: How-To Guides
+   
    HowTo/Palettes
    HowTo/SpatialImages
    HowTo/Textures

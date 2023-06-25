@@ -1,10 +1,6 @@
 # Customizing the color palette
 
-By default, DeepDrill colorizes the computed images with a default color palette. A custom color palette can be used by assigning a path to a palette image to the 
-```INI
-colors.palette
-``` 
-key. Here is an example: 
+By default, DeepDrill colorizes the computed images with a default color palette. A custom color palette can be used by assigning a path to a palette image to the `colors.palette` key. Here is an example: 
 ```none
 ./deepdrill top.ini -o image.map -o image.jpg colors.palette=vulcano.png 
 ```

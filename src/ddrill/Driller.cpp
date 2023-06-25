@@ -494,8 +494,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
                 .result     = DR_ESCAPED,
                 .first      = (i32)ref.skipped,
                 .last       = (i32)iteration,
-                .zn         = StandardComplex(zn),
                 .lognorm    = (float)::log(norm),
+                .zn         = StandardComplex(zn),
                 .derivative = StandardComplex(ddn),
                 .normal     = StandardComplex(nv) } );
             return;
