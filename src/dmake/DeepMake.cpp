@@ -73,7 +73,7 @@ DeepMake::run()
     auto project = opt.files.outputs.front();
     add(project / "Makefile");
     add(project / AssetManager::iniFile());
-    for (isize i = 0; i < opt.video.keyframes; i++) {
+    for (isize i = 0; i <= opt.video.keyframes; i++) {
         add(project / AssetManager::iniFile(i));
     }
 
@@ -93,6 +93,7 @@ DeepMake::run()
 
         if (s == "y" || s == "yes" || s == "") {
 
+            log::cout << log::endl;
             Maker(*this, opt).generate();
             return;
         }
