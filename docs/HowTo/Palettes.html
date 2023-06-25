@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Debugging the Toolchain &#8212; DeepDrill 2.0</title>
+    <title>Customizing the color palette &#8212; DeepDrill 3.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The Mandelbrot Set" href="../Theory/MandelbrotSet.html" />
-    <link rel="prev" title="Computing Zoom Videos" href="ZoomVideos.html" />
+    <link rel="next" title="Computing spatial images" href="SpatialImages.html" />
+    <link rel="prev" title="Computing Zoom Videos" href="../Tutorials/ZoomVideos.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
-            <a class="top" href="#">Debugging the Toolchain</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
+            <a class="top" href="#">Customizing the color palette</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,16 +82,16 @@
       </div>
     </header>
     <nav>
-      <a href="ZoomVideos.html" class="nav-icon previous" title="previous:&#13;Computing Zoom Videos" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="../Tutorials/ZoomVideos.html" class="nav-icon previous" title="previous:&#13;Computing Zoom Videos" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="../Theory/MandelbrotSet.html" class="nav-icon next" title="next:&#13;The Mandelbrot Set" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="SpatialImages.html" class="nav-icon next" title="next:&#13;Computing spatial images" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="ZoomVideos.html" aria-label="Previous topic" >
+      <a class="previous" href="../Tutorials/ZoomVideos.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
@@ -102,11 +102,11 @@
           </span>
         </div>
       </a>
-      <a class="next" href="../Theory/MandelbrotSet.html" aria-label="Next topic" >
+      <a class="next" href="SpatialImages.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            The Mandelbrot Set
+            Computing spatial images
           </span>
         </div>
         <div class="icon">
@@ -120,81 +120,61 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="debugging-the-toolchain">
-<h1>Debugging the Toolchain<a class="headerlink" href="#debugging-the-toolchain" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial you will learn how to get detailed information about the calculation process while creating images or videos.</p>
-<section id="generating-verbose-output">
-<h2>Generating Verbose Output<a class="headerlink" href="#generating-verbose-output" title="Permalink to this heading">¶</a></h2>
-<p>The easiest way to get more information about the currently performed computation is to specify the <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> (<code class="docutils literal notranslate"><span class="pre">-v</span></code>) option on the command line. For example, if we repeat the calculation of the Mandelbrot set that we performed before, we will get the following, more informative output:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -v top.loc -o top.map
-
-DeepDrill 2.0 - (C)opyright Dirk W. Hoffmann
-
-                        Center: -0.7 + 0i
-                   Upper left: (-2.7915,-1.17647)
-                  Lower right: (1.38932,1.17429)
-                 Magnification: 0.85b1
-                      Map size: 1920 x 1080 (3D)
-                    Image size: 1920 x 1080 (2D)
-                 GMP Precision: 128 Bit
-
-Round 1 / 50: 2073600 points
-
-     Computing reference orbit: ................................. 0.00 sec
-
-               Reference point: (960,540)
-        Perturbation tolerance: 1e-06
-                 Maximum depth: 1000
-                  Actual depth: 1000
-
-        Computing coefficients: ................................. 0.00 sec
-
-                  Coefficients: 5
-       Approximation tolerance: 1e-12
-
-         Checking probe points: ................................. 0.00 sec
-
-          Skippable iterations: 0
-
-        Computing delta orbits: ................................. 6.23 sec
-
-                      Glitches: 0
-
-               Saving map file: ................................. 0.07 sec
-
-                      Map size: 1920 x 1080
-              Iteration counts: Saved
-                      Lognorms: Saved
-                   Derivatives: Not saved
-                       Normals: Saved
-
-Total time: 6.38 sec
+<section class="tex2jax_ignore mathjax_ignore" id="customizing-the-color-palette">
+<h1>Customizing the color palette<a class="headerlink" href="#customizing-the-color-palette" title="Permalink to this heading">¶</a></h1>
+<p>By default, DeepDrill colorizes the computed images with a default color palette. A custom color palette can be used by assigning a path to a palette image to the <code class="docutils literal notranslate"><span class="pre">colors.palette</span></code> key. Here is an example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o image.map -o image.jpg colors.palette=vulcano.png 
 </pre></div>
 </div>
-</section>
-<section id="highlighting-glitch-points">
-<h2>Highlighting Glitch Points<a class="headerlink" href="#highlighting-glitch-points" title="Permalink to this heading">¶</a></h2>
-<p>To enable additional debug options, you may pass in profile <code class="docutils literal notranslate"><span class="pre">debug.prf</span></code>. This profile contains the following definitions:</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[debug]</span>
-<span class="na">glitches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">yes</span>
+<p><img alt="Recolored Mandelbrot set" src="../_images/recolored1.jpg" /></p>
+<p>DeepDrill does not rely on a special palette format. Instead, the color palettes is specified in the form of a standard image file. For simplicity, there are no restrictions on the image format. DeepDrill composes the color palette from the pixels of the first horizontal line and ignores all others. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images result in slightly smoother color transitions.</p>
+<p>In addition, DeepDrill provides a key called <code class="docutils literal notranslate"><span class="pre">colors.scale</span></code> which controls how fast the palette repeats. The following examples shows the effect:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill image.map colors.palette=vulcano.png colors.scale=3.0 -o image.jpg 
 </pre></div>
 </div>
-<p>By setting <code class="docutils literal notranslate"><span class="pre">debug.glitches</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>, DeepDrill will colorize all glitch points in red. For more information about glitch points, please refer to the mathematical background section.</p>
-<p>At the time of writing, the <code class="docutils literal notranslate"><span class="pre">glitches</span></code> option is the only available option in the <code class="docutils literal notranslate"><span class="pre">debug</span></code> section. Other options are likely to come in the future as the toolchain matures.</p>
-</section>
-<section id="exporting-normal-maps">
-<h2>Exporting Normal Maps<a class="headerlink" href="#exporting-normal-maps" title="Permalink to this heading">¶</a></h2>
-<p>To create 3D effects, DeepDrill calculates a normal map internally. This map can be made visible by applying the <code class="docutils literal notranslate"><span class="pre">normalmap.prf</span></code> profile. The profile instructs DeepDrill to use a special GPU filter that converts the normal map data into RGB values:</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
-<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
-<span class="na">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">normalmap.glsl</span>
+<p><img alt="Recolored Mandelbrot set" src="../_images/recolored2.jpg" /></p>
+<section id="predefined-palettes">
+<h2>Predefined palettes<a class="headerlink" href="#predefined-palettes" title="Permalink to this heading">¶</a></h2>
+<p>In the example shown above we have used image file <code class="docutils literal notranslate"><span class="pre">vulcano.png</span></code> which is one of several predefined color palettes. The images below give an overview of the available choices. Since you can pass any image file, it is easy to colorize  images with self-made palettes:</p>
+<p><em>default</em>
+<img alt="Default palette" src="../_images/default.png" /></p>
+<p><em>candy</em>
+<img alt="candy palette" src="../_images/candy.png" /></p>
+<p><em>dolomiti</em>
+<img alt="dolomiti palette" src="../_images/dolomiti.png" /></p>
+<p><em>elements</em>
+<img alt="elements palette" src="../_images/elements.png" /></p>
+<p><em>ice</em>
+<img alt="ice palette" src="../_images/ice.png" /></p>
+<p><em>lindor</em>
+<img alt="lindor palette" src="../_images/lindor.png" /></p>
+<p><em>pistachio</em>
+<img alt="pistachio palette" src="../_images/pistachio.png" /></p>
+<p><em>prism</em>
+<img alt="prism palette" src="../_images/prism.png" /></p>
+<p><em>ruby</em>
+<img alt="ruby palette" src="../_images/ruby.png" /></p>
+<p><em>ultrafrac</em>
+<img alt="ultrafrac palette" src="../_images/ultrafrac.png" /></p>
+<p><em>vulcano</em>
+<img alt="vulcano palette" src="../_images/vulcano.png" /></p>
+<p>The following additional examples show recolored versions of one of the images we calculated in the previous tutorial.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.ini<span class="w"> </span>-o<span class="w"> </span>image1.jpg<span class="w"> </span>-o<span class="w"> </span>seahorse1.map<span class="w"> </span>colors.palette<span class="o">=</span>ruby.png
 </pre></div>
 </div>
-<p>Running DeepDrill with this profile results in the following image:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-v<span class="w"> </span>-o<span class="w"> </span>normalmap.jpg<span class="w"> </span>-p<span class="w"> </span>normalmap.prf<span class="w"> </span>top.loc
+<p><img alt="prism recolored" src="../_images/recolored3.jpg" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image2.jpg<span class="w"> </span>colors.palette<span class="o">=</span>lindor.png
 </pre></div>
 </div>
-<p><img alt="Normal Map" src="../_images/normalmap.jpg" /></p>
+<p><img alt="prism recolored" src="../_images/recolored4.jpg" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image3.jpg<span class="w"> </span>colors.palette<span class="o">=</span>dolomiti.png
+</pre></div>
+</div>
+<p><img alt="prism recolored" src="../_images/recolored5.jpg" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image3.jpg<span class="w"> </span>colors.palette<span class="o">=</span>ice.png
+</pre></div>
+</div>
+<p><img alt="prism recolored" src="../_images/recolored6.jpg" /></p>
 </section>
 </section>
 
@@ -216,13 +196,17 @@ Total time: 6.38 sec
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Debugging the Toolchain</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Customizing the color palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing spatial images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding texture overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -255,7 +239,7 @@ Total time: 6.38 sec
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="ZoomVideos.html" aria-label="Previous topic" >
+      <a class="previous" href="../Tutorials/ZoomVideos.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
@@ -266,11 +250,11 @@ Total time: 6.38 sec
           </span>
         </div>
       </a>
-      <a class="next" href="../Theory/MandelbrotSet.html" aria-label="Next topic" >
+      <a class="next" href="SpatialImages.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            The Mandelbrot Set
+            Computing spatial images
           </span>
         </div>
         <div class="icon">
@@ -283,7 +267,7 @@ Total time: 6.38 sec
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Tutorials/Debug.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/HowTo/Palettes.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

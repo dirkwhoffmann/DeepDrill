@@ -1,3 +1,0 @@
-# Improving image quality
-
-In this tutorial you will learn how to enhance the quality of the computed images.

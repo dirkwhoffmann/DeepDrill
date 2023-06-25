@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Colorizing Images &#8212; DeepDrill 2.0</title>
+    <title>Adding texture overlays &#8212; DeepDrill 3.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Adding 3D Effects" href="3D.html" />
-    <link rel="prev" title="Computing Still Images" href="StillImages.html" />
+    <link rel="next" title="Debugging the Toolchain" href="Debug.html" />
+    <link rel="prev" title="Computing spatial images" href="SpatialImages.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
-            <a class="top" href="#">Colorizing Images</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
+            <a class="top" href="#">Adding texture overlays</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="StillImages.html" class="nav-icon previous" title="previous:&#13;Computing Still Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="SpatialImages.html" class="nav-icon previous" title="previous:&#13;Computing spatial images" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="3D.html" class="nav-icon next" title="next:&#13;Adding 3D Effects" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Debug.html" class="nav-icon next" title="next:&#13;Debugging the Toolchain" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="StillImages.html" aria-label="Previous topic" >
+      <a class="previous" href="SpatialImages.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing Still Images
+            Computing spatial images
           </span>
         </div>
       </a>
-      <a class="next" href="3D.html" aria-label="Next topic" >
+      <a class="next" href="Debug.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Adding 3D Effects
+            Debugging the Toolchain
           </span>
         </div>
         <div class="icon">
@@ -120,63 +120,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="colorizing-images">
-<h1>Colorizing Images<a class="headerlink" href="#colorizing-images" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial you will learn how to colorize Mandelbrot images with different color palettes.</p>
-<p>By default, images are created with a predefined color palette. The following call instructs DeepDrill to use a different palette.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill image.map -o image.jpg -c colors.palette=vulcano.png 
+<section class="tex2jax_ignore mathjax_ignore" id="adding-texture-overlays">
+<h1>Adding texture overlays<a class="headerlink" href="#adding-texture-overlays" title="Permalink to this heading">¶</a></h1>
+<p>DeepDrill supports to mix the pixels derived from the color palette with the pixels from a texture image. To enable this feature, simply assign an image file to key <code class="docutils literal notranslate"><span class="pre">colors.texture</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.map -o top.jpg top.ini colors.texture=wood.jpg
 </pre></div>
 </div>
-<p><img alt="Recolored Mandelbrot set" src="../_images/recolored1.jpg" /></p>
-<p>As shown above, the color palette is specified in the form of an image file. For simplicity, there are no restrictions on the format of the image. DeepDrill composes the color palette from the pixels of the first horizontal line and ignores all other lines. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images result in slightly smoother color transitions.</p>
-<p>In addition, DeepDrill provides a key called <code class="docutils literal notranslate"><span class="pre">colors.scale</span></code> which controls how fast the palette repeats. The following examples shows the effect:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill image.map -c colors.palette=vulcano.png -c colors.scale=3.0 -o image.jpg 
-</pre></div>
-</div>
-<p><img alt="Recolored Mandelbrot set" src="../_images/recolored2.jpg" /></p>
-<section id="predefined-palettes">
-<h2>Predefined palettes<a class="headerlink" href="#predefined-palettes" title="Permalink to this heading">¶</a></h2>
-<p>In the example shown above we have used palette image <code class="docutils literal notranslate"><span class="pre">vulcano.png</span></code> which is one of several predefined palettes. The images below give an overview of the available palettes. Since you can pass any image file as a palette image, you can easily colorize your images with a self-made palette:</p>
-<p><em>default</em>
-<img alt="Default palette" src="../_images/default.png" /></p>
-<p><em>candy</em>
-<img alt="candy palette" src="../_images/candy.png" /></p>
-<p><em>dolomiti</em>
-<img alt="dolomiti palette" src="../_images/dolomiti.png" /></p>
-<p><em>elements</em>
-<img alt="elements palette" src="../_images/elements.png" /></p>
-<p><em>ice</em>
-<img alt="ice palette" src="../_images/ice.png" /></p>
-<p><em>lindor</em>
-<img alt="lindor palette" src="../_images/lindor.png" /></p>
-<p><em>pistachio</em>
-<img alt="pistachio palette" src="../_images/pistachio.png" /></p>
-<p><em>prism</em>
-<img alt="prism palette" src="../_images/prism.png" /></p>
-<p><em>ruby</em>
-<img alt="ruby palette" src="../_images/ruby.png" /></p>
-<p><em>ultrafrac</em>
-<img alt="ultrafrac palette" src="../_images/ultrafrac.png" /></p>
-<p><em>vulcano</em>
-<img alt="vulcano palette" src="../_images/vulcano.png" /></p>
-<p>The following additional examples show recolored versions of one of the images we calculated in the previous tutorial.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.loc<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-o<span class="w"> </span>seahorse1.map<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>ruby.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored3.jpg" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>lindor.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored4.jpg" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>dolomiti.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored5.jpg" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>-c<span class="w"> </span>colors.palette<span class="o">=</span>ice.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored6.jpg" /></p>
-</section>
+<p><img alt="Textured Mandelbrot Image" src="../_images/textured.jpg" /></p>
+<p>File <code class="docutils literal notranslate"><span class="pre">wood.jpg</span></code> is located in folder <code class="docutils literal notranslate"><span class="pre">textures</span></code> which is one of the default search locations for asset files. This directory contains some other nice texture you may want to check out.</p>
 </section>
 
             <div class="clearer"></div>
@@ -197,12 +148,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Colorizing Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the color palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing spatial images</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding texture overlays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
@@ -236,22 +191,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="StillImages.html" aria-label="Previous topic" >
+      <a class="previous" href="SpatialImages.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing Still Images
+            Computing spatial images
           </span>
         </div>
       </a>
-      <a class="next" href="3D.html" aria-label="Next topic" >
+      <a class="next" href="Debug.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Adding 3D Effects
+            Debugging the Toolchain
           </span>
         </div>
         <div class="icon">
@@ -264,7 +219,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Tutorials/Colors.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/HowTo/Textures.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

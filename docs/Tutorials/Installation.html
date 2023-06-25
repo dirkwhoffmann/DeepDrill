@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Build instructions &#8212; DeepDrill 2.0</title>
+    <title>Build instructions &#8212; DeepDrill 3.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -59,7 +59,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
             <a class="top" href="#">Build instructions</a>
           </div>
           <div class="buttons">
@@ -123,10 +123,10 @@
 <section class="tex2jax_ignore mathjax_ignore" id="build-instructions">
 <h1>Build instructions<a class="headerlink" href="#build-instructions" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial, you will learn how to download, compile, and install the DeepDrill toolchain.</p>
-<p>DeepDrill is a Unix-style C++ application and should be compatible with most Unix-style operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.</p>
+<p>DeepDrill is a Unix-style C++20 application and compatible with most Unix-like operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.</p>
 <ul>
 <li><p><strong>Step 1: Install third-party libraries</strong></p>
-<p>To compile the DeepDrill toolchain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, FFmpeg needs to be installed on your machine. It is executed by DeepZoom at runtime.</p>
+<p>To compile the DeepDrill toolchain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, FFmpeg needs to be installed on your machine, too. It is executed by DeepZoom at runtime.</p>
 <ul>
 <li><p>Option 1: Install with Homebrew</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>gmp
@@ -184,10 +184,14 @@ make<span class="w"> </span>-j
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Build instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the color palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing spatial images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding texture overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>

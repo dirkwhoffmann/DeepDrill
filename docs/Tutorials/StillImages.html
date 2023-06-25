@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Computing Still Images &#8212; DeepDrill 2.0</title>
+    <title>Computing Still Images &#8212; DeepDrill 3.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,7 +17,7 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Colorizing Images" href="Colors.html" />
+    <link rel="next" title="Computing Zoom Videos" href="ZoomVideos.html" />
     <link rel="prev" title="Build instructions" href="Installation.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -59,7 +59,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
             <a class="top" href="#">Computing Still Images</a>
           </div>
           <div class="buttons">
@@ -85,7 +85,7 @@
       <a href="Installation.html" class="nav-icon previous" title="previous:&#13;Build instructions" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="Colors.html" class="nav-icon next" title="next:&#13;Colorizing Images" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="ZoomVideos.html" class="nav-icon next" title="next:&#13;Computing Zoom Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
@@ -102,11 +102,11 @@
           </span>
         </div>
       </a>
-      <a class="next" href="Colors.html" aria-label="Next topic" >
+      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Colorizing Images
+            Computing Zoom Videos
           </span>
         </div>
         <div class="icon">
@@ -123,7 +123,7 @@
 <section class="tex2jax_ignore mathjax_ignore" id="computing-still-images">
 <h1>Computing Still Images<a class="headerlink" href="#computing-still-images" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial, you will learn how to create still images using the DeepDrill toolchain.</p>
-<p>We start by computing a top view of the entire Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a so-called location file (<code class="docutils literal notranslate"><span class="pre">.loc</span></code>) as a command line parameter. A predefined location file for the title image is stored in the <code class="docutils literal notranslate"><span class="pre">tutorial</span></code> directory under <code class="docutils literal notranslate"><span class="pre">top.loc</span></code>. Before we continue, let’s take a look at the contents of this file:</p>
+<p>We start by computing a top view of the entire Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a configuration file as a command line parameter. All configuration files carry the .ini extension because DeepDrill uses a structured key-value syntax for customization. A predefined location file for the title image is stored in the <code class="docutils literal notranslate"><span class="pre">locations</span></code> directory under <code class="docutils literal notranslate"><span class="pre">top.ini</span></code>. Before we continue, let’s peek inside this file:</p>
 <div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[location]</span>
 <span class="na">real</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">-0.7</span>
 <span class="na">imag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.0</span>
@@ -133,21 +133,28 @@
 </div>
 <p>Four key-value pairs are defined. The first two define the position of the center coordinate on the complex number plane. The third pair defines the magnification factor and the fourth pair defines the maximum number of iterations. If an orbit has not yet broken out at the time this iteration is performed, the corresponding point is considered part of the Mandelbrot set.</p>
 <p>Assuming the current directory is the build directory, we can start DeepDrill by executing the following command at the command line:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>image.map<span class="w"> </span>top.loc
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>image.map<span class="w"> </span>top.ini
 </pre></div>
 </div>
 <p>The following output is generated:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepDrill 2.0 - (C)opyright Dirk W. Hoffmann
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepDrill 3.0 - (C)opyright Dirk W. Hoffmann
 
-Round 1: 2073600 points
+        Running the area check: ................................. 1.12 sec
+
+Round 1: 1784039 points remaining
 
      Computing reference orbit: ................................. 0.00 sec
         Computing coefficients: ................................. 0.00 sec
          Checking probe points: ................................. 0.00 sec
-        Computing delta orbits: ................................. 6.34 sec
-               Saving map file: ................................. 0.08 sec
+        Computing delta orbits: ................................. 1.23 sec
 
-Total time: 6.43 sec
+All rounds completed: 0 unresolved
+
+            Preparing map file: ................................. 0.05 sec
+          Compressing map file: ................................. 0.65 sec
+               Saving map file: ................................. 0.00 sec
+
+Total time: 3.14 sec
 </pre></div>
 </div>
 <p>Note that we have not generated the image directly. Instead, we computed a so-called map file, which stores various information about the orbit of each pixel. The creation of the map file is the first phase of a two-step process. In the second phase, the map file is converted into an image. This is done by specifying a map file as input and an image file as output.</p>
@@ -155,39 +162,41 @@ Total time: 6.43 sec
 </pre></div>
 </div>
 <p>The following output is generated:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepDrill 2.0 - (C)opyright Dirk W. Hoffmann
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepDrill 3.0 - (C)opyright Dirk W. Hoffmann
 
-              Loading map file: ................................. 0.08 sec
+              Loading map file: ................................. 0.00 sec
+        Uncompressing map file: ................................. 0.09 sec
+           Extracting channels: ................................. 0.04 sec
            Computing color map: ................................. 0.05 sec
            Running GPU shaders: ................................. 0.01 sec
                   Saving image: ................................. 0.02 sec
 
-Total time: 0.19 sec
+Total time: 0.33 sec
 </pre></div>
 </div>
-<p>Besides jpg images, DeepDrill also supports bmp and png type images.</p>
+<p>Besides JPG images, DeepDrill also supports BMP and PNG type images.</p>
 <p>By default, DeepDrill creates a 1920 x 1080 image with a predefined color palette and other default settings:</p>
 <p><img alt="Mandelbrot Image" src="../_images/stillImage1.jpg" /></p>
-<p>All settings can be customized by specifying one or more key-value pairs. The simplest way to define such a pair is to use the <code class="docutils literal notranslate"><span class="pre">-c</span></code> command line option. For example, the following invocation instructs DeepDrill to create the image in 4K resolution:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-c<span class="w"> </span>image.width<span class="o">=</span><span class="m">3840</span><span class="w"> </span>-c<span class="w"> </span>image.height<span class="o">=</span><span class="m">2160</span><span class="w"> </span>top.loc<span class="w"> </span>
+<p>All settings can be customized by specifying one or more key-value pairs. The simplest way to define such a pair is to pass it in as a command line parameter. For example, the following invocation instructs DeepDrill to create the image in 4K resolution:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>image.width<span class="o">=</span><span class="m">3840</span><span class="w"> </span>image.height<span class="o">=</span><span class="m">2160</span><span class="w"> </span>top.ini
 </pre></div>
 </div>
 <p>This example also demonstrates the possibility of going directly from a location file to an image. In this case the map file is only created internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes.</p>
-<p>Since the number of key-value pairs may become very large, DeepDrill allows the user to customize the settings via profiles. For example, the <code class="docutils literal notranslate"><span class="pre">profiles</span></code> folder contains a predefined profile named <code class="docutils literal notranslate"><span class="pre">4K.prf</span></code> with the following content:</p>
+<p>Another way of passing in key-value pairs is by putting the keys in a seperare configuration file. E.g., the <code class="docutils literal notranslate"><span class="pre">profiles</span></code> folder contains a predefined profile named <code class="docutils literal notranslate"><span class="pre">4K.ini</span></code> with the following content:</p>
 <div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
 <span class="na">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3840</span>
 <span class="na">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2160</span>
 </pre></div>
 </div>
-<p>Profiles can be specified with the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option at the command line. This means that we can simplify the calculation of our 4K image by running DeepDrill as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-p<span class="w"> </span>4K.prf<span class="w"> </span>top.loc
+<p>DeepDrill accepts any number of configuration files as input. This means that we can simplify the calculation of our 4K image with the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>4K.ini<span class="w"> </span>top.ini
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">-p</span></code> option can be specified multiple times to combine different profiles. Note that the old value of a key-value pair is overwritten if it is specified multiple times. All profiles are processed in the same order as they appear in the argument list.</p>
+<p>Note that the old value of a key-value pair is overwritten if it is specified multiple times. All configuration files are processed in the same order as they appear in the argument list.</p>
 <p>In the next example, we’ll dig a little deeper into the Mandelbrot set navigating to three different locations:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse1.jpg<span class="w"> </span>seahorse1.loc
-./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse2.jpg<span class="w"> </span>seahorse2.loc
-./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse3.jpg<span class="w"> </span>seahorse3.loc
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse1.jpg<span class="w"> </span>seahorse1.ini
+./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse2.jpg<span class="w"> </span>seahorse2.ini
+./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse3.jpg<span class="w"> </span>seahorse3.ini
 </pre></div>
 </div>
 <p>As a result, we get three well known images. All three structures are hidden in a part of the Mandelbrot set known as <em>seahorse valley</em>.</p>
@@ -217,10 +226,14 @@ Total time: 0.19 sec
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3D.html">Adding 3D Effects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the color palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing spatial images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding texture overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -264,11 +277,11 @@ Total time: 0.19 sec
           </span>
         </div>
       </a>
-      <a class="next" href="Colors.html" aria-label="Next topic" >
+      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Colorizing Images
+            Computing Zoom Videos
           </span>
         </div>
         <div class="icon">

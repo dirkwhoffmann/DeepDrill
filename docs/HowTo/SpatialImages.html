@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Adding 3D Effects &#8212; DeepDrill 2.0</title>
+    <title>Computing spatial images &#8212; DeepDrill 3.0</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Computing Zoom Videos" href="ZoomVideos.html" />
-    <link rel="prev" title="Colorizing Images" href="Colors.html" />
+    <link rel="next" title="Adding texture overlays" href="Textures.html" />
+    <link rel="prev" title="Customizing the color palette" href="Palettes.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 2.0</a>
-            <a class="top" href="#">Adding 3D Effects</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
+            <a class="top" href="#">Computing spatial images</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="Colors.html" class="nav-icon previous" title="previous:&#13;Colorizing Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="Palettes.html" class="nav-icon previous" title="previous:&#13;Customizing the color palette" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="ZoomVideos.html" class="nav-icon next" title="next:&#13;Computing Zoom Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Textures.html" class="nav-icon next" title="next:&#13;Adding texture overlays" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Colors.html" aria-label="Previous topic" >
+      <a class="previous" href="Palettes.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Colorizing Images
+            Customizing the color palette
           </span>
         </div>
       </a>
-      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
+      <a class="next" href="Textures.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing Zoom Videos
+            Adding texture overlays
           </span>
         </div>
         <div class="icon">
@@ -120,10 +120,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="adding-3d-effects">
-<h1>Adding 3D Effects<a class="headerlink" href="#adding-3d-effects" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial you will learn how to create spatial images.</p>
-<p>The easiest way to add a 3D effect in DeepDrill is to pass in the 3D profile which defines three key-value pairs:</p>
+<section class="tex2jax_ignore mathjax_ignore" id="computing-spatial-images">
+<h1>Computing spatial images<a class="headerlink" href="#computing-spatial-images" title="Permalink to this heading">¶</a></h1>
+<p>DeepDrill supports the creation of spatial images. The easiest way to add a 3D effect in DeepDrill is to pass in the <code class="docutils literal notranslate"><span class="pre">3D.ini</span></code> profile which defines three key-value pairs:</p>
 <div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
 <span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
 
@@ -132,17 +131,17 @@
 <span class="na">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">65</span>
 </pre></div>
 </div>
-<p>Setting <code class="docutils literal notranslate"><span class="pre">image.depth</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> instructs DeepDrill to mix the synthesized RGB pixels with depth information from a normal map. Running DeepDrill with this profile results in the following image:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.map -o top.jpg -p 3D.prf top.loc
+<p>Setting <code class="docutils literal notranslate"><span class="pre">image.depth</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> instructs DeepDrill to mix the derived pixel color values with depth information from a normal map. Running DeepDrill with this profile results in the following image:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.map -o top.jpg 3D.ini top.ini
 </pre></div>
 </div>
 <p><img alt="3D Mandelbrot Image" src="../_images/3D_1.jpg" /></p>
-<p>The latter two key-value pairs define the direction of the light vector. <code class="docutils literal notranslate"><span class="pre">alpha</span></code> specifies the direction of the incoming light on the xy plane. <code class="docutils literal notranslate"><span class="pre">beta</span></code> defines the inclination of the light source. Decreasing this angle increases the 3D effect:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.jpg -p 3D.prf top.map -c colors.beta=30
+<p>The latter two key-value pairs define the direction of the light vector. <code class="docutils literal notranslate"><span class="pre">alpha</span></code> specifies the direction of the incoming light on the xy plane, and <code class="docutils literal notranslate"><span class="pre">beta</span></code> is the inclination of the light source. Decreasing this angle increases the 3D effect:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.jpg 3D.ini top.map colors.beta=30
 </pre></div>
 </div>
 <p><img alt="3D Mandelbrot Image" src="../_images/3D_2.jpg" /></p>
-<p>Another predefined profile for computing spatial images is <code class="docutils literal notranslate"><span class="pre">relief.prf</span></code>. In addition to the options of the 3D profile, it selects a special GPU filter called <code class="docutils literal notranslate"><span class="pre">relief.glsl</span></code>. This filter ignores the color information and converts the normal map directly into a grayscale image:</p>
+<p>Another predefined profile for computing spatial images is <code class="docutils literal notranslate"><span class="pre">relief.ini</span></code>. In addition to the options of the 3D profile, it selects a special GPU filter called <code class="docutils literal notranslate"><span class="pre">relief.glsl</span></code>. This filter ignores the color information and converts the normal map directly into a grayscale image:</p>
 <div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
 <span class="na">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">relief.glsl</span>
 <span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
@@ -153,7 +152,7 @@
 </pre></div>
 </div>
 <p>Running DeepDrill with this profile yields the following result:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>-p<span class="w"> </span>relief.prf<span class="w"> </span>top.map
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>relief.ini<span class="w"> </span>top.map
 </pre></div>
 </div>
 <p><img alt="Mandelbrot Relief" src="../_images/relief.jpg" /></p>
@@ -177,12 +176,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colorizing Images</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding 3D Effects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the color palette</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Computing spatial images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding texture overlays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
@@ -216,22 +219,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Colors.html" aria-label="Previous topic" >
+      <a class="previous" href="Palettes.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Colorizing Images
+            Customizing the color palette
           </span>
         </div>
       </a>
-      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
+      <a class="next" href="Textures.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing Zoom Videos
+            Adding texture overlays
           </span>
         </div>
         <div class="icon">
@@ -244,7 +247,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Tutorials/3D.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/HowTo/SpatialImages.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>
