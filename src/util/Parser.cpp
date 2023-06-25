@@ -21,83 +21,122 @@
 namespace dd {
 
 void
-Parser::parse(const string &path, std::function<void(string,string)>callback)
+Parser::parse(const fs::path &path, Callback callback, isize nr)
 {
-    auto name = extractName(path);
     auto fs = std::ifstream(path);
 
     if (!fs.is_open()) {
-        throw Exception("Failed to open file " + path + ".");
+        throw Exception("Failed to open file " + path.string() + ".");
     }
  
-    try { parse(fs, callback); } catch (ParseError &e) {
+    try { parse(fs, callback, nr); } catch (ParseError &e) {
 
-        e.file = name;
+        e.path = path.filename();
         throw;
     }
 }
 
 void
-Parser::parse(std::ifstream &stream, std::function<void(string,string)>callback)
+Parser::parse(std::ifstream &stream, Callback callback, isize nr)
 {
     std::stringstream ss;
     ss << stream.rdbuf();
     
-    parse(ss, callback);
+    parse(ss, callback, nr);
 }
 
 void
-Parser::parse(std::stringstream &stream, std::function<void(string,string)>callback)
+Parser::parse(std::stringstream &stream, Callback callback, isize nr)
 {
     isize line = 0;
     string input;
     string section;
-    
-    while(std::getline(stream, input)) {
 
-        line++;
+    try {
 
-        // Remove comments
-        input = input.substr(0, input.find("#"));
+        while(std::getline(stream, input)) {
 
-        // Remove white spaces
-        trim(input);
-                
-        // Ignore empty lines
-        if (input == "") continue;
-                        
-        // Check if this line contains a section marker
-        if (input.front() == '[' && input.back() == ']') {
-        
-            section = input.substr(1, input.size() - 2);
-            tolower(section);
-            continue;
-        }
-        
-        // Check if this line is a key-value pair
-        if (auto pos = input.find("="); pos != std::string::npos) {
-            
-            auto key = input.substr(0, pos);
-            auto value = input.substr(pos + 1, std::string::npos);
-            
+            line++;
+
+            // Remove comments
+            input = input.substr(0, input.find("#"));
+
             // Remove white spaces
-            trim(key);
-            trim(value);
-            
-            // Convert the key to lower case
-            tolower(key);
-            
-            // Add the key-value pair
-            try {
-                callback(section + "." + key ,value);
-            } catch (const Exception &e) {
-                throw ParseError(e, line);
+            erase(input, ' ');
+
+            // Ignore empty lines
+            if (input == "") continue;
+
+            // Check if this line contains a section marker
+            if (input.front() == '[' && input.back() == ']') {
+
+                section = input.substr(1, input.size() - 2);
+                tolower(section);
+                continue;
             }
-            continue;
+
+            // Check if this line is a key-value pair
+            if (auto pos = input.find("="); pos != std::string::npos) {
+
+                auto key = input.substr(0, pos);
+                auto value = input.substr(pos + 1, std::string::npos);
+
+                // Get the range of keyframes this key-value pair applies to
+                auto range = stripRange(key);
+
+                if (nr >= range.first && nr <= range.second) {
+
+                    // Process the key-value pair
+                    try {
+                        callback(section + "." + key ,value);
+                    } catch (const Exception &e) {
+                        throw ParseError(e, line);
+                    }
+                }
+                continue;
+            }
+
+            throw SyntaxError("Parse error");
         }
-        
-        throw ParseError(SyntaxError("Parse error"), line);
-    }    
+
+    } catch (Exception &e) {
+
+        throw ParseError(e, line);
+    }
+}
+
+std::pair<isize, isize>
+Parser::getRange(string &key, bool strip)
+{
+    isize first = 0;
+    isize last = LONG_MAX;
+
+    if (auto pos1 = key.find(":"); pos1 != std::string::npos) {
+
+        try {
+
+            auto range = key.substr(0, pos1);
+            if (auto pos2 = range.find("-"); pos2 != std::string::npos) {
+
+                first = std::stol(range.substr(0, pos2));
+                last = std::stol(range.substr(pos2 + 1, std::string::npos));
+
+            } else {
+
+                first = std::stol(range);
+                last = first;
+            }
+
+        } catch (...) {
+            throw Exception(key + " is not a valid frame range.");
+        };
+
+        if (strip) {
+            key = key.substr(pos1 + 1, std::string::npos);
+        }
+    }
+
+    return { first, last };
 }
 
 void
@@ -120,6 +159,12 @@ Parser::trim(string &s)
 {
     ltrim(s);
     rtrim(s);
+}
+
+void
+Parser::erase(string &s, char c)
+{
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
 }
 
 void

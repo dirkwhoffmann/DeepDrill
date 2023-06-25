@@ -17,18 +17,38 @@
 
 namespace dd {
 
-enum class Format { NONE, BMP, DIR, GLSL, JPG, LOC, MAP, MPG, PNG, PRF, PRJ };
+enum class Format
+{
+    NONE,       // Unknown file format
+    BMP,        // Image file
+    DIR,        // Directory
+    GLSL,       // GPU shader
+    INI,        // Configuration file
+    JPG,        // Image format
+    MAP,        // Proprietary map file format
+    MPG,        // Video file
+    PNG         // Image file
+};
 
 class AssetManager {
 
     // Assets search paths
-    vector <fs::path> paths;
+    std::vector<fs::path> paths;
 
 public:
 
-    static Format getFormat(const string &path);
+    // Managing file names
+    static fs::path iniFile() { return "deepzoom.ini"; }
+    static fs::path movFile() { return "deepzoom.mov"; }
+    static fs::path rawFile(isize i) { return "keyframe_" + std::to_string(i); }
+    static fs::path iniFile(isize i) { return rawFile(i).string() + ".ini"; }
+    static fs::path mapFile(isize i) { return rawFile(i).string() + ".map"; }
+    static fs::path imgFile(isize i) { return rawFile(i).string() + ".jpg"; }
+
+    // Managing file formats
+    static Format getFormat(const fs::path &path);
     static void assureFormat(const fs::path &name, Format format);
-    static void assureFormat(const fs::path &name, vector <Format> formats);
+    static void assureFormat(const fs::path &name, std::vector<Format> formats);
     static bool isImageFormat(Format format);
     static bool isVideoFormat(Format format);
 
@@ -45,14 +65,14 @@ public:
 
 
     //
-    // Locating files
+    // Locating asset files
     //
 
 public:
 
     fs::path findAsset(const fs::path &name) const;
     fs::path findAsset(const fs::path &name, Format format) const;
-    fs::path findAsset(const fs::path &name, vector <Format> formats) const;
+    fs::path findAsset(const fs::path &name, std::vector<Format> formats) const;
 };
 
 }

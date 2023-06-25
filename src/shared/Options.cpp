@@ -14,6 +14,7 @@
 #include "Exception.h"
 #include "IO.h"
 #include "Logger.h"
+#include "Parser.h"
 
 namespace dd {
 
@@ -31,6 +32,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["map.width"] = "1920";
     defaults["map.height"] = "1080";
     defaults["map.depth"] = "1";
+    defaults["map.compress"] = "true";
 
     // Image keys
     defaults["image.width"] = "1920";
@@ -46,10 +48,12 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 
-    // Palette keys
+    // Color keys
     defaults["colors.mode"] = "default";
     defaults["colors.palette"] = "";
+    defaults["colors.texture"] = "";
     defaults["colors.scale"] = "1.0";
+    defaults["colors.opacity"] = "0.5";
     defaults["colors.alpha"] = "45";
     defaults["colors.beta"] = "45";
 
@@ -58,14 +62,48 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["perturbation.tolerance"] = "1e-6";
     defaults["perturbation.badpixels"] = "0.001";
     defaults["perturbation.rounds"] = "50";
+    defaults["perturbation.color"] = "black";
 
     // Approximation keys
     defaults["approximation.enable"] = "yes";
     defaults["approximation.coefficients"] = "5";
     defaults["approximation.tolerance"] = "1e-12";
 
-    // Debug keys
-    defaults["debug.glitches"] = "no";
+    // Area checking keys
+    defaults["areacheck.enable"] = "yes";
+    defaults["areacheck.color"] = "black";
+
+    // Attractor checking keys
+    defaults["attractorcheck.enable"] = "yes";
+    defaults["attractorcheck.tolerance"] = "1e-34";
+    defaults["attractorcheck.color"] = "black";
+
+    // Period checking keys
+    defaults["periodcheck.enable"] = "yes";
+    defaults["periodcheck.tolerance"] = "1e-74";
+    defaults["periodcheck.color"] = "black";
+}
+
+std::vector <fs::path>
+Options::getInputs(Format format)
+{
+    std::vector <fs::path> result;
+
+    for (const auto &it : files.inputs) {
+        if (AssetManager::getFormat(it) == format) result.push_back(it);
+    }
+    return result;
+}
+
+std::vector <fs::path>
+Options::getOutputs(Format format)
+{
+    std::vector <fs::path> result;
+
+    for (const auto &it : files.outputs) {
+        if (AssetManager::getFormat(it) == format) result.push_back(it);
+    }
+    return result;
 }
 
 void
@@ -79,16 +117,19 @@ Options::parse(string keyvalue)
     auto key = keyvalue.substr(0, pos);
     auto value = keyvalue.substr(pos + 1, std::string::npos);
 
-    // Convert the key to lower case
-    std::transform(key.begin(), key.end(), key.begin(),
-                   [](unsigned char ch){ return std::tolower(ch); });
-
     parse(key, value);
 }
 
 void
 Options::parse(string key, string value)
 {
+    // Convert the key to lower case
+    std::transform(key.begin(), key.end(), key.begin(),
+                   [](unsigned char ch){ return std::tolower(ch); });
+
+    // Strip quotation marks
+    value.erase(remove(value.begin(), value.end(), '\"'), value.end());
+
     keys[key] = value;
 
     if (key == "location.real") {
@@ -118,6 +159,10 @@ Options::parse(string key, string value)
     } else if (key == "map.depth") {
 
         parse(key, value, drillmap.depth, 0, 1);
+
+    } else if (key == "map.compress") {
+
+        parse(key, value, drillmap.compress);
 
     } else if (key == "image.width") {
 
@@ -173,9 +218,19 @@ Options::parse(string key, string value)
             colors.palette = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
         }
 
+    } else if (key == "colors.texture") {
+
+        if (value != "") {
+            colors.texture = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+        }
+
     } else if (key == "colors.scale") {
 
         parse(key, value, colors.scale);
+
+    } else if (key == "colors.opacity") {
+
+        parse(key, value, colors.opacity, 0.0, 1.0);
 
     } else if (key == "colors.alpha") {
 
@@ -193,6 +248,38 @@ Options::parse(string key, string value)
             throw KeyValueError(key, "Angle out of range");
         }
 
+    } else if (key == "areacheck.enable") {
+
+        parse(key, value, areacheck.enable);
+
+    } else if (key == "areacheck.color") {
+
+        parse(key, value, areacheck.color);
+
+    } else if (key == "attractorcheck.enable") {
+
+        parse(key, value, attractorcheck.enable);
+
+    } else if (key == "attractorcheck.tolerance") {
+
+        parse(key, value, attractorcheck.tolerance);
+
+    } else if (key == "attractorcheck.color") {
+
+        parse(key, value, attractorcheck.color);
+
+    } else if (key == "periodcheck.enable") {
+
+        parse(key, value, periodcheck.enable);
+
+    } else if (key == "periodcheck.tolerance") {
+
+        parse(key, value, periodcheck.tolerance);
+
+    } else if (key == "periodcheck.color") {
+
+        parse(key, value, periodcheck.color);
+
     } else if (key == "perturbation.enable") {
 
         parse(key, value, perturbation.enable);
@@ -209,6 +296,10 @@ Options::parse(string key, string value)
 
         parse(key, value, perturbation.rounds);
 
+    } else if (key == "perturbation.color") {
+
+        parse(key, value, perturbation.color);
+
     } else if (key == "approximation.enable") {
 
         parse(key, value, approximation.enable);
@@ -220,10 +311,6 @@ Options::parse(string key, string value)
     } else if (key == "approximation.tolerance") {
 
         parse(key, value, approximation.tolerance);
-
-    } else if (key == "debug.glitches") {
-
-        parse(key, value, debug.glitches);
 
     } else {
 
@@ -290,10 +377,47 @@ Options::parse(const string &key, const string &value, double &parsed)
 }
 
 void
+Options::parse(const string &key, const string &value, double &parsed, double min, double max)
+{
+    parse(key, value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be <= " + std::to_string(max));
+    }
+}
+
+void
 Options::parse(const string &key, const string &value, mpf_class &parsed)
 {
     try {
         parsed = mpf_class(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Options::parse(const string &key, const string &value, GpuColor &parsed)
+{
+    std::map <string, GpuColor> modes = {
+
+        { "black",      GpuColor::black     },
+        { "white",      GpuColor::white     },
+        { "red",        GpuColor::red       },
+        { "green",      GpuColor::green     },
+        { "blue",       GpuColor::blue      },
+        { "yellow",     GpuColor::yellow    },
+        { "magenta",    GpuColor::magenta   },
+        { "cyan",       GpuColor::cyan      }
+    };
+
+    try {
+        parsed = modes.at(value);
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }
@@ -305,17 +429,18 @@ Options::parse(const string &key, const string &value, ColoringMode &parsed)
     std::map <string, ColoringMode> modes = {
 
         { "default", ColoringMode::Default },
+        // { "textured", ColoringMode::Textured }
     };
 
     try {
-        parsed = modes.at(lowercased(value));
+        parsed = modes.at(value);
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }
 }
 
 void
-Options::derive()
+Options::applyDefaults()
 {
     // Adjust some default values
     if (keys.find("image.width") != keys.end()) {
@@ -336,13 +461,14 @@ Options::derive()
     for (auto &it : overrides) {
         parse(it);
     }
+}
 
+void
+Options::derive()
+{
     // Derive unspecified video parameters
-    auto frameRate = double(video.frameRate);
-    auto keyframes = double(video.keyframes);
-    auto inbetweens = double(video.inbetweens);
-
     if (!video.inbetweens) {
+
         video.inbetweens = 2 * video.frameRate;
     }
     if (!video.keyframes) {
@@ -350,22 +476,6 @@ Options::derive()
         auto zoom = ExtendedDouble(location.zoom);
         video.keyframes = isize(std::ceil(zoom.log2().asDouble()));
     }
-
-    // Derive the video length
-    duration = isize(std::round(keyframes * inbetweens / frameRate));
-
-    // Compute the distance between two pixels on the complex plane
-    mpfPixelDeltaX = mpfPixelDeltaY = mpf_class(4.0) / location.zoom / drillmap.height;
-    pixelDeltaX = pixelDeltaY = mpfPixelDeltaY;
-
-    // Derive coordinates
-    center = PrecisionComplex(location.real, location.imag);
-    auto x0y0 = Coord::ul(*this).translate(*this);
-    auto x1y1 = Coord::lr(*this).translate(*this);
-    x0 = x0y0.re;
-    y0 = x0y0.im;
-    x1 = x1y1.re;
-    y1 = x1y1.im;
 }
 
 }

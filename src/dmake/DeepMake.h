@@ -17,19 +17,20 @@
 namespace dd {
 
 class DeepMake : public Application {
-
-    isize maxKeyframes = LONG_MAX;
-
     
     //
     // Methods from Application
     //
 
-    const char *appName() { return "DeepMake"; }
-    void syntax();
+    const char *appName() const { return "DeepMake"; }
+    const char *optstring() const;
+    const option *longopts() const;
+    bool isAcceptedInputFormat(Format format) const { return format == Format::INI; }
+    bool isAcceptedOutputFormat(Format format) const { return format == Format::DIR; }
+
+    void syntax() const;
     void initialize() { };
-    void parseArguments(int argc, char *argv[]);
-    void checkCustomArguments();
+    void checkArguments();
     void run();
 };
 

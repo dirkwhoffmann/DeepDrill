@@ -14,7 +14,6 @@
 #include "config.h"
 #include "Types.h"
 #include "Options.h"
-#include "Buffer.h"
 #include "Palette.h"
 #include "Filter.h"
 
@@ -34,11 +33,11 @@ class ColorMap {
 public:
         
     // The colorized drill map
-    Buffer <u32> colorMap;
+    std::vector<u32> colorMap;
     sf::Texture colorMapTex;
 
     // The normal map
-    Buffer <u32> normalMap;
+    std::vector<u32> normalMap;
     sf::Texture normalMapTex;
 
     // The color palette
@@ -52,7 +51,6 @@ public:
 public:
 
     ColorMap(const Options &opt) : opt(opt) { };
-    ~ColorMap();
 
 private:
 
@@ -66,6 +64,7 @@ private:
 public:
 
     void compute(const class DrillMap &map);
+    template <ColoringMode> void compute(const class DrillMap &map);
 };
 
 }

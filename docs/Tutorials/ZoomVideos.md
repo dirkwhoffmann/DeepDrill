@@ -1,6 +1,6 @@
 # Computing Zoom Videos
 
-In this tutorial, you'll learn how to create Mandelbrot zoom videos using the DeepDrill toolchain. In particular, we are going to compute the following video:
+In this tutorial, you will learn how to create Mandelbrot zoom videos using the DeepDrill toolchain. In particular, you will learn how to compute the following video:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ayc5bE9nmTA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -14,7 +14,7 @@ mkdir project
 ```
 To set up a workflow in this directory, we launch `deepmake` with the following options:
 ```shell
-./deepmake -p spider.prf -o project spider.loc
+./deepmake mordor.ini -o project
 ```
 The application first tells you how many files will be created and asks for your permission to proceed:
 ```
@@ -35,27 +35,28 @@ DeepMake 2.0 - (C)opyright Dirk W. Hoffmann
 
 Total time: 0.01 sec
 ```
-If no profile had been specified, DeepDrill would have set up the workflow to zoom to the location specified in `spider.loc` with predefined settings. In our example, this would result in a fairly long video. To customize settings, we instructed DeepDrill to read in `spider.prf` before setting up the workflow. This profile defines the following key-value pairs:
+Let's have a more detailed look at the configuration file. Besides providing the location and iteration parameters, the following key-value pairs are defined: 
 ```INI
 [image]
 depth = 1
 
 [video]
-keyframes = 75
-inbetweens = 143
+keyframes = 180
+inbetweens = 60
 bitrate = 8000
+
+[colors]
+palette = vulcano.png
+texture = elvish.jpg
 ```
-The first key specifies the number of keyframes to calculate, and the second key specifies how many frames to insert between two consecutive keyframes. If the video were recorded at 60 Hz, a value of 60 would result in a delay of one second between two keyframes. In our case, a value of 143 is specified. This means that it takes a little more than 2 seconds to get from one keyframe to the next. The result is a video with a total length of a little more than 3 minutes. 
+The `depth` key in the `image` section advises DeepDrill to compute a spatial image. All video related parameters are specified in the `video` section. The first key specifies the number of keyframes to calculate, and the second key specifies how many frames to insert between two consecutive keyframes. Because the video will be recorded at 60 Hz, the specified value results in a delay of exactly one second between two keyframes. Because 180 keyframes are computed, the resulting video will play for 3 minutes. 
 
 Let's take a closer look at the files DeepDrill created in the project directory:  
-- `spider.prj`
-  This file contains several key-value pairs which will be picked up later by `deepzoom` to assemble the final video.
+- `deepzoom.ini`
+  This file contains several key-value pairs which will be picked up by `deepzoom` to assemble the final video. It plays no role in the creation of the keyframe images.
 
-- `spider.prf`
-  This profile is used for calculating keyframes. It is composed out of the profiles that were passed in as command line arguments when the workflow was set up.
-
-- `spider_0.loc` to `spider_75.loc`
-  These position files contain the coordinates and zoom factors for each keyframe.
+- `keyframe_0.ini` to 'keyframe_80.ini'
+  These configuration files are used to calculate the keyframes. They are composed out of the configuration files that were passed in as command line arguments when the workflow was set up.
 
 - `Makefile`
   This is a standard Makefile that automatically calculates all keyframe images. In the next section we will take a closer look at its contents.

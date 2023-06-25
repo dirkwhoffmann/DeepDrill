@@ -26,6 +26,12 @@ ExtendedDouble::ExtendedDouble(const mpf_class &value)
     mantissa = mpf_get_d_2exp(&exponent, value.get_mpf_t());
 }
 
+std::ostream& operator<<(std::ostream& os, const ExtendedDouble& d)
+{
+    os << d.mantissa << "*2^" << d.exponent;
+    return os;
+}
+
 ExtendedDouble &
 ExtendedDouble::operator=(const mpf_class &other)
 {

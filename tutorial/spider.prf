@@ -1,7 +1,0 @@
-[image]
-depth = 1
-
-[video]
-keyframes = 75
-inbetweens = 143
-bitrate = 8000

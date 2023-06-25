@@ -18,34 +18,38 @@
 namespace dd {
 
 struct Exception : public std::exception {
-    
-    string description;
+
+    // Textual description of this exception
+    string desc;
+
+    // An additional integer payload
     i64 data;
 
-    // Exception(const string &s, i64 d) : description(s), data(d) { }
-    Exception(const string &s) : description(s), data(0) { }
-    Exception(i64 d) : description(""), data(d) { }
-    Exception() : data(0) { }
+    Exception(const string &desc, i64 data) : desc(desc), data(data) { }
+    Exception(const string &desc) : desc(desc), data(0) { }
+    Exception(i64 data) : desc(""), data(data) { }
+    Exception() : desc(""), data(0) { }
     
-    const char *what() const throw() override { return description.c_str(); }
+    const char *what() const throw() override { return desc.c_str(); }
     virtual void what(const class Logger &logger) const;
 };
 
 struct SyntaxError : public Exception {
+
     using Exception::Exception;
 };
 
 struct KeyValueError : public Exception {
 
     KeyValueError(const string &k, const string &s) {
-        description = "'" + k + "': " + s;
+        desc = "'" + k + "': " + s;
     }
 };
 
 struct FileNotFoundError : Exception {
 
     FileNotFoundError(const string &s) {
-        description = s + ": File not found.";
+        desc = s + ": File not found.";
     }
 };
 
@@ -58,19 +62,19 @@ struct UserInterruptException : Exception {
 
 struct ParseError : Exception {
 
-    // Wrapped exception
+    // Embedded (other) exception
     Exception exception;
 
     // Line in which the error occurred
     isize line;
 
     // File in which the error occurred
-    string file;
+    fs::path path;
 
     ParseError(const Exception &exception, isize line) :
-    exception(exception), line(line), file("") { }
-    ParseError(const Exception &exception,  isize line, const string &file) :
-    exception(exception), line(line), file(file) { }
+    exception(exception), line(line), path("") { }
+    ParseError(const Exception &exception,  isize line, const fs::path &path) :
+    exception(exception), line(line), path(path) { }
 
     void what(const class Logger &logger) const override;
 };

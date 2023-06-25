@@ -13,6 +13,7 @@
 #include "Exception.h"
 #include "IO.h"
 #include "Options.h"
+#include "DrillMap.h"
 #include <tgmath.h>
 #include <SFML/Graphics.hpp>
 
@@ -22,9 +23,9 @@ Palette::Palette(const Options &opt) : opt(opt)
 {
     static constexpr isize size = 2048;
 
-    r.alloc(size);
-    g.alloc(size);
-    b.alloc(size);
+    r.resize(size);
+    g.resize(size);
+    b.resize(size);
 
     /* Create default palette
      *
@@ -46,19 +47,17 @@ Palette::Palette(const Options &opt) : opt(opt)
 }
 
 void
-Palette::load(const string &filename)
+Palette::loadPaletteImage(const fs::path &path)
 {
     sf::Image img;
 
-    path = filename;
-    
     if (path != "" && img.loadFromFile(path)) {
 
         auto size = img.getSize();
 
-        r.alloc(size.x);
-        g.alloc(size.x);
-        b.alloc(size.x);
+        r.resize(size.x);
+        g.resize(size.x);
+        b.resize(size.x);
 
         for (unsigned x = 0; x < size.x; x++) {
 
@@ -71,12 +70,33 @@ Palette::load(const string &filename)
     }
 }
 
-u32
-Palette::interpolateABGR(double value)
+void
+Palette::loadTextureImage(const fs::path &path)
 {
-    auto size = r.size;
+    if (path == "") return;
 
-    auto scaled = value * size / (2 * 3.14159);
+    if (texture.loadFromFile(path)) {
+        // printf("Loaded texture image %s\n", path.c_str());
+    } else {
+        printf("Failed to load texture image %s\n", path.c_str());
+    }
+}
+
+double
+Palette::overlayOpacity() const
+{
+    return texture.getSize().x ? opt.colors.opacity : 0.0;
+}
+
+u32
+Palette::interpolateABGR(struct MapEntry &entry) const
+{
+    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
+    sl *= opt.colors.scale;
+
+    auto size = r.size();
+
+    auto scaled = sl * size / (2 * 3.14159);
     auto frac = fmod(scaled, 1.0);
 
     auto r1 = r[(isize(scaled) + 0) % size];
@@ -90,6 +110,26 @@ Palette::interpolateABGR(double value)
     auto mb = b1 + (b2 - b1) * frac;
 
     return  255 << 24 | u8(mb) << 16 | u8(mg) << 8 | u8(mr);
+}
+
+u32
+Palette::readTextureImage(struct MapEntry &entry) const
+{
+    const double PI = 3.141592653589793238;
+
+    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
+    sl *= opt.colors.scale;
+
+    auto size = texture.getSize();
+
+    auto arg = (entry.normal.arg() + PI) / (2 * PI);
+    auto px = isize(arg * size.x * 5.0) % size.x;
+    auto py = isize(sl * size.y * 5.0) % size.y;
+    if (py < 0) py += size.y;
+    if (px < 0) px += size.x;
+
+    auto color = texture.getPixel(unsigned(px), unsigned(py));
+    return 255 << 24 | color.b << 16 | color.g << 8 | color.r;
 }
 
 }

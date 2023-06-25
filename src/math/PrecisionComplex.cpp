@@ -21,4 +21,23 @@ std::ostream& operator<<(std::ostream& os, const PrecisionComplex& c)
     return os;
 }
 
+bool
+PrecisionComplex::inCardioid()
+{
+    mpf_class r1 = re + 1.0;
+    mpf_class ii = im * im;
+
+    return r1 * r1 + ii < 0.0625;
+};
+
+bool
+PrecisionComplex::inMainBulb()
+{
+    mpf_class ii = im * im;
+    mpf_class p = re - 0.25;
+    mpf_class q = p * p + ii;
+
+    return q * (q + p) < ii * 0.25;
+};
+
 }

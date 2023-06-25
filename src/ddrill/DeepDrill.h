@@ -38,17 +38,23 @@ public:
 
 private:
 
-    const char *appName() { return "DeepDrill"; }
-    void syntax();
+    const char *appName() const { return "DeepDrill"; }
+    const char *optstring() const;
+    const option *longopts() const;
+    bool isAcceptedInputFormat(Format format) const;
+    bool isAcceptedOutputFormat(Format format) const;
+
+    void syntax() const;
     void initialize() { };
-    void parseArguments(int argc, char *argv[]);
-    void checkCustomArguments();
+    void checkArguments();
 
 
     //
     // Auxiliary methods
     //
 
+    void runDriller();
+    void generateOutputs();
 };
 
 }

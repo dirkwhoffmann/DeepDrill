@@ -65,7 +65,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "top.loc"
+            argument = "experimental.ini"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -81,15 +81,19 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p x.prf "
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-p 3D.prf"
+            argument = "areacheck.enable=false"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p medium.prf"
+            argument = "periodcheck.enable=false"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p 3D.prf"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p SD.prf"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

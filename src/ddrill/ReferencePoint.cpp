@@ -10,7 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "ReferencePoint.h"
-#include "Options.h"
+#include "DrillMap.h"
 #include "ProgressIndicator.h"
 #include "PrecisionComplex.h"
 #include "StandardComplex.h"
@@ -38,27 +38,10 @@ ReferenceIteration::ReferenceIteration(PrecisionComplex z, PrecisionComplex dz, 
     this->derivative = dz;
 }
 
-ReferencePoint::ReferencePoint(const Options &opt, Coord c)
+ReferencePoint::ReferencePoint(Coord c, const PrecisionComplex &pc)
 {
     this->coord = c;
-    this->location = c.translate(opt);
-}
-
-ExtendedComplex
-ReferencePoint::deltaLocation(const Options &opt, const Coord &other) const
-{
-    // Compute the pixel offset
-    auto dx = other.x - coord.x;
-    auto dy = other.y - coord.y;
-        
-    // Compute the delta location on the complex plain
-    auto dxc = opt.pixelDeltaX * dx;
-    auto dyc = opt.pixelDeltaY * dy;
-     
-    auto result = ExtendedComplex(dxc, dyc);
-    result.reduce();
-    
-    return result;
+    this->location = pc;
 }
 
 }

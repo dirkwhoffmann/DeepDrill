@@ -19,29 +19,46 @@
 
 namespace dd {
 
-Maker::Maker(Options &o) : opt(o)
+Maker::Maker(Application &app, Options &opt) : app(app), opt(opt)
 {
-    project = stripSuffix(stripPath(opt.files.inputs.front()));
     projectDir = opt.files.outputs.front();
 }
 
 void
 Maker::generate()
 {
-    vector <string> skipped;
+    auto printReport = [&]() {
 
-    auto reportSkippedFiles = [&]() {
-
-        if (!skipped.empty()) {
+        if (!report.empty() && opt.flags.verbose) {
 
             log::cout << log::vspace;
-            for (auto &it : skipped) {
 
-                log::cout << log::purple << log::bold << log::ralign("Skipping file: ") << log::light;
-                log::cout << log::normal << it << " already exists" << log::endl;
+            for (auto &it : report) {
+
+                switch (it.second) {
+
+                    case Action::CREATED:
+
+                        log::cout << log::red << log::bold << log::ralign("Created: ");
+                        log::cout << it.first << log::light << log::endl;
+                        break;
+
+                    case Action::SKIPPED:
+
+                        log::cout << log::green << log::bold << log::ralign("Skipped: ");
+                        log::cout << it.first << log::light << log::endl;
+                        break;
+
+                    case Action::MODIFIED:
+
+                        log::cout << log::red << log::bold << log::ralign("Updated: ");
+                        log::cout << it.first << log::light << log::endl;
+                        break;
+                }
             }
             log::cout << log::vspace;
-            skipped = { };
+
+            report = { };
         }
     };
 
@@ -51,28 +68,25 @@ Maker::generate()
     opt.drillmap.width = std::min(opt.drillmap.width, 2 * opt.image.width);
     opt.drillmap.height = std::min(opt.drillmap.height, 2 * opt.image.height);
 
-    generateProjectFile(skipped);
-    reportSkippedFiles();
+    generateProjectFile();
+    printReport();
 
-    generateLocationFiles(skipped);
-    reportSkippedFiles();
+    generateIniFiles();
+    printReport();
 
-    generateProfile(skipped);
-    reportSkippedFiles();
-
-    generateMakefile(skipped);
-    reportSkippedFiles();
+    generateMakefile();
+    printReport();
 }
 
 void
-Maker::generateProjectFile(vector <string> &skipped)
+Maker::generateProjectFile()
 {
-    ProgressIndicator progress("Generating project file");
+    ProgressIndicator progress("Generating zoomer ini file");
 
-    auto path = projectDir / (project + ".prj");
+    auto temp = fs::temp_directory_path() / AssetManager::iniFile();
 
     // Open output stream
-    std::ofstream os(path);
+    std::ofstream os(temp);
 
     // Write header
     writeHeader(os);
@@ -83,66 +97,53 @@ Maker::generateProjectFile(vector <string> &skipped)
     writeImageSection(os);
     writeColorsSection(os);
     writeVideoSection(os);
+
+    copy(temp, projectDir / AssetManager::iniFile());
 }
 
 void
-Maker::generateLocationFiles(vector <string> &skipped)
+Maker::generateIniFiles()
 {
-    ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " location files");
+    ProgressIndicator progress("Generating " + std::to_string(opt.video.keyframes) + " ini files");
 
-    for (isize nr = 0; nr <= opt.video.keyframes; nr++) {
+    mpf_class zoom = 1.0;
 
-        double zoom = exp2(nr);
+    for (isize nr = 0; nr <= opt.video.keyframes; nr++, zoom *= 2.0) {
 
-        // Assemble path name
-        auto name = (project + "_" + std::to_string(nr) + ".loc");
-        auto path = projectDir / name;
-
-        // Only proceed if file does not exist yet
-        if (fileExists(path)) { skipped.push_back(name); continue; }
-
-        // Open output stream
-        std::ofstream os(path);
-        os.precision(mpf_get_default_prec());
-
-        // Write header
-        writeHeader(os);
-
-        // Limit depth
-        isize maxDepth = 1000 * (nr + 1);
-        isize depth = std::min(maxDepth, opt.location.depth);
-
-        // Write location section
-        writeLocationSection(os);
-        os << "zoom = " << std::to_string(zoom) << std::endl;
-        os << "depth = " << std::to_string(depth) << std::endl;
-        os << std::endl;
+        app.readConfigFiles(nr);
+        generateIniFile(nr, zoom);
     }
 }
 
 void
-Maker::generateProfile(vector <string> &skipped)
+Maker::generateIniFile(isize nr, const mpf_class &zoom)
 {
-    ProgressIndicator progress("Generating profile");
+    // Overwrite zoom level
+    std::stringstream ss; ss << zoom;
+    opt.keys["location.zoom"] = ss.str();
 
     // Assemble path name
-    auto name = project + ".prf";
-    auto path = projectDir / name;
-
-    // Only proceed if file does not exist yet
-    if (fileExists(path)) { skipped.push_back(name); return; }
+    auto temp = fs::temp_directory_path() / AssetManager::iniFile(nr);
 
     // Open output stream
-    std::ofstream os(path);
+    std::ofstream os(temp);
+    os.precision(mpf_get_default_prec());
 
-    // Write sections
+    // Write header
     writeHeader(os);
+
+    // Write location section
+    writeLocationSection(os);
     writeMapSection(os);
-    writePreviewImageSection(os);
+    writeImageSection(os);
     writeColorsSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
-    writeDebugSection(os);
+    writeAreacheckSection(os);
+    writePeriodcheckSection(os);
+    writeAttractorcheckSection(os);
+
+    copy(temp, projectDir / AssetManager::iniFile(nr));
 }
 
 void
@@ -151,6 +152,8 @@ Maker::writeLocationSection(std::ofstream &os)
     os << "[location]" << std::endl;
     os << "real = " << opt.keys["location.real"] << std::endl;
     os << "imag = " << opt.keys["location.imag"] << std::endl;
+    os << "zoom = " << opt.keys["location.zoom"] << std::endl;
+    os << "depth = " << opt.keys["location.depth"] << std::endl;
     os << std::endl;
 }
 
@@ -173,18 +176,6 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
-    os << "depth = " << opt.image.depth << std::endl;
-    os << "illuminator = " << opt.image.illuminator << std::endl;
-    os << "scaler = " << opt.image.scaler << std::endl;
-    os << std::endl;
-}
-
-void
-Maker::writePreviewImageSection(std::ofstream &os)
-{
-    os << "[image]" << std::endl;
-    os << "width = 320    # Preview image width" << std::endl;
-    os << "height = 200   # Preview image height" << std::endl;
     os << "depth = " << opt.image.depth << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
@@ -236,35 +227,57 @@ Maker::writeApproximationSection(std::ofstream &os)
 }
 
 void
-Maker::writeDebugSection(std::ofstream &os)
+Maker::writeAreacheckSection(std::ofstream &os)
 {
-    os << "[debug]" << std::endl;
-    os << "glitches = " << opt.keys["debug.glitches"] << std::endl;
+    os << "[areacheck]" << std::endl;
+    os << "enable = " << opt.keys["areacheck.enable"] << std::endl;
+    os << "color = " << opt.keys["areacheck.color"] << std::endl;
     os << std::endl;
 }
 
 void
-Maker::generateMakefile(vector <string> &skipped)
+Maker::writePeriodcheckSection(std::ofstream &os)
+{
+    os << "[attractorcheck]" << std::endl;
+    os << "enable = " << opt.keys["attractorcheck.enable"] << std::endl;
+    os << "tolerance = " << opt.keys["attractorcheck.tolerance"] << std::endl;
+    os << "color = " << opt.keys["attractorcheck.color"] << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writeAttractorcheckSection(std::ofstream &os)
+{
+    os << "[periodcheck]" << std::endl;
+    os << "enable = " << opt.keys["periodcheck.enable"] << std::endl;
+    os << "tolerance = " << opt.keys["periodcheck.tolerance"] << std::endl;
+    os << "color = " << opt.keys["periodcheck.color"] << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::generateMakefile()
 {
     ProgressIndicator progress("Generating Makefile");
 
+    // Assemble path name
+    auto temp = fs::temp_directory_path() / "Makefile";
+
     // Open output stream
-    std::ofstream os(projectDir / "Makefile");
+    std::ofstream os(temp);
 
     // Write sections
     writeHeader(os);
     writeDefinitions(os);
     writeTargets(os);
+
+    copy(temp, projectDir / "Makefile");
 }
 
 void
 Maker::writeHeader(std::ofstream &os)
 {
-    auto now = std::chrono::system_clock::now();
-    auto time = std::chrono::system_clock::to_time_t(now);
-
-    os << "# Generated by DeepDrill " << Application::version();
-    os << " on " << std::ctime(&time);
+    os << "# Generated by DeepDrill " << Application::version() << std::endl;
     os << "# " << std::endl;
     os << "# Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << std::endl;
     os << "# Licensed under the GNU General Public License v3" << std::endl;
@@ -278,9 +291,8 @@ Maker::writeDefinitions(std::ofstream &os)
 
     os << "DEEPDRILL  = " << (path / "deepdrill").string() << std::endl;
     os << "DEEPZOOM   = " << (path / "deepzoom").string() << std::endl;
-    os << "MAPS       = $(patsubst %.loc,%.map,$(wildcard *_*.loc))" << std::endl;
-    os << "VIDEO      = " << project << ".mov" << std::endl;
-    os << "MAPFLAGS   = -b -v" << std::endl;
+    os << "MAPS       = $(patsubst %.ini,%.map,$(wildcard *_*.ini))" << std::endl;
+    os << "VIDEO      = " << AssetManager::movFile().string() << std::endl;
     os << std::endl;
 }
 
@@ -299,21 +311,46 @@ Maker::writeTargets(std::ofstream &os)
     os << std::endl;
 
     // Write 'map' target
-    os << "%.map: %.loc" << std::endl;
-    os << "\t" << "@$(DEEPDRILL) $(MAPFLAGS) -p " << project << ".prf";
-    os << " -o $*.map -o $*.jpg $*.loc > $*.log" << std::endl;
+    os << "%.map: %.ini" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) -b -v";
+    os << " $*.ini -o $*.map -o $*_preview.jpg image.width=320 image.height=200 > $*.log" << std::endl;
+    os << std::endl;
+
+    // Write 'jpg' target
+    os << "%.jpg: %.map" << std::endl;
+    os << "\t" << "@$(DEEPDRILL) -v";
+    os << " $*.ini $*.map -o $*.jpg" << std::endl;
     os << std::endl;
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
-    os << "\t" << "@$(DEEPZOOM) $(MOVFLAGS) " << project << ".prj";
+    os << "\t" << "@$(DEEPZOOM) " << AssetManager::iniFile();
     os << " -o $(VIDEO)" << std::endl;
     os << std::endl;
 
     // Write 'clean' target
     os << "clean:" << std::endl;
-    os << "\t" << "rm *.mov *.map *.jpg *.log" << std::endl;
+    os << "\t" << "@rm *.mov *.map *.jpg *.log" << std::endl;
     os << std::endl;
+}
+
+void
+Maker::copy(const fs::path &from, const fs::path &to)
+{
+    if (!fs::exists(to)) {
+
+        report.push_back( { to, Action::CREATED } );
+        fs::copy(from, to);
+
+    } else if (!compareFiles(from, to)) {
+
+        report.push_back( { to, Action::MODIFIED } );
+        fs::copy(from, to, std::filesystem::copy_options::overwrite_existing);
+
+    } else {
+
+        report.push_back( { to, Action::SKIPPED } );
+    }
 }
 
 }

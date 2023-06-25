@@ -14,48 +14,57 @@
 #include "config.h"
 #include "Types.h"
 #include "IO.h"
+#include "gmpxx.h"
 
 namespace dd {
 
 class Maker {
-    
+
+    // Refeference to the application
+    class Application &app;
+
     // Configuration options
     struct Options &opt;
-
-    // Name of the project
-    string project;
 
     // Path to the project directory
     fs::path projectDir;
 
+    // File tracker
+    enum class Action { CREATED, SKIPPED, MODIFIED };
+    std::vector <std::pair<fs::path, Action>> report;
+
 public:
     
     // Constructor
-    Maker(Options &opt);
+    Maker(Application &app, Options &opt);
     
     // Main entry point
     void generate(); 
     
 private:
 
-    void generateProjectFile(vector <string> &skipped);
-    void generateLocationFiles(vector <string> &skipped);
-    void generateProfile(vector <string> &skipped);
-    void generateMakefile(vector <string> &skipped);
+    // Generators
+    void generateProjectFile();
+    void generateIniFiles();
+    void generateIniFile(isize nr, const mpf_class &zoom);
+    void generateMakefile();
 
     void writeLocationSection(std::ofstream &os);
     void writeMapSection(std::ofstream &os);
     void writeImageSection(std::ofstream &os);
-    void writePreviewImageSection(std::ofstream &os);
     void writeColorsSection(std::ofstream &os);
     void writeVideoSection(std::ofstream &os);
     void writePerturbationSection(std::ofstream &os);
     void writeApproximationSection(std::ofstream &os);
-    void writeDebugSection(std::ofstream &os);
+    void writeAreacheckSection(std::ofstream &os);
+    void writePeriodcheckSection(std::ofstream &os);
+    void writeAttractorcheckSection(std::ofstream &os);
 
     void writeHeader(std::ofstream &os);
     void writeDefinitions(std::ofstream &os);
     void writeTargets(std::ofstream &os);
+
+    void copy(const fs::path &from, const fs::path &to);
 };
 
 }

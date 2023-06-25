@@ -16,6 +16,8 @@
 #include "Options.h"
 #include "ProgressIndicator.h"
 
+#include <random>
+
 namespace dd {
 
 Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
@@ -26,51 +28,58 @@ Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
 void
 Driller::drill()
 {    
-    vector<Coord> remaining;
-    vector<Coord> glitches;
+    std::vector<Coord> remaining;
+    std::vector<Coord> glitches;
 
     auto width = opt.drillmap.width;
     auto height = opt.drillmap.height;
 
+    // Determine the number of tolerated glitched pixels
+    isize threshold = width * height * opt.perturbation.badpixels;
+
     if (opt.flags.verbose) {
-        
+
+        assert(map.center.re.get_prec() == map.center.im.get_prec());
+        assert(map.ul.re.get_prec() == map.ul.im.get_prec());
+        assert(map.lr.re.get_prec() == map.lr.im.get_prec());
+
         log::cout << log::vspace;
         log::cout << log::ralign("Center: ");
-        log::cout << opt.center << log::endl;
-        log::cout << log::ralign("Upper left: (");
-        log::cout << opt.x0.get_d() << "," << opt.y0.get_d() << ")" << log::endl;
-        log::cout << log::ralign("Lower right: (");
-        log::cout << opt.x1.get_d() << "," << opt.y1.get_d() << ")" << log::endl;
+        log::cout << (map.center.re >= 0.0 ? " " : "") << map.center;
+        log::cout << " (" << map.center.re.get_prec() << " bit)" << log::endl;
+        log::cout << log::ralign("Upper left: ");
+        log::cout << (map.ul.re >= 0.0 ? " " : "") << map.ul;
+        log::cout << " (" << map.ul.re.get_prec() << " bit)" << log::endl;
+        log::cout << log::ralign("Lower right: ");
+        log::cout << (map.lr.re >= 0.0 ? " " : "") << map.lr;
+        log::cout << " (" << map.lr.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Magnification: ");
         log::cout << opt.location.zoom << log::endl;
+        log::cout << log::ralign("Drill depth: ");
+        log::cout << opt.location.depth << log::endl;
+        log::cout << log::endl;
         log::cout << log::ralign("Map size: ");
-        log::cout << width << " x " << height;
+        log::cout << opt.drillmap.width << " x " << opt.drillmap.height;
         log::cout << (opt.drillmap.depth ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::ralign("Image size: ");
         log::cout << opt.image.width << " x " << opt.image.height;
         log::cout << (opt.image.depth ? " (3D)" : " (2D)") << log::endl;
-        log::cout << log::ralign("GMP Precision: ");
-        log::cout << mpf_get_default_prec() << " Bit" << log::endl;
+        log::cout << log::endl;
+        log::cout << log::ralign("Perturbation: ");
+        log::cout << opt.perturbation.enable << log::endl;
+        log::cout << log::ralign("Series approximation: ");
+        log::cout << opt.approximation.enable << log::endl;
+        log::cout << log::ralign("Area checking: ");
+        log::cout << opt.areacheck.enable << log::endl;
+        log::cout << log::ralign("Period checking: ");
+        log::cout << opt.periodcheck.enable << log::endl;
+        log::cout << log::ralign("Attractor checking: ");
+        log::cout << opt.attractorcheck.enable << log::endl;
         log::cout << log::vspace;
     }
-            
-    // Determine the number of tolerated glitched pixels
-    isize threshold = width * height * opt.perturbation.badpixels;
-        
+
     // Collect all pixel coordinates to be drilled at
-    for (isize y = 0; y < height; y++) {
-        for (isize x = 0; x < width; x++) {
-            
-            remaining.push_back(Coord(x,y));
-        }
-    }
-
-    // Use the standard algorithm if perturbation is disabled
-    if (!opt.perturbation.enable) {
-
-        slowDrill(remaining);
-        return;
-    }
+    collectCoordinates(remaining);
 
     // Enter the main loop
     for (isize round = 1; round <= opt.perturbation.rounds; round++) {
@@ -82,7 +91,7 @@ Driller::drill()
         log::cout << "Round " << round;
         if (opt.flags.verbose) log::cout << " / " << opt.perturbation.rounds;
         log::cout << ": ";
-        log::cout << remaining.size() << " points" << log::endl << log::endl;
+        log::cout << remaining.size() << " points remaining" << log::endl << log::endl;
 
         // Select a reference point
         ref = pickReference(glitches);
@@ -141,10 +150,86 @@ Driller::drill()
             log::cout << log::vspace;
         }        
     }
+
+    log::cout << log::vspace;
+    log::cout << "All rounds completed: ";
+    log::cout << (isize)remaining.size() << " unresolved";
+    log::cout << log::endl << log::endl;
+}
+
+void
+Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
+{
+    /* This function collects all drill coordinates while filtering out all
+     * coordinates that belong to the main bulb or the cardioid (for which
+     * simple inside/outside tests exist).
+     *
+     * Strategy: The map area is superimposed with a grid. For each grid
+     * coordiate, bulb and cardioid checking is performed. If at least one
+     * pixel belongs to the bulb or the cardioid, the check is repeated for all
+     * pixels (which may take some seconds depending on the map size). If the
+     * test is negative for all points of the mesh, it is assumed that the
+     * drill area does not intercept the bulb or the cardioid. In this case,
+     * all locations need to be drilled.
+     */
+
+    auto width = opt.drillmap.width;
+    auto height = opt.drillmap.height;
+
+    // If area checking if disabled, drill everywhere
+    if (!opt.areacheck.enable) {
+
+        for (isize y = 0; y < height; y++) {
+            for (isize x = 0; x < width; x++) {
+                remaining.push_back(Coord(x,y));
+            }
+        }
+        return;
+    }
+
+    // Perform the area check
+    ProgressIndicator progress("Running the area check", width * height);
+
+    // Superimpose the drill map with a mesh
+    std::vector<Coord> mesh; map.getMesh(8, 8, mesh);
+
+    // Test if at least one mesh point belongs to the bulb or the cardioid
+    bool hit = false;
+    for (const auto &it : mesh) {
+
+        // auto c = it.translate(opt);
+        auto c = map.translate(it);
+        hit |= c.inCardioid();
+        hit |= c.inMainBulb();
+    }
+
+    // Collect all drill coordinates
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
+
+            if (hit) {
+
+                auto c = map.translate(Coord(x,y));
+
+                if (c.inCardioid()) {
+
+                    map.set(x, y, MapEntry { .result = DR_IN_CARDIOID });
+                    continue;
+                }
+                if (c.inMainBulb()) {
+
+                    map.set(x, y, MapEntry { .result = DR_IN_BULB });
+                    continue;
+                }
+            }
+            remaining.push_back(Coord(x,y));
+        }
+        progress.step(width);
+    }
 }
 
 ReferencePoint
-Driller::pickReference(const vector<Coord> &glitches)
+Driller::pickReference(const std::vector<Coord> &glitches)
 {
     // Current strategy: In the first round, the center is used as reference
     // point. In all other rounds, the reference point is selected randomly
@@ -154,17 +239,18 @@ Driller::pickReference(const vector<Coord> &glitches)
 
     if (firstRound) {
 
-        return ReferencePoint(opt, Coord::center(opt));
+        auto coord = Coord(map.width / 2, map.height / 2);
+        return ReferencePoint(coord, map.translate(coord));
 
     } else {
         
-        auto index = rand() % glitches.size();
-        return ReferencePoint(opt, glitches[index]);
+        auto coord = glitches[rand() % glitches.size()];
+        return ReferencePoint(coord, map.translate(coord));
     }
 }
 
 void
-Driller::pickProbePoints(vector <Coord> &probes)
+Driller::pickProbePoints(std::vector<Coord> &probes)
 {
     // Current strategy: The image canvas is superimposed with an equidistant
     // mesh. The density of the mesh is controlled by the 'sampling' parameter.
@@ -173,84 +259,8 @@ Driller::pickProbePoints(vector <Coord> &probes)
     
     static const isize sampling = 2;
 
-    isize width = opt.drillmap.width - 1;
-    isize height = opt.drillmap.height - 1;
-    
     probes.clear();
-    
-    for (isize i = 0; i < sampling; i++) {
-        for (isize j = 0; j < sampling; j++) {
-            
-            auto x = width * ((double)i / (double)(sampling - 1));
-            auto y = height * ((double)j / (double)(sampling - 1));
-            
-            probes.push_back(Coord(x,y));
-        }
-    }
-}
-
-void
-Driller::slowDrill(const vector<Coord> &remaining)
-{
-    ProgressIndicator progress("Running the standard algo", remaining.size());
-
-    for (unsigned int i = 0; i < remaining.size(); i++) {
-
-        slowDrill(remaining[i]);
-
-        if (opt.stop) throw UserInterruptException();
-        progress.step(1);
-    }
-}
-
-void
-Driller::slowDrill(const Coord &point)
-{
-    /*
-    auto p = ReferencePoint(opt, point);
-    drill(p);
-    */
-
-    auto x0 = ExtendedComplex(point.translate(opt));
-    auto xn = x0;
-
-    auto d0 = ExtendedComplex(1, 0);
-    auto dn = d0;
-
-    isize limit = opt.location.depth;
-    isize iteration = 0;
-
-    // Enter the main loop
-    while (++iteration < limit) {
-
-        dn *= xn * 2.0;
-        dn += d0;
-        dn.reduce();
-
-        xn *= xn;
-        xn += x0;
-        xn.reduce();
-
-        auto norm = xn.norm().asDouble();
-
-        // Perform the escape check
-        if (norm >= 256) {
-
-            // This point is outside the Mandelbrot set
-            auto u = xn / dn;
-            u.normalize();
-
-            map.set(point, MapEntry {
-                (u32)iteration,
-                (float)::log(norm),
-                StandardComplex(dn),
-                StandardComplex(u) } );
-            return;
-        }
-    }
-
-    // This point is inside the Mandelbrot set
-    map.markAsInside(point);
+    map.getMesh(sampling, sampling, probes);
 }
 
 void
@@ -286,7 +296,12 @@ Driller::drill(ReferencePoint &r)
             nv.normalize();
 
             r.escaped = true;
-            map.set(r.coord, MapEntry { (u32)i, (float)::log(norm), StandardComplex(dn), StandardComplex(nv) } );
+            map.set(r.coord, MapEntry {
+                .result     = DR_ESCAPED,
+                .last       = (i32)i,
+                .lognorm    = (float)::log(norm),
+                .derivative = StandardComplex(dn),
+                .normal     = StandardComplex(nv) } );
             return;
         }
         
@@ -298,11 +313,13 @@ Driller::drill(ReferencePoint &r)
     }
 
     // This point is inside the Mandelbrot set
-    map.markAsInside(r.coord);
+    map.set(r.coord, MapEntry {
+        .result     = DR_MAX_DEPTH_REACHED,
+        .last       = (i32)opt.location.depth });
 }
 
 isize
-Driller::drillProbePoints(vector <Coord> &probes)
+Driller::drillProbePoints(std::vector<Coord> &probes)
 {
     ProgressIndicator progress("Checking probe points", probes.size());
     
@@ -323,7 +340,7 @@ Driller::drillProbePoints(vector <Coord> &probes)
 isize
 Driller::drillProbePoint(Coord &probe)
 {
-    ExtendedComplex d0 = ref.deltaLocation(opt, probe);
+    ExtendedComplex d0 = map.distance(probe, ref.coord);
     ExtendedComplex dn = d0;
 
     isize iteration = 0;
@@ -351,7 +368,7 @@ Driller::drillProbePoint(Coord &probe)
 }
 
 void
-Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
+Driller::drill(const std::vector<Coord> &remaining, std::vector<Coord> &glitches)
 {
     ProgressIndicator progress("Computing delta orbits", remaining.size());
     
@@ -366,23 +383,34 @@ Driller::drill(const vector<Coord> &remaining, vector<Coord> &glitches)
 }
 
 void
-Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
+Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 {
-    // If point is the reference point, then there is nothing to do
+    // If this point is the reference point, there is nothing to do
     if (point == ref.coord) return;
-    
-    ExtendedComplex d0 = ref.deltaLocation(opt, point);
-    ExtendedComplex dn = d0;
-
-    ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
-    ExtendedComplex ddn = dd0;
 
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
 
+    // Determine the iteration to start with
     isize iteration = ref.skipped;
 
-    // Skip some iterations if possible
+    // Setup orbit parameters
+    ExtendedComplex d0 = map.distance(point, ref.coord);
+    ExtendedComplex dn = d0;
+
+    // Setup derivation parameters (df/dc)
+    ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex ddn = dd0;
+
+    // Setup derivation parameters (df/dz)
+    ExtendedComplex derz0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex derzn = derz0;
+
+    // Prepare for period checking
+    ExtendedComplex p = dn;
+    isize nextUpdate = iteration + 16;
+
+    // Perform series approximation if applicable
     if (ref.skipped) {
 
         dn = approximator.evaluate(point, d0, iteration);
@@ -391,48 +419,108 @@ Driller::drill(const Coord &point, vector<Coord> &glitchPoints)
         ddn.reduce();
     }
 
-    // Enter the main loop
+    //
+    // Main loop
+    //
+
     while (++iteration < limit) {
 
         ddn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
         ddn += dd0;
         ddn.reduce();
 
+        derzn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
+        derzn.reduce();
+
         dn *= ref.xn[iteration - 1].extended2 + dn;
         dn += d0;
         dn.reduce();
 
         auto zn = ref.xn[iteration].extended + dn;
-        double norm = (ref.xn[iteration].extended + dn).norm().asDouble();
+        double norm = zn.norm().asDouble();
 
-        // Perform the glitch check
+        //
+        // Glitch check
+        //
+
         if (norm < ref.xn[iteration].tolerance) {
             break;
         }
-        
-        // Perform the escape check
-        if (norm >= 256) {
+
+        //
+        // Period check
+        //
+
+        if (opt.periodcheck.enable) {
+
+            if ((dn - p).norm().asDouble() < opt.periodcheck.tolerance) {
+                map.set(point, MapEntry {
+                    .result     = DR_PERIODIC,
+                    .first      = (i32)ref.skipped,
+                    .last       = (i32)iteration } );
+                return;
+            }
+            if (iteration == nextUpdate) {
+                p = dn;
+                nextUpdate *= 1.5;
+            }
+        }
+
+        //
+        // Attractor check
+        //
+
+        if (opt.attractorcheck.enable) {
+
+            if (derzn.norm().asDouble() < opt.attractorcheck.tolerance) {
+                map.set(point, MapEntry {
+                    .result     = DR_ATTRACTED,
+                    .first      = (i32)ref.skipped,
+                    .last       = (i32)iteration } );
+                return;
+            }
+        }
+
+        //
+        // Escape check
+        //
+
+        if (norm >= 512) {
+        // if (norm >= 4.9) {
 
             auto nv = zn / ddn;
             nv.normalize();
             map.set(point, MapEntry {
-                (u32)iteration,
-                (float)::log(norm),
-                StandardComplex(ddn),
-                StandardComplex(nv) } );
+                .result     = DR_ESCAPED,
+                .first      = (i32)ref.skipped,
+                .last       = (i32)iteration,
+                .zn         = StandardComplex(zn),
+                .lognorm    = (float)::log(norm),
+                .derivative = StandardComplex(ddn),
+                .normal     = StandardComplex(nv) } );
             return;
         }
     }
-        
+
+    // If we have drilled up to the maximum depth, the point is (likely) inside
+    // the Mandelbrot set. If not, we have to consider this point a glitch
+    // point temporarily. Computation has to be repeated with a different
+    // reference poin with a larger depth.
+
     if (limit == opt.location.depth) {
 
-        // This point is inside the Mandelbrot set
-        map.markAsInside(point);
+        map.set(point, MapEntry {
+            .result     = DR_MAX_DEPTH_REACHED,
+            .first      = (i32)ref.skipped,
+            .last       = (i32)iteration } );
 
     } else {
 
-        // This point is a glitch point
-        map.markAsGlitch(point);
+        map.set(point, MapEntry {
+            .result     = DR_GLITCH,
+            .first      = (i32)ref.skipped,
+            .last       = (i32)iteration } );
+
         glitchPoints.push_back(point);
     }
 }

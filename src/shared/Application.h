@@ -15,6 +15,8 @@
 #include "Options.h"
 #include "Logger.h"
 
+#include <getopt.h>
+
 namespace dd {
 
 class Application {
@@ -24,55 +26,65 @@ protected:
     // Asset manager
     AssetManager assets;
 
-    // Config options
+    // Configuration options
     Options opt = Options(assets);
 
-    // Stop watch for measuring total execution time
+    // Stop watch for measuring the total execution time
     Clock stopWatch;
 
 public:
-
+    
     // Main entry point
     int main(int argc, char *argv[]);
 
     // Returns a version string
     static string version();
+    static string version(isize major, isize minor, isize subminor, isize beta);
+
+    // Reads all ini files
+    void readConfigFiles(isize keyframe = 0);
 
 private:
 
+    // Configures the application (called in main)
+    void configure();
+    
     // Sets up the GMP library
     void setupGmp();
 
-    // Performs some common command line arguments checks
-    void checkSharedArguments();
+protected:
 
-    // Reads all input files
-    void readInputs();
-
-    // Reads all profiles
-    void readProfiles();
+    // Parses all command line arguments
+    void parseArguments(int argc, char *argv[], const char *optstr, const option *longopts);
 
 
     //
     // Methods provided by subclasses
     //
 
+private:
+    
     // Returns the app name
-    virtual const char *appName() = 0;
+    virtual const char *appName() const = 0;
+
+    // Returns the argument strings required by getopt
+    virtual const char *optstring() const = 0;
+    virtual const struct option *longopts() const = 0;
 
     // Prints the command line syntax
-    virtual void syntax() = 0;
+    virtual void syntax() const = 0;
 
-    // Performs some basic initialization on program launch
+    // Performs all initializations required on program launch
     virtual void initialize() = 0;
 
-    // Parses all command line arguments
-    virtual void parseArguments(int argc, char *argv[]) = 0;
+    // Checks the input and output file formats for validity
+    virtual bool isAcceptedInputFormat(Format format) const = 0;
+    virtual bool isAcceptedOutputFormat(Format format) const = 0;
 
     // Checks all command line arguments for consistency
-    virtual void checkCustomArguments() = 0;
+    virtual void checkArguments() = 0;
 
-    // Main method
+    // Runs the application (main method)
     virtual void run() = 0;
 };
 

@@ -10,11 +10,11 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepDrill.h"
+#include "SlowDriller.h"
 #include "Driller.h"
 #include "ColorMap.h"
 #include "ProgressIndicator.h"
-
-#include <getopt.h>
+#include "Compressor.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,137 +23,107 @@ int main(int argc, char *argv[])
 
 namespace dd {
 
-void
-DeepDrill::syntax()
+const char *
+DeepDrill::optstring() const
 {
-    log::cout << "Usage: ";
-    log::cout << "deepdrill [-bv] [-a <path>] [-c <keyvalue>] [-p <profile>] -o <output> <input>" << log::endl;
-    log::cout << log::endl;
-    log::cout << "       -b or --batch     Run in batch mode" << log::endl;
-    log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
-    log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
-    log::cout << "       -c or --config    Configures a single key-value pair" << log::endl;
-    log::cout << "       -p or --profile   Customize settings" << log::endl;
-    log::cout << "       -o or --output    Output file" << log::endl;
+    return ":vba:o:";
 }
 
-void
-DeepDrill::parseArguments(int argc, char *argv[])
+const option *
+DeepDrill::longopts() const
 {
     static struct option long_options[] = {
-        
-        { "verbose",  no_argument,       NULL, 'v' },
+
         { "batch",    no_argument,       NULL, 'b' },
+        { "verbose",  no_argument,       NULL, 'v' },
         { "assets",   required_argument, NULL, 'a' },
-        { "config",   required_argument, NULL, 'c' },
-        { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
     };
 
-    // Don't print the default error messages
-    opterr = 0;
-    
-    // Remember the path to the DeppDrill executable
-    opt.files.exec = makeAbsolutePath(argv[0]);
-
-    // Parse all options
-    while (1) {
-        
-        int arg = getopt_long(argc, argv, ":vba:c:p:o:", long_options, NULL);
-        if (arg == -1) break;
-
-        switch (arg) {
-                
-            case 'v':
-                opt.flags.verbose = true;
-                break;
-                
-            case 'b':
-                opt.flags.batch = true;
-                break;
-
-            case 'a':
-                assets.addSearchPath(optarg);
-                break;
-
-            case 'c':
-                opt.overrides.push_back(optarg);
-                break;
-
-            case 'p':
-                opt.files.profiles.push_back(optarg);
-                break;
-            
-            case 'o':
-                opt.files.outputs.push_back(optarg);
-                break;
-
-            case ':':
-                throw SyntaxError("Missing argument for option '" +
-                                  string(argv[optind - 1]) + "'");
-                
-            default:
-                throw SyntaxError("Invalid option '" +
-                                  string(argv[optind - 1]) + "'");
-        }
-    }
-    
-    // Parse all remaining arguments
-    while (optind < argc) {
-        opt.files.inputs.push_back(argv[optind++]);
-    }
-
-    // Add default outputs if none are given
-    if (opt.files.outputs.empty() && !opt.files.inputs.empty()) {
-
-        auto name = stripSuffix(opt.files.inputs.front());
-        opt.files.outputs.push_back(name + ".map");
-        opt.files.outputs.push_back(name + ".jpg");
-    }
+    return long_options;
 }
 
 void
-DeepDrill::checkCustomArguments()
+DeepDrill::syntax() const
 {
-    // The user needs to specify at least one output file
+    log::cout << "Usage: ";
+    log::cout << "deepdrill [-bv] [-a <path>] -o <output> [<keyvalue>] <inputs>" << log::endl;
+    log::cout << log::endl;
+    log::cout << "       -b or --batch     Run in batch mode" << log::endl;
+    log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
+    log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
+    log::cout << "       -o or --output    Output file" << log::endl;
+}
+
+bool
+DeepDrill::isAcceptedInputFormat(Format format) const
+{
+    return format == Format::MAP || format == Format::INI;
+}
+
+bool
+DeepDrill::isAcceptedOutputFormat(Format format) const
+{
+    return format == Format::MAP || AssetManager::isImageFormat(format);
+}
+
+void
+DeepDrill::checkArguments()
+{
+    // At most one map file must be given
+    if (opt.getInputs(Format::MAP).size() > 1) throw SyntaxError("More than one map file is given");
+
+    // At least one output file must be given
     if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
-
-    // Valid input files are map files and locations files
-    for (auto &it: opt.files.inputs) {
-        (void)assets.findAsset(it, { Format::LOC, Format::MAP });
-    }
-
-    // Valid output files are map files and image files
-    for (auto &it: opt.files.outputs) {
-        AssetManager::assureFormat(it, { Format::MAP, Format::BMP, Format::JPG, Format::PNG });
-    }
 }
 
 void
 DeepDrill::run()
 {
-    auto input = opt.files.inputs.front();
-    auto inputFormat = AssetManager::getFormat(input);
-
     drillMap.resize();
 
-    // Create or load the drill map
-    if (inputFormat == Format::MAP) {
+    if (!opt.getInputs(Format::MAP).empty()) {
 
         // Load the drill map from disk
-        drillMap.load(input);
+        drillMap.load(opt.getInputs(Format::MAP).front());
+
+        // Generate outputs
+        generateOutputs();
 
     } else {
 
         BatchProgressIndicator progress(opt, "Drilling",  opt.files.outputs.front());
 
         // Run the driller
+        runDriller();
+
+        // Generate outputs
+        generateOutputs();
+
+        // Analyze the drill map
+        if (opt.flags.verbose) drillMap.analyze();
+    }
+}
+
+void
+DeepDrill::runDriller()
+{
+    if (opt.perturbation.enable) {
+
         Driller driller(opt, drillMap);
         driller.drill();
-    }
 
-    // Generate outputs
+    } else {
+
+        SlowDriller driller(opt, drillMap);
+        driller.drill();
+    }
+}
+
+void
+DeepDrill::generateOutputs()
+{
     for (auto &it : opt.files.outputs) {
 
         auto outputFormat = AssetManager::getFormat(it);

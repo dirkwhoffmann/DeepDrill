@@ -18,6 +18,8 @@
 #include "ProgressIndicator.h"
 
 #include <SFML/Graphics.hpp>
+#include <thread>
+#include <future>
 
 namespace fs = std::filesystem;
 
@@ -55,10 +57,23 @@ Zoomer::launch()
     // Start FFmpeg
     if (recordMode) recorder.startRecording();
 
+    // Load the textures of the first two keyframes
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 0" << log::endl << log::endl;
+    (void)loadMapFile(0);
+
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 1" << log::endl << log::endl;
+    (void)loadMapFile(1);
+
     // Process all keyframes
     for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
 
-        ProgressIndicator progress("Processing keyframe " + std::to_string(keyframe), opt.video.inbetweens);
+        log::cout << log::vspace;
+        log::cout << "Zooming from keyframe " << std::to_string(keyframe);
+        log::cout << " to keyframe " << std::to_string(keyframe + 1) << ": ";
+        log::cout << std::to_string(opt.video.inbetweens) << " inbetweens";
+        log::cout << log::endl << log::endl;
 
         updateClock.reset();
         renderClock.reset();
@@ -75,25 +90,15 @@ Zoomer::launch()
                     window.close();
             }
 
-            // Update state
-            updateClock.go();
+            //Perform main tasks
             update();
-            updateClock.stop();
-
-            // Render frame
-            renderClock.go();
             draw();
-            renderClock.stop();
-
-            // Record frame
-            recordClock.go();
             record();
-            recordClock.stop();
 
-            progress.step(1);
+            // progress.step(1);
         }
 
-        progress.done();
+        // progress.done();
 
         if (opt.flags.verbose) {
 
@@ -110,6 +115,9 @@ Zoomer::launch()
             }
             log::cout << log::vspace;
         }
+
+        // Wait for the async map file loader to finish
+        (void)loadResult.get();
     }
 
     // Stop FFmpeg
@@ -121,8 +129,19 @@ Zoomer::update()
 {
     if (frame == 0) {
 
-        updateTextures(keyframe);
-        updateLocation(keyframe);
+        // Preload the next texture in the background
+        loadResult = std::async([this]() {
+
+            if (keyframe + 2 > opt.video.keyframes) {
+                return false;
+            }
+
+            updateClock.go();
+            auto result = loadMapFile(keyframe + 2);
+            updateClock.stop();
+
+            return result;
+        });
 
         // Set animation start point
         zoom.set(1.0);
@@ -146,8 +165,11 @@ Zoomer::update()
 void
 Zoomer::draw()
 {
+    renderClock.go();
+
     // Colorize
-    colorizer.draw(drillMap.colorMap, drillMap2.colorMap,
+    colorizer.draw(drillMap[(keyframe + 0) % 3].colorMap,
+                   drillMap[(keyframe + 1) % 3].colorMap,
                    (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
@@ -155,6 +177,8 @@ Zoomer::draw()
     window.clear();
     window.draw(colorizer.getRect());
     window.display();
+
+    renderClock.stop();
 }
 
 void
@@ -162,62 +186,22 @@ Zoomer::record()
 {
     if (recordMode) {
 
+        recordClock.go();
         recorder.record(colorizer.getImage());
+        recordClock.stop();
     }
 }
 
-void
-Zoomer::updateTextures(isize nr)
+bool
+Zoomer::loadMapFile(isize nr)
 {
+    fs::path path = opt.files.inputs.front();
+    fs::path file = path / AssetManager::mapFile(nr);
 
-    auto mapFile = [&](isize nr) {
+    drillMap[nr % 3].load(file);
+    drillMap[nr % 3].colorize();
 
-        fs::path input = opt.files.inputs.front();
-        fs::path path = input.parent_path() / input.stem();
-        return path.string() + "_" + std::to_string(nr) + ".map";
-    };
-
-    {   SILENT
-
-        // Load map file of the current keyframe
-        if (!fileExists(mapFile(nr))) {
-            throw FileNotFoundError(mapFile(nr));
-        }
-        drillMap.load(mapFile(nr));
-        drillMap.colorize();
-
-        // Load mapfile of the next frame
-        if (!fileExists(mapFile(nr + 1))) {
-            throw FileNotFoundError(mapFile(nr + 1));
-        }
-        drillMap2.load(mapFile(nr + 1));
-        drillMap2.colorize();
-    }
-}
-
-void
-Zoomer::updateLocation(isize nr)
-{
-    /*
-    fs::path input = opt.files.inputs.front();
-    fs::path path = input.parent_path() / input.stem();
-    string name = path.string() + "_" + std::to_string(nr + 1) + ".loc";
-
-    // Read the first location file if this is the first location update
-    if (nr == 0) {
-
-        string name = path.string() + "_0.loc";
-        Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
-        opt.derive();
-    }
-
-    // Read the next location file if existent
-    if (fileExists(name)) {
-
-        Parser::parse(name, [this](string k, string v) { opt.parse(k,v); });
-        opt.derive();
-    }
-    */
+    return true;
 }
 
 }

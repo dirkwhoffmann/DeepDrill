@@ -2,11 +2,11 @@
 
 In this tutorial, you will learn how to download, compile, and install the DeepDrill toolchain. 
 
-DeepDrill is a Unix-style C++ application and should be compatible with most Unix-style operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.
+DeepDrill is a Unix-style C++20 application and compatible with most Unix-like operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.
 
 - **Step 1: Install third-party libraries**
 
-    To compile the DeepDrill toolchain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, FFmpeg needs to be installed on your machine. It is executed by DeepZoom at runtime.
+    To compile the DeepDrill toolchain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, FFmpeg needs to be installed on your machine, too. It is executed by DeepZoom at runtime.
 
   - Option 1: Install with Homebrew
  

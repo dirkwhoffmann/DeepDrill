@@ -191,6 +191,17 @@ struct PrecisionComplex {
         return result;
     }
 
+
+    //
+    // Misc
+    //
+
+    // Returns true if the number belongs to the cartioid of the Mandelbrot set
+    bool inCardioid();
+
+    // Returns true if the number belongs to the main bulb of the Mandelbrot set
+    bool inMainBulb();
+
 };
 
 }

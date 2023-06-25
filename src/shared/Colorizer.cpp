@@ -46,7 +46,7 @@ Colorizer::draw(const ColorMap &map)
         ProgressIndicator progress("Running GPU shaders");
 
         // 1. Apply lighting
-        illuminator.shader.setUniform("lightDir", lightVector());
+        illuminator.setUniform("lightDir", lightVector());
         illuminator.setUniform("image", map.colorMapTex);
         illuminator.setUniform("normal", map.normalMapTex);
         illuminator.apply();

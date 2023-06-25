@@ -30,34 +30,32 @@ struct Coord {
 
 
     //
-    // Locating
-    //
-
-    static Coord ul(const struct Options &opt);
-    static Coord ur(const struct Options &opt);
-    static Coord ll(const struct Options &opt);
-    static Coord lr(const struct Options &opt);
-    static Coord center(const struct Options &opt);
-
-    // Translates the coordinate to it's location on the complex plane
-    PrecisionComplex translate(const struct Options &opt) const;
-
-
-    //
     // Calculating
     //
 
     bool operator==(const Coord &other) const { return x == other.x && y == other.y; }
 
-    inline Coord &operator-=(const Coord &other) {
+    inline Coord &operator+=(const Coord &other) {
     
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+    
+    inline Coord operator+(const Coord &other) const {
+        
+        return Coord { (i16)(x + other.x), (i16)(y + other.y) };
+    }
+
+    inline Coord &operator-=(const Coord &other) {
+
         x -= other.x;
         y -= other.y;
         return *this;
     }
-    
+
     inline Coord operator-(const Coord &other) const {
-        
+
         return Coord { (i16)(x - other.x), (i16)(y - other.y) };
     }
 

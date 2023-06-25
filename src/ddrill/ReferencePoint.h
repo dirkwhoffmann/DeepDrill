@@ -71,10 +71,7 @@ struct ReferencePoint {
     //
     
     ReferencePoint() { }
-    ReferencePoint(const struct Options &opt, Coord c);
-
-    // Returns the relative location of a given pixel
-    ExtendedComplex deltaLocation(const Options &opt, const Coord &coord) const;
+    ReferencePoint(Coord c, const PrecisionComplex &pc); 
 };
 
 }

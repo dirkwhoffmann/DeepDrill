@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "ProgressIndicator.h"
+#include "AssetManager.h"
 #include "IO.h"
 #include "Logger.h"
 #include "Options.h"
@@ -66,18 +67,18 @@ ProgressIndicator::done(const string &info)
     log::cout << log::endl;
 }
 
-BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg, const string &file)
+BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg, const fs::path &path)
 {
     if (opt.flags.batch) {
 
         this->msg = msg;
-        this->file = file;
+        this->path = path;
 
         std::stringstream ss;
         Logger logger(ss);
 
         prefix(logger);
-        logger << log::yellow << msg << " " << file << log::normal;
+        logger << log::yellow << msg << " " << path << log::normal;
         logger << " ..." << log::endl;
 
         std::cerr << ss.str();
@@ -93,7 +94,7 @@ BatchProgressIndicator::~BatchProgressIndicator()
         Logger logger(ss);
 
         prefix(logger);
-        logger << log::green << "Created " << file;
+        logger << log::green << "Created " << path;
         logger << log::normal << " (" << clock.stop() << ")" << log::endl;
 
         std::cerr << ss.str();
@@ -103,12 +104,35 @@ BatchProgressIndicator::~BatchProgressIndicator()
 void
 BatchProgressIndicator::prefix(Logger &logger)
 {
-    auto cnt1 = countFiles(extractSuffix(file));
-    auto cnt2 = countFiles("loc");
-    auto percent = isize(100.0 * cnt1 / cnt2);
+    isize total = 0;
+    isize done = 0;
 
-    logger << log::blue << "[" << percent << "%] ";
-    logger << cnt1 << "/" << cnt2 << ": ";
+    for (const auto &it : fs::directory_iterator(fs::current_path())) {
+
+        auto file = it.path();
+
+        if (file.extension() != ".ini") continue;
+        if (file.filename() == AssetManager::iniFile()) continue;
+
+        auto iniFile = file;
+        auto mapFile = iniFile.replace_extension(".map");
+        total += 1;
+        done += isOlderThan(iniFile, mapFile);
+        /*
+        if (fs::exists(mapFile)) {
+
+            auto iniDate = fs::last_write_time(iniFile).time_since_epoch();
+            auto mapDate = fs::last_write_time(mapFile).time_since_epoch();
+            done += isize(mapDate >= iniDate);
+        }
+        */
+    }
+
+    if (total) {
+        logger << log::blue << "[" << isize(100.0 * done / total) << "%] ";
+    } else {
+        logger << log::blue << "[-] ";
+    }
 }
 
 }

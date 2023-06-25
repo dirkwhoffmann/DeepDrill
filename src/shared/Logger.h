@@ -27,7 +27,7 @@ namespace log {
 struct Endl { };
 struct VSpace { };
 struct Flush { };
-struct ralign { string str; ralign(const string s) : str(s) { } };
+struct ralign { string s; int w; ralign(const string s, int w = 32) : s(s), w(w) { } };
 struct Normal { };
 struct Black { };
 struct Red { };
@@ -69,13 +69,14 @@ class Logger {
     isize blanks = 0;
     
     // Indicates if all output should be omitted
-    bool silent = false;
+    int muted = 0;
 
 public:
 
     Logger(std::ostream &stream) : stream(stream) { };
 
-    void setSilent(bool value) { silent = value; }
+    void mute() { muted++; }
+    void unmute() { muted--; }
     
     Logger& operator<<(const log::Endl &arg);
     Logger& operator<<(const log::VSpace &arg);
@@ -93,6 +94,7 @@ public:
     Logger& operator<<(const log::Bold &arg) {  *this << "\033[1m"; return *this; }
     Logger& operator<<(const log::Light &arg) { *this << "\033[0m"; return *this; }
     Logger& operator<<(const string &arg);
+    Logger& operator<<(const fs::path &arg);
     Logger& operator<<(const char &arg);
     Logger& operator<<(const char *arg);
     Logger& operator<<(const bool &arg);
@@ -106,26 +108,9 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
-    Logger& operator<<(const fs::path &arg);
 };
 
 // Default logger (writes to stdout)
 namespace log { extern class Logger cout; }
 
-class Silence
-{
-    Logger &logger;
-    bool silent;
-
-public:
-    
-    Silence(Logger &logger) : logger(logger), silent(logger.silent) {
-        logger.setSilent(true);
-    }
-    ~Silence() {
-        logger.setSilent(silent);
-    }
-};
-
-#define SILENT Silence s(log::cout);
 }

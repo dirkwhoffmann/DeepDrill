@@ -19,10 +19,15 @@ DeepDrill User's Manual
 
    Tutorials/Installation
    Tutorials/StillImages
-   Tutorials/Colors
-   Tutorials/3D
    Tutorials/ZoomVideos
-   Tutorials/Debug
+
+.. toctree::
+   :maxdepth: 1
+   :caption: How-To Guides
+   HowTo/Palettes
+   HowTo/SpatialImages
+   HowTo/Textures
+   HowTo/Debug
 
 .. toctree::
    :maxdepth: 1

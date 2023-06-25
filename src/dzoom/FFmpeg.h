@@ -21,10 +21,10 @@ class FFmpeg {
 public:
 
     // A list of available FFmpeg executables (setup in init() )
-    static std::vector<string> paths;
+    static std::vector <fs::path> paths;
 
     // Path to the selected FFmpeg executable
-    static string exec;
+    static fs::path exec;
 
     FILE *handle = nullptr;
 

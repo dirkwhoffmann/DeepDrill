@@ -19,8 +19,6 @@
 namespace dd {
 
 class Filter {
-
-public: // REMOVE ASAP
     
     // Configuration options
     const struct Options &opt;
@@ -30,7 +28,7 @@ public: // REMOVE ASAP
     sf::Shader shader;
 
     // List of uniforms
-    vector <string> uniforms;
+    std::vector<string> uniforms;
     
     // Dimensions of the output texture
     isize width;

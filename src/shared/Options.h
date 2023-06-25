@@ -14,20 +14,27 @@
 #include "config.h"
 #include "Types.h"
 #include "AssetManager.h"
+#include "Colors.h"
 #include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
 namespace dd {
 
-enum class ColoringMode { Default };
+// struct Color { u32 abgr; };
+
+enum class ColoringMode
+{
+    Default,
+    // Textured
+};
 
 struct Options {
 
     // Reference to the asset manager
     const AssetManager &assets;
 
-    // Set to true to abort the computation
+    // Set to true to interrupt the application
     bool stop = false;
 
 
@@ -35,14 +42,14 @@ struct Options {
     // Key-value pairs (unparsed)
     //
 
-    // Keys specified at the command line
-    std::vector <string> overrides;
-
     // Default keys
-    std::map <string,string> defaults;
+    std::map<string,string> defaults;
 
-    // User-defined keys
-    std::map <string,string> keys;
+    // Keys read from configuration files
+    std::map<string,string> keys;
+
+    // Keys specified at the command line
+    std::vector<string> overrides;
 
     struct {
 
@@ -59,10 +66,9 @@ struct Options {
         // Full path to the executable
         fs::path exec;
 
-        // Full paths to input files, output files, and profiles
-        std::vector <fs::path> inputs;
-        std::vector <fs::path> outputs;
-        std::vector <fs::path> profiles;
+        // Full paths to the input and output files
+        std::vector<fs::path> inputs;
+        std::vector<fs::path> outputs;
 
     } files;
 
@@ -75,7 +81,7 @@ struct Options {
         // Magnification
         mpf_class zoom;
         
-        // Maximum iterations count
+        // Maximum number of iterations
         isize depth;
 
     } location;
@@ -89,6 +95,9 @@ struct Options {
         // Indicates if a normal map should be computed
         isize depth;
 
+        // Indicates if map files should be saved in compressed format
+        bool compress;
+        
     } drillmap;
 
     struct {
@@ -97,14 +106,14 @@ struct Options {
         isize width;
         isize height;
 
-        // Indicates if a 3D effect should be applied
+        // Indicates if an illumination effect should be applied
         isize depth;
 
         // Path to the illumination filter
-        string illuminator;
+        fs::path illuminator;
 
-        // Path to the downscaling filter
-        string scaler;
+        // Path to the image downscaling filter
+        fs::path scaler;
 
     } image;
 
@@ -122,8 +131,8 @@ struct Options {
         // Bitrate
         isize bitrate;
 
-        // Path to fragment shaders
-        string scaler;
+        // Path to the video downscaling filter
+        fs::path scaler;
 
     } video;
 
@@ -133,10 +142,16 @@ struct Options {
         ColoringMode mode;
         
         // Path to the palette image
-        string palette;
+        fs::path palette;
+
+        // Path to the texture image
+        fs::path texture;
 
         // Scaling factor
         double scale;
+
+        // Texture opacity
+        double opacity;
 
         // Light vector direction
         double alpha;
@@ -146,23 +161,26 @@ struct Options {
     
     struct {
 
-        // Indicates if perturbation should be used
+        // Indicates if perturbation should be utilized
         bool enable;
 
         // Tolerance used for glitch detection
         double tolerance;
 
-        // Fraction of pixels that are allowed to have a wrong color
+        // Fraction of pixels that are allowed to be miscolored
         double badpixels;
 
         // Maximum number of rounds
         isize rounds;
 
+        // Color used for glitch points
+        GpuColor color;
+
     } perturbation;
     
     struct {
 
-        // Indicates if series approximation should be used
+        // Indicates if series approximation should be utilized
         bool enable;
 
         // Number of coefficients used in series approximation
@@ -175,30 +193,39 @@ struct Options {
 
     struct {
 
-        // Highlight glitches in texture
-        bool glitches;
+        // Indicates if area checking should be applied
+        bool enable;
 
-    } debug;
+        // Color used for points with a positive area check
+        GpuColor color;
 
+    } areacheck;
 
-    //
-    // Derived values
-    //
+    struct {
 
-    // Center coordinate in precision format
-    PrecisionComplex center;
+        // Indicates if attractor checking should be applied
+        bool enable;
 
-    // Bounding box in precision format
-    mpf_class x0, y0, x1, y1;
+        // Tolerance for equality checks
+        double tolerance;
 
-    // Distance between two adjacent pixels
-    mpf_class mpfPixelDeltaX;
-    mpf_class mpfPixelDeltaY;
-    ExtendedDouble pixelDeltaX;
-    ExtendedDouble pixelDeltaY;
+        // Color used for points with a positive attractor check
+        GpuColor color;
 
-    // Video duration in seconds
-    isize duration;
+    } attractorcheck;
+
+    struct {
+
+        // Indicates if period checking should be applied
+        bool enable;
+
+        // Tolerance for equality checks
+        double tolerance;
+
+        // Color unsed for points with a positive period check
+        GpuColor color;
+
+    } periodcheck;
 
 
     //
@@ -211,11 +238,20 @@ public:
 
 
     //
+    // Handling input and output files
+    //
+
+    std::vector <fs::path> getInputs(Format format);
+    std::vector <fs::path> getOutputs(Format format);
+
+
+    //
     // Parsing key-value pairs
     //
 
     void parse(string keyvalue);
     void parse(string key, string value);
+    void applyDefaults();
     void derive();
 
 private:
@@ -225,7 +261,9 @@ private:
     void parse(const string &key, const string &value, isize &parsed);
     void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
     void parse(const string &key, const string &value, double &parsed);
+    void parse(const string &key, const string &value, double &parsed, double min, double max);
     void parse(const string &key, const string &value, mpf_class &parsed);
+    void parse(const string &key, const string &value, GpuColor &parsed);
     void parse(const string &key, const string &value, ColoringMode &parsed);
 };
 

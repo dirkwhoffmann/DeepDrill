@@ -22,11 +22,15 @@ class DeepZoom : public Application {
     // Methods from Application
     //
 
-    const char *appName() { return "DeepZoom"; }
-    void syntax();
+    const char *appName() const { return "DeepZoom"; }
+    const char *optstring() const;
+    const option *longopts() const;
+    bool isAcceptedInputFormat(Format format) const;
+    bool isAcceptedOutputFormat(Format format) const;
+
+    void syntax() const;
     void initialize();
-    void parseArguments(int argc, char *argv[]);
-    void checkCustomArguments();
+    void checkArguments();
     void run();
 };
 

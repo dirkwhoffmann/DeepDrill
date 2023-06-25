@@ -13,37 +13,66 @@
 
 #include "config.h"
 #include "Types.h"
-#include "Buffer.h"
 #include "StandardComplex.h"
 #include "ColorMap.h"
+#include "Compressor.h"
 
 namespace dd {
 
-enum ChannelID {
+enum DrillResult : i8 {
 
-    CHANNEL_ITCOUNTS,
-    CHANNEL_LOGNORMS,
-    CHANNEL_DERIVATIVES,
-    CHANNEL_NORMALS
+    DR_UNPROCESSED,
+    DR_ESCAPED,
+    DR_MAX_DEPTH_REACHED,
+    DR_IN_BULB,
+    DR_IN_CARDIOID,
+    DR_PERIODIC,
+    DR_ATTRACTED,
+    DR_GLITCH,
 };
 
 enum ChannelFormat {
 
-    FMT_U24_LE,
-    FMT_U32_LE,
-    FMT_U64_LE,
-    FMT_FP16_LE,
-    FMT_FLOAT_LE,
-    FMT_DOUBLE_LE
+    FMT_I8,
+    FMT_I16,
+    FMT_I24,
+    FMT_I32,
+    FMT_FP16,
+    FMT_FLOAT,
+    FMT_DOUBLE
+};
+
+enum ChannelID {
+
+    CHANNEL_RESULT,
+    CHANNEL_FIRST,
+    CHANNEL_LAST,
+    CHANNEL_LOGNORM,
+    CHANNEL_DERIVATIVE,
+    CHANNEL_NORMAL
 };
 
 struct MapEntry {
 
-    u32 iteration;
+    // Drill outcome
+    DrillResult result;
+
+    // First executed iteration
+    i32 first;
+
+    // Last executed iteration
+    i32 last;
+
+    // Shall we save this directly or compute it?
     float lognorm;
 
-    // Experimental
+    // Last iteration value before the escape check hit
+    StandardComplex zn;
+    
+    // Derivative
     StandardComplex derivative;
+
+    // Normal vector
     StandardComplex normal;
 };
 
@@ -54,60 +83,98 @@ public:
     // Configuration options
     const struct Options &opt;
 
-    // Resolution
+    // Map resolution
     isize width = 0;
     isize height = 0;
+    isize depth = 0;
 
-    // Map data (TODO: Use Buffer class)
-    MapEntry *data = nullptr;
+    // The center coordinate
+    PrecisionComplex center;
+
+    // Bounding box
+    PrecisionComplex ul;
+    PrecisionComplex lr;
+
+    // Distance between adjacent pixels
+    mpf_class mpfPixelDeltaX;
+    mpf_class mpfPixelDeltaY;
+    ExtendedDouble pixelDeltaX;
+    ExtendedDouble pixelDeltaY;
+
+    // Map data
+    std::vector<MapEntry> data;
 
     // Associated color map
     ColorMap colorMap = ColorMap(opt);
-
-public:
 
 
     //
     // Initializing
     //
 
+public:
+
     DrillMap(const Options &opt) : opt(opt) { };
-    ~DrillMap();
 
     void resize();
-    void resize(isize w, isize h);
-
-
-    //
-    // Analyzing
-    //
-
-    bool hasIterations();
-    bool hasLogNorms();
-    bool hasDerivates();
-    bool hasNormals();
+    void resize(isize w, isize h, isize d);
 
 
     //
     // Accessing
     //
 
-    MapEntry *operator [] (const isize &) const;
-    MapEntry &get(isize w, isize h) const;
-    MapEntry &get(const struct Coord &c) const;
+public:
+
+    MapEntry *operator [] (const isize &);
+    const MapEntry *operator [] (const isize &) const;
+    MapEntry &get(isize w, isize h);
+    const MapEntry &get(isize w, isize h) const;
+    MapEntry &get(const struct Coord &c);
+    const MapEntry &get(const struct Coord &c) const;
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
-    void set(const struct Coord &c, u32 iteration, float lognorm);
-    void markAsInside(const struct Coord &c);
-    void markAsGlitch(const struct Coord &c);
+
+
+    //
+    // Locating
+    //
+
+    // Translates a coordinate into a complex number and vice versa
+    PrecisionComplex translate(const Coord &coord) const;
+    Coord translate(const PrecisionComplex &coord) const;
+
+    // Computes the distance of coordinate from another coordinate
+    ExtendedComplex distance(const Coord &coord, const Coord &other) const;
+
+    // Computes the distance from the center
+    ExtendedComplex distance(const Coord &coord) const;
+
+    // Returns the coordinates of a mesh covering the drill map
+    void getMesh(isize numx, isize numy, std::vector<Coord> &meshPoints) const;
+
+
+    //
+    // Analyzing
+    //
+
+public:
+
+    bool hasDrillResults() const;
+    bool hasIterations() const;
+    bool hasLogNorms() const;
+    bool hasDerivates() const;
+    bool hasNormals() const;
+    void analyze() const;
 
 
     //
     // Colorizing
     //
 
+public:
+
     ColorMap &getColorMap() { return colorMap; }
-    // const sf::Texture &getTexture() { return colorMap.getTexture(); }
     const ColorMap &colorize();
 
 
@@ -123,13 +190,12 @@ public:
 private:
 
     void loadHeader(std::istream &is);
-    void loadChannel(std::istream &is);
-    template<ChannelFormat fmt, typename T> void load(std::istream &is, T &raw);
-    template<ChannelFormat fmt> void load(std::istream &is, u32 &raw) { load <fmt, u32> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, u64 &raw) { load <fmt, u64> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, float &raw) { load <fmt, float> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, double &raw) { load <fmt, double> (is, raw); }
-    template<ChannelFormat fmt> void load(std::istream &is, StandardComplex &raw);
+    void loadChannel(Compressor &is);
+    template<ChannelFormat fmt, typename T> void load(Compressor &is, T &raw);
+    template<ChannelFormat fmt> void load(Compressor &is, u32 &raw) { load <fmt,u32> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, u64 &raw) { load <fmt,u64> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, float &raw) { load <fmt,float> (is, raw); }
+    template<ChannelFormat fmt> void load(Compressor &is, double &raw) { load <fmt,double> (is, raw); }
 
     
     //
@@ -144,13 +210,12 @@ public:
 private:
 
     void saveHeader(std::ostream &os);
-    void saveChannel(std::ostream &os, ChannelID id);
-    template<ChannelFormat fmt, typename T> void save(std::ostream &os, T raw);
-    template<ChannelFormat fmt> void save(std::ostream &os, u32 raw) { save <fmt, u32> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, u64 raw) { save <fmt, u64> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, float raw) { save <fmt, float> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, double raw) { save <fmt, double> (os, raw); }
-    template<ChannelFormat fmt> void save(std::ostream &os, const StandardComplex &raw);
+    void saveChannel(Compressor &os, ChannelID id);
+    template<ChannelFormat fmt, typename T> void save(Compressor &os, T raw);
+    template<ChannelFormat fmt> void save(Compressor &os, u32 raw) { save <fmt,u32> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, u64 raw) { save <fmt,u64> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, float raw) { save <fmt,float> (os, raw); }
+    template<ChannelFormat fmt> void save(Compressor &os, double raw) { save <fmt,double> (os, raw); }
 };
 
 }

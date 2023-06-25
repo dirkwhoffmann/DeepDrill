@@ -12,8 +12,6 @@
 #include "DeepMake.h"
 #include "Maker.h"
 
-#include <getopt.h>
-
 int main(int argc, char *argv[])
 {
     return dd::DeepMake().main(argc, argv);
@@ -21,85 +19,43 @@ int main(int argc, char *argv[])
 
 namespace dd {
 
-void
-DeepMake::syntax()
+const char *
+DeepMake::optstring() const
 {
-    log::cout << "Usage: ";
-    log::cout << "deepmake [-a <path>] [-p <profile>] -o <output> <input>" << log::endl;
-    log::cout << log::endl;
-    log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
-    log::cout << "       -c or --config    Configures a single key-value pair" << log::endl;
-    log::cout << "       -p or --profile   Customize settings" << log::endl;
-    log::cout << "       -o or --output    Output file" << log::endl;
+    return ":va:o:";
 }
 
-void
-DeepMake::parseArguments(int argc, char *argv[])
+const option *
+DeepMake::longopts() const
 {
     static struct option long_options[] = {
 
+        { "verbose",  no_argument,       NULL, 'v' },
         { "assets",   required_argument, NULL, 'a' },
-        { "config",   required_argument, NULL, 'c' },
-        { "profile",  required_argument, NULL, 'p' },
         { "output",   required_argument, NULL, 'o' },
         { NULL,       0,                 NULL,  0  }
     };
 
-    // Don't print the default error messages
-    opterr = 0;
-
-    // Remember the path to the DeppDrill executable
-    opt.files.exec = makeAbsolutePath(argv[0]);
-
-    // Parse all options
-    while (1) {
-
-        int arg = getopt_long(argc, argv, ":a:c:p:o:", long_options, NULL);
-        if (arg == -1) break;
-
-        switch (arg) {
-
-            case 'a':
-                assets.addSearchPath(optarg);
-                break;
-
-            case 'c':
-                opt.overrides.push_back(optarg);
-                break;
-
-            case 'p':
-                opt.files.profiles.push_back(optarg);
-                break;
-
-            case 'o':
-                opt.files.outputs.push_back(optarg);
-                break;
-
-            case ':':
-                throw SyntaxError("Missing argument for option '" +
-                                  string(argv[optind - 1]) + "'");
-
-            default:
-                throw SyntaxError("Invalid option '" +
-                                  string(argv[optind - 1]) + "'");
-        }
-    }
-
-    // Parse all remaining arguments
-    while (optind < argc) {
-        opt.files.inputs.push_back(argv[optind++]);
-    }
+    return long_options;
 }
 
 void
-DeepMake::checkCustomArguments()
+DeepMake::syntax() const
 {
-    // The user needs to specify a single output
+    log::cout << "Usage: ";
+    log::cout << "deepmake [-v] [-a <path>] -o <output> <inputs>" << log::endl;
+    log::cout << log::endl;
+    log::cout << "       -v or --verbose   Run in verbose mode" << log::endl;
+    log::cout << "       -a or --assets    Optional path to asset files" << log::endl;
+    log::cout << "       -o or --output    Output file" << log::endl;
+}
+
+void
+DeepMake::checkArguments()
+{
+    // A single output file must be given
     if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
     if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
-
-    // The input must be a location file
-    (void)assets.findAsset(opt.files.inputs.front() , Format::LOC);
 
     // The output must be an existing directory
     (void)assets.findAsset(opt.files.outputs.front(), Format::DIR);
@@ -108,22 +64,45 @@ DeepMake::checkCustomArguments()
 void
 DeepMake::run()
 {
-    // Determine the number of computed files
-    auto numFiles = opt.video.keyframes + 4;
-
-    // Ask for permisson
-    log::cout << numFiles << " files will be created. Do you want to proceed [no]? ";
-    string line; std::getline(std::cin, line);
-
-    if (line != "y" && line != "yes") {
-
-        log::cout << "Aborting" << log::endl;
-        return;
+    // Collect paths to all files that need to be created, skipped or modified
+    std::vector <fs::path> create;
+    std::vector <fs::path> skipOrModify;
+    auto add = [&](const fs::path &path) {
+        fs::exists(path) ? skipOrModify.push_back(path) : create.push_back(path);
+    };
+    auto project = opt.files.outputs.front();
+    add(project / "Makefile");
+    add(project / AssetManager::iniFile());
+    for (isize i = 0; i < opt.video.keyframes; i++) {
+        add(project / AssetManager::iniFile(i));
     }
+
+    log::cout << log::vspace;
+    log::cout << log::ralign(std::to_string(create.size()), 5);
+    log::cout << " files will be created. " << log::endl;
+    log::cout << log::ralign(std::to_string(skipOrModify.size()), 5);
+    log::cout << " files will be skipped or modified." << log::endl;
     log::cout << log::endl;
 
-    stopWatch.restart();
-    Maker(opt).generate();
+    while (1) {
+
+        log::cout << "Do you want to proceed [y]? ";
+
+        string s; std::getline(std::cin, s);
+        stopWatch.restart();
+
+        if (s == "y" || s == "yes" || s == "") {
+
+            Maker(*this, opt).generate();
+            return;
+        }
+        if (s == "n" || s == "no") {
+
+            return;
+        }
+
+        std::cout << '\a';
+    }
 }
 
 }

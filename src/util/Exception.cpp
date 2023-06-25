@@ -30,7 +30,7 @@ void
 ParseError::what(const class Logger &log) const
 {
     log::cout << log::red << log::bold;
-    log::cout << "Error in file " << file << ", line " << line << ": ";
+    log::cout << "Error in file " << path << ", line " << line << ": ";
     log::cout << exception.what() << log::light << log::normal;
 }
 

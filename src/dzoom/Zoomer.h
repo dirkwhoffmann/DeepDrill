@@ -23,6 +23,7 @@
 #include "Filter.h"
 
 #include <SFML/Graphics.hpp>
+#include <future>
 
 namespace dd {
 
@@ -35,8 +36,7 @@ class Zoomer {
     sf::RenderWindow window;
 
     // Drill maps (read from map files)
-    DrillMap drillMap = DrillMap(opt);
-    DrillMap drillMap2 = DrillMap(opt);
+    DrillMap drillMap[3] = { DrillMap(opt), DrillMap(opt), DrillMap(opt) };
 
     // Colorizer for converting the drill maps into an image
     Colorizer colorizer = Colorizer(opt);
@@ -44,7 +44,7 @@ class Zoomer {
     // The video recorder
     Recorder recorder = Recorder(opt);
 
-    // Indicates if we run in record mode or preview mode
+    // Indicates if the application runs in record mode or preview mode
     bool recordMode;
 
     // The currently processed keyframe and inbetween
@@ -59,9 +59,12 @@ class Zoomer {
     Clock renderClock;
     Clock recordClock;
 
+    // Synchronizer for the async map file loader
+    std::future<bool> loadResult;
+
 public:
 
-    // Constructor
+    // Constructors
     Zoomer(Options &opt);
 
     // Initializers
@@ -77,11 +80,8 @@ private:
     void draw();
     void record();
 
-    // Loads a new image file from disk
-    void updateTextures(isize nr);
-
-    // Loads a new location from disk
-    void updateLocation(isize nr);
+    // Loads a new map file from disk
+    bool loadMapFile(isize nr);
 };
 
 }

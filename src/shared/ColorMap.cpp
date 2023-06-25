@@ -24,11 +24,6 @@
 
 namespace dd {
 
-ColorMap::~ColorMap()
-{
-
-}
-
 void
 ColorMap::resize(isize w, isize h)
 {
@@ -43,8 +38,9 @@ ColorMap::resize(isize w, isize h)
         colorMap.resize(width * height);
         normalMap.resize(width * height);
 
-        // Load color palette
-        palette.load(opt.colors.palette);
+        // Load palette images
+        palette.loadPaletteImage(opt.colors.palette);
+        palette.loadTextureImage(opt.colors.texture);
 
         // Create textures
         if (!colorMapTex.create(unsigned(width), unsigned(height))) {
@@ -59,61 +55,86 @@ ColorMap::resize(isize w, isize h)
 void
 ColorMap::compute(const DrillMap &map)
 {
+    switch (opt.colors.mode) {
+
+        case ColoringMode::Default:     compute <ColoringMode::Default> (map); break;
+        // case ColoringMode::Textured:    compute <ColoringMode::Textured> (map); break;
+    }
+}
+
+template <ColoringMode M> void
+ColorMap::compute(const DrillMap &map)
+{
     ProgressIndicator progress("Computing color map", map.height * map.width);
 
+    // Resize to the size of the drill map
     resize(map.width, map.height);
 
+    auto opacity = palette.overlayOpacity();
+
+    // Colorize all pixels
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
 
+            auto c = Coord(x,y);
             auto data = map.get(x, y);
-            // auto pos = (height - 1 - y) * width + x;
             auto pos = y * width + x;
 
             //
             // Colorize image
             //
 
-            if (data.iteration == UINT32_MAX) {
+            switch (map.get(c).result) {
 
-                // Map to a black or to a debug color if the point is a glitch point
-                colorMap[pos] = opt.debug.glitches ? 0xFF0000FF : 0xFF000000;
+                case DR_ESCAPED:
 
-            } else if (data.iteration == 0) {
+                    if constexpr (M == ColoringMode::Default) {
 
-                // Map to a black if the point belongs to the mandelbrot set
-                colorMap[pos] = 0xFF000000;
+                        GpuColor color = palette.interpolateABGR(data);
 
-            } else {
+                        if (opacity != 0.0) {
 
-                double sl = (double(data.iteration) - log2(data.lognorm)) + 4.0;
-                sl *= .0025;
-                // sl = 2.7 + sl * 30.0;
-                sl *= 30.0;
-                sl *= opt.colors.scale;
+                            GpuColor texColor = palette.readTextureImage(data);
+                            color = color.mix(texColor, opacity);
+                        }
 
-                colorMap[pos] = palette.interpolateABGR(sl);
+                        colorMap[pos] = color;
+                    }
+                    break;
+
+                case DR_GLITCH:
+
+                    colorMap[pos] = opt.perturbation.color;
+                    break;
+
+                case DR_IN_BULB:
+                case DR_IN_CARDIOID:
+
+                    colorMap[pos] = opt.areacheck.color;
+                    break;
+
+                case DR_PERIODIC:
+
+                    colorMap[pos] = opt.periodcheck.color;
+                    break;
+
+                case DR_ATTRACTED:
+
+                    colorMap[pos] = opt.attractorcheck.color;
+                    break;
+
+                default:
+
+                    colorMap[pos] = GpuColor::black;
+                    break;
             }
 
+
             //
-            // Colorize normal map
+            // Generate normal map
             //
 
-            if (opt.image.depth == 0) {
-
-                normalMap[pos] = 0;
-
-            } else if (data.iteration == UINT32_MAX) {
-
-                // Map to zero if the point is a glitch point
-                normalMap[pos] = 0;
-
-            } else if (data.iteration == 0) {
-
-                // Map to zero if the point belongs to the mandelbrot set
-                normalMap[pos] = 0;
-
-            } else {
+            if (opt.image.depth == 1 && map.get(c).result == DR_ESCAPED) {
 
                 auto r = (0.5 + (data.normal.re / 2.0)) * 255.0;
                 auto g = (0.5 + (data.normal.im / 2.0)) * 255.0;
@@ -121,6 +142,10 @@ ColorMap::compute(const DrillMap &map)
                 auto a = 255.0;
 
                 normalMap[pos] = u8(a) << 24 | u8(b) << 16 | u8(g) << 8 | u8(r);
+
+            } else {
+
+                normalMap[pos] = 0;
             }
         }
 
@@ -128,20 +153,20 @@ ColorMap::compute(const DrillMap &map)
         progress.step(map.width);
     }
 
-    colorMapTex.update((u8 *)colorMap.ptr);
-    normalMapTex.update((u8 *)normalMap.ptr);
+    colorMapTex.update((u8 *)colorMap.data());
+    normalMapTex.update((u8 *)normalMap.data());
 
     progress.done();
 
     if (opt.flags.verbose) {
 
-        auto path = palette.getPath();
-
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Palette: ");
-        log::cout << (path != "" ? path : "not specified") << log::endl;
+        log::cout << (opt.colors.palette != "" ? opt.colors.palette : "not specified") << log::endl;
+        log::cout << log::ralign("Texture: ");
+        log::cout << (opt.colors.texture != "" ? opt.colors.texture : "not specified") << log::endl;
         log::cout << log::vspace;
     }
 }

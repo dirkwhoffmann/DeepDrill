@@ -27,6 +27,7 @@ AssetManager::AssetManager()
     paths.push_back(repo / "tutorial");
     paths.push_back(repo / "profiles");
     paths.push_back(repo / "palettes");
+    paths.push_back(repo / "textures");
     paths.push_back(repo / "shaders");
 }
 
@@ -38,20 +39,18 @@ AssetManager::addSearchPath(const fs::path &path)
 
 
 Format
-AssetManager::getFormat(const string &path) {
+AssetManager::getFormat(const fs::path &path) {
 
-    if (isDirectory(path)) return Format::DIR;
+    auto ext = path.extension();
 
-    auto suffix = extractSuffix(path);
-    if (suffix == "bmp") return Format::BMP;
-    if (suffix == "glsl") return Format::GLSL;
-    if (suffix == "jpg") return Format::JPG;
-    if (suffix == "loc") return Format::LOC;
-    if (suffix == "map") return Format::MAP;
-    if (suffix == "mpg" || suffix == "mov") return Format::MPG;
-    if (suffix == "png") return Format::PNG;
-    if (suffix == "prf") return Format::PRF;
-    if (suffix == "prj") return Format::PRJ;
+    if (ext == ".bmp") return Format::BMP;
+    if (ext == ".glsl") return Format::GLSL;
+    if (ext == ".ini") return Format::INI;
+    if (ext == ".jpg") return Format::JPG;
+    if (ext == ".map") return Format::MAP;
+    if (ext == ".mpg" || ext == ".mov") return Format::MPG;
+    if (ext == ".png") return Format::PNG;
+    if (fs::is_directory(path)) return Format::DIR;
 
     return Format::NONE;
 }
@@ -59,30 +58,28 @@ AssetManager::getFormat(const string &path) {
 void
 AssetManager::assureFormat(const fs::path &name, Format format)
 {
-    assureFormat(name, vector <Format> { format });
+    assureFormat(name, std::vector<Format> { format });
 }
 
 void
-AssetManager::assureFormat(const fs::path &name, vector <Format> formats)
+AssetManager::assureFormat(const fs::path &name, std::vector<Format> formats)
 {
     auto format = getFormat(name);
 
     if (std::find(formats.begin(), formats.end(), format) == formats.end()) {
 
-        vector <string> s;
+        std::vector<string> s;
         for (const auto &it : formats) {
 
             switch(it) {
 
                 case Format::BMP: s.push_back(".bmp"); break;
                 case Format::GLSL: s.push_back(".glsl"); break;
+                case Format::INI: s.push_back(".ini"); break;
                 case Format::JPG: s.push_back(".jpg"); break;
-                case Format::LOC: s.push_back(".loc"); break;
                 case Format::MAP: s.push_back(".map"); break;
                 case Format::MPG: s.push_back(".mpg"); s.push_back(".mov"); break;
                 case Format::PNG: s.push_back(".png"); break;
-                case Format::PRF: s.push_back(".prf"); break;
-                case Format::PRJ: s.push_back(".prj"); break;
 
                 default:
                     assert(false);
@@ -116,26 +113,25 @@ AssetManager::findAsset(const fs::path &name) const
     if (name != "") {
 
         // Search the file at the specified path
-        if (fileExists(name)) return name;
+        if (fs::exists(name)) return name;
 
         // Search the file in the assets directories
         for (const auto &it : paths) {
-            if (fileExists(it / name)) return it / name;
+            if (fs::exists(it / name)) return it / name;
         }
     }
 
-    // File not found
     throw FileNotFoundError(name);
 }
 
 fs::path
 AssetManager::findAsset(const fs::path &name, Format format) const
 {
-    return findAsset(name, vector <Format> { format });
+    return findAsset(name, std::vector<Format> { format });
 }
 
 fs::path
-AssetManager::findAsset(const fs::path &name, vector <Format> formats) const
+AssetManager::findAsset(const fs::path &name, std::vector<Format> formats) const
 {
     assureFormat(name, formats);
     return findAsset(name);

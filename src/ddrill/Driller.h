@@ -17,7 +17,6 @@
 #include "Coord.h"
 #include "DrillMap.h"
 #include "ReferencePoint.h"
-#include <random>
 
 namespace dd {
 
@@ -46,7 +45,7 @@ class Driller {
     Approximator approximator = Approximator(opt);
     
     // The probe points
-    vector <Coord> probePoints;
+    std::vector<Coord> probePoints;
     
     
     //
@@ -67,48 +66,43 @@ public:
     // Computes the drill map (main entry point)
     void drill();
         
-private:
 
     //
     // Picking points
     //
-    
+
+private:
+
+    // Collect all drill locations
+    void collectCoordinates(std::vector<dd::Coord> &remaining);
+
     // Picks a reference point
-    ReferencePoint pickReference(const vector<Coord> &glitches);
+    ReferencePoint pickReference(const std::vector<Coord> &glitches);
 
     // Picks a collection of probe points
-    void pickProbePoints(vector <Coord> &probes);
+    void pickProbePoints(std::vector<Coord> &probes);
 
 
     //
-    // Drilling points with the standard algorithm (for debugging)
+    // Drilling points
     //
 
-    // Drills a collection of points
-    void slowDrill(const vector<Coord> &remaining);
-
-    // Drills a single of point
-    void slowDrill(const Coord &point);
-
-
-    //
-    // Drilling points with perturbation and series approximation
-    //
-
+private:
+    
     // Drills a reference point
     void drill(ReferencePoint &ref);
     
     // Drills a collection of probe points
-    isize drillProbePoints(vector <Coord> &probes);
+    isize drillProbePoints(std::vector<Coord> &probes);
 
     // Drills a single probe point
     isize drillProbePoint(Coord &probe);
 
     // Drills a collection of delta points
-    void drill(const vector<Coord> &remaining, vector<Coord> &glitchPoints);
+    void drill(const std::vector<Coord> &remaining, std::vector<Coord> &glitchPoints);
 
     // Drills a single delta point
-    void drill(const Coord &point, vector<Coord> &glitchPoints);
+    void drill(const Coord &point, std::vector<Coord> &glitchPoints);
 };
 
 }
