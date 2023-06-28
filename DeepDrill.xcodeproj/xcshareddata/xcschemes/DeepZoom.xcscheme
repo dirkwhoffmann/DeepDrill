@@ -61,11 +61,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/tmp/dd/project"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/Dropbox/infinity/infinity.prj"
-            isEnabled = "NO">
+            argument = "/Users/hoff/Dropbox/mordor"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/Dropbox/x/x.prj"

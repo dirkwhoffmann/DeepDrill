@@ -49,6 +49,7 @@ Zoomer::init()
     colorizer.init(opt.image.illuminator, opt.video.scaler);
 }
 
+/*
 void
 Zoomer::launch()
 {
@@ -123,7 +124,59 @@ Zoomer::launch()
     // Stop FFmpeg
     if (recordMode) recorder.stopRecording();
 }
+*/
 
+void
+Zoomer::launch()
+{
+    sf::Event event;
+
+    // Start FFmpeg
+    if (recordMode) recorder.startRecording();
+
+    // Load the textures of the first two keyframes
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 0" << log::endl << log::endl;
+    (void)loadMapFile(0);
+
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 1" << log::endl << log::endl;
+    (void)loadMapFile(1);
+
+    log::cout << log::vspace;
+    log::cout << "Preloading map file 2" << log::endl << log::endl;
+    (void)loadMapFile(2);
+
+    // Set animation parameter
+    zoom.set(1.0);
+    zoom.set(4.0, 2 * opt.video.inbetweens);
+
+    // Process all keyframes
+    while (1) {
+
+        // Process all events
+        if (!window.isOpen()) throw UserInterruptException();
+        while (window.pollEvent(event)) {
+
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        //Perform main tasks
+        update();
+        draw();
+        record();
+
+    }
+
+        // Wait for the async map file loader to finish
+        // (void)loadResult.get();
+
+    // Stop FFmpeg
+    // if (recordMode) recorder.stopRecording();
+}
+
+/*
 void
 Zoomer::update()
 {
@@ -160,6 +213,49 @@ Zoomer::update()
 
         zoom.move();
     }
+}
+*/
+
+void
+Zoomer::update()
+{
+    zoom.move();
+
+    // printf("Zoom: %f\n", zoom.current);
+    if (zoom.current >= 2.0) {
+
+        printf("keyframe = %ld\n", keyframe);
+
+        // printf("Switching to new keyframe\n");
+        keyframe++;
+
+        zoom.current /= 2;
+
+        // Wait for the async map file loader to finish
+        // if (keyframe >= 2) (void)loadResult.get();
+
+        // Preload the next texture in the background
+        loadResult = std::async([this]() {
+
+            if (keyframe + 2 > opt.video.keyframes) {
+                return false;
+            }
+
+            updateClock.go();
+            auto result = loadMapFile(keyframe + 2);
+            updateClock.stop();
+
+            return result;
+        });
+
+    }
+
+    // Update window title bar
+    string title = "DeepZoom - ";
+    title += recordMode ? "Recording " : "Preview ";
+    title += "[Keyframe " + std::to_string(keyframe + 1);
+    title += " / " + std::to_string(opt.video.keyframes) + "] ";
+    window.setTitle(title);
 }
 
 void
