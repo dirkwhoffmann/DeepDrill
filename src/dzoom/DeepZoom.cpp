@@ -63,6 +63,7 @@ DeepZoom::initialize()
     // Limit console output to the main thread
     log::cout.restrict();
 }
+
 void
 DeepZoom::finalize()
 {

@@ -10,9 +10,6 @@ uniform vec2 size;
 // Zoom factor
 uniform float zoom;
 
-// Normalized inbetween [0;1)
-uniform float frame;
-
 vec2 zoomed(vec2 coord)
 {
     return (coord / zoom) + 0.5 - (0.5 / zoom);
@@ -52,7 +49,7 @@ void main()
         vec4 color2 = bilinear(next, coord2);
 
         // Interpolate between both texels
-        color1 = mix(color1, color2, frame);
+        color1 = mix(color1, color2, zoom - 1.0);
     }
 
     gl_FragColor = gl_Color * color1;

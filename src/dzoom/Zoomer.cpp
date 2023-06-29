@@ -150,6 +150,11 @@ Zoomer::launch()
     keyframe = 12;
     */
 
+    // Reset clocks
+    updateClock.reset();
+    renderClock.reset();
+    recordClock.reset();
+    
     // Process all frames
     for (frame = 0;; frame++) {
 
