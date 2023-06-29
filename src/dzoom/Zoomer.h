@@ -69,6 +69,9 @@ class Zoomer {
     Clock updateClock;
     Clock renderClock;
     Clock recordClock;
+    Time updateTime;
+    // Time renderTime;
+    // Time recordTime;
 
     // Progress indicator
     ProgressIndicator progress;
@@ -104,7 +107,7 @@ private:
     bool loadMapFile(isize nr);
 
     // Updates the window title bar
-    void updateWindowTitle();
+    void report();
 };
 
 }

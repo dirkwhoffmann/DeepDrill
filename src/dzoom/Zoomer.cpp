@@ -150,33 +150,28 @@ Zoomer::launch()
     keyframe = 12;
     */
 
+    isize oldKeyframe = -1;
+
     // Process all frames
-    while (1) {
+    for (frame = 0;; frame++) {
+
+        // Exit if the user has closed the window
+        if (!window.isOpen()) throw UserInterruptException();
 
         // Process all events
-        if (!window.isOpen()) throw UserInterruptException();
         while (window.pollEvent(event)) {
 
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
-        //Perform main tasks
+        // Perform main tasks
+        report();
         animate();
         update();
         draw();
         record();
-
     }
-
-    // Stop FFmpeg
-    // if (recordMode) recorder.stopRecording();
-}
-
-void
-Zoomer::mainLoop()
-{
-
 }
 
 void
@@ -201,40 +196,13 @@ Zoomer::animate()
         switched = true;
         zoom.current *= 2.0;
     }
-
-    progress.step();
-
-    if (switched) {
-
-        progress.done();
-
-        if (opt.flags.verbose) {
-
-            log::cout << log::vspace;
-            log::cout << log::ralign("Update: ");
-            log::cout << updateClock.getElapsedTime() << log::endl;
-            log::cout << log::ralign("Render: ");
-            log::cout << renderClock.getElapsedTime() << log::endl;
-
-            if (recordMode) {
-
-                log::cout << log::ralign("Record: ");
-                log::cout << recordClock.getElapsedTime() << log::endl;
-            }
-            log::cout << log::vspace;
-        }
-
-        updateClock.reset();
-        renderClock.reset();
-        recordClock.reset();
-    }
-
-    updateWindowTitle();
 }
 
 void
 Zoomer::update()
 {
+    updateClock.go();
+
     // Terminate if we've left the valid keyframe range
     if (keyframe < 0 || keyframe > opt.video.keyframes) throw Exit();
 
@@ -262,6 +230,8 @@ Zoomer::update()
             mapState[slotNr(i)] = MapState::UpToDate;
         }
     }
+
+    updateClock.stop();
 }
 
 void
@@ -300,10 +270,7 @@ Zoomer::loadMapFileAsync(isize nr)
     // Preload the next texture in the background
     return std::async([this, nr]() {
 
-        updateClock.go();
         auto result = loadMapFile(nr);
-        updateClock.stop();
-
         return result;
     });
 }
@@ -321,7 +288,7 @@ Zoomer::loadMapFile(isize nr)
 }
 
 void
-Zoomer::updateWindowTitle()
+Zoomer::report()
 {
     static isize oldKeyFrame = -1;
 
@@ -329,16 +296,39 @@ Zoomer::updateWindowTitle()
 
         oldKeyFrame = keyframe;
 
-        // log::cout << "Processing keyframe " << keyframe << log::endl;
+        if (frame != 0) {
+
+            progress.done();
+
+            if (opt.flags.verbose) {
+
+                log::cout << log::vspace;
+                log::cout << log::ralign("Update: ");
+                log::cout << updateClock.reset() << log::endl;
+                log::cout << log::ralign("Render: ");
+                log::cout << renderClock.reset() << log::endl;
+
+                if (recordMode) {
+
+                    log::cout << log::ralign("Record: ");
+                    log::cout << recordClock.reset() << log::endl;
+                }
+                log::cout << log::vspace;
+            }
+        }
+
         progress.init("Processing keyframe " + std::to_string(keyframe),
                       opt.video.inbetweens);
-        
+
+        // Update the title bar of the preview window
         string title = "DeepZoom - ";
         title += recordMode ? "Recording " : "Preview ";
         title += "[Keyframe " + std::to_string(keyframe);
         title += " / " + std::to_string(opt.video.keyframes) + "] ";
         window.setTitle(title);
     }
+
+    progress.step();
 }
 
 }

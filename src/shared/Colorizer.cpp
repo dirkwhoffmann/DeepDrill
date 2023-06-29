@@ -100,7 +100,7 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float z
     downscaler.setUniform("next", illuminator2.getTexture());
     downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
     downscaler.setUniform("zoom", zoom);
-    downscaler.setUniform("frame", frame);
+    downscaler.setUniform("frame", 0.0f); // TODO: Remove. Derive from zoom factor
     downscaler.apply();
 
     // 3. Read back image data
