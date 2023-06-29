@@ -143,19 +143,17 @@ Zoomer::launch()
     zoom.set(1.0);
     zoom.set(4.0, 2 * opt.video.inbetweens);
 
-    // Experimental (REMOVE ASAP)
+    // Experimental code for testing backzooms (REMOVE ASAP)
     /*
     zoom.set(2.0);
     zoom.set(0.5, 2 * opt.video.inbetweens);
     keyframe = 12;
     */
 
-    isize oldKeyframe = -1;
-
     // Process all frames
     for (frame = 0;; frame++) {
 
-        // Exit if the user has closed the window
+        // Exit if the preview window has been closed
         if (!window.isOpen()) throw UserInterruptException();
 
         // Process all events
@@ -172,6 +170,50 @@ Zoomer::launch()
         draw();
         record();
     }
+}
+
+void
+Zoomer::report()
+{
+    static isize oldKeyFrame = -1;
+
+    if (oldKeyFrame != keyframe) {
+
+        oldKeyFrame = keyframe;
+
+        if (frame != 0) {
+
+            progress.done();
+
+            if (opt.flags.verbose) {
+
+                log::cout << log::vspace;
+                log::cout << log::ralign("Update: ");
+                log::cout << updateClock.reset() << log::endl;
+                log::cout << log::ralign("Render: ");
+                log::cout << renderClock.reset() << log::endl;
+
+                if (recordMode) {
+
+                    log::cout << log::ralign("Record: ");
+                    log::cout << recordClock.reset() << log::endl;
+                }
+                log::cout << log::vspace;
+            }
+        }
+
+        progress.init("Processing keyframe " + std::to_string(keyframe),
+                      opt.video.inbetweens);
+
+        // Update the title bar of the preview window
+        string title = "DeepZoom - ";
+        title += recordMode ? "Recording " : "Preview ";
+        title += "[Keyframe " + std::to_string(keyframe);
+        title += " / " + std::to_string(opt.video.keyframes) + "] ";
+        window.setTitle(title);
+    }
+
+    progress.step();
 }
 
 void
@@ -285,50 +327,6 @@ Zoomer::loadMapFile(isize nr)
     drillMap[slotNr(nr)].colorize();
 
     return true;
-}
-
-void
-Zoomer::report()
-{
-    static isize oldKeyFrame = -1;
-
-    if (oldKeyFrame != keyframe) {
-
-        oldKeyFrame = keyframe;
-
-        if (frame != 0) {
-
-            progress.done();
-
-            if (opt.flags.verbose) {
-
-                log::cout << log::vspace;
-                log::cout << log::ralign("Update: ");
-                log::cout << updateClock.reset() << log::endl;
-                log::cout << log::ralign("Render: ");
-                log::cout << renderClock.reset() << log::endl;
-
-                if (recordMode) {
-
-                    log::cout << log::ralign("Record: ");
-                    log::cout << recordClock.reset() << log::endl;
-                }
-                log::cout << log::vspace;
-            }
-        }
-
-        progress.init("Processing keyframe " + std::to_string(keyframe),
-                      opt.video.inbetweens);
-
-        // Update the title bar of the preview window
-        string title = "DeepZoom - ";
-        title += recordMode ? "Recording " : "Preview ";
-        title += "[Keyframe " + std::to_string(keyframe);
-        title += " / " + std::to_string(opt.video.keyframes) + "] ";
-        window.setTitle(title);
-    }
-
-    progress.step();
 }
 
 }

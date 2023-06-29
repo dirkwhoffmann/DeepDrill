@@ -219,7 +219,7 @@ Logger::operator<<(const Exception& arg)
 bool
 Logger::verbose() const
 {
-    return !muted && Application::isMainThread();
+    return !muted && (!id || std::this_thread::get_id() == id);
 }
 
 

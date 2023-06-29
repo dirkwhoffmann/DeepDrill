@@ -13,12 +13,14 @@
 
 #include "config.h"
 #include "Types.h"
-#include "Application.h"
+// #include "Application.h"
 #include "Chrono.h"
 #include "Exception.h"
 #include "StandardComplex.h"
 #include "ExtendedComplex.h"
 #include "PrecisionComplex.h"
+
+#include <thread>
 
 namespace dd {
 
@@ -66,6 +68,9 @@ class Logger {
     // The underlying output stream
     std::ostream &stream;
 
+    // Limits the output to a particular thread
+    std::optional<std::thread::id> id;
+    
     // Blank line counter
     isize blanks = 0;
     
@@ -75,6 +80,8 @@ class Logger {
 public:
 
     Logger(std::ostream &stream) : stream(stream) { };
+
+    void restrict(std::thread::id tid = std::this_thread::get_id()) { id = tid; }
 
     void mute() { muted++; }
     void unmute() { muted--; }

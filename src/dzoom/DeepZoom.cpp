@@ -55,12 +55,13 @@ void
 DeepZoom::initialize()
 {
     // Check for shader support
-    if (!sf::Shader::isAvailable()) {
-        throw Exception("No GPU shader support");
-    }
+    if (!sf::Shader::isAvailable()) throw Exception("No GPU shader support");
 
     // Initialize FFmpeg
     FFmpeg::init();
+
+    // Limit console output to the main thread
+    log::cout.restrict();
 }
 void
 DeepZoom::finalize()

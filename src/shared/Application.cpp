@@ -16,9 +16,6 @@
 
 namespace dd {
 
-const std::thread::id
-Application::MAIN_THREAD_ID = std::this_thread::get_id();
-
 int
 Application::main(int argc, char *argv[])
 {
