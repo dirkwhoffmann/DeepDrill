@@ -21,8 +21,6 @@
 
 namespace dd {
 
-// struct Color { u32 abgr; };
-
 enum class ColoringMode
 {
     Default,
@@ -256,6 +254,7 @@ public:
 
 private:
 
+    /*
     void parse(const string &key, const string &value, string &parsed);
     void parse(const string &key, const string &value, bool &parsed);
     void parse(const string &key, const string &value, isize &parsed);
@@ -265,6 +264,7 @@ private:
     void parse(const string &key, const string &value, mpf_class &parsed);
     void parse(const string &key, const string &value, GpuColor &parsed);
     void parse(const string &key, const string &value, ColoringMode &parsed);
+    */
 };
 
 }

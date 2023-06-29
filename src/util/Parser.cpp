@@ -105,6 +105,127 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
     }
 }
 
+void
+Parser::parse(const string &key, const string &value, string &parsed)
+{
+    parsed = value;
+}
+
+void
+Parser::parse(const string &key, const string &value, bool &parsed)
+{
+    if (value == "true" || value == "yes" || value == "on") {
+
+        parsed = true;
+        return;
+    }
+    if (value == "false" || value == "no" || value == "off") {
+
+        parsed = false;
+        return;
+    }
+
+    throw Exception("Invalid argument for key " + key + ": " + value);
+}
+
+void
+Parser::parse(const string &key, const string &value, isize &parsed)
+{
+    try {
+        parsed = stol(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, isize &parsed, isize min, isize max)
+{
+    parse(key, value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be <= " + std::to_string(max));
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, double &parsed)
+{
+    try {
+        parsed = stod(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, double &parsed, double min, double max)
+{
+    parse(key, value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument for key " + key +
+                        ": Value must be <= " + std::to_string(max));
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, mpf_class &parsed)
+{
+    try {
+        parsed = mpf_class(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, GpuColor &parsed)
+{
+    std::map <string, GpuColor> modes = {
+
+        { "black",      GpuColor::black     },
+        { "white",      GpuColor::white     },
+        { "red",        GpuColor::red       },
+        { "green",      GpuColor::green     },
+        { "blue",       GpuColor::blue      },
+        { "yellow",     GpuColor::yellow    },
+        { "magenta",    GpuColor::magenta   },
+        { "cyan",       GpuColor::cyan      }
+    };
+
+    try {
+        parsed = modes.at(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, ColoringMode &parsed)
+{
+    std::map <string, ColoringMode> modes = {
+
+        { "default", ColoringMode::Default },
+        // { "textured", ColoringMode::Textured }
+    };
+
+    try {
+        parsed = modes.at(value);
+    } catch (...) {
+        throw Exception("Invalid argument for key " + key + ": " + value);
+    }
+}
+
 std::pair<isize, isize>
 Parser::getRange(string &key, bool strip)
 {

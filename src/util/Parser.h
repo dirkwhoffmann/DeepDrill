@@ -13,6 +13,8 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Options.h"
+
 #include <functional>
 
 namespace dd {
@@ -32,6 +34,16 @@ public:
     static void parse(const fs::path &path, Callback callback, isize nr = 0);
     static void parse(std::ifstream &stream, Callback callback, isize nr = 0);
     static void parse(std::stringstream &stream, Callback callback, isize nr = 0);
+
+    static void parse(const string &key, const string &value, string &parsed);
+    static void parse(const string &key, const string &value, bool &parsed);
+    static void parse(const string &key, const string &value, isize &parsed);
+    static void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
+    static void parse(const string &key, const string &value, double &parsed);
+    static void parse(const string &key, const string &value, double &parsed, double min, double max);
+    static void parse(const string &key, const string &value, mpf_class &parsed);
+    static void parse(const string &key, const string &value, GpuColor &parsed);
+    static void parse(const string &key, const string &value, ColoringMode &parsed);
 
 private:
 
