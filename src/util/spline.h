@@ -552,7 +552,7 @@ void band_matrix::resize(int dim, int n_u, int n_l)
 int band_matrix::dim() const
 {
     if(m_upper.size()>0) {
-        return m_upper[0].size();
+        return (int)m_upper[0].size();
     } else {
         return 0;
     }

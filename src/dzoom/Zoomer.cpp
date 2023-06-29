@@ -154,7 +154,7 @@ Zoomer::launch()
     updateClock.reset();
     renderClock.reset();
     recordClock.reset();
-    
+
     // Process all frames
     for (frame = 0;; frame++) {
 
@@ -167,6 +167,9 @@ Zoomer::launch()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        // Experimental (change animation parameter for each frame)
+        // zoom.setFactor(opt.video.inbetweens2(frame / 60.0));
 
         // Perform main tasks
         report();

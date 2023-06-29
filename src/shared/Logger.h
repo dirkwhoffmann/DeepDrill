@@ -13,8 +13,8 @@
 
 #include "config.h"
 #include "Types.h"
-// #include "Application.h"
 #include "Chrono.h"
+#include "Dynamic.h"
 #include "Exception.h"
 #include "StandardComplex.h"
 #include "ExtendedComplex.h"
@@ -116,6 +116,7 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
+    Logger& operator<<(const Dynamic& arg);
 
 private:
 

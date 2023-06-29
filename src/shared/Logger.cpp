@@ -184,7 +184,6 @@ Logger::operator<<(const ExtendedDouble& arg)
         stream << arg.mantissa << "b" << arg.exponent;
     }
     return *this;
-
 }
 
 Logger&
@@ -213,6 +212,17 @@ Logger&
 Logger::operator<<(const Exception& arg)
 {
     arg.what(*this);
+    return *this;
+}
+
+Logger&
+Logger::operator<<(const Dynamic& arg)
+{
+    if (verbose()) {
+
+        blanks = 0;
+        stream << arg;
+    }
     return *this;
 }
 

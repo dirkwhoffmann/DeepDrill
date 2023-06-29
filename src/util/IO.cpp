@@ -43,6 +43,19 @@ string join(const std::vector<string> &v, const string &delim1, const string &de
     return result;
 }
 
+std::vector<string> split(const string &s, char delimiter)
+{
+    std::stringstream ss(s);
+    std::vector<string> result;
+    string segment;
+
+    while(std::getline(ss, segment, delimiter)) {
+        result.push_back(segment);
+    }
+
+    return result;
+}
+
 bool compareFiles(const fs::path &path1, const fs::path &path2)
 {
     std::ifstream stream1(path1, std::ifstream::binary|std::ifstream::ate);

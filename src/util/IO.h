@@ -28,6 +28,9 @@ namespace dd {
 string join(const std::vector<string> &v, const string &delim1);
 string join(const std::vector<string> &v, const string &delim1, const string &delim2);
 
+// Splits a string into a vector of strings
+std::vector<string> split(const string &s, char delimiter);
+
 
 //
 // File utilitis

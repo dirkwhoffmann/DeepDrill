@@ -15,15 +15,24 @@
 namespace dd {
 
 void
-Dynamic::init(std::vector <double> xn, std::vector <double> yn)
+Dynamic::init(std::vector <double> vxn, std::vector <double> vyn)
 {
+    this->xn = vxn;
+    this->yn = vyn;
+
     spline = tk::spline(xn, yn);
 }
 
-double
-Dynamic::get(double x)
+std::ostream &
+operator<<(std::ostream& os, const Dynamic& d)
 {
-    return spline(x);
+    for (usize i = 0; i < d.xn.size(); i++) {
+
+        os << d.xn[i] << '/' << d.yn[i] << ' ';
+    }
+    os << std::endl;
+
+    return os;
 }
 
 }

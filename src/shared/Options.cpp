@@ -45,6 +45,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
+    defaults["video.inbetweens2"] = "0:00/180, 0:05/90, 0:10/30";
     defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 
@@ -199,6 +200,10 @@ Options::parse(string key, string value)
     } else if (key == "video.inbetweens") {
 
         Parser::parse(key, value, video.inbetweens);
+
+    } else if (key == "video.inbetweens2") {
+
+        Parser::parse(key, value, video.inbetweens2);
 
     } else if (key == "video.bitrate") {
 

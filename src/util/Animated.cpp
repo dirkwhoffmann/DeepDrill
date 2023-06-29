@@ -17,18 +17,21 @@ Animated::Animated(double value)
     set(value);
 }
 
-bool Animated::animates() const
+bool
+Animated::animates() const
 {
     return current != target;
 }
 
-void Animated::set(double value)
+void
+Animated::set(double value)
 {
     current = value;
     target = value;
 }
 
-void Animated::set(double value, long steps)
+void
+Animated::set(double value, long steps)
 {
     assert(current != 0);
 
@@ -36,7 +39,8 @@ void Animated::set(double value, long steps)
     factor = pow(target / current, 1.0 / steps);
 }
 
-void Animated::move()
+void
+Animated::move()
 {
     if (current > target && current * factor >= target) {
         current *= factor;
@@ -45,4 +49,10 @@ void Animated::move()
     } else {
         current = target;
     }
+}
+
+void
+Animated::setFactor(long steps)
+{
+    factor = pow(2.0, 1.0 / steps);
 }

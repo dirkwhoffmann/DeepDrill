@@ -56,7 +56,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/hoff/tmp/dd/project/ssssss.prj"
+            argument = "experimental.ini"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

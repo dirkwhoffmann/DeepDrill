@@ -14,6 +14,7 @@
 #include "config.h"
 #include "Types.h"
 #include "Options.h"
+#include "Chrono.h"
 
 #include <functional>
 
@@ -44,6 +45,8 @@ public:
     static void parse(const string &key, const string &value, mpf_class &parsed);
     static void parse(const string &key, const string &value, GpuColor &parsed);
     static void parse(const string &key, const string &value, ColoringMode &parsed);
+    static void parse(const string &key, const string &value, Dynamic &parsed);
+    static void parse(const string &key, const string &value, Time &parsed);
 
 private:
 

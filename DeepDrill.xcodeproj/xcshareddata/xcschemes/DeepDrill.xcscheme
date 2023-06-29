@@ -82,11 +82,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "areacheck.enable=false"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "periodcheck.enable=false"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p 3D.prf"

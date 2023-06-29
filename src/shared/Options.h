@@ -15,6 +15,7 @@
 #include "Types.h"
 #include "AssetManager.h"
 #include "Colors.h"
+#include "Dynamic.h"
 #include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
@@ -125,6 +126,9 @@ struct Options {
 
         // Number of in-between images
         isize inbetweens;
+
+        // Experimental (will replace inbetweens)
+        Dynamic inbetweens2;
 
         // Bitrate
         isize bitrate;
@@ -251,20 +255,6 @@ public:
     void parse(string key, string value);
     void applyDefaults();
     void derive();
-
-private:
-
-    /*
-    void parse(const string &key, const string &value, string &parsed);
-    void parse(const string &key, const string &value, bool &parsed);
-    void parse(const string &key, const string &value, isize &parsed);
-    void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
-    void parse(const string &key, const string &value, double &parsed);
-    void parse(const string &key, const string &value, double &parsed, double min, double max);
-    void parse(const string &key, const string &value, mpf_class &parsed);
-    void parse(const string &key, const string &value, GpuColor &parsed);
-    void parse(const string &key, const string &value, ColoringMode &parsed);
-    */
 };
 
 }

@@ -12,6 +12,7 @@
 #include "Parser.h"
 #include "Exception.h"
 #include "IO.h"
+#include "Logger.h"
 
 #include <algorithm>
 #include <fstream>
@@ -215,8 +216,7 @@ Parser::parse(const string &key, const string &value, ColoringMode &parsed)
 {
     std::map <string, ColoringMode> modes = {
 
-        { "default", ColoringMode::Default },
-        // { "textured", ColoringMode::Textured }
+        { "default", ColoringMode::Default }
     };
 
     try {
@@ -224,6 +224,59 @@ Parser::parse(const string &key, const string &value, ColoringMode &parsed)
     } catch (...) {
         throw Exception("Invalid argument for key " + key + ": " + value);
     }
+}
+
+void
+Parser::parse(const string &key, const string &value, Dynamic &parsed)
+{
+    std::vector<double> xn;
+    std::vector<double> yn;
+
+    // Check if value is a value list
+    if (auto pos1 = value.find("/"); pos1 == std::string::npos) {
+        throw Exception("Invalid spline description");
+    }
+
+    // Split list
+    auto pairs = split(value, ',');
+
+    // Split list entries
+    for (auto &it : pairs) {
+
+        if (auto pos = it.find("/"); pos != std::string::npos) {
+
+            auto first = it.substr(0, pos);
+            auto last = it.substr(pos + 1, std::string::npos);
+
+            Time t;
+            Parser::parse(key, first, t);
+            auto y = std::stod(last);
+
+            xn.push_back(t.asSeconds());
+            yn.push_back(y);
+        }
+    }
+
+    parsed.init(xn, yn);
+    log::cout << parsed;
+    for (double i = 0.0; i <= 4.1; i += 0.2) {
+        printf("Spline(%f) = %f\n", i, parsed(i));
+    }
+}
+
+void
+Parser::parse(const string &key, const string &value, Time &parsed)
+{
+    if (auto pos = value.find(":"); pos != std::string::npos) {
+        
+        auto mm = value.substr(0, pos);
+        auto ss = value.substr(pos + 1, std::string::npos);
+        
+        auto m = std::stol(mm);
+        auto s = std::stol(ss);
+        
+        parsed = Time::seconds(i64(60 * m + s));
+    } 
 }
 
 std::pair<isize, isize>

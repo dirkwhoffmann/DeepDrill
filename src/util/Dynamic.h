@@ -19,13 +19,26 @@ namespace dd {
 
 struct Dynamic {
 
+    std::vector<double> xn;
+    std::vector<double> yn;
+
     class tk::spline spline;
 
-    Dynamic() { };
 
+    //
+    // Initializing
+    //
+
+    Dynamic() { };
     void init(std::vector <double> xn, std::vector <double> yn);
 
-    double get(double x);
+
+    //
+    // Operators
+    //
+
+    friend std::ostream& operator<<(std::ostream& os, const Dynamic& d);
+    double operator() (double x) const { return spline(x); }
 };
 
 }

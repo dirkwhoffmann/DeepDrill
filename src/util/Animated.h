@@ -26,4 +26,6 @@ struct Animated {
     void set(double value);
     void set(double value, long steps);
     void move();
+
+    void setFactor(long steps);
 };
