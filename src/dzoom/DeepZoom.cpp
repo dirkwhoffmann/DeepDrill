@@ -11,6 +11,7 @@
 
 #include "DeepZoom.h"
 #include "Zoomer.h"
+#include "Dynamic.h"
 
 int main(int argc, char *argv[])
 {
@@ -62,6 +63,16 @@ DeepZoom::initialize()
 
     // Limit console output to the main thread
     log::cout.restrict();
+
+
+    // REMOVE ASAP
+    /*
+    Dynamic test;
+    test.init({ 0.0, 2.0, 4.0}, { 0.0, 0.5, 1.0 });
+    for (double i = 0; i <= 4.1; i += 0.2) {
+        printf("spline(%f) = %f\n", i, test.get(i));
+    }
+    */
 }
 
 void
