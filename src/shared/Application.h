@@ -16,6 +16,7 @@
 #include "Logger.h"
 
 #include <getopt.h>
+#include <thread>
 
 namespace dd {
 
@@ -32,6 +33,9 @@ protected:
     // Stop watch for measuring the total execution time
     Clock stopWatch;
 
+    // ID of the main thread
+    static const std::thread::id MAIN_THREAD_ID;
+
 public:
     
     // Main entry point
@@ -40,6 +44,9 @@ public:
     // Returns a version string
     static string version();
     static string version(isize major, isize minor, isize subminor, isize beta);
+
+    // Returns true if the current thread is the main thread
+    static bool isMainThread() { return std::this_thread::get_id() == MAIN_THREAD_ID; }
 
     // Reads all ini files
     void readConfigFiles(isize keyframe = 0);
@@ -74,7 +81,7 @@ private:
     // Prints the command line syntax
     virtual void syntax() const = 0;
 
-    // Performs all initializations required on program launch
+    // Initializes or finalizes the application
     virtual void initialize() = 0;
 
     // Checks the input and output file formats for validity

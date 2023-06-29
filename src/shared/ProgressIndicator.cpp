@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "ProgressIndicator.h"
+#include "Application.h"
 #include "AssetManager.h"
 #include "IO.h"
 #include "Logger.h"
@@ -29,7 +30,7 @@ ProgressIndicator::~ProgressIndicator()
 
 void
 ProgressIndicator::init(const string &description, isize max)
-{
+{    
     progress = 0;
     progressMax = max;
     

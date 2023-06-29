@@ -101,13 +101,14 @@ Recorder::startRecording()
 void
 Recorder::stopRecording()
 {
-    assert(videoPipe.isOpen());
+    if (videoPipe.isOpen()) {
 
-    // Close pipe
-    videoPipe.close();
+        // Close pipe
+        videoPipe.close();
 
-    // Wait for the decoder to terminate
-    videoFFmpeg.join();
+        // Wait for the decoder to terminate
+        videoFFmpeg.join();
+    }
 }
 
 void

@@ -30,6 +30,11 @@ Zoomer::Zoomer(Options &o) : opt(o)
     init();
 }
 
+Zoomer::~Zoomer()
+{
+    recorder.stopRecording();
+}
+
 void
 Zoomer::init()
 {
@@ -143,7 +148,7 @@ Zoomer::launch()
     zoom.set(0.5, 2 * opt.video.inbetweens);
     keyframe = 12;
 
-    // Process all keyframes
+    // Process all frames
     while (1) {
 
         // Process all events
@@ -155,87 +160,52 @@ Zoomer::launch()
         }
 
         //Perform main tasks
+        animate();
         update();
         draw();
         record();
 
     }
 
-        // Wait for the async map file loader to finish
-        // (void)loadResult.get();
-
     // Stop FFmpeg
     // if (recordMode) recorder.stopRecording();
 }
 
-/*
 void
-Zoomer::update()
+Zoomer::mainLoop()
 {
-    if (frame == 0) {
 
-        // Preload the next texture in the background
-        loadResult = std::async([this]() {
-
-            if (keyframe + 2 > opt.video.keyframes) {
-                return false;
-            }
-
-            updateClock.go();
-            auto result = loadMapFile(keyframe + 2);
-            updateClock.stop();
-
-            return result;
-        });
-
-        // Set animation start point
-        zoom.set(1.0);
-
-        // Set animation end point and speed
-        zoom.set(2.0, opt.video.inbetweens);
-
-        // Update window title bar
-        string title = "DeepZoom - ";
-        title += recordMode ? "Recording " : "Preview ";
-        title += "[Keyframe " + std::to_string(keyframe + 1);
-        title += " / " + std::to_string(opt.video.keyframes) + "] ";
-        window.setTitle(title);
-
-    } else {
-
-        zoom.move();
-    }
 }
-*/
 
 void
-Zoomer::update()
+Zoomer::animate()
 {
-    //
-    // Perform animation
-    //
-
     zoom.move();
 
     if (zoom.current >= 2.0) {
 
-        // Switch to next frame
+        // Switch to the next keyframe
         keyframe++;
         zoom.current /= 2.0;
     }
 
-    if (zoom.current < 1.0 && keyframe > 0) {
+    if (zoom.current < 1.0) {
 
-        // Switch to previous frame
+        // Switch to the previous keyframe
         keyframe--;
         zoom.current *= 2.0;
     }
 
-    //
-    // Update slots
-    //
+    updateWindowTitle();
+}
 
-    // Check for dirty slots
+void
+Zoomer::update()
+{
+    // Terminate if we've left the valid keyframe range
+    if (keyframe < 0 || keyframe > opt.video.keyframes) throw Exit();
+
+    // Check all map slots for dirty drill maps
     for (isize i = -1; i <= 2; i++) {
 
         auto frameNr = keyframe + i;
@@ -243,14 +213,14 @@ Zoomer::update()
 
         if (slot[nr] != frameNr) {
 
-            // Preload the next texture in the background
+            // Update the map slot
             slot[nr] = frameNr;
             mapState[nr] = MapState::Loading;
             loadResult[nr] = loadMapFileAsync(frameNr);
         }
     }
 
-    // Wait for the loaders to finish the maps we need
+    // Wait for the drill maps we need
     for (isize i = keyframe; i <= keyframe + 1; i++) {
 
         if (mapState[slotNr(i)] != MapState::UpToDate) {
@@ -259,15 +229,6 @@ Zoomer::update()
             mapState[slotNr(i)] = MapState::UpToDate;
         }
     }
-
-    // Update window title bar
-    /*
-    string title = "DeepZoom - ";
-    title += recordMode ? "Recording " : "Preview ";
-    title += "[Keyframe " + std::to_string(keyframe + 1);
-    title += " / " + std::to_string(opt.video.keyframes) + "] ";
-    window.setTitle(title);
-    */
 }
 
 void
@@ -324,6 +285,22 @@ Zoomer::loadMapFile(isize nr)
     drillMap[slotNr(nr)].colorize();
 
     return true;
+}
+
+void
+Zoomer::updateWindowTitle()
+{
+    static isize oldKeyFrame = -1;
+
+    if (oldKeyFrame != keyframe) {
+
+        oldKeyFrame = keyframe;
+        string title = "DeepZoom - ";
+        title += recordMode ? "Recording " : "Preview ";
+        title += "[Keyframe " + std::to_string(keyframe + 1);
+        title += " / " + std::to_string(opt.video.keyframes) + "] ";
+        window.setTitle(title);
+    }
 }
 
 }

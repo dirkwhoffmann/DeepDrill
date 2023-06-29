@@ -30,6 +30,7 @@ class DeepZoom : public Application {
 
     void syntax() const;
     void initialize();
+    void finalize();
     void checkArguments();
     void run();
 };

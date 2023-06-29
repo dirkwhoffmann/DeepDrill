@@ -62,6 +62,11 @@ DeepZoom::initialize()
     // Initialize FFmpeg
     FFmpeg::init();
 }
+void
+DeepZoom::finalize()
+{
+    
+}
 
 bool
 DeepZoom::isAcceptedInputFormat(Format format) const

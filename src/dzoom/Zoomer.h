@@ -73,7 +73,8 @@ public:
 
     // Constructors
     Zoomer(Options &opt);
-
+    ~Zoomer();
+    
     // Initializers
     void init();
 
@@ -82,7 +83,11 @@ public:
 
 private:
 
+    // The main loop
+    void mainLoop();
+
     // Called inside the main loop
+    void animate();
     void update();
     void draw();
     void record();
@@ -93,6 +98,9 @@ private:
     // Loads a new map file from disk
     std::future<bool> loadMapFileAsync(isize nr);
     bool loadMapFile(isize nr);
+
+    // Updates the window title bar
+    void updateWindowTitle();
 };
 
 }

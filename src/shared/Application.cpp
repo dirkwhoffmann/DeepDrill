@@ -16,6 +16,9 @@
 
 namespace dd {
 
+const std::thread::id
+Application::MAIN_THREAD_ID = std::this_thread::get_id();
+
 int
 Application::main(int argc, char *argv[])
 {
@@ -42,9 +45,9 @@ Application::main(int argc, char *argv[])
         // Run the application
         run();
 
-        log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
+    } catch (Exit &e) {
 
-    } catch (dd::SyntaxError &e) {
+    } catch (SyntaxError &e) {
 
         syntax();
         log::cout << log::endl;
@@ -62,6 +65,7 @@ Application::main(int argc, char *argv[])
         return 1;
     }
 
+    log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
     return 0;
 }
 
