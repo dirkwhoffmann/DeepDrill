@@ -21,6 +21,7 @@
 #include "ColorMap.h"
 #include "Colorizer.h"
 #include "Filter.h"
+#include "ProgressIndicator.h"
 
 #include <SFML/Graphics.hpp>
 #include <future>
@@ -68,6 +69,9 @@ class Zoomer {
     Clock updateClock;
     Clock renderClock;
     Clock recordClock;
+
+    // Progress indicator
+    ProgressIndicator progress;
 
 public:
 

@@ -10,7 +10,6 @@
 // -----------------------------------------------------------------------------
 
 #include "ProgressIndicator.h"
-#include "Application.h"
 #include "AssetManager.h"
 #include "IO.h"
 #include "Logger.h"
@@ -30,13 +29,14 @@ ProgressIndicator::~ProgressIndicator()
 
 void
 ProgressIndicator::init(const string &description, isize max)
-{    
+{
+    this->description = description;
     progress = 0;
     progressMax = max;
     
     dots = 0;
     dotsMax = 33;
-     
+
     log::cout << log::ralign(description + ": ");
     log::cout << log::flush;
     clock.restart();
@@ -46,7 +46,7 @@ void
 ProgressIndicator::step(isize delta)
 {
     if (clock.isPaused()) return;
-    
+
     progress += delta;
 
     isize newDots = dotsMax * progress / progressMax;
@@ -58,7 +58,7 @@ void
 ProgressIndicator::done(const string &info)
 {
     if (clock.isPaused()) return;
-    
+
     auto elapsed = clock.stop();
         
     for (; dots < dotsMax; dots++) { log::cout << "."; } log::cout << " ";

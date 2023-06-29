@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Application.h"
 #include "Chrono.h"
 #include "Exception.h"
 #include "StandardComplex.h"
@@ -77,7 +78,7 @@ public:
 
     void mute() { muted++; }
     void unmute() { muted--; }
-    
+
     Logger& operator<<(const log::Endl &arg);
     Logger& operator<<(const log::VSpace &arg);
     Logger& operator<<(const log::Flush &arg);
@@ -108,6 +109,11 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
+
+private:
+
+    bool verbose() const;
+
 };
 
 // Default logger (writes to stdout)

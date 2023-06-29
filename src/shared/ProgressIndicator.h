@@ -18,7 +18,10 @@
 namespace dd {
 
 class ProgressIndicator {
-        
+
+    // Description
+    string description;
+    
     // Progress
     isize progress;
     isize progressMax;
@@ -30,20 +33,21 @@ class ProgressIndicator {
     // Stop watch
     Clock clock;
         
-    
+
     //
     // Methods
     //
     
 public:
-    
+
+    ProgressIndicator() { };
     ProgressIndicator(const string &description, isize max = 100);
     ~ProgressIndicator();
 
     void step(isize delta = 1);
     void done(const string &info = "");
 
-private:
+// private:
     
     void init(const string &description, isize max = 100);
 };

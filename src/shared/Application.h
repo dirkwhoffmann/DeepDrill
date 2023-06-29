@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "Options.h"
+#include "Chrono.h"
 #include "Logger.h"
 
 #include <getopt.h>

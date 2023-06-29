@@ -144,9 +144,11 @@ Zoomer::launch()
     zoom.set(4.0, 2 * opt.video.inbetweens);
 
     // Experimental (REMOVE ASAP)
+    /*
     zoom.set(2.0);
     zoom.set(0.5, 2 * opt.video.inbetweens);
     keyframe = 12;
+    */
 
     // Process all frames
     while (1) {
@@ -182,10 +184,13 @@ Zoomer::animate()
 {
     zoom.move();
 
+    bool switched = false;
+
     if (zoom.current >= 2.0) {
 
         // Switch to the next keyframe
         keyframe++;
+        switched = true;
         zoom.current /= 2.0;
     }
 
@@ -193,7 +198,35 @@ Zoomer::animate()
 
         // Switch to the previous keyframe
         keyframe--;
+        switched = true;
         zoom.current *= 2.0;
+    }
+
+    progress.step();
+
+    if (switched) {
+
+        progress.done();
+
+        if (opt.flags.verbose) {
+
+            log::cout << log::vspace;
+            log::cout << log::ralign("Update: ");
+            log::cout << updateClock.getElapsedTime() << log::endl;
+            log::cout << log::ralign("Render: ");
+            log::cout << renderClock.getElapsedTime() << log::endl;
+
+            if (recordMode) {
+
+                log::cout << log::ralign("Record: ");
+                log::cout << recordClock.getElapsedTime() << log::endl;
+            }
+            log::cout << log::vspace;
+        }
+
+        updateClock.reset();
+        renderClock.reset();
+        recordClock.reset();
     }
 
     updateWindowTitle();
@@ -295,9 +328,14 @@ Zoomer::updateWindowTitle()
     if (oldKeyFrame != keyframe) {
 
         oldKeyFrame = keyframe;
+
+        // log::cout << "Processing keyframe " << keyframe << log::endl;
+        progress.init("Processing keyframe " + std::to_string(keyframe),
+                      opt.video.inbetweens);
+        
         string title = "DeepZoom - ";
         title += recordMode ? "Recording " : "Preview ";
-        title += "[Keyframe " + std::to_string(keyframe + 1);
+        title += "[Keyframe " + std::to_string(keyframe);
         title += " / " + std::to_string(opt.video.keyframes) + "] ";
         window.setTitle(title);
     }
