@@ -134,22 +134,14 @@ Zoomer::launch()
     // Start FFmpeg
     if (recordMode) recorder.startRecording();
 
-    // Load the textures of the first two keyframes
-    log::cout << log::vspace;
-    log::cout << "Preloading map file 0" << log::endl << log::endl;
-    (void)loadMapFile(0);
-
-    log::cout << log::vspace;
-    log::cout << "Preloading map file 1" << log::endl << log::endl;
-    (void)loadMapFile(1);
-
-    log::cout << log::vspace;
-    log::cout << "Preloading map file 2" << log::endl << log::endl;
-    (void)loadMapFile(2);
-
     // Set animation parameter
     zoom.set(1.0);
     zoom.set(4.0, 2 * opt.video.inbetweens);
+
+    // Experimental (REMOVE ASAP)
+    zoom.set(2.0);
+    zoom.set(0.5, 2 * opt.video.inbetweens);
+    keyframe = 12;
 
     // Process all keyframes
     while (1) {
@@ -219,43 +211,63 @@ Zoomer::update()
 void
 Zoomer::update()
 {
+    //
+    // Perform animation
+    //
+
     zoom.move();
 
-    // printf("Zoom: %f\n", zoom.current);
     if (zoom.current >= 2.0) {
 
-        printf("keyframe = %ld\n", keyframe);
-
-        // printf("Switching to new keyframe\n");
+        // Switch to next frame
         keyframe++;
+        zoom.current /= 2.0;
+    }
 
-        zoom.current /= 2;
+    if (zoom.current < 1.0 && keyframe > 0) {
 
-        // Wait for the async map file loader to finish
-        // if (keyframe >= 2) (void)loadResult.get();
+        // Switch to previous frame
+        keyframe--;
+        zoom.current *= 2.0;
+    }
 
-        // Preload the next texture in the background
-        loadResult = std::async([this]() {
+    //
+    // Update slots
+    //
 
-            if (keyframe + 2 > opt.video.keyframes) {
-                return false;
-            }
+    // Check for dirty slots
+    for (isize i = -1; i <= 2; i++) {
 
-            updateClock.go();
-            auto result = loadMapFile(keyframe + 2);
-            updateClock.stop();
+        auto frameNr = keyframe + i;
+        auto nr = slotNr(frameNr);
 
-            return result;
-        });
+        if (slot[nr] != frameNr) {
 
+            // Preload the next texture in the background
+            slot[nr] = frameNr;
+            mapState[nr] = MapState::Loading;
+            loadResult[nr] = loadMapFileAsync(frameNr);
+        }
+    }
+
+    // Wait for the loaders to finish the maps we need
+    for (isize i = keyframe; i <= keyframe + 1; i++) {
+
+        if (mapState[slotNr(i)] != MapState::UpToDate) {
+
+            (void)loadResult[slotNr(i)].get();
+            mapState[slotNr(i)] = MapState::UpToDate;
+        }
     }
 
     // Update window title bar
+    /*
     string title = "DeepZoom - ";
     title += recordMode ? "Recording " : "Preview ";
     title += "[Keyframe " + std::to_string(keyframe + 1);
     title += " / " + std::to_string(opt.video.keyframes) + "] ";
     window.setTitle(title);
+    */
 }
 
 void
@@ -264,8 +276,8 @@ Zoomer::draw()
     renderClock.go();
 
     // Colorize
-    colorizer.draw(drillMap[(keyframe + 0) % 3].colorMap,
-                   drillMap[(keyframe + 1) % 3].colorMap,
+    colorizer.draw(drillMap[slotNr(keyframe + 0)].colorMap,
+                   drillMap[slotNr(keyframe + 1)].colorMap,
                    (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
@@ -288,14 +300,28 @@ Zoomer::record()
     }
 }
 
+std::future<bool>
+Zoomer::loadMapFileAsync(isize nr)
+{
+    // Preload the next texture in the background
+    return std::async([this, nr]() {
+
+        updateClock.go();
+        auto result = loadMapFile(nr);
+        updateClock.stop();
+
+        return result;
+    });
+}
+
 bool
 Zoomer::loadMapFile(isize nr)
 {
     fs::path path = opt.files.inputs.front();
     fs::path file = path / AssetManager::mapFile(nr);
 
-    drillMap[nr % 3].load(file);
-    drillMap[nr % 3].colorize();
+    drillMap[slotNr(nr)].load(file);
+    drillMap[slotNr(nr)].colorize();
 
     return true;
 }

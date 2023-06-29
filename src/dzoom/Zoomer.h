@@ -36,9 +36,19 @@ class Zoomer {
     sf::RenderWindow window;
 
     // Drill maps (read from map files)
-    DrillMap drillMap[3] = { DrillMap(opt), DrillMap(opt), DrillMap(opt) };
+    DrillMap drillMap[4] = { DrillMap(opt), DrillMap(opt), DrillMap(opt), DrillMap(opt) };
 
-    // Colorizer for converting the drill maps into an image
+    // Currently loaded keyframe in each slot
+    isize slot[4] = { -1, -1, -1, -1 };
+
+    // Indicates whether a mapfile needs to be updated
+    enum class MapState { Dirty, Loading, UpToDate };
+    MapState mapState[4] = { MapState::Dirty, MapState::Dirty, MapState::Dirty, MapState::Dirty };
+
+    // Synchronizers for the async map file loader
+    std::future<bool> loadResult[4];
+
+    // Colorizer for converting the drill maps into images
     Colorizer colorizer = Colorizer(opt);
 
     // The video recorder
@@ -59,9 +69,6 @@ class Zoomer {
     Clock renderClock;
     Clock recordClock;
 
-    // Synchronizer for the async map file loader
-    std::future<bool> loadResult;
-
 public:
 
     // Constructors
@@ -80,7 +87,11 @@ private:
     void draw();
     void record();
 
+    // Returns the map slot for a given keyframe
+    isize slotNr(isize nr) { return (nr + 4) % 4; }
+
     // Loads a new map file from disk
+    std::future<bool> loadMapFileAsync(isize nr);
     bool loadMapFile(isize nr);
 };
 
