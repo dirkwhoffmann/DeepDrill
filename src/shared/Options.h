@@ -124,9 +124,6 @@ struct Options {
         // Number of keyframes
         isize keyframes;
 
-        // Number of in-between images
-        isize inbetweens;
-
         // Zoom velocity
         Dynamic velocity;
 

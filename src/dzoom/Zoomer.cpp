@@ -54,83 +54,6 @@ Zoomer::init()
     colorizer.init(opt.image.illuminator, opt.video.scaler);
 }
 
-/*
-void
-Zoomer::launch()
-{
-    sf::Event event;
-
-    // Start FFmpeg
-    if (recordMode) recorder.startRecording();
-
-    // Load the textures of the first two keyframes
-    log::cout << log::vspace;
-    log::cout << "Preloading map file 0" << log::endl << log::endl;
-    (void)loadMapFile(0);
-
-    log::cout << log::vspace;
-    log::cout << "Preloading map file 1" << log::endl << log::endl;
-    (void)loadMapFile(1);
-
-    // Process all keyframes
-    for (keyframe = 0; keyframe < opt.video.keyframes; keyframe++) {
-
-        log::cout << log::vspace;
-        log::cout << "Zooming from keyframe " << std::to_string(keyframe);
-        log::cout << " to keyframe " << std::to_string(keyframe + 1) << ": ";
-        log::cout << std::to_string(opt.video.inbetweens) << " inbetweens";
-        log::cout << log::endl << log::endl;
-
-        updateClock.reset();
-        renderClock.reset();
-        recordClock.reset();
-
-        // Process all inbetweens
-        for (frame = 0; frame < opt.video.inbetweens; frame++) {
-
-            // Process all events
-            if (!window.isOpen()) throw UserInterruptException();
-            while (window.pollEvent(event)) {
-
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
-
-            //Perform main tasks
-            update();
-            draw();
-            record();
-
-            // progress.step(1);
-        }
-
-        // progress.done();
-
-        if (opt.flags.verbose) {
-
-            log::cout << log::vspace;
-            log::cout << log::ralign("Update: ");
-            log::cout << updateClock.getElapsedTime() << log::endl;
-            log::cout << log::ralign("Render: ");
-            log::cout << renderClock.getElapsedTime() << log::endl;
-
-            if (recordMode) {
-
-                log::cout << log::ralign("Record: ");
-                log::cout << recordClock.getElapsedTime() << log::endl;
-            }
-            log::cout << log::vspace;
-        }
-
-        // Wait for the async map file loader to finish
-        (void)loadResult.get();
-    }
-
-    // Stop FFmpeg
-    if (recordMode) recorder.stopRecording();
-}
-*/
-
 void
 Zoomer::launch()
 {
@@ -203,7 +126,7 @@ Zoomer::report()
         }
 
         progress.init("Processing keyframe " + std::to_string(keyframe),
-                      opt.video.inbetweens);
+                      Animated::scale / opt.video.velocity(double(frame) / double(opt.video.frameRate)));
 
         // Update the title bar of the preview window
         string title = "DeepZoom - ";
@@ -281,7 +204,6 @@ Zoomer::draw()
     // Colorize
     colorizer.draw(drillMap[slotNr(keyframe + 0)].colorMap,
                    drillMap[slotNr(keyframe + 1)].colorMap,
-                   (float)frame / (float)opt.video.inbetweens,
                    float(zoom.current));
 
     // Display the result

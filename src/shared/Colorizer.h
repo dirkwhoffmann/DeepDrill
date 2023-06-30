@@ -55,8 +55,8 @@ public:
     void draw(const ColorMap &map);
 
     // Colorizes a video frame
-    void draw(DrillMap &map1, DrillMap &map2, float frame, float zoom);
-    void draw(const ColorMap &map1, const ColorMap &map2, float frame, float zoom);
+    void draw(DrillMap &map1, DrillMap &map2, float zoom);
+    void draw(const ColorMap &map1, const ColorMap &map2, float zoom);
 
 private:
 

@@ -155,10 +155,13 @@ Parser::parse(const string &value, isize &parsed, isize min, isize max)
 void
 Parser::parse(const string &value, double &parsed)
 {
+    if (value.find_first_not_of("-0123456789.beBE") != std::string::npos) {
+        throw Exception("Invalid floating point value: " + value);
+    }
     try {
         parsed = stod(value);
     } catch (...) {
-        throw Exception("Invalid argument: " + value);
+        throw Exception("Invalid floating point value: " + value);
     }
 }
 
@@ -228,14 +231,15 @@ Parser::parse(const string &value, Dynamic &parsed)
     std::vector<double> xn;
     std::vector<double> yn;
 
+    Time t;
+    double y;
+
     if (auto pos1 = value.find("/"); pos1 == std::string::npos) {
 
         // A single value is given
-        auto number = std::stod(value);
-
-        xn.push_back(0.0); yn.push_back(number);
-        xn.push_back(1.0); yn.push_back(number);
-        xn.push_back(2.0); yn.push_back(number);
+        Parser::parse(value, y);
+        xn.push_back(0.0);
+        yn.push_back(y);
 
     } else {
 
@@ -250,10 +254,11 @@ Parser::parse(const string &value, Dynamic &parsed)
                 auto first = it.substr(0, pos);
                 auto last = it.substr(pos + 1, std::string::npos);
 
-                Time t;
+                printf("'%s' / '%s'\n", first.c_str(), last.c_str());
                 Parser::parse(first, t);
-                auto y = std::stod(last);
+                Parser::parse(last, y);
 
+                printf("%f -> %f\n", t.asSeconds(), y);
                 xn.push_back(t.asSeconds());
                 yn.push_back(y);
 

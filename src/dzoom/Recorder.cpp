@@ -90,8 +90,6 @@ Recorder::startRecording()
         log::cout << opt.video.frameRate << " Hz" << log::endl;
         log::cout << log::ralign("Keyframes: ");
         log::cout << opt.video.keyframes << log::endl;
-        log::cout << log::ralign("Inbetweens: ");
-        log::cout << opt.video.inbetweens << log::endl;
         log::cout << log::ralign("Bitrate: ");
         log::cout << opt.video.bitrate << log::endl;
         log::cout << log::vspace;

@@ -73,15 +73,15 @@ Colorizer::draw(const ColorMap &map)
 }
 
 void
-Colorizer::draw(DrillMap &map1, DrillMap &map2, float frame, float zoom)
+Colorizer::draw(DrillMap &map1, DrillMap &map2, float zoom)
 {
     auto &colorMap1 = map1.colorize();
     auto &colorMap2 = map2.colorize();
-    draw(colorMap1, colorMap2, frame, zoom);
+    draw(colorMap1, colorMap2, zoom);
 }
 
 void
-Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float frame, float zoom)
+Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
 {
     // 1. Colorize
     illuminator.setUniform("lightDir", lightVector());

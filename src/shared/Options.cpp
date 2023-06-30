@@ -44,9 +44,9 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Video keys
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
-    defaults["video.inbetweens"] = "0";
 //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
-    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
+//    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
+    defaults["video.velocity"] = "0.5";
     defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 
@@ -129,6 +129,9 @@ Options::parse(string key, string value)
     std::transform(key.begin(), key.end(), key.begin(),
                    [](unsigned char ch){ return std::tolower(ch); });
 
+    // Remove white spaces
+    erase(value, ' ');
+
     // Strip quotation marks
     value.erase(remove(value.begin(), value.end(), '\"'), value.end());
 
@@ -199,10 +202,6 @@ Options::parse(string key, string value)
         } else if (key == "video.keyframes") {
 
             Parser::parse(value, video.keyframes);
-
-        } else if (key == "video.inbetweens") {
-
-            Parser::parse(value, video.inbetweens);
 
         } else if (key == "video.velocity") {
 
@@ -358,10 +357,6 @@ void
 Options::derive()
 {
     // Derive unspecified video parameters
-    if (!video.inbetweens) {
-
-        video.inbetweens = 2 * video.frameRate;
-    }
     if (!video.keyframes) {
 
         auto zoom = ExtendedDouble(location.zoom);
