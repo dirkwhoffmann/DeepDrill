@@ -137,43 +137,43 @@ Options::parse(string key, string value)
 
         if (key == "location.real") {
 
-            Parser::parse(key, value, location.real);
+            Parser::parse(value, location.real);
 
         } else if (key == "location.imag") {
 
-            Parser::parse(key, value, location.imag);
+            Parser::parse(value, location.imag);
 
         } else if (key == "location.zoom") {
 
-            Parser::parse(key, value, location.zoom);
+            Parser::parse(value, location.zoom);
 
         } else if (key == "location.depth") {
 
-            Parser::parse(key, value, location.depth);
+            Parser::parse(value, location.depth);
 
         } else if (key == "map.width") {
 
-            Parser::parse(key, value, drillmap.width, MIN_MAP_WIDTH, MAX_MAP_WIDTH);
+            Parser::parse(value, drillmap.width, MIN_MAP_WIDTH, MAX_MAP_WIDTH);
 
         } else if (key == "map.height") {
 
-            Parser::parse(key, value, drillmap.height, MIN_MAP_HEIGHT, MAX_MAP_HEIGHT);
+            Parser::parse(value, drillmap.height, MIN_MAP_HEIGHT, MAX_MAP_HEIGHT);
 
         } else if (key == "map.depth") {
 
-            Parser::parse(key, value, drillmap.depth, 0, 1);
+            Parser::parse(value, drillmap.depth, 0, 1);
 
         } else if (key == "map.compress") {
 
-            Parser::parse(key, value, drillmap.compress);
+            Parser::parse(value, drillmap.compress);
 
         } else if (key == "image.width") {
 
-            Parser::parse(key, value, image.width, MIN_IMAGE_WIDTH, MAX_IMAGE_WIDTH);
+            Parser::parse(value, image.width, MIN_IMAGE_WIDTH, MAX_IMAGE_WIDTH);
 
         } else if (key == "image.height") {
 
-            Parser::parse(key, value, image.height, MIN_IMAGE_HEIGHT, MAX_IMAGE_HEIGHT);
+            Parser::parse(value, image.height, MIN_IMAGE_HEIGHT, MAX_IMAGE_HEIGHT);
 
             if (image.height % 2 == 1) {
                 throw Exception("Height must be dividable by 2");
@@ -181,7 +181,7 @@ Options::parse(string key, string value)
 
         } else if (key == "image.depth") {
 
-            Parser::parse(key, value, image.depth, 0, 1);
+            Parser::parse(value, image.depth, 0, 1);
 
         } else if (key == "image.illuminator") {
 
@@ -193,23 +193,23 @@ Options::parse(string key, string value)
 
         } else if (key == "video.framerate") {
 
-            Parser::parse(key, value, video.frameRate, 25, 240);
+            Parser::parse(value, video.frameRate, 25, 240);
 
         } else if (key == "video.keyframes") {
 
-            Parser::parse(key, value, video.keyframes);
+            Parser::parse(value, video.keyframes);
 
         } else if (key == "video.inbetweens") {
 
-            Parser::parse(key, value, video.inbetweens);
+            Parser::parse(value, video.inbetweens);
 
         } else if (key == "video.velocity") {
 
-            Parser::parse(key, value, video.velocity);
+            Parser::parse(value, video.velocity);
 
         } else if (key == "video.bitrate") {
 
-            Parser::parse(key, value, video.bitrate);
+            Parser::parse(value, video.bitrate);
 
         } else if (key == "video.scaler") {
 
@@ -217,7 +217,7 @@ Options::parse(string key, string value)
 
         } else if (key == "colors.mode") {
 
-            Parser::parse(key, value, colors.mode);
+            Parser::parse(value, colors.mode);
 
         } else if (key == "colors.palette") {
 
@@ -233,15 +233,15 @@ Options::parse(string key, string value)
 
         } else if (key == "colors.scale") {
 
-            Parser::parse(key, value, colors.scale);
+            Parser::parse(value, colors.scale);
 
         } else if (key == "colors.opacity") {
 
-            Parser::parse(key, value, colors.opacity, 0.0, 1.0);
+            Parser::parse(value, colors.opacity, 0.0, 1.0);
 
         } else if (key == "colors.alpha") {
 
-            Parser::parse(key, value, colors.alpha);
+            Parser::parse(value, colors.alpha);
 
             if (colors.alpha < 0.0 || colors.alpha >= 360.0) {
                 throw Exception("Angle out of range");
@@ -249,7 +249,7 @@ Options::parse(string key, string value)
 
         } else if (key == "colors.beta") {
 
-            Parser::parse(key, value, colors.beta);
+            Parser::parse(value, colors.beta);
 
             if (colors.beta < 0.0 || colors.beta >= 360.0) {
                 throw Exception("Angle out of range");
@@ -257,67 +257,67 @@ Options::parse(string key, string value)
 
         } else if (key == "areacheck.enable") {
 
-            Parser::parse(key, value, areacheck.enable);
+            Parser::parse(value, areacheck.enable);
 
         } else if (key == "areacheck.color") {
 
-            Parser::parse(key, value, areacheck.color);
+            Parser::parse(value, areacheck.color);
 
         } else if (key == "attractorcheck.enable") {
 
-            Parser::parse(key, value, attractorcheck.enable);
+            Parser::parse(value, attractorcheck.enable);
 
         } else if (key == "attractorcheck.tolerance") {
 
-            Parser::parse(key, value, attractorcheck.tolerance);
+            Parser::parse(value, attractorcheck.tolerance);
 
         } else if (key == "attractorcheck.color") {
 
-            Parser::parse(key, value, attractorcheck.color);
+            Parser::parse(value, attractorcheck.color);
 
         } else if (key == "periodcheck.enable") {
 
-            Parser::parse(key, value, periodcheck.enable);
+            Parser::parse(value, periodcheck.enable);
 
         } else if (key == "periodcheck.tolerance") {
 
-            Parser::parse(key, value, periodcheck.tolerance);
+            Parser::parse(value, periodcheck.tolerance);
 
         } else if (key == "periodcheck.color") {
 
-            Parser::parse(key, value, periodcheck.color);
+            Parser::parse(value, periodcheck.color);
 
         } else if (key == "perturbation.enable") {
 
-            Parser::parse(key, value, perturbation.enable);
+            Parser::parse(value, perturbation.enable);
 
         } else if (key == "perturbation.tolerance") {
 
-            Parser::parse(key, value, perturbation.tolerance);
+            Parser::parse(value, perturbation.tolerance);
 
         } else if (key == "perturbation.badpixels") {
 
-            Parser::parse(key, value, perturbation.badpixels);
+            Parser::parse(value, perturbation.badpixels);
 
         } else if (key == "perturbation.rounds") {
 
-            Parser::parse(key, value, perturbation.rounds);
+            Parser::parse(value, perturbation.rounds);
 
         } else if (key == "perturbation.color") {
 
-            Parser::parse(key, value, perturbation.color);
+            Parser::parse(value, perturbation.color);
 
         } else if (key == "approximation.enable") {
 
-            Parser::parse(key, value, approximation.enable);
+            Parser::parse(value, approximation.enable);
 
         } else if (key == "approximation.coefficients") {
 
-            Parser::parse(key, value, approximation.coefficients);
+            Parser::parse(value, approximation.coefficients);
 
         } else if (key == "approximation.tolerance") {
 
-            Parser::parse(key, value, approximation.tolerance);
+            Parser::parse(value, approximation.tolerance);
 
         } else {
 

@@ -89,7 +89,7 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
                     key = key.substr(pos2 + 1, std::string::npos);
 
                     std::pair<isize,isize> range = { 0, LONG_MAX };
-                    parse(key, prefix, range);
+                    parse(prefix, range);
 
                     // Only proceed if the frame is inside the valid range
                     if (nr < range.first || nr > range.second) continue;
@@ -107,13 +107,13 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
 }
 
 void
-Parser::parse(const string &key, const string &value, string &parsed)
+Parser::parse(const string &value, string &parsed)
 {
     parsed = value;
 }
 
 void
-Parser::parse(const string &key, const string &value, bool &parsed)
+Parser::parse(const string &value, bool &parsed)
 {
     if (value == "true" || value == "yes" || value == "on") {
 
@@ -126,71 +126,67 @@ Parser::parse(const string &key, const string &value, bool &parsed)
         return;
     }
 
-    throw Exception("Invalid argument for key " + key + ": " + value);
+    throw Exception("Invalid argument: " + value);
 }
 
 void
-Parser::parse(const string &key, const string &value, isize &parsed)
+Parser::parse(const string &value, isize &parsed)
 {
     try {
         parsed = stol(value);
     } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
+        throw Exception("Invalid argument: " + value);
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, isize &parsed, isize min, isize max)
+Parser::parse(const string &value, isize &parsed, isize min, isize max)
 {
-    parse(key, value, parsed);
+    parse(value, parsed);
 
     if (parsed < min) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be >= " + std::to_string(min));
+        throw Exception("Invalid argument. Value must be >= " + std::to_string(min));
     }
     if (parsed > max) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be <= " + std::to_string(max));
+        throw Exception("Invalid argument. Value must be <= " + std::to_string(max));
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, double &parsed)
+Parser::parse(const string &value, double &parsed)
 {
     try {
         parsed = stod(value);
     } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
+        throw Exception("Invalid argument: " + value);
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, double &parsed, double min, double max)
+Parser::parse(const string &value, double &parsed, double min, double max)
 {
-    parse(key, value, parsed);
+    parse(value, parsed);
 
     if (parsed < min) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be >= " + std::to_string(min));
+        throw Exception("Invalid argument. Value must be >= " + std::to_string(min));
     }
     if (parsed > max) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be <= " + std::to_string(max));
+        throw Exception("Invalid argument. Value must be <= " + std::to_string(max));
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, mpf_class &parsed)
+Parser::parse(const string &value, mpf_class &parsed)
 {
     try {
         parsed = mpf_class(value);
     } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
+        throw Exception("Invalid argument: " + value);
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, GpuColor &parsed)
+Parser::parse(const string &value, GpuColor &parsed)
 {
     std::map <string, GpuColor> modes = {
 
@@ -207,12 +203,12 @@ Parser::parse(const string &key, const string &value, GpuColor &parsed)
     try {
         parsed = modes.at(value);
     } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
+        throw Exception("Invalid argument: " + value);
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, ColoringMode &parsed)
+Parser::parse(const string &value, ColoringMode &parsed)
 {
     std::map <string, ColoringMode> modes = {
 
@@ -222,12 +218,12 @@ Parser::parse(const string &key, const string &value, ColoringMode &parsed)
     try {
         parsed = modes.at(value);
     } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
+        throw Exception("Unknown coloring mode: '" + value + "'");
     }
 }
 
 void
-Parser::parse(const string &key, const string &value, Dynamic &parsed)
+Parser::parse(const string &value, Dynamic &parsed)
 {
     std::vector<double> xn;
     std::vector<double> yn;
@@ -249,7 +245,7 @@ Parser::parse(const string &key, const string &value, Dynamic &parsed)
             auto last = it.substr(pos + 1, std::string::npos);
 
             Time t;
-            Parser::parse(key, first, t);
+            Parser::parse(first, t);
             auto y = std::stod(last);
 
             xn.push_back(t.asSeconds());
@@ -267,7 +263,7 @@ Parser::parse(const string &key, const string &value, Dynamic &parsed)
 }
 
 void
-Parser::parse(const string &key, const string &value, Time &parsed)
+Parser::parse(const string &value, Time &parsed)
 {
     if (auto pos = value.find(":"); pos != std::string::npos) {
         
@@ -282,7 +278,7 @@ Parser::parse(const string &key, const string &value, Time &parsed)
 }
 
 void
-Parser::parse(const string &key, const string &value, std::pair<isize,isize> &parsed)
+Parser::parse(const string &value, std::pair<isize,isize> &parsed)
 {
     isize first = 0;
     isize last = LONG_MAX;
