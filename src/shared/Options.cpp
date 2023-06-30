@@ -133,319 +133,201 @@ Options::parse(string key, string value)
 
     keys[key] = value;
 
-    if (key == "location.real") {
+    try {
 
-        Parser::parse(key, value, location.real);
+        if (key == "location.real") {
 
-    } else if (key == "location.imag") {
+            Parser::parse(key, value, location.real);
 
-        Parser::parse(key, value, location.imag);
+        } else if (key == "location.imag") {
 
-    } else if (key == "location.zoom") {
+            Parser::parse(key, value, location.imag);
 
-        Parser::parse(key, value, location.zoom);
+        } else if (key == "location.zoom") {
 
-    } else if (key == "location.depth") {
+            Parser::parse(key, value, location.zoom);
 
-        Parser::parse(key, value, location.depth);
+        } else if (key == "location.depth") {
 
-    } else if (key == "map.width") {
+            Parser::parse(key, value, location.depth);
 
-        Parser::parse(key, value, drillmap.width, MIN_MAP_WIDTH, MAX_MAP_WIDTH);
+        } else if (key == "map.width") {
 
-    } else if (key == "map.height") {
+            Parser::parse(key, value, drillmap.width, MIN_MAP_WIDTH, MAX_MAP_WIDTH);
 
-        Parser::parse(key, value, drillmap.height, MIN_MAP_HEIGHT, MAX_MAP_HEIGHT);
+        } else if (key == "map.height") {
 
-    } else if (key == "map.depth") {
+            Parser::parse(key, value, drillmap.height, MIN_MAP_HEIGHT, MAX_MAP_HEIGHT);
 
-        Parser::parse(key, value, drillmap.depth, 0, 1);
+        } else if (key == "map.depth") {
 
-    } else if (key == "map.compress") {
+            Parser::parse(key, value, drillmap.depth, 0, 1);
 
-        Parser::parse(key, value, drillmap.compress);
+        } else if (key == "map.compress") {
 
-    } else if (key == "image.width") {
+            Parser::parse(key, value, drillmap.compress);
 
-        Parser::parse(key, value, image.width, MIN_IMAGE_WIDTH, MAX_IMAGE_WIDTH);
+        } else if (key == "image.width") {
 
-    } else if (key == "image.height") {
+            Parser::parse(key, value, image.width, MIN_IMAGE_WIDTH, MAX_IMAGE_WIDTH);
 
-        Parser::parse(key, value, image.height, MIN_IMAGE_HEIGHT, MAX_IMAGE_HEIGHT);
+        } else if (key == "image.height") {
 
-        if (image.height % 2 == 1) {
-            throw KeyValueError(key, "Height must be dividable by 2.");
+            Parser::parse(key, value, image.height, MIN_IMAGE_HEIGHT, MAX_IMAGE_HEIGHT);
+
+            if (image.height % 2 == 1) {
+                throw Exception("Height must be dividable by 2");
+            }
+
+        } else if (key == "image.depth") {
+
+            Parser::parse(key, value, image.depth, 0, 1);
+
+        } else if (key == "image.illuminator") {
+
+            image.illuminator = assets.findAsset(value, Format::GLSL);
+
+        } else if (key == "image.scaler") {
+
+            image.scaler = assets.findAsset(value, Format::GLSL);
+
+        } else if (key == "video.framerate") {
+
+            Parser::parse(key, value, video.frameRate, 25, 240);
+
+        } else if (key == "video.keyframes") {
+
+            Parser::parse(key, value, video.keyframes);
+
+        } else if (key == "video.inbetweens") {
+
+            Parser::parse(key, value, video.inbetweens);
+
+        } else if (key == "video.velocity") {
+
+            Parser::parse(key, value, video.velocity);
+
+        } else if (key == "video.bitrate") {
+
+            Parser::parse(key, value, video.bitrate);
+
+        } else if (key == "video.scaler") {
+
+            video.scaler = assets.findAsset(value, Format::GLSL);
+
+        } else if (key == "colors.mode") {
+
+            Parser::parse(key, value, colors.mode);
+
+        } else if (key == "colors.palette") {
+
+            if (value != "") {
+                colors.palette = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+            }
+
+        } else if (key == "colors.texture") {
+
+            if (value != "") {
+                colors.texture = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+            }
+
+        } else if (key == "colors.scale") {
+
+            Parser::parse(key, value, colors.scale);
+
+        } else if (key == "colors.opacity") {
+
+            Parser::parse(key, value, colors.opacity, 0.0, 1.0);
+
+        } else if (key == "colors.alpha") {
+
+            Parser::parse(key, value, colors.alpha);
+
+            if (colors.alpha < 0.0 || colors.alpha >= 360.0) {
+                throw Exception("Angle out of range");
+            }
+
+        } else if (key == "colors.beta") {
+
+            Parser::parse(key, value, colors.beta);
+
+            if (colors.beta < 0.0 || colors.beta >= 360.0) {
+                throw Exception("Angle out of range");
+            }
+
+        } else if (key == "areacheck.enable") {
+
+            Parser::parse(key, value, areacheck.enable);
+
+        } else if (key == "areacheck.color") {
+
+            Parser::parse(key, value, areacheck.color);
+
+        } else if (key == "attractorcheck.enable") {
+
+            Parser::parse(key, value, attractorcheck.enable);
+
+        } else if (key == "attractorcheck.tolerance") {
+
+            Parser::parse(key, value, attractorcheck.tolerance);
+
+        } else if (key == "attractorcheck.color") {
+
+            Parser::parse(key, value, attractorcheck.color);
+
+        } else if (key == "periodcheck.enable") {
+
+            Parser::parse(key, value, periodcheck.enable);
+
+        } else if (key == "periodcheck.tolerance") {
+
+            Parser::parse(key, value, periodcheck.tolerance);
+
+        } else if (key == "periodcheck.color") {
+
+            Parser::parse(key, value, periodcheck.color);
+
+        } else if (key == "perturbation.enable") {
+
+            Parser::parse(key, value, perturbation.enable);
+
+        } else if (key == "perturbation.tolerance") {
+
+            Parser::parse(key, value, perturbation.tolerance);
+
+        } else if (key == "perturbation.badpixels") {
+
+            Parser::parse(key, value, perturbation.badpixels);
+
+        } else if (key == "perturbation.rounds") {
+
+            Parser::parse(key, value, perturbation.rounds);
+
+        } else if (key == "perturbation.color") {
+
+            Parser::parse(key, value, perturbation.color);
+
+        } else if (key == "approximation.enable") {
+
+            Parser::parse(key, value, approximation.enable);
+
+        } else if (key == "approximation.coefficients") {
+
+            Parser::parse(key, value, approximation.coefficients);
+
+        } else if (key == "approximation.tolerance") {
+
+            Parser::parse(key, value, approximation.tolerance);
+
+        } else {
+
+            throw Exception("Unknown key");
         }
 
-    } else if (key == "image.depth") {
-
-        Parser::parse(key, value, image.depth, 0, 1);
-
-    } else if (key == "image.illuminator") {
-
-        image.illuminator = assets.findAsset(value, Format::GLSL);
-
-    } else if (key == "image.scaler") {
-
-        image.scaler = assets.findAsset(value, Format::GLSL);
-
-    } else if (key == "video.framerate") {
-
-        Parser::parse(key, value, video.frameRate, 25, 240);
-
-    } else if (key == "video.keyframes") {
-
-        Parser::parse(key, value, video.keyframes);
-
-    } else if (key == "video.inbetweens") {
-
-        Parser::parse(key, value, video.inbetweens);
-
-    } else if (key == "video.velocity") {
-
-        Parser::parse(key, value, video.velocity);
-
-    } else if (key == "video.bitrate") {
-
-        Parser::parse(key, value, video.bitrate);
-
-    } else if (key == "video.scaler") {
-
-        video.scaler = assets.findAsset(value, Format::GLSL);
-
-    } else if (key == "colors.mode") {
-
-        Parser::parse(key, value, colors.mode);
-
-    } else if (key == "colors.palette") {
-
-        if (value != "") {
-            colors.palette = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
-        }
-
-    } else if (key == "colors.texture") {
-
-        if (value != "") {
-            colors.texture = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
-        }
-
-    } else if (key == "colors.scale") {
-
-        Parser::parse(key, value, colors.scale);
-
-    } else if (key == "colors.opacity") {
-
-        Parser::parse(key, value, colors.opacity, 0.0, 1.0);
-
-    } else if (key == "colors.alpha") {
-
-        Parser::parse(key, value, colors.alpha);
-
-        if (colors.alpha < 0.0 || colors.alpha >= 360.0) {
-            throw KeyValueError(key, "Angle out of range");
-        }
-
-    } else if (key == "colors.beta") {
-
-        Parser::parse(key, value, colors.beta);
-
-        if (colors.beta < 0.0 || colors.beta >= 360.0) {
-            throw KeyValueError(key, "Angle out of range");
-        }
-
-    } else if (key == "areacheck.enable") {
-
-        Parser::parse(key, value, areacheck.enable);
-
-    } else if (key == "areacheck.color") {
-
-        Parser::parse(key, value, areacheck.color);
-
-    } else if (key == "attractorcheck.enable") {
-
-        Parser::parse(key, value, attractorcheck.enable);
-
-    } else if (key == "attractorcheck.tolerance") {
-
-        Parser::parse(key, value, attractorcheck.tolerance);
-
-    } else if (key == "attractorcheck.color") {
-
-        Parser::parse(key, value, attractorcheck.color);
-
-    } else if (key == "periodcheck.enable") {
-
-        Parser::parse(key, value, periodcheck.enable);
-
-    } else if (key == "periodcheck.tolerance") {
-
-        Parser::parse(key, value, periodcheck.tolerance);
-
-    } else if (key == "periodcheck.color") {
-
-        Parser::parse(key, value, periodcheck.color);
-
-    } else if (key == "perturbation.enable") {
-
-        Parser::parse(key, value, perturbation.enable);
-
-    } else if (key == "perturbation.tolerance") {
-
-        Parser::parse(key, value, perturbation.tolerance);
-
-    } else if (key == "perturbation.badpixels") {
-
-        Parser::parse(key, value, perturbation.badpixels);
-
-    } else if (key == "perturbation.rounds") {
-
-        Parser::parse(key, value, perturbation.rounds);
-
-    } else if (key == "perturbation.color") {
-
-        Parser::parse(key, value, perturbation.color);
-
-    } else if (key == "approximation.enable") {
-
-        Parser::parse(key, value, approximation.enable);
-
-    } else if (key == "approximation.coefficients") {
-
-        Parser::parse(key, value, approximation.coefficients);
-
-    } else if (key == "approximation.tolerance") {
-
-        Parser::parse(key, value, approximation.tolerance);
-
-    } else {
-
-        printf("Unexpected key: %s\n", key.c_str());
-        throw KeyValueError(key, "Unexpected key");
+    } catch (Exception &e) {
+        throw KeyValueError(key, e.what());
     }
 }
-
-/*
-void
-Options::parse(const string &key, const string &value, string &parsed)
-{
-    parsed = value;
-}
-
-void
-Options::parse(const string &key, const string &value, bool &parsed)
-{
-    if (value == "true" || value == "yes" || value == "on") {
-
-        parsed = true;
-        return;
-    }
-    if (value == "false" || value == "no" || value == "off") {
-
-        parsed = false;
-        return;
-    }
-
-    throw Exception("Invalid argument for key " + key + ": " + value);
-}
-
-void
-Options::parse(const string &key, const string &value, isize &parsed)
-{
-    try {
-        parsed = stol(value);
-    } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
-    }
-}
-
-void
-Options::parse(const string &key, const string &value, isize &parsed, isize min, isize max)
-{
-    parse(key, value, parsed);
-
-    if (parsed < min) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be >= " + std::to_string(min));
-    }
-    if (parsed > max) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be <= " + std::to_string(max));
-    }
-}
-
-void
-Options::parse(const string &key, const string &value, double &parsed)
-{
-    try {
-        parsed = stod(value);
-    } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
-    }
-}
-
-void
-Options::parse(const string &key, const string &value, double &parsed, double min, double max)
-{
-    parse(key, value, parsed);
-
-    if (parsed < min) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be >= " + std::to_string(min));
-    }
-    if (parsed > max) {
-        throw Exception("Invalid argument for key " + key +
-                        ": Value must be <= " + std::to_string(max));
-    }
-}
-
-void
-Options::parse(const string &key, const string &value, mpf_class &parsed)
-{
-    try {
-        parsed = mpf_class(value);
-    } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
-    }
-}
-
-void
-Options::parse(const string &key, const string &value, GpuColor &parsed)
-{
-    std::map <string, GpuColor> modes = {
-
-        { "black",      GpuColor::black     },
-        { "white",      GpuColor::white     },
-        { "red",        GpuColor::red       },
-        { "green",      GpuColor::green     },
-        { "blue",       GpuColor::blue      },
-        { "yellow",     GpuColor::yellow    },
-        { "magenta",    GpuColor::magenta   },
-        { "cyan",       GpuColor::cyan      }
-    };
-
-    try {
-        parsed = modes.at(value);
-    } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
-    }
-}
-
-void
-Options::parse(const string &key, const string &value, ColoringMode &parsed)
-{
-    std::map <string, ColoringMode> modes = {
-
-        { "default", ColoringMode::Default },
-        // { "textured", ColoringMode::Textured }
-    };
-
-    try {
-        parsed = modes.at(value);
-    } catch (...) {
-        throw Exception("Invalid argument for key " + key + ": " + value);
-    }
-}
-*/
 
 void
 Options::applyDefaults()

@@ -89,7 +89,7 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
                     key = key.substr(pos2 + 1, std::string::npos);
 
                     std::pair<isize,isize> range = { 0, LONG_MAX };
-                    parse(prefix, prefix, range);
+                    parse(key, prefix, range);
 
                     // Only proceed if the frame is inside the valid range
                     if (nr < range.first || nr > range.second) continue;
