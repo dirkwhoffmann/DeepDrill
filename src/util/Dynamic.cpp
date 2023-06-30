@@ -26,13 +26,26 @@ Dynamic::init(std::vector <double> vxn, std::vector <double> vyn)
 std::ostream &
 operator<<(std::ostream& os, const Dynamic& d)
 {
-    for (usize i = 0; i < d.xn.size(); i++) {
+    if (d.yn.size() == 1) {
 
-        os << d.xn[i] << '/' << d.yn[i] << ' ';
+        os << d.yn[0];
+
+    } else {
+
+        for (usize i = 0; i < d.xn.size(); i++) {
+
+            if (i) os << ", ";
+            os << d.xn[i] << '/' << d.yn[i];
+        }
     }
-    os << std::endl;
 
     return os;
+}
+
+double
+Dynamic::operator() (double x) const
+{
+    return yn.size() == 1 ? yn[0] : spline(x);
 }
 
 }

@@ -45,7 +45,8 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
     defaults["video.inbetweens"] = "0";
-    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
+//    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
+    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
     defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 

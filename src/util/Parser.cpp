@@ -228,28 +228,38 @@ Parser::parse(const string &value, Dynamic &parsed)
     std::vector<double> xn;
     std::vector<double> yn;
 
-    // Check if value is a value list
     if (auto pos1 = value.find("/"); pos1 == std::string::npos) {
-        throw Exception("Invalid spline description");
-    }
 
-    // Split list
-    auto pairs = split(value, ',');
+        // A single value is given
+        auto number = std::stod(value);
 
-    // Split list entries
-    for (auto &it : pairs) {
+        xn.push_back(0.0); yn.push_back(number);
+        xn.push_back(1.0); yn.push_back(number);
+        xn.push_back(2.0); yn.push_back(number);
 
-        if (auto pos = it.find("/"); pos != std::string::npos) {
+    } else {
 
-            auto first = it.substr(0, pos);
-            auto last = it.substr(pos + 1, std::string::npos);
+        // A list of values is given
+        auto pairs = split(value, ',');
 
-            Time t;
-            Parser::parse(first, t);
-            auto y = std::stod(last);
+        // Split list entries
+        for (auto &it : pairs) {
 
-            xn.push_back(t.asSeconds());
-            yn.push_back(y);
+            if (auto pos = it.find("/"); pos != std::string::npos) {
+
+                auto first = it.substr(0, pos);
+                auto last = it.substr(pos + 1, std::string::npos);
+
+                Time t;
+                Parser::parse(first, t);
+                auto y = std::stod(last);
+
+                xn.push_back(t.asSeconds());
+                yn.push_back(y);
+
+            } else {
+                throw Exception("Invalid spline pair: '" + it + "'");
+            }
         }
     }
 

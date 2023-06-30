@@ -200,7 +200,8 @@ Maker::writeVideoSection(std::ofstream &os)
     os << "[video]" << std::endl;
     os << "framerate = " << opt.video.frameRate << std::endl;
     os << "keyframes = " << opt.video.keyframes << std::endl;
-    os << "inbetweens = " << opt.video.inbetweens << std::endl;
+    // os << "inbetweens = " << opt.video.inbetweens << std::endl;
+    os << "velocity = " << opt.video.velocity << std::endl;
     os << "bitrate = " << opt.video.bitrate << std::endl;
     os << "scaler = " << opt.video.scaler << std::endl;
     os << std::endl;

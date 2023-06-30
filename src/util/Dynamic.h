@@ -38,7 +38,7 @@ struct Dynamic {
     //
 
     friend std::ostream& operator<<(std::ostream& os, const Dynamic& d);
-    double operator() (double x) const { return spline(x); }
+    double operator() (double x) const;
 };
 
 }

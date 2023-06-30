@@ -28,9 +28,9 @@ ProgressIndicator::~ProgressIndicator()
 }
 
 void
-ProgressIndicator::init(const string &description, isize max)
+ProgressIndicator::init(const string &desc, isize max)
 {
-    this->description = description;
+    description = desc;
     progress = 0;
     progressMax = max;
     
