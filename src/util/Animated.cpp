@@ -12,47 +12,14 @@
 #include "Animated.h"
 #include <tgmath.h>
 
-Animated::Animated(double value)
-{
-    set(value);
-}
-
-bool
-Animated::animates() const
-{
-    return current != target;
-}
-
 void
 Animated::set(double value)
 {
     current = value;
-    target = value;
 }
 
 void
-Animated::set(double value, long steps)
+Animated::move(double velocity)
 {
-    assert(current != 0);
-
-    target = value;
-    factor = pow(target / current, 1.0 / steps);
-}
-
-void
-Animated::move()
-{
-    if (current > target && current * factor >= target) {
-        current *= factor;
-    } else if (current < target && current * factor <= target) {
-        current *= factor;
-    } else {
-        current = target;
-    }
-}
-
-void
-Animated::setFactor(long steps)
-{
-    factor = pow(2.0, 1.0 / steps);
+    current *= pow(2.0, velocity / scale);
 }

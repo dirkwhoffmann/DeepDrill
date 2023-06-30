@@ -82,22 +82,22 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
                 auto key = input.substr(0, pos);
                 auto value = input.substr(pos + 1, std::string::npos);
 
-                // Get the range of keyframes this key-value pair applies to
-                auto range = stripRange(key);
+                // Check if the key is prefixed with a frame range
+                if (auto pos2 = key.find(":"); pos2 != std::string::npos) {
 
-                if (nr >= range.first && nr <= range.second) {
+                    auto prefix = key.substr(0, pos2);
+                    key = key.substr(pos2 + 1, std::string::npos);
 
-                    // Process the key-value pair
-                    try {
-                        callback(section + "." + key ,value);
-                    } catch (const Exception &e) {
-                        throw ParseError(e, line);
-                    }
+                    std::pair<isize,isize> range = { 0, LONG_MAX };
+                    parse(prefix, prefix, range);
+
+                    // Only proceed if the frame is inside the valid range
+                    if (nr < range.first || nr > range.second) continue;
                 }
-                continue;
-            }
 
-            throw SyntaxError("Parse error");
+                // Process the key-value pair
+                callback(section + "." + key ,value);
+            }
         }
 
     } catch (Exception &e) {
@@ -258,10 +258,12 @@ Parser::parse(const string &key, const string &value, Dynamic &parsed)
     }
 
     parsed.init(xn, yn);
+    /*
     log::cout << parsed;
-    for (double i = 0.0; i <= 4.1; i += 0.2) {
+    for (double i = 0.0; i <= 70.1; i += 0.5) {
         printf("Spline(%f) = %f\n", i, parsed(i));
     }
+    */
 }
 
 void
@@ -277,6 +279,32 @@ Parser::parse(const string &key, const string &value, Time &parsed)
         
         parsed = Time::seconds(i64(60 * m + s));
     } 
+}
+
+void
+Parser::parse(const string &key, const string &value, std::pair<isize,isize> &parsed)
+{
+    isize first = 0;
+    isize last = LONG_MAX;
+
+    try {
+
+        if (auto pos2 = value.find("-"); pos2 != std::string::npos) {
+
+            first = std::stol(value.substr(0, pos2));
+            last = std::stol(value.substr(pos2 + 1, std::string::npos));
+
+        } else {
+
+            first = std::stol(value);
+            last = first;
+        }
+
+    } catch (...) {
+        throw Exception(value + " is not a valid frame range.");
+    }
+
+    parsed = { first, last };
 }
 
 std::pair<isize, isize>

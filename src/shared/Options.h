@@ -127,8 +127,8 @@ struct Options {
         // Number of in-between images
         isize inbetweens;
 
-        // Experimental (will replace inbetweens)
-        Dynamic inbetweens2;
+        // Zoom velocity
+        Dynamic velocity;
 
         // Bitrate
         isize bitrate;

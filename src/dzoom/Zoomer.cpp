@@ -141,14 +141,9 @@ Zoomer::launch()
 
     // Set animation parameter
     zoom.set(1.0);
-    zoom.set(4.0, 2 * opt.video.inbetweens);
 
     // Experimental code for testing backzooms (REMOVE ASAP)
-    /*
-    zoom.set(2.0);
-    zoom.set(0.5, 2 * opt.video.inbetweens);
     keyframe = 12;
-    */
 
     // Reset clocks
     updateClock.reset();
@@ -167,9 +162,6 @@ Zoomer::launch()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
-        // Experimental (change animation parameter for each frame)
-        // zoom.setFactor(opt.video.inbetweens2(frame / 60.0));
 
         // Perform main tasks
         report();
@@ -227,23 +219,20 @@ Zoomer::report()
 void
 Zoomer::animate()
 {
-    zoom.move();
+    // Zoom in or out
+    zoom.move(opt.video.velocity(double(frame) / double(opt.video.frameRate)));
 
-    bool switched = false;
-
+    // Check if we need to switch to the next keyframe
     if (zoom.current >= 2.0) {
 
-        // Switch to the next keyframe
         keyframe++;
-        switched = true;
         zoom.current /= 2.0;
     }
 
+    // Check if we need to switch to the previous keyframe
     if (zoom.current < 1.0) {
 
-        // Switch to the previous keyframe
         keyframe--;
-        switched = true;
         zoom.current *= 2.0;
     }
 }
