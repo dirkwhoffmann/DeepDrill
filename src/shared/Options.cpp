@@ -52,7 +52,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Color keys
     defaults["colors.mode"] = "default";
-    defaults["colors.palette"] = "default";
+    defaults["colors.palette"] = "default.png";
     defaults["colors.texture"] = "";
     defaults["colors.scale"] = "1.0";
     defaults["colors.opacity"] = "0.5";

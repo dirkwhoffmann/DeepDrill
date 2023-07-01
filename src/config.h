@@ -72,6 +72,9 @@ static const int FORCE_NO_FFMPEG    = 0;
 #endif
 static const int releaseBuild = 1;
 #else
+#ifdef NDEBUG
+#undef NDEBUG
+#endif
 static const int releaseBuild = 0;
 #endif
 

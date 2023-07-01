@@ -48,6 +48,8 @@ Colorizer::draw(const ColorMap &map)
         // 1. Apply lighting
         illuminator.setUniform("lightDir", lightVector());
         illuminator.setUniform("image", map.colorMapTex);
+        illuminator.setUniform("index", map.indexMapTex);
+        illuminator.setUniform("palette", map.paletteTex);
         illuminator.setUniform("normal", map.normalMapTex);
         illuminator.apply();
 

@@ -109,6 +109,7 @@ ColorMap::compute(const DrillMap &map)
                         colorMap[pos] = color;
 
                         auto index = palette.colorIndex(data);
+                        assert(index >= 0.0 && index <= 1.0);
                         indexMap[pos] = u32(index * 256 * 256 * 256);
                     }
                     break;
