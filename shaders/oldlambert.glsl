@@ -1,12 +1,6 @@
 // Sampler for the color image
 uniform sampler2D image;
 
-// Sampler for the color index map
-uniform sampler2D index;
-
-// Sampler for the color palette
-uniform sampler2D palette;
-
 // Sampler for the normal map
 uniform sampler2D normal;
 
@@ -37,24 +31,6 @@ vec3 hsv2rgb(vec3 c)
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
 
-vec3 deriveColor(vec2 coord)
-{
-    // Read entry from color index table
-    vec4 colorIndex = texture2D(index, coord);
-
-    if (colorIndex.a != 0.0) {
-
-        // The RGB value is hard-coded
-        return colorIndex.rgb;
-
-    } else {
-
-        // Get the RGB value from the color palette
-        coord.x = colorIndex.b + colorIndex.g / 256.0 + colorIndex.r / (256.0 * 256.0);
-        return texture2D(palette, coord).xyz;
-    }
-}
-
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
@@ -64,11 +40,7 @@ void main()
     //
 
     // RGBA of our diffuse color
-    vec4 diffuseColor =  texture2D(image, coord);
-    vec4 paletteColor = texture2D(palette, coord);
-    // vec4 colorIndex = texture2D(index, coord);
-
-    diffuseColor.xyz = deriveColor(coord);
+    vec4 diffuseColor = texture2D(image, coord);
 
     // RGB of our normal map
     vec3 normalMap = texture2D(normal, coord).rgb;
@@ -94,17 +66,6 @@ void main()
         hsv.z *= (lambert * scale) + 1.0 - 0.5 * scale;
         final = hsv2rgb(hsv);
     }
-
-    /*
-    if (colorIndex.a != 0.0) {
-        final = colorIndex.rgb;
-    } else {
-        float ind = colorIndex.b + colorIndex.g / 256.0 + colorIndex.r / (256.0 * 256.0);
-        coord.x = ind;
-        paletteColor = texture2D(palette, coord);
-        final = paletteColor.xyz;
-    }
-    */
 
     gl_FragColor = gl_Color * vec4(final, 1.0);
 }

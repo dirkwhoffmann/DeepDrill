@@ -20,7 +20,10 @@ Dynamic::init(std::vector <double> vxn, std::vector <double> vyn)
     this->xn = vxn;
     this->yn = vyn;
 
-    spline = tk::spline(xn, yn, tk::spline::cspline, true);
+    if (xn.size() >= 3) {
+        
+        spline = tk::spline(xn, yn, tk::spline::cspline, true);
+    }
 }
 
 std::ostream &

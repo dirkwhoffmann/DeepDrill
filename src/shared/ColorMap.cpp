@@ -36,6 +36,7 @@ ColorMap::resize(isize w, isize h)
         height = h;
 
         colorMap.resize(width * height);
+        indexMap.resize(width * height);
         normalMap.resize(width * height);
 
         // Load palette images
@@ -46,9 +47,16 @@ ColorMap::resize(isize w, isize h)
         if (!colorMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create color map texture");
         }
+        if (!indexMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create color index map texture");
+        }
         if (!normalMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normal map texture");
         }
+        if (!paletteTex.loadFromImage(palette.palette)) {
+            throw Exception("Can't create palette texture");
+        }
+
     }
 }
 
@@ -99,33 +107,43 @@ ColorMap::compute(const DrillMap &map)
                         }
 
                         colorMap[pos] = color;
+
+                        auto index = palette.colorIndex(data);
+                        indexMap[pos] = u32(index * 256 * 256 * 256);
                     }
                     break;
 
                 case DR_GLITCH:
 
                     colorMap[pos] = opt.perturbation.color;
+                    indexMap[pos] = 0; // TODO
+                    indexMap[pos] = opt.perturbation.color | 0xFF000000;
                     break;
 
                 case DR_IN_BULB:
                 case DR_IN_CARDIOID:
 
                     colorMap[pos] = opt.areacheck.color;
+                    indexMap[pos] = 0; // TODO
+                    indexMap[pos] = opt.areacheck.color | 0xFF000000;
                     break;
 
                 case DR_PERIODIC:
 
                     colorMap[pos] = opt.periodcheck.color;
+                    indexMap[pos] = opt.periodcheck.color | 0xFF000000;
                     break;
 
                 case DR_ATTRACTED:
 
                     colorMap[pos] = opt.attractorcheck.color;
+                    indexMap[pos] = opt.attractorcheck.color | 0xFF000000;
                     break;
 
                 default:
 
                     colorMap[pos] = GpuColor::black;
+                    indexMap[pos] = GpuColor::black | 0xFF000000;
                     break;
             }
 
@@ -154,8 +172,8 @@ ColorMap::compute(const DrillMap &map)
     }
 
     colorMapTex.update((u8 *)colorMap.data());
+    indexMapTex.update((u8 *)indexMap.data());
     normalMapTex.update((u8 *)normalMap.data());
-
     progress.done();
 
     if (opt.flags.verbose) {

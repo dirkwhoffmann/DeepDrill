@@ -86,11 +86,15 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     // 1. Colorize
     illuminator.setUniform("lightDir", lightVector());
     illuminator.setUniform("image", map1.colorMapTex);
+    illuminator.setUniform("index", map1.indexMapTex);
+    illuminator.setUniform("palette", map1.paletteTex);
     illuminator.setUniform("normal", map1.normalMapTex);
     illuminator.apply();
 
     illuminator2.setUniform("lightDir", lightVector());
     illuminator2.setUniform("image", map2.colorMapTex);
+    illuminator2.setUniform("index", map2.indexMapTex);
+    illuminator2.setUniform("palette", map2.paletteTex);
     illuminator2.setUniform("normal", map2.normalMapTex);
     illuminator2.apply();
 

@@ -247,6 +247,7 @@
 		50BBF5072A4DD9B9007CDE42 /* spline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
 		50BBF5082A4DDA0D007CDE42 /* Dynamic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dynamic.cpp; sourceTree = "<group>"; };
 		50BBF5092A4DDA0D007CDE42 /* Dynamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dynamic.h; sourceTree = "<group>"; };
+		50BBF50D2A505EC4007CDE42 /* oldlambert.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = oldlambert.glsl; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Approximator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Approximator.h; sourceTree = "<group>"; };
 		50BEC6F0269486A800CCDFA8 /* Driller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driller.cpp; sourceTree = "<group>"; };
@@ -684,6 +685,7 @@
 				504FE2C72A1F4798007A3F04 /* bicubic.glsl */,
 				504FE2C82A1F47AB007A3F04 /* tricubic.glsl */,
 				50F8C41129EC3C97008A0B4C /* lambert.glsl */,
+				50BBF50D2A505EC4007CDE42 /* oldlambert.glsl */,
 				50B5C7772A29D55700E531CC /* relief.glsl */,
 				5071221B2A3101AA0013E655 /* normalmap.glsl */,
 				507122232A31D2C30013E655 /* workinprogress */,

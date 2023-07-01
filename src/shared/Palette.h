@@ -28,6 +28,11 @@ class Palette {
     std::vector <double> g;
     std::vector <double> b;
 
+public:
+
+    // Palette image
+    sf::Image palette;
+    
     // Overlay image
     sf::Image texture;
 
@@ -40,6 +45,7 @@ public:
 
     double overlayOpacity() const;
     u32 interpolateABGR(struct MapEntry &entry) const;
+    float colorIndex(struct MapEntry &entry) const;
     u32 readTextureImage(struct MapEntry &entry) const;
 };
 

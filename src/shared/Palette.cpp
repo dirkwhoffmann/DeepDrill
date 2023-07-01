@@ -49,11 +49,9 @@ Palette::Palette(const Options &opt) : opt(opt)
 void
 Palette::loadPaletteImage(const fs::path &path)
 {
-    sf::Image img;
+    if (path != "" && palette.loadFromFile(path)) {
 
-    if (path != "" && img.loadFromFile(path)) {
-
-        auto size = img.getSize();
+        auto size = palette.getSize();
 
         r.resize(size.x);
         g.resize(size.x);
@@ -61,7 +59,7 @@ Palette::loadPaletteImage(const fs::path &path)
 
         for (unsigned x = 0; x < size.x; x++) {
 
-            auto p = img.getPixel(x, 0);
+            auto p = palette.getPixel(x, 0);
 
             r[x] = p.r;
             g[x] = p.g;
@@ -110,6 +108,18 @@ Palette::interpolateABGR(struct MapEntry &entry) const
     auto mb = b1 + (b2 - b1) * frac;
 
     return  255 << 24 | u8(mb) << 16 | u8(mg) << 8 | u8(mr);
+}
+
+float
+Palette::colorIndex(struct MapEntry &entry) const
+{
+    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
+    sl *= opt.colors.scale;
+
+    // auto scaled = sl * size / (2 * 3.14159);
+    auto scaled = sl / (2 * 3.14159);
+
+    return fmod(scaled, 1.0);
 }
 
 u32

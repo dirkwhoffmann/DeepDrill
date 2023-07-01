@@ -32,9 +32,13 @@ class ColorMap {
 
 public:
         
-    // The colorized drill map
+    // The colorized drill map (DEPRECATED)
     std::vector<u32> colorMap;
     sf::Texture colorMapTex;
+
+    // The color index map (EXPERIMENTAL)
+    std::vector<u32> indexMap;
+    sf::Texture indexMapTex;
 
     // The normal map
     std::vector<u32> normalMap;
@@ -42,6 +46,7 @@ public:
 
     // The color palette
     Palette palette = Palette(opt);
+    sf::Texture paletteTex;
 
 
     //
