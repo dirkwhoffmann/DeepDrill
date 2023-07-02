@@ -40,6 +40,14 @@ public:
     std::vector<u32> indexMap;
     sf::Texture indexMapTex;
 
+    // The iteration count map (EXPERIMENTAL)
+    std::vector<u32> iterMap;
+    sf::Texture iterMapTex;
+
+    // The lognorm map (EXPERIMENTAL)
+    std::vector<float> lognormMap;
+    sf::Texture lognormMapTex;
+
     // The normal map
     std::vector<u32> normalMap;
     sf::Texture normalMapTex;

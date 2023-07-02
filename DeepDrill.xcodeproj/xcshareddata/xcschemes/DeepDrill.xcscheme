@@ -61,8 +61,8 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-m -o /Users/hoff/tmp/dd/project"
-            isEnabled = "NO">
+            argument = "SD.ini"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "experimental.ini"

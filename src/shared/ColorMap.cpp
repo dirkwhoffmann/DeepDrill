@@ -36,6 +36,8 @@ ColorMap::resize(isize w, isize h)
         height = h;
 
         colorMap.resize(width * height);
+        iterMap.resize(width * height);
+        lognormMap.resize(width * height);
         indexMap.resize(width * height);
         normalMap.resize(width * height);
 
@@ -46,6 +48,12 @@ ColorMap::resize(isize w, isize h)
         // Create textures
         if (!colorMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create color map texture");
+        }
+        if (!iterMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create iteration map texture");
+        }
+        if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create lognorm map texture");
         }
         if (!indexMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create color index map texture");
@@ -92,6 +100,9 @@ ColorMap::compute(const DrillMap &map)
             // Colorize image
             //
 
+            lognormMap[pos] = data.lognorm;
+            iterMap[pos] = data.last;
+
             switch (map.get(c).result) {
 
                 case DR_ESCAPED:
@@ -117,7 +128,6 @@ ColorMap::compute(const DrillMap &map)
                 case DR_GLITCH:
 
                     colorMap[pos] = opt.perturbation.color;
-                    indexMap[pos] = 0; // TODO
                     indexMap[pos] = opt.perturbation.color | 0xFF000000;
                     break;
 
@@ -125,7 +135,6 @@ ColorMap::compute(const DrillMap &map)
                 case DR_IN_CARDIOID:
 
                     colorMap[pos] = opt.areacheck.color;
-                    indexMap[pos] = 0; // TODO
                     indexMap[pos] = opt.areacheck.color | 0xFF000000;
                     break;
 
@@ -173,6 +182,8 @@ ColorMap::compute(const DrillMap &map)
     }
 
     colorMapTex.update((u8 *)colorMap.data());
+    iterMapTex.update((u8 *)iterMap.data());
+    lognormMapTex.update((u8 *)lognormMap.data());
     indexMapTex.update((u8 *)indexMap.data());
     normalMapTex.update((u8 *)normalMap.data());
     progress.done();

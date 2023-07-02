@@ -1,6 +1,10 @@
 // Sampler for the color index map
 uniform sampler2D index;
 
+// Sampler for the iteration count map and the lognorm map
+uniform sampler2D iter;
+uniform sampler2D lognorm;
+
 // Sampler for the color palette
 uniform sampler2D palette;
 
@@ -52,6 +56,33 @@ vec3 deriveColor(vec2 coord)
     }
 }
 
+// See
+// https://stackoverflow.com/questions/63827836/is-it-possible-to-do-a-rgba-to-float-and-back-round-trip-and-read-the-pixels-in/63830492#63830492
+float decode_float(vec4 v)
+{
+    vec4 bits = v * 255.0;
+    float sign = mix(-1.0, 1.0, step(bits[3], 128.0));
+    float expo = floor(mod(bits[3] + 0.1, 128.0)) * 2.0 +
+    floor((bits[2] + 0.1) / 128.0) - 127.0;
+    float sig = bits[0] +
+    bits[1] * 256.0 +
+    floor(mod(bits[2] + 0.1, 128.0)) * 256.0 * 256.0;
+    return sign * (1.0 + sig / 8388607.0) * pow(2.0, expo);
+}
+
+float decode_int(vec4 v)
+{
+    return 256.0 * (v.r + 256.0 * (v.g + 256.0 * (v.b + 256.0 * v.a)));
+}
+
+float compute_sl(vec2 coord)
+{
+    float count = decode_int(texture2D(iter, coord));
+    float lnorm = decode_float(texture2D(lognorm, coord));
+
+    return (count - log2(lnorm) + 4.0) * 0.075;
+}
+
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
@@ -87,6 +118,11 @@ void main()
         hsv.z *= (lambert * scale) + 1.0 - 0.5 * scale;
         final = hsv2rgb(hsv);
     }
+
+    // Experimental
+    float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
+    final = texture2D(palette, vec2(sl, 0.0)).xyz;
+
 
     gl_FragColor = gl_Color * vec4(final, 1.0);
 }
