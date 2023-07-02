@@ -1,11 +1,11 @@
 // Sampler for the color index map
-uniform sampler2D index;        // DEPRECATED
+// uniform sampler2D index;        // DEPRECATED
 
 // Sampler for the iteration count map and the lognorm map
 uniform sampler2D iter;
 uniform sampler2D lognorm;
 
-uniform sampler2D arg;          // DEPRECATED
+// uniform sampler2D arg;          // DEPRECATED
 
 // Sampler for the texture and the overlay image
 uniform sampler2D texture;
@@ -15,7 +15,7 @@ uniform sampler2D overlay;
 uniform sampler2D palette;
 
 // Sampler for the normal map
-uniform sampler2D normal;       // DEPRECATED
+// uniform sampler2D normal;       // DEPRECATED
 uniform sampler2D normalRe;
 uniform sampler2D normalIm;
 
@@ -23,19 +23,19 @@ uniform sampler2D normalIm;
 uniform vec3 lightDir;
 
 // Palette scaling factor
-// uniform float paletteStretch;
+uniform float paletteStretch;
 
 // Palette offset
-// uniform float paletteShift;
+uniform float paletteShift;
 
 // Texture image opacity
-// uniform float opacity;
+uniform float opacity;
 
 // Texture scaling factor
-// uniform float textureStretch;
+uniform float textureStretch;
 
 // Palette offset
-// uniform float textureShift;
+uniform float textureShift;
 
 // See
 // https://stackoverflow.com/questions/15095909/from-rgb-to-hsv-in-opengl-glsl
@@ -59,24 +59,6 @@ vec3 hsv2rgb(vec3 c)
     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
     vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
-
-vec3 deriveColor(vec2 coord)
-{
-    // Read entry from color index table
-    vec4 colorIndex = texture2D(index, coord);
-
-    if (colorIndex.a != 0.0) {
-
-        // The RGB value is hard-coded
-        return colorIndex.rgb;
-
-    } else {
-
-        // Get the RGB value from the color palette
-        coord.x = colorIndex.b + colorIndex.g / 256.0 + colorIndex.r / (256.0 * 256.0);
-        return texture2D(palette, coord).xyz;
-    }
 }
 
 // See
@@ -106,6 +88,12 @@ float compute_sl(vec2 coord)
     return (count - log2(lnorm) + 4.0) * 0.075;
 }
 
+vec3 deriveColor(vec2 coord)
+{
+    float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
+    return texture2D(palette, vec2(sl, 0.0)).rgb;
+}
+
 vec3 compute_tex_pixel(vec2 coord)
 {
     float PI = 3.141592653589793238;
@@ -114,7 +102,6 @@ vec3 compute_tex_pixel(vec2 coord)
     float nrmRe = decode_float(texture2D(normalRe, coord));
     float nrmIm = decode_float(texture2D(normalIm, coord));
 
-    // float arg = decode_float(texture2D(arg, coord));
     float arg = (atan(nrmIm, nrmRe) + PI) / (2.0 * PI);
 
     float px = mod(arg * 5.0, 1.0);
@@ -132,11 +119,13 @@ void main()
     //
 
     // Get diffuse color from palette image
-    float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
-    vec4 diffuseColor = texture2D(palette, vec2(sl, 0.0));
+    // float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
+    // vec4 diffuseColor = texture2D(palette, vec2(sl, 0.0));
+    vec3 diffuseColor = deriveColor(coord);
 
     // Mix with texture image
-    diffuseColor = mix(diffuseColor, vec4(compute_tex_pixel(coord), 1.0), 0.5);
+    // diffuseColor = mix(diffuseColor, vec4(compute_tex_pixel(coord), 1.0), 0.5);
+    diffuseColor = mix(diffuseColor, compute_tex_pixel(coord), 0.5); // TODO: Use 'opacity'
 
     // Get normal vector and light vector
     float nrmRe = decode_float(texture2D(normalRe, coord));
@@ -156,7 +145,7 @@ void main()
         float lambert = max(dot(N, L), 0.0);
 
         float lambertScale = 0.75;
-        vec3 hsv = rgb2hsv(diffuseColor.rgb);
+        vec3 hsv = rgb2hsv(diffuseColor);
         hsv.z *= (lambert * lambertScale) + 1.0 - 0.5 * lambertScale;
         final = hsv2rgb(hsv);
     }
