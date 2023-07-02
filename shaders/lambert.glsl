@@ -1,21 +1,17 @@
-// Sampler for the color index map
-// uniform sampler2D index;        // DEPRECATED
-
 // Sampler for the iteration count map and the lognorm map
 uniform sampler2D iter;
 uniform sampler2D lognorm;
 
-// uniform sampler2D arg;          // DEPRECATED
-
-// Sampler for the texture and the overlay image
+// Sampler for the texture image
 uniform sampler2D texture;
+
+// Sampler for the overlay image
 uniform sampler2D overlay;
 
 // Sampler for the color palette
 uniform sampler2D palette;
 
-// Sampler for the normal map
-// uniform sampler2D normal;       // DEPRECATED
+// Samplers for the normal map
 uniform sampler2D normalRe;
 uniform sampler2D normalIm;
 
@@ -119,13 +115,10 @@ void main()
     //
 
     // Get diffuse color from palette image
-    // float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
-    // vec4 diffuseColor = texture2D(palette, vec2(sl, 0.0));
     vec3 diffuseColor = deriveColor(coord);
 
     // Mix with texture image
-    // diffuseColor = mix(diffuseColor, vec4(compute_tex_pixel(coord), 1.0), 0.5);
-    diffuseColor = mix(diffuseColor, compute_tex_pixel(coord), 0.5); // TODO: Use 'opacity'
+    diffuseColor = mix(diffuseColor, compute_tex_pixel(coord), opacity);
 
     // Get normal vector and light vector
     float nrmRe = decode_float(texture2D(normalRe, coord));

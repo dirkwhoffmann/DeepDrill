@@ -74,6 +74,12 @@ Filter::setUniform(const string &key, float value)
 }
 
 void
+Filter::setUniform(const string &key, double value)
+{
+    if (hasUniform(key)) shader.setUniform(key, float(value));
+}
+
+void
 Filter::setUniform(const string &key, sf::Vector2f value)
 {
     if (hasUniform(key)) shader.setUniform(key, value);

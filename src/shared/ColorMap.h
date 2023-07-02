@@ -33,8 +33,8 @@ class ColorMap {
 public:
         
     // The colorized drill map (DEPRECATED)
-    std::vector<u32> colorMap;
-    sf::Texture colorMapTex;
+    // std::vector<u32> colorMap;
+    // sf::Texture colorMapTex;
 
     // The color index map (EXPERIMENTAL)
     std::vector<u32> indexMap;
@@ -55,14 +55,6 @@ public:
     // The lognorm map (EXPERIMENTAL)
     std::vector<float> lognormMap;
     sf::Texture lognormMapTex;
-
-    // The normal map (arg) (EXPERIMENTAL)
-    std::vector<float> argMap;
-    sf::Texture argMapTex;
-
-    // The normal map
-    std::vector<u32> normalMap;
-    sf::Texture normalMapTex;
 
     // The normal map
     std::vector<float> normalReMap;
