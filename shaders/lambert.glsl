@@ -5,11 +5,19 @@ uniform sampler2D index;
 uniform sampler2D iter;
 uniform sampler2D lognorm;
 
+uniform sampler2D arg;
+
+// Sampler for the texture and the overlay image
+uniform sampler2D texture;
+uniform sampler2D overlay;
+
 // Sampler for the color palette
 uniform sampler2D palette;
 
 // Sampler for the normal map
 uniform sampler2D normal;
+uniform sampler2D normalRe;
+uniform sampler2D normalIm;
 
 // Light direction
 uniform vec3 lightDir;
@@ -83,6 +91,33 @@ float compute_sl(vec2 coord)
     return (count - log2(lnorm) + 4.0) * 0.075;
 }
 
+vec3 compute_tex_pixel(vec2 coord)
+{
+    float PI = 3.141592653589793238;
+    float sl = compute_sl(coord);
+
+    /*
+    vec4 normalMap = texture2D(normal, coord);
+    float re = (normalMap.g * 256.0 + normalMap.r); // / (256.0 * 255.0);
+    float im = (normalMap.a * 256.0 + normalMap.b); //  / (256.0 * 255.0);
+     */
+    // vec3 N = normalMap * 2.0 - 1.0;
+
+    // float arg = (atan(im, re) + PI) / (2.0 * PI);
+
+    float nrmRe = decode_float(texture2D(normalRe, coord));
+    float nrmIm = decode_float(texture2D(normalIm, coord));
+
+    // float arg = decode_float(texture2D(arg, coord));
+    float arg = (atan(nrmIm, nrmRe) + PI) / (2.0 * PI);
+
+    float px = mod(arg * 5.0, 1.0);
+    float py = mod(sl * 5.0, 1.0);
+
+    return vec3(texture2D(texture, vec2(px,py)).xyz);
+//    return vec3(texture2D(texture, vec2(px,py)).xyz);
+}
+
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
@@ -123,6 +158,7 @@ void main()
     float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
     final = texture2D(palette, vec2(sl, 0.0)).xyz;
 
+    final = mix(final, compute_tex_pixel(coord), 0.5);
 
     gl_FragColor = gl_Color * vec4(final, 1.0);
 }

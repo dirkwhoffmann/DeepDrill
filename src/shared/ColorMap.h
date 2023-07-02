@@ -44,13 +44,31 @@ public:
     std::vector<u32> iterMap;
     sf::Texture iterMapTex;
 
+    // The overlay map (EXPERIMENTAL)
+    std::vector<u32> overlayMap;
+    sf::Texture overlayMapTex;
+
+    // The texture map (EXPERIMENTAL)
+    std::vector<u32> textureMap;
+    sf::Texture textureMapTex;
+
     // The lognorm map (EXPERIMENTAL)
     std::vector<float> lognormMap;
     sf::Texture lognormMapTex;
 
+    // The normal map (arg) (EXPERIMENTAL)
+    std::vector<float> argMap;
+    sf::Texture argMapTex;
+
     // The normal map
     std::vector<u32> normalMap;
     sf::Texture normalMapTex;
+
+    // The normal map
+    std::vector<float> normalReMap;
+    sf::Texture normalReMapTex;
+    std::vector<float> normalImMap;
+    sf::Texture normalImMapTex;
 
     // The color palette
     Palette palette = Palette(opt);
