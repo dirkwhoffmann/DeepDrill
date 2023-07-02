@@ -32,14 +32,6 @@ class ColorMap {
 
 public:
         
-    // The colorized drill map (DEPRECATED)
-    // std::vector<u32> colorMap;
-    // sf::Texture colorMapTex;
-
-    // The color index map (EXPERIMENTAL)
-    std::vector<u32> indexMap;
-    sf::Texture indexMapTex;
-
     // The iteration count map (EXPERIMENTAL)
     std::vector<u32> iterMap;
     sf::Texture iterMapTex;

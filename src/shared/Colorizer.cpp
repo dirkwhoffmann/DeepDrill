@@ -51,7 +51,6 @@ Colorizer::draw(const ColorMap &map)
         illuminator.setUniform("overlay", map.overlayMapTex);
         illuminator.setUniform("texture", map.textureMapTex);
         illuminator.setUniform("lognorm", map.lognormMapTex);
-        illuminator.setUniform("index", map.indexMapTex);
         illuminator.setUniform("palette", map.paletteTex);
         illuminator.setUniform("normalRe", map.normalReMapTex);
         illuminator.setUniform("normalIm", map.normalImMapTex);
@@ -96,7 +95,6 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     illuminator.setUniform("overlay", map1.overlayMapTex);
     illuminator.setUniform("texture", map1.textureMapTex);
     illuminator.setUniform("lognorm", map1.lognormMapTex);
-    illuminator.setUniform("index", map1.indexMapTex);
     illuminator.setUniform("palette", map1.paletteTex);
     illuminator.setUniform("normalRe", map1.normalReMapTex);
     illuminator.setUniform("normalIm", map1.normalImMapTex);
@@ -108,7 +106,6 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     illuminator2.setUniform("overlay", map2.overlayMapTex);
     illuminator2.setUniform("texture", map2.textureMapTex);
     illuminator2.setUniform("lognorm", map2.lognormMapTex);
-    illuminator2.setUniform("index", map2.indexMapTex);
     illuminator2.setUniform("palette", map2.paletteTex);
     illuminator2.setUniform("normalRe", map2.normalReMapTex);
     illuminator2.setUniform("normalIm", map2.normalImMapTex);

@@ -39,7 +39,6 @@ ColorMap::resize(isize w, isize h)
         overlayMap.resize(width * height);
         textureMap.resize(width * height);
         lognormMap.resize(width * height);
-        indexMap.resize(width * height);
         normalReMap.resize(width * height);
         normalImMap.resize(width * height);
 
@@ -61,9 +60,6 @@ ColorMap::resize(isize w, isize h)
         }
         if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create lognorm map texture");
-        }
-        if (!indexMapTex.create(unsigned(width), unsigned(height))) {
-            throw Exception("Can't create color index map texture");
         }
         if (!normalReMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normal(re) map texture");
@@ -129,39 +125,33 @@ ColorMap::compute(const DrillMap &map)
 
                         auto index = palette.colorIndex(data);
                         assert(index >= 0.0 && index <= 1.0);
-                        indexMap[pos] = u32(index * 256 * 256 * 256);
                         overlayMap[pos] = 0;
                     }
                     break;
 
                 case DR_GLITCH:
 
-                    indexMap[pos] = opt.perturbation.color | 0xFF000000;
                     overlayMap[pos] = opt.perturbation.color | 0xFF000000;
                     break;
 
                 case DR_IN_BULB:
                 case DR_IN_CARDIOID:
 
-                    indexMap[pos] = opt.areacheck.color | 0xFF000000;
                     overlayMap[pos] = opt.areacheck.color | 0xFF000000;
                     break;
 
                 case DR_PERIODIC:
 
-                    indexMap[pos] = opt.periodcheck.color | 0xFF000000;
                     overlayMap[pos] = opt.periodcheck.color | 0xFF000000;
                     break;
 
                 case DR_ATTRACTED:
 
-                    indexMap[pos] = opt.attractorcheck.color | 0xFF000000;
                     overlayMap[pos] = opt.attractorcheck.color | 0xFF000000;
                     break;
 
                 default:
 
-                    indexMap[pos] = GpuColor::black | 0xFF000000;
                     overlayMap[pos] = GpuColor::black | 0xFF000000;
                     break;
             }
@@ -190,7 +180,6 @@ ColorMap::compute(const DrillMap &map)
     iterMapTex.update((u8 *)iterMap.data());
     overlayMapTex.update((u8 *)overlayMap.data());
     lognormMapTex.update((u8 *)lognormMap.data());
-    indexMapTex.update((u8 *)indexMap.data());
     normalReMapTex.update((u8 *)normalReMap.data());
     normalImMapTex.update((u8 *)normalImMap.data());
     progress.done();
