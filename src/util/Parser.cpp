@@ -231,7 +231,6 @@ Parser::parse(const string &value, DynamicFloat &parsed)
     std::vector<float> xn;
     std::vector<float> yn;
 
-    Time t;
     double y;
 
     if (auto pos1 = value.find("/"); pos1 == std::string::npos) {
@@ -254,12 +253,21 @@ Parser::parse(const string &value, DynamicFloat &parsed)
                 auto first = it.substr(0, pos);
                 auto last = it.substr(pos + 1, std::string::npos);
 
-                // printf("'%s' / '%s'\n", first.c_str(), last.c_str());
-                Parser::parse(first, t);
-                Parser::parse(last, y);
+                if (first.find(":") != std::string::npos) {
 
-                // printf("%f -> %f\n", t.asSeconds(), y);
-                xn.push_back(t.asSeconds());
+                    // Time is gives as a time stamp
+                    Time t; Parser::parse(first, t);
+                    xn.push_back(t.asSeconds());
+
+                } else {
+
+                    // Time is given as a frame number
+                    isize f; Parser::parse(first, f);
+                    xn.push_back(double(f) / DynamicFloat::fps);
+
+                }
+
+                Parser::parse(last, y);
                 yn.push_back(float(y));
 
             } else {
@@ -283,15 +291,18 @@ void
 Parser::parse(const string &value, Time &parsed)
 {
     if (auto pos = value.find(":"); pos != std::string::npos) {
-        
-        auto mm = value.substr(0, pos);
-        auto ss = value.substr(pos + 1, std::string::npos);
-        
-        auto m = std::stol(mm);
-        auto s = std::stol(ss);
-        
+
+        long m, s;
+
+        parse(value.substr(0, pos), m);
+        parse(value.substr(pos + 1, std::string::npos), s);
+
         parsed = Time::seconds(i64(60 * m + s));
-    } 
+
+    } else {
+
+        throw Exception("Invalid time specification: " + value);
+    }
 }
 
 void

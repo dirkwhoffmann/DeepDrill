@@ -19,7 +19,7 @@
 #include "Animated.h"
 #include "DrillMap.h"
 #include "ColorMap.h"
-#include "Colorizer.h"
+#include "ImageMaker.h"
 #include "Filter.h"
 #include "ProgressIndicator.h"
 
@@ -50,7 +50,7 @@ class Zoomer {
     std::future<bool> loadResult[4];
 
     // Colorizer for converting the drill maps into images
-    Colorizer colorizer = Colorizer(opt);
+    ImageMaker imageMaker = ImageMaker(opt);
 
     // The video recorder
     Recorder recorder = Recorder(opt);

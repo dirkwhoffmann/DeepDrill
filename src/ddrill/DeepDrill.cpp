@@ -84,8 +84,8 @@ DeepDrill::run()
     // Initialize the drill map
     drillMap.resize();
 
-    // Initialize the colorizer
-    colorizer.init(opt.image.illuminator, opt.image.scaler);
+    // Initialize the imageMaker
+    imageMaker.init(opt.image.illuminator, opt.image.scaler);
 
     if (!opt.getInputs(Format::MAP).empty()) {
 
@@ -135,9 +135,8 @@ DeepDrill::generateOutputs()
         if (AssetManager::isImageFormat(outputFormat)) {
 
             // Create and save image file
-            // colorizer.init(opt.image.illuminator, opt.image.scaler);
-            colorizer.draw(drillMap);
-            colorizer.save(it, outputFormat);
+            imageMaker.draw(drillMap);
+            imageMaker.save(it, outputFormat);
 
         } else {
 

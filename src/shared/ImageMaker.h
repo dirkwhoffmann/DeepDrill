@@ -19,7 +19,7 @@
 
 namespace dd {
 
-class Colorizer {
+class ImageMaker {
 
     // Configuration options
     const struct Options &opt;
@@ -39,8 +39,8 @@ class Colorizer {
 
 public:
 
-    Colorizer(const Options &opt) : opt(opt) { };
-    ~Colorizer() { };
+    ImageMaker(const Options &opt) : opt(opt) { };
+    ~ImageMaker() { };
 
     void init(const string &illuminationFilter, const string &scalingFilter);
 

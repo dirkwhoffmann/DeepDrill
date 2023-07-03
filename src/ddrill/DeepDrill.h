@@ -15,7 +15,7 @@
 #include "Application.h"
 #include "DrillMap.h"
 #include "ColorMap.h"
-#include "Colorizer.h"
+#include "ImageMaker.h"
 
 namespace dd {
 
@@ -24,8 +24,8 @@ class DeepDrill : public Application {
     // The drill map
     DrillMap drillMap = DrillMap(opt);
 
-    // Colorizer for converting the drill map into an image
-    Colorizer colorizer = Colorizer(opt);
+    // Image maker for converting the drill map into an image
+    ImageMaker imageMaker = ImageMaker(opt);
 
 
     //

@@ -9,7 +9,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "Colorizer.h"
+#include "ImageMaker.h"
 #include "Exception.h"
 #include "ProgressIndicator.h"
 #include "DrillMap.h"
@@ -17,7 +17,7 @@
 namespace dd {
 
 void
-Colorizer::init(const string &illuminationFilter, const string &scalingFilter)
+ImageMaker::init(const string &illuminationFilter, const string &scalingFilter)
 {
     // Only initialize once
     assert(illuminator.getSize().x == 0);
@@ -33,14 +33,14 @@ Colorizer::init(const string &illuminationFilter, const string &scalingFilter)
 }
 
 void
-Colorizer::draw(DrillMap &map)
+ImageMaker::draw(DrillMap &map)
 {
     auto &colorMap = map.colorize();
     draw(colorMap);
 }
 
 void
-Colorizer::draw(const ColorMap &map)
+ImageMaker::draw(const ColorMap &map)
 {
     {
         ProgressIndicator progress("Running GPU shaders");
@@ -83,7 +83,7 @@ Colorizer::draw(const ColorMap &map)
 }
 
 void
-Colorizer::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
+ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
     auto &colorMap1 = map1.colorize();
     auto &colorMap2 = map2.colorize();
@@ -91,7 +91,7 @@ Colorizer::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 }
 
 void
-Colorizer::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
+ImageMaker::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
 {
     // 1. Colorize
     illuminator.setUniform("lightDir", lightVector(frame));
@@ -137,7 +137,7 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float z
 }
 
 sf::Vector3f
-Colorizer::lightVector(isize frame)
+ImageMaker::lightVector(isize frame)
 {
     auto a = opt.lighting.alpha(frame) * 3.14159 / 180.0;
     auto b = opt.lighting.beta(frame) * 3.14159 / 180.0;
@@ -150,7 +150,7 @@ Colorizer::lightVector(isize frame)
 }
 
 void
-Colorizer::save(const string &path, Format format) const
+ImageMaker::save(const string &path, Format format) const
 {
     {
         ProgressIndicator progress("Saving image");

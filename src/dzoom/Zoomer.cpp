@@ -51,8 +51,8 @@ Zoomer::init()
     // Preview in real-time if no video is recorded
     window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
 
-    // Initialize the colorizer
-    colorizer.init(opt.image.illuminator, opt.video.scaler);
+    // Initialize the imageMaker
+    imageMaker.init(opt.image.illuminator, opt.video.scaler);
 }
 
 void
@@ -204,14 +204,14 @@ Zoomer::draw()
     renderClock.go();
 
     // Colorize
-    colorizer.draw(drillMap[slotNr(keyframe + 0)].colorMap,
+    imageMaker.draw(drillMap[slotNr(keyframe + 0)].colorMap,
                    drillMap[slotNr(keyframe + 1)].colorMap,
                    frame,
                    float(zoom.current));
 
     // Display the result
     window.clear();
-    window.draw(colorizer.getRect());
+    window.draw(imageMaker.getRect());
     window.display();
 
     renderClock.stop();
@@ -223,7 +223,7 @@ Zoomer::record()
     if (recordMode) {
 
         recordClock.go();
-        recorder.record(colorizer.getImage());
+        recorder.record(imageMaker.getImage());
         recordClock.stop();
     }
 }
