@@ -14,6 +14,8 @@
 #include "Logger.h"
 #include "Parser.h"
 
+// #include <bit.h>
+
 namespace dd {
 
 int
@@ -26,6 +28,9 @@ Application::main(int argc, char *argv[])
         log::cout << appName() << " " << version();
         log::cout << " - (C)opyright Dirk W. Hoffmann";
         log::cout << log::endl << log::endl;
+
+        // Check if this system is capable of running the app
+        systemCheck();
 
         // Perform app specific initializations
         initialize();
@@ -64,6 +69,14 @@ Application::main(int argc, char *argv[])
 
     log::cout << log::vspace << "Total time: " << stopWatch.stop() << log::endl;
     return 0;
+}
+
+void
+Application::systemCheck()
+{
+    if constexpr (std::endian::native != std::endian::little) {
+        throw Exception("A little endian system is required to run the application.");
+    }
 }
 
 string

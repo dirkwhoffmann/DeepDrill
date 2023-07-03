@@ -39,6 +39,9 @@ public:
     // Main entry point
     int main(int argc, char *argv[]);
 
+    // Performs some basic system checks on startup
+    void systemCheck();
+
     // Returns a version string
     static string version();
     static string version(isize major, isize minor, isize subminor, isize beta);
