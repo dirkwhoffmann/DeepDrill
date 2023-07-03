@@ -38,7 +38,7 @@ public:
 
 private:
 
-    const char *appName() const { return "DeepDrill"; }
+    const char *appName() const { return "DeepCDrill"; }
     const char *optstring() const;
     const option *longopts() const;
     bool isAcceptedInputFormat(Format format) const;

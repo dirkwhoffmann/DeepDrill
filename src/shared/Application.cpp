@@ -74,7 +74,9 @@ Application::main(int argc, char *argv[])
 void
 Application::systemCheck()
 {
-    if constexpr (std::endian::native != std::endian::little) {
+    constexpr bool littleEndian = std::endian::native == std::endian::little;
+
+    if constexpr (!littleEndian) {
         throw Exception("A little endian system is required to run the application.");
     }
 }
