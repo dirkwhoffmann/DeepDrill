@@ -37,7 +37,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Image keys
     defaults["image.width"] = "1920";
     defaults["image.height"] = "1080";
-    defaults["image.depth"] = "0";
     defaults["image.illuminator"] = "lambert.glsl";
     defaults["image.scaler"] = "bicubic.glsl";
 
@@ -46,18 +45,26 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["video.keyframes"] = "0";
 //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
 //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
-    defaults["video.velocity"] = "0.5";
+    defaults["video.velocity"] = "1.0";
     defaults["video.bitrate"] = "8000";
     defaults["video.scaler"] = "tricubic.glsl";
 
-    // Color keys
-    defaults["colors.mode"] = "default";
-    defaults["colors.palette"] = "";
-    defaults["colors.texture"] = "";
-    defaults["colors.scale"] = "1.0";
-    defaults["colors.opacity"] = "0.5";
-    defaults["colors.alpha"] = "45";
-    defaults["colors.beta"] = "45";
+    // Palette keys
+    defaults["palette.image"] = "";
+    defaults["palette.mode"] = "default";
+    defaults["palette.scale"] = "1.0";
+    defaults["palette.offset"] = "0.0";
+
+    // Texture keys
+    defaults["texture.image"] = "";
+    defaults["texture.opacity"] = "0.5";
+    defaults["texture.scale"] = "1.0";
+    defaults["texture.offset"] = "0.0";
+
+    // Lighting keys
+    defaults["lighting.enable"] = "no";
+    defaults["lighting.alpha"] = "45";
+    defaults["lighting.beta"] = "45";
 
     // Perturbation keys
     defaults["perturbation.enable"] = "yes";
@@ -183,10 +190,6 @@ Options::parse(string key, string value)
                 throw Exception("Height must be dividable by 2");
             }
 
-        } else if (key == "image.depth") {
-
-            Parser::parse(value, image.depth, 0, 1);
-
         } else if (key == "image.illuminator") {
 
             image.illuminator = assets.findAsset(value, Format::GLSL);
@@ -215,45 +218,53 @@ Options::parse(string key, string value)
 
             video.scaler = assets.findAsset(value, Format::GLSL);
 
-        } else if (key == "colors.mode") {
-
-            Parser::parse(value, colors.mode);
-
-        } else if (key == "colors.palette") {
+        } else if (key == "palette.image") {
 
             if (value != "") {
-                colors.palette = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+                palette.image = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
             }
 
-        } else if (key == "colors.texture") {
+        } else if (key == "palette.mode") {
+
+            Parser::parse(value, palette.mode);
+
+        } else if (key == "palette.scale") {
+
+            Parser::parse(value, palette.scale);
+
+        } else if (key == "palette.offset") {
+
+            Parser::parse(value, palette.offset);
+
+        } else if (key == "texture.image") {
 
             if (value != "") {
-                colors.texture = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+                texture.image = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
             }
 
-        } else if (key == "colors.scale") {
+        } else if (key == "texture.opacity") {
 
-            Parser::parse(value, colors.scale);
+            Parser::parse(value, texture.opacity);
 
-        } else if (key == "colors.opacity") {
+        } else if (key == "texture.scale") {
 
-            Parser::parse(value, colors.opacity, 0.0, 1.0);
+            Parser::parse(value, texture.scale);
 
-        } else if (key == "colors.alpha") {
+        } else if (key == "texture.offset") {
 
-            Parser::parse(value, colors.alpha);
+            Parser::parse(value, texture.offset);
 
-            if (colors.alpha < 0.0 || colors.alpha >= 360.0) {
-                throw Exception("Angle out of range");
-            }
+        } else if (key == "lighting.enable") {
 
-        } else if (key == "colors.beta") {
+            Parser::parse(value, lighting.enable);
 
-            Parser::parse(value, colors.beta);
+        } else if (key == "lighting.alpha") {
 
-            if (colors.beta < 0.0 || colors.beta >= 360.0) {
-                throw Exception("Angle out of range");
-            }
+            Parser::parse(value, lighting.alpha, 0.0, 360.0);
+
+        } else if (key == "lighting.beta") {
+
+            Parser::parse(value, lighting.beta, 0.0, 360.0);
 
         } else if (key == "areacheck.enable") {
 

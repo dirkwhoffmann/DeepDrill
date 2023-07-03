@@ -95,7 +95,9 @@ Maker::generateProjectFile()
     writeLocationSection(os);
     writeMapSection(os);
     writeImageSection(os);
-    writeColorsSection(os);
+    writePaletteSection(os);
+    writeTextureSection(os);
+    writeLightingSection(os);
     writeVideoSection(os);
 
     copy(temp, projectDir / AssetManager::iniFile());
@@ -136,7 +138,9 @@ Maker::generateIniFile(isize nr, const mpf_class &zoom)
     writeLocationSection(os);
     writeMapSection(os);
     writeImageSection(os);
-    writeColorsSection(os);
+    writePaletteSection(os);
+    writeTextureSection(os);
+    writeLightingSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
     writeAreacheckSection(os);
@@ -176,21 +180,40 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
-    os << "depth = " << opt.image.depth << std::endl;
     os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;
 }
 
 void
-Maker::writeColorsSection(std::ofstream &os)
+Maker::writePaletteSection(std::ofstream &os)
 {
-    os << "[colors]" << std::endl;
-    os << "mode = " << opt.keys["colors.mode"] << std::endl;
-    os << "palette = " << opt.keys["colors.palette"] << std::endl;
-    os << "scale = " << opt.keys["colors.scale"] << std::endl;
-    os << "alpha = " << opt.keys["colors.alpha"] << std::endl;
-    os << "beta = " << opt.keys["colors.beta"] << std::endl;
+    os << "[palette]" << std::endl;
+    os << "image = " << opt.keys["palette.image"] << std::endl;
+    os << "mode = " << opt.keys["palette.mode"] << std::endl;
+    os << "scale = " << opt.keys["palette.scale"] << std::endl;
+    os << "offset = " << opt.keys["palette.offset"] << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writeTextureSection(std::ofstream &os)
+{
+    os << "[texture]" << std::endl;
+    os << "image = " << opt.keys["texture.image"] << std::endl;
+    os << "opacity = " << opt.keys["texture.opacity"] << std::endl;
+    os << "scale = " << opt.keys["texture.scale"] << std::endl;
+    os << "offset = " << opt.keys["texture.offset"] << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writeLightingSection(std::ofstream &os)
+{
+    os << "[lighting]" << std::endl;
+    os << "enable = " << opt.keys["lighting.enable"] << std::endl;
+    os << "alpha = " << opt.keys["lighting.alpha"] << std::endl;
+    os << "beta = " << opt.keys["lighting.beta"] << std::endl;
     os << std::endl;
 }
 

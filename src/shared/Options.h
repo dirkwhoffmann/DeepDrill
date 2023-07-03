@@ -106,7 +106,7 @@ struct Options {
         isize height;
 
         // Indicates if an illumination effect should be applied
-        isize depth;
+        // isize depth;
 
         // Path to the illumination filter
         fs::path illuminator;
@@ -137,30 +137,46 @@ struct Options {
 
     struct {
 
+        // Path to the palette image
+        fs::path image;
+
         // Coloring mode
         ColoringMode mode;
-        
-        // Path to the palette image
-        fs::path palette;
+
+        // Scaling and shifting
+        double scale;
+        double offset;
+
+    } palette;
+
+    struct {
 
         // Path to the texture image
-        fs::path texture;
-
-        // Scaling factor
-        double scale;
+        fs::path image;
 
         // Texture opacity
         double opacity;
 
-        // Light vector direction
+        // Scaling and shifting
+        double scale;
+        double offset;
+
+    } texture;
+
+    struct {
+
+        // Indicates if a spatial images shall be computed
+        bool enable;
+
+        // Direction of the light vector
         double alpha;
         double beta;
 
-    } colors;
-    
+    } lighting;
+
     struct {
 
-        // Indicates if perturbation should be utilized
+        // Indicates if perturbation shall be utilized
         bool enable;
 
         // Tolerance used for glitch detection
@@ -179,7 +195,7 @@ struct Options {
     
     struct {
 
-        // Indicates if series approximation should be utilized
+        // Indicates if series approximation shall be utilized
         bool enable;
 
         // Number of coefficients used in series approximation

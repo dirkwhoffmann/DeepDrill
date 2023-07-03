@@ -43,8 +43,8 @@ ColorMap::resize(isize w, isize h)
         normalImMap.resize(width * height);
 
         // Load palette images
-        palette.loadPaletteImage(opt.colors.palette);
-        palette.loadTextureImage(opt.colors.texture);
+        palette.loadPaletteImage(opt.palette.image);
+        palette.loadTextureImage(opt.texture.image);
 
         if (!iterMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create iteration map texture");
@@ -77,10 +77,9 @@ ColorMap::resize(isize w, isize h)
 void
 ColorMap::compute(const DrillMap &map)
 {
-    switch (opt.colors.mode) {
+    switch (opt.palette.mode) {
 
         case ColoringMode::Default:     compute <ColoringMode::Default> (map); break;
-        // case ColoringMode::Textured:    compute <ColoringMode::Textured> (map); break;
     }
 }
 
@@ -146,7 +145,7 @@ ColorMap::compute(const DrillMap &map)
             // Generate normal map
             //
 
-            if (opt.image.depth == 1 && map.get(c).result == DR_ESCAPED) {
+            if (opt.lighting.enable && map.get(c).result == DR_ESCAPED) {
 
                 normalReMap[pos] = float(data.normal.re);
                 normalImMap[pos] = float(data.normal.im);
@@ -175,9 +174,9 @@ ColorMap::compute(const DrillMap &map)
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Palette: ");
-        log::cout << (opt.colors.palette != "" ? opt.colors.palette : "not specified") << log::endl;
+        log::cout << (opt.palette.image != "" ? opt.palette.image : "not specified") << log::endl;
         log::cout << log::ralign("Texture: ");
-        log::cout << (opt.colors.texture != "" ? opt.colors.texture : "not specified") << log::endl;
+        log::cout << (opt.texture.image != "" ? opt.texture.image : "not specified") << log::endl;
         log::cout << log::vspace;
     }
 }

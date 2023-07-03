@@ -63,7 +63,7 @@ Driller::drill()
         log::cout << (opt.drillmap.depth ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::ralign("Image size: ");
         log::cout << opt.image.width << " x " << opt.image.height;
-        log::cout << (opt.image.depth ? " (3D)" : " (2D)") << log::endl;
+        log::cout << (opt.lighting.enable ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::endl;
         log::cout << log::ralign("Perturbation: ");
         log::cout << opt.perturbation.enable << log::endl;
