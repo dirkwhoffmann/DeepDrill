@@ -17,7 +17,7 @@
 
 namespace dd {
 
-struct Dynamic {
+template <class T> struct Dynamic {
 
     std::vector<double> xn;
     std::vector<double> yn;
@@ -30,15 +30,19 @@ struct Dynamic {
     //
 
     Dynamic() { };
-    void init(std::vector <double> xn, std::vector <double> yn);
+    void init(std::vector <T> xn, std::vector <T> yn);
 
 
     //
     // Operators
     //
 
-    friend std::ostream& operator<<(std::ostream& os, const Dynamic& d);
-    double operator() (double x) const;
+    friend std::ostream& operator<<(std::ostream& os, const Dynamic<T>& d) { return d.print(os); }
+    T operator() (double x) const;
+
+private:
+
+    std::ostream& print(std::ostream& os) const;
 };
 
 }

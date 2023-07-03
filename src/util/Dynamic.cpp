@@ -14,11 +14,11 @@
 
 namespace dd {
 
-void
-Dynamic::init(std::vector <double> vxn, std::vector <double> vyn)
+template <class T> void
+Dynamic<T>::init(std::vector <T> vxn, std::vector <T> vyn)
 {
-    this->xn = vxn;
-    this->yn = vyn;
+    for (const auto &it : vxn) xn.push_back(double(it));
+    for (const auto &it : vyn) yn.push_back(double(it));
 
     if (xn.size() >= 3) {
         
@@ -26,29 +26,38 @@ Dynamic::init(std::vector <double> vxn, std::vector <double> vyn)
     }
 }
 
-std::ostream &
-operator<<(std::ostream& os, const Dynamic& d)
+template <class T> std::ostream&
+Dynamic<T>::print(std::ostream& os) const
 {
-    if (d.yn.size() == 1) {
+    if (yn.size() == 1) {
 
-        os << d.yn[0];
+        os << (T)yn[0];
 
     } else {
 
-        for (usize i = 0; i < d.xn.size(); i++) {
+        for (usize i = 0; i < xn.size(); i++) {
 
             if (i) os << ", ";
-            os << d.xn[i] << '/' << d.yn[i];
+            os << (T)xn[i] << '/' << (T)yn[i];
         }
     }
 
     return os;
 }
 
-double
-Dynamic::operator() (double x) const
+template <class T> T
+Dynamic<T>::operator() (double x) const
 {
-    return yn.size() == 1 ? yn[0] : spline(x);
+    return yn.size() == 1 ? (T)yn[0] : (T)spline(x);
 }
 
+//
+// Instantiate template functions
+//
+
+template void Dynamic<float>::init(std::vector <float>, std::vector <float>);
+template float Dynamic<float>::operator() (double) const;
+template std::ostream& Dynamic<float>::print(std::ostream &) const;
+
 }
+

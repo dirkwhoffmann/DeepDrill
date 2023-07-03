@@ -125,7 +125,7 @@ struct Options {
         isize keyframes;
 
         // Zoom velocity
-        Dynamic velocity;
+        Dynamic<float> velocity;
 
         // Bitrate
         isize bitrate;

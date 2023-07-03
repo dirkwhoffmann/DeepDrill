@@ -226,10 +226,10 @@ Parser::parse(const string &value, ColoringMode &parsed)
 }
 
 void
-Parser::parse(const string &value, Dynamic &parsed)
+Parser::parse(const string &value, Dynamic<float> &parsed)
 {
-    std::vector<double> xn;
-    std::vector<double> yn;
+    std::vector<float> xn;
+    std::vector<float> yn;
 
     Time t;
     double y;
@@ -260,7 +260,7 @@ Parser::parse(const string &value, Dynamic &parsed)
 
                 printf("%f -> %f\n", t.asSeconds(), y);
                 xn.push_back(t.asSeconds());
-                yn.push_back(y);
+                yn.push_back(float(y));
 
             } else {
                 throw Exception("Invalid spline pair: '" + it + "'");

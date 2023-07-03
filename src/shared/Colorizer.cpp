@@ -54,7 +54,7 @@ Colorizer::draw(const ColorMap &map)
         illuminator.setUniform("palette", map.paletteTex);
         illuminator.setUniform("normalRe", map.normalReMapTex);
         illuminator.setUniform("normalIm", map.normalImMapTex);
-        illuminator.setUniform("opacity", opt.colors.opacity);
+        illuminator.setUniform("opacity", opt.colors.texture == "" ? 0.0 : opt.colors.opacity);
         illuminator.apply();
 
         // 2. Scale down
@@ -98,7 +98,8 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     illuminator.setUniform("palette", map1.paletteTex);
     illuminator.setUniform("normalRe", map1.normalReMapTex);
     illuminator.setUniform("normalIm", map1.normalImMapTex);
-    illuminator.setUniform("opacity", opt.colors.opacity);
+    illuminator.setUniform("opacity", opt.colors.texture == "" ? 0.0 : opt.colors.opacity);
+
     illuminator.apply();
 
     illuminator2.setUniform("lightDir", lightVector());
@@ -109,7 +110,7 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     illuminator2.setUniform("palette", map2.paletteTex);
     illuminator2.setUniform("normalRe", map2.normalReMapTex);
     illuminator2.setUniform("normalIm", map2.normalImMapTex);
-    illuminator2.setUniform("opacity", opt.colors.opacity);
+    illuminator2.setUniform("opacity", opt.colors.texture == "" ? 0.0 : opt.colors.opacity);
     illuminator2.apply();
 
     // 2. Scale down

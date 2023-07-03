@@ -19,7 +19,7 @@
 
 namespace dd {
 
- void
+void
 Palette::loadPaletteImage(const fs::path &path)
 {
     if (path == "") {
