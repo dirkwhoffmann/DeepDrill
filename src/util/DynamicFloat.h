@@ -17,7 +17,7 @@
 
 namespace dd {
 
-template <class T> struct Dynamic {
+struct DynamicFloat {
 
     static double fps;
 
@@ -31,17 +31,17 @@ template <class T> struct Dynamic {
     // Initializing
     //
 
-    Dynamic() { };
-    void init(std::vector <T> xn, std::vector <T> yn);
+    DynamicFloat() { };
+    void init(std::vector<float> xn, std::vector<float> yn);
 
 
     //
     // Operators
     //
 
-    friend std::ostream& operator<<(std::ostream& os, const Dynamic<T>& d) { return d.print(os); }
-    T operator() (double x) const;
-    T operator() (isize x) const;
+    friend std::ostream& operator<<(std::ostream& os, const DynamicFloat& d) { return d.print(os); }
+    float operator() (double x) const;
+    float operator() (isize x) const;
 
 private:
 

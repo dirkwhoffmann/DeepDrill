@@ -6,7 +6,7 @@ target_sources(deepdrill PRIVATE
 
 Chrono.cpp
 Colors.cpp
-Dynamic.cpp
+DynamicFloat.cpp
 Exception.cpp
 IO.cpp
 Parser.cpp
@@ -19,7 +19,7 @@ target_sources(deepmake PRIVATE
 
 Chrono.cpp
 Colors.cpp
-Dynamic.cpp
+DynamicFloat.cpp
 Exception.cpp
 IO.cpp
 Parser.cpp
@@ -31,7 +31,7 @@ target_sources(deepzoom PRIVATE
 Animated.cpp
 Chrono.cpp
 Colors.cpp
-Dynamic.cpp
+DynamicFloat.cpp
 Exception.cpp
 IO.cpp
 Parser.cpp

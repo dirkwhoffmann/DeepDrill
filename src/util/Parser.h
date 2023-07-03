@@ -45,7 +45,7 @@ public:
     static void parse(const string &value, mpf_class &parsed);
     static void parse(const string &value, GpuColor &parsed);
     static void parse(const string &value, ColoringMode &parsed);
-    static void parse(const string &value, Dynamic<float> &parsed);
+    static void parse(const string &value, DynamicFloat &parsed);
     static void parse(const string &value, Time &parsed);
     static void parse(const string &value, std::pair<isize,isize> &parsed);
 

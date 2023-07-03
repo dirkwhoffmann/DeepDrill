@@ -15,7 +15,7 @@
 #include "Types.h"
 #include "AssetManager.h"
 #include "Colors.h"
-#include "Dynamic.h"
+#include "DynamicFloat.h"
 #include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
@@ -125,7 +125,7 @@ struct Options {
         isize keyframes;
 
         // Zoom velocity
-        Dynamic<float> velocity;
+        DynamicFloat velocity;
 
         // Bitrate
         isize bitrate;
@@ -144,8 +144,8 @@ struct Options {
         ColoringMode mode;
 
         // Scaling and shifting
-        Dynamic<float> scale;
-        Dynamic<float> offset;
+        DynamicFloat scale;
+        DynamicFloat offset;
 
     } palette;
 
@@ -155,11 +155,11 @@ struct Options {
         fs::path image;
 
         // Texture opacity
-        Dynamic<float> opacity;
+        DynamicFloat opacity;
 
         // Scaling and shifting
-        Dynamic<float> scale;
-        Dynamic<float> offset;
+        DynamicFloat scale;
+        DynamicFloat offset;
 
     } texture;
 
@@ -169,8 +169,8 @@ struct Options {
         bool enable;
 
         // Direction of the light vector
-        Dynamic<float> alpha;
-        Dynamic<float> beta;
+        DynamicFloat alpha;
+        DynamicFloat beta;
 
     } lighting;
 

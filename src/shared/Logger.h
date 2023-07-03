@@ -14,7 +14,7 @@
 #include "config.h"
 #include "Types.h"
 #include "Chrono.h"
-#include "Dynamic.h"
+#include "DynamicFloat.h"
 #include "Exception.h"
 #include "StandardComplex.h"
 #include "ExtendedComplex.h"
@@ -116,7 +116,7 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
-    Logger& operator<<(const Dynamic<float>& arg);
+    Logger& operator<<(const DynamicFloat& arg);
 
 private:
 

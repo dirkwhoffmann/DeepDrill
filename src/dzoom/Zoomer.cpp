@@ -11,6 +11,7 @@
 
 #include "Zoomer.h"
 #include "Coord.h"
+#include "DynamicFloat.h"
 #include "Exception.h"
 #include "IO.h"
 #include "Options.h"
@@ -59,11 +60,12 @@ Zoomer::launch()
 {
     sf::Event event;
 
+    // Initialize parameters
+    DynamicFloat::fps = opt.video.frameRate;
+    zoom.set(1.0);
+
     // Start FFmpeg
     if (recordMode) recorder.startRecording();
-
-    // Set animation parameter
-    zoom.set(1.0);
 
     // Experimental code for testing backzooms (REMOVE ASAP)
     keyframe = 12;

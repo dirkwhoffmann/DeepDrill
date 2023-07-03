@@ -226,7 +226,7 @@ Parser::parse(const string &value, ColoringMode &parsed)
 }
 
 void
-Parser::parse(const string &value, Dynamic<float> &parsed)
+Parser::parse(const string &value, DynamicFloat &parsed)
 {
     std::vector<float> xn;
     std::vector<float> yn;
@@ -270,6 +270,7 @@ Parser::parse(const string &value, Dynamic<float> &parsed)
 
     parsed.init(xn, yn);
 
+    log::cout << parsed << log::endl;
     /*
     log::cout << parsed;
     for (double i = 0.0; i <= 70.1; i += 0.5) {

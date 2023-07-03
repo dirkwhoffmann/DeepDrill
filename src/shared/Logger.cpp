@@ -216,7 +216,7 @@ Logger::operator<<(const Exception& arg)
 }
 
 Logger&
-Logger::operator<<(const Dynamic<float>& arg)
+Logger::operator<<(const DynamicFloat& arg)
 {
     if (verbose()) {
 

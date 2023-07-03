@@ -9,18 +9,19 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "Dynamic.h"
+#include "DynamicFloat.h"
 #include "spline.h"
 
 namespace dd {
 
-template <class T> double
-Dynamic<T>::fps = 60.0;
+double DynamicFloat::fps = 60.0;
 
-template <class T> void
-Dynamic<T>::init(std::vector <T> vxn, std::vector <T> vyn)
+void
+DynamicFloat::init(std::vector<float> vxn, std::vector<float> vyn)
 {
+    xn.clear();
     for (const auto &it : vxn) xn.push_back(double(it));
+    yn.clear();
     for (const auto &it : vyn) yn.push_back(double(it));
 
     if (xn.size() >= 3) {
@@ -29,45 +30,39 @@ Dynamic<T>::init(std::vector <T> vxn, std::vector <T> vyn)
     }
 }
 
-template <class T> std::ostream&
-Dynamic<T>::print(std::ostream& os) const
+std::ostream&
+DynamicFloat::print(std::ostream& os) const
 {
     if (yn.size() == 1) {
 
-        os << (T)yn[0];
+        os << yn[0];
 
     } else {
 
         for (usize i = 0; i < xn.size(); i++) {
 
             if (i) os << ", ";
-            os << (T)xn[i] << '/' << (T)yn[i];
+            os << xn[i] << '/' << yn[i];
         }
     }
 
     return os;
 }
 
-template <class T> T
-Dynamic<T>::operator() (double x) const
+float
+DynamicFloat::operator() (double x) const
 {
-    return yn.size() == 1 ? (T)yn[0] : (T)spline(x);
+    assert(xn.size() != 0);
+    assert(xn.size() != 2);
+    assert(yn.size() != 0);
+    assert(yn.size() != 2);
+    return yn.size() == 1 ? float(yn[0]) : float(spline(x));
 }
 
-template <class T> T
-Dynamic<T>::operator() (isize x) const
+float
+DynamicFloat::operator() (isize x) const
 {
     return (*this)(double(x) / fps);
 }
 
-//
-// Instantiate template functions
-//
-
-template void Dynamic<float>::init(std::vector <float>, std::vector <float>);
-template float Dynamic<float>::operator() (double) const;
-template float Dynamic<float>::operator() (isize) const;
-template std::ostream& Dynamic<float>::print(std::ostream &) const;
-
 }
-

@@ -11,7 +11,7 @@
 
 #include "DeepZoom.h"
 #include "Zoomer.h"
-#include "Dynamic.h"
+#include "DynamicFloat.h"
 
 int main(int argc, char *argv[])
 {

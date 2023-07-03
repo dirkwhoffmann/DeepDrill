@@ -72,12 +72,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-o /tmp/ssssss.mov "
-            isEnabled = "NO">
+            argument = "texture.opacity=1.0"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p /Users/hoff/Retro/DeepDrill/profiles/relief.prf"
-            isEnabled = "NO">
+            argument = "texture.image=bluegradient.jpg lighting.enable=yes"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/hoff/tmp/dd/project/dinosaur_fossils.prj"
