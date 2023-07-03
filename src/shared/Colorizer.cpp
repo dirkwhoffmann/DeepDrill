@@ -46,7 +46,7 @@ Colorizer::draw(const ColorMap &map)
         ProgressIndicator progress("Running GPU shaders");
 
         // 1. Apply lighting
-        illuminator.setUniform("lightDir", lightVector());
+        illuminator.setUniform("lightDir", lightVector(0));
         illuminator.setUniform("iter", map.iterMapTex);
         illuminator.setUniform("overlay", map.overlayMapTex);
         illuminator.setUniform("texture", map.textureMapTex);
@@ -54,7 +54,11 @@ Colorizer::draw(const ColorMap &map)
         illuminator.setUniform("palette", map.paletteTex);
         illuminator.setUniform("normalRe", map.normalReMapTex);
         illuminator.setUniform("normalIm", map.normalImMapTex);
-        illuminator.setUniform("opacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity);
+        illuminator.setUniform("paletteScale", opt.palette.scale(0.0));
+        illuminator.setUniform("paletteOffset", opt.palette.offset(0.0));
+        illuminator.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(0.0));
+        illuminator.setUniform("textureScale", opt.texture.scale(0.0));
+        illuminator.setUniform("textureOffset", opt.texture.offset(0.0));
         illuminator.apply();
 
         // 2. Scale down
@@ -79,18 +83,18 @@ Colorizer::draw(const ColorMap &map)
 }
 
 void
-Colorizer::draw(DrillMap &map1, DrillMap &map2, float zoom)
+Colorizer::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
     auto &colorMap1 = map1.colorize();
     auto &colorMap2 = map2.colorize();
-    draw(colorMap1, colorMap2, zoom);
+    draw(colorMap1, colorMap2, frame, zoom);
 }
 
 void
-Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
+Colorizer::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
 {
     // 1. Colorize
-    illuminator.setUniform("lightDir", lightVector());
+    illuminator.setUniform("lightDir", lightVector(frame));
     illuminator.setUniform("iter", map1.iterMapTex);
     illuminator.setUniform("overlay", map1.overlayMapTex);
     illuminator.setUniform("texture", map1.textureMapTex);
@@ -98,11 +102,15 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     illuminator.setUniform("palette", map1.paletteTex);
     illuminator.setUniform("normalRe", map1.normalReMapTex);
     illuminator.setUniform("normalIm", map1.normalImMapTex);
-    illuminator.setUniform("opacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity);
-
+    illuminator.setUniform("paletteScale", opt.palette.scale(frame));
+    illuminator.setUniform("paletteOffset", opt.palette.offset(frame));
+    illuminator.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
+    illuminator.setUniform("textureScale", opt.texture.scale(frame));
+    illuminator.setUniform("textureOffset", opt.texture.offset(frame));
     illuminator.apply();
 
-    illuminator2.setUniform("lightDir", lightVector());
+    frame++;
+    illuminator2.setUniform("lightDir", lightVector(frame));
     illuminator2.setUniform("iter", map2.iterMapTex);
     illuminator2.setUniform("overlay", map2.overlayMapTex);
     illuminator2.setUniform("texture", map2.textureMapTex);
@@ -110,7 +118,11 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
     illuminator2.setUniform("palette", map2.paletteTex);
     illuminator2.setUniform("normalRe", map2.normalReMapTex);
     illuminator2.setUniform("normalIm", map2.normalImMapTex);
-    illuminator2.setUniform("opacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity);
+    illuminator2.setUniform("paletteScale", opt.palette.scale(frame));
+    illuminator2.setUniform("paletteOffset", opt.palette.offset(frame));
+    illuminator2.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
+    illuminator2.setUniform("textureScale", opt.texture.scale(frame));
+    illuminator2.setUniform("textureOffset", opt.texture.offset(frame));
     illuminator2.apply();
 
     // 2. Scale down
@@ -125,10 +137,10 @@ Colorizer::draw(const ColorMap &map1, const ColorMap &map2, float zoom)
 }
 
 sf::Vector3f
-Colorizer::lightVector()
+Colorizer::lightVector(isize frame)
 {
-    auto a = opt.lighting.alpha * 3.14159 / 180.0;
-    auto b = opt.lighting.beta * 3.14159 / 180.0;
+    auto a = opt.lighting.alpha(frame) * 3.14159 / 180.0;
+    auto b = opt.lighting.beta(frame) * 3.14159 / 180.0;
     auto z = std::sin(b);
     auto l = std::cos(b);
     auto y = std::sin(a) * l;

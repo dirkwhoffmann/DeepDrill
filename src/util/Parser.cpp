@@ -254,11 +254,11 @@ Parser::parse(const string &value, Dynamic<float> &parsed)
                 auto first = it.substr(0, pos);
                 auto last = it.substr(pos + 1, std::string::npos);
 
-                printf("'%s' / '%s'\n", first.c_str(), last.c_str());
+                // printf("'%s' / '%s'\n", first.c_str(), last.c_str());
                 Parser::parse(first, t);
                 Parser::parse(last, y);
 
-                printf("%f -> %f\n", t.asSeconds(), y);
+                // printf("%f -> %f\n", t.asSeconds(), y);
                 xn.push_back(t.asSeconds());
                 yn.push_back(float(y));
 
@@ -269,6 +269,7 @@ Parser::parse(const string &value, Dynamic<float> &parsed)
     }
 
     parsed.init(xn, yn);
+
     /*
     log::cout << parsed;
     for (double i = 0.0; i <= 70.1; i += 0.5) {

@@ -19,6 +19,8 @@ namespace dd {
 
 template <class T> struct Dynamic {
 
+    static double fps;
+
     std::vector<double> xn;
     std::vector<double> yn;
 
@@ -39,6 +41,7 @@ template <class T> struct Dynamic {
 
     friend std::ostream& operator<<(std::ostream& os, const Dynamic<T>& d) { return d.print(os); }
     T operator() (double x) const;
+    T operator() (isize x) const;
 
 private:
 

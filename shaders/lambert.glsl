@@ -15,23 +15,18 @@ uniform sampler2D texture;
 // Sampler for the overlay image
 uniform sampler2D overlay;
 
+// Palette adjustments
+uniform float paletteScale;
+uniform float paletteOffset;
+
+// Texture adjustments
+uniform float textureOpacity;
+uniform float textureScale;
+uniform float textureOffset;
+
 // Light direction
 uniform vec3 lightDir;
 
-// Palette scaling factor
-uniform float paletteStretch;
-
-// Palette offset
-uniform float paletteShift;
-
-// Texture image opacity
-uniform float opacity;
-
-// Texture scaling factor
-uniform float textureStretch;
-
-// Palette offset
-uniform float textureShift;
 
 //
 // Utility functions
@@ -92,8 +87,10 @@ float compute_sl(vec2 coord)
 // Derives the color for a given coordinate from the color palette
 vec3 deriveColor(vec2 coord)
 {
-    float sl = mod(compute_sl(coord) / (2.0 * 3.14159), 1.0);
-    return texture2D(palette, vec2(sl, 0.0)).rgb;
+    float sl = compute_sl(coord) / (2.0 * 3.14159);
+    float px = mod(sl * paletteScale + paletteOffset, 1.0);
+
+    return texture2D(palette, vec2(px, 0.0)).rgb;
 }
 
 // Derives the texture pixel for a given coordinate from the texture image
@@ -104,8 +101,8 @@ vec3 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
 
     float arg = (atan(nrmIm, nrmRe) + PI) / (2.0 * PI);
 
-    float px = mod(arg * 5.0, 1.0);
-    float py = mod(sl * 5.0, 1.0);
+    float px = mod(arg * 5.0 * textureScale + textureOffset, 1.0);
+    float py = mod(sl * 5.0 * textureScale, 1.0);
 
     return vec3(texture2D(texture, vec2(px,py)).xyz);
 }
@@ -145,7 +142,7 @@ void main()
     vec3 textureColor = deriveTexturePixel(coord, nrmRe, nrmIm);
 
     // Mix diffuse color with the texture color
-    diffuseColor = mix(diffuseColor, textureColor, opacity);
+    diffuseColor = mix(diffuseColor, textureColor, textureOpacity);
 
     // Apply 3D effect
     vec3 final = makeSpatial(diffuseColor, nrmRe, nrmIm);

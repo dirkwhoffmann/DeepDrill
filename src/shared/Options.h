@@ -144,8 +144,8 @@ struct Options {
         ColoringMode mode;
 
         // Scaling and shifting
-        double scale;
-        double offset;
+        Dynamic<float> scale;
+        Dynamic<float> offset;
 
     } palette;
 
@@ -155,11 +155,11 @@ struct Options {
         fs::path image;
 
         // Texture opacity
-        double opacity;
+        Dynamic<float> opacity;
 
         // Scaling and shifting
-        double scale;
-        double offset;
+        Dynamic<float> scale;
+        Dynamic<float> offset;
 
     } texture;
 
@@ -169,8 +169,8 @@ struct Options {
         bool enable;
 
         // Direction of the light vector
-        double alpha;
-        double beta;
+        Dynamic<float> alpha;
+        Dynamic<float> beta;
 
     } lighting;
 

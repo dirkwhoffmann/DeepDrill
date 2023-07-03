@@ -14,6 +14,9 @@
 
 namespace dd {
 
+template <class T> double
+Dynamic<T>::fps = 60.0;
+
 template <class T> void
 Dynamic<T>::init(std::vector <T> vxn, std::vector <T> vyn)
 {
@@ -51,12 +54,19 @@ Dynamic<T>::operator() (double x) const
     return yn.size() == 1 ? (T)yn[0] : (T)spline(x);
 }
 
+template <class T> T
+Dynamic<T>::operator() (isize x) const
+{
+    return (*this)(double(x) / fps);
+}
+
 //
 // Instantiate template functions
 //
 
 template void Dynamic<float>::init(std::vector <float>, std::vector <float>);
 template float Dynamic<float>::operator() (double) const;
+template float Dynamic<float>::operator() (isize) const;
 template std::ostream& Dynamic<float>::print(std::ostream &) const;
 
 }

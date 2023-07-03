@@ -55,12 +55,12 @@ public:
     void draw(const ColorMap &map);
 
     // Colorizes a video frame
-    void draw(DrillMap &map1, DrillMap &map2, float zoom);
-    void draw(const ColorMap &map1, const ColorMap &map2, float zoom);
+    void draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom);
+    void draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom);
 
 private:
 
-    sf::Vector3f lightVector();
+    sf::Vector3f lightVector(isize frame);
 
 
     //

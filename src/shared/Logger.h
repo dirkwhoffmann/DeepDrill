@@ -116,7 +116,7 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
-    template <class T> Logger& operator<<(const Dynamic<T>& arg);
+    Logger& operator<<(const Dynamic<float>& arg);
 
 private:
 

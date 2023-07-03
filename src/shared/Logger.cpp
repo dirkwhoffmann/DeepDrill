@@ -215,8 +215,8 @@ Logger::operator<<(const Exception& arg)
     return *this;
 }
 
-template <class T> Logger&
-Logger::operator<<(const Dynamic<T>& arg)
+Logger&
+Logger::operator<<(const Dynamic<float>& arg)
 {
     if (verbose()) {
 

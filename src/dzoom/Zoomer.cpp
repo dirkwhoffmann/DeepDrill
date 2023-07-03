@@ -204,6 +204,7 @@ Zoomer::draw()
     // Colorize
     colorizer.draw(drillMap[slotNr(keyframe + 0)].colorMap,
                    drillMap[slotNr(keyframe + 1)].colorMap,
+                   frame,
                    float(zoom.current));
 
     // Display the result

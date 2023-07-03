@@ -260,11 +260,11 @@ Options::parse(string key, string value)
 
         } else if (key == "lighting.alpha") {
 
-            Parser::parse(value, lighting.alpha, 0.0, 360.0);
+            Parser::parse(value, lighting.alpha);
 
         } else if (key == "lighting.beta") {
 
-            Parser::parse(value, lighting.beta, 0.0, 360.0);
+            Parser::parse(value, lighting.beta);
 
         } else if (key == "areacheck.enable") {
 
