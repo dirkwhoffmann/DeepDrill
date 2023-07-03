@@ -92,8 +92,6 @@ ColorMap::compute(const DrillMap &map)
     // Resize to the size of the drill map
     resize(map.width, map.height);
 
-    auto opacity = palette.overlayOpacity();
-
     // Colorize all pixels
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
@@ -113,20 +111,7 @@ ColorMap::compute(const DrillMap &map)
 
                 case DR_ESCAPED:
 
-                    if constexpr (M == ColoringMode::Default) {
-
-                        GpuColor color = palette.interpolateABGR(data);
-
-                        if (opacity != 0.0) {
-
-                            GpuColor texColor = palette.readTextureImage(data);
-                            color = color.mix(texColor, opacity);
-                        }
-
-                        auto index = palette.colorIndex(data);
-                        assert(index >= 0.0 && index <= 1.0);
-                        overlayMap[pos] = 0;
-                    }
+                    overlayMap[pos] = 0;
                     break;
 
                 case DR_GLITCH:

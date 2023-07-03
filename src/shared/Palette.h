@@ -23,11 +23,6 @@ class Palette {
     // Configuration options
     const struct Options &opt;
 
-    // Color values
-    std::vector <double> r;
-    std::vector <double> g;
-    std::vector <double> b;
-
 public:
 
     // Palette image
@@ -38,15 +33,10 @@ public:
 
 public:
 
-    Palette(const Options &options);
+    Palette(const Options &options) : opt(options) { }
 
     void loadPaletteImage(const fs::path &path);
     void loadTextureImage(const fs::path &path);
-
-    double overlayOpacity() const;
-    u32 interpolateABGR(struct MapEntry &entry) const;
-    float colorIndex(struct MapEntry &entry) const;
-    u32 readTextureImage(struct MapEntry &entry) const;
 };
 
 }
