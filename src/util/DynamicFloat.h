@@ -40,7 +40,7 @@ struct DynamicFloat {
     //
 
     friend std::ostream& operator<<(std::ostream& os, const DynamicFloat& d) { return d.print(os); }
-    float operator() (double x) const;
+    float operator() (double x = 0.0) const;
     float operator() (isize x) const;
 
 private:

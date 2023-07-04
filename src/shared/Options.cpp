@@ -37,7 +37,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Image keys
     defaults["image.width"] = "1920";
     defaults["image.height"] = "1080";
-    defaults["image.illuminator"] = "lambert.glsl";
     defaults["image.scaler"] = "bicubic.glsl";
 
     // Video keys
@@ -54,15 +53,17 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["palette.mode"] = "default";
     defaults["palette.scale"] = "1.0";
     defaults["palette.offset"] = "0.0";
+    defaults["palette.colorizer"] = "gradient.glsl";
 
     // Texture keys
-    defaults["texture.image"] = "";
+    defaults["texture.image"] = "wood.jpg";
     defaults["texture.opacity"] = "0.5";
     defaults["texture.scale"] = "1.0";
     defaults["texture.offset"] = "0.0";
 
     // Lighting keys
     defaults["lighting.enable"] = "no";
+    defaults["lighting.illuminator"] = "lambert.glsl";
     defaults["lighting.alpha"] = "45";
     defaults["lighting.beta"] = "45";
 
@@ -190,10 +191,6 @@ Options::parse(string key, string value)
                 throw Exception("Height must be dividable by 2");
             }
 
-        } else if (key == "image.illuminator") {
-
-            image.illuminator = assets.findAsset(value, Format::GLSL);
-
         } else if (key == "image.scaler") {
 
             image.scaler = assets.findAsset(value, Format::GLSL);
@@ -236,6 +233,10 @@ Options::parse(string key, string value)
 
             Parser::parse(value, palette.offset);
 
+        } else if (key == "palette.colorizer") {
+
+            palette.colorizer = assets.findAsset(value, Format::GLSL);
+
         } else if (key == "texture.image") {
 
             if (value != "") {
@@ -257,6 +258,10 @@ Options::parse(string key, string value)
         } else if (key == "lighting.enable") {
 
             Parser::parse(value, lighting.enable);
+
+        } else if (key == "lighting.illuminator") {
+
+            lighting.illuminator = assets.findAsset(value, Format::GLSL);
 
         } else if (key == "lighting.alpha") {
 

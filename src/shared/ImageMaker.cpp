@@ -17,7 +17,7 @@
 namespace dd {
 
 void
-ImageMaker::init(const string &illuminationFilter, const string &scalingFilter)
+ImageMaker::init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter)
 {
     // Only initialize once
     assert(illuminator.getSize().x == 0);
@@ -27,6 +27,8 @@ ImageMaker::init(const string &illuminationFilter, const string &scalingFilter)
     auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
 
     // Init GPU filters
+    colorizer.init(colorizationFilter, mapDim);
+    colorizer2.init(colorizationFilter, mapDim);
     illuminator.init(illuminationFilter, mapDim);
     illuminator2.init(illuminationFilter, mapDim);
     downscaler.init(scalingFilter, imageDim);
@@ -45,7 +47,23 @@ ImageMaker::draw(const ColorMap &map)
     {
         ProgressIndicator progress("Running GPU shaders");
 
-        // 1. Apply lighting
+        // 1. Colorize
+        colorizer.setUniform("iter", map.iterMapTex);
+        colorizer.setUniform("overlay", map.overlayMapTex);
+        colorizer.setUniform("texture", map.textureMapTex);
+        colorizer.setUniform("lognorm", map.lognormMapTex);
+        colorizer.setUniform("palette", map.paletteTex);
+        colorizer.setUniform("normalRe", map.normalReMapTex);
+        colorizer.setUniform("normalIm", map.normalImMapTex);
+        colorizer.setUniform("paletteScale", opt.palette.scale());
+        colorizer.setUniform("paletteOffset", opt.palette.offset());
+        colorizer.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity());
+        colorizer.setUniform("textureScale", opt.texture.scale());
+        colorizer.setUniform("textureOffset", opt.texture.offset());
+        colorizer.apply();
+
+        // 2. Illuminate
+        illuminator.setUniform("image", colorizer.getTexture());
         illuminator.setUniform("lightDir", lightVector(0));
         illuminator.setUniform("iter", map.iterMapTex);
         illuminator.setUniform("overlay", map.overlayMapTex);
@@ -54,29 +72,31 @@ ImageMaker::draw(const ColorMap &map)
         illuminator.setUniform("palette", map.paletteTex);
         illuminator.setUniform("normalRe", map.normalReMapTex);
         illuminator.setUniform("normalIm", map.normalImMapTex);
-        illuminator.setUniform("paletteScale", opt.palette.scale(0.0));
-        illuminator.setUniform("paletteOffset", opt.palette.offset(0.0));
-        illuminator.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(0.0));
-        illuminator.setUniform("textureScale", opt.texture.scale(0.0));
-        illuminator.setUniform("textureOffset", opt.texture.offset(0.0));
+        illuminator.setUniform("paletteScale", opt.palette.scale());
+        illuminator.setUniform("paletteOffset", opt.palette.offset());
+        illuminator.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity());
+        illuminator.setUniform("textureScale", opt.texture.scale());
+        illuminator.setUniform("textureOffset", opt.texture.offset());
         illuminator.apply();
 
-        // 2. Scale down
+        // 3. Scale down
         downscaler.setUniform("curr", illuminator.getTexture());
         downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
         downscaler.setUniform("zoom", 1.0f);
         downscaler.apply();
 
-        // 3. Read back image data
+        // 4. Read back image data
         image = downscaler.getTexture().copyToImage();
     }
 
     if (opt.flags.verbose) {
 
         log::cout << log::vspace;
-        log::cout << log::ralign("Illumination filter: ");
+        log::cout << log::ralign("Colorizer: ");
+        log::cout << colorizer.getPath() << log::endl;
+        log::cout << log::ralign("Illuminator: ");
         log::cout << illuminator.getPath() << log::endl;
-        log::cout << log::ralign("Downscaling filter: ");
+        log::cout << log::ralign("Downscaler: ");
         log::cout << downscaler.getPath() << log::endl;
         log::cout << log::vspace;
     }
@@ -94,45 +114,55 @@ void
 ImageMaker::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
 {
     // 1. Colorize
+    colorizer.setUniform("iter", map1.iterMapTex);
+    colorizer.setUniform("overlay", map1.overlayMapTex);
+    colorizer.setUniform("texture", map1.textureMapTex);
+    colorizer.setUniform("lognorm", map1.lognormMapTex);
+    colorizer.setUniform("palette", map1.paletteTex);
+    colorizer.setUniform("normalRe", map1.normalReMapTex);
+    colorizer.setUniform("normalIm", map1.normalImMapTex);
+    colorizer.setUniform("paletteScale", opt.palette.scale(frame));
+    colorizer.setUniform("paletteOffset", opt.palette.offset(frame));
+    colorizer.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
+    colorizer.setUniform("textureScale", opt.texture.scale(frame));
+    colorizer.setUniform("textureOffset", opt.texture.offset(frame));
+    colorizer.apply();
+
+    colorizer2.setUniform("iter", map2.iterMapTex);
+    colorizer2.setUniform("overlay", map2.overlayMapTex);
+    colorizer2.setUniform("texture", map2.textureMapTex);
+    colorizer2.setUniform("lognorm", map2.lognormMapTex);
+    colorizer2.setUniform("palette", map2.paletteTex);
+    colorizer2.setUniform("normalRe", map2.normalReMapTex);
+    colorizer2.setUniform("normalIm", map2.normalImMapTex);
+    colorizer2.setUniform("paletteScale", opt.palette.scale(frame));
+    colorizer2.setUniform("paletteOffset", opt.palette.offset(frame));
+    colorizer2.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
+    colorizer2.setUniform("textureScale", opt.texture.scale(frame));
+    colorizer2.setUniform("textureOffset", opt.texture.offset(frame));
+    colorizer2.apply();
+
+    // 2. Illuminate
+    illuminator.setUniform("image", colorizer.getTexture());
     illuminator.setUniform("lightDir", lightVector(frame));
-    illuminator.setUniform("iter", map1.iterMapTex);
-    illuminator.setUniform("overlay", map1.overlayMapTex);
-    illuminator.setUniform("texture", map1.textureMapTex);
-    illuminator.setUniform("lognorm", map1.lognormMapTex);
-    illuminator.setUniform("palette", map1.paletteTex);
     illuminator.setUniform("normalRe", map1.normalReMapTex);
     illuminator.setUniform("normalIm", map1.normalImMapTex);
-    illuminator.setUniform("paletteScale", opt.palette.scale(frame));
-    illuminator.setUniform("paletteOffset", opt.palette.offset(frame));
-    illuminator.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
-    illuminator.setUniform("textureScale", opt.texture.scale(frame));
-    illuminator.setUniform("textureOffset", opt.texture.offset(frame));
     illuminator.apply();
 
-    frame++;
+    illuminator2.setUniform("image", colorizer2.getTexture());
     illuminator2.setUniform("lightDir", lightVector(frame));
-    illuminator2.setUniform("iter", map2.iterMapTex);
-    illuminator2.setUniform("overlay", map2.overlayMapTex);
-    illuminator2.setUniform("texture", map2.textureMapTex);
-    illuminator2.setUniform("lognorm", map2.lognormMapTex);
-    illuminator2.setUniform("palette", map2.paletteTex);
     illuminator2.setUniform("normalRe", map2.normalReMapTex);
     illuminator2.setUniform("normalIm", map2.normalImMapTex);
-    illuminator2.setUniform("paletteScale", opt.palette.scale(frame));
-    illuminator2.setUniform("paletteOffset", opt.palette.offset(frame));
-    illuminator2.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
-    illuminator2.setUniform("textureScale", opt.texture.scale(frame));
-    illuminator2.setUniform("textureOffset", opt.texture.offset(frame));
     illuminator2.apply();
 
-    // 2. Scale down
-    downscaler.setUniform("curr", illuminator.getTexture());
-    downscaler.setUniform("next", illuminator2.getTexture());
+    // 3. Scale down
+    downscaler.setUniform("curr", colorizer.getTexture());
+    downscaler.setUniform("next", colorizer2.getTexture());
     downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
     downscaler.setUniform("zoom", zoom);
     downscaler.apply();
 
-    // 3. Read back image data
+    // 4. Read back image data
     image = downscaler.getTexture().copyToImage();
 }
 

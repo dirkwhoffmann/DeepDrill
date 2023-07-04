@@ -278,7 +278,6 @@ Parser::parse(const string &value, DynamicFloat &parsed)
 
     parsed.init(xn, yn);
 
-    log::cout << parsed << log::endl;
     /*
     log::cout << parsed;
     for (double i = 0.0; i <= 70.1; i += 0.5) {

@@ -1,28 +1,9 @@
-// Sampler for the iteration count map and the lognorm map
-uniform sampler2D iter;
-uniform sampler2D lognorm;
-
-// Sampler for the color palette
-uniform sampler2D palette;
+// Sampler for the texture to process
+uniform sampler2D image;
 
 // Samplers for the normal map
 uniform sampler2D normalRe;
 uniform sampler2D normalIm;
-
-// Sampler for the texture image
-uniform sampler2D texture;
-
-// Sampler for the overlay image
-uniform sampler2D overlay;
-
-// Palette adjustments
-uniform float paletteScale;
-uniform float paletteOffset;
-
-// Texture adjustments
-uniform float textureOpacity;
-uniform float textureScale;
-uniform float textureOffset;
 
 // Light direction
 uniform vec3 lightDir;
@@ -75,38 +56,6 @@ float decode_float(vec4 v)
 //
 //
 
-// Computes the normalized iteration count
-float compute_sl(vec2 coord)
-{
-    float count = decode_int(texture2D(iter, coord));
-    float lnorm = decode_float(texture2D(lognorm, coord));
-
-    return (count - log2(lnorm) + 4.0) * 0.075;
-}
-
-// Derives the color for a given coordinate from the color palette
-vec3 deriveColor(vec2 coord)
-{
-    float sl = compute_sl(coord) / (2.0 * 3.14159);
-    float px = mod(sl * paletteScale + paletteOffset, 1.0);
-
-    return texture2D(palette, vec2(px, 0.0)).rgb;
-}
-
-// Derives the texture pixel for a given coordinate from the texture image
-vec3 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
-{
-    float PI = 3.141592653589793238;
-    float sl = compute_sl(coord);
-
-    float arg = (atan(nrmIm, nrmRe) + PI) / (2.0 * PI);
-
-    float px = mod(arg * 5.0 * textureScale + textureOffset, 1.0);
-    float py = mod(sl * 5.0 * textureScale, 1.0);
-
-    return vec3(texture2D(texture, vec2(px,py)).xyz);
-}
-
 // Applies a lighting effect
 vec3 makeSpatial(vec3 color, float nrmRe, float nrmIm)
 {
@@ -131,25 +80,15 @@ void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
 
-    // Get diffuse color from palette image
-    vec3 diffuseColor = deriveColor(coord);
+    // Get color pixel
+    vec3 diffuseColor = texture2D(image, coord).rgb;
 
     // Get the normal vector
     float nrmRe = decode_float(texture2D(normalRe, coord));
     float nrmIm = decode_float(texture2D(normalIm, coord));
 
-    // Get the texture pixel from the texture image
-    vec3 textureColor = deriveTexturePixel(coord, nrmRe, nrmIm);
-
-    // Mix diffuse color with the texture color
-    diffuseColor = mix(diffuseColor, textureColor, textureOpacity);
-
     // Apply 3D effect
     vec3 final = makeSpatial(diffuseColor, nrmRe, nrmIm);
-
-    // Superimpose the overlay image
-    vec4 ovl = texture2D(overlay, coord);
-    final = mix(final, ovl.xyz, ovl.a);
 
     gl_FragColor = gl_Color * vec4(final, 1.0);
 }

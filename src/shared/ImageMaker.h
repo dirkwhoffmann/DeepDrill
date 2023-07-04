@@ -25,6 +25,8 @@ class ImageMaker {
     const struct Options &opt;
 
     // GPU filters
+    Filter colorizer = Filter(opt);
+    Filter colorizer2 = Filter(opt);
     Filter illuminator = Filter(opt);
     Filter illuminator2 = Filter(opt);
     Filter downscaler = Filter(opt);
@@ -42,7 +44,7 @@ public:
     ImageMaker(const Options &opt) : opt(opt) { };
     ~ImageMaker() { };
 
-    void init(const string &illuminationFilter, const string &scalingFilter);
+    void init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter);
 
     //
     // Colorizing

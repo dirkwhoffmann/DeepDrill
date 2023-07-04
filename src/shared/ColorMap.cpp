@@ -53,10 +53,7 @@ ColorMap::resize(isize w, isize h)
             throw Exception("Can't create overlay map texture");
         }
         if (!textureMapTex.loadFromImage(palette.texture)) {
-            printf("Texture image faile to load\n");
-            if (!textureMapTex.create(unsigned(width), unsigned(height))) {
-                throw Exception("Can't create texture map texture");
-            }
+            throw Exception("Can't create texture map texture");
         }
         if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create lognorm map texture");
@@ -145,7 +142,7 @@ ColorMap::compute(const DrillMap &map)
             // Generate normal map
             //
 
-            if (opt.lighting.enable && map.get(c).result == DR_ESCAPED) {
+            if (map.get(c).result == DR_ESCAPED) {
 
                 normalReMap[pos] = float(data.normal.re);
                 normalImMap[pos] = float(data.normal.im);

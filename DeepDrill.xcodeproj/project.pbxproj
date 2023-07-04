@@ -147,6 +147,7 @@
 		5049969229DEED6800B15919 /* Zoomer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Zoomer.cpp; sourceTree = "<group>"; };
 		5049969329DEED6800B15919 /* Zoomer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zoomer.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
+		504FAFEB2A53446B006495B8 /* gradient.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gradient.glsl; sourceTree = "<group>"; };
 		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
 		504FE2C42A1CF08A007A3F04 /* lanczos.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lanczos.glsl; sourceTree = "<group>"; };
 		504FE2C52A1CF2A3007A3F04 /* catmull.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = catmull.glsl; sourceTree = "<group>"; };
@@ -679,6 +680,7 @@
 		50D69A7429E177D50025DE0D /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				504FAFEB2A53446B006495B8 /* gradient.glsl */,
 				50F8C40F29E44042008A0B4C /* nearest.glsl */,
 				504FE2C32A1CE74C007A3F04 /* bilinear.glsl */,
 				504FE2C62A1F477A007A3F04 /* trilinear.glsl */,

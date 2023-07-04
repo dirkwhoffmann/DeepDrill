@@ -180,7 +180,6 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
-    os << "illuminator = " << opt.image.illuminator << std::endl;
     os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;
 }
@@ -193,6 +192,7 @@ Maker::writePaletteSection(std::ofstream &os)
     os << "mode = " << opt.keys["palette.mode"] << std::endl;
     os << "scale = " << opt.keys["palette.scale"] << std::endl;
     os << "offset = " << opt.keys["palette.offset"] << std::endl;
+    os << "colorizer = " << opt.palette.colorizer << std::endl;
     os << std::endl;
 }
 
@@ -212,6 +212,7 @@ Maker::writeLightingSection(std::ofstream &os)
 {
     os << "[lighting]" << std::endl;
     os << "enable = " << opt.keys["lighting.enable"] << std::endl;
+    os << "illuminator = " << opt.lighting.illuminator << std::endl;
     os << "alpha = " << opt.keys["lighting.alpha"] << std::endl;
     os << "beta = " << opt.keys["lighting.beta"] << std::endl;
     os << std::endl;
