@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "ImageMaker.h"
+#include "Options.h"
 #include "Exception.h"
 #include "ProgressIndicator.h"
 #include "DrillMap.h"
@@ -45,14 +46,7 @@ ImageMaker::init(const string &colorizationFilter, const string &illuminationFil
 }
 
 void
-ImageMaker::draw(DrillMap &map)
-{
-    auto &colorMap = map.colorize();
-    draw(map, colorMap);
-}
-
-void
-ImageMaker::draw(DrillMap &dmap, const ColorMap &map)
+ImageMaker::draw(DrillMap &dmap)
 {
     {
         ProgressIndicator progress("Running GPU shaders");
@@ -114,15 +108,7 @@ ImageMaker::draw(DrillMap &dmap, const ColorMap &map)
 }
 
 void
-ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
-{
-    auto &colorMap1 = map1.colorize();
-    auto &colorMap2 = map2.colorize();
-    draw(map1, map2, colorMap1, colorMap2, frame, zoom);
-}
-
-void
-ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
+ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
 {
     // 1. Colorize
     colorizer.setUniform("iter", dmap1.getIterationMapTex());

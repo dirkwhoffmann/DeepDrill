@@ -204,8 +204,6 @@ Zoomer::draw()
     // Colorize
     imageMaker.draw(drillMap[slotNr(keyframe + 0)],
                     drillMap[slotNr(keyframe + 1)],
-                    drillMap[slotNr(keyframe + 0)].colorMap,
-                    drillMap[slotNr(keyframe + 1)].colorMap,
                     frame,
                     float(zoom.current));
 
@@ -246,7 +244,6 @@ Zoomer::loadMapFile(isize nr)
     fs::path file = path / AssetManager::mapFile(nr);
 
     drillMap[slotNr(nr)].load(file);
-    drillMap[slotNr(nr)].colorize();
 
     return true;
 }

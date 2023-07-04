@@ -11,6 +11,7 @@
 
 #include "SlowDriller.h"
 #include "ProgressIndicator.h"
+#include "Options.h"
 
 namespace dd {
 

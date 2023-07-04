@@ -10,7 +10,6 @@
 // -----------------------------------------------------------------------------
 
 #include "Driller.h"
-#include "ColorMap.h"
 #include "Exception.h"
 #include "Logger.h"
 #include "Options.h"

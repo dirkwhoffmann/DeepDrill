@@ -501,13 +501,6 @@ DrillMap::analyze() const
     log::cout << log::endl;
 }
 
-const ColorMap &
-DrillMap::colorize()
-{
-    colorMap.compute(*this);
-    return colorMap;
-}
-
 void
 DrillMap::updateTextures()
 {

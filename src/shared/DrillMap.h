@@ -14,8 +14,11 @@
 #include "config.h"
 #include "Types.h"
 #include "StandardComplex.h"
-#include "ColorMap.h"
+#include "ExtendedComplex.h"
+#include "PrecisionComplex.h"
 #include "Compressor.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace dd {
 
@@ -117,20 +120,12 @@ public:
     // Map data in texture format
     sf::Texture iterationMapTex;
     sf::Texture overlayMapTex;
-    // sf::Texture textureMapTex; // MOVE TO ImageMaker
     sf::Texture lognormMapTex;
     sf::Texture normalReMapTex;
     sf::Texture normalImMapTex;
-    // The color palette
-    // Palette palette = Palette(opt); // MOVE TO ImageMaker
-    // sf::Texture paletteTex;
 
     // Indicates whether texture maps are dirty
     bool dirty = true;
-
-
-    // Associated color map
-    ColorMap colorMap = ColorMap(opt);
 
     const sf::Texture &getIterationMapTex() { updateTextures(); return iterationMapTex; }
     const sf::Texture &getOverlayMapTex() { updateTextures(); return overlayMapTex; }
@@ -204,9 +199,6 @@ public:
     //
 
 public:
-
-    ColorMap &getColorMap() { return colorMap; } // DEPRECATED
-    const ColorMap &colorize(); // DEPRECATED
 
     void updateTextures();
 

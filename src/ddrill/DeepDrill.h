@@ -14,7 +14,6 @@
 #include "config.h"
 #include "Application.h"
 #include "DrillMap.h"
-#include "ColorMap.h"
 #include "ImageMaker.h"
 
 namespace dd {

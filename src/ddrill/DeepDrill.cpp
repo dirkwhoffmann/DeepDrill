@@ -12,7 +12,7 @@
 #include "DeepDrill.h"
 #include "SlowDriller.h"
 #include "Driller.h"
-#include "ColorMap.h"
+#include "DrillMap.h"
 #include "ProgressIndicator.h"
 #include "Compressor.h"
 

@@ -12,7 +12,6 @@ Logger.cpp
 Palette.cpp
 ProgressIndicator.cpp
 DrillMap.cpp
-ColorMap.cpp
 ImageMaker.cpp
 Filter.cpp
 
@@ -39,7 +38,6 @@ Logger.cpp
 Palette.cpp
 ProgressIndicator.cpp
 DrillMap.cpp
-ColorMap.cpp
 ImageMaker.cpp
 Filter.cpp
 

@@ -18,7 +18,6 @@
 #include "Recorder.h"
 #include "Animated.h"
 #include "DrillMap.h"
-#include "ColorMap.h"
 #include "ImageMaker.h"
 #include "Filter.h"
 #include "ProgressIndicator.h"

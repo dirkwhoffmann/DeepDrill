@@ -12,7 +12,9 @@
 #pragma once
 
 #include "config.h"
-#include "ColorMap.h"
+#include "AssetManager.h"
+#include "DrillMap.h"
+#include "Palette.h"
 #include "Filter.h"
 #include <functional>
 #include <SFML/Graphics.hpp>
@@ -61,11 +63,9 @@ public:
 
     // Colorizes a still image
     void draw(DrillMap &map);
-    void draw(DrillMap &dmap, const ColorMap &map);
 
     // Colorizes a video frame
     void draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom);
-    void draw(DrillMap &dmap1, DrillMap &dmap2, const ColorMap &map1, const ColorMap &map2, isize frame, float zoom);
 
 private:
 
