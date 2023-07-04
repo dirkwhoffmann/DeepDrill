@@ -102,7 +102,29 @@ public:
     ExtendedDouble pixelDeltaY;
 
     // Map data
-    std::vector<MapEntry> data;
+    std::vector<MapEntry> data; // DEPRECATED
+    std::vector<u32> iterMap;
+    std::vector<u32> overlayMap;
+    std::vector<u32> textureMap;
+    std::vector<float> lognormMap;
+    std::vector<float> normalReMap;
+    std::vector<float> normalImMap;
+
+    /*
+    sf::Texture iterMapTex;
+    // The overlay map (EXPERIMENTAL)
+    sf::Texture overlayMapTex;
+    // The texture map (EXPERIMENTAL)
+    sf::Texture textureMapTex;
+    // The lognorm map (EXPERIMENTAL)
+    sf::Texture lognormMapTex;
+    // The normal map
+    sf::Texture normalReMapTex;
+    sf::Texture normalImMapTex;
+    // The color palette
+    Palette palette = Palette(opt);
+    sf::Texture paletteTex;
+    */
 
     // Associated color map
     ColorMap colorMap = ColorMap(opt);

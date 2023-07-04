@@ -48,6 +48,12 @@ DrillMap::resize(isize w, isize h, isize d)
 
     data.resize(w * h);
     data = { };
+    iterMap.assign(width * height, 0);
+    overlayMap.assign(width * height, 0);
+    textureMap.assign(width * height, 0);
+    lognormMap.assign(width * height, 0);
+    normalReMap.assign(width * height, 0);
+    normalImMap.assign(width * height, 0);
 
     assert(!hasIterations());
     assert(!hasLogNorms());
@@ -95,7 +101,53 @@ void
 DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
     assert(w < width && h < height);
-    data[h * width + w] = entry;
+
+    auto index = h * width + w;
+
+    data[index] = entry;
+    iterMap[index] = entry.last;
+    lognormMap[index] = entry.lognorm;
+    normalReMap[index] = entry.normal.re;
+    normalImMap[index] = entry.normal.im;
+
+    // REMOVE THESE ASSERTS ASAP
+    assert(entry.result == DR_ESCAPED || normalReMap[index] == 0.0);
+    assert(entry.result == DR_ESCAPED || normalImMap[index] == 0.0);
+
+    switch (entry.result) {
+
+        case DR_ESCAPED:
+
+            overlayMap[index] = 0;
+            break;
+
+        case DR_GLITCH:
+
+            overlayMap[index] = opt.perturbation.color | 0xFF000000;
+            break;
+
+        case DR_IN_BULB:
+        case DR_IN_CARDIOID:
+
+            overlayMap[index] = opt.areacheck.color | 0xFF000000;
+            break;
+
+        case DR_PERIODIC:
+
+            overlayMap[index] = opt.periodcheck.color | 0xFF000000;
+            break;
+
+        case DR_ATTRACTED:
+
+            overlayMap[index] = opt.attractorcheck.color | 0xFF000000;
+            break;
+
+        default:
+
+            overlayMap[index] = GpuColor::black | 0xFF000000;
+            break;
+    }
+
 }
 
 void
