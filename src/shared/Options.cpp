@@ -42,6 +42,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Video keys
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
+    defaults["video.startframe"] = "0";
 //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
 //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
     defaults["video.velocity"] = "1.0";
@@ -202,6 +203,10 @@ Options::parse(string key, string value)
         } else if (key == "video.keyframes") {
 
             Parser::parse(value, video.keyframes);
+
+        } else if (key == "video.startframe") {
+
+            Parser::parse(value, video.startframe);
 
         } else if (key == "video.velocity") {
 

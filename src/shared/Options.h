@@ -118,6 +118,9 @@ struct Options {
         // Number of keyframes
         isize keyframes;
 
+        // The first visible keyframe
+        isize startframe;
+
         // Zoom velocity
         DynamicFloat velocity;
 

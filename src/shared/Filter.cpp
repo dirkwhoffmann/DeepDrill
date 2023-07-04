@@ -68,6 +68,18 @@ Filter::hasUniform(const string &key)
 }
 
 void
+Filter::setUniform(const string &key, bool value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
+Filter::setUniform(const string &key, int value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
 Filter::setUniform(const string &key, float value)
 {
     if (hasUniform(key)) shader.setUniform(key, value);

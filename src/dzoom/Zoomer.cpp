@@ -62,20 +62,18 @@ Zoomer::launch()
 
     // Initialize parameters
     DynamicFloat::fps = opt.video.frameRate;
+    keyframe = opt.video.startframe;
     zoom.set(1.0);
 
     // Start FFmpeg
     if (recordMode) recorder.startRecording();
-
-    // Experimental code for testing backzooms (REMOVE ASAP)
-    keyframe = 12;
 
     // Reset clocks
     updateClock.reset();
     renderClock.reset();
     recordClock.reset();
 
-    // Process all frames
+    // Enter the main loop
     for (frame = 0;; frame++) {
 
         // Exit if the preview window has been closed

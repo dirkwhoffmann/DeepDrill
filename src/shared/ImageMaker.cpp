@@ -82,6 +82,7 @@ ImageMaker::draw(const ColorMap &map)
         // 3. Scale down
         downscaler.setUniform("curr", illuminator.getTexture());
         downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
+        downscaler.setUniform("numTextures", 1);
         downscaler.setUniform("zoom", 1.0f);
         downscaler.apply();
 
@@ -159,6 +160,7 @@ ImageMaker::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float 
     downscaler.setUniform("curr", colorizer.getTexture());
     downscaler.setUniform("next", colorizer2.getTexture());
     downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
+    downscaler.setUniform("numTextures", 2);
     downscaler.setUniform("zoom", zoom);
     downscaler.apply();
 

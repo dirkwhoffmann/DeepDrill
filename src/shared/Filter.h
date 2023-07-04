@@ -62,6 +62,8 @@ public:
 public:
 
     bool hasUniform(const string &name);
+    void setUniform(const string &key, bool value);
+    void setUniform(const string &key, int value);
     void setUniform(const string &key, float value);
     void setUniform(const string &key, double value);
     void setUniform(const string &key, sf::Vector2f value);

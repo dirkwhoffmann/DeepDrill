@@ -248,7 +248,6 @@
 		50BBF5072A4DD9B9007CDE42 /* spline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
 		50BBF5082A4DDA0D007CDE42 /* DynamicFloat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicFloat.cpp; sourceTree = "<group>"; };
 		50BBF5092A4DDA0D007CDE42 /* DynamicFloat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicFloat.h; sourceTree = "<group>"; };
-		50BBF50D2A505EC4007CDE42 /* oldlambert.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = oldlambert.glsl; sourceTree = "<group>"; };
 		50BEC6ED269486A800CCDFA8 /* Driller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driller.h; sourceTree = "<group>"; };
 		50BEC6EF269486A800CCDFA8 /* Approximator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Approximator.h; sourceTree = "<group>"; };
 		50BEC6F0269486A800CCDFA8 /* Driller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driller.cpp; sourceTree = "<group>"; };
@@ -418,6 +417,36 @@
 			path = dzoom;
 			sourceTree = "<group>";
 		};
+		504FAFEC2A543A06006495B8 /* colorizers */ = {
+			isa = PBXGroup;
+			children = (
+				504FAFEB2A53446B006495B8 /* gradient.glsl */,
+			);
+			path = colorizers;
+			sourceTree = "<group>";
+		};
+		504FAFED2A543A17006495B8 /* scalers */ = {
+			isa = PBXGroup;
+			children = (
+				50F8C40F29E44042008A0B4C /* nearest.glsl */,
+				504FE2C32A1CE74C007A3F04 /* bilinear.glsl */,
+				504FE2C62A1F477A007A3F04 /* trilinear.glsl */,
+				504FE2C72A1F4798007A3F04 /* bicubic.glsl */,
+				504FE2C82A1F47AB007A3F04 /* tricubic.glsl */,
+			);
+			path = scalers;
+			sourceTree = "<group>";
+		};
+		504FAFEE2A543A2C006495B8 /* illuminators */ = {
+			isa = PBXGroup;
+			children = (
+				50F8C41129EC3C97008A0B4C /* lambert.glsl */,
+				50B5C7772A29D55700E531CC /* relief.glsl */,
+				5071221B2A3101AA0013E655 /* normalmap.glsl */,
+			);
+			path = illuminators;
+			sourceTree = "<group>";
+		};
 		505EB93129D720B5008DE5BB /* ddrill */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,13 +465,13 @@
 			path = ddrill;
 			sourceTree = "<group>";
 		};
-		507122232A31D2C30013E655 /* workinprogress */ = {
+		507122232A31D2C30013E655 /* experimental */ = {
 			isa = PBXGroup;
 			children = (
 				504FE2C42A1CF08A007A3F04 /* lanczos.glsl */,
 				504FE2C52A1CF2A3007A3F04 /* catmull.glsl */,
 			);
-			path = workinprogress;
+			path = experimental;
 			sourceTree = "<group>";
 		};
 		5071224E2A35D0640013E655 /* yarndley */ = {
@@ -680,17 +709,10 @@
 		50D69A7429E177D50025DE0D /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				504FAFEB2A53446B006495B8 /* gradient.glsl */,
-				50F8C40F29E44042008A0B4C /* nearest.glsl */,
-				504FE2C32A1CE74C007A3F04 /* bilinear.glsl */,
-				504FE2C62A1F477A007A3F04 /* trilinear.glsl */,
-				504FE2C72A1F4798007A3F04 /* bicubic.glsl */,
-				504FE2C82A1F47AB007A3F04 /* tricubic.glsl */,
-				50F8C41129EC3C97008A0B4C /* lambert.glsl */,
-				50BBF50D2A505EC4007CDE42 /* oldlambert.glsl */,
-				50B5C7772A29D55700E531CC /* relief.glsl */,
-				5071221B2A3101AA0013E655 /* normalmap.glsl */,
-				507122232A31D2C30013E655 /* workinprogress */,
+				504FAFEC2A543A06006495B8 /* colorizers */,
+				504FAFED2A543A17006495B8 /* scalers */,
+				504FAFEE2A543A2C006495B8 /* illuminators */,
+				507122232A31D2C30013E655 /* experimental */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
