@@ -548,6 +548,48 @@ DrillMap::updateTextures()
         */
     }
 
+    // Generate the overlay image
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
+            
+            auto pos = y * width + x;
+            
+            switch (resultMap[pos]) {
+                    
+                case DR_ESCAPED:
+                    
+                    overlayMap[pos] = 0;
+                    break;
+                    
+                case DR_GLITCH:
+                    
+                    overlayMap[pos] = opt.perturbation.color | 0xFF000000;
+                    break;
+                    
+                case DR_IN_BULB:
+                case DR_IN_CARDIOID:
+                    
+                    overlayMap[pos] = opt.areacheck.color | 0xFF000000;
+                    break;
+                    
+                case DR_PERIODIC:
+                    
+                    overlayMap[pos] = opt.periodcheck.color | 0xFF000000;
+                    break;
+                    
+                case DR_ATTRACTED:
+                    
+                    overlayMap[pos] = opt.attractorcheck.color | 0xFF000000;
+                    break;
+                    
+                default:
+                    
+                    overlayMap[pos] = GpuColor::black | 0xFF000000;
+                    break;
+            }
+        }
+    }
+
     iterationMapTex.update((u8 *)lastIterationMap.data());
     overlayMapTex.update((u8 *)overlayMap.data());
     lognormMapTex.update((u8 *)lognormMap.data());
