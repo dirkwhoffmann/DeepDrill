@@ -54,11 +54,11 @@ public:
 
     // Colorizes a still image
     void draw(DrillMap &map);
-    void draw(const ColorMap &map);
+    void draw(DrillMap &dmap, const ColorMap &map);
 
     // Colorizes a video frame
-    void draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom);
-    void draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom);
+    void draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom);
+    void draw(DrillMap &dmap1, DrillMap &dmap2, const ColorMap &map1, const ColorMap &map2, isize frame, float zoom);
 
 private:
 

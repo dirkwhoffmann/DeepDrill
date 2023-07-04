@@ -156,6 +156,7 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
             break;
     }
 
+    dirty = true;
 }
 
 void
@@ -510,14 +511,17 @@ DrillMap::colorize()
 void
 DrillMap::updateTextures()
 {
+    // Only proceed of textures are dirty
+    if (!dirty) return;
+
     auto w = unsigned(width);
     auto h = unsigned(height);
 
-    if (firstIterationMapTex.getSize() != sf::Vector2u(w, h)) {
+    if (iterationMapTex.getSize() != sf::Vector2u(w, h)) {
 
-        printf("Texture has %d x %d. Needs creation.\n", firstIterationMapTex.getSize().x, firstIterationMapTex.getSize().y);
+        printf("Texture has %d x %d. Needs creation.\n", iterationMapTex.getSize().x, iterationMapTex.getSize().y);
 
-        if (!firstIterationMapTex.create(unsigned(width), unsigned(height))) {
+        if (!iterationMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create iteration map texture");
         }
         if (!overlayMapTex.create(unsigned(width), unsigned(height))) {
@@ -544,13 +548,13 @@ DrillMap::updateTextures()
         */
     }
 
-    firstIterationMapTex.update((u8 *)firstIterationMap.data());
+    iterationMapTex.update((u8 *)lastIterationMap.data());
     overlayMapTex.update((u8 *)overlayMap.data());
     lognormMapTex.update((u8 *)lognormMap.data());
     normalReMapTex.update((u8 *)normalReMap.data());
     normalImMapTex.update((u8 *)normalImMap.data());
 
-    
+    dirty = false;
 }
 
 void
@@ -592,6 +596,9 @@ DrillMap::load(std::istream &is)
     ProgressIndicator progress3("Extracting channels");
     while (!compressor.eof()) { loadChannel(compressor); }
     progress3.done();
+
+    // Mark textures as outdated
+    dirty = true;
 
     if (opt.flags.verbose) {
 

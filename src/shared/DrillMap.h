@@ -115,7 +115,7 @@ public:
     std::vector<float> normalImMap;
 
     // Map data in texture format
-    sf::Texture firstIterationMapTex;
+    sf::Texture iterationMapTex;
     sf::Texture overlayMapTex;
     // sf::Texture textureMapTex; // MOVE TO ImageMaker
     sf::Texture lognormMapTex;
@@ -125,8 +125,18 @@ public:
     // Palette palette = Palette(opt); // MOVE TO ImageMaker
     // sf::Texture paletteTex;
 
+    // Indicates whether texture maps are dirty
+    bool dirty = true;
+
+
     // Associated color map
     ColorMap colorMap = ColorMap(opt);
+
+    const sf::Texture &getIterationMapTex() { updateTextures(); return iterationMapTex; }
+    const sf::Texture &getOverlayMapTex() { updateTextures(); return overlayMapTex; }
+    const sf::Texture &getLognormMapTex() { updateTextures(); return lognormMapTex; }
+    const sf::Texture &getNormalReMapTex() { updateTextures(); return normalReMapTex; }
+    const sf::Texture &getNormalImMapTex() { updateTextures(); return normalImMapTex; }
 
 
     //

@@ -202,10 +202,12 @@ Zoomer::draw()
     renderClock.go();
 
     // Colorize
-    imageMaker.draw(drillMap[slotNr(keyframe + 0)].colorMap,
-                   drillMap[slotNr(keyframe + 1)].colorMap,
-                   frame,
-                   float(zoom.current));
+    imageMaker.draw(drillMap[slotNr(keyframe + 0)],
+                    drillMap[slotNr(keyframe + 1)],
+                    drillMap[slotNr(keyframe + 0)].colorMap,
+                    drillMap[slotNr(keyframe + 1)].colorMap,
+                    frame,
+                    float(zoom.current));
 
     // Display the result
     window.clear();

@@ -38,11 +38,11 @@ void
 ImageMaker::draw(DrillMap &map)
 {
     auto &colorMap = map.colorize();
-    draw(colorMap);
+    draw(map, colorMap);
 }
 
 void
-ImageMaker::draw(const ColorMap &map)
+ImageMaker::draw(DrillMap &dmap, const ColorMap &map)
 {
     {
         ProgressIndicator progress("Running GPU shaders");
@@ -108,20 +108,20 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
     auto &colorMap1 = map1.colorize();
     auto &colorMap2 = map2.colorize();
-    draw(colorMap1, colorMap2, frame, zoom);
+    draw(map1, map2, colorMap1, colorMap2, frame, zoom);
 }
 
 void
-ImageMaker::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
+ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, const ColorMap &map1, const ColorMap &map2, isize frame, float zoom)
 {
     // 1. Colorize
-    colorizer.setUniform("iter", map1.iterMapTex);
+    colorizer.setUniform("iter", dmap1.getIterationMapTex());
     colorizer.setUniform("overlay", map1.overlayMapTex);
     colorizer.setUniform("texture", map1.textureMapTex);
-    colorizer.setUniform("lognorm", map1.lognormMapTex);
+    colorizer.setUniform("lognorm", dmap1.getLognormMapTex());
     colorizer.setUniform("palette", map1.paletteTex);
-    colorizer.setUniform("normalRe", map1.normalReMapTex);
-    colorizer.setUniform("normalIm", map1.normalImMapTex);
+    colorizer.setUniform("normalRe", dmap1.getNormalReMapTex());
+    colorizer.setUniform("normalIm", dmap1.getNormalImMapTex());
     colorizer.setUniform("paletteScale", opt.palette.scale(frame));
     colorizer.setUniform("paletteOffset", opt.palette.offset(frame));
     colorizer.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
@@ -129,13 +129,13 @@ ImageMaker::draw(const ColorMap &map1, const ColorMap &map2, isize frame, float 
     colorizer.setUniform("textureOffset", opt.texture.offset(frame));
     colorizer.apply();
 
-    colorizer2.setUniform("iter", map2.iterMapTex);
+    colorizer2.setUniform("iter", dmap2.getIterationMapTex());
     colorizer2.setUniform("overlay", map2.overlayMapTex);
     colorizer2.setUniform("texture", map2.textureMapTex);
-    colorizer2.setUniform("lognorm", map2.lognormMapTex);
+    colorizer2.setUniform("lognorm", dmap2.getLognormMapTex());
     colorizer2.setUniform("palette", map2.paletteTex);
-    colorizer2.setUniform("normalRe", map2.normalReMapTex);
-    colorizer2.setUniform("normalIm", map2.normalImMapTex);
+    colorizer2.setUniform("normalRe", dmap2.getNormalReMapTex());
+    colorizer2.setUniform("normalIm", dmap2.getNormalImMapTex());
     colorizer2.setUniform("paletteScale", opt.palette.scale(frame));
     colorizer2.setUniform("paletteOffset", opt.palette.offset(frame));
     colorizer2.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
