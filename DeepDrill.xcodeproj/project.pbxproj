@@ -150,6 +150,12 @@
 		504FAFEB2A53446B006495B8 /* gradient.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gradient.glsl; sourceTree = "<group>"; };
 		504FAFEF2A544977006495B8 /* dna.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dna.jpg; sourceTree = "<group>"; };
 		504FAFF02A544C01006495B8 /* tiger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tiger.jpg; sourceTree = "<group>"; };
+		504FAFF12A544DFA006495B8 /* checkerboard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkerboard.jpg; sourceTree = "<group>"; };
+		504FAFF32A544EEB006495B8 /* flag-of-germany.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flag-of-germany.jpg"; sourceTree = "<group>"; };
+		504FAFF42A544F73006495B8 /* flag-of-norway.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flag-of-norway.jpg"; sourceTree = "<group>"; };
+		504FAFF52A5454DA006495B8 /* flag-of-ukraine.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flag-of-ukraine.jpg"; sourceTree = "<group>"; };
+		504FAFF62A5454DA006495B8 /* flag-of-singapore.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flag-of-singapore.jpg"; sourceTree = "<group>"; };
+		504FAFF82A5455DA006495B8 /* flag-of-iceland.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flag-of-iceland.jpg"; sourceTree = "<group>"; };
 		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
 		504FE2C42A1CF08A007A3F04 /* lanczos.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lanczos.glsl; sourceTree = "<group>"; };
 		504FE2C52A1CF2A3007A3F04 /* catmull.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = catmull.glsl; sourceTree = "<group>"; };
@@ -604,6 +610,12 @@
 				50A09C842A45CEB600845EE7 /* lava.jpg */,
 				50A09C822A45CEB600845EE7 /* wood.jpg */,
 				504FAFF02A544C01006495B8 /* tiger.jpg */,
+				504FAFF12A544DFA006495B8 /* checkerboard.jpg */,
+				504FAFF32A544EEB006495B8 /* flag-of-germany.jpg */,
+				504FAFF42A544F73006495B8 /* flag-of-norway.jpg */,
+				504FAFF62A5454DA006495B8 /* flag-of-singapore.jpg */,
+				504FAFF52A5454DA006495B8 /* flag-of-ukraine.jpg */,
+				504FAFF82A5455DA006495B8 /* flag-of-iceland.jpg */,
 			);
 			path = textures;
 			sourceTree = "<group>";
