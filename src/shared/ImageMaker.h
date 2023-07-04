@@ -24,6 +24,13 @@ class ImageMaker {
     // Configuration options
     const struct Options &opt;
 
+    // The color palette
+    Palette palette = Palette(opt);
+    sf::Texture paletteTex;
+
+    // An optional overlay texture
+    sf::Texture textureMapTex;
+
     // GPU filters
     Filter colorizer = Filter(opt);
     Filter colorizer2 = Filter(opt);
