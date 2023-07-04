@@ -37,7 +37,7 @@ ColorMap::resize(isize w, isize h)
 
         iterMap.resize(width * height);
         overlayMap.resize(width * height);
-        textureMap.resize(width * height);
+        // textureMap.resize(width * height);
         lognormMap.resize(width * height);
         normalReMap.resize(width * height);
         normalImMap.resize(width * height);
@@ -152,6 +152,18 @@ ColorMap::compute(const DrillMap &map)
                 normalReMap[pos] = 0.0;
                 normalImMap[pos] = 0.0;
             }
+
+            assert(map.resultMap[pos] == data.result);
+            assert(map.firstIterationMap[pos] == data.first);
+            assert(map.lastIterationMap[pos] == iterMap[pos]);
+            assert(map.lognormMap[pos] == lognormMap[pos]);
+            if (map.derivReMap[pos] != data.derivative.re) {
+                printf("Mismatch: %f\n %f\n", map.derivReMap[pos], data.derivative.re);
+            }
+            assert(map.derivReMap[pos] == data.derivative.re);
+            assert(map.derivImMap[pos] == data.derivative.im);
+            assert(map.normalReMap[pos] == normalReMap[pos]);
+            assert(map.normalImMap[pos] == normalImMap[pos]);
         }
 
         if (opt.stop) throw UserInterruptException();

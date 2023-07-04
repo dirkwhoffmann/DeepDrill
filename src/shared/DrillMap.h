@@ -103,28 +103,27 @@ public:
 
     // Map data
     std::vector<MapEntry> data; // DEPRECATED
-    std::vector<u32> iterMap;
+    std::vector<DrillResult> resultMap;
+    std::vector<u32> firstIterationMap;
+    std::vector<u32> lastIterationMap;
     std::vector<u32> overlayMap;
     std::vector<u32> textureMap;
     std::vector<float> lognormMap;
+    std::vector<double> derivReMap;
+    std::vector<double> derivImMap;
     std::vector<float> normalReMap;
     std::vector<float> normalImMap;
 
-    /*
-    sf::Texture iterMapTex;
-    // The overlay map (EXPERIMENTAL)
+    // Map data in texture format
+    sf::Texture firstIterationMapTex;
     sf::Texture overlayMapTex;
-    // The texture map (EXPERIMENTAL)
-    sf::Texture textureMapTex;
-    // The lognorm map (EXPERIMENTAL)
+    // sf::Texture textureMapTex; // MOVE TO ImageMaker
     sf::Texture lognormMapTex;
-    // The normal map
     sf::Texture normalReMapTex;
     sf::Texture normalImMapTex;
     // The color palette
-    Palette palette = Palette(opt);
-    sf::Texture paletteTex;
-    */
+    // Palette palette = Palette(opt); // MOVE TO ImageMaker
+    // sf::Texture paletteTex;
 
     // Associated color map
     ColorMap colorMap = ColorMap(opt);
@@ -196,8 +195,10 @@ public:
 
 public:
 
-    ColorMap &getColorMap() { return colorMap; }
-    const ColorMap &colorize();
+    ColorMap &getColorMap() { return colorMap; } // DEPRECATED
+    const ColorMap &colorize(); // DEPRECATED
+
+    void updateTextures();
 
 
     //

@@ -48,10 +48,14 @@ DrillMap::resize(isize w, isize h, isize d)
 
     data.resize(w * h);
     data = { };
-    iterMap.assign(width * height, 0);
+    resultMap.assign(width * height, DrillResult::DR_UNPROCESSED);
+    firstIterationMap.assign(width * height, 0);
+    lastIterationMap.assign(width * height, 0);
     overlayMap.assign(width * height, 0);
     textureMap.assign(width * height, 0);
     lognormMap.assign(width * height, 0);
+    derivReMap.assign(width * height, 0);
+    derivImMap.assign(width * height, 0);
     normalReMap.assign(width * height, 0);
     normalImMap.assign(width * height, 0);
 
@@ -105,8 +109,12 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     auto index = h * width + w;
 
     data[index] = entry;
-    iterMap[index] = entry.last;
+    resultMap[index] = entry.result;
+    firstIterationMap[index] = entry.first;
+    lastIterationMap[index] = entry.last;
     lognormMap[index] = entry.lognorm;
+    derivReMap[index] = entry.derivative.re;
+    derivImMap[index] = entry.derivative.im;
     normalReMap[index] = entry.normal.re;
     normalImMap[index] = entry.normal.im;
 
@@ -500,6 +508,52 @@ DrillMap::colorize()
 }
 
 void
+DrillMap::updateTextures()
+{
+    auto w = unsigned(width);
+    auto h = unsigned(height);
+
+    if (firstIterationMapTex.getSize() != sf::Vector2u(w, h)) {
+
+        printf("Texture has %d x %d. Needs creation.\n", firstIterationMapTex.getSize().x, firstIterationMapTex.getSize().y);
+
+        if (!firstIterationMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create iteration map texture");
+        }
+        if (!overlayMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create overlay map texture");
+        }
+        /*
+        if (!textureMapTex.loadFromImage(palette.texture)) {
+            throw Exception("Can't create texture map texture");
+        }
+        */
+        if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create lognorm map texture");
+        }
+        if (!normalReMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create normal(re) map texture");
+        }
+        if (!normalImMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create normal(im) map texture");
+        }
+        /*
+        if (!paletteTex.loadFromImage(palette.palette)) {
+            throw Exception("Can't create palette texture");
+        }
+        */
+    }
+
+    firstIterationMapTex.update((u8 *)firstIterationMap.data());
+    overlayMapTex.update((u8 *)overlayMap.data());
+    lognormMapTex.update((u8 *)lognormMap.data());
+    normalReMapTex.update((u8 *)normalReMap.data());
+    normalImMapTex.update((u8 *)normalImMap.data());
+
+    
+}
+
+void
 DrillMap::load(const string &path)
 {
     std::ifstream os(path.c_str(), std::ios::binary);
@@ -637,6 +691,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).result = DrillResult(loadInt());
+                    resultMap[y * width + x] = get(x,y).result;
                 }
             }
             break;
@@ -646,6 +701,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).first = u32(loadInt());
+                    firstIterationMap[y * width + x] = get(x,y).first;
                 }
             }
             break;
@@ -655,6 +711,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).last = u32(loadInt());
+                    lastIterationMap[y * width + x] = get(x,y).last;
                 }
             }
             break;
@@ -664,6 +721,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).lognorm = float(loadFloat());
+                    lognormMap[y * width + x] = get(x,y).lognorm;
                 }
             }
             break;
@@ -674,6 +732,8 @@ DrillMap::loadChannel(Compressor &is)
                 for (isize x = 0; x < width; x++) {
                     get(x,y).derivative.re = double(loadFloat());
                     get(x,y).derivative.im = double(loadFloat());
+                    derivReMap[y * width + x] = get(x,y).derivative.re;
+                    derivImMap[y * width + x] = get(x,y).derivative.im;
                 }
             }
             break;
@@ -684,6 +744,8 @@ DrillMap::loadChannel(Compressor &is)
                 for (isize x = 0; x < width; x++) {
                     get(x,y).normal.re = double(loadFloat());
                     get(x,y).normal.im = double(loadFloat());
+                    normalReMap[y * width + x] = get(x,y).normal.re;
+                    normalImMap[y * width + x] = get(x,y).normal.im;
                 }
             }
             break;

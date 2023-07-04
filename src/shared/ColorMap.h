@@ -41,7 +41,7 @@ public:
     sf::Texture overlayMapTex;
 
     // The texture map (EXPERIMENTAL)
-    std::vector<u32> textureMap;
+    // std::vector<u32> textureMap;
     sf::Texture textureMapTex;
 
     // The lognorm map (EXPERIMENTAL)
