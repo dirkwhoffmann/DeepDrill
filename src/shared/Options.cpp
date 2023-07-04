@@ -37,7 +37,6 @@ Options::Options(const AssetManager &assets) : assets(assets)
     // Image keys
     defaults["image.width"] = "1920";
     defaults["image.height"] = "1080";
-    defaults["image.scaler"] = "bicubic.glsl";
 
     // Video keys
     defaults["video.framerate"] = "60";
@@ -47,14 +46,12 @@ Options::Options(const AssetManager &assets) : assets(assets)
 //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
     defaults["video.velocity"] = "1.0";
     defaults["video.bitrate"] = "8000";
-    defaults["video.scaler"] = "tricubic.glsl";
 
     // Palette keys
     defaults["palette.image"] = "";
     defaults["palette.mode"] = "default";
     defaults["palette.scale"] = "1.0";
     defaults["palette.offset"] = "0.0";
-    defaults["palette.colorizer"] = "gradient.glsl";
 
     // Texture keys
     defaults["texture.image"] = "wood.jpg";
@@ -64,9 +61,13 @@ Options::Options(const AssetManager &assets) : assets(assets)
 
     // Lighting keys
     defaults["lighting.enable"] = "no";
-    defaults["lighting.illuminator"] = "lambert.glsl";
     defaults["lighting.alpha"] = "45";
     defaults["lighting.beta"] = "45";
+
+    // GPU keys
+    defaults["gpu.colorizer"] = "gradient.glsl";
+    defaults["gpu.illuminator"] = "lambert.glsl";
+    defaults["gpu.scaler"] = "tricubic.glsl";
 
     // Perturbation keys
     defaults["perturbation.enable"] = "yes";
@@ -192,10 +193,6 @@ Options::parse(string key, string value)
                 throw Exception("Height must be dividable by 2");
             }
 
-        } else if (key == "image.scaler") {
-
-            image.scaler = assets.findAsset(value, Format::GLSL);
-
         } else if (key == "video.framerate") {
 
             Parser::parse(value, video.frameRate, 25, 240);
@@ -216,10 +213,6 @@ Options::parse(string key, string value)
 
             Parser::parse(value, video.bitrate);
 
-        } else if (key == "video.scaler") {
-
-            video.scaler = assets.findAsset(value, Format::GLSL);
-
         } else if (key == "palette.image") {
 
             if (value != "") {
@@ -237,10 +230,6 @@ Options::parse(string key, string value)
         } else if (key == "palette.offset") {
 
             Parser::parse(value, palette.offset);
-
-        } else if (key == "palette.colorizer") {
-
-            palette.colorizer = assets.findAsset(value, Format::GLSL);
 
         } else if (key == "texture.image") {
 
@@ -264,10 +253,6 @@ Options::parse(string key, string value)
 
             Parser::parse(value, lighting.enable);
 
-        } else if (key == "lighting.illuminator") {
-
-            lighting.illuminator = assets.findAsset(value, Format::GLSL);
-
         } else if (key == "lighting.alpha") {
 
             Parser::parse(value, lighting.alpha);
@@ -275,6 +260,18 @@ Options::parse(string key, string value)
         } else if (key == "lighting.beta") {
 
             Parser::parse(value, lighting.beta);
+
+        } else if (key == "gpu.colorizer") {
+
+            gpu.colorizer = assets.findAsset(value, Format::GLSL);
+
+        } else if (key == "gpu.illuminator") {
+
+            gpu.illuminator = assets.findAsset(value, Format::GLSL);
+
+        } else if (key == "gpu.scaler") {
+
+            gpu.scaler = assets.findAsset(value, Format::GLSL);
 
         } else if (key == "areacheck.enable") {
 

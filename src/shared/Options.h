@@ -105,9 +105,6 @@ struct Options {
         isize width;
         isize height;
 
-        // Path to the image downscaling filter
-        fs::path scaler;
-
     } image;
 
     struct {
@@ -127,18 +124,12 @@ struct Options {
         // Bitrate
         isize bitrate;
 
-        // Path to the downscaling filter
-        fs::path scaler;
-
     } video;
 
     struct {
 
         // Path to the palette image
         fs::path image;
-
-        // Path to the colorization filter
-        fs::path colorizer;
 
         // Coloring mode
         ColoringMode mode;
@@ -168,14 +159,24 @@ struct Options {
         // Indicates if a spatial images shall be computed
         bool enable;
 
-        // Path to the illumination filter
-        fs::path illuminator;
-
         // Direction of the light vector
         DynamicFloat alpha;
         DynamicFloat beta;
 
     } lighting;
+
+    struct {
+
+        // Path to the colorization filter
+        fs::path colorizer;
+
+        // Path to the illumination filter
+        fs::path illuminator;
+
+        // Path to the downscaling filter
+        fs::path scaler;
+
+    } gpu;
 
     struct {
 

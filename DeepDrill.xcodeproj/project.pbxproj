@@ -148,6 +148,8 @@
 		5049969329DEED6800B15919 /* Zoomer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zoomer.h; sourceTree = "<group>"; };
 		5049969C29DFFC8000B15919 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
 		504FAFEB2A53446B006495B8 /* gradient.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gradient.glsl; sourceTree = "<group>"; };
+		504FAFEF2A544977006495B8 /* dna.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dna.jpg; sourceTree = "<group>"; };
+		504FAFF02A544C01006495B8 /* tiger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tiger.jpg; sourceTree = "<group>"; };
 		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
 		504FE2C42A1CF08A007A3F04 /* lanczos.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lanczos.glsl; sourceTree = "<group>"; };
 		504FE2C52A1CF2A3007A3F04 /* catmull.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = catmull.glsl; sourceTree = "<group>"; };
@@ -598,8 +600,10 @@
 				50A09C832A45CEB600845EE7 /* greengradient.jpg */,
 				50A09C852A45CEB600845EE7 /* redgradient.jpg */,
 				50A09C802A45CEB600845EE7 /* elvish.jpg */,
+				504FAFEF2A544977006495B8 /* dna.jpg */,
 				50A09C842A45CEB600845EE7 /* lava.jpg */,
 				50A09C822A45CEB600845EE7 /* wood.jpg */,
+				504FAFF02A544C01006495B8 /* tiger.jpg */,
 			);
 			path = textures;
 			sourceTree = "<group>";

@@ -180,7 +180,6 @@ Maker::writeImageSection(std::ofstream &os)
     os << "[image]" << std::endl;
     os << "width = " << opt.image.width << std::endl;
     os << "height = " << opt.image.height << std::endl;
-    os << "scaler = " << opt.image.scaler << std::endl;
     os << std::endl;
 }
 
@@ -192,7 +191,6 @@ Maker::writePaletteSection(std::ofstream &os)
     os << "mode = " << opt.keys["palette.mode"] << std::endl;
     os << "scale = " << opt.keys["palette.scale"] << std::endl;
     os << "offset = " << opt.keys["palette.offset"] << std::endl;
-    os << "colorizer = " << opt.palette.colorizer << std::endl;
     os << std::endl;
 }
 
@@ -212,9 +210,18 @@ Maker::writeLightingSection(std::ofstream &os)
 {
     os << "[lighting]" << std::endl;
     os << "enable = " << opt.keys["lighting.enable"] << std::endl;
-    os << "illuminator = " << opt.lighting.illuminator << std::endl;
     os << "alpha = " << opt.keys["lighting.alpha"] << std::endl;
     os << "beta = " << opt.keys["lighting.beta"] << std::endl;
+    os << std::endl;
+}
+
+void
+Maker::writeGpuSection(std::ofstream &os)
+{
+    os << "[gpu]" << std::endl;
+    os << "colorizer = " << opt.gpu.colorizer << std::endl;
+    os << "illuminator = " << opt.gpu.illuminator << std::endl;
+    os << "scaler = " << opt.gpu.scaler << std::endl;
     os << std::endl;
 }
 
@@ -226,7 +233,6 @@ Maker::writeVideoSection(std::ofstream &os)
     os << "keyframes = " << opt.video.keyframes << std::endl;
     os << "velocity = " << opt.video.velocity << std::endl;
     os << "bitrate = " << opt.video.bitrate << std::endl;
-    os << "scaler = " << opt.video.scaler << std::endl;
     os << std::endl;
 }
 

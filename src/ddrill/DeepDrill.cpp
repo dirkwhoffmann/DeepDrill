@@ -85,7 +85,7 @@ DeepDrill::run()
     drillMap.resize();
 
     // Initialize the imageMaker
-    imageMaker.init(opt.palette.colorizer, opt.lighting.illuminator, opt.video.scaler);
+    imageMaker.init(opt.gpu.colorizer, opt.gpu.illuminator, opt.gpu.scaler);
 
     if (!opt.getInputs(Format::MAP).empty()) {
 
