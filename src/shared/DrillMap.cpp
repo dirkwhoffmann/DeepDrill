@@ -512,19 +512,12 @@ DrillMap::updateTextures()
 
     if (iterationMapTex.getSize() != sf::Vector2u(w, h)) {
 
-        printf("Texture has %d x %d. Needs creation.\n", iterationMapTex.getSize().x, iterationMapTex.getSize().y);
-
         if (!iterationMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create iteration map texture");
         }
         if (!overlayMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create overlay map texture");
         }
-        /*
-        if (!textureMapTex.loadFromImage(palette.texture)) {
-            throw Exception("Can't create texture map texture");
-        }
-        */
         if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create lognorm map texture");
         }
@@ -534,11 +527,6 @@ DrillMap::updateTextures()
         if (!normalImMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normal(im) map texture");
         }
-        /*
-        if (!paletteTex.loadFromImage(palette.palette)) {
-            throw Exception("Can't create palette texture");
-        }
-        */
     }
 
     // Generate the overlay image

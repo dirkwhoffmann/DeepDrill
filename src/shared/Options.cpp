@@ -54,7 +54,7 @@ Options::Options(const AssetManager &assets) : assets(assets)
     defaults["palette.offset"] = "0.0";
 
     // Texture keys
-    defaults["texture.image"] = "wood.jpg";
+    defaults["texture.image"] = "";
     defaults["texture.opacity"] = "0.5";
     defaults["texture.scale"] = "1.0";
     defaults["texture.offset"] = "0.0";

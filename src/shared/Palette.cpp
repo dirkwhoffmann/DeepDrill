@@ -14,20 +14,22 @@
 #include "IO.h"
 #include "Options.h"
 #include "DrillMap.h"
+
 #include <tgmath.h>
-#include <SFML/Graphics.hpp>
 
 namespace dd {
 
-void
-Palette::loadPaletteImage(const fs::path &path)
+const sf::Image &
+Palette::getImage()
 {
+    const auto &path = opt.palette.image;
+
     if (path == "") {
 
         constexpr isize width = 4096;
 
         // Compute default palette programmatically
-        palette.create(width, 16);
+        palette.create(width, 16); // TODO: Change 16 to 1
 
         /* Create default palette
          *
@@ -50,19 +52,32 @@ Palette::loadPaletteImage(const fs::path &path)
     } else {
 
         if (!palette.loadFromFile(path)) {
-            return;
+            throw Exception("Failed to load palette image");
         }
     }
+
+    return palette;
 }
 
-void
-Palette::loadTextureImage(const fs::path &path)
+const sf::Image &
+Palette::getTextureImage()
 {
-    if (path == "") return;
+    const auto &path = opt.texture.image;
 
-    if (!texture.loadFromFile(path)) {
-        printf("Failed to load texture image %s\n", path.c_str());
+    if (path == "") {
+
+        // Compute a transparent image
+        texture.create(1, 1);
+        texture.setPixel(0, 0, sf::Color(0, 0, 0, 0));
+
+    } else {
+
+        if (!texture.loadFromFile(path)) {
+            throw Exception("Failed to load texture image");
+        }
     }
+
+    return texture;
 }
 
 }

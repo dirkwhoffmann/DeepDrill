@@ -92,7 +92,7 @@ vec3 deriveColor(vec2 coord)
 }
 
 // Derives the texture pixel for a given coordinate from the texture image
-vec3 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
+vec4 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
 {
     float PI = 3.141592653589793238;
     float sl = compute_sl(coord);
@@ -102,7 +102,7 @@ vec3 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
     float px = mod(arg * 5.0 * textureScale + textureOffset, 1.0);
     float py = mod(sl * 5.0 * textureScale, 1.0);
 
-    return vec3(texture2D(texture, vec2(px,py)).xyz);
+    return texture2D(texture, vec2(px,py));
 }
 
 void main()
@@ -117,10 +117,10 @@ void main()
     float nrmIm = decode_float(texture2D(normalIm, coord));
 
     // Get the texture pixel from the texture image
-    vec3 textureColor = deriveTexturePixel(coord, nrmRe, nrmIm);
+    vec4 textureColor = deriveTexturePixel(coord, nrmRe, nrmIm);
 
     // Mix diffuse color with the texture color
-    diffuseColor = mix(diffuseColor, textureColor, textureOpacity);
+    diffuseColor = mix(diffuseColor, textureColor.rgb, textureOpacity * textureColor.a);
 
     // Apply 3D effect
     vec3 final = diffuseColor; 

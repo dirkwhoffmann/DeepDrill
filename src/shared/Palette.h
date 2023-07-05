@@ -23,20 +23,18 @@ class Palette {
     // Configuration options
     const struct Options &opt;
 
-public:
-
-    // Palette image
+    // The palette image
     sf::Image palette;
-    
-    // Overlay image
+
+    // The texture image
     sf::Image texture;
 
 public:
 
     Palette(const Options &options) : opt(options) { }
 
-    void loadPaletteImage(const fs::path &path);
-    void loadTextureImage(const fs::path &path);
+    const sf::Image &getImage();
+    const sf::Image &getTextureImage();
 };
 
 }

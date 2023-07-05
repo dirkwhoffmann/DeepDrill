@@ -23,16 +23,14 @@ ImageMaker::init(const string &colorizationFilter, const string &illuminationFil
     // Only initialize once
     assert(illuminator.getSize().x == 0);
 
-    // Load palette and overlay image
-    palette.loadPaletteImage(opt.palette.image);
-    palette.loadTextureImage(opt.texture.image);
-
-    // Create the palette texture and the overlay texture
-    if (!paletteTex.loadFromImage(palette.palette)) {
-        throw Exception("Can't create palette texture");
+    // Load the color palette
+    if (!paletteTex.loadFromImage(palette.getImage())) {
+        throw Exception("Failed to create palette texture");
     }
-    if (!textureMapTex.loadFromImage(palette.texture)) {
-        throw Exception("Can't create texture map texture");
+
+    // Load the texture overlay
+    if (!textureMapTex.loadFromImage(palette.getTextureImage())) {
+        throw Exception("Failed to create overlay texture");
     }
 
     // Setup GPU filters
@@ -61,30 +59,38 @@ ImageMaker::draw(DrillMap &dmap)
         colorizer.setUniform("normalIm", dmap.getNormalImMapTex());
         colorizer.setUniform("paletteScale", opt.palette.scale());
         colorizer.setUniform("paletteOffset", opt.palette.offset());
-        colorizer.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity());
+        colorizer.setUniform("textureOpacity", opt.texture.opacity());
         colorizer.setUniform("textureScale", opt.texture.scale());
         colorizer.setUniform("textureOffset", opt.texture.offset());
         colorizer.apply();
 
         // 2. Illuminate
-        illuminator.setUniform("image", colorizer.getTexture());
-        illuminator.setUniform("lightDir", lightVector(0));
-        illuminator.setUniform("iter", dmap.getIterationMapTex());
-        illuminator.setUniform("overlay", dmap.getOverlayMapTex());
-        illuminator.setUniform("texture", textureMapTex);
-        illuminator.setUniform("lognorm", dmap.getLognormMapTex());
-        illuminator.setUniform("palette", paletteTex);
-        illuminator.setUniform("normalRe", dmap.getNormalReMapTex());
-        illuminator.setUniform("normalIm", dmap.getNormalImMapTex());
-        illuminator.setUniform("paletteScale", opt.palette.scale());
-        illuminator.setUniform("paletteOffset", opt.palette.offset());
-        illuminator.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity());
-        illuminator.setUniform("textureScale", opt.texture.scale());
-        illuminator.setUniform("textureOffset", opt.texture.offset());
-        illuminator.apply();
+        if (opt.lighting.enable) {
+
+            illuminator.setUniform("image", colorizer.getTexture());
+            illuminator.setUniform("lightDir", lightVector(0));
+            illuminator.setUniform("iter", dmap.getIterationMapTex());
+            illuminator.setUniform("overlay", dmap.getOverlayMapTex());
+            illuminator.setUniform("texture", textureMapTex);
+            illuminator.setUniform("lognorm", dmap.getLognormMapTex());
+            illuminator.setUniform("palette", paletteTex);
+            illuminator.setUniform("normalRe", dmap.getNormalReMapTex());
+            illuminator.setUniform("normalIm", dmap.getNormalImMapTex());
+            illuminator.setUniform("paletteScale", opt.palette.scale());
+            illuminator.setUniform("paletteOffset", opt.palette.offset());
+            illuminator.setUniform("textureOpacity", opt.texture.opacity());
+            illuminator.setUniform("textureScale", opt.texture.scale());
+            illuminator.setUniform("textureOffset", opt.texture.offset());
+            illuminator.apply();
+
+            downscaler.setUniform("curr", illuminator.getTexture());
+
+        } else {
+
+            downscaler.setUniform("curr", colorizer.getTexture());
+        }
 
         // 3. Scale down
-        downscaler.setUniform("curr", illuminator.getTexture());
         downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
         downscaler.setUniform("numTextures", 1);
         downscaler.setUniform("zoom", 1.0f);
@@ -140,21 +146,30 @@ ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
     colorizer2.apply();
 
     // 2. Illuminate
-    illuminator.setUniform("image", colorizer.getTexture());
-    illuminator.setUniform("lightDir", lightVector(frame));
-    illuminator.setUniform("normalRe", dmap1.getNormalReMapTex());
-    illuminator.setUniform("normalIm", dmap1.getNormalImMapTex());
-    illuminator.apply();
+    if (opt.lighting.enable) {
 
-    illuminator2.setUniform("image", colorizer2.getTexture());
-    illuminator2.setUniform("lightDir", lightVector(frame));
-    illuminator2.setUniform("normalRe", dmap2.getNormalReMapTex());
-    illuminator2.setUniform("normalIm", dmap2.getNormalImMapTex());
-    illuminator2.apply();
+        illuminator.setUniform("image", colorizer.getTexture());
+        illuminator.setUniform("lightDir", lightVector(frame));
+        illuminator.setUniform("normalRe", dmap1.getNormalReMapTex());
+        illuminator.setUniform("normalIm", dmap1.getNormalImMapTex());
+        illuminator.apply();
+
+        illuminator2.setUniform("image", colorizer2.getTexture());
+        illuminator2.setUniform("lightDir", lightVector(frame));
+        illuminator2.setUniform("normalRe", dmap2.getNormalReMapTex());
+        illuminator2.setUniform("normalIm", dmap2.getNormalImMapTex());
+        illuminator2.apply();
+
+        downscaler.setUniform("curr", illuminator.getTexture());
+        downscaler.setUniform("next", illuminator2.getTexture());
+
+    } else {
+
+        downscaler.setUniform("curr", colorizer.getTexture());
+        downscaler.setUniform("next", colorizer2.getTexture());
+    }
 
     // 3. Scale down
-    downscaler.setUniform("curr", illuminator.getTexture());
-    downscaler.setUniform("next", illuminator2.getTexture());
     downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
     downscaler.setUniform("numTextures", 2);
     downscaler.setUniform("zoom", zoom);
