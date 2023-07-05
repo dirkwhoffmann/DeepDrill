@@ -330,40 +330,6 @@ Parser::parse(const string &value, std::pair<isize,isize> &parsed)
     parsed = { first, last };
 }
 
-std::pair<isize, isize>
-Parser::getRange(string &key, bool strip)
-{
-    isize first = 0;
-    isize last = LONG_MAX;
-
-    if (auto pos1 = key.find(":"); pos1 != std::string::npos) {
-
-        try {
-
-            auto range = key.substr(0, pos1);
-            if (auto pos2 = range.find("-"); pos2 != std::string::npos) {
-
-                first = std::stol(range.substr(0, pos2));
-                last = std::stol(range.substr(pos2 + 1, std::string::npos));
-
-            } else {
-
-                first = std::stol(range);
-                last = first;
-            }
-
-        } catch (...) {
-            throw Exception(key + " is not a valid frame range.");
-        };
-
-        if (strip) {
-            key = key.substr(pos1 + 1, std::string::npos);
-        }
-    }
-
-    return { first, last };
-}
-
 void
 Parser::ltrim(string &s)
 {

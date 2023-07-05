@@ -48,11 +48,6 @@ public:
     static void parse(const string &value, DynamicFloat &parsed);
     static void parse(const string &value, Time &parsed);
     static void parse(const string &value, std::pair<isize,isize> &parsed);
-
-private:
-
-    [[deprecated]] static std::pair<isize,isize> getRange(string &key, bool strip = false);
-    [[deprecated]] static std::pair<isize,isize> stripRange(string &key) { return getRange(key, true); }
 };
 
 }
