@@ -15,6 +15,7 @@
 #include "Types.h"
 #include "spline.h"
 
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-result"
 
 namespace dd {
@@ -49,3 +50,5 @@ private:
 };
 
 }
+
+#pragma GCC diagnostic pop
