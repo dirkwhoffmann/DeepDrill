@@ -30,9 +30,6 @@ enum class ColoringMode
 
 struct Options {
 
-    // Reference to the asset manager
-    const AssetManager &assets;
-
     // Set to true to interrupt the application
     static bool stop;
 
@@ -253,7 +250,7 @@ struct Options {
 
 public:
 
-    Options(const AssetManager &assets);
+    Options();
 
 
     //

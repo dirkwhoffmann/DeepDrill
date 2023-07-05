@@ -58,7 +58,7 @@ DeepMake::checkArguments()
     if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
     // The output must be an existing directory
-    (void)assets.findAsset(opt.files.outputs.front(), Format::DIR);
+    (void)AssetManager::findAsset(opt.files.outputs.front(), Format::DIR);
 }
 
 void

@@ -16,11 +16,12 @@
 
 namespace dd {
 
-AssetManager::AssetManager()
-{
+std::vector<fs::path> AssetManager::paths = [](){
+
     // Search assets in the repo directory by default
     auto repo = fs::path(__FILE__).parent_path().parent_path().parent_path();
 
+    std::vector<fs::path> paths;
     paths.push_back(repo / "locations");
     paths.push_back(repo / "locations" / "yarndley");
     paths.push_back(repo / "locations" / "wiki");
@@ -32,7 +33,9 @@ AssetManager::AssetManager()
     paths.push_back(repo / "shaders" / "illuminators");
     paths.push_back(repo / "shaders" / "scalers");
     paths.push_back(repo / "shaders" / "experimental");
-}
+
+    return paths;
+}();
 
 void
 AssetManager::addSearchPath(const fs::path &path)
@@ -111,7 +114,7 @@ AssetManager::isVideoFormat(Format format) {
 }
 
 fs::path
-AssetManager::findAsset(const fs::path &name) const
+AssetManager::findAsset(const fs::path &name)
 {
     if (name != "") {
 
@@ -128,13 +131,13 @@ AssetManager::findAsset(const fs::path &name) const
 }
 
 fs::path
-AssetManager::findAsset(const fs::path &name, Format format) const
+AssetManager::findAsset(const fs::path &name, Format format)
 {
     return findAsset(name, std::vector<Format> { format });
 }
 
 fs::path
-AssetManager::findAsset(const fs::path &name, std::vector<Format> formats) const
+AssetManager::findAsset(const fs::path &name, std::vector<Format> formats)
 {
     assureFormat(name, formats);
     return findAsset(name);

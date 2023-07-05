@@ -166,7 +166,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
                 break;
 
             case 'a':
-                assets.addSearchPath(optarg);
+                AssetManager::addSearchPath(optarg);
                 break;
 
             case 'o':
@@ -215,7 +215,7 @@ Application::readConfigFiles(isize keyframe)
 
     for (auto &it: iniFiles) {
 
-        Parser::parse(assets.findAsset(it),
+        Parser::parse(AssetManager::findAsset(it),
                       [this](string k, string v) { opt.parse(k, v); },
                       keyframe);
     }

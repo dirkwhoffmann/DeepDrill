@@ -25,11 +25,8 @@ class Application {
 
 protected:
 
-    // Asset manager
-    AssetManager assets;
-
     // Configuration options
-    Options opt = Options(assets);
+    Options opt = Options();
 
     // Stop watch for measuring the total execution time
     Clock stopWatch;

@@ -37,7 +37,7 @@ Filter::init(const string &shaderName, sf::Vector2u resolution)
     rect.setTexture(&out.getTexture());
 
     // Load shader
-    path = opt.assets.findAsset(shaderName, Format::GLSL);
+    path = AssetManager::findAsset(shaderName, Format::GLSL);
     
     if (path == "") {
         throw Exception("Can't load fragment shader '" + shaderName + "'");

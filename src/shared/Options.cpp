@@ -39,7 +39,7 @@ Options::Areacheck Options::areacheck;
 Options::Attractorcheck Options::attractorcheck;
 Options::Periodcheck Options::periodcheck;
 
-Options::Options(const AssetManager &assets) : assets(assets)
+Options::Options()
 {
     // Register default keys
 
@@ -237,7 +237,7 @@ Options::parse(string key, string value)
         } else if (key == "palette.image") {
 
             if (value != "") {
-                palette.image = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+                palette.image = AssetManager::findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
             }
 
         } else if (key == "palette.mode") {
@@ -255,7 +255,7 @@ Options::parse(string key, string value)
         } else if (key == "texture.image") {
 
             if (value != "") {
-                texture.image = assets.findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
+                texture.image = AssetManager::findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
             }
 
         } else if (key == "texture.opacity") {
@@ -284,15 +284,15 @@ Options::parse(string key, string value)
 
         } else if (key == "gpu.colorizer") {
 
-            gpu.colorizer = assets.findAsset(value, Format::GLSL);
+            gpu.colorizer = AssetManager::findAsset(value, Format::GLSL);
 
         } else if (key == "gpu.illuminator") {
 
-            gpu.illuminator = assets.findAsset(value, Format::GLSL);
+            gpu.illuminator = AssetManager::findAsset(value, Format::GLSL);
 
         } else if (key == "gpu.scaler") {
 
-            gpu.scaler = assets.findAsset(value, Format::GLSL);
+            gpu.scaler = AssetManager::findAsset(value, Format::GLSL);
 
         } else if (key == "areacheck.enable") {
 
