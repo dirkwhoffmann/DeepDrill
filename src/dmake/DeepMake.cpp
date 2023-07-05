@@ -94,7 +94,7 @@ DeepMake::run()
         if (s == "y" || s == "yes" || s == "") {
 
             log::cout << log::endl;
-            Maker(*this, opt).generate();
+            Maker(*this).generate();
             return;
         }
         if (s == "n" || s == "no") {

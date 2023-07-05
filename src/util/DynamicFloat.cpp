@@ -29,7 +29,13 @@ DynamicFloat::init(std::vector<float> vxn, std::vector<float> vyn)
     for (const auto &it : vyn) yn.push_back(double(it));
 
     if (xn.size() >= 3) {
-        
+
+        for (usize i = 0; i < xn.size(); i++) {
+
+            printf("%f / %f ", xn[i], yn[i]);
+        }
+        printf("\n");
+
         // spline = tk::spline(xn, yn, tk::spline::cspline, true);
         pSpline = (void *)new tk::spline(xn, yn, tk::spline::cspline, true);
     }

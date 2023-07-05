@@ -231,6 +231,7 @@ Parser::parse(const string &value, DynamicFloat &parsed)
     std::vector<float> xn;
     std::vector<float> yn;
 
+    Time t;
     double y;
 
     if (auto pos1 = value.find("/"); pos1 == std::string::npos) {
@@ -253,20 +254,8 @@ Parser::parse(const string &value, DynamicFloat &parsed)
                 auto first = it.substr(0, pos);
                 auto last = it.substr(pos + 1, std::string::npos);
 
-                if (first.find(":") != std::string::npos) {
-
-                    // Time is gives as a time stamp
-                    Time t; Parser::parse(first, t);
-                    xn.push_back(t.asSeconds());
-
-                } else {
-
-                    // Time is given as a frame number
-                    isize f; Parser::parse(first, f);
-                    xn.push_back(double(f) / Options::video.frameRate);
-
-                }
-
+                Parser::parse(first, t);
+                xn.push_back(t.asSeconds());
                 Parser::parse(last, y);
                 yn.push_back(float(y));
 
