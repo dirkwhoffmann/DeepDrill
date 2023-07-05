@@ -10,11 +10,10 @@
 // -----------------------------------------------------------------------------
 
 #include "DynamicFloat.h"
+#include "Options.h"
 #include "spline.h"
 
 namespace dd {
-
-double DynamicFloat::fps = 60.0;
 
 void
 DynamicFloat::init(std::vector<float> vxn, std::vector<float> vyn)
@@ -62,7 +61,7 @@ DynamicFloat::operator() (double x) const
 float
 DynamicFloat::operator() (isize x) const
 {
-    return (*this)(double(x) / fps);
+    return (*this)(double(x) / Options::video.frameRate);
 }
 
 }

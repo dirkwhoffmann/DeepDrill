@@ -19,8 +19,6 @@ namespace dd {
 
 struct DynamicFloat {
 
-    static double fps;
-
     std::vector<double> xn;
     std::vector<double> yn;
 

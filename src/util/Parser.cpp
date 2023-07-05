@@ -263,7 +263,7 @@ Parser::parse(const string &value, DynamicFloat &parsed)
 
                     // Time is given as a frame number
                     isize f; Parser::parse(first, f);
-                    xn.push_back(double(f) / DynamicFloat::fps);
+                    xn.push_back(double(f) / Options::video.frameRate);
 
                 }
 
