@@ -15,6 +15,11 @@
 
 namespace dd {
 
+DynamicFloat::~DynamicFloat()
+{
+    delete (tk::spline *)pSpline;
+}
+
 void
 DynamicFloat::init(std::vector<float> vxn, std::vector<float> vyn)
 {

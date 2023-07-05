@@ -30,6 +30,7 @@ struct DynamicFloat {
     //
 
     DynamicFloat() { };
+    ~DynamicFloat(); 
     void init(std::vector<float> xn, std::vector<float> yn);
 
 
