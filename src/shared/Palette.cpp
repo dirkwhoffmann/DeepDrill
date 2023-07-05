@@ -14,122 +14,70 @@
 #include "IO.h"
 #include "Options.h"
 #include "DrillMap.h"
+
 #include <tgmath.h>
-#include <SFML/Graphics.hpp>
 
 namespace dd {
 
-Palette::Palette(const Options &opt) : opt(opt)
+const sf::Image &
+Palette::getImage()
 {
-    static constexpr isize size = 2048;
+    const auto &path = Options::palette.image;
 
-    r.resize(size);
-    g.resize(size);
-    b.resize(size);
+    if (path == "") {
 
-    /* Create default palette
-     *
-     * The formula is an adaption from https://www.shadertoy.com/view/tllSWj
-     * It was used in an GLSL shader in the following form:
-     *
-     *     vec4 mapColor(float mcol) {
-     *        return vec4(0.5 + 0.5*cos(2.7+mcol*30.0 + vec3(0.0,.6,1.0)),1.0);
-     *     }
-     */
+        constexpr isize width = 8192;
 
-    for (isize i = 0; i < size; i++) {
+        // Compute default palette programmatically
+        palette.create(width, 1);
 
-        double v = double(i) / size * 2 * 3.14159;
-        r[i] = 255.0 * (0.5 + 0.5 * cos(v + 0.0 - 2.7));
-        g[i] = 255.0 * (0.5 + 0.5 * cos(v + 0.6 - 2.7));
-        b[i] = 255.0 * (0.5 + 0.5 * cos(v + 1.0 - 2.7));
-    }
-}
+        /* Create default palette
+         *
+         * The formula is an adaption from https://www.shadertoy.com/view/tllSWj
+         * It was used in an GLSL shader in the following form:
+         *
+         *     vec4 mapColor(float mcol) {
+         *        return vec4(0.5 + 0.5*cos(2.7+mcol*30.0 + vec3(0.0,.6,1.0)),1.0);
+         *     }
+         */
+        for (isize i = 0; i < width; i++) {
 
-void
-Palette::loadPaletteImage(const fs::path &path)
-{
-    sf::Image img;
+            double v = double(i) / width * 2 * 3.14159;
+            auto rr = isize(255.0 * (0.5 + 0.5 * cos(v + 0.0 - 2.7)));
+            auto gg = isize(255.0 * (0.5 + 0.5 * cos(v + 0.6 - 2.7)));
+            auto bb = isize(255.0 * (0.5 + 0.5 * cos(v + 1.0 - 2.7)));
+            palette.setPixel(int(i), 0, sf::Color(u8(rr), u8(gg), u8(bb)));
+        }
 
-    if (path != "" && img.loadFromFile(path)) {
+    } else {
 
-        auto size = img.getSize();
-
-        r.resize(size.x);
-        g.resize(size.x);
-        b.resize(size.x);
-
-        for (unsigned x = 0; x < size.x; x++) {
-
-            auto p = img.getPixel(x, 0);
-
-            r[x] = p.r;
-            g[x] = p.g;
-            b[x] = p.b;
+        if (!palette.loadFromFile(path)) {
+            throw Exception("Failed to load palette image");
         }
     }
+
+    return palette;
 }
 
-void
-Palette::loadTextureImage(const fs::path &path)
+const sf::Image &
+Palette::getTextureImage()
 {
-    if (path == "") return;
+    const auto &path = Options::texture.image;
 
-    if (texture.loadFromFile(path)) {
-        // printf("Loaded texture image %s\n", path.c_str());
+    if (path == "") {
+
+        // Compute a transparent image
+        texture.create(1, 1);
+        texture.setPixel(0, 0, sf::Color(0, 0, 0, 0));
+
     } else {
-        printf("Failed to load texture image %s\n", path.c_str());
+
+        if (!texture.loadFromFile(path)) {
+            throw Exception("Failed to load texture image");
+        }
     }
-}
 
-double
-Palette::overlayOpacity() const
-{
-    return texture.getSize().x ? opt.colors.opacity : 0.0;
-}
-
-u32
-Palette::interpolateABGR(struct MapEntry &entry) const
-{
-    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
-    sl *= opt.colors.scale;
-
-    auto size = r.size();
-
-    auto scaled = sl * size / (2 * 3.14159);
-    auto frac = fmod(scaled, 1.0);
-
-    auto r1 = r[(isize(scaled) + 0) % size];
-    auto g1 = g[(isize(scaled) + 0) % size];
-    auto b1 = b[(isize(scaled) + 0) % size];
-    auto r2 = r[(isize(scaled) + 1) % size];
-    auto g2 = g[(isize(scaled) + 1) % size];
-    auto b2 = b[(isize(scaled) + 1) % size];
-    auto mr = r1 + (r2 - r1) * frac;
-    auto mg = g1 + (g2 - g1) * frac;
-    auto mb = b1 + (b2 - b1) * frac;
-
-    return  255 << 24 | u8(mb) << 16 | u8(mg) << 8 | u8(mr);
-}
-
-u32
-Palette::readTextureImage(struct MapEntry &entry) const
-{
-    const double PI = 3.141592653589793238;
-
-    auto sl = ((double(entry.last) - log2(entry.lognorm)) + 4.0) * 0.075;
-    sl *= opt.colors.scale;
-
-    auto size = texture.getSize();
-
-    auto arg = (entry.normal.arg() + PI) / (2 * PI);
-    auto px = isize(arg * size.x * 5.0) % size.x;
-    auto py = isize(sl * size.y * 5.0) % size.y;
-    if (py < 0) py += size.y;
-    if (px < 0) px += size.x;
-
-    auto color = texture.getPixel(unsigned(px), unsigned(py));
-    return 255 << 24 | color.b << 16 | color.g << 8 | color.r;
+    return texture;
 }
 
 }

@@ -24,7 +24,7 @@ namespace dd {
 void
 DrillMap::resize()
 {
-    resize(opt.drillmap.width, opt.drillmap.height, opt.drillmap.depth);
+    resize(Options::drillmap.width, Options::drillmap.height, Options::drillmap.depth);
 }
 
 void
@@ -37,8 +37,8 @@ DrillMap::resize(isize w, isize h, isize d)
     height = h;
     depth = d;
 
-    center = PrecisionComplex(opt.location.real, opt.location.imag);
-    mpfPixelDeltaX = mpf_class(4.0) / opt.location.zoom / height;
+    center = PrecisionComplex(Options::location.real, Options::location.imag);
+    mpfPixelDeltaX = mpf_class(4.0) / Options::location.zoom / height;
     mpfPixelDeltaY = mpfPixelDeltaX;
     pixelDeltaX = mpfPixelDeltaY;
     pixelDeltaY = mpfPixelDeltaY;
@@ -48,6 +48,16 @@ DrillMap::resize(isize w, isize h, isize d)
 
     data.resize(w * h);
     data = { };
+    resultMap.assign(width * height, DrillResult::DR_UNPROCESSED);
+    firstIterationMap.assign(width * height, 0);
+    lastIterationMap.assign(width * height, 0);
+    overlayMap.assign(width * height, 0);
+    textureMap.assign(width * height, 0);
+    lognormMap.assign(width * height, 0);
+    derivReMap.assign(width * height, 0);
+    derivImMap.assign(width * height, 0);
+    normalReMap.assign(width * height, 0);
+    normalImMap.assign(width * height, 0);
 
     assert(!hasIterations());
     assert(!hasLogNorms());
@@ -95,7 +105,58 @@ void
 DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
     assert(w < width && h < height);
-    data[h * width + w] = entry;
+
+    auto index = h * width + w;
+
+    data[index] = entry;
+    resultMap[index] = entry.result;
+    firstIterationMap[index] = entry.first;
+    lastIterationMap[index] = entry.last;
+    lognormMap[index] = entry.lognorm;
+    derivReMap[index] = entry.derivative.re;
+    derivImMap[index] = entry.derivative.im;
+    normalReMap[index] = entry.normal.re;
+    normalImMap[index] = entry.normal.im;
+
+    // REMOVE THESE ASSERTS ASAP
+    assert(entry.result == DR_ESCAPED || normalReMap[index] == 0.0);
+    assert(entry.result == DR_ESCAPED || normalImMap[index] == 0.0);
+
+    switch (entry.result) {
+
+        case DR_ESCAPED:
+
+            overlayMap[index] = 0;
+            break;
+
+        case DR_GLITCH:
+
+            overlayMap[index] = Options::perturbation.color | 0xFF000000;
+            break;
+
+        case DR_IN_BULB:
+        case DR_IN_CARDIOID:
+
+            overlayMap[index] = Options::areacheck.color | 0xFF000000;
+            break;
+
+        case DR_PERIODIC:
+
+            overlayMap[index] = Options::periodcheck.color | 0xFF000000;
+            break;
+
+        case DR_ATTRACTED:
+
+            overlayMap[index] = Options::attractorcheck.color | 0xFF000000;
+            break;
+
+        default:
+
+            overlayMap[index] = GpuColor::black | 0xFF000000;
+            break;
+    }
+
+    dirty = true;
 }
 
 void
@@ -262,7 +323,7 @@ DrillMap::analyze() const
     } saved;
 
     auto total = width * height;
-    auto limit = opt.location.depth;
+    auto limit = Options::location.depth;
 
     {   ProgressIndicator progress("Analyzing drill map", total);
 
@@ -440,11 +501,83 @@ DrillMap::analyze() const
     log::cout << log::endl;
 }
 
-const ColorMap &
-DrillMap::colorize()
+void
+DrillMap::updateTextures()
 {
-    colorMap.compute(*this);
-    return colorMap;
+    // Only proceed of textures are dirty
+    if (!dirty) return;
+
+    auto w = unsigned(width);
+    auto h = unsigned(height);
+
+    if (iterationMapTex.getSize() != sf::Vector2u(w, h)) {
+
+        if (!iterationMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create iteration map texture");
+        }
+        if (!overlayMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create overlay map texture");
+        }
+        if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create lognorm map texture");
+        }
+        if (!normalReMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create normal(re) map texture");
+        }
+        if (!normalImMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create normal(im) map texture");
+        }
+    }
+
+    // Generate the overlay image
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
+            
+            auto pos = y * width + x;
+            
+            switch (resultMap[pos]) {
+                    
+                case DR_ESCAPED:
+                    
+                    overlayMap[pos] = 0;
+                    break;
+                    
+                case DR_GLITCH:
+                    
+                    overlayMap[pos] = Options::perturbation.color | 0xFF000000;
+                    break;
+                    
+                case DR_IN_BULB:
+                case DR_IN_CARDIOID:
+                    
+                    overlayMap[pos] = Options::areacheck.color | 0xFF000000;
+                    break;
+                    
+                case DR_PERIODIC:
+                    
+                    overlayMap[pos] = Options::periodcheck.color | 0xFF000000;
+                    break;
+                    
+                case DR_ATTRACTED:
+                    
+                    overlayMap[pos] = Options::attractorcheck.color | 0xFF000000;
+                    break;
+                    
+                default:
+                    
+                    overlayMap[pos] = GpuColor::black | 0xFF000000;
+                    break;
+            }
+        }
+    }
+
+    iterationMapTex.update((u8 *)lastIterationMap.data());
+    overlayMapTex.update((u8 *)overlayMap.data());
+    lognormMapTex.update((u8 *)lognormMap.data());
+    normalReMapTex.update((u8 *)normalReMap.data());
+    normalImMapTex.update((u8 *)normalImMap.data());
+
+    dirty = false;
 }
 
 void
@@ -487,7 +620,10 @@ DrillMap::load(std::istream &is)
     while (!compressor.eof()) { loadChannel(compressor); }
     progress3.done();
 
-    if (opt.flags.verbose) {
+    // Mark textures as outdated
+    dirty = true;
+
+    if (Options::flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
@@ -585,6 +721,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).result = DrillResult(loadInt());
+                    resultMap[y * width + x] = get(x,y).result;
                 }
             }
             break;
@@ -594,6 +731,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).first = u32(loadInt());
+                    firstIterationMap[y * width + x] = get(x,y).first;
                 }
             }
             break;
@@ -603,6 +741,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).last = u32(loadInt());
+                    lastIterationMap[y * width + x] = get(x,y).last;
                 }
             }
             break;
@@ -612,6 +751,7 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     get(x,y).lognorm = float(loadFloat());
+                    lognormMap[y * width + x] = get(x,y).lognorm;
                 }
             }
             break;
@@ -622,6 +762,8 @@ DrillMap::loadChannel(Compressor &is)
                 for (isize x = 0; x < width; x++) {
                     get(x,y).derivative.re = double(loadFloat());
                     get(x,y).derivative.im = double(loadFloat());
+                    derivReMap[y * width + x] = get(x,y).derivative.re;
+                    derivImMap[y * width + x] = get(x,y).derivative.im;
                 }
             }
             break;
@@ -632,6 +774,8 @@ DrillMap::loadChannel(Compressor &is)
                 for (isize x = 0; x < width; x++) {
                     get(x,y).normal.re = double(loadFloat());
                     get(x,y).normal.im = double(loadFloat());
+                    normalReMap[y * width + x] = get(x,y).normal.re;
+                    normalImMap[y * width + x] = get(x,y).normal.im;
                 }
             }
             break;
@@ -717,7 +861,7 @@ DrillMap::save(std::ostream &os)
     bool saveLast = true;
     bool saveLognorms = true;
     bool saveDerivatives = false;
-    bool saveNormals = opt.drillmap.depth == 1;
+    bool saveNormals = Options::drillmap.depth == 1;
 
     Compressor compressor(width * height * sizeof(MapEntry));
 
@@ -727,7 +871,7 @@ DrillMap::save(std::ostream &os)
         saveHeader(os);
 
         // The next byte indicates if channel data is compressed
-        os << u8(opt.drillmap.compress);
+        os << u8(Options::drillmap.compress);
 
         // Generate channels
         if (saveDrillResults) saveChannel(compressor, CHANNEL_RESULT);
@@ -738,7 +882,7 @@ DrillMap::save(std::ostream &os)
         if (saveNormals) saveChannel(compressor, CHANNEL_NORMAL);
     }
 
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
@@ -758,7 +902,7 @@ DrillMap::save(std::ostream &os)
         log::cout << log::vspace;
     }
 
-    if (opt.drillmap.compress) {
+    if (Options::drillmap.compress) {
 
         ProgressIndicator progress2("Compressing map file");
 
@@ -768,7 +912,7 @@ DrillMap::save(std::ostream &os)
         auto saved = oldSize - newSize;
         progress2.done();
 
-        if (opt.flags.verbose) {
+        if (Options::flags.verbose) {
 
             log::cout << log::vspace;
             log::cout << log::ralign("Size reduction: ");

@@ -33,9 +33,6 @@ public:
 
 class Approximator {
 
-    // Configuration options
-    const struct Options &opt;
-
     // Coefficient array
     Coefficients a;
 
@@ -46,7 +43,7 @@ class Approximator {
 
 public:
 
-    Approximator(const Options &opt) : opt(opt) { };
+    Approximator() { };
 
 
     //

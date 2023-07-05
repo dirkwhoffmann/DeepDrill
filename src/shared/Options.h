@@ -15,13 +15,12 @@
 #include "Types.h"
 #include "AssetManager.h"
 #include "Colors.h"
+#include "DynamicFloat.h"
 #include "IO.h"
 #include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
 
 namespace dd {
-
-// struct Color { u32 abgr; };
 
 enum class ColoringMode
 {
@@ -31,11 +30,8 @@ enum class ColoringMode
 
 struct Options {
 
-    // Reference to the asset manager
-    const AssetManager &assets;
-
     // Set to true to interrupt the application
-    bool stop = false;
+    static bool stop;
 
 
     //
@@ -43,15 +39,15 @@ struct Options {
     //
 
     // Default keys
-    std::map<string,string> defaults;
+    static std::map<string,string> defaults;
 
     // Keys read from configuration files
-    std::map<string,string> keys;
+    static std::map<string,string> keys;
 
     // Keys specified at the command line
-    std::vector<string> overrides;
+    static std::vector<string> overrides;
 
-    struct {
+    static struct Flags {
 
         // Indicates if the '-v' flag has been specified
         bool verbose = false;
@@ -61,7 +57,7 @@ struct Options {
 
     } flags;
 
-    struct {
+    static struct Files {
 
         // Full path to the executable
         fs::path exec;
@@ -72,7 +68,7 @@ struct Options {
 
     } files;
 
-    struct {
+    static struct Location {
 
         // Center coordinate
         mpf_class real;
@@ -86,7 +82,7 @@ struct Options {
 
     } location;
 
-    struct {
+    static struct Drillmap {
 
         // Drill map dimensions in pixels
         isize width;
@@ -100,24 +96,15 @@ struct Options {
         
     } drillmap;
 
-    struct {
+    static struct Image {
 
         // Image dimensions in pixels
         isize width;
         isize height;
 
-        // Indicates if an illumination effect should be applied
-        isize depth;
-
-        // Path to the illumination filter
-        fs::path illuminator;
-
-        // Path to the image downscaling filter
-        fs::path scaler;
-
     } image;
 
-    struct {
+    static struct Video {
 
         // Video frame rate
         isize frameRate;
@@ -125,43 +112,72 @@ struct Options {
         // Number of keyframes
         isize keyframes;
 
-        // Number of in-between images
-        isize inbetweens;
+        // The first visible keyframe
+        isize startframe;
+
+        // Zoom velocity
+        DynamicFloat velocity;
 
         // Bitrate
         isize bitrate;
 
-        // Path to the video downscaling filter
-        fs::path scaler;
-
     } video;
 
-    struct {
+    static struct Palette {
+
+        // Path to the palette image
+        fs::path image;
 
         // Coloring mode
         ColoringMode mode;
-        
-        // Path to the palette image
-        fs::path palette;
+
+        // Scaling and shifting
+        DynamicFloat scale;
+        DynamicFloat offset;
+
+    } palette;
+
+    static struct Texture {
 
         // Path to the texture image
-        fs::path texture;
-
-        // Scaling factor
-        double scale;
+        fs::path image;
 
         // Texture opacity
-        double opacity;
+        DynamicFloat opacity;
 
-        // Light vector direction
-        double alpha;
-        double beta;
+        // Scaling and shifting
+        DynamicFloat scale;
+        DynamicFloat offset;
 
-    } colors;
-    
-    struct {
+    } texture;
 
-        // Indicates if perturbation should be utilized
+    static struct Lighting {
+
+        // Indicates if a spatial images shall be computed
+        bool enable;
+
+        // Direction of the light vector
+        DynamicFloat alpha;
+        DynamicFloat beta;
+
+    } lighting;
+
+    static struct GPU {
+
+        // Path to the colorization filter
+        fs::path colorizer;
+
+        // Path to the illumination filter
+        fs::path illuminator;
+
+        // Path to the downscaling filter
+        fs::path scaler;
+
+    } gpu;
+
+    static struct Perturbation {
+
+        // Indicates if perturbation shall be utilized
         bool enable;
 
         // Tolerance used for glitch detection
@@ -178,9 +194,9 @@ struct Options {
 
     } perturbation;
     
-    struct {
+    static struct Approximation {
 
-        // Indicates if series approximation should be utilized
+        // Indicates if series approximation shall be utilized
         bool enable;
 
         // Number of coefficients used in series approximation
@@ -191,7 +207,7 @@ struct Options {
 
     } approximation;
 
-    struct {
+    static struct Areacheck {
 
         // Indicates if area checking should be applied
         bool enable;
@@ -201,7 +217,7 @@ struct Options {
 
     } areacheck;
 
-    struct {
+    static struct Attractorcheck {
 
         // Indicates if attractor checking should be applied
         bool enable;
@@ -214,7 +230,7 @@ struct Options {
 
     } attractorcheck;
 
-    struct {
+    static struct Periodcheck {
 
         // Indicates if period checking should be applied
         bool enable;
@@ -234,37 +250,26 @@ struct Options {
 
 public:
 
-    Options(const AssetManager &assets);
+    // This class is not meant to be instantiated
+    Options() = delete;
 
 
     //
     // Handling input and output files
     //
 
-    std::vector <fs::path> getInputs(Format format);
-    std::vector <fs::path> getOutputs(Format format);
+    static std::vector <fs::path> getInputs(Format format);
+    static std::vector <fs::path> getOutputs(Format format);
 
 
     //
     // Parsing key-value pairs
     //
 
-    void parse(string keyvalue);
-    void parse(string key, string value);
-    void applyDefaults();
-    void derive();
-
-private:
-
-    void parse(const string &key, const string &value, string &parsed);
-    void parse(const string &key, const string &value, bool &parsed);
-    void parse(const string &key, const string &value, isize &parsed);
-    void parse(const string &key, const string &value, isize &parsed, isize min, isize max);
-    void parse(const string &key, const string &value, double &parsed);
-    void parse(const string &key, const string &value, double &parsed, double min, double max);
-    void parse(const string &key, const string &value, mpf_class &parsed);
-    void parse(const string &key, const string &value, GpuColor &parsed);
-    void parse(const string &key, const string &value, ColoringMode &parsed);
+    static void parse(string keyvalue);
+    static void parse(string key, string value);
+    static void applyDefaults();
+    static void derive();
 };
 
 }

@@ -18,9 +18,9 @@
 #include "Recorder.h"
 #include "Animated.h"
 #include "DrillMap.h"
-#include "ColorMap.h"
-#include "Colorizer.h"
+#include "ImageMaker.h"
 #include "Filter.h"
+#include "ProgressIndicator.h"
 
 #include <SFML/Graphics.hpp>
 #include <future>
@@ -29,20 +29,27 @@ namespace dd {
 
 class Zoomer {
 
-    // Configuration options
-    struct Options &opt;
-
     // The application window
     sf::RenderWindow window;
 
     // Drill maps (read from map files)
-    DrillMap drillMap[3] = { DrillMap(opt), DrillMap(opt), DrillMap(opt) };
+    DrillMap drillMap[4] = { DrillMap(), DrillMap(), DrillMap(), DrillMap() };
 
-    // Colorizer for converting the drill maps into an image
-    Colorizer colorizer = Colorizer(opt);
+    // Currently loaded keyframe in each slot
+    isize slot[4] = { -1, -1, -1, -1 };
+
+    // Indicates whether a mapfile needs to be updated
+    enum class MapState { Dirty, Loading, UpToDate };
+    MapState mapState[4] = { MapState::Dirty, MapState::Dirty, MapState::Dirty, MapState::Dirty };
+
+    // Synchronizers for the async map file loader
+    std::future<bool> loadResult[4];
+
+    // Colorizer for converting the drill maps into images
+    ImageMaker imageMaker;
 
     // The video recorder
-    Recorder recorder = Recorder(opt);
+    Recorder recorder;
 
     // Indicates if the application runs in record mode or preview mode
     bool recordMode;
@@ -58,15 +65,19 @@ class Zoomer {
     Clock updateClock;
     Clock renderClock;
     Clock recordClock;
+    Time updateTime;
+    // Time renderTime;
+    // Time recordTime;
 
-    // Synchronizer for the async map file loader
-    std::future<bool> loadResult;
+    // Progress indicator
+    ProgressIndicator progress;
 
 public:
 
     // Constructors
-    Zoomer(Options &opt);
-
+    Zoomer();
+    ~Zoomer();
+    
     // Initializers
     void init();
 
@@ -75,12 +86,21 @@ public:
 
 private:
 
+    // The main loop
+    void mainLoop();
+
     // Called inside the main loop
+    void report();
+    void animate();
     void update();
     void draw();
     void record();
 
+    // Returns the map slot for a given keyframe
+    isize slotNr(isize nr) { return (nr + 4) % 4; }
+
     // Loads a new map file from disk
+    std::future<bool> loadMapFileAsync(isize nr);
     bool loadMapFile(isize nr);
 };
 

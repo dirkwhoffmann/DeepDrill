@@ -12,6 +12,7 @@
 #include "Parser.h"
 #include "Exception.h"
 #include "IO.h"
+#include "Logger.h"
 
 #include <algorithm>
 #include <fstream>
@@ -81,18 +82,22 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
                 auto key = input.substr(0, pos);
                 auto value = input.substr(pos + 1, std::string::npos);
 
-                // Get the range of keyframes this key-value pair applies to
-                auto range = stripRange(key);
+                // Check if the key is prefixed with a frame range
+                if (auto pos2 = key.find(":"); pos2 != std::string::npos) {
 
-                if (nr >= range.first && nr <= range.second) {
+                    auto prefix = key.substr(0, pos2);
+                    key = key.substr(pos2 + 1, std::string::npos);
 
-                    // Process the key-value pair
-                    callback(section + "." + key ,value);
+                    std::pair<isize,isize> range = { 0, LONG_MAX };
+                    parse(prefix, range);
+
+                    // Only proceed if the frame is inside the valid range
+                    if (nr < range.first || nr > range.second) continue;
                 }
-                continue;
-            }
 
-            throw SyntaxError("Parse error");
+                // Process the key-value pair
+                callback(section + "." + key ,value);
+            }
         }
 
     } catch (Exception &e) {
@@ -101,38 +106,228 @@ Parser::parse(std::stringstream &stream, Callback callback, isize nr)
     }
 }
 
-std::pair<isize, isize>
-Parser::getRange(string &key, bool strip)
+void
+Parser::parse(const string &value, string &parsed)
+{
+    parsed = value;
+}
+
+void
+Parser::parse(const string &value, bool &parsed)
+{
+    if (value == "true" || value == "yes" || value == "on") {
+
+        parsed = true;
+        return;
+    }
+    if (value == "false" || value == "no" || value == "off") {
+
+        parsed = false;
+        return;
+    }
+
+    throw Exception("Invalid argument: " + value);
+}
+
+void
+Parser::parse(const string &value, isize &parsed)
+{
+    try {
+        parsed = stol(value);
+    } catch (...) {
+        throw Exception("Invalid argument: " + value);
+    }
+}
+
+void
+Parser::parse(const string &value, isize &parsed, isize min, isize max)
+{
+    parse(value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument. Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument. Value must be <= " + std::to_string(max));
+    }
+}
+
+void
+Parser::parse(const string &value, double &parsed)
+{
+    if (value.find_first_not_of("-0123456789.beBE") != std::string::npos) {
+        throw Exception("Invalid floating point value: " + value);
+    }
+    try {
+        parsed = stod(value);
+    } catch (...) {
+        throw Exception("Invalid floating point value: " + value);
+    }
+}
+
+void
+Parser::parse(const string &value, double &parsed, double min, double max)
+{
+    parse(value, parsed);
+
+    if (parsed < min) {
+        throw Exception("Invalid argument. Value must be >= " + std::to_string(min));
+    }
+    if (parsed > max) {
+        throw Exception("Invalid argument. Value must be <= " + std::to_string(max));
+    }
+}
+
+void
+Parser::parse(const string &value, mpf_class &parsed)
+{
+    try {
+        parsed = mpf_class(value);
+    } catch (...) {
+        throw Exception("Invalid argument: " + value);
+    }
+}
+
+void
+Parser::parse(const string &value, GpuColor &parsed)
+{
+    std::map <string, GpuColor> modes = {
+
+        { "black",      GpuColor::black     },
+        { "white",      GpuColor::white     },
+        { "red",        GpuColor::red       },
+        { "green",      GpuColor::green     },
+        { "blue",       GpuColor::blue      },
+        { "yellow",     GpuColor::yellow    },
+        { "magenta",    GpuColor::magenta   },
+        { "cyan",       GpuColor::cyan      }
+    };
+
+    try {
+        parsed = modes.at(value);
+    } catch (...) {
+        throw Exception("Invalid argument: " + value);
+    }
+}
+
+void
+Parser::parse(const string &value, ColoringMode &parsed)
+{
+    std::map <string, ColoringMode> modes = {
+
+        { "default", ColoringMode::Default }
+    };
+
+    try {
+        parsed = modes.at(value);
+    } catch (...) {
+        throw Exception("Unknown coloring mode: '" + value + "'");
+    }
+}
+
+void
+Parser::parse(const string &value, DynamicFloat &parsed)
+{
+    std::vector<float> xn;
+    std::vector<float> yn;
+
+    double y;
+
+    if (auto pos1 = value.find("/"); pos1 == std::string::npos) {
+
+        // A single value is given
+        Parser::parse(value, y);
+        xn.push_back(0.0);
+        yn.push_back(y);
+
+    } else {
+
+        // A list of values is given
+        auto pairs = split(value, ',');
+
+        // Split list entries
+        for (auto &it : pairs) {
+
+            if (auto pos = it.find("/"); pos != std::string::npos) {
+
+                auto first = it.substr(0, pos);
+                auto last = it.substr(pos + 1, std::string::npos);
+
+                if (first.find(":") != std::string::npos) {
+
+                    // Time is gives as a time stamp
+                    Time t; Parser::parse(first, t);
+                    xn.push_back(t.asSeconds());
+
+                } else {
+
+                    // Time is given as a frame number
+                    isize f; Parser::parse(first, f);
+                    xn.push_back(double(f) / Options::video.frameRate);
+
+                }
+
+                Parser::parse(last, y);
+                yn.push_back(float(y));
+
+            } else {
+                throw Exception("Invalid spline pair: '" + it + "'");
+            }
+        }
+    }
+
+    parsed.init(xn, yn);
+
+    /*
+    log::cout << parsed;
+    for (double i = 0.0; i <= 70.1; i += 0.5) {
+        printf("Spline(%f) = %f\n", i, parsed(i));
+    }
+    */
+}
+
+void
+Parser::parse(const string &value, Time &parsed)
+{
+    if (auto pos = value.find(":"); pos != std::string::npos) {
+
+        long m, s;
+
+        parse(value.substr(0, pos), m);
+        parse(value.substr(pos + 1, std::string::npos), s);
+
+        parsed = Time::seconds(i64(60 * m + s));
+
+    } else {
+
+        throw Exception("Invalid time specification: " + value);
+    }
+}
+
+void
+Parser::parse(const string &value, std::pair<isize,isize> &parsed)
 {
     isize first = 0;
     isize last = LONG_MAX;
 
-    if (auto pos1 = key.find(":"); pos1 != std::string::npos) {
+    try {
 
-        try {
+        if (auto pos2 = value.find("-"); pos2 != std::string::npos) {
 
-            auto range = key.substr(0, pos1);
-            if (auto pos2 = range.find("-"); pos2 != std::string::npos) {
+            first = std::stol(value.substr(0, pos2));
+            last = std::stol(value.substr(pos2 + 1, std::string::npos));
 
-                first = std::stol(range.substr(0, pos2));
-                last = std::stol(range.substr(pos2 + 1, std::string::npos));
+        } else {
 
-            } else {
-
-                first = std::stol(range);
-                last = first;
-            }
-
-        } catch (...) {
-            throw Exception(key + " is not a valid frame range.");
-        };
-
-        if (strip) {
-            key = key.substr(pos1 + 1, std::string::npos);
+            first = std::stol(value);
+            last = first;
         }
+
+    } catch (...) {
+        throw Exception(value + " is not a valid frame range.");
     }
 
-    return { first, last };
+    parsed = { first, last };
 }
 
 void

@@ -13,21 +13,17 @@
 
 #include "config.h"
 #include "Options.h"
+#include "Chrono.h"
 #include "Logger.h"
 
 #include <getopt.h>
+#include <thread>
 
 namespace dd {
 
 class Application {
 
 protected:
-
-    // Asset manager
-    AssetManager assets;
-
-    // Configuration options
-    Options opt = Options(assets);
 
     // Stop watch for measuring the total execution time
     Clock stopWatch;
@@ -36,6 +32,9 @@ public:
     
     // Main entry point
     int main(int argc, char *argv[]);
+
+    // Performs some basic system checks on startup
+    void systemCheck();
 
     // Returns a version string
     static string version();
@@ -74,7 +73,7 @@ private:
     // Prints the command line syntax
     virtual void syntax() const = 0;
 
-    // Performs all initializations required on program launch
+    // Initializes or finalizes the application
     virtual void initialize() = 0;
 
     // Checks the input and output file formats for validity

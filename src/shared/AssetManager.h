@@ -33,9 +33,12 @@ enum class Format
 class AssetManager {
 
     // Assets search paths
-    std::vector<fs::path> paths;
+    static std::vector<fs::path> paths;
 
 public:
+
+    // This class is not meant to be instantiated
+    AssetManager() = delete;
 
     // Managing file names
     static fs::path iniFile() { return "deepzoom.ini"; }
@@ -59,9 +62,7 @@ public:
 
 public:
 
-    AssetManager();
-
-    void addSearchPath(const fs::path &path);
+    static void addSearchPath(const fs::path &path);
 
 
     //
@@ -70,9 +71,9 @@ public:
 
 public:
 
-    fs::path findAsset(const fs::path &name) const;
-    fs::path findAsset(const fs::path &name, Format format) const;
-    fs::path findAsset(const fs::path &name, std::vector<Format> formats) const;
+    static fs::path findAsset(const fs::path &name);
+    static fs::path findAsset(const fs::path &name, Format format);
+    static fs::path findAsset(const fs::path &name, std::vector<Format> formats);
 };
 
 }

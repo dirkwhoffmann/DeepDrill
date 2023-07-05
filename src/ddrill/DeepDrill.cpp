@@ -12,7 +12,7 @@
 #include "DeepDrill.h"
 #include "SlowDriller.h"
 #include "Driller.h"
-#include "ColorMap.h"
+#include "DrillMap.h"
 #include "ProgressIndicator.h"
 #include "Compressor.h"
 
@@ -72,28 +72,32 @@ void
 DeepDrill::checkArguments()
 {
     // At most one map file must be given
-    if (opt.getInputs(Format::MAP).size() > 1) throw SyntaxError("More than one map file is given");
+    if (Options::getInputs(Format::MAP).size() > 1) throw SyntaxError("More than one map file is given");
 
     // At least one output file must be given
-    if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
+    if (Options::files.outputs.size() < 1) throw SyntaxError("No output file is given");
 }
 
 void
 DeepDrill::run()
 {
+    // Initialize the drill map
     drillMap.resize();
 
-    if (!opt.getInputs(Format::MAP).empty()) {
+    // Initialize the imageMaker
+    imageMaker.init(Options::gpu.colorizer, Options::gpu.illuminator, Options::gpu.scaler);
+
+    if (!Options::getInputs(Format::MAP).empty()) {
 
         // Load the drill map from disk
-        drillMap.load(opt.getInputs(Format::MAP).front());
+        drillMap.load(Options::getInputs(Format::MAP).front());
 
         // Generate outputs
         generateOutputs();
 
     } else {
 
-        BatchProgressIndicator progress(opt, "Drilling",  opt.files.outputs.front());
+        BatchProgressIndicator progress("Drilling",  Options::files.outputs.front());
 
         // Run the driller
         runDriller();
@@ -102,21 +106,21 @@ DeepDrill::run()
         generateOutputs();
 
         // Analyze the drill map
-        if (opt.flags.verbose) drillMap.analyze();
+        if (Options::flags.verbose) drillMap.analyze();
     }
 }
 
 void
 DeepDrill::runDriller()
 {
-    if (opt.perturbation.enable) {
+    if (Options::perturbation.enable) {
 
-        Driller driller(opt, drillMap);
+        Driller driller(drillMap);
         driller.drill();
 
     } else {
 
-        SlowDriller driller(opt, drillMap);
+        SlowDriller driller(drillMap);
         driller.drill();
     }
 }
@@ -124,16 +128,15 @@ DeepDrill::runDriller()
 void
 DeepDrill::generateOutputs()
 {
-    for (auto &it : opt.files.outputs) {
+    for (auto &it : Options::files.outputs) {
 
         auto outputFormat = AssetManager::getFormat(it);
 
         if (AssetManager::isImageFormat(outputFormat)) {
 
             // Create and save image file
-            colorizer.init(opt.image.illuminator, opt.image.scaler);
-            colorizer.draw(drillMap);
-            colorizer.save(it, outputFormat);
+            imageMaker.draw(drillMap);
+            imageMaker.save(it, outputFormat);
 
         } else {
 

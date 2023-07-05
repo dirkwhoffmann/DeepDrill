@@ -13,6 +13,9 @@
 
 #include "config.h"
 #include "Types.h"
+#include "Options.h"
+#include "Chrono.h"
+
 #include <functional>
 
 namespace dd {
@@ -33,10 +36,18 @@ public:
     static void parse(std::ifstream &stream, Callback callback, isize nr = 0);
     static void parse(std::stringstream &stream, Callback callback, isize nr = 0);
 
-private:
-
-    static std::pair<isize,isize> getRange(string &key, bool strip = false);
-    static std::pair<isize,isize> stripRange(string &key) { return getRange(key, true); }
+    static void parse(const string &value, string &parsed);
+    static void parse(const string &value, bool &parsed);
+    static void parse(const string &value, isize &parsed);
+    static void parse(const string &value, isize &parsed, isize min, isize max);
+    static void parse(const string &value, double &parsed);
+    static void parse(const string &value, double &parsed, double min, double max);
+    static void parse(const string &value, mpf_class &parsed);
+    static void parse(const string &value, GpuColor &parsed);
+    static void parse(const string &value, ColoringMode &parsed);
+    static void parse(const string &value, DynamicFloat &parsed);
+    static void parse(const string &value, Time &parsed);
+    static void parse(const string &value, std::pair<isize,isize> &parsed);
 };
 
 }

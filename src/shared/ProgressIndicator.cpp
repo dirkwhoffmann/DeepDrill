@@ -28,14 +28,15 @@ ProgressIndicator::~ProgressIndicator()
 }
 
 void
-ProgressIndicator::init(const string &description, isize max)
+ProgressIndicator::init(const string &desc, isize max)
 {
+    description = desc;
     progress = 0;
     progressMax = max;
     
     dots = 0;
     dotsMax = 33;
-     
+
     log::cout << log::ralign(description + ": ");
     log::cout << log::flush;
     clock.restart();
@@ -45,7 +46,7 @@ void
 ProgressIndicator::step(isize delta)
 {
     if (clock.isPaused()) return;
-    
+
     progress += delta;
 
     isize newDots = dotsMax * progress / progressMax;
@@ -57,7 +58,7 @@ void
 ProgressIndicator::done(const string &info)
 {
     if (clock.isPaused()) return;
-    
+
     auto elapsed = clock.stop();
         
     for (; dots < dotsMax; dots++) { log::cout << "."; } log::cout << " ";
@@ -67,9 +68,9 @@ ProgressIndicator::done(const string &info)
     log::cout << log::endl;
 }
 
-BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg, const fs::path &path)
+BatchProgressIndicator::BatchProgressIndicator(const string &msg, const fs::path &path)
 {
-    if (opt.flags.batch) {
+    if (Options::flags.batch) {
 
         this->msg = msg;
         this->path = path;

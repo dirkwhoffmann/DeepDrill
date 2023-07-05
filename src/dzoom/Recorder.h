@@ -22,10 +22,6 @@ namespace dd {
 
 class Recorder {
 
-    // Configuration options
-    const struct Options &opt;
-
-
     //
     // Handles
     //
@@ -51,7 +47,7 @@ class Recorder {
 
 public:
 
-    Recorder(const Options &opt);
+    Recorder() { };
 
 
     //

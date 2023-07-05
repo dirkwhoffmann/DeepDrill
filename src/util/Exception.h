@@ -34,6 +34,11 @@ struct Exception : public std::exception {
     virtual void what(const class Logger &logger) const;
 };
 
+struct Exit : public Exception {
+
+    using Exception::Exception;
+};
+
 struct SyntaxError : public Exception {
 
     using Exception::Exception;

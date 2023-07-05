@@ -12,22 +12,30 @@
 #pragma once
 
 #include "config.h"
-#include "ColorMap.h"
+#include "AssetManager.h"
+#include "DrillMap.h"
+#include "Palette.h"
 #include "Filter.h"
 #include <functional>
 #include <SFML/Graphics.hpp>
 
 namespace dd {
 
-class Colorizer {
+class ImageMaker {
 
-    // Configuration options
-    const struct Options &opt;
+    // The color palette
+    Palette palette = Palette();
+    sf::Texture paletteTex;
+
+    // An optional overlay texture
+    sf::Texture textureMapTex;
 
     // GPU filters
-    Filter illuminator = Filter(opt);
-    Filter illuminator2 = Filter(opt);
-    Filter downscaler = Filter(opt);
+    Filter colorizer;
+    Filter colorizer2;
+    Filter illuminator;
+    Filter illuminator2;
+    Filter downscaler;
 
     // Final image
     sf::Image image;
@@ -39,10 +47,12 @@ class Colorizer {
 
 public:
 
-    Colorizer(const Options &opt) : opt(opt) { };
-    ~Colorizer() { };
+    /*
+    ImageMaker(const Options &opt) : opt(opt) { };
+    ~ImageMaker() { };
+    */
 
-    void init(const string &illuminationFilter, const string &scalingFilter);
+    void init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter);
 
     //
     // Colorizing
@@ -52,15 +62,13 @@ public:
 
     // Colorizes a still image
     void draw(DrillMap &map);
-    void draw(const ColorMap &map);
 
     // Colorizes a video frame
-    void draw(DrillMap &map1, DrillMap &map2, float frame, float zoom);
-    void draw(const ColorMap &map1, const ColorMap &map2, float frame, float zoom);
+    void draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom);
 
 private:
 
-    sf::Vector3f lightVector();
+    sf::Vector3f lightVector(isize frame);
 
 
     //

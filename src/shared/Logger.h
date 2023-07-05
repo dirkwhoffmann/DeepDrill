@@ -14,10 +14,14 @@
 #include "config.h"
 #include "Types.h"
 #include "Chrono.h"
+#include "DynamicFloat.h"
 #include "Exception.h"
 #include "StandardComplex.h"
 #include "ExtendedComplex.h"
 #include "PrecisionComplex.h"
+
+#include <optional>
+#include <thread>
 
 namespace dd {
 
@@ -65,6 +69,9 @@ class Logger {
     // The underlying output stream
     std::ostream &stream;
 
+    // Limits the output to a particular thread
+    std::optional<std::thread::id> id;
+    
     // Blank line counter
     isize blanks = 0;
     
@@ -75,9 +82,11 @@ public:
 
     Logger(std::ostream &stream) : stream(stream) { };
 
+    void restrict(std::thread::id tid = std::this_thread::get_id()) { id = tid; }
+
     void mute() { muted++; }
     void unmute() { muted--; }
-    
+
     Logger& operator<<(const log::Endl &arg);
     Logger& operator<<(const log::VSpace &arg);
     Logger& operator<<(const log::Flush &arg);
@@ -108,6 +117,12 @@ public:
     Logger& operator<<(const ExtendedComplex& arg);
     Logger& operator<<(const PrecisionComplex& arg);
     Logger& operator<<(const Exception& arg);
+    Logger& operator<<(const DynamicFloat& arg);
+
+private:
+
+    bool verbose() const;
+
 };
 
 // Default logger (writes to stdout)

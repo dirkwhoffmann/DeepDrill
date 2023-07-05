@@ -23,9 +23,6 @@ class Maker {
     // Refeference to the application
     class Application &app;
 
-    // Configuration options
-    struct Options &opt;
-
     // Path to the project directory
     fs::path projectDir;
 
@@ -36,7 +33,7 @@ class Maker {
 public:
     
     // Constructor
-    Maker(Application &app, Options &opt);
+    Maker(Application &app);
     
     // Main entry point
     void generate(); 
@@ -52,7 +49,10 @@ private:
     void writeLocationSection(std::ofstream &os);
     void writeMapSection(std::ofstream &os);
     void writeImageSection(std::ofstream &os);
-    void writeColorsSection(std::ofstream &os);
+    void writePaletteSection(std::ofstream &os);
+    void writeTextureSection(std::ofstream &os);
+    void writeLightingSection(std::ofstream &os);
+    void writeGpuSection(std::ofstream &os);
     void writeVideoSection(std::ofstream &os);
     void writePerturbationSection(std::ofstream &os);
     void writeApproximationSection(std::ofstream &os);

@@ -61,8 +61,8 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-m -o /Users/hoff/tmp/dd/project"
-            isEnabled = "NO">
+            argument = "SD.ini"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "experimental.ini"
@@ -82,11 +82,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "areacheck.enable=false"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "periodcheck.enable=false"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-p 3D.prf"

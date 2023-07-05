@@ -14,8 +14,11 @@
 #include "config.h"
 #include "Types.h"
 #include "StandardComplex.h"
-#include "ColorMap.h"
+#include "ExtendedComplex.h"
+#include "PrecisionComplex.h"
 #include "Compressor.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace dd {
 
@@ -80,9 +83,6 @@ class DrillMap {
 
 public:
     
-    // Configuration options
-    const struct Options &opt;
-
     // Map resolution
     isize width = 0;
     isize height = 0;
@@ -102,10 +102,33 @@ public:
     ExtendedDouble pixelDeltaY;
 
     // Map data
-    std::vector<MapEntry> data;
+    std::vector<MapEntry> data; // DEPRECATED
+    std::vector<DrillResult> resultMap;
+    std::vector<u32> firstIterationMap;
+    std::vector<u32> lastIterationMap;
+    std::vector<u32> overlayMap;
+    std::vector<u32> textureMap;
+    std::vector<float> lognormMap;
+    std::vector<double> derivReMap;
+    std::vector<double> derivImMap;
+    std::vector<float> normalReMap;
+    std::vector<float> normalImMap;
 
-    // Associated color map
-    ColorMap colorMap = ColorMap(opt);
+    // Map data in texture format
+    sf::Texture iterationMapTex;
+    sf::Texture overlayMapTex;
+    sf::Texture lognormMapTex;
+    sf::Texture normalReMapTex;
+    sf::Texture normalImMapTex;
+
+    // Indicates whether texture maps are dirty
+    bool dirty = true;
+
+    const sf::Texture &getIterationMapTex() { updateTextures(); return iterationMapTex; }
+    const sf::Texture &getOverlayMapTex() { updateTextures(); return overlayMapTex; }
+    const sf::Texture &getLognormMapTex() { updateTextures(); return lognormMapTex; }
+    const sf::Texture &getNormalReMapTex() { updateTextures(); return normalReMapTex; }
+    const sf::Texture &getNormalImMapTex() { updateTextures(); return normalImMapTex; }
 
 
     //
@@ -114,7 +137,7 @@ public:
 
 public:
 
-    DrillMap(const Options &opt) : opt(opt) { };
+    // DrillMap() { };
 
     void resize();
     void resize(isize w, isize h, isize d);
@@ -174,8 +197,7 @@ public:
 
 public:
 
-    ColorMap &getColorMap() { return colorMap; }
-    const ColorMap &colorize();
+    void updateTextures();
 
 
     //

@@ -1,17 +1,17 @@
-// Sampler for the current texture
+// Sampler for the first texture (current keyframe)
 uniform sampler2D curr;
 
-// Sampler for the next texture
+// Sampler for the second texture (next keyframe)
 uniform sampler2D next;
+
+// Number of provided textures
+uniform int numTextures;
 
 // Texture size
 uniform vec2 size;
 
 // Zoom factor
 uniform float zoom;
-
-// Normalized inbetween [0;1)
-uniform float frame;
 
 vec2 zoomed(vec2 coord)
 {
@@ -44,15 +44,18 @@ void main()
     vec2 coord = zoomed(gl_TexCoord[0].xy);
     vec4 color1 = bilinear(curr, coord);
 
-    // Check if a corresponding texel exists in the next texture
-    vec2 coord2 = 2.0 * coord - vec2(0.5,0.5);
-    if (coord2.x >= 0.0 && coord2.x <= 1.0 && coord2.y >= 0.0 && coord2.y <= 1.0) {
+    if (numTextures > 1) {
 
-        // Read the corresponding texel from the next texture
-        vec4 color2 = bilinear(next, coord2);
+        // Check if a corresponding texel exists in the next texture
+        vec2 coord2 = 2.0 * coord - vec2(0.5,0.5);
+        if (coord2.x >= 0.0 && coord2.x <= 1.0 && coord2.y >= 0.0 && coord2.y <= 1.0) {
 
-        // Interpolate between both texels
-        color1 = mix(color1, color2, frame);
+            // Read the corresponding texel from the next texture
+            vec4 color2 = bilinear(next, coord2);
+
+            // Interpolate between both texels
+            color1 = mix(color1, color2, zoom - 1.0);
+        }
     }
 
     gl_FragColor = gl_Color * color1;

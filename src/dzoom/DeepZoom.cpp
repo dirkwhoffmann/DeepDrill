@@ -11,6 +11,7 @@
 
 #include "DeepZoom.h"
 #include "Zoomer.h"
+#include "DynamicFloat.h"
 
 int main(int argc, char *argv[])
 {
@@ -55,12 +56,29 @@ void
 DeepZoom::initialize()
 {
     // Check for shader support
-    if (!sf::Shader::isAvailable()) {
-        throw Exception("No GPU shader support");
-    }
+    if (!sf::Shader::isAvailable()) throw Exception("No GPU shader support");
 
     // Initialize FFmpeg
     FFmpeg::init();
+
+    // Limit console output to the main thread
+    log::cout.restrict();
+
+
+    // REMOVE ASAP
+    /*
+    Dynamic test;
+    test.init({ 0.0, 2.0, 4.0}, { 0.0, 0.5, 1.0 });
+    for (double i = 0; i <= 4.1; i += 0.2) {
+        printf("spline(%f) = %f\n", i, test.get(i));
+    }
+    */
+}
+
+void
+DeepZoom::finalize()
+{
+    
 }
 
 bool
@@ -78,25 +96,25 @@ DeepZoom::isAcceptedOutputFormat(Format format) const
 void
 DeepZoom::checkArguments()
 {
-    auto iniFiles = opt.getInputs(Format::INI);
+    auto iniFiles = Options::getInputs(Format::INI);
 
     // A single input file must be given
-    if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
-    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
+    if (Options::files.inputs.size() < 1) throw SyntaxError("No input file is given");
+    if (Options::files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
     // At most one output file must be given
-    if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
+    if (Options::files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
     // The input must be an existing directory
-    (void)assets.findAsset(opt.files.inputs.front(), Format::DIR);
+    (void)AssetManager::findAsset(Options::files.inputs.front(), Format::DIR);
 
     // The directory must contain an .ini file for the zoomer
-    // TODO: Check for this file
-    opt.files.inputs.push_back(opt.files.inputs.front() / "deepzoom.ini");
+    (void)AssetManager::findAsset(Options::files.inputs.front() / "deepzoom.ini", Format::INI);
+    Options::files.inputs.push_back(Options::files.inputs.front() / "deepzoom.ini");
 
-    if (!opt.files.outputs.empty()) {
+    if (!Options::files.outputs.empty()) {
 
-        auto output = opt.files.outputs.front();
+        auto output = Options::files.outputs.front();
 
         // The output file must be writable
         std::ofstream file(output, std::ofstream::out);
@@ -114,7 +132,7 @@ DeepZoom::checkArguments()
 void
 DeepZoom::run()
 {
-    Zoomer(opt).launch();
+    Zoomer().launch();
 }
 
 }

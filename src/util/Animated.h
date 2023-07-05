@@ -16,14 +16,12 @@
 
 struct Animated {
 
-    double current = 1.0;
-    double target = 1.0;
-    double factor = 1.0;
+    static constexpr double scale = 60.0;
 
-    Animated(double value = 0);
+    double current;
 
-    bool animates() const;
+    Animated(double value = 1.0) : current(value) { };
+
     void set(double value);
-    void set(double value, long steps);
-    void move();
+    void move(double velocity);
 };

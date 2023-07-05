@@ -115,13 +115,13 @@ Approximator::compute(ReferencePoint &ref, isize numCoeff, isize depth)
 
     progress.done();
 
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Coefficients: ");
-        log::cout << opt.approximation.coefficients << log::endl;
+        log::cout << Options::approximation.coefficients << log::endl;
         log::cout << log::ralign("Approximation tolerance: ");
-        log::cout << opt.approximation.tolerance << log::endl;
+        log::cout << Options::approximation.tolerance << log::endl;
         log::cout << log::vspace;
     }
 }

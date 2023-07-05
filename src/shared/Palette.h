@@ -20,27 +20,16 @@ namespace dd {
 
 class Palette {
 
-    // Configuration options
-    const struct Options &opt;
+    // The palette image
+    sf::Image palette;
 
-    // Color values
-    std::vector <double> r;
-    std::vector <double> g;
-    std::vector <double> b;
-
-    // Overlay image
+    // The texture image
     sf::Image texture;
 
 public:
 
-    Palette(const Options &options);
-
-    void loadPaletteImage(const fs::path &path);
-    void loadTextureImage(const fs::path &path);
-
-    double overlayOpacity() const;
-    u32 interpolateABGR(struct MapEntry &entry) const;
-    u32 readTextureImage(struct MapEntry &entry) const;
+    const sf::Image &getImage();
+    const sf::Image &getTextureImage();
 };
 
 }
