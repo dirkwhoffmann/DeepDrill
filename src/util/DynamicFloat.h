@@ -13,9 +13,10 @@
 
 #include "config.h"
 #include "Types.h"
-#include "spline.h"
 
 namespace dd {
+
+#include "spline.h"
 
 struct DynamicFloat {
 
