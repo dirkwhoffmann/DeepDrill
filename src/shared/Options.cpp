@@ -18,9 +18,6 @@
 
 namespace dd {
 
-std::map<string,string> Options::defaults;
-std::map<string,string> Options::keys;
-std::vector<string> Options::overrides;
 bool Options::stop;
 
 Options::Flags Options::flags;
@@ -39,9 +36,11 @@ Options::Areacheck Options::areacheck;
 Options::Attractorcheck Options::attractorcheck;
 Options::Periodcheck Options::periodcheck;
 
-Options::Options()
-{
-    // Register default keys
+std::map<string,string> Options::keys;
+std::vector<string> Options::overrides;
+std::map<string,string> Options::defaults = [](){
+
+    std::map<string,string> defaults;
 
     // Location keys
     defaults["location.real"] = "0.0";
@@ -63,8 +62,8 @@ Options::Options()
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
     defaults["video.startframe"] = "0";
-//    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
-//    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
+    //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
+    //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
     defaults["video.velocity"] = "1.0";
     defaults["video.bitrate"] = "8000";
 
@@ -115,7 +114,9 @@ Options::Options()
     defaults["periodcheck.enable"] = "yes";
     defaults["periodcheck.tolerance"] = "1e-74";
     defaults["periodcheck.color"] = "black";
-}
+
+    return defaults;
+}();
 
 std::vector <fs::path>
 Options::getInputs(Format format)

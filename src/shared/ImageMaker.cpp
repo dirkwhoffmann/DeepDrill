@@ -34,8 +34,8 @@ ImageMaker::init(const string &colorizationFilter, const string &illuminationFil
     }
 
     // Setup GPU filters
-    auto mapDim = sf::Vector2u(unsigned(opt.drillmap.width), unsigned(opt.drillmap.height));
-    auto imageDim = sf::Vector2u(unsigned(opt.image.width), unsigned(opt.image.height));
+    auto mapDim = sf::Vector2u(unsigned(Options::drillmap.width), unsigned(Options::drillmap.height));
+    auto imageDim = sf::Vector2u(unsigned(Options::image.width), unsigned(Options::image.height));
     colorizer.init(colorizationFilter, mapDim);
     colorizer2.init(colorizationFilter, mapDim);
     illuminator.init(illuminationFilter, mapDim);
@@ -57,15 +57,15 @@ ImageMaker::draw(DrillMap &dmap)
         colorizer.setUniform("normalIm", dmap.getNormalImMapTex());
         colorizer.setUniform("texture", textureMapTex);
         colorizer.setUniform("overlay", dmap.getOverlayMapTex());
-        colorizer.setUniform("paletteScale", opt.palette.scale());
-        colorizer.setUniform("paletteOffset", opt.palette.offset());
-        colorizer.setUniform("textureOpacity", opt.texture.opacity());
-        colorizer.setUniform("textureScale", opt.texture.scale());
-        colorizer.setUniform("textureOffset", opt.texture.offset());
+        colorizer.setUniform("paletteScale", Options::palette.scale());
+        colorizer.setUniform("paletteOffset", Options::palette.offset());
+        colorizer.setUniform("textureOpacity", Options::texture.opacity());
+        colorizer.setUniform("textureScale", Options::texture.scale());
+        colorizer.setUniform("textureOffset", Options::texture.offset());
         colorizer.apply();
 
         // 2. Illuminate
-        if (opt.lighting.enable) {
+        if (Options::lighting.enable) {
 
             illuminator.setUniform("image", colorizer.getTexture());
             illuminator.setUniform("lightDir", lightVector(0));
@@ -90,7 +90,7 @@ ImageMaker::draw(DrillMap &dmap)
         image = downscaler.getTexture().copyToImage();
     }
 
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Colorizer: ");
@@ -114,11 +114,11 @@ ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
     colorizer.setUniform("normalIm", dmap1.getNormalImMapTex());
     colorizer.setUniform("texture", textureMapTex);
     colorizer.setUniform("overlay", dmap1.getOverlayMapTex());
-    colorizer.setUniform("paletteScale", opt.palette.scale(frame));
-    colorizer.setUniform("paletteOffset", opt.palette.offset(frame));
-    colorizer.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
-    colorizer.setUniform("textureScale", opt.texture.scale(frame));
-    colorizer.setUniform("textureOffset", opt.texture.offset(frame));
+    colorizer.setUniform("paletteScale", Options::palette.scale(frame));
+    colorizer.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
+    colorizer.setUniform("textureScale", Options::texture.scale(frame));
+    colorizer.setUniform("textureOffset", Options::texture.offset(frame));
     colorizer.apply();
 
     colorizer2.setUniform("iter", dmap2.getIterationMapTex());
@@ -128,15 +128,15 @@ ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
     colorizer2.setUniform("normalIm", dmap2.getNormalImMapTex());
     colorizer2.setUniform("texture", textureMapTex);
     colorizer2.setUniform("overlay", dmap2.getOverlayMapTex());
-    colorizer2.setUniform("paletteScale", opt.palette.scale(frame));
-    colorizer2.setUniform("paletteOffset", opt.palette.offset(frame));
-    colorizer2.setUniform("textureOpacity", opt.texture.image == "" ? 0.0 : opt.texture.opacity(frame));
-    colorizer2.setUniform("textureScale", opt.texture.scale(frame));
-    colorizer2.setUniform("textureOffset", opt.texture.offset(frame));
+    colorizer2.setUniform("paletteScale", Options::palette.scale(frame));
+    colorizer2.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer2.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
+    colorizer2.setUniform("textureScale", Options::texture.scale(frame));
+    colorizer2.setUniform("textureOffset", Options::texture.offset(frame));
     colorizer2.apply();
 
     // 2. Illuminate
-    if (opt.lighting.enable) {
+    if (Options::lighting.enable) {
 
         illuminator.setUniform("image", colorizer.getTexture());
         illuminator.setUniform("lightDir", lightVector(frame));
@@ -172,8 +172,8 @@ ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
 sf::Vector3f
 ImageMaker::lightVector(isize frame)
 {
-    auto a = opt.lighting.alpha(frame) * 3.14159 / 180.0;
-    auto b = opt.lighting.beta(frame) * 3.14159 / 180.0;
+    auto a = Options::lighting.alpha(frame) * 3.14159 / 180.0;
+    auto b = Options::lighting.beta(frame) * 3.14159 / 180.0;
     auto z = std::sin(b);
     auto l = std::cos(b);
     auto y = std::sin(a) * l;
@@ -190,7 +190,7 @@ ImageMaker::save(const string &path, Format format) const
 
         image.saveToFile(path);
     }
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         auto size = image.getSize();
 

@@ -25,9 +25,6 @@ class Application {
 
 protected:
 
-    // Configuration options
-    Options opt = Options();
-
     // Stop watch for measuring the total execution time
     Clock stopWatch;
 

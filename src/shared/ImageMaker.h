@@ -23,22 +23,19 @@ namespace dd {
 
 class ImageMaker {
 
-    // Configuration options
-    const struct Options &opt;
-
     // The color palette
-    Palette palette = Palette(opt);
+    Palette palette = Palette();
     sf::Texture paletteTex;
 
     // An optional overlay texture
     sf::Texture textureMapTex;
 
     // GPU filters
-    Filter colorizer = Filter(opt);
-    Filter colorizer2 = Filter(opt);
-    Filter illuminator = Filter(opt);
-    Filter illuminator2 = Filter(opt);
-    Filter downscaler = Filter(opt);
+    Filter colorizer;
+    Filter colorizer2;
+    Filter illuminator;
+    Filter illuminator2;
+    Filter downscaler;
 
     // Final image
     sf::Image image;
@@ -50,8 +47,10 @@ class ImageMaker {
 
 public:
 
+    /*
     ImageMaker(const Options &opt) : opt(opt) { };
     ~ImageMaker() { };
+    */
 
     void init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter);
 

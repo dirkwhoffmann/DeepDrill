@@ -22,7 +22,7 @@ namespace dd {
 const sf::Image &
 Palette::getImage()
 {
-    const auto &path = opt.palette.image;
+    const auto &path = Options::palette.image;
 
     if (path == "") {
 
@@ -62,7 +62,7 @@ Palette::getImage()
 const sf::Image &
 Palette::getTextureImage()
 {
-    const auto &path = opt.texture.image;
+    const auto &path = Options::texture.image;
 
     if (path == "") {
 

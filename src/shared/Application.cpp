@@ -106,13 +106,13 @@ Application::configure()
     readConfigFiles();
 
     // Assign default values to all options that are still undefined
-    opt.applyDefaults();
+    Options::applyDefaults();
 
     // Setup the GMP library
     setupGmp();
 
     // Deduce missing options
-    opt.derive();
+    Options::derive();
 }
 
 void
@@ -125,19 +125,19 @@ Application::setupGmp()
      * strategies are likely to exist. Any advice is highly appreciated.
      */
     long exponent = 0;
-    mpf_get_d_2exp(&exponent, opt.location.zoom.get_mpf_t());
+    mpf_get_d_2exp(&exponent, Options::location.zoom.get_mpf_t());
     accuracy = exponent + 64;
 
     // Set the new precision
     mpf_set_default_prec(accuracy);
 
     // Resize the GMP location variable
-    opt.location.real.set_prec(accuracy);
-    opt.location.imag.set_prec(accuracy);
+    Options::location.real.set_prec(accuracy);
+    Options::location.imag.set_prec(accuracy);
 
     // Parse the location again to make use of the new precision
-    opt.parse("location.real", opt.keys["location.real"]);
-    opt.parse("location.imag", opt.keys["location.imag"]);
+    Options::parse("location.real", Options::keys["location.real"]);
+    Options::parse("location.imag", Options::keys["location.imag"]);
 }
 
 void
@@ -147,7 +147,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
     opterr = 0;
 
     // Remember the path to the DeppDrill executable
-    opt.files.exec = fs::absolute(argv[0]);
+    Options::files.exec = fs::absolute(argv[0]);
 
     // Parse all options
     while (1) {
@@ -158,11 +158,11 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
         switch (arg) {
 
             case 'v':
-                opt.flags.verbose = true;
+                Options::flags.verbose = true;
                 break;
 
             case 'b':
-                opt.flags.batch = true;
+                Options::flags.batch = true;
                 break;
 
             case 'a':
@@ -170,7 +170,7 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
                 break;
 
             case 'o':
-                opt.files.outputs.push_back(optarg);
+                Options::files.outputs.push_back(optarg);
                 break;
 
             case ':':
@@ -189,19 +189,19 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
         string arg = argv[optind++];
 
         if (arg.find('=') != std::string::npos) {
-            opt.overrides.push_back(arg);
+            Options::overrides.push_back(arg);
         } else {
-            opt.files.inputs.push_back(arg);
+            Options::files.inputs.push_back(arg);
         }
     }
 
     // Check file types
-    for (const auto &it : opt.files.inputs) {
+    for (const auto &it : Options::files.inputs) {
         if (!isAcceptedInputFormat(AssetManager::getFormat(it))) {
             throw SyntaxError(it.string() + ": Invalid input format");
         }
     }
-    for (const auto &it : opt.files.outputs) {
+    for (const auto &it : Options::files.outputs) {
         if (!isAcceptedOutputFormat(AssetManager::getFormat(it))) {
             throw SyntaxError(it.string() + ": Invalid output format");
         }
@@ -211,12 +211,12 @@ Application::parseArguments(int argc, char *argv[], const char *optstr, const op
 void
 Application::readConfigFiles(isize keyframe)
 {
-    auto iniFiles = opt.getInputs(Format::INI);
+    auto iniFiles = Options::getInputs(Format::INI);
 
     for (auto &it: iniFiles) {
 
         Parser::parse(AssetManager::findAsset(it),
-                      [this](string k, string v) { opt.parse(k, v); },
+                      [](string k, string v) { Options::parse(k, v); },
                       keyframe);
     }
 }

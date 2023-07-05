@@ -24,7 +24,7 @@ namespace dd {
 void
 DrillMap::resize()
 {
-    resize(opt.drillmap.width, opt.drillmap.height, opt.drillmap.depth);
+    resize(Options::drillmap.width, Options::drillmap.height, Options::drillmap.depth);
 }
 
 void
@@ -37,8 +37,8 @@ DrillMap::resize(isize w, isize h, isize d)
     height = h;
     depth = d;
 
-    center = PrecisionComplex(opt.location.real, opt.location.imag);
-    mpfPixelDeltaX = mpf_class(4.0) / opt.location.zoom / height;
+    center = PrecisionComplex(Options::location.real, Options::location.imag);
+    mpfPixelDeltaX = mpf_class(4.0) / Options::location.zoom / height;
     mpfPixelDeltaY = mpfPixelDeltaX;
     pixelDeltaX = mpfPixelDeltaY;
     pixelDeltaY = mpfPixelDeltaY;
@@ -131,23 +131,23 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
 
         case DR_GLITCH:
 
-            overlayMap[index] = opt.perturbation.color | 0xFF000000;
+            overlayMap[index] = Options::perturbation.color | 0xFF000000;
             break;
 
         case DR_IN_BULB:
         case DR_IN_CARDIOID:
 
-            overlayMap[index] = opt.areacheck.color | 0xFF000000;
+            overlayMap[index] = Options::areacheck.color | 0xFF000000;
             break;
 
         case DR_PERIODIC:
 
-            overlayMap[index] = opt.periodcheck.color | 0xFF000000;
+            overlayMap[index] = Options::periodcheck.color | 0xFF000000;
             break;
 
         case DR_ATTRACTED:
 
-            overlayMap[index] = opt.attractorcheck.color | 0xFF000000;
+            overlayMap[index] = Options::attractorcheck.color | 0xFF000000;
             break;
 
         default:
@@ -323,7 +323,7 @@ DrillMap::analyze() const
     } saved;
 
     auto total = width * height;
-    auto limit = opt.location.depth;
+    auto limit = Options::location.depth;
 
     {   ProgressIndicator progress("Analyzing drill map", total);
 
@@ -544,23 +544,23 @@ DrillMap::updateTextures()
                     
                 case DR_GLITCH:
                     
-                    overlayMap[pos] = opt.perturbation.color | 0xFF000000;
+                    overlayMap[pos] = Options::perturbation.color | 0xFF000000;
                     break;
                     
                 case DR_IN_BULB:
                 case DR_IN_CARDIOID:
                     
-                    overlayMap[pos] = opt.areacheck.color | 0xFF000000;
+                    overlayMap[pos] = Options::areacheck.color | 0xFF000000;
                     break;
                     
                 case DR_PERIODIC:
                     
-                    overlayMap[pos] = opt.periodcheck.color | 0xFF000000;
+                    overlayMap[pos] = Options::periodcheck.color | 0xFF000000;
                     break;
                     
                 case DR_ATTRACTED:
                     
-                    overlayMap[pos] = opt.attractorcheck.color | 0xFF000000;
+                    overlayMap[pos] = Options::attractorcheck.color | 0xFF000000;
                     break;
                     
                 default:
@@ -623,7 +623,7 @@ DrillMap::load(std::istream &is)
     // Mark textures as outdated
     dirty = true;
 
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
@@ -861,7 +861,7 @@ DrillMap::save(std::ostream &os)
     bool saveLast = true;
     bool saveLognorms = true;
     bool saveDerivatives = false;
-    bool saveNormals = opt.drillmap.depth == 1;
+    bool saveNormals = Options::drillmap.depth == 1;
 
     Compressor compressor(width * height * sizeof(MapEntry));
 
@@ -871,7 +871,7 @@ DrillMap::save(std::ostream &os)
         saveHeader(os);
 
         // The next byte indicates if channel data is compressed
-        os << u8(opt.drillmap.compress);
+        os << u8(Options::drillmap.compress);
 
         // Generate channels
         if (saveDrillResults) saveChannel(compressor, CHANNEL_RESULT);
@@ -882,7 +882,7 @@ DrillMap::save(std::ostream &os)
         if (saveNormals) saveChannel(compressor, CHANNEL_NORMAL);
     }
 
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         log::cout << log::vspace;
         log::cout << log::ralign("Map size: ");
@@ -902,7 +902,7 @@ DrillMap::save(std::ostream &os)
         log::cout << log::vspace;
     }
 
-    if (opt.drillmap.compress) {
+    if (Options::drillmap.compress) {
 
         ProgressIndicator progress2("Compressing map file");
 
@@ -912,7 +912,7 @@ DrillMap::save(std::ostream &os)
         auto saved = oldSize - newSize;
         progress2.done();
 
-        if (opt.flags.verbose) {
+        if (Options::flags.verbose) {
 
             log::cout << log::vspace;
             log::cout << log::ralign("Size reduction: ");

@@ -96,25 +96,25 @@ DeepZoom::isAcceptedOutputFormat(Format format) const
 void
 DeepZoom::checkArguments()
 {
-    auto iniFiles = opt.getInputs(Format::INI);
+    auto iniFiles = Options::getInputs(Format::INI);
 
     // A single input file must be given
-    if (opt.files.inputs.size() < 1) throw SyntaxError("No input file is given");
-    if (opt.files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
+    if (Options::files.inputs.size() < 1) throw SyntaxError("No input file is given");
+    if (Options::files.inputs.size() > 1) throw SyntaxError("More than one input file is given");
 
     // At most one output file must be given
-    if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
+    if (Options::files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
     // The input must be an existing directory
-    (void)AssetManager::findAsset(opt.files.inputs.front(), Format::DIR);
+    (void)AssetManager::findAsset(Options::files.inputs.front(), Format::DIR);
 
     // The directory must contain an .ini file for the zoomer
     // TODO: Check for this file
-    opt.files.inputs.push_back(opt.files.inputs.front() / "deepzoom.ini");
+    Options::files.inputs.push_back(Options::files.inputs.front() / "deepzoom.ini");
 
-    if (!opt.files.outputs.empty()) {
+    if (!Options::files.outputs.empty()) {
 
-        auto output = opt.files.outputs.front();
+        auto output = Options::files.outputs.front();
 
         // The output file must be writable
         std::ofstream file(output, std::ofstream::out);
@@ -132,7 +132,7 @@ DeepZoom::checkArguments()
 void
 DeepZoom::run()
 {
-    Zoomer(opt).launch();
+    Zoomer().launch();
 }
 
 }

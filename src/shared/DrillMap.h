@@ -83,9 +83,6 @@ class DrillMap {
 
 public:
     
-    // Configuration options
-    const struct Options &opt;
-
     // Map resolution
     isize width = 0;
     isize height = 0;
@@ -140,7 +137,7 @@ public:
 
 public:
 
-    DrillMap(const Options &opt) : opt(opt) { };
+    // DrillMap() { };
 
     void resize();
     void resize(isize w, isize h, isize d);

@@ -20,9 +20,6 @@ namespace dd {
 
 class SlowDriller {
 
-    // Configuration options
-    const struct Options &opt;
-
     // The associated drill map
     DrillMap &map;
 
@@ -33,7 +30,7 @@ class SlowDriller {
 
 public:
 
-    SlowDriller(const Options &o, DrillMap &m) : opt(o), map(m) { }
+    SlowDriller(DrillMap &m) : map(m) { }
 
 
     //

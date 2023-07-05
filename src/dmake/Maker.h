@@ -23,9 +23,6 @@ class Maker {
     // Refeference to the application
     class Application &app;
 
-    // Configuration options
-    struct Options &opt;
-
     // Path to the project directory
     fs::path projectDir;
 
@@ -36,7 +33,7 @@ class Maker {
 public:
     
     // Constructor
-    Maker(Application &app, Options &opt);
+    Maker(Application &app);
     
     // Main entry point
     void generate(); 

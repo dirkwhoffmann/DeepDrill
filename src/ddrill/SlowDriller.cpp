@@ -20,8 +20,8 @@ SlowDriller::drill()
 {
     std::vector<Coord> remaining;
 
-    auto width = opt.drillmap.width;
-    auto height = opt.drillmap.height;
+    auto width = Options::drillmap.width;
+    auto height = Options::drillmap.height;
 
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
@@ -41,7 +41,7 @@ SlowDriller::drill(const std::vector<Coord> &remaining)
 
         drill(remaining[i]);
 
-        if (opt.stop) throw UserInterruptException();
+        if (Options::stop) throw UserInterruptException();
         progress.step(1);
     }
 }
@@ -56,7 +56,7 @@ SlowDriller::drill(const Coord &point)
     auto d0 = ExtendedComplex(1, 0);
     auto dn = d0;
 
-    isize limit = opt.location.depth;
+    isize limit = Options::location.depth;
     isize iteration = 0;
 
     // Enter the main loop

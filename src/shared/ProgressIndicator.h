@@ -60,7 +60,7 @@ class BatchProgressIndicator {
 
 public:
 
-    BatchProgressIndicator(const struct Options &opt, const string &msg, const fs::path &path);
+    BatchProgressIndicator(const string &msg, const fs::path &path);
     ~BatchProgressIndicator();
 
 private:

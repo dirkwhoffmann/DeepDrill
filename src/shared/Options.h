@@ -250,25 +250,26 @@ struct Options {
 
 public:
 
-    Options();
+    // This class is not meant to be instantiated
+    Options() = delete;
 
 
     //
     // Handling input and output files
     //
 
-    std::vector <fs::path> getInputs(Format format);
-    std::vector <fs::path> getOutputs(Format format);
+    static std::vector <fs::path> getInputs(Format format);
+    static std::vector <fs::path> getOutputs(Format format);
 
 
     //
     // Parsing key-value pairs
     //
 
-    void parse(string keyvalue);
-    void parse(string key, string value);
-    void applyDefaults();
-    void derive();
+    static void parse(string keyvalue);
+    static void parse(string key, string value);
+    static void applyDefaults();
+    static void derive();
 };
 
 }

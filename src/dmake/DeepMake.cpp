@@ -54,11 +54,11 @@ void
 DeepMake::checkArguments()
 {
     // A single output file must be given
-    if (opt.files.outputs.size() < 1) throw SyntaxError("No output file is given");
-    if (opt.files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
+    if (Options::files.outputs.size() < 1) throw SyntaxError("No output file is given");
+    if (Options::files.outputs.size() > 1) throw SyntaxError("More than one output file is given");
 
     // The output must be an existing directory
-    (void)AssetManager::findAsset(opt.files.outputs.front(), Format::DIR);
+    (void)AssetManager::findAsset(Options::files.outputs.front(), Format::DIR);
 }
 
 void
@@ -70,10 +70,10 @@ DeepMake::run()
     auto add = [&](const fs::path &path) {
         fs::exists(path) ? skipOrModify.push_back(path) : create.push_back(path);
     };
-    auto project = opt.files.outputs.front();
+    auto project = Options::files.outputs.front();
     add(project / "Makefile");
     add(project / AssetManager::iniFile());
-    for (isize i = 0; i < opt.video.keyframes; i++) {
+    for (isize i = 0; i < Options::video.keyframes; i++) {
         add(project / AssetManager::iniFile(i));
     }
 
@@ -93,7 +93,7 @@ DeepMake::run()
 
         if (s == "y" || s == "yes" || s == "") {
 
-            Maker(*this, opt).generate();
+            Maker(*this).generate();
             return;
         }
         if (s == "n" || s == "no") {

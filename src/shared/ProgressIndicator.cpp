@@ -68,9 +68,9 @@ ProgressIndicator::done(const string &info)
     log::cout << log::endl;
 }
 
-BatchProgressIndicator::BatchProgressIndicator(const Options &opt, const string &msg, const fs::path &path)
+BatchProgressIndicator::BatchProgressIndicator(const string &msg, const fs::path &path)
 {
-    if (opt.flags.batch) {
+    if (Options::flags.batch) {
 
         this->msg = msg;
         this->path = path;

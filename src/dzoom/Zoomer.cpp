@@ -26,7 +26,7 @@ namespace fs = std::filesystem;
 
 namespace dd {
 
-Zoomer::Zoomer(Options &o) : opt(o)
+Zoomer::Zoomer()
 {
     init();
 }
@@ -39,20 +39,20 @@ Zoomer::~Zoomer()
 void
 Zoomer::init()
 {
-    recordMode = !opt.files.outputs.empty();
+    recordMode = !Options::files.outputs.empty();
 
     // Create the render window
-    auto mode = sf::VideoMode(unsigned(opt.image.width), unsigned(opt.image.height));
+    auto mode = sf::VideoMode(unsigned(Options::image.width), unsigned(Options::image.height));
     window.create(mode, "");
 
     // Hide the window in batch mode
-    if (opt.flags.batch) window.setVisible(false);
+    if (Options::flags.batch) window.setVisible(false);
 
     // Preview in real-time if no video is recorded
-    window.setFramerateLimit(recordMode ? 0 : unsigned(opt.video.frameRate));
+    window.setFramerateLimit(recordMode ? 0 : unsigned(Options::video.frameRate));
 
     // Initialize the imageMaker
-    imageMaker.init(opt.gpu.colorizer, opt.gpu.illuminator, opt.gpu.scaler);
+    imageMaker.init(Options::gpu.colorizer, Options::gpu.illuminator, Options::gpu.scaler);
 }
 
 void
@@ -61,8 +61,8 @@ Zoomer::launch()
     sf::Event event;
 
     // Initialize parameters
-    DynamicFloat::fps = opt.video.frameRate;
-    keyframe = opt.video.startframe;
+    DynamicFloat::fps = Options::video.frameRate;
+    keyframe = Options::video.startframe;
     zoom.set(1.0);
 
     // Start FFmpeg
@@ -108,7 +108,7 @@ Zoomer::report()
 
             progress.done();
 
-            if (opt.flags.verbose) {
+            if (Options::flags.verbose) {
 
                 log::cout << log::vspace;
                 log::cout << log::ralign("Update: ");
@@ -126,13 +126,13 @@ Zoomer::report()
         }
 
         progress.init("Processing keyframe " + std::to_string(keyframe),
-                      Animated::scale / opt.video.velocity(double(frame) / double(opt.video.frameRate)));
+                      Animated::scale / Options::video.velocity(double(frame) / double(Options::video.frameRate)));
 
         // Update the title bar of the preview window
         string title = "DeepZoom - ";
         title += recordMode ? "Recording " : "Preview ";
         title += "[Keyframe " + std::to_string(keyframe);
-        title += " / " + std::to_string(opt.video.keyframes) + "] ";
+        title += " / " + std::to_string(Options::video.keyframes) + "] ";
         window.setTitle(title);
     }
 
@@ -143,7 +143,7 @@ void
 Zoomer::animate()
 {
     // Zoom in or out
-    zoom.move(opt.video.velocity(double(frame) / double(opt.video.frameRate)));
+    zoom.move(Options::video.velocity(double(frame) / double(Options::video.frameRate)));
 
     // Check if we need to switch to the next keyframe
     if (zoom.current >= 2.0) {
@@ -166,7 +166,7 @@ Zoomer::update()
     updateClock.go();
 
     // Terminate if we've left the valid keyframe range
-    if (keyframe < 0 || keyframe > opt.video.keyframes) throw Exit();
+    if (keyframe < 0 || keyframe > Options::video.keyframes) throw Exit();
 
     // Check all map slots for dirty drill maps
     for (isize i = -1; i <= 2; i++) {
@@ -240,7 +240,7 @@ Zoomer::loadMapFileAsync(isize nr)
 bool
 Zoomer::loadMapFile(isize nr)
 {
-    fs::path path = opt.files.inputs.front();
+    fs::path path = Options::files.inputs.front();
     fs::path file = path / AssetManager::mapFile(nr);
 
     drillMap[slotNr(nr)].load(file);

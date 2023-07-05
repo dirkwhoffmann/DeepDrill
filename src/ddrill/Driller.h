@@ -21,10 +21,7 @@
 namespace dd {
 
 class Driller {
-    
-    // Configuration options
-    const struct Options &opt;
-    
+
     // The associated drill map
     DrillMap &map;
     
@@ -42,7 +39,7 @@ class Driller {
     //
     
     // Computed coefficients
-    Approximator approximator = Approximator(opt);
+    Approximator approximator;
     
     // The probe points
     std::vector<Coord> probePoints;
@@ -54,7 +51,7 @@ class Driller {
 
 public:
 
-    Driller(const Options &options, DrillMap &map);
+    Driller(DrillMap &map);
     
     
     //

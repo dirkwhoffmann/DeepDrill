@@ -29,14 +29,11 @@ namespace dd {
 
 class Zoomer {
 
-    // Configuration options
-    struct Options &opt;
-
     // The application window
     sf::RenderWindow window;
 
     // Drill maps (read from map files)
-    DrillMap drillMap[4] = { DrillMap(opt), DrillMap(opt), DrillMap(opt), DrillMap(opt) };
+    DrillMap drillMap[4] = { DrillMap(), DrillMap(), DrillMap(), DrillMap() };
 
     // Currently loaded keyframe in each slot
     isize slot[4] = { -1, -1, -1, -1 };
@@ -49,10 +46,10 @@ class Zoomer {
     std::future<bool> loadResult[4];
 
     // Colorizer for converting the drill maps into images
-    ImageMaker imageMaker = ImageMaker(opt);
+    ImageMaker imageMaker;
 
     // The video recorder
-    Recorder recorder = Recorder(opt);
+    Recorder recorder;
 
     // Indicates if the application runs in record mode or preview mode
     bool recordMode;
@@ -78,7 +75,7 @@ class Zoomer {
 public:
 
     // Constructors
-    Zoomer(Options &opt);
+    Zoomer();
     ~Zoomer();
     
     // Initializers

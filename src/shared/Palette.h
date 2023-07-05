@@ -20,9 +20,6 @@ namespace dd {
 
 class Palette {
 
-    // Configuration options
-    const struct Options &opt;
-
     // The palette image
     sf::Image palette;
 
@@ -30,8 +27,6 @@ class Palette {
     sf::Image texture;
 
 public:
-
-    Palette(const Options &options) : opt(options) { }
 
     const sf::Image &getImage();
     const sf::Image &getTextureImage();

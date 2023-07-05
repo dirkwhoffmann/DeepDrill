@@ -19,9 +19,6 @@
 namespace dd {
 
 class Filter {
-    
-    // Configuration options
-    const struct Options &opt;
 
     // The compute kernel
     fs::path path;
@@ -45,7 +42,7 @@ class Filter {
 
 public:
 
-    Filter(const Options &opt) : opt(opt) { };
+    // Filter(const Options &opt) : opt(opt) { };
     void init(const string &shaderName, isize w, isize h);
     void init(const string &shaderName, sf::Vector2u resolution);
 

@@ -19,7 +19,7 @@
 
 namespace dd {
 
-Driller::Driller(const Options &o, DrillMap &m) : opt(o), map(m)
+Driller::Driller(DrillMap &m) : map(m)
 {
 
 }
@@ -30,13 +30,13 @@ Driller::drill()
     std::vector<Coord> remaining;
     std::vector<Coord> glitches;
 
-    auto width = opt.drillmap.width;
-    auto height = opt.drillmap.height;
+    auto width = Options::drillmap.width;
+    auto height = Options::drillmap.height;
 
     // Determine the number of tolerated glitched pixels
-    isize threshold = width * height * opt.perturbation.badpixels;
+    isize threshold = width * height * Options::perturbation.badpixels;
 
-    if (opt.flags.verbose) {
+    if (Options::flags.verbose) {
 
         assert(map.center.re.get_prec() == map.center.im.get_prec());
         assert(map.ul.re.get_prec() == map.ul.im.get_prec());
@@ -53,27 +53,27 @@ Driller::drill()
         log::cout << (map.lr.re >= 0.0 ? " " : "") << map.lr;
         log::cout << " (" << map.lr.re.get_prec() << " bit)" << log::endl;
         log::cout << log::ralign("Magnification: ");
-        log::cout << opt.location.zoom << log::endl;
+        log::cout << Options::location.zoom << log::endl;
         log::cout << log::ralign("Drill depth: ");
-        log::cout << opt.location.depth << log::endl;
+        log::cout << Options::location.depth << log::endl;
         log::cout << log::endl;
         log::cout << log::ralign("Map size: ");
-        log::cout << opt.drillmap.width << " x " << opt.drillmap.height;
-        log::cout << (opt.drillmap.depth ? " (3D)" : " (2D)") << log::endl;
+        log::cout << Options::drillmap.width << " x " << Options::drillmap.height;
+        log::cout << (Options::drillmap.depth ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::ralign("Image size: ");
-        log::cout << opt.image.width << " x " << opt.image.height;
-        log::cout << (opt.lighting.enable ? " (3D)" : " (2D)") << log::endl;
+        log::cout << Options::image.width << " x " << Options::image.height;
+        log::cout << (Options::lighting.enable ? " (3D)" : " (2D)") << log::endl;
         log::cout << log::endl;
         log::cout << log::ralign("Perturbation: ");
-        log::cout << opt.perturbation.enable << log::endl;
+        log::cout << Options::perturbation.enable << log::endl;
         log::cout << log::ralign("Series approximation: ");
-        log::cout << opt.approximation.enable << log::endl;
+        log::cout << Options::approximation.enable << log::endl;
         log::cout << log::ralign("Area checking: ");
-        log::cout << opt.areacheck.enable << log::endl;
+        log::cout << Options::areacheck.enable << log::endl;
         log::cout << log::ralign("Period checking: ");
-        log::cout << opt.periodcheck.enable << log::endl;
+        log::cout << Options::periodcheck.enable << log::endl;
         log::cout << log::ralign("Attractor checking: ");
-        log::cout << opt.attractorcheck.enable << log::endl;
+        log::cout << Options::attractorcheck.enable << log::endl;
         log::cout << log::vspace;
     }
 
@@ -81,14 +81,14 @@ Driller::drill()
     collectCoordinates(remaining);
 
     // Enter the main loop
-    for (isize round = 1; round <= opt.perturbation.rounds; round++) {
+    for (isize round = 1; round <= Options::perturbation.rounds; round++) {
 
         // Exit once enough pixels have been computed
         if ((isize)remaining.size() <= threshold) break;
 
         log::cout << log::vspace;
         log::cout << "Round " << round;
-        if (opt.flags.verbose) log::cout << " / " << opt.perturbation.rounds;
+        if (Options::flags.verbose) log::cout << " / " << Options::perturbation.rounds;
         log::cout << ": ";
         log::cout << remaining.size() << " points remaining" << log::endl << log::endl;
 
@@ -98,25 +98,25 @@ Driller::drill()
         // Drill the reference point
         drill(ref);
         
-        if (opt.flags.verbose) {
+        if (Options::flags.verbose) {
 
             log::cout << log::vspace;
             log::cout << log::ralign("Reference point: ");
             log::cout << ref.coord << log::endl;
             log::cout << log::ralign("Perturbation tolerance: ");
-            log::cout << opt.perturbation.tolerance << log::endl;
+            log::cout << Options::perturbation.tolerance << log::endl;
             log::cout << log::ralign("Maximum depth: ");
-            log::cout << opt.location.depth << log::endl;
+            log::cout << Options::location.depth << log::endl;
             log::cout << log::ralign("Actual depth: ");
             log::cout << ref.xn.size() << log::endl;
             log::cout << log::vspace;
         }
         
         // If series approximation is enabled...
-        if (opt.approximation.enable) {
+        if (Options::approximation.enable) {
         
             // Compute the coefficients
-            approximator.compute(ref, opt.approximation.coefficients, opt.location.depth);
+            approximator.compute(ref, Options::approximation.coefficients, Options::location.depth);
 
             // Pick the probe points
             pickProbePoints(probePoints);
@@ -128,7 +128,7 @@ Driller::drill()
             if (ref.skipped == isize(ref.xn.size())) ref.skipped -= 2;
             if (ref.skipped < 0) ref.skipped = 0;
 
-            if (opt.flags.verbose) {
+            if (Options::flags.verbose) {
 
                 log::cout << log::vspace;
                 log::cout << log::ralign("Skippable iterations: ");
@@ -141,7 +141,7 @@ Driller::drill()
         drill(remaining, glitches);
         remaining = glitches;
         
-        if (opt.flags.verbose) {
+        if (Options::flags.verbose) {
             
             log::cout << log::vspace;
             log::cout << log::ralign("Glitches: ");
@@ -172,11 +172,11 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
      * all locations need to be drilled.
      */
 
-    auto width = opt.drillmap.width;
-    auto height = opt.drillmap.height;
+    auto width = Options::drillmap.width;
+    auto height = Options::drillmap.height;
 
     // If area checking if disabled, drill everywhere
-    if (!opt.areacheck.enable) {
+    if (!Options::areacheck.enable) {
 
         for (isize y = 0; y < height; y++) {
             for (isize x = 0; x < width; x++) {
@@ -265,16 +265,16 @@ Driller::pickProbePoints(std::vector<Coord> &probes)
 void
 Driller::drill(ReferencePoint &r)
 {
-    ProgressIndicator progress("Computing reference orbit", opt.location.depth);
+    ProgressIndicator progress("Computing reference orbit", Options::location.depth);
 
     PrecisionComplex z = r.location;
 
     PrecisionComplex d0 { 1.0, 0.0 };
     PrecisionComplex dn = d0;
 
-    r.xn.push_back(ReferenceIteration(z, opt.perturbation.tolerance));
+    r.xn.push_back(ReferenceIteration(z, Options::perturbation.tolerance));
         
-    for (isize i = 1; i < opt.location.depth; i++) {
+    for (isize i = 1; i < Options::location.depth; i++) {
 
         // Compute derivative
         dn *= z * 2.0;
@@ -284,7 +284,7 @@ Driller::drill(ReferencePoint &r)
         z *= z;
         z += r.location;
         
-        r.xn.push_back(ReferenceIteration(z, dn, opt.perturbation.tolerance));
+        r.xn.push_back(ReferenceIteration(z, dn, Options::perturbation.tolerance));
 
         double norm = StandardComplex(z).norm();
 
@@ -306,7 +306,7 @@ Driller::drill(ReferencePoint &r)
         
         // Update the progress counter
         if (i % 1024 == 0) {
-            if (opt.stop) throw UserInterruptException();
+            if (Options::stop) throw UserInterruptException();
             progress.step(1024);
         }
     }
@@ -314,7 +314,7 @@ Driller::drill(ReferencePoint &r)
     // This point is inside the Mandelbrot set
     map.set(r.coord, MapEntry {
         .result     = DR_MAX_DEPTH_REACHED,
-        .last       = (i32)opt.location.depth });
+        .last       = (i32)Options::location.depth });
 }
 
 isize
@@ -322,14 +322,14 @@ Driller::drillProbePoints(std::vector<Coord> &probes)
 {
     ProgressIndicator progress("Checking probe points", probes.size());
     
-    isize minValid = opt.location.depth - 1;
+    isize minValid = Options::location.depth - 1;
     
     for (auto &probe : probes) {
 
         isize valid = drillProbePoint(probe);
         minValid = std::min(minValid, valid);
 
-        if (opt.stop) throw UserInterruptException();
+        if (Options::stop) throw UserInterruptException();
         progress.step();
     }
     
@@ -343,7 +343,7 @@ Driller::drillProbePoint(Coord &probe)
     ExtendedComplex dn = d0;
 
     isize iteration = 0;
-    auto tolerance = ExtendedDouble(opt.approximation.tolerance);
+    auto tolerance = ExtendedDouble(Options::approximation.tolerance);
     
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
@@ -376,7 +376,7 @@ Driller::drill(const std::vector<Coord> &remaining, std::vector<Coord> &glitches
         
         drill(remaining[i], glitches);
         
-        if (opt.stop) throw UserInterruptException();
+        if (Options::stop) throw UserInterruptException();
         progress.step(1);
     }
 }
@@ -450,9 +450,9 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Period check
         //
 
-        if (opt.periodcheck.enable) {
+        if (Options::periodcheck.enable) {
 
-            if ((dn - p).norm().asDouble() < opt.periodcheck.tolerance) {
+            if ((dn - p).norm().asDouble() < Options::periodcheck.tolerance) {
                 map.set(point, MapEntry {
                     .result     = DR_PERIODIC,
                     .first      = (i32)ref.skipped,
@@ -469,9 +469,9 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Attractor check
         //
 
-        if (opt.attractorcheck.enable) {
+        if (Options::attractorcheck.enable) {
 
-            if (derzn.norm().asDouble() < opt.attractorcheck.tolerance) {
+            if (derzn.norm().asDouble() < Options::attractorcheck.tolerance) {
                 map.set(point, MapEntry {
                     .result     = DR_ATTRACTED,
                     .first      = (i32)ref.skipped,
@@ -506,7 +506,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     // point temporarily. Computation has to be repeated with a different
     // reference poin with a larger depth.
 
-    if (limit == opt.location.depth) {
+    if (limit == Options::location.depth) {
 
         map.set(point, MapEntry {
             .result     = DR_MAX_DEPTH_REACHED,

@@ -21,10 +21,10 @@ namespace dd {
 class DeepDrill : public Application {
 
     // The drill map
-    DrillMap drillMap = DrillMap(opt);
+    DrillMap drillMap;
 
     // Image maker for converting the drill map into an image
-    ImageMaker imageMaker = ImageMaker(opt);
+    ImageMaker imageMaker;
 
 
     //
