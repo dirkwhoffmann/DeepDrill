@@ -15,6 +15,8 @@
 #include "Types.h"
 #include "spline.h"
 
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 namespace dd {
 
 struct DynamicFloat {
