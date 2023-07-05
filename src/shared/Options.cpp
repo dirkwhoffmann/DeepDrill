@@ -18,6 +18,27 @@
 
 namespace dd {
 
+std::map<string,string> Options::defaults;
+std::map<string,string> Options::keys;
+std::vector<string> Options::overrides;
+bool Options::stop;
+
+Options::Flags Options::flags;
+Options::Files Options::files;
+Options::Location Options::location;
+Options::Drillmap Options::drillmap;
+Options::Image Options::image;
+Options::Video Options::video;
+Options::Palette Options::palette;
+Options::Texture Options::texture;
+Options::Lighting Options::lighting;
+Options::GPU Options::gpu;
+Options::Perturbation Options::perturbation;
+Options::Approximation Options::approximation;
+Options::Areacheck Options::areacheck;
+Options::Attractorcheck Options::attractorcheck;
+Options::Periodcheck Options::periodcheck;
+
 Options::Options(const AssetManager &assets) : assets(assets)
 {
     // Register default keys

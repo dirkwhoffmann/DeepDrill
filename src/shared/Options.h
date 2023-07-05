@@ -34,7 +34,7 @@ struct Options {
     const AssetManager &assets;
 
     // Set to true to interrupt the application
-    bool stop = false;
+    static bool stop;
 
 
     //
@@ -42,15 +42,15 @@ struct Options {
     //
 
     // Default keys
-    std::map<string,string> defaults;
+    static std::map<string,string> defaults;
 
     // Keys read from configuration files
-    std::map<string,string> keys;
+    static std::map<string,string> keys;
 
     // Keys specified at the command line
-    std::vector<string> overrides;
+    static std::vector<string> overrides;
 
-    struct {
+    static struct Flags {
 
         // Indicates if the '-v' flag has been specified
         bool verbose = false;
@@ -60,7 +60,7 @@ struct Options {
 
     } flags;
 
-    struct {
+    static struct Files {
 
         // Full path to the executable
         fs::path exec;
@@ -71,7 +71,7 @@ struct Options {
 
     } files;
 
-    struct {
+    static struct Location {
 
         // Center coordinate
         mpf_class real;
@@ -85,7 +85,7 @@ struct Options {
 
     } location;
 
-    struct {
+    static struct Drillmap {
 
         // Drill map dimensions in pixels
         isize width;
@@ -99,7 +99,7 @@ struct Options {
         
     } drillmap;
 
-    struct {
+    static struct Image {
 
         // Image dimensions in pixels
         isize width;
@@ -107,7 +107,7 @@ struct Options {
 
     } image;
 
-    struct {
+    static struct Video {
 
         // Video frame rate
         isize frameRate;
@@ -126,7 +126,7 @@ struct Options {
 
     } video;
 
-    struct {
+    static struct Palette {
 
         // Path to the palette image
         fs::path image;
@@ -140,7 +140,7 @@ struct Options {
 
     } palette;
 
-    struct {
+    static struct Texture {
 
         // Path to the texture image
         fs::path image;
@@ -154,7 +154,7 @@ struct Options {
 
     } texture;
 
-    struct {
+    static struct Lighting {
 
         // Indicates if a spatial images shall be computed
         bool enable;
@@ -165,7 +165,7 @@ struct Options {
 
     } lighting;
 
-    struct {
+    static struct GPU {
 
         // Path to the colorization filter
         fs::path colorizer;
@@ -178,7 +178,7 @@ struct Options {
 
     } gpu;
 
-    struct {
+    static struct Perturbation {
 
         // Indicates if perturbation shall be utilized
         bool enable;
@@ -197,7 +197,7 @@ struct Options {
 
     } perturbation;
     
-    struct {
+    static struct Approximation {
 
         // Indicates if series approximation shall be utilized
         bool enable;
@@ -210,7 +210,7 @@ struct Options {
 
     } approximation;
 
-    struct {
+    static struct Areacheck {
 
         // Indicates if area checking should be applied
         bool enable;
@@ -220,7 +220,7 @@ struct Options {
 
     } areacheck;
 
-    struct {
+    static struct Attractorcheck {
 
         // Indicates if attractor checking should be applied
         bool enable;
@@ -233,7 +233,7 @@ struct Options {
 
     } attractorcheck;
 
-    struct {
+    static struct Periodcheck {
 
         // Indicates if period checking should be applied
         bool enable;

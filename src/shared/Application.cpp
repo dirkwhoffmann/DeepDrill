@@ -14,8 +14,6 @@
 #include "Logger.h"
 #include "Parser.h"
 
-// #include <bit.h>
-
 namespace dd {
 
 int
