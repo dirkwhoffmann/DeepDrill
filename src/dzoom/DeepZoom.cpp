@@ -109,7 +109,7 @@ DeepZoom::checkArguments()
     (void)AssetManager::findAsset(Options::files.inputs.front(), Format::DIR);
 
     // The directory must contain an .ini file for the zoomer
-    // TODO: Check for this file
+    (void)AssetManager::findAsset(Options::files.inputs.front() / "deepzoom.ini", Format::INI);
     Options::files.inputs.push_back(Options::files.inputs.front() / "deepzoom.ini");
 
     if (!Options::files.outputs.empty()) {

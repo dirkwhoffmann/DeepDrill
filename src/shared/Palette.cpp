@@ -26,10 +26,10 @@ Palette::getImage()
 
     if (path == "") {
 
-        constexpr isize width = 4096;
+        constexpr isize width = 8192;
 
         // Compute default palette programmatically
-        palette.create(width, 16); // TODO: Change 16 to 1
+        palette.create(width, 1);
 
         /* Create default palette
          *
