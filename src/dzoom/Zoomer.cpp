@@ -61,7 +61,6 @@ Zoomer::launch()
     sf::Event event;
 
     // Initialize parameters
-    DynamicFloat::fps = Options::video.frameRate;
     keyframe = Options::video.startframe;
     zoom.set(1.0);
 
