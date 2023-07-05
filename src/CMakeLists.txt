@@ -39,6 +39,7 @@ target_compile_options(deepdrill PUBLIC -Wall -Werror)
 target_compile_options(deepdrill PUBLIC -Wno-unused-parameter)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(deepdrill PUBLIC -Wno-restrict)
+    target_compile_options(deepdrill PUBLIC -Wno-subobject-linkage)
 else()
 endif()
 

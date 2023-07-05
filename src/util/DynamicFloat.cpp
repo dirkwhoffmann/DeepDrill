@@ -11,7 +11,6 @@
 
 #include "DynamicFloat.h"
 #include "Options.h"
-#include "spline.h"
 
 namespace dd {
 
