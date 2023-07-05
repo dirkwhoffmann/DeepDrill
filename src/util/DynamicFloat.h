@@ -13,10 +13,7 @@
 
 #include "config.h"
 #include "Types.h"
-#include "spline.h"
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-result"
+// #include "spline.h"
 
 namespace dd {
 
@@ -25,8 +22,8 @@ struct DynamicFloat {
     std::vector<double> xn;
     std::vector<double> yn;
 
-    class tk::spline spline;
-
+    // class tk::spline spline;
+    void *pSpline;
 
     //
     // Initializing
@@ -50,5 +47,3 @@ private:
 };
 
 }
-
-#pragma GCC diagnostic pop

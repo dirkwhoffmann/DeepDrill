@@ -11,6 +11,7 @@
 
 #include "DynamicFloat.h"
 #include "Options.h"
+#include "spline.h"
 
 namespace dd {
 
@@ -24,7 +25,8 @@ DynamicFloat::init(std::vector<float> vxn, std::vector<float> vyn)
 
     if (xn.size() >= 3) {
         
-        spline = tk::spline(xn, yn, tk::spline::cspline, true);
+        // spline = tk::spline(xn, yn, tk::spline::cspline, true);
+        pSpline = (void *)new tk::spline(xn, yn, tk::spline::cspline, true);
     }
 }
 
@@ -54,7 +56,13 @@ DynamicFloat::operator() (double x) const
     assert(xn.size() != 2);
     assert(yn.size() != 0);
     assert(yn.size() != 2);
-    return yn.size() == 1 ? float(yn[0]) : float(spline(x));
+
+    if (yn.size() == 1) {
+        return float(yn[0]);
+    } else {
+        tk::spline *s = (tk::spline *)pSpline;
+        return float((*s)(x));
+    }
 }
 
 float
