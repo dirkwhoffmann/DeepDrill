@@ -13,12 +13,11 @@
 
 #include "config.h"
 #include "Types.h"
-#include "AssetManager.h"
+#include "Exception.h"
 #include "Colors.h"
 #include "DynamicFloat.h"
-#include "IO.h"
-#include "PrecisionComplex.h"
 #include "ExtendedDouble.h"
+#include "PrecisionComplex.h"
 
 namespace dd {
 

@@ -10,11 +10,8 @@
 // -----------------------------------------------------------------------------
 
 #include "Zoomer.h"
-#include "Coord.h"
-#include "DynamicFloat.h"
-#include "Exception.h"
-#include "IO.h"
 #include "Options.h"
+#include "IO.h"
 #include "Parser.h"
 #include "ProgressIndicator.h"
 

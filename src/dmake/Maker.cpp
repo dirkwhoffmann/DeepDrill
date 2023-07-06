@@ -11,10 +11,10 @@
 
 #include "Maker.h"
 #include "Application.h"
-#include "Coord.h"
+#include "AssetManager.h"
+#include "Options.h"
 #include "IO.h"
 #include "Logger.h"
-#include "Options.h"
 #include "ProgressIndicator.h"
 
 namespace dd {

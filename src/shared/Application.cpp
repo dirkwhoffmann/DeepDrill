@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Application.h"
+#include "AssetManager.h"
 #include "Exception.h"
 #include "Logger.h"
 #include "Parser.h"

@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "DeepMake.h"
+#include "AssetManager.h"
 #include "Maker.h"
 
 int main(int argc, char *argv[])

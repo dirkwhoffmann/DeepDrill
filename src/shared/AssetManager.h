@@ -17,19 +17,6 @@
 
 namespace dd {
 
-enum class Format
-{
-    NONE,       // Unknown file format
-    BMP,        // Image file
-    DIR,        // Directory
-    GLSL,       // GPU shader
-    INI,        // Configuration file
-    JPG,        // Image format
-    MAP,        // Proprietary map file format
-    MPG,        // Video file
-    PNG         // Image file
-};
-
 class AssetManager {
 
     // Assets search paths

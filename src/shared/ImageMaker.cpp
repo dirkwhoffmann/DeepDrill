@@ -11,7 +11,6 @@
 
 #include "ImageMaker.h"
 #include "Options.h"
-#include "Exception.h"
 #include "ProgressIndicator.h"
 #include "DrillMap.h"
 

@@ -23,20 +23,28 @@ DynamicFloat::~DynamicFloat()
 void
 DynamicFloat::init(std::vector<float> vxn, std::vector<float> vyn)
 {
+    assert(vxn.size() == vyn.size());
+
     xn.clear();
     for (const auto &it : vxn) xn.push_back(double(it));
     yn.clear();
     for (const auto &it : vyn) yn.push_back(double(it));
 
+    // A spline needs at least three data points
+    if (xn.size() == 2) {
+        throw Exception("A spline description requires at least three data points");
+    }
+
+    // Abscissae must be in ascending order
+    for (isize i = 0; i < (isize)xn.size() - 1; i++) {
+        if (xn[i] >= xn[i + 1]) {
+            throw Exception("Data points must be arranged in ascending order");
+        }
+    }
+
+    // Create a spline if at least three data points are given
     if (xn.size() >= 3) {
 
-        for (usize i = 0; i < xn.size(); i++) {
-
-            printf("%f / %f ", xn[i], yn[i]);
-        }
-        printf("\n");
-
-        // spline = tk::spline(xn, yn, tk::spline::cspline, true);
         pSpline = (void *)new tk::spline(xn, yn, tk::spline::cspline, true);
     }
 }

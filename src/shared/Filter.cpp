@@ -10,8 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Filter.h"
-// #include "AssetManager.h"
-#include "Exception.h"
+#include "AssetManager.h"
 #include "Options.h"
 
 namespace dd {

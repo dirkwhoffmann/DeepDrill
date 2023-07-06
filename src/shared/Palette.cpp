@@ -10,10 +10,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Palette.h"
-#include "Exception.h"
-#include "IO.h"
 #include "Options.h"
-#include "DrillMap.h"
 
 #include <tgmath.h>
 

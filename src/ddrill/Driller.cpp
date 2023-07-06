@@ -10,9 +10,8 @@
 // -----------------------------------------------------------------------------
 
 #include "Driller.h"
-#include "Exception.h"
-#include "Logger.h"
 #include "Options.h"
+#include "Logger.h"
 #include "ProgressIndicator.h"
 
 #include <random>

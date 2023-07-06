@@ -10,8 +10,8 @@
 // -----------------------------------------------------------------------------
 
 #include "Options.h"
+#include "AssetManager.h"
 #include "Coord.h"
-#include "Exception.h"
 #include "IO.h"
 #include "Logger.h"
 #include "Parser.h"
