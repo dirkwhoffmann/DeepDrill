@@ -23,8 +23,7 @@ namespace dd {
 
 enum class ColoringMode
 {
-    Default,
-    // Textured
+    Default
 };
 
 struct Options {
