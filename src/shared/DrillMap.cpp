@@ -50,7 +50,6 @@ DrillMap::resize(isize w, isize h, isize d)
     lastIterationMap.assign(width * height, 0);
     overlayMap.assign(width * height, 0);
     textureMap.assign(width * height, 0);
-    lognormMap.assign(width * height, 0);
     nitcntMap.assign(width * height, 0);
     derivReMap.assign(width * height, 0);
     derivImMap.assign(width * height, 0);
@@ -58,7 +57,7 @@ DrillMap::resize(isize w, isize h, isize d)
     normalImMap.assign(width * height, 0);
 
     assert(!hasIterations());
-    assert(!hasLogNorms());
+    assert(!hasNormalizedIterationCounts());
     assert(!hasDerivates());
     assert(!hasNormals());
 }
@@ -73,7 +72,6 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     resultMap[i] = entry.result;
     firstIterationMap[i] = entry.first;
     lastIterationMap[i] = entry.last;
-    lognormMap[i] = entry.lognorm;
     derivReMap[i] = entry.derivative.re;
     derivImMap[i] = entry.derivative.im;
     normalReMap[i] = entry.normal.re;
@@ -213,10 +211,10 @@ DrillMap::hasIterations() const
 }
 
 bool
-DrillMap::hasLogNorms() const
+DrillMap::hasNormalizedIterationCounts() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (lognormMap[i]) return true;
+        if (nitcntMap[i]) return true;
     }
     return false;
 }
@@ -480,9 +478,6 @@ DrillMap::updateTextures()
         if (!overlayMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create overlay map texture");
         }
-        if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
-            throw Exception("Can't create lognorm map texture");
-        }
         if (!nitcntMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normalized iteration count map texture");
         }
@@ -538,7 +533,6 @@ DrillMap::updateTextures()
 
     iterationMapTex.update((u8 *)lastIterationMap.data());
     overlayMapTex.update((u8 *)overlayMap.data());
-    lognormMapTex.update((u8 *)lognormMap.data());
     nitcntMapTex.update((u8 *)nitcntMap.data());
     normalReMapTex.update((u8 *)normalReMap.data());
     normalImMapTex.update((u8 *)normalImMap.data());
@@ -598,8 +592,8 @@ DrillMap::load(std::istream &is)
         log::cout << (hasDrillResults() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Iteration counts: ");
         log::cout << (hasIterations() ? "Loaded" : "Not included in map file") << log::endl;
-        log::cout << log::ralign("Lognorms: ");
-        log::cout << (hasLogNorms() ? "Loaded" : "Not included in map file") << log::endl;
+        log::cout << log::ralign("Normalized iteration counts: ");
+        log::cout << (hasNormalizedIterationCounts() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Derivates: ");
         log::cout << (hasDerivates() ? "Loaded" : "Not included in map file") << log::endl;
         log::cout << log::ralign("Normals: ");
@@ -705,15 +699,6 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     lastIterationMap[y * width + x] = u32(loadInt());
-                }
-            }
-            break;
-
-        case CHANNEL_LOGNORM:
-
-            for (isize y = 0; y < height; y++) {
-                for (isize x = 0; x < width; x++) {
-                    lognormMap[y * width + x] = float(loadFloat());
                 }
             }
             break;
@@ -826,7 +811,7 @@ DrillMap::save(std::ostream &os)
     bool saveDrillResults = true;
     bool saveFirst = true;
     bool saveLast = true;
-    bool saveLognorms = true;
+    bool saveNrmItCnts = true;
     bool saveDerivatives = false;
     bool saveNormals = Options::drillmap.depth == 1;
 
@@ -844,7 +829,7 @@ DrillMap::save(std::ostream &os)
         if (saveDrillResults) saveChannel(compressor, CHANNEL_RESULT);
         if (saveFirst) saveChannel(compressor, CHANNEL_FIRST);
         if (saveLast) saveChannel(compressor, CHANNEL_LAST);
-        if (saveLognorms) saveChannel(compressor, CHANNEL_LOGNORM);
+        if (saveNrmItCnts) saveChannel(compressor, CHANNEL_NITCNT);
         if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVE);
         if (saveNormals) saveChannel(compressor, CHANNEL_NORMAL);
     }
@@ -860,8 +845,8 @@ DrillMap::save(std::ostream &os)
         log::cout << (saveLast ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Skipped interations: ");
         log::cout << (saveFirst ? "Saved" : "Not saved") << log::endl;
-        log::cout << log::ralign("Lognorms: ");
-        log::cout << (saveLognorms ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::ralign("Normalized iteration counts: ");
+        log::cout << (saveNrmItCnts ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Derivatives: ");
         log::cout << (saveDerivatives ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Normals: ");
@@ -942,16 +927,6 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     save <FMT_I32> (os, lastIterationMap[y * width + x]);
-                }
-            }
-            break;
-
-        case CHANNEL_LOGNORM:
-
-            os << u8(id) << u8(FMT_FLOAT);
-            for (isize y = 0; y < height; y++) {
-                for (isize x = 0; x < width; x++) {
-                    save <FMT_FLOAT> (os, lognormMap[y * width + x]);
                 }
             }
             break;

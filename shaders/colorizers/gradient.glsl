@@ -1,7 +1,3 @@
-
-// Sampler for the iteration count map
-uniform sampler2D iter;
-
 // Sampler for the normalized iteration count map
 uniform sampler2D nitcnt;
 

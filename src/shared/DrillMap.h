@@ -50,10 +50,9 @@ enum ChannelID {
     CHANNEL_RESULT,     // Pixel type
     CHANNEL_FIRST,      // First executed iteration
     CHANNEL_LAST,       // Last executed iteration
-    CHANNEL_LOGNORM,    // DEPRECATED
+    CHANNEL_NITCNT,     // Normalized iteration count
     CHANNEL_DERIVATIVE, // Derivative
     CHANNEL_NORMAL,     // Normal vector
-    CHANNEL_NITCNT      // Normalized iteration count
 };
 
 struct MapEntry {
@@ -108,7 +107,7 @@ public:
     std::vector<u32> lastIterationMap;
     std::vector<u32> overlayMap;
     std::vector<u32> textureMap;
-    std::vector<float> lognormMap;  // DEPRECATED
+    // std::vector<float> lognormMap;  // DEPRECATED
     std::vector<float> nitcntMap;
     std::vector<double> derivReMap;
     std::vector<double> derivImMap;
@@ -118,7 +117,7 @@ public:
     // Map data in texture format
     sf::Texture iterationMapTex;
     sf::Texture overlayMapTex;
-    sf::Texture lognormMapTex;      // DEPRECATED
+    // sf::Texture lognormMapTex;      // DEPRECATED
     sf::Texture nitcntMapTex;
     sf::Texture normalReMapTex;
     sf::Texture normalImMapTex;
@@ -128,7 +127,6 @@ public:
 
     const sf::Texture &getIterationMapTex() { updateTextures(); return iterationMapTex; }
     const sf::Texture &getOverlayMapTex() { updateTextures(); return overlayMapTex; }
-    const sf::Texture &getLognormMapTex() { updateTextures(); return lognormMapTex; }
     const sf::Texture &getNitcntMapTex() { updateTextures(); return nitcntMapTex; }
     const sf::Texture &getNormalReMapTex() { updateTextures(); return normalReMapTex; }
     const sf::Texture &getNormalImMapTex() { updateTextures(); return normalImMapTex; }
@@ -182,7 +180,7 @@ public:
 
     bool hasDrillResults() const;
     bool hasIterations() const;
-    bool hasLogNorms() const;
+    bool hasNormalizedIterationCounts() const;
     bool hasDerivates() const;
     bool hasNormals() const;
     void analyze() const;
