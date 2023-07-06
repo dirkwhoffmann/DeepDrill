@@ -298,7 +298,7 @@ Parser::parse(const string &value, Time &parsed)
         throw Exception(std::to_string(mm) + " is out of range (expected: 0..59)");
     }
     if (tt < 0 || tt > 9) {
-        throw Exception(std::to_string(mm) + " is out of range (expected: 0..9)");
+        throw Exception(std::to_string(tt) + " is out of range (expected: 0..9)");
     }
 
     parsed = Time::seconds(60.0f * mm + ss + tt / 10.0f);
