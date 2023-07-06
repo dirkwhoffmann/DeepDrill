@@ -103,7 +103,6 @@ public:
     ExtendedDouble pixelDeltaY;
 
     // Map data
-    std::vector<MapEntry> data; // DEPRECATED
     std::vector<DrillResult> resultMap;
     std::vector<u32> firstIterationMap;
     std::vector<u32> lastIterationMap;

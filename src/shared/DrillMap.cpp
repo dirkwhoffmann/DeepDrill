@@ -45,8 +45,6 @@ DrillMap::resize(isize w, isize h, isize d)
     ul = translate(Coord());
     lr = translate(Coord(width - 1, height -1));
 
-    data.resize(w * h);
-    data = { };
     resultMap.assign(width * height, DrillResult::DR_UNPROCESSED);
     firstIterationMap.assign(width * height, 0);
     lastIterationMap.assign(width * height, 0);
@@ -71,7 +69,6 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
 
     auto index = h * width + w;
 
-    data[index] = entry;
     resultMap[index] = entry.result;
     firstIterationMap[index] = entry.first;
     lastIterationMap[index] = entry.last;
@@ -201,7 +198,7 @@ bool
 DrillMap::hasDrillResults() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (data[i].result) return true;
+        if (resultMap[i]) return true;
     }
     return false;
 }
@@ -210,7 +207,7 @@ bool
 DrillMap::hasIterations() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (data[i].last) return true;
+        if (lastIterationMap[i]) return true;
     }
     return false;
 }
@@ -219,7 +216,7 @@ bool
 DrillMap::hasLogNorms() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (data[i].lognorm) return true;
+        if (lognormMap[i]) return true;
     }
     return false;
 }
@@ -228,7 +225,7 @@ bool
 DrillMap::hasDerivates() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (data[i].derivative != StandardComplex(0,0)) return true;
+        if (derivReMap[i] || derivImMap[i]) return true;
     }
     return false;
 }
@@ -237,7 +234,7 @@ bool
 DrillMap::hasNormals() const
 {
     for (isize i = 0; i < width * height; i++) {
-        if (data[i].normal != StandardComplex(0,0)) return true;
+        if (normalReMap[i] || normalImMap[i]) return true;
     }
     return false;
 }
