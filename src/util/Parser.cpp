@@ -278,19 +278,30 @@ Parser::parse(const string &value, DynamicFloat &parsed)
 void
 Parser::parse(const string &value, Time &parsed)
 {
-    if (auto pos = value.find(":"); pos != std::string::npos) {
+    auto values = split(value, ':');
 
-        long m, s;
+    long mm = 0; // Minutes
+    long ss = 0; // Seconds
+    long tt = 0; // Tenths
 
-        parse(value.substr(0, pos), m);
-        parse(value.substr(pos + 1, std::string::npos), s);
-
-        parsed = Time::seconds(i64(60 * m + s));
-
-    } else {
-
+    // Expected formats: 'mm:ss' or 'mm:ss:tt'
+    if (values.size() < 2 || values.size() > 3) {
         throw Exception("Invalid time specification: " + value);
     }
+
+    parse(values[0], mm);
+    parse(values[1], ss);
+    if (values.size() == 3) parse(values[2], tt);
+
+    // Minutes and tenth must be in their usual range
+    if (mm < 0 || mm > 59) {
+        throw Exception(std::to_string(mm) + " is out of range (expected: 0..59)");
+    }
+    if (tt < 0 || tt > 9) {
+        throw Exception(std::to_string(mm) + " is out of range (expected: 0..9)");
+    }
+
+    parsed = Time::seconds(60.0f * mm + ss + tt / 10.0f);
 }
 
 void
