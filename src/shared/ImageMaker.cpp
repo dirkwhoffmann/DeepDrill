@@ -125,7 +125,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer.apply();
 
     colorizer2.setUniform("iter", map2.getIterationMapTex());
-    colorizer.setUniform("nitcnt", map2.getNitcntMapTex());
+    colorizer2.setUniform("nitcnt", map2.getNitcntMapTex());
     colorizer2.setUniform("palette", paletteTex);
     colorizer2.setUniform("normalRe", map2.getNormalReMapTex());
     colorizer2.setUniform("normalIm", map2.getNormalImMapTex());

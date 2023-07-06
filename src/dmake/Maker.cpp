@@ -98,6 +98,7 @@ Maker::generateProjectFile()
     writePaletteSection(os);
     writeTextureSection(os);
     writeLightingSection(os);
+    writeGpuSection(os);
     writeVideoSection(os);
 
     copy(temp, projectDir / AssetManager::iniFile());
@@ -141,6 +142,7 @@ Maker::generateIniFile(isize nr, const mpf_class &zoom)
     writePaletteSection(os);
     writeTextureSection(os);
     writeLightingSection(os);
+    writeGpuSection(os);
     writePerturbationSection(os);
     writeApproximationSection(os);
     writeAreacheckSection(os);
