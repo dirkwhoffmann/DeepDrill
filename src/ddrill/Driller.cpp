@@ -55,6 +55,8 @@ Driller::drill()
         log::cout << Options::location.zoom << log::endl;
         log::cout << log::ralign("Drill depth: ");
         log::cout << Options::location.depth << log::endl;
+        log::cout << log::ralign("Escape radius: ");
+        log::cout << Options::location.escape << log::endl;
         log::cout << log::endl;
         log::cout << log::ralign("Map size: ");
         log::cout << Options::drillmap.width << " x " << Options::drillmap.height;
@@ -267,9 +269,10 @@ Driller::drill(ReferencePoint &r)
     ProgressIndicator progress("Computing reference orbit", Options::location.depth);
 
     PrecisionComplex z = r.location;
-
     PrecisionComplex d0 { 1.0, 0.0 };
     PrecisionComplex dn = d0;
+
+    double escape = Options::location.escape;
 
     r.xn.push_back(ReferenceIteration(z, Options::perturbation.tolerance));
         
@@ -288,7 +291,7 @@ Driller::drill(ReferencePoint &r)
         double norm = StandardComplex(z).norm();
 
         // Perform the escape check
-        if (norm >= 256) {
+        if (norm >= escape) {
 
             auto nv = z / dn;
             nv.normalize();
@@ -389,6 +392,9 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     // The depth of the reference point limits how deep we can drill
     isize limit = ref.xn.size();
 
+    // Threshold value for detecting an escaping orbit
+    double escape = Options::location.escape;
+
     // Determine the iteration to start with
     isize iteration = ref.skipped;
 
@@ -483,11 +489,12 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         // Escape check
         //
 
-        if (norm >= 512) {
-        // if (norm >= 4.9) {
+        if (norm >= escape) {
 
+            // Compute the normal vector
             auto nv = zn / ddn;
             nv.normalize();
+
             map.set(point, MapEntry {
                 .result     = DR_ESCAPED,
                 .first      = (i32)ref.skipped,

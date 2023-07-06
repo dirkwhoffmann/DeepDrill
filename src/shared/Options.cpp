@@ -47,6 +47,7 @@ std::map<string,string> Options::defaults = [](){
     defaults["location.imag"] = "0.0";
     defaults["location.zoom"] = "1.0";
     defaults["location.depth"] = "800";
+    defaults["location.escape"] = "1e32";
 
     // Map keys
     defaults["map.width"] = "1920";
@@ -186,6 +187,10 @@ Options::parse(string key, string value)
         } else if (key == "location.depth") {
 
             Parser::parse(value, location.depth);
+
+        } else if (key == "location.escape") {
+
+            Parser::parse(value, location.escape);
 
         } else if (key == "map.width") {
 

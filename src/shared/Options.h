@@ -79,6 +79,9 @@ struct Options {
         // Maximum number of iterations
         isize depth;
 
+        // Escape radius
+        double escape;
+
     } location;
 
     static struct Drillmap {

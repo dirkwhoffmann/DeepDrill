@@ -57,6 +57,8 @@ SlowDriller::drill(const Coord &point)
     auto dn = d0;
 
     isize limit = Options::location.depth;
+    double escape = Options::location.escape;
+
     isize iteration = 0;
 
     // Enter the main loop
@@ -73,7 +75,7 @@ SlowDriller::drill(const Coord &point)
         auto norm = xn.norm().asDouble();
 
         // Perform the escape check
-        if (norm >= 256) {
+        if (norm >= escape) {
 
             // This point is outside the Mandelbrot set
             auto u = xn / dn;
