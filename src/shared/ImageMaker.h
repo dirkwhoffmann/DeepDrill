@@ -47,12 +47,9 @@ class ImageMaker {
 
 public:
 
-    /*
-    ImageMaker(const Options &opt) : opt(opt) { };
-    ~ImageMaker() { };
-    */
-
+    // TODO: Get these strings directly from Options, remove parameters afterwards
     void init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter);
+
 
     //
     // Colorizing
@@ -64,7 +61,7 @@ public:
     void draw(DrillMap &map);
 
     // Colorizes a video frame
-    void draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom);
+    void draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom);
 
 private:
 

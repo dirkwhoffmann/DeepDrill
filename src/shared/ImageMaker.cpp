@@ -43,19 +43,20 @@ ImageMaker::init(const string &colorizationFilter, const string &illuminationFil
 }
 
 void
-ImageMaker::draw(DrillMap &dmap)
+ImageMaker::draw(DrillMap &map)
 {
     {
         ProgressIndicator progress("Running GPU shaders");
 
         // 1. Colorize
-        colorizer.setUniform("iter", dmap.getIterationMapTex());
-        colorizer.setUniform("lognorm", dmap.getLognormMapTex());
+        colorizer.setUniform("iter", map.getIterationMapTex());
+        colorizer.setUniform("lognorm", map.getLognormMapTex());
+        colorizer.setUniform("nitcnt", map.getNitcntMapTex());
         colorizer.setUniform("palette", paletteTex);
-        colorizer.setUniform("normalRe", dmap.getNormalReMapTex());
-        colorizer.setUniform("normalIm", dmap.getNormalImMapTex());
+        colorizer.setUniform("normalRe", map.getNormalReMapTex());
+        colorizer.setUniform("normalIm", map.getNormalImMapTex());
         colorizer.setUniform("texture", textureMapTex);
-        colorizer.setUniform("overlay", dmap.getOverlayMapTex());
+        colorizer.setUniform("overlay", map.getOverlayMapTex());
         colorizer.setUniform("paletteScale", Options::palette.scale());
         colorizer.setUniform("paletteOffset", Options::palette.offset());
         colorizer.setUniform("textureOpacity", Options::texture.opacity());
@@ -68,8 +69,8 @@ ImageMaker::draw(DrillMap &dmap)
 
             illuminator.setUniform("image", colorizer.getTexture());
             illuminator.setUniform("lightDir", lightVector(0));
-            illuminator.setUniform("normalRe", dmap.getNormalReMapTex());
-            illuminator.setUniform("normalIm", dmap.getNormalImMapTex());
+            illuminator.setUniform("normalRe", map.getNormalReMapTex());
+            illuminator.setUniform("normalIm", map.getNormalImMapTex());
             illuminator.apply();
 
             downscaler.setUniform("curr", illuminator.getTexture());
@@ -103,16 +104,17 @@ ImageMaker::draw(DrillMap &dmap)
 }
 
 void
-ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
+ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
     // 1. Colorize
-    colorizer.setUniform("iter", dmap1.getIterationMapTex());
-    colorizer.setUniform("lognorm", dmap1.getLognormMapTex());
+    colorizer.setUniform("iter", map1.getIterationMapTex());
+    colorizer.setUniform("lognorm", map1.getLognormMapTex());
+    colorizer.setUniform("nitcnt", map1.getNitcntMapTex());
     colorizer.setUniform("palette", paletteTex);
-    colorizer.setUniform("normalRe", dmap1.getNormalReMapTex());
-    colorizer.setUniform("normalIm", dmap1.getNormalImMapTex());
+    colorizer.setUniform("normalRe", map1.getNormalReMapTex());
+    colorizer.setUniform("normalIm", map1.getNormalImMapTex());
     colorizer.setUniform("texture", textureMapTex);
-    colorizer.setUniform("overlay", dmap1.getOverlayMapTex());
+    colorizer.setUniform("overlay", map1.getOverlayMapTex());
     colorizer.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer.setUniform("paletteOffset", Options::palette.offset(frame));
     colorizer.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
@@ -120,13 +122,14 @@ ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
     colorizer.setUniform("textureOffset", Options::texture.offset(frame));
     colorizer.apply();
 
-    colorizer2.setUniform("iter", dmap2.getIterationMapTex());
-    colorizer2.setUniform("lognorm", dmap2.getLognormMapTex());
+    colorizer2.setUniform("iter", map2.getIterationMapTex());
+    colorizer2.setUniform("lognorm", map2.getLognormMapTex());
+    colorizer.setUniform("nitcnt", map2.getNitcntMapTex());
     colorizer2.setUniform("palette", paletteTex);
-    colorizer2.setUniform("normalRe", dmap2.getNormalReMapTex());
-    colorizer2.setUniform("normalIm", dmap2.getNormalImMapTex());
+    colorizer2.setUniform("normalRe", map2.getNormalReMapTex());
+    colorizer2.setUniform("normalIm", map2.getNormalImMapTex());
     colorizer2.setUniform("texture", textureMapTex);
-    colorizer2.setUniform("overlay", dmap2.getOverlayMapTex());
+    colorizer2.setUniform("overlay", map2.getOverlayMapTex());
     colorizer2.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer2.setUniform("paletteOffset", Options::palette.offset(frame));
     colorizer2.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
@@ -139,14 +142,14 @@ ImageMaker::draw(DrillMap &dmap1, DrillMap &dmap2, isize frame, float zoom)
 
         illuminator.setUniform("image", colorizer.getTexture());
         illuminator.setUniform("lightDir", lightVector(frame));
-        illuminator.setUniform("normalRe", dmap1.getNormalReMapTex());
-        illuminator.setUniform("normalIm", dmap1.getNormalImMapTex());
+        illuminator.setUniform("normalRe", map1.getNormalReMapTex());
+        illuminator.setUniform("normalIm", map1.getNormalImMapTex());
         illuminator.apply();
 
         illuminator2.setUniform("image", colorizer2.getTexture());
         illuminator2.setUniform("lightDir", lightVector(frame));
-        illuminator2.setUniform("normalRe", dmap2.getNormalReMapTex());
-        illuminator2.setUniform("normalIm", dmap2.getNormalImMapTex());
+        illuminator2.setUniform("normalRe", map2.getNormalReMapTex());
+        illuminator2.setUniform("normalIm", map2.getNormalImMapTex());
         illuminator2.apply();
 
         downscaler.setUniform("curr", illuminator.getTexture());

@@ -47,13 +47,13 @@ enum ChannelFormat {
 
 enum ChannelID {
 
-    CHANNEL_RESULT,
-    CHANNEL_FIRST,
-    CHANNEL_LAST,
-    CHANNEL_LOGNORM,
-    CHANNEL_DERIVATIVE,
-    CHANNEL_NORMAL,
-    CHANNEL_NITCNT
+    CHANNEL_RESULT,     // Pixel type
+    CHANNEL_FIRST,      // First executed iteration
+    CHANNEL_LAST,       // Last executed iteration
+    CHANNEL_LOGNORM,    // DEPRECATED
+    CHANNEL_DERIVATIVE, // Derivative
+    CHANNEL_NORMAL,     // Normal vector
+    CHANNEL_NITCNT      // Normalized iteration count
 };
 
 struct MapEntry {
@@ -67,7 +67,7 @@ struct MapEntry {
     // Last executed iteration
     i32 last;
 
-    // Shall we save this directly or compute it?
+    // DEPRECATED
     float lognorm;
 
     // Last iteration value before the escape check hit
@@ -108,7 +108,8 @@ public:
     std::vector<u32> lastIterationMap;
     std::vector<u32> overlayMap;
     std::vector<u32> textureMap;
-    std::vector<float> lognormMap;
+    std::vector<float> lognormMap;  // DEPRECATED
+    std::vector<float> nitcntMap;
     std::vector<double> derivReMap;
     std::vector<double> derivImMap;
     std::vector<float> normalReMap;
@@ -117,7 +118,8 @@ public:
     // Map data in texture format
     sf::Texture iterationMapTex;
     sf::Texture overlayMapTex;
-    sf::Texture lognormMapTex;
+    sf::Texture lognormMapTex;      // DEPRECATED
+    sf::Texture nitcntMapTex;
     sf::Texture normalReMapTex;
     sf::Texture normalImMapTex;
 
@@ -127,6 +129,7 @@ public:
     const sf::Texture &getIterationMapTex() { updateTextures(); return iterationMapTex; }
     const sf::Texture &getOverlayMapTex() { updateTextures(); return overlayMapTex; }
     const sf::Texture &getLognormMapTex() { updateTextures(); return lognormMapTex; }
+    const sf::Texture &getNitcntMapTex() { updateTextures(); return nitcntMapTex; }
     const sf::Texture &getNormalReMapTex() { updateTextures(); return normalReMapTex; }
     const sf::Texture &getNormalImMapTex() { updateTextures(); return normalImMapTex; }
 

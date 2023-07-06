@@ -1,7 +1,10 @@
 
-// Sampler for the iteration count map and the lognorm map
+// Sampler for the iteration count map
 uniform sampler2D iter;
 uniform sampler2D lognorm;
+
+// Sampler for the normalized iteration count map
+uniform sampler2D nitcnt;
 
 // Sampler for the color palette
 uniform sampler2D palette;

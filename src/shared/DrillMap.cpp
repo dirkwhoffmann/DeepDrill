@@ -51,6 +51,7 @@ DrillMap::resize(isize w, isize h, isize d)
     overlayMap.assign(width * height, 0);
     textureMap.assign(width * height, 0);
     lognormMap.assign(width * height, 0);
+    nitcntMap.assign(width * height, 0);
     derivReMap.assign(width * height, 0);
     derivImMap.assign(width * height, 0);
     normalReMap.assign(width * height, 0);
@@ -67,52 +68,51 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
     assert(w < width && h < height);
 
-    auto index = h * width + w;
+    auto i = h * width + w;
 
-    resultMap[index] = entry.result;
-    firstIterationMap[index] = entry.first;
-    lastIterationMap[index] = entry.last;
-    lognormMap[index] = entry.lognorm;
-    derivReMap[index] = entry.derivative.re;
-    derivImMap[index] = entry.derivative.im;
-    normalReMap[index] = entry.normal.re;
-    normalImMap[index] = entry.normal.im;
+    resultMap[i] = entry.result;
+    firstIterationMap[i] = entry.first;
+    lastIterationMap[i] = entry.last;
+    lognormMap[i] = entry.lognorm;
+    derivReMap[i] = entry.derivative.re;
+    derivImMap[i] = entry.derivative.im;
+    normalReMap[i] = entry.normal.re;
+    normalImMap[i] = entry.normal.im;
 
-    // REMOVE THESE ASSERTS ASAP
-    assert(entry.result == DR_ESCAPED || normalReMap[index] == 0.0);
-    assert(entry.result == DR_ESCAPED || normalImMap[index] == 0.0);
+    // Derive the normalized iteration count
+    nitcntMap[i] = entry.last - std::log(0.5 * entry.lognorm) / std::log(2.0);
 
     switch (entry.result) {
 
         case DR_ESCAPED:
 
-            overlayMap[index] = 0;
+            overlayMap[i] = 0;
             break;
 
         case DR_GLITCH:
 
-            overlayMap[index] = Options::perturbation.color | 0xFF000000;
+            overlayMap[i] = Options::perturbation.color | 0xFF000000;
             break;
 
         case DR_IN_BULB:
         case DR_IN_CARDIOID:
 
-            overlayMap[index] = Options::areacheck.color | 0xFF000000;
+            overlayMap[i] = Options::areacheck.color | 0xFF000000;
             break;
 
         case DR_PERIODIC:
 
-            overlayMap[index] = Options::periodcheck.color | 0xFF000000;
+            overlayMap[i] = Options::periodcheck.color | 0xFF000000;
             break;
 
         case DR_ATTRACTED:
 
-            overlayMap[index] = Options::attractorcheck.color | 0xFF000000;
+            overlayMap[i] = Options::attractorcheck.color | 0xFF000000;
             break;
 
         default:
 
-            overlayMap[index] = GpuColor::black | 0xFF000000;
+            overlayMap[i] = GpuColor::black | 0xFF000000;
             break;
     }
 
@@ -483,6 +483,9 @@ DrillMap::updateTextures()
         if (!lognormMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create lognorm map texture");
         }
+        if (!nitcntMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create normalized iteration count map texture");
+        }
         if (!normalReMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normal(re) map texture");
         }
@@ -536,6 +539,7 @@ DrillMap::updateTextures()
     iterationMapTex.update((u8 *)lastIterationMap.data());
     overlayMapTex.update((u8 *)overlayMap.data());
     lognormMapTex.update((u8 *)lognormMap.data());
+    nitcntMapTex.update((u8 *)nitcntMap.data());
     normalReMapTex.update((u8 *)normalReMap.data());
     normalImMapTex.update((u8 *)normalImMap.data());
 
@@ -710,6 +714,15 @@ DrillMap::loadChannel(Compressor &is)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     lognormMap[y * width + x] = float(loadFloat());
+                }
+            }
+            break;
+
+        case CHANNEL_NITCNT:
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    nitcntMap[y * width + x] = float(loadFloat());
                 }
             }
             break;
@@ -939,6 +952,16 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     save <FMT_FLOAT> (os, lognormMap[y * width + x]);
+                }
+            }
+            break;
+
+        case CHANNEL_NITCNT:
+
+            os << u8(id) << u8(FMT_FLOAT);
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    save <FMT_FLOAT> (os, nitcntMap[y * width + x]);
                 }
             }
             break;
