@@ -1,7 +1,6 @@
 
 // Sampler for the iteration count map
 uniform sampler2D iter;
-uniform sampler2D lognorm;
 
 // Sampler for the normalized iteration count map
 uniform sampler2D nitcnt;
@@ -76,22 +75,12 @@ float decode_float(vec4 v)
 //
 //
 
-// Computes the normalized iteration count
-float compute_sl(vec2 coord)
-{
-    float count = decode_int(texture2D(iter, coord));
-    float lnorm = decode_float(texture2D(lognorm, coord));
-
-    float llmodulus = log(0.5 * lnorm) / log(2.0);
-    return count - llmodulus;
-    // return (count - log2(lnorm) + 4.0) * 0.075;
-}
-
 // Derives the color for a given coordinate from the color palette
 vec3 deriveColor(vec2 coord)
 {
-    float sl = compute_sl(coord) / 64.0;
-    float px = mod(sl * paletteScale + paletteOffset, 1.0);
+    float nic = decode_float(texture2D(nitcnt, coord));
+    // float sl = compute_sl(coord) / 64.0;
+    float px = mod(nic / 64.0 * paletteScale + paletteOffset, 1.0);
 
     return texture2D(palette, vec2(px, 0.0)).rgb;
 }
@@ -100,12 +89,13 @@ vec3 deriveColor(vec2 coord)
 vec4 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
 {
     float PI = 3.141592653589793238;
-    float sl = compute_sl(coord);
+    float nic = decode_float(texture2D(nitcnt, coord));
+    // float sl = compute_sl(coord);
 
     float arg = (atan(nrmIm, nrmRe) + PI) / (2.0 * PI);
 
     float px = mod(arg * 5.0 * textureScale + textureOffset, 1.0);
-    float py = mod(sl * 0.5 * textureScale, 1.0);
+    float py = mod(nic * 0.5 * textureScale, 1.0);
 
     return texture2D(texture, vec2(px,py));
 }
