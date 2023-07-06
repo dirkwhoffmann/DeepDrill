@@ -66,9 +66,6 @@ struct MapEntry {
     // Last executed iteration
     i32 last;
 
-    // DEPRECATED
-    float lognorm;
-
     // Last iteration value before the escape check hit
     StandardComplex zn;
     

@@ -78,7 +78,7 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     normalImMap[i] = entry.normal.im;
 
     // Derive the normalized iteration count
-    nitcntMap[i] = entry.last - std::log(0.5 * entry.lognorm) / std::log(2.0);
+    nitcntMap[i] = entry.last - std::log(0.5 * std::log(entry.zn.norm())) / std::log(2.0);
 
     switch (entry.result) {
 
@@ -622,7 +622,7 @@ DrillMap::loadHeader(std::istream &is)
 
     // Check check map format
     if (format != MAP_FORMAT) {
-        throw Exception("The mapfile is incompatible with this release. It has been generated with DeepDrill " +
+        throw Exception("The mapfile is incompatible with this release. It was generated with DeepDrill " +
                         Application::version(major, minor, subminor, beta) +
                         ".");
     }

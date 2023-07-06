@@ -84,7 +84,6 @@ SlowDriller::drill(const Coord &point)
             map.set(point, MapEntry {
                 .result     = DR_ESCAPED,
                 .last       = (i32)iteration,
-                .lognorm    = (float)::log(norm),
                 .derivative = StandardComplex(dn),
                 .normal     = StandardComplex(u) } );
             return;

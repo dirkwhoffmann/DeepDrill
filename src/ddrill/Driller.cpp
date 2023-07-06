@@ -300,7 +300,7 @@ Driller::drill(ReferencePoint &r)
             map.set(r.coord, MapEntry {
                 .result     = DR_ESCAPED,
                 .last       = (i32)i,
-                .lognorm    = (float)::log(norm),
+                .zn         = StandardComplex(z),
                 .derivative = StandardComplex(dn),
                 .normal     = StandardComplex(nv) } );
             return;
@@ -499,7 +499,6 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
                 .result     = DR_ESCAPED,
                 .first      = (i32)ref.skipped,
                 .last       = (i32)iteration,
-                .lognorm    = (float)::log(norm),
                 .zn         = StandardComplex(zn),
                 .derivative = StandardComplex(ddn),
                 .normal     = StandardComplex(nv) } );
