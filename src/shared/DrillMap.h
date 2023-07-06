@@ -52,7 +52,8 @@ enum ChannelID {
     CHANNEL_LAST,
     CHANNEL_LOGNORM,
     CHANNEL_DERIVATIVE,
-    CHANNEL_NORMAL
+    CHANNEL_NORMAL,
+    CHANNEL_NITCNT
 };
 
 struct MapEntry {
@@ -149,12 +150,6 @@ public:
 
 public:
 
-    MapEntry *operator [] (const isize &);
-    const MapEntry *operator [] (const isize &) const;
-    MapEntry &get(isize w, isize h);
-    const MapEntry &get(isize w, isize h) const;
-    MapEntry &get(const struct Coord &c);
-    const MapEntry &get(const struct Coord &c) const;
     void set(isize w, isize h, const MapEntry &entry);
     void set(const struct Coord &c, const MapEntry &entry);
 

@@ -64,42 +64,6 @@ DrillMap::resize(isize w, isize h, isize d)
     assert(!hasNormals());
 }
 
-MapEntry *
-DrillMap::operator [] (const isize &index)
-{
-    return data.data() + (index * width);
-}
-
-const MapEntry *
-DrillMap::operator [] (const isize &index) const
-{
-    return data.data() + (index * width);
-}
-
-MapEntry &
-DrillMap::get(isize w, isize h)
-{
-    return data[h * width + w];
-}
-
-const MapEntry &
-DrillMap::get(isize w, isize h) const
-{
-    return data[h * width + w];
-}
-
-MapEntry &
-DrillMap::get(const struct Coord &c)
-{
-    return data[c.y * width + c.x];
-}
-
-const MapEntry &
-DrillMap::get(const struct Coord &c) const
-{
-    return data[c.y * width + c.x];
-}
-
 void
 DrillMap::set(isize w, isize h, const MapEntry &entry)
 {
@@ -329,14 +293,16 @@ DrillMap::analyze() const
         for (isize y = 0; y < height; y++) {
             for (isize x = 0; x < width; x++) {
 
-                auto &entry = get(Coord(x,y));
+                auto i = y * width + x;
 
-                bool optspot = !!entry.first;
-                optspots.approximations += !!entry.first;
-                saved.approximations += entry.first;
-                saved.total += entry.first;
+                // auto &entry = get(Coord(x,y));
 
-                switch(entry.result) {
+                bool optspot = !!firstIterationMap[i];
+                optspots.approximations += !!firstIterationMap[i];
+                saved.approximations += firstIterationMap[i];
+                saved.total += firstIterationMap[i];
+
+                switch(resultMap[i]) {
 
                     case DR_UNPROCESSED:
 
@@ -348,17 +314,17 @@ DrillMap::analyze() const
 
                         spots.total++;
                         spots.exterior++;
-                        iterations.total += entry.last;
-                        iterations.exterior += entry.last;
+                        iterations.total += lastIterationMap[i];
+                        iterations.exterior += lastIterationMap[i];
                         break;
 
                     case DR_MAX_DEPTH_REACHED:
 
                         spots.total++;
                         spots.interior++;
-                        iterations.total += entry.last;
-                        iterations.interior += entry.last;
-                        assert(entry.last == limit);
+                        iterations.total += lastIterationMap[i];
+                        iterations.interior += lastIterationMap[i];
+                        assert(lastIterationMap[i] == limit);
                         break;
 
                     case DR_IN_BULB:
@@ -393,8 +359,8 @@ DrillMap::analyze() const
                         optspots.periods++;
                         iterations.total += limit;
                         iterations.interior += limit;
-                        saved.total += limit - entry.last;
-                        saved.periods += limit - entry.last;
+                        saved.total += limit - lastIterationMap[i];
+                        saved.periods += limit - lastIterationMap[i];
                         break;
 
                     case DR_ATTRACTED:
@@ -405,8 +371,8 @@ DrillMap::analyze() const
                         optspots.attractors++;
                         iterations.total += limit;
                         iterations.interior += limit;
-                        saved.total += limit - entry.last;
-                        saved.attractors += limit - entry.last;
+                        saved.total += limit - lastIterationMap[i];
+                        saved.attractors += limit - lastIterationMap[i];
                         break;
 
                     case DR_GLITCH:
@@ -719,8 +685,7 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    get(x,y).result = DrillResult(loadInt());
-                    resultMap[y * width + x] = get(x,y).result;
+                    resultMap[y * width + x] = DrillResult(loadInt());
                 }
             }
             break;
@@ -729,8 +694,7 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    get(x,y).first = u32(loadInt());
-                    firstIterationMap[y * width + x] = get(x,y).first;
+                    firstIterationMap[y * width + x] = u32(loadInt());
                 }
             }
             break;
@@ -739,8 +703,7 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    get(x,y).last = u32(loadInt());
-                    lastIterationMap[y * width + x] = get(x,y).last;
+                    lastIterationMap[y * width + x] = u32(loadInt());
                 }
             }
             break;
@@ -749,8 +712,7 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    get(x,y).lognorm = float(loadFloat());
-                    lognormMap[y * width + x] = get(x,y).lognorm;
+                    lognormMap[y * width + x] = float(loadFloat());
                 }
             }
             break;
@@ -759,10 +721,8 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    get(x,y).derivative.re = double(loadFloat());
-                    get(x,y).derivative.im = double(loadFloat());
-                    derivReMap[y * width + x] = get(x,y).derivative.re;
-                    derivImMap[y * width + x] = get(x,y).derivative.im;
+                    derivReMap[y * width + x] = double(loadFloat());
+                    derivImMap[y * width + x] = double(loadFloat());
                 }
             }
             break;
@@ -771,10 +731,8 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    get(x,y).normal.re = double(loadFloat());
-                    get(x,y).normal.im = double(loadFloat());
-                    normalReMap[y * width + x] = get(x,y).normal.re;
-                    normalImMap[y * width + x] = get(x,y).normal.im;
+                    normalReMap[y * width + x] = double(loadFloat());
+                    normalImMap[y * width + x] = double(loadFloat());
                 }
             }
             break;
@@ -953,7 +911,7 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             os << u8(id) << u8(FMT_I8);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_I8> (os, i8(get(x,y).result));
+                    save <FMT_I8> (os, i8(resultMap[y * width + x]));
                 }
             }
             break;
@@ -963,7 +921,7 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             os << u8(id) << u8(FMT_I32);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_I32> (os, get(x,y).first);
+                    save <FMT_I32> (os, firstIterationMap[y * width + x]);
                 }
             }
             break;
@@ -973,7 +931,7 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             os << u8(id) << u8(FMT_I32);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_I32> (os, get(x,y).last);
+                    save <FMT_I32> (os, lastIterationMap[y * width + x]);
                 }
             }
             break;
@@ -983,7 +941,7 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             os << u8(id) << u8(FMT_FLOAT);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_FLOAT> (os, get(x,y).lognorm);
+                    save <FMT_FLOAT> (os, lognormMap[y * width + x]);
                 }
             }
             break;
@@ -993,8 +951,8 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             os << u8(id) << u8(FMT_FLOAT);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_FLOAT> (os, get(x,y).derivative.re);
-                    save <FMT_FLOAT> (os, get(x,y).derivative.im);
+                    save <FMT_FLOAT> (os, derivReMap[y * width + x]);
+                    save <FMT_FLOAT> (os, derivImMap[y * width + x]);
                 }
             }
             break;
@@ -1004,8 +962,8 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             os << u8(id) << u8(FMT_FP16);
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    save <FMT_FP16> (os, get(x,y).normal.re);
-                    save <FMT_FP16> (os, get(x,y).normal.im);
+                    save <FMT_FP16> (os, normalReMap[y * width + x]);
+                    save <FMT_FP16> (os, normalImMap[y * width + x]);
                 }
             }
             break;
