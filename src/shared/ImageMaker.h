@@ -47,8 +47,7 @@ class ImageMaker {
 
 public:
 
-    // TODO: Get these strings directly from Options, remove parameters afterwards
-    void init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter);
+    void init();
 
 
     //

@@ -49,7 +49,7 @@ Zoomer::init()
     window.setFramerateLimit(recordMode ? 0 : unsigned(Options::video.frameRate));
 
     // Initialize the imageMaker
-    imageMaker.init(Options::gpu.colorizer, Options::gpu.illuminator, Options::gpu.scaler);
+    imageMaker.init();
 }
 
 void

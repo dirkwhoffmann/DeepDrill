@@ -17,7 +17,7 @@
 namespace dd {
 
 void
-ImageMaker::init(const string &colorizationFilter, const string &illuminationFilter, const string &scalingFilter)
+ImageMaker::init()
 {
     // Only initialize once
     assert(illuminator.getSize().x == 0);
@@ -35,11 +35,11 @@ ImageMaker::init(const string &colorizationFilter, const string &illuminationFil
     // Setup GPU filters
     auto mapDim = sf::Vector2u(unsigned(Options::drillmap.width), unsigned(Options::drillmap.height));
     auto imageDim = sf::Vector2u(unsigned(Options::image.width), unsigned(Options::image.height));
-    colorizer.init(colorizationFilter, mapDim);
-    colorizer2.init(colorizationFilter, mapDim);
-    illuminator.init(illuminationFilter, mapDim);
-    illuminator2.init(illuminationFilter, mapDim);
-    downscaler.init(scalingFilter, imageDim);
+    colorizer.init(Options::gpu.colorizer, mapDim);
+    colorizer2.init(Options::gpu.colorizer, mapDim);
+    illuminator.init(Options::gpu.illuminator, mapDim);
+    illuminator2.init(Options::gpu.illuminator, mapDim);
+    downscaler.init(Options::gpu.scaler, imageDim);
 }
 
 void
