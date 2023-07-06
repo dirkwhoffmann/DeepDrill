@@ -242,9 +242,7 @@ Options::parse(string key, string value)
 
         } else if (key == "palette.image") {
 
-            if (value != "") {
-                palette.image = AssetManager::findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
-            }
+            Parser::parse(value, palette.image, { Format::BMP, Format::JPG, Format:: PNG });
 
         } else if (key == "palette.mode") {
 
@@ -260,9 +258,7 @@ Options::parse(string key, string value)
 
         } else if (key == "texture.image") {
 
-            if (value != "") {
-                texture.image = AssetManager::findAsset(value, { Format::BMP, Format::JPG, Format:: PNG });
-            }
+            Parser::parse(value, texture.image, { Format::BMP, Format::JPG, Format:: PNG });
 
         } else if (key == "texture.opacity") {
 
@@ -290,15 +286,15 @@ Options::parse(string key, string value)
 
         } else if (key == "gpu.colorizer") {
 
-            gpu.colorizer = AssetManager::findAsset(value, Format::GLSL);
+            Parser::parse(value, gpu.colorizer, { Format::GLSL });
 
         } else if (key == "gpu.illuminator") {
 
-            gpu.illuminator = AssetManager::findAsset(value, Format::GLSL);
+            Parser::parse(value, gpu.illuminator, { Format::GLSL });
 
         } else if (key == "gpu.scaler") {
 
-            gpu.scaler = AssetManager::findAsset(value, Format::GLSL);
+            Parser::parse(value, gpu.scaler, { Format::GLSL });
 
         } else if (key == "areacheck.enable") {
 

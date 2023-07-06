@@ -11,6 +11,7 @@
 
 #include "Parser.h"
 #include "Exception.h"
+#include "AssetManager.h"
 #include "IO.h"
 #include "Logger.h"
 
@@ -110,6 +111,12 @@ void
 Parser::parse(const string &value, string &parsed)
 {
     parsed = value;
+}
+
+void
+Parser::parse(const string &value, fs::path &parsed, const std::vector<Format> &formats)
+{
+    parsed = value == "" ? "" : AssetManager::findAsset(value, formats);
 }
 
 void

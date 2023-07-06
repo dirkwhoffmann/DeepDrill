@@ -37,6 +37,7 @@ public:
     static void parse(std::stringstream &stream, Callback callback, isize nr = 0);
 
     static void parse(const string &value, string &parsed);
+    static void parse(const string &value, fs::path &parsed, const std::vector<Format> &formats);
     static void parse(const string &value, bool &parsed);
     static void parse(const string &value, isize &parsed);
     static void parse(const string &value, isize &parsed, isize min, isize max);
