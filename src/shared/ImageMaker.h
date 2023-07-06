@@ -45,7 +45,7 @@ class ImageMaker {
     // Initializing
     //
 
-public:
+private:
 
     void init();
 

@@ -84,9 +84,6 @@ DeepDrill::run()
     // Initialize the drill map
     drillMap.resize();
 
-    // Initialize the imageMaker
-    imageMaker.init();
-
     if (!Options::getInputs(Format::MAP).empty()) {
 
         // Load the drill map from disk

@@ -19,8 +19,8 @@ namespace dd {
 void
 ImageMaker::init()
 {
-    // Only initialize once
-    assert(illuminator.getSize().x == 0);
+    // Only proceed if initialization hasn't been done yet
+    if (colorizer.getSize().x != 0) return;
 
     // Load the color palette
     if (!paletteTex.loadFromImage(palette.getImage())) {
@@ -45,6 +45,8 @@ ImageMaker::init()
 void
 ImageMaker::draw(DrillMap &map)
 {
+    init();
+
     {
         ProgressIndicator progress("Running GPU shaders");
 
@@ -105,6 +107,8 @@ ImageMaker::draw(DrillMap &map)
 void
 ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
+    init();
+    
     // 1. Colorize
     colorizer.setUniform("iter", map1.getIterationMapTex());
     colorizer.setUniform("nitcnt", map1.getNitcntMapTex());
