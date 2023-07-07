@@ -110,23 +110,15 @@ BatchProgressIndicator::prefix(Logger &logger)
 
     for (const auto &it : fs::directory_iterator(fs::current_path())) {
 
-        auto file = it.path();
+        auto iniFile = it.path();
 
-        if (file.extension() != ".ini") continue;
-        if (file.filename() == AssetManager::iniFile()) continue;
+        if (iniFile.extension() != ".ini") continue;
+        if (iniFile.filename() == AssetManager::iniFile()) continue;
 
-        auto iniFile = file;
-        auto mapFile = iniFile.replace_extension(".map");
+        auto mapFile = iniFile;
+        mapFile.replace_extension(".map");
         total += 1;
         done += isOlderThan(iniFile, mapFile);
-        /*
-        if (fs::exists(mapFile)) {
-
-            auto iniDate = fs::last_write_time(iniFile).time_since_epoch();
-            auto mapDate = fs::last_write_time(mapFile).time_since_epoch();
-            done += isize(mapDate >= iniDate);
-        }
-        */
     }
 
     if (total) {

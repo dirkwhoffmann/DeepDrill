@@ -78,6 +78,9 @@ bool compareFiles(const fs::path &path1, const fs::path &path2)
 
 bool isOlderThan(const fs::path &path1, const fs::path &path2)
 {
+    printf("path1: %s ", path1.c_str());
+    printf("path2: %s\n", path2.c_str());
+
     if (fs::exists(path1) && fs::exists(path2)) {
 
         auto date1 = fs::last_write_time(path1).time_since_epoch();

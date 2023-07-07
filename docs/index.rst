@@ -1,11 +1,20 @@
-.. image:: images/youtube-flowers.jpg
-   :width: 100 %
-   :target: https://youtu.be/dNWzz-BignM
-   :align: center
-   :alt: Banner
-
 DeepDrill User's Manual
 =======================
+
+|pic1| |pic2|
+
+.. |pic1| image:: images/dd-at-github.png
+   :width: 49 %
+   :target: https://dirkwhoffmann.github.io/DeepDrill
+   :alt: Banner
+
+.. |pic2| image:: images/dd-at-youtube.png
+   :width: 49 %
+   :target: https://www.youtube.com/playlist?list=PLKsVJZiYDlPK5xBKJSFvuuWVNhyUu3r9P
+   :alt: Banner
+
+Table of Contents
+-----------------
 
 .. toctree::
    :maxdepth: 1
