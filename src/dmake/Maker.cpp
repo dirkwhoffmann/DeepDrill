@@ -233,6 +233,7 @@ Maker::writeVideoSection(std::ofstream &os)
     os << "[video]" << std::endl;
     os << "framerate = " << Options::video.frameRate << std::endl;
     os << "keyframes = " << Options::video.keyframes << std::endl;
+    os << "startframe = " << Options::video.startframe << std::endl;
     os << "velocity = " << Options::video.velocity << std::endl;
     os << "bitrate = " << Options::video.bitrate << std::endl;
     os << std::endl;
@@ -356,8 +357,7 @@ Maker::writeTargets(std::ofstream &os)
 
     // Write 'mov' target
     os << "$(VIDEO): $(IMAGES)" << std::endl;
-    os << "\t" << "@$(DEEPZOOM) " << AssetManager::iniFile();
-    os << " -o $(VIDEO)" << std::endl;
+    os << "\t" << "@$(DEEPZOOM) . -o $(VIDEO)" << std::endl;
     os << std::endl;
 
     // Write 'clean' target
