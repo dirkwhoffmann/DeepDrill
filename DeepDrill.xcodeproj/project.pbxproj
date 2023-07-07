@@ -181,6 +181,7 @@
 		504FB0172A57E1DE006495B8 /* swirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swirl.png; sourceTree = "<group>"; };
 		504FB0182A57E227006495B8 /* money2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = money2.jpg; sourceTree = "<group>"; };
 		504FB0192A57E2A7006495B8 /* electronics.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = electronics.jpg; sourceTree = "<group>"; };
+		504FB01A2A582637006495B8 /* bewitched.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = bewitched.ini; sourceTree = "<group>"; };
 		504FE2C32A1CE74C007A3F04 /* bilinear.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bilinear.glsl; sourceTree = "<group>"; };
 		504FE2C42A1CF08A007A3F04 /* lanczos.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lanczos.glsl; sourceTree = "<group>"; };
 		504FE2C52A1CF2A3007A3F04 /* catmull.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = catmull.glsl; sourceTree = "<group>"; };
@@ -816,6 +817,7 @@
 				50BEC72F2694872900CCDFA8 /* spider.ini */,
 				50A09C7C2A40365000845EE7 /* experimental.ini */,
 				5012111D2A47266B0012A4B7 /* mordor.ini */,
+				504FB01A2A582637006495B8 /* bewitched.ini */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";

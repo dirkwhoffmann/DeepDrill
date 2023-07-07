@@ -18,8 +18,8 @@ DeepDrill User's Manual
    :caption: Tutorials
 
    Tutorials/Installation
-   Tutorials/StillImages
-   Tutorials/ZoomVideos
+   Tutorials/Images
+   Tutorials/Videos
 
 .. toctree::
    :maxdepth: 1
@@ -27,8 +27,10 @@ DeepDrill User's Manual
    
    HowTo/Palettes
    HowTo/SpatialImages
+   HowTo/NormalMap
    HowTo/Textures
-   HowTo/Debug
+   HowTo/Zoom
+   HowTo/Analyze
 
 .. toctree::
    :maxdepth: 1
@@ -47,6 +49,7 @@ DeepDrill User's Manual
    Videos/Fossile
    Videos/X
    Videos/Flowers
+   Videos/Bewitched
 
 .. toctree::
    :maxdepth: 1
