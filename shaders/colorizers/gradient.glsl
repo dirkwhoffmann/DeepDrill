@@ -86,7 +86,6 @@ vec4 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
 {
     float PI = 3.141592653589793238;
     float nic = decode_float(texture2D(nitcnt, coord));
-    // float sl = compute_sl(coord);
 
     float arg = (atan(nrmIm, nrmRe) + PI) / (2.0 * PI);
 
