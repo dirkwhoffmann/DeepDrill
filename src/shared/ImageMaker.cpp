@@ -83,7 +83,6 @@ ImageMaker::draw(DrillMap &map)
 
         // 3. Scale down
         downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
-        downscaler.setUniform("numTextures", 1);
         downscaler.setUniform("zoom", 1.0f);
         downscaler.apply();
 
@@ -164,7 +163,6 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 
     // 3. Scale down
     downscaler.setUniform("size", sf::Vector2f(illuminator.getSize()));
-    downscaler.setUniform("numTextures", 2);
     downscaler.setUniform("zoom", zoom);
     downscaler.apply();
 

@@ -4,9 +4,6 @@ uniform sampler2D curr;
 // Sampler for the second texture (next keyframe)
 uniform sampler2D next;
 
-// Number of provided textures
-uniform int numTextures;
-
 // Texture size
 uniform vec2 size;
 
@@ -44,7 +41,7 @@ void main()
     vec2 coord = zoomed(gl_TexCoord[0].xy);
     vec4 color1 = bilinear(curr, coord);
 
-    if (numTextures > 1) {
+    if (zoom > 1.0) {
 
         // Check if a corresponding texel exists in the next texture
         vec2 coord2 = 2.0 * coord - vec2(0.5,0.5);
