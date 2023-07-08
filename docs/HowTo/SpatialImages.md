@@ -1,6 +1,6 @@
-# Computing spatial images
+# Computing Spatial Images
 
-DeepDrill supports the creation of spatial images. To create such an image, set the `enable` key in the `lighting` section to `yes:
+DeepDrill supports the creation of spatial images. To create such an image, set the `enable` key in the `lighting` section to `yes`:
 ```none
 ./deepdrill top.ini -o top.map -o top.jpg lighting.enable=yes
 ```

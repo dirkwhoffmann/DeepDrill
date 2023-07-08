@@ -23,19 +23,17 @@ void main()
     float nrmRe = decode_float(texture2D(normalRe, coord));
     float nrmIm = decode_float(texture2D(normalIm, coord));
 
+    vec3 N;
+
     if (nrmRe == 0.0 && nrmIm == 0.0) {
-
-        gl_FragColor = gl_Color * vec4(0.0, 0.0, 0.0, 1.0);
-
+        N = vec3(0.0, 0.0, 0.0);
     } else {
-
-        // Normalize
-        vec3 N = vec3(nrmRe, nrmIm, 1.0);
-
-        float r = 0.5 * N.r + 0.5;
-        float g = 0.5 * N.g + 0.5;
-        float b = 0.5 * N.b + 0.5;
-
-        gl_FragColor = gl_Color * vec4(r, g, b, 1.0);
+        N = vec3(nrmRe, nrmIm, 1.0);
     }
+
+    float r = 0.5 * N.r + 0.5;
+    float g = 0.5 * N.g + 0.5;
+    float b = 0.5 * N.b + 0.5;
+
+    gl_FragColor = gl_Color * vec4(r, g, b, 1.0);
 }

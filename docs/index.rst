@@ -38,7 +38,7 @@ Table of Contents
    HowTo/SpatialImages
    HowTo/NormalMap
    HowTo/Textures
-   HowTo/Zoom
+   HowTo/Dynamic
    HowTo/Analyze
 
 .. toctree::

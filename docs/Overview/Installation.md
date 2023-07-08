@@ -1,6 +1,6 @@
 # Build instructions
 
-In this tutorial, you will learn how to download, compile, and install the DeepDrill toolchain. 
+This document describes how to download, compile, and install the DeepDrill toolchain. 
 
 DeepDrill is a Unix-style C++20 application and compatible with most Unix-like operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.
 

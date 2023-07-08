@@ -1,4 +1,4 @@
-# Customizing the color palette
+# Customizing the Color Palette
 
 By default, DeepDrill colorizes the computed images with a default color palette. A custom color palette can be used by assigning a path to a palette image to the `palette.image` key. Here is an example: 
 ```none
