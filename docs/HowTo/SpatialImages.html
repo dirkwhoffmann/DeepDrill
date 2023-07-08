@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Computing spatial images &#8212; DeepDrill 3.0</title>
+    <title>Computing Spatial Images &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Adding texture overlays" href="Textures.html" />
-    <link rel="prev" title="Customizing the color palette" href="Palettes.html" />
+    <link rel="next" title="Exporting the Normal Map" href="NormalMap.html" />
+    <link rel="prev" title="Customizing the Color Palette" href="Palettes.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
-            <a class="top" href="#">Computing spatial images</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="top" href="#">Computing Spatial Images</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,10 +82,10 @@
       </div>
     </header>
     <nav>
-      <a href="Palettes.html" class="nav-icon previous" title="previous:&#13;Customizing the color palette" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="Palettes.html" class="nav-icon previous" title="previous:&#13;Customizing the Color Palette" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="Textures.html" class="nav-icon next" title="next:&#13;Adding texture overlays" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="NormalMap.html" class="nav-icon next" title="next:&#13;Exporting the Normal Map" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
@@ -98,15 +98,15 @@
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Customizing the color palette
+            Customizing the Color Palette
           </span>
         </div>
       </a>
-      <a class="next" href="Textures.html" aria-label="Next topic" >
+      <a class="next" href="NormalMap.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Adding texture overlays
+            Exporting the Normal Map
           </span>
         </div>
         <div class="icon">
@@ -121,38 +121,24 @@
           <div class="body" role="main">
             
 <section class="tex2jax_ignore mathjax_ignore" id="computing-spatial-images">
-<h1>Computing spatial images<a class="headerlink" href="#computing-spatial-images" title="Permalink to this heading">¶</a></h1>
-<p>DeepDrill supports the creation of spatial images. The easiest way to add a 3D effect in DeepDrill is to pass in the <code class="docutils literal notranslate"><span class="pre">3D.ini</span></code> profile which defines three key-value pairs:</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
-<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
-
-<span class="k">[colors]</span>
-<span class="na">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">45</span>
-<span class="na">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">65</span>
+<h1>Computing Spatial Images<a class="headerlink" href="#computing-spatial-images" title="Permalink to this heading">¶</a></h1>
+<p>DeepDrill supports the creation of spatial images. To create such an image, set the <code class="docutils literal notranslate"><span class="pre">enable</span></code> key in the <code class="docutils literal notranslate"><span class="pre">lighting</span></code> section to <code class="docutils literal notranslate"><span class="pre">yes</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o top.map -o top.jpg lighting.enable=yes
 </pre></div>
 </div>
-<p>Setting <code class="docutils literal notranslate"><span class="pre">image.depth</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> instructs DeepDrill to mix the derived pixel color values with depth information from a normal map. Running DeepDrill with this profile results in the following image:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.map -o top.jpg 3D.ini top.ini
-</pre></div>
-</div>
+<p>When spatial image creation is turned on, DeepDrill mixes the derived pixel color values with the depth information from a normal map. The result looks like this:</p>
 <p><img alt="3D Mandelbrot Image" src="../_images/3D_1.jpg" /></p>
-<p>The latter two key-value pairs define the direction of the light vector. <code class="docutils literal notranslate"><span class="pre">alpha</span></code> specifies the direction of the incoming light on the xy plane, and <code class="docutils literal notranslate"><span class="pre">beta</span></code> is the inclination of the light source. Decreasing this angle increases the 3D effect:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.jpg 3D.ini top.map colors.beta=30
+<p>Lighting can be controlled by two additonal keys, namely <code class="docutils literal notranslate"><span class="pre">lighting.alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">lighting.beta</span></code>. The <code class="docutils literal notranslate"><span class="pre">alpha</span></code>  parameter specifies the direction of the incoming light on the xy plane. The <code class="docutils literal notranslate"><span class="pre">beta</span></code> parameter describes the inclination of the light source. Decreasing this angle increases the 3D effect and vice versa:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.map -o top.jpg lighting.enable=yes lighting.beta=10
 </pre></div>
 </div>
 <p><img alt="3D Mandelbrot Image" src="../_images/3D_2.jpg" /></p>
-<p>Another predefined profile for computing spatial images is <code class="docutils literal notranslate"><span class="pre">relief.ini</span></code>. In addition to the options of the 3D profile, it selects a special GPU filter called <code class="docutils literal notranslate"><span class="pre">relief.glsl</span></code>. This filter ignores the color information and converts the normal map directly into a grayscale image:</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
-<span class="na">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">relief.glsl</span>
-<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
-
-<span class="k">[colors]</span>
-<span class="na">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">45</span>
-<span class="na">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">65</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.map -o top.jpg lighting.enable=yes lighting.beta=60
 </pre></div>
 </div>
-<p>Running DeepDrill with this profile yields the following result:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>relief.ini<span class="w"> </span>top.map
+<p><img alt="3D Mandelbrot Image" src="../_images/3D_3.jpg" /></p>
+<p>In addition, DeepDrill offers a special GPU shader called <code class="docutils literal notranslate"><span class="pre">relief.ini</span></code>. This filter ignores the color information and converts the normal map directly into a grayscale image:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.map -o top.jpg lighting.enable=yes gpu.illuminator=relief.glsl
 </pre></div>
 </div>
 <p><img alt="Mandelbrot Relief" src="../_images/relief.jpg" /></p>
@@ -174,19 +160,21 @@
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/Installation.html">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -194,17 +182,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
 </ul>
 
@@ -226,15 +207,15 @@
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Customizing the color palette
+            Customizing the Color Palette
           </span>
         </div>
       </a>
-      <a class="next" href="Textures.html" aria-label="Next topic" >
+      <a class="next" href="NormalMap.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Adding texture overlays
+            Exporting the Normal Map
           </span>
         </div>
         <div class="icon">

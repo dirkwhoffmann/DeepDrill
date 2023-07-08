@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Adding texture overlays &#8212; DeepDrill 3.0</title>
+    <title>Adding an Overlay Image &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Debugging the Toolchain" href="Debug.html" />
-    <link rel="prev" title="Computing spatial images" href="SpatialImages.html" />
+    <link rel="next" title="Working with Dynamic Values" href="Dynamic.html" />
+    <link rel="prev" title="Exporting the Normal Map" href="NormalMap.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
-            <a class="top" href="#">Adding texture overlays</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="top" href="#">Adding an Overlay Image</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="SpatialImages.html" class="nav-icon previous" title="previous:&#13;Computing spatial images" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="NormalMap.html" class="nav-icon previous" title="previous:&#13;Exporting the Normal Map" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="Debug.html" class="nav-icon next" title="next:&#13;Debugging the Toolchain" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Dynamic.html" class="nav-icon next" title="next:&#13;Working with Dynamic Values" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="SpatialImages.html" aria-label="Previous topic" >
+      <a class="previous" href="NormalMap.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing spatial images
+            Exporting the Normal Map
           </span>
         </div>
       </a>
-      <a class="next" href="Debug.html" aria-label="Next topic" >
+      <a class="next" href="Dynamic.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Debugging the Toolchain
+            Working with Dynamic Values
           </span>
         </div>
         <div class="icon">
@@ -120,14 +120,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="adding-texture-overlays">
-<h1>Adding texture overlays<a class="headerlink" href="#adding-texture-overlays" title="Permalink to this heading">¶</a></h1>
-<p>DeepDrill supports to mix the pixels derived from the color palette with the pixels from a texture image. To enable this feature, simply assign an image file to key <code class="docutils literal notranslate"><span class="pre">colors.texture</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill -o top.map -o top.jpg top.ini colors.texture=wood.jpg
+<section class="tex2jax_ignore mathjax_ignore" id="adding-an-overlay-image">
+<h1>Adding an Overlay Image<a class="headerlink" href="#adding-an-overlay-image" title="Permalink to this heading">¶</a></h1>
+<p>DeepDrill supports to mix the pixels derived from the color palette with the pixels from a texture image. To enable this feature, simply assign an image file to key <code class="docutils literal notranslate"><span class="pre">texture.image</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o top.jpg texture.image=giraffe.jpg
 </pre></div>
 </div>
 <p><img alt="Textured Mandelbrot Image" src="../_images/textured.jpg" /></p>
-<p>File <code class="docutils literal notranslate"><span class="pre">wood.jpg</span></code> is located in folder <code class="docutils literal notranslate"><span class="pre">textures</span></code> which is one of the default search locations for asset files. This directory contains some other nice texture you may want to check out.</p>
+<p>File <code class="docutils literal notranslate"><span class="pre">giraffe.jpg</span></code> is located in folder <code class="docutils literal notranslate"><span class="pre">textures</span></code> which is one of the default search locations for asset files. This directory contains some other nice texture you may want to check out.</p>
 </section>
 
             <div class="clearer"></div>
@@ -146,19 +146,21 @@
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/Installation.html">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -166,17 +168,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
 </ul>
 
@@ -191,22 +186,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="SpatialImages.html" aria-label="Previous topic" >
+      <a class="previous" href="NormalMap.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Computing spatial images
+            Exporting the Normal Map
           </span>
         </div>
       </a>
-      <a class="next" href="Debug.html" aria-label="Next topic" >
+      <a class="next" href="Dynamic.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Debugging the Toolchain
+            Working with Dynamic Values
           </span>
         </div>
         <div class="icon">

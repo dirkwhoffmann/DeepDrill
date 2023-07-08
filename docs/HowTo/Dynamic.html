@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>X &#8212; DeepDrill 3.0</title>
+    <title>Working with Dynamic Values &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -13,12 +13,14 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script defer src="../_static/insipid.js"></script>
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flowers" href="Flowers.html" />
-    <link rel="prev" title="Fossile" href="Fossile.html" />
+    <link rel="next" title="Analyzing the Computation Run" href="Analyze.html" />
+    <link rel="prev" title="Adding an Overlay Image" href="Textures.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +61,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
-            <a class="top" href="#">X</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="top" href="#">Working with Dynamic Values</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +84,31 @@
       </div>
     </header>
     <nav>
-      <a href="Fossile.html" class="nav-icon previous" title="previous:&#13;Fossile" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="Textures.html" class="nav-icon previous" title="previous:&#13;Adding an Overlay Image" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="Flowers.html" class="nav-icon next" title="next:&#13;Flowers" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Analyze.html" class="nav-icon next" title="next:&#13;Analyzing the Computation Run" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Fossile.html" aria-label="Previous topic" >
+      <a class="previous" href="Textures.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Fossile
+            Adding an Overlay Image
           </span>
         </div>
       </a>
-      <a class="next" href="Flowers.html" aria-label="Next topic" >
+      <a class="next" href="Analyze.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Flowers
+            Analyzing the Computation Run
           </span>
         </div>
         <div class="icon">
@@ -120,84 +122,32 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="x">
-<h1>X<a class="headerlink" href="#x" title="Permalink to this heading">¶</a></h1>
-<p>Created with DeepDrill 1.1</p>
-<section id="first-version">
-<h2>First version<a class="headerlink" href="#first-version" title="Permalink to this heading">¶</a></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6bk-HDSilGE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<section id="location-file">
-<h3>Location file<a class="headerlink" href="#location-file" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Taken from the Rust fractal core project by Jack Yarndley (x)</span>
-<span class="c1"># https://github.com/rust-fractal/rust-fractal-core</span>
-
-<span class="p">[</span><span class="n">location</span><span class="p">]</span>
-
-<span class="n">real</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.479796270901760024425279934770411525645551054432599517909807632824286254403907594526888466099962805022975196472549771681831234491695559852583955204986197762293872769474806903995564259040667568599770094383157857518790853771783314763231302599999999999999999999999998</span>
-
-<span class="n">imag</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.001199443952813447746281973233374468444560314114132538362037569205657422216739564521471119107626453330996365067987088146663639996715939831819152248618042255824652268918299630897525386638029428706473919823922522752497780934312003352081931299999999999999999999999998</span>
-
-<span class="n">zoom</span> <span class="o">=</span> <span class="mf">4.27799999998E235</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mi">50000</span>
+<section class="tex2jax_ignore mathjax_ignore" id="working-with-dynamic-values">
+<h1>Working with Dynamic Values<a class="headerlink" href="#working-with-dynamic-values" title="Permalink to this heading">¶</a></h1>
+<p>As you’ve already learned, DeepDrill is configured by defining several key-value pairs. E.g., by setting</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[video]</span>
+<span class="na">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.5</span>
 </pre></div>
 </div>
-</section>
-<section id="profile">
-<h3>Profile<a class="headerlink" href="#profile" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mi">3840</span>
-<span class="n">height</span> <span class="o">=</span> <span class="mi">2160</span>
-
-<span class="p">[</span><span class="n">location</span><span class="p">]</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mi">3500000</span>
-
-<span class="p">[</span><span class="n">palette</span><span class="p">]</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">ruby</span><span class="o">.</span><span class="n">png</span>
-
-<span class="p">[</span><span class="n">video</span><span class="p">]</span>
-<span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">120</span>
-<span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
-
-<span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
-<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
-<span class="n">rounds</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="p">[</span><span class="n">approximation</span><span class="p">]</span>
-<span class="n">coefficients</span> <span class="o">=</span> <span class="mi">5</span>
+<p>we advice DeepZoom to zoom in at a pace of 2 seconds per keyframe. The velocity won’t change throughout the entire video.</p>
+<p>However, <code class="docutils literal notranslate"><span class="pre">velocity</span></code> is a so-called dynamic value which means that it can be varied throughout the video. This is achieved by assigning a split description instead of fixed value. A spline is defined by several <span class="math notranslate nohighlight">\(x/y\)</span> pairs where <span class="math notranslate nohighlight">\(x\)</span> is a time stamp and <span class="math notranslate nohighlight">\(y\)</span> is the value we want to assign at that point in time.</p>
+<p>For the following example, we assume that you’ve worked through the zoom-video tutorial. I.e., we assume that <code class="docutils literal notranslate"><span class="pre">project</span></code> contains all precomputed keyframes for the video. Then, the zoom velocity can be made dynamic like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deepzoom</span> <span class="n">project</span> <span class="n">video</span><span class="o">.</span><span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="o">/-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="o">/-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="o">/-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">14</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">16</span><span class="o">/</span><span class="mi">0</span> <span class="n">video</span><span class="o">.</span><span class="n">startframe</span><span class="o">=</span><span class="mi">30</span> <span class="o">-</span><span class="n">o</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">wobble</span><span class="o">.</span><span class="n">mov</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="second-version">
-<h2>Second version<a class="headerlink" href="#second-version" title="Permalink to this heading">¶</a></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/y7RPU77vnkg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<section id="id1">
-<h3>Profile<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">image</span><span class="p">]</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mi">3840</span>
-<span class="n">height</span> <span class="o">=</span> <span class="mi">2160</span>
-
-<span class="p">[</span><span class="n">location</span><span class="p">]</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mi">3500000</span>
-
-<span class="p">[</span><span class="n">palette</span><span class="p">]</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">lindor</span><span class="o">.</span><span class="n">png</span>
-<span class="n">scale</span> <span class="o">=</span> <span class="mf">0.5</span>
-
-<span class="p">[</span><span class="n">video</span><span class="p">]</span>
-<span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">120</span>
-<span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
-
-<span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
-<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
-<span class="n">rounds</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="p">[</span><span class="n">approximation</span><span class="p">]</span>
-<span class="n">coefficients</span> <span class="o">=</span> <span class="mi">5</span>
-</pre></div>
-</div>
-</section>
-</section>
+<p>This is the result:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gM5hYQWW9Bk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<p>The following keys refer to dynamic values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">video.velocity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">palette.scale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">palette.offset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">texture.opacity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">texture.scale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">texture.offset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lighting.alpha</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lighting.beta</span></code></p></li>
+</ul>
 </section>
 
             <div class="clearer"></div>
@@ -216,19 +166,21 @@
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/Installation.html">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Debug.html">Debugging the Toolchain</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -236,17 +188,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Fossile.html">Fossile</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
 </ul>
 
@@ -261,22 +206,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Fossile.html" aria-label="Previous topic" >
+      <a class="previous" href="Textures.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Fossile
+            Adding an Overlay Image
           </span>
         </div>
       </a>
-      <a class="next" href="Flowers.html" aria-label="Next topic" >
+      <a class="next" href="Analyze.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Flowers
+            Analyzing the Computation Run
           </span>
         </div>
         <div class="icon">
@@ -289,7 +234,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Videos/X.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/HowTo/Dynamic.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

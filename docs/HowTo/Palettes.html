@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Customizing the color palette &#8212; DeepDrill 3.0</title>
+    <title>Customizing the Color Palette &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Computing spatial images" href="SpatialImages.html" />
-    <link rel="prev" title="Computing Zoom Videos" href="../Tutorials/ZoomVideos.html" />
+    <link rel="next" title="Computing Spatial Images" href="SpatialImages.html" />
+    <link rel="prev" title="Computing Zoom Videos" href="../Tutorials/Videos.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
-            <a class="top" href="#">Customizing the color palette</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="top" href="#">Customizing the Color Palette</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,16 +82,16 @@
       </div>
     </header>
     <nav>
-      <a href="../Tutorials/ZoomVideos.html" class="nav-icon previous" title="previous:&#13;Computing Zoom Videos" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="../Tutorials/Videos.html" class="nav-icon previous" title="previous:&#13;Computing Zoom Videos" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="SpatialImages.html" class="nav-icon next" title="next:&#13;Computing spatial images" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="SpatialImages.html" class="nav-icon next" title="next:&#13;Computing Spatial Images" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="../Tutorials/ZoomVideos.html" aria-label="Previous topic" >
+      <a class="previous" href="../Tutorials/Videos.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
@@ -106,7 +106,7 @@
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing spatial images
+            Computing Spatial Images
           </span>
         </div>
         <div class="icon">
@@ -121,18 +121,23 @@
           <div class="body" role="main">
             
 <section class="tex2jax_ignore mathjax_ignore" id="customizing-the-color-palette">
-<h1>Customizing the color palette<a class="headerlink" href="#customizing-the-color-palette" title="Permalink to this heading">¶</a></h1>
-<p>By default, DeepDrill colorizes the computed images with a default color palette. A custom color palette can be used by assigning a path to a palette image to the <code class="docutils literal notranslate"><span class="pre">colors.palette</span></code> key. Here is an example:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o image.map -o image.jpg colors.palette=vulcano.png 
+<h1>Customizing the Color Palette<a class="headerlink" href="#customizing-the-color-palette" title="Permalink to this heading">¶</a></h1>
+<p>By default, DeepDrill colorizes the computed images with a default color palette. A custom color palette can be used by assigning a path to a palette image to the <code class="docutils literal notranslate"><span class="pre">palette.image</span></code> key. Here is an example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o image.map -o image.jpg palette.image=dolomiti.png
 </pre></div>
 </div>
 <p><img alt="Recolored Mandelbrot set" src="../_images/recolored1.jpg" /></p>
 <p>DeepDrill does not rely on a special palette format. Instead, the color palettes is specified in the form of a standard image file. For simplicity, there are no restrictions on the image format. DeepDrill composes the color palette from the pixels of the first horizontal line and ignores all others. The horizontal resolution of the palette does not affect the overall appearance of the image. However, wider images result in slightly smoother color transitions.</p>
-<p>In addition, DeepDrill provides a key called <code class="docutils literal notranslate"><span class="pre">colors.scale</span></code> which controls how fast the palette repeats. The following examples shows the effect:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill image.map colors.palette=vulcano.png colors.scale=3.0 -o image.jpg 
+<p>In addition, DeepDrill provides two keys to manipulate the color palette. Key <code class="docutils literal notranslate"><span class="pre">palette.scale</span></code> controls how fast the palette repeats. The following examples shows the effect:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o image.map -o image.jpg palette.image=dolomiti.png palette.scale=10.0 
 </pre></div>
 </div>
-<p><img alt="Recolored Mandelbrot set" src="../_images/recolored2.jpg" /></p>
+<p><img alt="Recolored Mandelbrot set" src="../_images/recolored_scaled.jpg" /></p>
+<p>Key <code class="docutils literal notranslate"><span class="pre">palette.offset</span></code> can be utilized to shift the color palette like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deepdrill top.ini -o image.map -o image.jpg palette.image=dolomiti.png palette.scale=10.0 palette.offset=0.5
+</pre></div>
+</div>
+<p><img alt="Recolored Mandelbrot set" src="../_images/recolored_scaled_shifted.jpg" /></p>
 <section id="predefined-palettes">
 <h2>Predefined palettes<a class="headerlink" href="#predefined-palettes" title="Permalink to this heading">¶</a></h2>
 <p>In the example shown above we have used image file <code class="docutils literal notranslate"><span class="pre">vulcano.png</span></code> which is one of several predefined color palettes. The images below give an overview of the available choices. Since you can pass any image file, it is easy to colorize  images with self-made palettes:</p>
@@ -158,23 +163,6 @@
 <img alt="ultrafrac palette" src="../_images/ultrafrac.png" /></p>
 <p><em>vulcano</em>
 <img alt="vulcano palette" src="../_images/vulcano.png" /></p>
-<p>The following additional examples show recolored versions of one of the images we calculated in the previous tutorial.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.ini<span class="w"> </span>-o<span class="w"> </span>image1.jpg<span class="w"> </span>-o<span class="w"> </span>seahorse1.map<span class="w"> </span>colors.palette<span class="o">=</span>ruby.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored3.jpg" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image2.jpg<span class="w"> </span>colors.palette<span class="o">=</span>lindor.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored4.jpg" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image3.jpg<span class="w"> </span>colors.palette<span class="o">=</span>dolomiti.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored5.jpg" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse1.map<span class="w"> </span>-o<span class="w"> </span>image3.jpg<span class="w"> </span>colors.palette<span class="o">=</span>ice.png
-</pre></div>
-</div>
-<p><img alt="prism recolored" src="../_images/recolored6.jpg" /></p>
 </section>
 </section>
 
@@ -194,19 +182,21 @@
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/Installation.html">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Debug.html">Debugging the Toolchain</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -214,17 +204,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
 </ul>
 
@@ -239,7 +222,7 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="../Tutorials/ZoomVideos.html" aria-label="Previous topic" >
+      <a class="previous" href="../Tutorials/Videos.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
@@ -254,7 +237,7 @@
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing spatial images
+            Computing Spatial Images
           </span>
         </div>
         <div class="icon">

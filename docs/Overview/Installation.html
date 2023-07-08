@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Computing Still Images &#8212; DeepDrill 3.0</title>
+    <title>Build instructions &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Computing Zoom Videos" href="ZoomVideos.html" />
-    <link rel="prev" title="Build instructions" href="Installation.html" />
+    <link rel="next" title="Computing Still Images" href="../Tutorials/Images.html" />
+    <link rel="prev" title="About" href="About.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
-            <a class="top" href="#">Computing Still Images</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="top" href="#">Build instructions</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="Installation.html" class="nav-icon previous" title="previous:&#13;Build instructions" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="About.html" class="nav-icon previous" title="previous:&#13;About" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="ZoomVideos.html" class="nav-icon next" title="next:&#13;Computing Zoom Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="../Tutorials/Images.html" class="nav-icon next" title="next:&#13;Computing Still Images" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Installation.html" aria-label="Previous topic" >
+      <a class="previous" href="About.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Build instructions
+            About
           </span>
         </div>
       </a>
-      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
+      <a class="next" href="../Tutorials/Images.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing Zoom Videos
+            Computing Still Images
           </span>
         </div>
         <div class="icon">
@@ -120,89 +120,47 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="computing-still-images">
-<h1>Computing Still Images<a class="headerlink" href="#computing-still-images" title="Permalink to this heading">¶</a></h1>
-<p>In this tutorial, you will learn how to create still images using the DeepDrill toolchain.</p>
-<p>We start by computing a top view of the entire Mandelbrot set. To compute the image, we need to tell DeepDrill the location of the object. This is done by passing a configuration file as a command line parameter. All configuration files carry the .ini extension because DeepDrill uses a structured key-value syntax for customization. A predefined location file for the title image is stored in the <code class="docutils literal notranslate"><span class="pre">locations</span></code> directory under <code class="docutils literal notranslate"><span class="pre">top.ini</span></code>. Before we continue, let’s peek inside this file:</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[location]</span>
-<span class="na">real</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">-0.7</span>
-<span class="na">imag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.0</span>
-<span class="na">zoom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1.7</span>
-<span class="na">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1000</span>
+<section class="tex2jax_ignore mathjax_ignore" id="build-instructions">
+<h1>Build instructions<a class="headerlink" href="#build-instructions" title="Permalink to this heading">¶</a></h1>
+<p>This document describes how to download, compile, and install the DeepDrill toolchain.</p>
+<p>DeepDrill is a Unix-style C++20 application and compatible with most Unix-like operating systems. It has been tested to run on macOS, Ubuntu, and Linux Mint.</p>
+<ul>
+<li><p><strong>Step 1: Install third-party libraries</strong></p>
+<p>To compile the DeepDrill toolchain, the GNU Multiple Precision Arithmetic Library (GMP) and the Simple and Fast Multimedia Library (SFML) are required. For recording zoom videos, FFmpeg needs to be installed on your machine, too. It is executed by DeepZoom at runtime.</p>
+<ul>
+<li><p>Option 1: Install with Homebrew</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>gmp
+brew<span class="w"> </span>install<span class="w"> </span>libsfml
+brew<span class="w"> </span>install<span class="w"> </span>ffmpeg
 </pre></div>
 </div>
-<p>Four key-value pairs are defined. The first two define the position of the center coordinate on the complex number plane. The third pair defines the magnification factor and the fourth pair defines the maximum number of iterations. If an orbit has not yet broken out at the time this iteration is performed, the corresponding point is considered part of the Mandelbrot set.</p>
-<p>Assuming the current directory is the build directory, we can start DeepDrill by executing the following command at the command line:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>image.map<span class="w"> </span>top.ini
+</li>
+<li><p>Option 2: Install with APT</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libgmp3-dev
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libsfml-dev
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>ffmpeg
 </pre></div>
 </div>
-<p>The following output is generated:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepDrill 3.0 - (C)opyright Dirk W. Hoffmann
-
-        Running the area check: ................................. 1.12 sec
-
-Round 1: 1784039 points remaining
-
-     Computing reference orbit: ................................. 0.00 sec
-        Computing coefficients: ................................. 0.00 sec
-         Checking probe points: ................................. 0.00 sec
-        Computing delta orbits: ................................. 1.23 sec
-
-All rounds completed: 0 unresolved
-
-            Preparing map file: ................................. 0.05 sec
-          Compressing map file: ................................. 0.65 sec
-               Saving map file: ................................. 0.00 sec
-
-Total time: 3.14 sec
+</li>
+</ul>
+</li>
+<li><p><strong>Step 2: Clone the GitHub project</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/dirkwhoffmann/DeepDrill.git
 </pre></div>
 </div>
-<p>Note that we have not generated the image directly. Instead, we computed a so-called map file, which stores various information about the orbit of each pixel. The creation of the map file is the first phase of a two-step process. In the second phase, the map file is converted into an image. This is done by specifying a map file as input and an image file as output.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>image.jpg<span class="w"> </span>image.map
+</li>
+<li><p><strong>Step 3: Compile the source code</strong></p>
+<p>Compiling the application requires CMake and a standard C++ toolchain to be installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>DeepDrill
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>../src
+make<span class="w"> </span>-j
 </pre></div>
 </div>
-<p>The following output is generated:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DeepDrill 3.0 - (C)opyright Dirk W. Hoffmann
-
-              Loading map file: ................................. 0.00 sec
-        Uncompressing map file: ................................. 0.09 sec
-           Extracting channels: ................................. 0.04 sec
-           Computing color map: ................................. 0.05 sec
-           Running GPU shaders: ................................. 0.01 sec
-                  Saving image: ................................. 0.02 sec
-
-Total time: 0.33 sec
-</pre></div>
-</div>
-<p>Besides JPG images, DeepDrill also supports BMP and PNG type images.</p>
-<p>By default, DeepDrill creates a 1920 x 1080 image with a predefined color palette and other default settings:</p>
-<p><img alt="Mandelbrot Image" src="../_images/stillImage1.jpg" /></p>
-<p>All settings can be customized by specifying one or more key-value pairs. The simplest way to define such a pair is to pass it in as a command line parameter. For example, the following invocation instructs DeepDrill to create the image in 4K resolution:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>image.width<span class="o">=</span><span class="m">3840</span><span class="w"> </span>image.height<span class="o">=</span><span class="m">2160</span><span class="w"> </span>top.ini
-</pre></div>
-</div>
-<p>This example also demonstrates the possibility of going directly from a location file to an image. In this case the map file is only created internally and not written to disk. Since rendering the map file is by far the most time-consuming part, saving map files to disk is the preferred method if a single map file is to be rendered multiple times, e.g. with different color palettes.</p>
-<p>Another way of passing in key-value pairs is by putting the keys in a seperare configuration file. E.g., the <code class="docutils literal notranslate"><span class="pre">profiles</span></code> folder contains a predefined profile named <code class="docutils literal notranslate"><span class="pre">4K.ini</span></code> with the following content:</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
-<span class="na">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3840</span>
-<span class="na">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2160</span>
-</pre></div>
-</div>
-<p>DeepDrill accepts any number of configuration files as input. This means that we can simplify the calculation of our 4K image with the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>4K.ini<span class="w"> </span>top.ini
-</pre></div>
-</div>
-<p>Note that the old value of a key-value pair is overwritten if it is specified multiple times. All configuration files are processed in the same order as they appear in the argument list.</p>
-<p>In the next example, we’ll dig a little deeper into the Mandelbrot set navigating to three different locations:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse1.jpg<span class="w"> </span>seahorse1.ini
-./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse2.jpg<span class="w"> </span>seahorse2.ini
-./deepdrill<span class="w"> </span>-o<span class="w"> </span>seahorse3.jpg<span class="w"> </span>seahorse3.ini
-</pre></div>
-</div>
-<p>As a result, we get three well known images. All three structures are hidden in a part of the Mandelbrot set known as <em>seahorse valley</em>.</p>
-<p><img alt="Inside seahorse valley" src="../_images/seahorse1.jpg" />
-<img alt="Inside seahorse valley" src="../_images/seahorse2.jpg" />
-<img alt="Inside seahorse valley" src="../_images/seahorse3.jpg" /></p>
+</li>
+</ul>
+<p>The buid process creates three executables: <code class="docutils literal notranslate"><span class="pre">deepdrill</span></code>, <code class="docutils literal notranslate"><span class="pre">deepmake</span></code>, and <code class="docutils literal notranslate"><span class="pre">deepzoom</span></code>.</p>
 </section>
 
             <div class="clearer"></div>
@@ -219,21 +177,23 @@ Total time: 0.33 sec
 
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Build instructions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ZoomVideos.html">Computing Zoom Videos</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Debug.html">Debugging the Toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -241,17 +201,10 @@ Total time: 0.33 sec
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Videos/Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
 </ul>
 
@@ -266,22 +219,22 @@ Total time: 0.33 sec
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Installation.html" aria-label="Previous topic" >
+      <a class="previous" href="About.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Build instructions
+            About
           </span>
         </div>
       </a>
-      <a class="next" href="ZoomVideos.html" aria-label="Next topic" >
+      <a class="next" href="../Tutorials/Images.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Computing Zoom Videos
+            Computing Still Images
           </span>
         </div>
         <div class="icon">
@@ -294,7 +247,7 @@ Total time: 0.33 sec
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Tutorials/StillImages.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/Overview/Installation.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

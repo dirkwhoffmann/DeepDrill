@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>DeepDrill User’s Manual &#8212; DeepDrill 3.0</title>
+    <title>DeepDrill User’s Manual &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/insipid.css" />
@@ -58,7 +58,7 @@
             </button>
           </div>
           <div class="title">
-            <span class="parent">DeepDrill 3.0</span>
+            <span class="parent">DeepDrill 3.1</span>
             <a class="top" href="#">DeepDrill User’s Manual</a>
           </div>
           <div class="buttons">
@@ -105,30 +105,34 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<a class="reference external image-reference" href="https://youtu.be/dNWzz-BignM"><img alt="Banner" class="align-center" src="_images/youtube-flowers.jpg" style="width: 100%;" /></a>
 <section id="deepdrill-user-s-manual">
 <h1>DeepDrill User’s Manual<a class="headerlink" href="#deepdrill-user-s-manual" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://dirkwhoffmann.github.io/DeepDrill"><img alt="Banner" src="_images/dd-at-github.png" style="width: 49%;" /></a> <a class="reference external" href="https://www.youtube.com/playlist?list=PLKsVJZiYDlPK5xBKJSFvuuWVNhyUu3r9P"><img alt="Banner" src="_images/dd-at-youtube.png" style="width: 49%;" /></a></p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview/Installation.html">Build instructions</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/Debug.html">Debugging the Toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -140,22 +144,14 @@
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/Flowers.html">Flowers</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="References/Links.html">External links</a></li>
 </ul>
 </div>
+</section>
 </section>
 
             <div class="clearer"></div>
@@ -174,19 +170,21 @@
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview/Installation.html">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HowTo/Debug.html">Debugging the Toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HowTo/Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -194,17 +192,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Videos/FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/Fossile.html">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Videos/Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="References/Links.html">External links</a></li>
 </ul>
 

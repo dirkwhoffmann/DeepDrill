@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Fossile &#8212; DeepDrill 3.0</title>
+    <title>Exporting the Normal Map &#8212; DeepDrill 3.1</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -17,8 +17,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="X" href="X.html" />
-    <link rel="prev" title="Second flight" href="SecondFlight.html" />
+    <link rel="next" title="Adding an Overlay Image" href="Textures.html" />
+    <link rel="prev" title="Computing Spatial Images" href="SpatialImages.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,8 +59,8 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.0</a>
-            <a class="top" href="#">Fossile</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="top" href="#">Exporting the Normal Map</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -82,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="SecondFlight.html" class="nav-icon previous" title="previous:&#13;Second flight" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="SpatialImages.html" class="nav-icon previous" title="previous:&#13;Computing Spatial Images" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="X.html" class="nav-icon next" title="next:&#13;X" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Textures.html" class="nav-icon next" title="next:&#13;Adding an Overlay Image" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="SecondFlight.html" aria-label="Previous topic" >
+      <a class="previous" href="SpatialImages.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Second flight
+            Computing Spatial Images
           </span>
         </div>
       </a>
-      <a class="next" href="X.html" aria-label="Next topic" >
+      <a class="next" href="Textures.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            X
+            Adding an Overlay Image
           </span>
         </div>
         <div class="icon">
@@ -120,44 +120,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="fossile">
-<h1>Fossile<a class="headerlink" href="#fossile" title="Permalink to this heading">¶</a></h1>
-<p>Created with DeepDrill 1.1b1</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Az5tYFvBvNM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<section id="location-file">
-<h2>Location file<a class="headerlink" href="#location-file" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adapted from the Rust fractal core project by Jack Yarndley (dinosaur_fossile)</span>
-<span class="c1"># https://github.com/rust-fractal/rust-fractal-core</span>
-
-<span class="p">[</span><span class="n">location</span><span class="p">]</span>
-<span class="n">real</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.045543734336104922997753573953362987952549530292977965266292112797459589792231033578387324341928465086153893360107821481913555372483770632133971888332631822912236818408840452953040519155137399849701223018058413800044053431990435966350410010573741463215232477964394074861926088627519202745343677408902348562270720292029128964817850028455173141607574274533183047065704723494925373151809520213220844956483079344222961455491879886243117850095752773527957699546532333280900334180870137695293387945654736115037817652760017025891787541126725581692296144140325726214597321992051716234213168202290782457095112299262693161570525878235439678140992693249495205789720166483781939926553209863523646697933871258605601557231633409530001196840016852181985220199064456119926114467233072765203286533936786963498664977772017424409163162542676952457987430028127319173821059507800986265426038376634812657122611979112449744143363632525320910476859216</span>
-<span class="n">imag</span> <span class="o">=</span> <span class="mf">0.9866390088941988645150586209098181638200792146329707957369597572089601961252684358219210571844059356391404918293663658689671936968530305499316926124336179373238260149834067036000594669454332226484603210734117864774839510431532750563672691024507409580272827378950592345898346798717534030494374279536980374355416747263183831235698083443270193212119753814556220380181679807891988554440177150978755290306824054574165130141279753460537187861866358437357076847426167626036007556115559873142337004435392812057544278541991003339585715168359016367741460792587043775226624873309589966713198542867085804755529124924713805777196039651149363319529711545613480663190670878453958246775284572788031962257561770109847356957435156175131706885171380109469977424599946647141330774785077270644518587235659388247437290773748440333712187723778390938636024534081787054809675374022598805727843911265546491872725733956159738812931570074259860927965800499999999999999999959</span>
-<span class="n">zoom</span> <span class="o">=</span> <span class="mf">2.90e201</span>
+<section class="tex2jax_ignore mathjax_ignore" id="exporting-the-normal-map">
+<h1>Exporting the Normal Map<a class="headerlink" href="#exporting-the-normal-map" title="Permalink to this heading">¶</a></h1>
+<p>The creation of spatial images as well as the calculation of texture overlays requires the calculation of a normal map. Normally, DeepDrill calculates this map internally and does not share it with the user. However, the map can be exported by adding the <code class="docutils literal notranslate"><span class="pre">normalmap.ini</span></code> profile to the command line options. The profile tells DeepDrill to run a special GPU filter that converts the normal map vectors into to RGB values:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[gpu]</span>
+<span class="na">illuminator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">normalmap.glsl</span>
 </pre></div>
 </div>
-</section>
-<section id="profile">
-<h2>Profile<a class="headerlink" href="#profile" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">location</span><span class="p">]</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mi">3500000</span>
-
-<span class="p">[</span><span class="n">palette</span><span class="p">]</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">candy</span><span class="o">.</span><span class="n">png</span>
-
-<span class="p">[</span><span class="n">video</span><span class="p">]</span>
-<span class="n">keyframes</span> <span class="o">=</span> <span class="mi">164</span>
-<span class="n">inbetweens</span> <span class="o">=</span> <span class="mi">173</span>
-<span class="n">bitrate</span> <span class="o">=</span> <span class="mi">8000</span>
-
-<span class="p">[</span><span class="n">perturbation</span><span class="p">]</span>
-<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
-<span class="n">rounds</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="p">[</span><span class="n">approximation</span><span class="p">]</span>
-<span class="n">coefficients</span> <span class="o">=</span> <span class="mi">5</span>
+<p>Running DeepDrill with this profile results in the following image:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>-o<span class="w"> </span>normalmap.jpg<span class="w"> </span>top.ini<span class="w"> </span>normalmap.ini<span class="w"> </span>
 </pre></div>
 </div>
-</section>
+<p><img alt="Normal Map" src="../_images/normalmap.jpg" /></p>
+<p>The created image shows the typical bluish appearance of normal maps. The colors result from the way the normal vectors are encoded into the color channels of the image.</p>
 </section>
 
             <div class="clearer"></div>
@@ -176,19 +151,21 @@
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/Installation.html">Build instructions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Installation.html">Build instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/StillImages.html">Computing Still Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorials/ZoomVideos.html">Computing Zoom Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the color palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing spatial images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding texture overlays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HowTo/Debug.html">Debugging the Toolchain</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -196,17 +173,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Videos</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="FirstFlight.html">First flight</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SecondFlight.html">Second flight</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Fossile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="X.html">X</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Flowers.html">Flowers</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
 </ul>
 
@@ -221,22 +191,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="SecondFlight.html" aria-label="Previous topic" >
+      <a class="previous" href="SpatialImages.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Second flight
+            Computing Spatial Images
           </span>
         </div>
       </a>
-      <a class="next" href="X.html" aria-label="Next topic" >
+      <a class="next" href="Textures.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            X
+            Adding an Overlay Image
           </span>
         </div>
         <div class="icon">
@@ -249,7 +219,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/Videos/Fossile.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/HowTo/NormalMap.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

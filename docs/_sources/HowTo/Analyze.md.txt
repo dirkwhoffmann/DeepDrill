@@ -1,20 +1,22 @@
-# Debugging the Toolchain
+# Analyzing the Computation Run
 
-In this tutorial you will learn how to get detailed information about the calculation process while creating images or videos. 
+In this tutorial you will learn how to get detailed information about the calculation process while creating an image. Internally, DeepDrill records the outcome of the computation in a so called drill map. This map does not only contain the derives color values. It also keeps track of the various optimizations that have been applied during the computation run. Examples are the number of skipped iterations by applying series approximation or the number of skipped pixels due a positive area check. 
 
-## Generating Verbose Output
+## Running the map analyzer 
 
-The standard way to get more information about the currently performed computation is to run DeepDrill, DeepMake, or DeepZoom with the `--verbose` (`-v`) command line option. With this flag specified, additional information about the current computation is provided to the user:
+To gather statistical information, you can advise DeepDrill to run a map analyzer at the end of the computation. The map analyzer is run automatically when the `-v` option is specified at the command line. This flag tells DeepDrill to produce verbose output after completing each computatation stage. 
+
 ```none
 ./deepdrill -v top.ini -o top.map
 
-DeepDrill 3.0 - (C)opyright Dirk W. Hoffmann
+DeepCDrill 3.1 - (C)opyright Dirk W. Hoffmann
 
                         Center: -0.700000 + 0.000000i (128 bit)
                     Upper left: -2.791503 - 1.176471i (128 bit)
                    Lower right:  1.389325 + 1.174292i (128 bit)
                  Magnification: 0.85b1
                    Drill depth: 1000
+                 Escape radius: 1e+32
 
                       Map size: 1920 x 1080 (3D)
                     Image size: 1920 x 1080 (2D)
@@ -45,7 +47,7 @@ Round 1 / 50: 1784039 points remaining
 
           Skippable iterations: 0
 
-        Computing delta orbits: ................................. 1.21 sec
+        Computing delta orbits: ................................. 1.48 sec
 
                       Glitches: 0
 
@@ -57,13 +59,13 @@ All rounds completed: 0 unresolved
                  Drill results: Saved
               Iteration counts: Saved
            Skipped interations: Saved
-                      Lognorms: Saved
+   Normalized iteration counts: Saved
                    Derivatives: Not saved
                        Normals: Saved
 
-          Compressing map file: ................................. 0.64 sec
+          Compressing map file: ................................. 0.62 sec
 
-                Size reduction: 23062778 Bytes (65%)
+                Size reduction: 22848105 Bytes (64%)
 
                Saving map file: ................................. 0.00 sec
            Analyzing drill map: ................................. 0.00 sec
@@ -72,8 +74,8 @@ All rounds completed: 0 unresolved
 
                          Total:   2073600 (100.00 %)
                    Unprocessed:         0 (  0.00 %)
-                      Interior:    318425 ( 15.36 %)
-                      Exterior:   1755175 ( 84.64 %)
+                      Interior:    318431 ( 15.36 %)
+                      Exterior:   1755169 ( 84.64 %)
                       Glitches:         0 (  0.00 %)
 
            Locations with applied optimizations: 
@@ -87,21 +89,24 @@ All rounds completed: 0 unresolved
 
            Iteration counts: 
 
-                         Total: 329839527 (100.00 %)
-                      Interior: 318425000 ( 96.54 %)
-                      Exterior:  11414527 (  3.46 %)
+                         Total: 336029916 (100.00 %)
+                      Interior: 318431000 ( 94.76 %)
+                      Exterior:  17598916 (  5.24 %)
 
            Skipped iterations: 
 
-                         Total: 301036579 ( 91.27 %)
-              Main bulb filter: 248206000 ( 75.25 %)
-               Cartioid filter:  41354000 ( 12.54 %)
+                         Total: 301036579 ( 89.59 %)
+              Main bulb filter: 248206000 ( 73.86 %)
+               Cartioid filter:  41354000 ( 12.31 %)
           Series approximation:         0 (  0.00 %)
               Period detection:     91412 (  0.30 %)
-           Attractor detection:  11385167 (  3.45 %)
+           Attractor detection:  11385167 (  3.39 %)
 
-Total time: 3.09 sec
+Total time: 3.34 sec
 ```
+
+You'll find the outcome of the map analyzer at the very end of the output. 
+
 
 ## Highlighting pixels
 
@@ -114,7 +119,7 @@ color = red
 color = green
 
 [attractorcheck]
-color = blue
+color = magenta
 
 [periodcheck]
 color = yellow
@@ -123,19 +128,9 @@ The `color` key in the `perturbation` section tells DeepDrill to draw all glitch
 
 The next three keys instruct DeepDrill to mark pixels for which the area checker, the attractor checker or the period checker has signaled a hit. All three checkers are used to speed up calculation. They are able to classify certain pixels as belonging to the Mandelbrot set before the maximum iteration count is reached. 
 
-
-## Exporting the normal maps
-
-The creation of spatial images as well as the calculation of texture overlays requires the calculation of a normal map. Normally, DeepDrill calculates this map internally and does not share it with the user. However, the map can be exported by adding the `normalmap.ini` profile to the command line options. The profile tells DeepDrill to run a special GPU filter that converts the normal map vectors into to RGB values:
-```INI
-[image]
-depth = 1
-illuminator = normalmap.glsl
-```
-Running DeepDrill with this profile results in the following image: 
 ```bash
-./deepdrill -v -o normalmap.jpg normalmap.ini top.ini
+./deepdrill top.ini -o top.jpg debug.ini
 ```
-![Normal Map](images/normalmap.jpg "Normal Map")
+![Map analyzer visualization](images/mapanalyzer.jpg "Map analyzer visualization")
 
-The created image shows the typical bluish appearance of normal maps. The colors result from the way the normal vectors are encoded into the color channels of the image. 
+
