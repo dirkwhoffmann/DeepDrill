@@ -176,7 +176,7 @@
 		504FB0122A57DF2A006495B8 /* mandala.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mandala.jpg; sourceTree = "<group>"; };
 		504FB0132A57DF76006495B8 /* pink.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pink.jpg; sourceTree = "<group>"; };
 		504FB0142A57DFFB006495B8 /* neurons.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = neurons.jpg; sourceTree = "<group>"; };
-		504FB0152A57E05D006495B8 /* scrapbooking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = scrapbooking.jpg; sourceTree = "<group>"; };
+		504FB0152A57E05D006495B8 /* wickerwork.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wickerwork.jpg; sourceTree = "<group>"; };
 		504FB0162A57E0A7006495B8 /* spiral.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = spiral.jpg; sourceTree = "<group>"; };
 		504FB0172A57E1DE006495B8 /* swirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swirl.png; sourceTree = "<group>"; };
 		504FB0182A57E227006495B8 /* money2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = money2.jpg; sourceTree = "<group>"; };
@@ -660,7 +660,7 @@
 				504FB0122A57DF2A006495B8 /* mandala.jpg */,
 				504FB0132A57DF76006495B8 /* pink.jpg */,
 				504FB0142A57DFFB006495B8 /* neurons.jpg */,
-				504FB0152A57E05D006495B8 /* scrapbooking.jpg */,
+				504FB0152A57E05D006495B8 /* wickerwork.jpg */,
 				504FB0162A57E0A7006495B8 /* spiral.jpg */,
 				504FB0172A57E1DE006495B8 /* swirl.png */,
 			);

@@ -21,12 +21,12 @@ Table of Contents
    :caption: Overview
 
    Overview/About
+   Overview/Installation
 
 .. toctree::
    :maxdepth: 1
    :caption: Tutorials
 
-   Tutorials/Installation
    Tutorials/Images
    Tutorials/Videos
 
@@ -51,18 +51,8 @@ Table of Contents
 
 .. toctree::
    :maxdepth: 1
-   :caption: Videos
-
-   Videos/FirstFlight
-   Videos/SecondFlight
-   Videos/Fossile
-   Videos/X
-   Videos/Flowers
-   Videos/Bewitched
-
-.. toctree::
-   :maxdepth: 1
    :caption: References
 
    References/Options
+   References/Examples
    References/Links
