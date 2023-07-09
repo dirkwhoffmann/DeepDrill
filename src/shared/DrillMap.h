@@ -53,6 +53,7 @@ enum ChannelID {
     CHANNEL_NITCNT,     // Normalized iteration count
     CHANNEL_DERIVATIVE, // Derivative
     CHANNEL_NORMAL,     // Normal vector
+    CHANNEL_DIST,       // Distance estimates
 };
 
 struct MapEntry {
@@ -105,6 +106,7 @@ public:
     std::vector<u32> overlayMap;
     std::vector<u32> textureMap;
     std::vector<float> nitcntMap;
+    std::vector<float> distMap;
     std::vector<double> derivReMap;
     std::vector<double> derivImMap;
     std::vector<float> normalReMap;
@@ -114,6 +116,7 @@ public:
     sf::Texture iterationMapTex;
     sf::Texture overlayMapTex;
     sf::Texture nitcntMapTex;
+    sf::Texture distMapTex;
     sf::Texture normalReMapTex;
     sf::Texture normalImMapTex;
 
@@ -123,6 +126,7 @@ public:
     const sf::Texture &getIterationMapTex() { updateTextures(); return iterationMapTex; }
     const sf::Texture &getOverlayMapTex() { updateTextures(); return overlayMapTex; }
     const sf::Texture &getNitcntMapTex() { updateTextures(); return nitcntMapTex; }
+    const sf::Texture &getDistMapTex() { updateTextures(); return distMapTex; }
     const sf::Texture &getNormalReMapTex() { updateTextures(); return normalReMapTex; }
     const sf::Texture &getNormalImMapTex() { updateTextures(); return normalImMapTex; }
 
@@ -174,6 +178,7 @@ public:
     bool hasDrillResults() const;
     bool hasIterations() const;
     bool hasNormalizedIterationCounts() const;
+    bool hasDistances() const;
     bool hasDerivates() const;
     bool hasNormals() const;
     void analyze() const;

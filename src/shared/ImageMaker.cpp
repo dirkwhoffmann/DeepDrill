@@ -54,6 +54,7 @@ ImageMaker::draw(DrillMap &map)
         colorizer.setUniform("iter", map.getIterationMapTex());
         colorizer.setUniform("nitcnt", map.getNitcntMapTex());
         colorizer.setUniform("palette", paletteTex);
+        colorizer.setUniform("dist", map.distMapTex);
         colorizer.setUniform("normalRe", map.getNormalReMapTex());
         colorizer.setUniform("normalIm", map.getNormalImMapTex());
         colorizer.setUniform("texture", textureMapTex);
@@ -112,6 +113,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer.setUniform("iter", map1.getIterationMapTex());
     colorizer.setUniform("nitcnt", map1.getNitcntMapTex());
     colorizer.setUniform("palette", paletteTex);
+    colorizer.setUniform("dist", map1.distMapTex);
     colorizer.setUniform("normalRe", map1.getNormalReMapTex());
     colorizer.setUniform("normalIm", map1.getNormalImMapTex());
     colorizer.setUniform("texture", textureMapTex);
@@ -126,6 +128,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer2.setUniform("iter", map2.getIterationMapTex());
     colorizer2.setUniform("nitcnt", map2.getNitcntMapTex());
     colorizer2.setUniform("palette", paletteTex);
+    colorizer2.setUniform("dist", map2.distMapTex);
     colorizer2.setUniform("normalRe", map2.getNormalReMapTex());
     colorizer2.setUniform("normalIm", map2.getNormalImMapTex());
     colorizer2.setUniform("texture", textureMapTex);

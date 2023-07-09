@@ -192,6 +192,7 @@
 		505EB93529D73E55008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		505FE5722A5ADA7400018F87 /* distance.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = distance.glsl; sourceTree = "<group>"; };
 		507122172A304EF10013E655 /* ImageMaker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImageMaker.cpp; sourceTree = "<group>"; };
 		507122182A304EF10013E655 /* ImageMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageMaker.h; sourceTree = "<group>"; };
 		5071221B2A3101AA0013E655 /* normalmap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.glsl; sourceTree = "<group>"; };
@@ -451,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				504FAFEB2A53446B006495B8 /* gradient.glsl */,
+				505FE5722A5ADA7400018F87 /* distance.glsl */,
 			);
 			path = colorizers;
 			sourceTree = "<group>";

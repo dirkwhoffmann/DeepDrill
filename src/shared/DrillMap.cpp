@@ -51,6 +51,7 @@ DrillMap::resize(isize w, isize h, isize d)
     overlayMap.assign(width * height, 0);
     textureMap.assign(width * height, 0);
     nitcntMap.assign(width * height, 0);
+    distMap.assign(width * height, 0);
     derivReMap.assign(width * height, 0);
     derivImMap.assign(width * height, 0);
     normalReMap.assign(width * height, 0);
@@ -80,6 +81,11 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     // Derive the normalized iteration count
     nitcntMap[i] = entry.last - std::log(0.5 * std::log(entry.zn.norm())) / std::log(2.0);
 
+    // Derive the distance estimate
+    auto znabs = entry.zn.abs();
+    auto derabs = StandardComplex(entry.derivative.re, entry.derivative.im).abs();
+    distMap[i] = 2.0 * znabs * std::log(znabs) / derabs;
+
     switch (entry.result) {
 
         case DR_ESCAPED:
@@ -90,27 +96,32 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
         case DR_GLITCH:
 
             overlayMap[i] = Options::perturbation.color | 0xFF000000;
+            distMap[i] = 0;
             break;
 
         case DR_IN_BULB:
         case DR_IN_CARDIOID:
 
             overlayMap[i] = Options::areacheck.color | 0xFF000000;
+            distMap[i] = 0;
             break;
 
         case DR_PERIODIC:
 
             overlayMap[i] = Options::periodcheck.color | 0xFF000000;
+            distMap[i] = 0;
             break;
 
         case DR_ATTRACTED:
 
             overlayMap[i] = Options::attractorcheck.color | 0xFF000000;
+            distMap[i] = 0;
             break;
 
         default:
 
             overlayMap[i] = GpuColor::black | 0xFF000000;
+            distMap[i] = 0;
             break;
     }
 
@@ -215,6 +226,15 @@ DrillMap::hasNormalizedIterationCounts() const
 {
     for (isize i = 0; i < width * height; i++) {
         if (nitcntMap[i]) return true;
+    }
+    return false;
+}
+
+bool
+DrillMap::hasDistances() const
+{
+    for (isize i = 0; i < width * height; i++) {
+        if (distMap[i]) return true;
     }
     return false;
 }
@@ -481,6 +501,9 @@ DrillMap::updateTextures()
         if (!nitcntMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normalized iteration count map texture");
         }
+        if (!distMapTex.create(unsigned(width), unsigned(height))) {
+            throw Exception("Can't create distance map texture");
+        }
         if (!normalReMapTex.create(unsigned(width), unsigned(height))) {
             throw Exception("Can't create normal(re) map texture");
         }
@@ -534,6 +557,7 @@ DrillMap::updateTextures()
     iterationMapTex.update((u8 *)lastIterationMap.data());
     overlayMapTex.update((u8 *)overlayMap.data());
     nitcntMapTex.update((u8 *)nitcntMap.data());
+    distMapTex.update((u8 *)distMap.data());
     normalReMapTex.update((u8 *)normalReMap.data());
     normalImMapTex.update((u8 *)normalImMap.data());
 
@@ -712,6 +736,15 @@ DrillMap::loadChannel(Compressor &is)
             }
             break;
 
+        case CHANNEL_DIST:
+
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    distMap[y * width + x] = float(loadFloat());
+                }
+            }
+            break;
+
         case CHANNEL_DERIVATIVE:
 
             for (isize y = 0; y < height; y++) {
@@ -812,6 +845,7 @@ DrillMap::save(std::ostream &os)
     bool saveFirst = true;
     bool saveLast = true;
     bool saveNrmItCnts = true;
+    bool saveDist = true;
     bool saveDerivatives = false;
     bool saveNormals = Options::drillmap.depth == 1;
 
@@ -830,6 +864,7 @@ DrillMap::save(std::ostream &os)
         if (saveFirst) saveChannel(compressor, CHANNEL_FIRST);
         if (saveLast) saveChannel(compressor, CHANNEL_LAST);
         if (saveNrmItCnts) saveChannel(compressor, CHANNEL_NITCNT);
+        if (saveDist) saveChannel(compressor, CHANNEL_DIST);
         if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVE);
         if (saveNormals) saveChannel(compressor, CHANNEL_NORMAL);
     }
@@ -937,6 +972,16 @@ DrillMap::saveChannel(Compressor &os, ChannelID id)
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
                     save <FMT_FLOAT> (os, nitcntMap[y * width + x]);
+                }
+            }
+            break;
+
+        case CHANNEL_DIST:
+
+            os << u8(id) << u8(FMT_FLOAT);
+            for (isize y = 0; y < height; y++) {
+                for (isize x = 0; x < width; x++) {
+                    save <FMT_FLOAT> (os, distMap[y * width + x]);
                 }
             }
             break;

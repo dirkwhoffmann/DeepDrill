@@ -116,11 +116,19 @@ void main()
     diffuseColor = mix(diffuseColor, textureColor.rgb, textureOpacity * textureColor.a);
 
     // Apply 3D effect
-    vec3 final = diffuseColor; 
+    vec3 final = diffuseColor;
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
     final = mix(final, ovl.xyz, ovl.a);
+
+    // TODO
+    float d = decode_float(texture2D(dist, coord));
+    if (d < 0.001) {
+        final = vec3(0.0,0.0,0.0);
+    } else {
+        final = vec3(1.0,1.0,1.0);
+    }
 
     gl_FragColor = gl_Color * vec4(final, 1.0);
 }
