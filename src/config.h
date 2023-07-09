@@ -19,7 +19,7 @@
 // Version number
 #define VER_MAJOR       3
 #define VER_MINOR       1
-#define VER_SUBMINOR    0
+#define VER_SUBMINOR    1
 
 #define VER_BETA        0
 
