@@ -42,7 +42,6 @@ class Filter {
 
 public:
 
-    // Filter(const Options &opt) : opt(opt) { };
     void init(const string &shaderName, isize w, isize h);
     void init(const string &shaderName, sf::Vector2u resolution);
 

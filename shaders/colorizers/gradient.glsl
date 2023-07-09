@@ -97,6 +97,7 @@ vec4 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
 
     // Get diffuse color from palette image
     vec3 diffuseColor = deriveColor(coord);

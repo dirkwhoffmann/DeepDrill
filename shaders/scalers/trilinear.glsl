@@ -38,7 +38,10 @@ vec4 bilinear(sampler2D sampler, vec2 coord)
 void main()
 {
     // Read texel from the current texture
-    vec2 coord = zoomed(gl_TexCoord[0].xy);
+    vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
+    coord = zoomed(coord);
+
     vec4 color1 = bilinear(curr, coord);
 
     if (zoom > 1.0) {

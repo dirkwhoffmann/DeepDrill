@@ -39,14 +39,11 @@ vec3 makeSpatial(float nrmRe, float nrmIm)
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
 
     // Get the normal vector
     float nrmRe = decode_float(texture2D(normalRe, coord));
     float nrmIm = decode_float(texture2D(normalIm, coord));
-
-    // Normalize
-    vec3 N = normalize(vec3(nrmRe, nrmIm, 1.0));
-    vec3 L = normalize(lightDir);
 
     // Apply 3D effect
     vec3 final = makeSpatial(nrmRe, nrmIm);

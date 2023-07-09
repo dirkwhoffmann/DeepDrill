@@ -65,7 +65,10 @@ vec4 bicubic(sampler2D sampler, vec2 texCoords)
 void main()
 {
     // Read texel from the current texture
-    vec2 coord = zoomed(gl_TexCoord[0].xy);
+    vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
+    coord = zoomed(coord);
+
     vec4 color1 = bicubic(curr, coord);
 
     // Check if a corresponding texel exists in the next texture

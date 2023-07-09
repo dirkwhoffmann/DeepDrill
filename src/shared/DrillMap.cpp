@@ -726,8 +726,8 @@ DrillMap::loadChannel(Compressor &is)
 
             for (isize y = 0; y < height; y++) {
                 for (isize x = 0; x < width; x++) {
-                    normalReMap[y * width + x] = double(loadFloat());
-                    normalImMap[y * width + x] = double(loadFloat());
+                    normalReMap[y * width + x] = float(loadFloat());
+                    normalImMap[y * width + x] = float(loadFloat());
                 }
             }
             break;

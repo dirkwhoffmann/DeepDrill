@@ -79,6 +79,7 @@ vec3 makeSpatial(vec3 color, float nrmRe, float nrmIm)
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
 
     // Get color pixel
     vec3 diffuseColor = texture2D(image, coord).rgb;

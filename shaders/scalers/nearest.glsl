@@ -10,7 +10,10 @@ vec2 zoomed(vec2 coord)
 
 void main()
 {
-    vec2 coord = zoomed(gl_TexCoord[0].xy);
+    vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
+    coord = zoomed(coord);
+
     vec4 pixel = texture2D(curr, coord);
     gl_FragColor = gl_Color * pixel;
 }

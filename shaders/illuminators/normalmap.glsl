@@ -18,6 +18,7 @@ float decode_float(vec4 v)
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
+    coord.y = 1.0 - coord.y;
 
     // Get the normal vector
     float nrmRe = decode_float(texture2D(normalRe, coord));
