@@ -403,8 +403,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     ExtendedComplex dn = d0;
 
     // Setup derivation parameters (df/dc)
-    ExtendedComplex dd0 = ExtendedComplex(1.0, 0.0);
-    ExtendedComplex ddn = dd0;
+    ExtendedComplex derc0 = ExtendedComplex(1.0, 0.0);
+    ExtendedComplex dercn = derc0;
 
     // Setup derivation parameters (df/dz)
     ExtendedComplex derz0 = ExtendedComplex(1.0, 0.0);
@@ -419,8 +419,8 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 
         dn = approximator.evaluate(point, d0, iteration);
         dn.reduce();
-        ddn = approximator.evaluateDerivate(point, d0, iteration);
-        ddn.reduce();
+        dercn = approximator.evaluateDerivate(point, d0, iteration);
+        dercn.reduce();
     }
 
     //
@@ -429,9 +429,9 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 
     while (++iteration < limit) {
 
-        ddn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
-        ddn += dd0;
-        ddn.reduce();
+        dercn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
+        dercn += derc0;
+        dercn.reduce();
 
         derzn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
         derzn.reduce();
@@ -492,7 +492,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         if (norm >= escape) {
 
             // Compute the normal vector
-            auto nv = zn / ddn;
+            auto nv = zn / dercn;
             nv.normalize();
 
             map.set(point, MapEntry {
@@ -500,7 +500,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
                 .first      = (i32)ref.skipped,
                 .last       = (i32)iteration,
                 .zn         = StandardComplex(zn),
-                .derivative = StandardComplex(ddn),
+                .derivative = StandardComplex(dercn),
                 .normal     = StandardComplex(nv) } );
             return;
         }
