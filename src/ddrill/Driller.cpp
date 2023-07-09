@@ -429,20 +429,20 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 
     while (++iteration < limit) {
 
-        // auto two_xn_plus_dn = ref.xn[iteration - 1].extended2 + dn;
-        // auto two_xn_plus_two_two_dn = two_xn_plus_dn + dn;
+        auto two_xn_plus_dn = ref.xn[iteration - 1].extended2 + dn;
+        auto two_xn_plus_two_two_dn = two_xn_plus_dn + dn;
 
-        dercn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
-        // dercn *= two_xn_plus_two_two_dn;
+        // dercn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
+        dercn *= two_xn_plus_two_two_dn;
         dercn += derc0;
         dercn.reduce();
 
-        derzn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
-        // derzn *= two_xn_plus_two_two_dn;
+        // derzn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
+        derzn *= two_xn_plus_two_two_dn;
         derzn.reduce();
 
-        dn *= ref.xn[iteration - 1].extended2 + dn;
-        // dn *= two_xn_plus_dn;
+        // dn *= ref.xn[iteration - 1].extended2 + dn;
+        dn *= two_xn_plus_dn;
         dn += d0;
         dn.reduce();
 
