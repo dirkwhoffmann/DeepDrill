@@ -45,10 +45,8 @@ struct ExtendedDouble {
     // Converting
     //
     
-    inline double asDouble() const {
-        
-        return ldexp(mantissa, (int)exponent);
-    }
+    inline double asDouble() const { return ldexp(mantissa, (int)exponent); }
+    inline float asFloat() const { return (float)asDouble(); }
 
     
     //
@@ -180,6 +178,12 @@ struct ExtendedDouble {
     inline ExtendedDouble reciprocal() const {
 
         ExtendedDouble result = ExtendedDouble { 1.0 / mantissa, -exponent };
+        return result;
+    }
+
+    inline ExtendedDouble log() const {
+
+        ExtendedDouble result = ExtendedDouble(std::log(mantissa) + exponent * std::log(2));
         return result;
     }
 

@@ -68,13 +68,13 @@ struct MapEntry {
     i32 last;
 
     // Last iteration value before the escape check hit
-    StandardComplex zn;
+    ExtendedComplex zn;
     
     // Derivative
-    StandardComplex derivative;
+    ExtendedComplex derivative;
 
     // Normal vector
-    StandardComplex normal;
+    ExtendedComplex normal;
 };
 
 class DrillMap {

@@ -69,22 +69,28 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     assert(w < width && h < height);
 
     auto i = h * width + w;
+    auto derivative = StandardComplex(entry.derivative);
+    auto normal = StandardComplex(entry.normal);
 
     resultMap[i] = entry.result;
     firstIterationMap[i] = entry.first;
     lastIterationMap[i] = entry.last;
-    derivReMap[i] = entry.derivative.re;
-    derivImMap[i] = entry.derivative.im;
-    normalReMap[i] = entry.normal.re;
-    normalImMap[i] = entry.normal.im;
+    derivReMap[i] = derivative.re;
+    derivImMap[i] = derivative.im;
+    normalReMap[i] = normal.re;
+    normalImMap[i] = normal.im;
 
     auto znabs = entry.zn.abs();
 
     // Derive the normalized iteration count
-    nitcntMap[i] = lastIterationMap[i] - std::log(std::log(znabs)) / std::log(2.0);
+    auto znloglog = znabs.log().log().asDouble();
+    nitcntMap[i] = lastIterationMap[i] - znloglog / std::log(2.0);
 
-    // Derive the distance estimate
-    distMap[i] = 2.0 * znabs * std::log(znabs) / entry.derivative.abs();
+    // Estimate the distance to the Mandelbrot set in pixels
+    auto znlog = znabs.log().asDouble();
+    auto dist = znabs * 2.0 * znlog / entry.derivative.abs();
+    dist /= pixelDeltaX;
+    distMap[i] = dist.asFloat();
 
     // Declare all textures as being outdated
     dirty = true;
