@@ -37,10 +37,8 @@ DrillMap::resize(isize w, isize h, isize d)
     depth = d;
 
     center = PrecisionComplex(Options::location.real, Options::location.imag);
-    mpfPixelDeltaX = mpf_class(4.0) / Options::location.zoom / height;
-    mpfPixelDeltaY = mpfPixelDeltaX;
-    pixelDeltaX = mpfPixelDeltaY;
-    pixelDeltaY = mpfPixelDeltaY;
+    mpfPixelDelta = mpf_class(4.0) / Options::location.zoom / height;
+    pixelDelta = mpfPixelDelta;
 
     ul = translate(Coord());
     lr = translate(Coord(width - 1, height -1));
@@ -89,7 +87,7 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     // Estimate the distance to the Mandelbrot set in pixels
     auto znlog = znabs.log().asDouble();
     auto dist = znabs * 2.0 * znlog / entry.derivative.abs();
-    dist /= pixelDeltaX;
+    dist /= pixelDelta;
     distMap[i] = dist.asFloat();
 
     // Declare all textures as being outdated
@@ -108,8 +106,8 @@ DrillMap::translate(const Coord &coord) const
     auto c = Coord(width / 2, height / 2);
 
     // Compute the pixel distance to the center
-    auto dx = mpfPixelDeltaX * (coord.x - c.x);
-    auto dy = mpfPixelDeltaY * (coord.y - c.y);
+    auto dx = mpfPixelDelta * (coord.x - c.x);
+    auto dy = mpfPixelDelta * (coord.y - c.y);
 
     return center + PrecisionComplex(dx, dy);
 }
@@ -121,8 +119,8 @@ DrillMap::translate(const PrecisionComplex &coord) const
 
     // Compute the distance to the center
     auto dxy = coord -  center;
-    mpf_class dx = dxy.re / mpfPixelDeltaX;
-    mpf_class dy = dxy.re / mpfPixelDeltaX;
+    mpf_class dx = dxy.re / mpfPixelDelta;
+    mpf_class dy = dxy.re / mpfPixelDelta;
 
     return c + Coord(dx.get_si(), dy.get_si());
 }
@@ -135,8 +133,8 @@ DrillMap::distance(const Coord &coord, const Coord &other) const
     auto dy = coord.y - other.y;
 
     // Compute the delta location on the complex plain
-    auto dxc = pixelDeltaX * dx;
-    auto dyc = pixelDeltaY * dy;
+    auto dxc = pixelDelta * dx;
+    auto dyc = pixelDelta * dy;
 
     auto result = ExtendedComplex(dxc, dyc);
     result.reduce();

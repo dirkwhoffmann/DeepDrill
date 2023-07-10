@@ -94,10 +94,8 @@ public:
     PrecisionComplex lr;
 
     // Distance between adjacent pixels
-    mpf_class mpfPixelDeltaX;
-    mpf_class mpfPixelDeltaY;
-    ExtendedDouble pixelDeltaX;
-    ExtendedDouble pixelDeltaY;
+    mpf_class mpfPixelDelta;
+    ExtendedDouble pixelDelta;
 
     // Map data
     std::vector<DrillResult> resultMap;
