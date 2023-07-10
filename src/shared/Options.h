@@ -138,6 +138,16 @@ struct Options {
 
     } palette;
 
+    static struct Distance {
+
+        // Indicates if distance estimation should be applied
+        bool enable;
+
+        // Thickness
+        DynamicFloat threshold;
+
+    } distance;
+
     static struct Texture {
 
         // Path to the texture image

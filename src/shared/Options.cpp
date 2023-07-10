@@ -27,6 +27,7 @@ Options::Drillmap Options::drillmap;
 Options::Image Options::image;
 Options::Video Options::video;
 Options::Palette Options::palette;
+Options::Distance Options::distance;
 Options::Texture Options::texture;
 Options::Lighting Options::lighting;
 Options::GPU Options::gpu;
@@ -73,6 +74,10 @@ std::map<string,string> Options::defaults = [](){
     defaults["palette.mode"] = "default";
     defaults["palette.scale"] = "1.0";
     defaults["palette.offset"] = "0.0";
+
+    // Distance estimation keys
+    defaults["distance.enable"] = "no";
+    defaults["distance.threshold"] = "0.001";
 
     // Texture keys
     defaults["texture.image"] = "";
@@ -255,6 +260,14 @@ Options::parse(string key, string value)
         } else if (key == "palette.offset") {
 
             Parser::parse(value, palette.offset);
+
+        } else if (key == "distance.enable") {
+
+            Parser::parse(value, distance.enable);
+
+        } else if (key == "distance.threshold") {
+
+            Parser::parse(value, distance.threshold);
 
         } else if (key == "texture.image") {
 

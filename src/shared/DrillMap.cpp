@@ -78,53 +78,15 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     normalReMap[i] = entry.normal.re;
     normalImMap[i] = entry.normal.im;
 
+    auto znabs = entry.zn.abs();
+
     // Derive the normalized iteration count
-    nitcntMap[i] = entry.last - std::log(0.5 * std::log(entry.zn.norm())) / std::log(2.0);
+    nitcntMap[i] = lastIterationMap[i] - std::log(std::log(znabs)) / std::log(2.0);
 
     // Derive the distance estimate
-    auto znabs = entry.zn.abs();
-    auto derabs = StandardComplex(entry.derivative.re, entry.derivative.im).abs();
-    distMap[i] = 2.0 * znabs * std::log(znabs) / derabs;
+    distMap[i] = 2.0 * znabs * std::log(znabs) / entry.derivative.abs();
 
-    switch (entry.result) {
-
-        case DR_ESCAPED:
-
-            overlayMap[i] = 0;
-            break;
-
-        case DR_GLITCH:
-
-            overlayMap[i] = Options::perturbation.color | 0xFF000000;
-            distMap[i] = 0;
-            break;
-
-        case DR_IN_BULB:
-        case DR_IN_CARDIOID:
-
-            overlayMap[i] = Options::areacheck.color | 0xFF000000;
-            distMap[i] = 0;
-            break;
-
-        case DR_PERIODIC:
-
-            overlayMap[i] = Options::periodcheck.color | 0xFF000000;
-            distMap[i] = 0;
-            break;
-
-        case DR_ATTRACTED:
-
-            overlayMap[i] = Options::attractorcheck.color | 0xFF000000;
-            distMap[i] = 0;
-            break;
-
-        default:
-
-            overlayMap[i] = GpuColor::black | 0xFF000000;
-            distMap[i] = 0;
-            break;
-    }
-
+    // Declare all textures as being outdated
     dirty = true;
 }
 
@@ -528,27 +490,32 @@ DrillMap::updateTextures()
                 case DR_GLITCH:
                     
                     overlayMap[pos] = Options::perturbation.color | 0xFF000000;
+                    distMap[pos] = 0;
                     break;
                     
                 case DR_IN_BULB:
                 case DR_IN_CARDIOID:
                     
                     overlayMap[pos] = Options::areacheck.color | 0xFF000000;
+                    distMap[pos] = 0;
                     break;
                     
                 case DR_PERIODIC:
                     
                     overlayMap[pos] = Options::periodcheck.color | 0xFF000000;
+                    distMap[pos] = 0;
                     break;
                     
                 case DR_ATTRACTED:
                     
                     overlayMap[pos] = Options::attractorcheck.color | 0xFF000000;
+                    distMap[pos] = 0;
                     break;
                     
                 default:
                     
                     overlayMap[pos] = GpuColor::black | 0xFF000000;
+                    distMap[pos] = 0;
                     break;
             }
         }

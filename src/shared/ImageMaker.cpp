@@ -53,17 +53,18 @@ ImageMaker::draw(DrillMap &map)
         // 1. Colorize
         colorizer.setUniform("iter", map.getIterationMapTex());
         colorizer.setUniform("nitcnt", map.getNitcntMapTex());
-        colorizer.setUniform("palette", paletteTex);
-        colorizer.setUniform("dist", map.distMapTex);
         colorizer.setUniform("normalRe", map.getNormalReMapTex());
         colorizer.setUniform("normalIm", map.getNormalImMapTex());
-        colorizer.setUniform("texture", textureMapTex);
-        colorizer.setUniform("overlay", map.getOverlayMapTex());
+        colorizer.setUniform("palette", paletteTex);
         colorizer.setUniform("paletteScale", Options::palette.scale());
         colorizer.setUniform("paletteOffset", Options::palette.offset());
+        colorizer.setUniform("dist", map.distMapTex);
+        colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold() : 0.0);
+        colorizer.setUniform("texture", textureMapTex);
         colorizer.setUniform("textureOpacity", Options::texture.opacity());
         colorizer.setUniform("textureScale", Options::texture.scale());
         colorizer.setUniform("textureOffset", Options::texture.offset());
+        colorizer.setUniform("overlay", map.getOverlayMapTex());
         colorizer.apply();
 
         // 2. Illuminate
@@ -108,36 +109,38 @@ void
 ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
     init();
-    
+
     // 1. Colorize
     colorizer.setUniform("iter", map1.getIterationMapTex());
     colorizer.setUniform("nitcnt", map1.getNitcntMapTex());
-    colorizer.setUniform("palette", paletteTex);
-    colorizer.setUniform("dist", map1.distMapTex);
     colorizer.setUniform("normalRe", map1.getNormalReMapTex());
     colorizer.setUniform("normalIm", map1.getNormalImMapTex());
-    colorizer.setUniform("texture", textureMapTex);
-    colorizer.setUniform("overlay", map1.getOverlayMapTex());
+    colorizer.setUniform("palette", paletteTex);
     colorizer.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer.setUniform("dist", map1.distMapTex);
+    colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
+    colorizer.setUniform("texture", textureMapTex);
     colorizer.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
     colorizer.setUniform("textureScale", Options::texture.scale(frame));
     colorizer.setUniform("textureOffset", Options::texture.offset(frame));
+    colorizer.setUniform("overlay", map1.getOverlayMapTex());
     colorizer.apply();
 
     colorizer2.setUniform("iter", map2.getIterationMapTex());
     colorizer2.setUniform("nitcnt", map2.getNitcntMapTex());
-    colorizer2.setUniform("palette", paletteTex);
-    colorizer2.setUniform("dist", map2.distMapTex);
     colorizer2.setUniform("normalRe", map2.getNormalReMapTex());
     colorizer2.setUniform("normalIm", map2.getNormalImMapTex());
-    colorizer2.setUniform("texture", textureMapTex);
-    colorizer2.setUniform("overlay", map2.getOverlayMapTex());
+    colorizer2.setUniform("palette", paletteTex);
     colorizer2.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer2.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer2.setUniform("dist", map2.distMapTex);
+    colorizer2.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
+    colorizer2.setUniform("texture", textureMapTex);
     colorizer2.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
     colorizer2.setUniform("textureScale", Options::texture.scale(frame));
     colorizer2.setUniform("textureOffset", Options::texture.offset(frame));
+    colorizer2.setUniform("overlay", map2.getOverlayMapTex());
     colorizer2.apply();
 
     // 2. Illuminate

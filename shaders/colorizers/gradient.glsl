@@ -1,30 +1,33 @@
 // Sampler for the normalized iteration count map
 uniform sampler2D nitcnt;
 
-// Sampler for the color palette
-uniform sampler2D palette;
-
-// Sampler for the distance estimate
-uniform sampler2D dist;
-
 // Samplers for the normal map
 uniform sampler2D normalRe;
 uniform sampler2D normalIm;
 
-// Sampler for the texture image
-uniform sampler2D texture;
-
-// Sampler for the overlay image
-uniform sampler2D overlay;
+// Sampler for the color palette
+uniform sampler2D palette;
 
 // Palette adjustments
 uniform float paletteScale;
 uniform float paletteOffset;
 
+// Sampler for the distance estimate
+uniform sampler2D dist;
+
+// Distance estimation adjustments
+uniform float distThreshold;
+
+// Sampler for the texture image
+uniform sampler2D texture;
+
 // Texture adjustments
 uniform float textureOpacity;
 uniform float textureScale;
 uniform float textureOffset;
+
+// Sampler for the overlay image
+uniform sampler2D overlay;
 
 
 //
@@ -115,8 +118,9 @@ void main()
     // Mix diffuse color with the texture color
     diffuseColor = mix(diffuseColor, textureColor.rgb, textureOpacity * textureColor.a);
 
-    // Apply 3D effect
-    vec3 final = diffuseColor; 
+    // Apply the distance estimator
+    float dist = decode_float(texture2D(dist, coord));
+    vec3 final = dist < distThreshold ? vec3(0.0,0.0,0.0) : diffuseColor;
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
