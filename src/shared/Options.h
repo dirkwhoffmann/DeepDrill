@@ -88,14 +88,24 @@ struct Options {
         // Drill map dimensions in pixels
         isize width;
         isize height;
+        
+    } drillmap;
 
-        // Indicates if a normal map should be computed
-        isize depth;
+    static struct Mapfile {
 
         // Indicates if map files should be saved in compressed format
         bool compress;
-        
-    } drillmap;
+
+        // Channels which are saved in the mapfile
+        bool result;
+        bool first;
+        bool last;
+        bool nitcnt;
+        bool derivative;
+        bool normal;
+        bool dist;
+
+    } mapfile;
 
     static struct Image {
 

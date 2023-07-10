@@ -23,18 +23,17 @@ namespace dd {
 void
 DrillMap::resize()
 {
-    resize(Options::drillmap.width, Options::drillmap.height, Options::drillmap.depth);
+    resize(Options::drillmap.width, Options::drillmap.height);
 }
 
 void
-DrillMap::resize(isize w, isize h, isize d)
+DrillMap::resize(isize w, isize h)
 {
     assert(w >= MIN_MAP_WIDTH && w <= MAX_MAP_WIDTH);
     assert(h >= MIN_MAP_HEIGHT && h <= MAX_MAP_HEIGHT);
 
     width = w;
     height = h;
-    depth = d;
 
     center = PrecisionComplex(Options::location.real, Options::location.imag);
     mpfPixelDelta = mpf_class(4.0) / Options::location.zoom / height;
@@ -553,7 +552,7 @@ DrillMap::load(std::istream &is)
     loadHeader(is);
 
     // Adjust the map size
-    resize(width, height, depth);
+    resize(width, height);
 
     // The next byte indicates if the map is compressed
     u8 compressed; is >> compressed;
@@ -625,7 +624,6 @@ DrillMap::loadHeader(std::istream &is)
     // Read map dimensions
     is.read((char *)&width, sizeof(width));
     is.read((char *)&height, sizeof(height));
-    is.read((char *)&depth, sizeof(depth));
 }
 
 void
@@ -812,14 +810,6 @@ DrillMap::save(const string &path)
 void
 DrillMap::save(std::ostream &os)
 {
-    bool saveDrillResults = true;
-    bool saveFirst = true;
-    bool saveLast = true;
-    bool saveNrmItCnts = true;
-    bool saveDist = true;
-    bool saveDerivatives = false;
-    bool saveNormals = Options::drillmap.depth == 1;
-
     Compressor compressor(width * height * sizeof(MapEntry));
 
     {   ProgressIndicator progress1("Preparing map file");
@@ -828,16 +818,16 @@ DrillMap::save(std::ostream &os)
         saveHeader(os);
 
         // The next byte indicates if channel data is compressed
-        os << u8(Options::drillmap.compress);
+        os << u8(Options::mapfile.compress);
 
         // Generate channels
-        if (saveDrillResults) saveChannel(compressor, CHANNEL_RESULT);
-        if (saveFirst) saveChannel(compressor, CHANNEL_FIRST);
-        if (saveLast) saveChannel(compressor, CHANNEL_LAST);
-        if (saveNrmItCnts) saveChannel(compressor, CHANNEL_NITCNT);
-        if (saveDist) saveChannel(compressor, CHANNEL_DIST);
-        if (saveDerivatives) saveChannel(compressor, CHANNEL_DERIVATIVE);
-        if (saveNormals) saveChannel(compressor, CHANNEL_NORMAL);
+        if (Options::mapfile.result) saveChannel(compressor, CHANNEL_RESULT);
+        if (Options::mapfile.last) saveChannel(compressor, CHANNEL_LAST);
+        if (Options::mapfile.first) saveChannel(compressor, CHANNEL_FIRST);
+        if (Options::mapfile.nitcnt) saveChannel(compressor, CHANNEL_NITCNT);
+        if (Options::mapfile.dist) saveChannel(compressor, CHANNEL_DIST);
+        if (Options::mapfile.derivative) saveChannel(compressor, CHANNEL_DERIVATIVE);
+        if (Options::mapfile.normal) saveChannel(compressor, CHANNEL_NORMAL);
     }
 
     if (Options::flags.verbose) {
@@ -846,21 +836,23 @@ DrillMap::save(std::ostream &os)
         log::cout << log::ralign("Map size: ");
         log::cout << width << " x " << height << log::endl;
         log::cout << log::ralign("Drill results: ");
-        log::cout << (saveDrillResults ? "Saved" : "Not saved") << log::endl;
+        log::cout << (Options::mapfile.result ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Iteration counts: ");
-        log::cout << (saveLast ? "Saved" : "Not saved") << log::endl;
+        log::cout << (Options::mapfile.last ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Skipped interations: ");
-        log::cout << (saveFirst ? "Saved" : "Not saved") << log::endl;
+        log::cout << (Options::mapfile.first ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Normalized iteration counts: ");
-        log::cout << (saveNrmItCnts ? "Saved" : "Not saved") << log::endl;
+        log::cout << (Options::mapfile.nitcnt ? "Saved" : "Not saved") << log::endl;
+        log::cout << log::ralign("Distance estimates: ");
+        log::cout << (Options::mapfile.dist ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Derivatives: ");
-        log::cout << (saveDerivatives ? "Saved" : "Not saved") << log::endl;
+        log::cout << (Options::mapfile.derivative ? "Saved" : "Not saved") << log::endl;
         log::cout << log::ralign("Normals: ");
-        log::cout << (saveNormals ? "Saved" : "Not saved") << log::endl;
+        log::cout << (Options::mapfile.normal ? "Saved" : "Not saved") << log::endl;
         log::cout << log::vspace;
     }
 
-    if (Options::drillmap.compress) {
+    if (Options::mapfile.compress) {
 
         ProgressIndicator progress2("Compressing map file");
 
@@ -899,7 +891,6 @@ DrillMap::saveHeader(std::ostream &os)
     // Write map dimensions
     os.write((char *)&width, sizeof(width));
     os.write((char *)&height, sizeof(height));
-    os.write((char *)&depth, sizeof(depth));
 }
 
 void

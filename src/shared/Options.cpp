@@ -24,6 +24,7 @@ Options::Flags Options::flags;
 Options::Files Options::files;
 Options::Location Options::location;
 Options::Drillmap Options::drillmap;
+Options::Mapfile Options::mapfile;
 Options::Image Options::image;
 Options::Video Options::video;
 Options::Palette Options::palette;
@@ -53,8 +54,16 @@ std::map<string,string> Options::defaults = [](){
     // Map keys
     defaults["map.width"] = "1920";
     defaults["map.height"] = "1080";
-    defaults["map.depth"] = "1";
-    defaults["map.compress"] = "yes";
+
+    // Mapfile keys
+    defaults["mapfile.compress"] = "yes";
+    defaults["mapfile.result"] = "yes";
+    defaults["mapfile.first"] = "yes";
+    defaults["mapfile.last"] = "yes";
+    defaults["mapfile.nitcnt"] = "yes";
+    defaults["mapfile.derivative"] = "no";
+    defaults["mapfile.normal"] = "yes";
+    defaults["mapfile.dist"] = "yes";
 
     // Image keys
     defaults["image.width"] = "1920";
@@ -64,8 +73,6 @@ std::map<string,string> Options::defaults = [](){
     defaults["video.framerate"] = "60";
     defaults["video.keyframes"] = "0";
     defaults["video.startframe"] = "0";
-    //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/1.0, 0:03/-1.0, 0:04/1.0, 0:5/-1.0, 0:6/1.0, 0:70/1.0";
-    //    defaults["video.velocity"] = "0:00/1.0, 0:01/-1.0, 0:02/2.0, 0:03/-2.0, 0:04/3.0, 0:5/-3.0, 0:6/4.0, 0:7/1.0, 0:70/1.0";
     defaults["video.velocity"] = "1.0";
     defaults["video.bitrate"] = "8000";
 
@@ -205,13 +212,37 @@ Options::parse(string key, string value)
 
             Parser::parse(value, drillmap.height, MIN_MAP_HEIGHT, MAX_MAP_HEIGHT);
 
-        } else if (key == "map.depth") {
+        } else if (key == "mapfile.compress") {
 
-            Parser::parse(value, drillmap.depth, 0, 1);
+            Parser::parse(value, mapfile.compress);
 
-        } else if (key == "map.compress") {
+        } else if (key == "mapfile.result") {
 
-            Parser::parse(value, drillmap.compress);
+            Parser::parse(value, mapfile.result);
+
+        } else if (key == "mapfile.first") {
+
+            Parser::parse(value, mapfile.first);
+
+        } else if (key == "mapfile.last") {
+
+            Parser::parse(value, mapfile.last);
+
+        } else if (key == "mapfile.nitcnt") {
+
+            Parser::parse(value, mapfile.nitcnt);
+
+        } else if (key == "mapfile.derivative") {
+
+            Parser::parse(value, mapfile.derivative);
+
+        } else if (key == "mapfile.normal") {
+
+            Parser::parse(value, mapfile.normal);
+
+        } else if (key == "mapfile.dist") {
+
+            Parser::parse(value, mapfile.dist);
 
         } else if (key == "image.width") {
 

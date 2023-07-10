@@ -18,13 +18,13 @@
 
 // Version number
 #define VER_MAJOR       3
-#define VER_MINOR       1
-#define VER_SUBMINOR    1
+#define VER_MINOR       2
+#define VER_SUBMINOR    0
 
-#define VER_BETA        0
+#define VER_BETA        1
 
 // Mapfile format
-#define MAP_FORMAT      310
+#define MAP_FORMAT      320
 
 // Uncomment this setting in a release build
 #define RELEASEBUILD

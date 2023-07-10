@@ -84,7 +84,6 @@ public:
     // Map resolution
     isize width = 0;
     isize height = 0;
-    isize depth = 0;
 
     // The center coordinate
     PrecisionComplex center;
@@ -136,7 +135,7 @@ public:
 public:
 
     void resize();
-    void resize(isize w, isize h, isize d);
+    void resize(isize w, isize h);
 
 
     //

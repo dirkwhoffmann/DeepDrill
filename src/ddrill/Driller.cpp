@@ -60,7 +60,7 @@ Driller::drill()
         log::cout << log::endl;
         log::cout << log::ralign("Map size: ");
         log::cout << Options::drillmap.width << " x " << Options::drillmap.height;
-        log::cout << (Options::drillmap.depth ? " (3D)" : " (2D)") << log::endl;
+        log::cout << log::endl;
         log::cout << log::ralign("Image size: ");
         log::cout << Options::image.width << " x " << Options::image.height;
         log::cout << (Options::lighting.enable ? " (3D)" : " (2D)") << log::endl;
