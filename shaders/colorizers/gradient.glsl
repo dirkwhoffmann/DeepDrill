@@ -100,6 +100,23 @@ vec4 deriveTexturePixel(vec2 coord, float nrmRe, float nrmIm)
     return texture2D(texture, vec2(px,py));
 }
 
+// Apply border pixel effect
+vec3 applyBorderEffect(vec2 coord, vec3 color)
+{
+    // Read distance estimate
+    float dist = decode_float(texture2D(dist, coord));
+
+    if (dist < distThreshold) {
+
+        // Modulate V channel
+        vec3 hsv = rgb2hsv(color);
+        hsv.z = dist / distThreshold;
+        color = hsv2rgb(hsv);
+    }
+
+    return color;
+}
+
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
@@ -118,13 +135,12 @@ void main()
     // Mix diffuse color with the texture color
     diffuseColor = mix(diffuseColor, textureColor.rgb, textureOpacity * textureColor.a);
 
-    // Apply the distance estimator
-    float dist = decode_float(texture2D(dist, coord));
-    vec3 final = dist < distThreshold ? vec3(0.0,0.0,0.0) : diffuseColor;
+    // Apply distance estimator effect
+    diffuseColor = applyBorderEffect(coord, diffuseColor);
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
-    final = mix(final, ovl.xyz, ovl.a);
+    diffuseColor = mix(diffuseColor, ovl.xyz, ovl.a);
 
-    gl_FragColor = gl_Color * vec4(final, 1.0);
+    gl_FragColor = gl_Color * vec4(diffuseColor, 1.0);
 }

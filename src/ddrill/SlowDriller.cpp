@@ -81,7 +81,7 @@ SlowDriller::drill(const Coord &point)
             auto u = xn / dn;
             u.normalize();
 
-            map.set(point, MapEntry {
+            map.set(point, {
                 .result     = DR_ESCAPED,
                 .last       = (i32)iteration,
                 .derivative = StandardComplex(dn),
@@ -91,7 +91,7 @@ SlowDriller::drill(const Coord &point)
     }
 
     // This point is inside the Mandelbrot set
-    map.set(point, MapEntry {
+    map.set(point, {
         .result     = DR_MAX_DEPTH_REACHED,
         .last       = (i32)iteration } );
 }

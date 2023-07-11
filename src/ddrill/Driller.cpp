@@ -215,12 +215,12 @@ Driller::collectCoordinates(std::vector<dd::Coord> &remaining)
 
                 if (c.inCardioid()) {
 
-                    map.set(x, y, MapEntry { .result = DR_IN_CARDIOID });
+                    map.set(x, y, { .result = DR_IN_CARDIOID });
                     continue;
                 }
                 if (c.inMainBulb()) {
 
-                    map.set(x, y, MapEntry { .result = DR_IN_BULB });
+                    map.set(x, y, { .result = DR_IN_BULB });
                     continue;
                 }
             }
@@ -299,7 +299,7 @@ Driller::drill(ReferencePoint &r)
             nv.normalize();
 
             r.escaped = true;
-            map.set(r.coord, MapEntry {
+            map.set(r.coord, {
                 .result     = DR_ESCAPED,
                 .last       = (i32)i,
                 .zn         = StandardComplex(z),
@@ -316,7 +316,7 @@ Driller::drill(ReferencePoint &r)
     }
 
     // This point is inside the Mandelbrot set
-    map.set(r.coord, MapEntry {
+    map.set(r.coord, {
         .result     = DR_MAX_DEPTH_REACHED,
         .last       = (i32)Options::location.depth });
 }
@@ -466,7 +466,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         if (Options::periodcheck.enable) {
 
             if ((dn - p).norm().asDouble() < Options::periodcheck.tolerance) {
-                map.set(point, MapEntry {
+                map.set(point, {
                     .result     = DR_PERIODIC,
                     .first      = (i32)ref.skipped,
                     .last       = (i32)iteration } );
@@ -485,7 +485,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         if (Options::attractorcheck.enable) {
 
             if (derzn.norm().asDouble() < Options::attractorcheck.tolerance) {
-                map.set(point, MapEntry {
+                map.set(point, {
                     .result     = DR_ATTRACTED,
                     .first      = (i32)ref.skipped,
                     .last       = (i32)iteration } );
@@ -503,7 +503,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
             auto nv = zn / dercn;
             nv.normalize();
 
-            map.set(point, MapEntry {
+            map.set(point, {
                 .result     = DR_ESCAPED,
                 .first      = (i32)ref.skipped,
                 .last       = (i32)iteration,
@@ -521,14 +521,14 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
 
     if (limit == Options::location.depth) {
 
-        map.set(point, MapEntry {
+        map.set(point, {
             .result     = DR_MAX_DEPTH_REACHED,
             .first      = (i32)ref.skipped,
             .last       = (i32)iteration } );
 
     } else {
 
-        map.set(point, MapEntry {
+        map.set(point, {
             .result     = DR_GLITCH,
             .first      = (i32)ref.skipped,
             .last       = (i32)iteration } );

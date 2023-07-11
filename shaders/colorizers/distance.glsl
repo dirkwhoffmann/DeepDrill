@@ -1,3 +1,10 @@
+// Sampler for the color palette
+uniform sampler2D palette;
+
+// Palette adjustments
+uniform float paletteScale;
+uniform float paletteOffset;
+
 // Sampler for the distance estimate
 uniform sampler2D dist;
 
@@ -20,6 +27,19 @@ float decode_float(vec4 v)
     return sign * (1.0 + sig / 8388607.0) * pow(2.0, expo);
 }
 
+// Derives the color for a given coordinate from the color palette
+vec3 deriveColor(vec2 coord, float d)
+{
+    // float dd = 1.0 / (d / 500.0 + 1.0 - distThreshold);
+    // float dd = 0.2 * log(1.0 + d);
+    // float dd = sqrt(d / 64.0);
+    float dd = 1.0 / (d / 2.0 + 1.0);
+    // float dd = 1.0 / (sqrt(d) + 1.0);
+    float px = mod(dd * paletteScale + paletteOffset, 1.0);
+
+    return texture2D(palette, vec2(px, 0.0)).rgb;
+}
+
 void main()
 {
     vec2 coord = gl_TexCoord[0].xy;
@@ -27,23 +47,27 @@ void main()
 
     // Get the distance estimation
     float d = decode_float(texture2D(dist, coord));
+    float alpha;
 
-    vec3 final;
+    // Compute color
+    vec3 color = deriveColor(coord, d);
 
     if (d < distThreshold) {
 
-        // float c = d / distThreshold;
         float c = 0.0;
-        final = vec3(c,c,c);
+        color = vec3(c,c,c);
+        alpha = 1.0;
 
     } else {
 
-        final = vec3(1.0,1.0,1.0);
+        color = vec3(1.0,1.0,1.0);
+        alpha = 0.0;
     }
+
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
-    final = mix(final, ovl.xyz, ovl.a);
+    color = mix(color, ovl.xyz, ovl.a);
 
-    gl_FragColor = gl_Color * vec4(final, 1.0);
+    gl_FragColor = gl_Color * vec4(color, alpha);
 }
