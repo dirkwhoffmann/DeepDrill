@@ -29,6 +29,7 @@
 		5049969729DF050D00B15919 /* ExtendedDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC710269486C100CCDFA8 /* ExtendedDouble.cpp */; };
 		5049969829DF050F00B15919 /* PrecisionComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC719269486C200CCDFA8 /* PrecisionComplex.cpp */; };
 		5049969929DF051200B15919 /* StandardComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BEC716269486C200CCDFA8 /* StandardComplex.cpp */; };
+		505FE5752A5D1DB300018F87 /* MapAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505FE5732A5D1DB300018F87 /* MapAnalyzer.cpp */; };
 		507122192A304EF10013E655 /* ImageMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507122172A304EF10013E655 /* ImageMaker.cpp */; };
 		5071221A2A304EF10013E655 /* ImageMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507122172A304EF10013E655 /* ImageMaker.cpp */; };
 		5072FD672A271E36003DE341 /* Maker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50EB497426A067850019078C /* Maker.cpp */; };
@@ -193,6 +194,8 @@
 		505EB93629D73E62008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505EB93729D73E6E008DE5BB /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505FE5722A5ADA7400018F87 /* distance.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = distance.glsl; sourceTree = "<group>"; };
+		505FE5732A5D1DB300018F87 /* MapAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapAnalyzer.cpp; sourceTree = "<group>"; };
+		505FE5742A5D1DB300018F87 /* MapAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapAnalyzer.h; sourceTree = "<group>"; };
 		507122172A304EF10013E655 /* ImageMaker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImageMaker.cpp; sourceTree = "<group>"; };
 		507122182A304EF10013E655 /* ImageMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageMaker.h; sourceTree = "<group>"; };
 		5071221B2A3101AA0013E655 /* normalmap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = normalmap.glsl; sourceTree = "<group>"; };
@@ -493,6 +496,8 @@
 				50BEC6F2269486A900CCDFA8 /* Approximator.cpp */,
 				50BEC6FC269486A900CCDFA8 /* ReferencePoint.h */,
 				50BEC6FF269486AA00CCDFA8 /* ReferencePoint.cpp */,
+				505FE5742A5D1DB300018F87 /* MapAnalyzer.h */,
+				505FE5732A5D1DB300018F87 /* MapAnalyzer.cpp */,
 			);
 			path = ddrill;
 			sourceTree = "<group>";
@@ -1007,6 +1012,7 @@
 				5047B4FF29FE2BBC00AC38DC /* AssetManager.cpp in Sources */,
 				50A09C732A3AE81C00845EE7 /* miniz.c in Sources */,
 				50BEC71E269486C200CCDFA8 /* StandardComplex.cpp in Sources */,
+				505FE5752A5D1DB300018F87 /* MapAnalyzer.cpp in Sources */,
 				50BEC702269486AA00CCDFA8 /* Approximator.cpp in Sources */,
 				50BBF50A2A4DDA0D007CDE42 /* DynamicFloat.cpp in Sources */,
 				507122192A304EF10013E655 /* ImageMaker.cpp in Sources */,

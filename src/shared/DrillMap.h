@@ -178,7 +178,6 @@ public:
     bool hasDistances() const;
     bool hasDerivates() const;
     bool hasNormals() const;
-    void analyze() const;
 
 
     //

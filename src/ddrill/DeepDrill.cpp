@@ -13,6 +13,7 @@
 #include "SlowDriller.h"
 #include "Driller.h"
 #include "DrillMap.h"
+#include "MapAnalyzer.h"
 #include "ProgressIndicator.h"
 #include "Compressor.h"
 
@@ -103,7 +104,7 @@ DeepDrill::run()
         generateOutputs();
 
         // Analyze the drill map
-        if (Options::flags.verbose) drillMap.analyze();
+        if (Options::flags.verbose) MapAnalyzer(drillMap).print();
     }
 }
 

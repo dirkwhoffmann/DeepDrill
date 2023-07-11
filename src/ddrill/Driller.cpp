@@ -69,6 +69,8 @@ Driller::drill()
         log::cout << Options::perturbation.enable << log::endl;
         log::cout << log::ralign("Series approximation: ");
         log::cout << Options::approximation.enable << log::endl;
+        log::cout << log::ralign("Border detection: ");
+        log::cout << Options::distance.enable << log::endl;
         log::cout << log::ralign("Area checking: ");
         log::cout << Options::areacheck.enable << log::endl;
         log::cout << log::ralign("Period checking: ");
