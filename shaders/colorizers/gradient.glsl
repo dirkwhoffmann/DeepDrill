@@ -109,9 +109,12 @@ vec3 applyBorderEffect(vec2 coord, vec3 color)
     if (dist < distThreshold) {
 
         // Modulate V channel
+        /*
         vec3 hsv = rgb2hsv(color);
         hsv.z = dist / distThreshold;
         color = hsv2rgb(hsv);
+        */
+        color = vec3(0.0,0.0,0.0);
     }
 
     return color;
