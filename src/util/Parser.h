@@ -41,10 +41,12 @@ public:
     static void parse(const string &value, bool &parsed);
     static void parse(const string &value, isize &parsed);
     static void parse(const string &value, isize &parsed, isize min, isize max);
+    static void parse(const string &value, u32 &parsed);
     static void parse(const string &value, double &parsed);
     static void parse(const string &value, double &parsed, double min, double max);
     static void parse(const string &value, mpf_class &parsed);
     static void parse(const string &value, GpuColor &parsed);
+    static void parse(const string &value, std::optional<GpuColor> &parsed);
     static void parse(const string &value, ColoringMode &parsed);
     static void parse(const string &value, DynamicFloat &parsed);
     static void parse(const string &value, Time &parsed);

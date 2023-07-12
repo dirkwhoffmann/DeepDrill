@@ -253,6 +253,10 @@ DrillMap::updateTextures()
         }
     }
 
+    auto color = [&](std::optional<GpuColor> c = {}) {
+        return (c ? *c : GpuColor::black);
+    };
+
     // Generate the overlay image
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
@@ -267,33 +271,33 @@ DrillMap::updateTextures()
                     break;
                     
                 case DR_GLITCH:
-                    
-                    overlayMap[pos] = Options::perturbation.color | 0xFF000000;
+
+                    overlayMap[pos] = color(Options::perturbation.color);
                     distMap[pos] = 0;
                     break;
                     
                 case DR_IN_BULB:
                 case DR_IN_CARDIOID:
-                    
-                    overlayMap[pos] = Options::areacheck.color | 0xFF000000;
+
+                    overlayMap[pos] = color(Options::areacheck.color);
                     distMap[pos] = 0;
                     break;
                     
                 case DR_PERIODIC:
-                    
-                    overlayMap[pos] = Options::periodcheck.color | 0xFF000000;
+
+                    overlayMap[pos] = color(Options::periodcheck.color);
                     distMap[pos] = 0;
                     break;
                     
                 case DR_ATTRACTED:
-                    
-                    overlayMap[pos] = Options::attractorcheck.color | 0xFF000000;
+
+                    overlayMap[pos] = color(Options::attractorcheck.color);
                     distMap[pos] = 0;
                     break;
                     
                 default:
                     
-                    overlayMap[pos] = GpuColor::black | 0xFF000000;
+                    overlayMap[pos] = color();
                     distMap[pos] = 0;
                     break;
             }

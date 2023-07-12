@@ -143,7 +143,10 @@ void main()
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
-    diffuseColor = mix(diffuseColor, ovl.xyz, ovl.a);
+    if (ovl != vec4(0.0,0.0,0.0,0.0)) {
+        gl_FragColor = gl_Color * ovl;
+    } else {
+        gl_FragColor = gl_Color * vec4(diffuseColor, 1.0);
+    }
 
-    gl_FragColor = gl_Color * vec4(diffuseColor, 1.0);
 }

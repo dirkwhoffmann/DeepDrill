@@ -107,7 +107,7 @@ std::map<string,string> Options::defaults = [](){
     defaults["perturbation.tolerance"] = "1e-6";
     defaults["perturbation.badpixels"] = "0.001";
     defaults["perturbation.rounds"] = "50";
-    defaults["perturbation.color"] = "black";
+    defaults["perturbation.color"] = "";
 
     // Approximation keys
     defaults["approximation.enable"] = "yes";
@@ -116,17 +116,17 @@ std::map<string,string> Options::defaults = [](){
 
     // Area checking keys
     defaults["areacheck.enable"] = "yes";
-    defaults["areacheck.color"] = "black";
+    defaults["areacheck.color"] = "";
 
     // Attractor checking keys
     defaults["attractorcheck.enable"] = "yes";
     defaults["attractorcheck.tolerance"] = "1e-34";
-    defaults["attractorcheck.color"] = "black";
+    defaults["attractorcheck.color"] = "";
 
     // Period checking keys
     defaults["periodcheck.enable"] = "yes";
     defaults["periodcheck.tolerance"] = "1e-74";
-    defaults["periodcheck.color"] = "black";
+    defaults["periodcheck.color"] = "";
 
     return defaults;
 }();

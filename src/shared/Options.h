@@ -210,8 +210,8 @@ struct Options {
         // Maximum number of rounds
         isize rounds;
 
-        // Color used for glitch points
-        GpuColor color;
+        // Optional debug color for glitch points
+        std::optional<GpuColor> color;
 
     } perturbation;
     
@@ -233,8 +233,8 @@ struct Options {
         // Indicates if area checking should be applied
         bool enable;
 
-        // Color used for points with a positive area check
-        GpuColor color;
+        // Optional debug color for points with a positive area check
+        std::optional<GpuColor> color;
 
     } areacheck;
 
@@ -247,7 +247,7 @@ struct Options {
         double tolerance;
 
         // Color used for points with a positive attractor check
-        GpuColor color;
+        std::optional<GpuColor> color;
 
     } attractorcheck;
 
@@ -260,7 +260,7 @@ struct Options {
         double tolerance;
 
         // Color unsed for points with a positive period check
-        GpuColor color;
+        std::optional<GpuColor> color;
 
     } periodcheck;
 

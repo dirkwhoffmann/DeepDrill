@@ -160,6 +160,18 @@ Parser::parse(const string &value, isize &parsed, isize min, isize max)
 }
 
 void
+Parser::parse(const string &value, u32 &parsed)
+{
+    int base = value.rfind("0x", 0) == 0 ? 16 : 10;
+
+    try {
+        parsed = (u32)stoul(value, nullptr, base);
+    } catch (...) {
+        throw Exception("Invalid argument: " + value);
+    }
+}
+
+void
 Parser::parse(const string &value, double &parsed)
 {
     if (value.find_first_not_of("-0123456789.beBE") != std::string::npos) {
@@ -210,11 +222,28 @@ Parser::parse(const string &value, GpuColor &parsed)
         { "cyan",       GpuColor::cyan      }
     };
 
-    try {
-        parsed = modes.at(value);
-    } catch (...) {
-        throw Exception("Invalid argument: " + value);
+    if (modes.count(value)) {
+
+        parsed = modes[value];
+        return;
     }
+
+    parse(value, parsed.rawValue);
+    printf("Parded color: %s %x\n", value.c_str(), parsed.rawValue);
+}
+
+void
+Parser::parse(const string &value, std::optional<GpuColor> &parsed)
+{
+    if (value == "") {
+
+        parsed = {};
+        return;
+    }
+
+    GpuColor color;
+    parse(value, color);
+    parsed = color;
 }
 
 void
