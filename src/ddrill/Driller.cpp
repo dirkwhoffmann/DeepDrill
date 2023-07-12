@@ -274,7 +274,7 @@ Driller::drill(ReferencePoint &r)
     PrecisionComplex d0 { 1.0, 0.0 };
     PrecisionComplex dn = d0;
 
-    double escape = Options::location.escape;
+    double escape = Options::location.escape * Options::location.escape;
 
     r.xn.push_back(ReferenceIteration(z, Options::perturbation.tolerance));
         
@@ -395,7 +395,7 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     isize limit = ref.xn.size();
 
     // Threshold value for detecting an escaping orbit
-    double escape = Options::location.escape;
+    double escape = Options::location.escape * Options::location.escape;
 
     // Determine the iteration to start with
     isize iteration = ref.skipped;
@@ -434,16 +434,13 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
         auto two_xn_plus_dn = ref.xn[iteration - 1].extended2 + dn;
         auto two_xn_plus_two_two_dn = two_xn_plus_dn + dn;
 
-        // dercn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
         dercn *= two_xn_plus_two_two_dn;
         dercn += derc0;
         dercn.reduce();
 
-        // derzn *= ref.xn[iteration - 1].extended2 + (dn * 2.0);
         derzn *= two_xn_plus_two_two_dn;
         derzn.reduce();
 
-        // dn *= ref.xn[iteration - 1].extended2 + dn;
         dn *= two_xn_plus_dn;
         dn += d0;
         dn.reduce();

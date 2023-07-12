@@ -91,7 +91,6 @@ vec3 deriveColor(vec2 coord)
     if (!smooth) nic = floor(nic);
 
     // Determine the palette lookup position
-    // float px = mod(nic / 64.0 * paletteScale + paletteOffset, 1.0);
     float px = mod(nic / 64.0 * paletteScale + paletteOffset, 1.0);
 
     return texture2D(palette, vec2(px, 0.0)).rgb;

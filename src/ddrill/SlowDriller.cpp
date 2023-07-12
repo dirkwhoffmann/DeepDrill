@@ -57,7 +57,7 @@ SlowDriller::drill(const Coord &point)
     auto dn = d0;
 
     isize limit = Options::location.depth;
-    double escape = Options::location.escape;
+    double escape = Options::location.escape * Options::location.escape;
 
     isize iteration = 0;
 
