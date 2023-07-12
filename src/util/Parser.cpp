@@ -251,7 +251,8 @@ Parser::parse(const string &value, ColoringMode &parsed)
 {
     std::map <string, ColoringMode> modes = {
 
-        { "default", ColoringMode::Default }
+        { "classic",    ColoringMode::Classic },
+        { "smooth",     ColoringMode::Smooth  }
     };
 
     try {

@@ -79,9 +79,9 @@ std::map<string,string> Options::defaults = [](){
     // Palette keys
     defaults["palette.image"] = "";
     defaults["palette.bgcolor"] = "black";
-    defaults["palette.mode"] = "default";
+    defaults["palette.mode"] = "smooth";
     defaults["palette.scale"] = "1.0";
-    defaults["palette.offset"] = "0.0";
+    defaults["palette.offset"] = "-0.15";
 
     // Distance estimation keys
     defaults["distance.enable"] = "no";

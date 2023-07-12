@@ -11,6 +11,7 @@ uniform sampler2D palette;
 // Palette adjustments
 uniform float paletteScale;
 uniform float paletteOffset;
+uniform bool smooth;
 
 // Background color (color of the Mandelbrot set)
 uniform vec4 bgcolor;
@@ -83,11 +84,14 @@ float decode_float(vec4 v)
 // Derives the color for a given coordinate from the color palette
 vec3 deriveColor(vec2 coord)
 {
+    // Get the normalized iteration count
     float nic = decode_float(texture2D(nitcnt, coord));
 
-    // Experimental: Make discrete
-    // nic = floor(nic);
+    // Remove the fractional part in classic mode
+    if (!smooth) nic = floor(nic);
 
+    // Determine the palette lookup position
+    // float px = mod(nic / 64.0 * paletteScale + paletteOffset, 1.0);
     float px = mod(nic / 64.0 * paletteScale + paletteOffset, 1.0);
 
     return texture2D(palette, vec2(px, 0.0)).rgb;

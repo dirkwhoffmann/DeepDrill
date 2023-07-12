@@ -60,6 +60,7 @@ ImageMaker::draw(DrillMap &map)
         colorizer.setUniform("palette", paletteTex);
         colorizer.setUniform("paletteScale", Options::palette.scale());
         colorizer.setUniform("paletteOffset", Options::palette.offset());
+        colorizer.setUniform("smooth", Options::palette.mode == ColoringMode::Smooth);
         colorizer.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
         colorizer.setUniform("dist", map.distMapTex);
         colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold() : 0.0);
@@ -123,6 +124,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer.setUniform("palette", paletteTex);
     colorizer.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer.setUniform("smooth", Options::palette.mode == ColoringMode::Smooth);
     colorizer.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
     colorizer.setUniform("dist", map1.distMapTex);
     colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
@@ -140,6 +142,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer2.setUniform("palette", paletteTex);
     colorizer2.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer2.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer2.setUniform("smooth", Options::palette.mode == ColoringMode::Smooth);
     colorizer2.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
     colorizer2.setUniform("dist", map2.distMapTex);
     colorizer2.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
