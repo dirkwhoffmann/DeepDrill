@@ -27,7 +27,7 @@
 #define MAP_FORMAT      320
 
 // Uncomment this setting in a release build
-#define RELEASEBUILD
+// #define RELEASEBUILD
 
 
 //

@@ -26,12 +26,16 @@ MapAnalyzer::analyze(const DrillMap &map)
 
     {   ProgressIndicator progress("Analyzing drill map", total);
 
+        spots.total = total;
+
         for (isize y = 0; y < height; y++) {
             for (isize x = 0; x < width; x++) {
 
                 auto i = y * width + x;
 
-                // auto &entry = get(Coord(x,y));
+                auto inBorder = [&]() {
+                    return Options::distance.enable && map.distMap[i] < Options::distance.threshold();
+                };
 
                 bool optspot = !!map.firstIterationMap[i];
                 optspots.approximations += !!map.firstIterationMap[i];
@@ -42,21 +46,18 @@ MapAnalyzer::analyze(const DrillMap &map)
 
                     case DR_UNPROCESSED:
 
-                        spots.total++;
                         spots.unprocessed++;
                         break;
 
                     case DR_ESCAPED:
 
-                        spots.total++;
-                        spots.exterior++;
+                        inBorder() ? spots.border++ : spots.exterior++;
                         iterations.total += map.lastIterationMap[i];
                         iterations.exterior += map.lastIterationMap[i];
                         break;
 
                     case DR_MAX_DEPTH_REACHED:
 
-                        spots.total++;
                         spots.interior++;
                         iterations.total += map.lastIterationMap[i];
                         iterations.interior += map.lastIterationMap[i];
@@ -66,7 +67,6 @@ MapAnalyzer::analyze(const DrillMap &map)
                     case DR_IN_BULB:
 
                         optspot = true;
-                        spots.total++;
                         spots.interior++;
                         optspots.bulb++;
                         iterations.total += limit;
@@ -78,7 +78,6 @@ MapAnalyzer::analyze(const DrillMap &map)
                     case DR_IN_CARDIOID:
 
                         optspot = true;
-                        spots.total++;
                         spots.interior++;
                         optspots.cartioid++;
                         iterations.total += limit;
@@ -90,7 +89,6 @@ MapAnalyzer::analyze(const DrillMap &map)
                     case DR_PERIODIC:
 
                         optspot = true;
-                        spots.total++;
                         spots.interior++;
                         optspots.periods++;
                         iterations.total += limit;
@@ -102,7 +100,6 @@ MapAnalyzer::analyze(const DrillMap &map)
                     case DR_ATTRACTED:
 
                         optspot = true;
-                        spots.total++;
                         spots.interior++;
                         optspots.attractors++;
                         iterations.total += limit;
@@ -113,7 +110,6 @@ MapAnalyzer::analyze(const DrillMap &map)
 
                     case DR_GLITCH:
 
-                        spots.total++;
                         spots.glitches++;
                         break;
                 }
@@ -155,6 +151,8 @@ MapAnalyzer::print()
     log::cout << format(spots.unprocessed) << log::endl;
     log::cout << log::ralign("Interior: ");
     log::cout << format(spots.interior) << log::endl;
+    log::cout << log::ralign("Border: ");
+    log::cout << format(spots.border) << log::endl;
     log::cout << log::ralign("Exterior: ");
     log::cout << format(spots.exterior) << log::endl;
     log::cout << log::ralign("Glitches: ");

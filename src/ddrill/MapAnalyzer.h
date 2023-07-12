@@ -27,6 +27,7 @@ class MapAnalyzer {
 
         isize total = 0;
         isize interior = 0;
+        isize border = 0;
         isize exterior = 0;
         isize unprocessed = 0;
         isize glitches = 0;
