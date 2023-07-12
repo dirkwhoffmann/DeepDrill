@@ -33,11 +33,8 @@ float decode_float(vec4 v)
 // Derives the color for a given coordinate from the color palette
 vec4 deriveColor(vec2 coord, float d)
 {
-    // float dd = 1.0 / (d / 500.0 + 1.0 - distThreshold);
-    // float dd = 0.2 * log(1.0 + d);
-    // float dd = sqrt(d / 64.0);
-    float dd = 1.0 / (d / 2.0 + 1.0);
-    // float dd = 1.0 / (sqrt(d) + 1.0);
+    // float dd = 1.0 / (d + 1.0);
+    float dd = 0.0;
     float px = mod(dd * paletteScale + paletteOffset, 1.0);
 
     return texture2D(palette, vec2(px, 0.0));
@@ -72,17 +69,12 @@ void main()
 
     // Get the distance estimation
     float d = decode_float(texture2D(dist, coord));
-    float alpha;
 
     // Compute color
     vec4 color = deriveColor(coord, d);
 
-    // Experimental
-    if (d < distThreshold) {
-        color = bgcolor;
-    } else {
-        // color = vec4(1.0,1.0,1.0,1.0);
-    }
+    // Apply border effect
+    if (d < distThreshold) color = bgcolor;
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
