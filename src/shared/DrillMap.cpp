@@ -254,7 +254,7 @@ DrillMap::updateTextures()
     }
 
     auto color = [&](std::optional<GpuColor> c = {}) {
-        return (c ? *c : GpuColor::black);
+        return (c ? *c : Options::palette.bgColor);
     };
 
     // Generate the overlay image

@@ -139,6 +139,9 @@ struct Options {
         // Path to the palette image
         fs::path image;
 
+        // Background color
+        GpuColor bgColor;
+        
         // Coloring mode
         ColoringMode mode;
 

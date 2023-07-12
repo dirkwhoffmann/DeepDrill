@@ -212,14 +212,15 @@ Parser::parse(const string &value, GpuColor &parsed)
 {
     std::map <string, GpuColor> modes = {
 
-        { "black",      GpuColor::black     },
-        { "white",      GpuColor::white     },
-        { "red",        GpuColor::red       },
-        { "green",      GpuColor::green     },
-        { "blue",       GpuColor::blue      },
-        { "yellow",     GpuColor::yellow    },
-        { "magenta",    GpuColor::magenta   },
-        { "cyan",       GpuColor::cyan      }
+        { "black",          GpuColor::black     },
+        { "white",          GpuColor::white     },
+        { "red",            GpuColor::red       },
+        { "green",          GpuColor::green     },
+        { "blue",           GpuColor::blue      },
+        { "yellow",         GpuColor::yellow    },
+        { "magenta",        GpuColor::magenta   },
+        { "cyan",           GpuColor::cyan      },
+        { "transparent",    GpuColor(0xFFFFFFu) }
     };
 
     if (modes.count(value)) {
@@ -229,7 +230,6 @@ Parser::parse(const string &value, GpuColor &parsed)
     }
 
     parse(value, parsed.rawValue);
-    printf("Parded color: %s %x\n", value.c_str(), parsed.rawValue);
 }
 
 void

@@ -78,6 +78,7 @@ std::map<string,string> Options::defaults = [](){
 
     // Palette keys
     defaults["palette.image"] = "";
+    defaults["palette.bgcolor"] = "black";
     defaults["palette.mode"] = "default";
     defaults["palette.scale"] = "1.0";
     defaults["palette.offset"] = "0.0";
@@ -279,6 +280,10 @@ Options::parse(string key, string value)
         } else if (key == "palette.image") {
 
             Parser::parse(value, palette.image, { Format::BMP, Format::JPG, Format:: PNG });
+
+        } else if (key == "palette.bgcolor") {
+
+            Parser::parse(value, palette.bgColor);
 
         } else if (key == "palette.mode") {
 
