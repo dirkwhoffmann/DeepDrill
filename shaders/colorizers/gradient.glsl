@@ -84,6 +84,10 @@ float decode_float(vec4 v)
 vec3 deriveColor(vec2 coord)
 {
     float nic = decode_float(texture2D(nitcnt, coord));
+
+    // Experimental: Make discrete
+    // nic = floor(nic);
+
     float px = mod(nic / 64.0 * paletteScale + paletteOffset, 1.0);
 
     return texture2D(palette, vec2(px, 0.0)).rgb;

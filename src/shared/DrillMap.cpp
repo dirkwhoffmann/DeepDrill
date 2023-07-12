@@ -80,12 +80,13 @@ DrillMap::set(isize w, isize h, const MapEntry &entry)
     auto znabs = entry.zn.abs();
 
     // Derive the normalized iteration count
-    auto znloglog = znabs.log().log().asDouble();
-    nitcntMap[i] = lastIterationMap[i] - znloglog / std::log(2.0);
+    auto znlog = znabs.log() / std::log(Options::location.escape);
+    auto znloglog = znlog.log() / std::log(2.0);
+    nitcntMap[i] = lastIterationMap[i] - znloglog.asDouble();
 
     // Estimate the distance to the Mandelbrot set in pixels
-    auto znlog = znabs.log().asDouble();
-    auto dist = znabs * 2.0 * znlog / entry.derivative.abs();
+    auto znabslog = znabs.log().asDouble();
+    auto dist = znabs * 2.0 * znabslog / entry.derivative.abs();
     dist /= pixelDelta;
     distMap[i] = dist.asFloat();
 
