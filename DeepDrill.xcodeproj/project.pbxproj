@@ -124,6 +124,7 @@
 		50102351269EC70200AC61A8 /* DrillMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrillMap.h; sourceTree = "<group>"; };
 		5012111C2A4707890012A4B7 /* textured.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = textured.ini; sourceTree = "<group>"; };
 		5012111D2A47266B0012A4B7 /* mordor.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = mordor.ini; sourceTree = "<group>"; };
+		5029516D2A5E906300484F24 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		5030F11226A2BCCF009A53B3 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		5030F11326A2BCCF009A53B3 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5047B4E129F812F700AC38DC /* Palette.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
@@ -733,6 +734,7 @@
 		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
+				5029516D2A5E906300484F24 /* transparent.png */,
 				5072FD582A2718BD003DE341 /* white.png */,
 				5047B4FC29FD537D00AC38DC /* prism.png */,
 				5047B4E729F9623500AC38DC /* candy.png */,

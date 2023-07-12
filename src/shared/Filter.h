@@ -64,6 +64,7 @@ public:
     void setUniform(const string &key, double value);
     void setUniform(const string &key, sf::Vector2f value);
     void setUniform(const string &key, sf::Vector3f value);
+    void setUniform(const string &key, sf::Glsl::Vec4 value);
     void setUniform(const string &key, const sf::Texture &value);
 
 

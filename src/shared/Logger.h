@@ -19,8 +19,6 @@
 #include "StandardComplex.h"
 #include "ExtendedComplex.h"
 #include "PrecisionComplex.h"
-
-#include <optional>
 #include <thread>
 
 namespace dd {

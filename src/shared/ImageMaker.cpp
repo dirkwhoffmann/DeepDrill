@@ -47,6 +47,8 @@ ImageMaker::draw(DrillMap &map)
 {
     init();
 
+    auto rgba = RgbColor(Options::palette.bgColor);
+
     {
         ProgressIndicator progress("Running GPU shaders");
 
@@ -58,6 +60,7 @@ ImageMaker::draw(DrillMap &map)
         colorizer.setUniform("palette", paletteTex);
         colorizer.setUniform("paletteScale", Options::palette.scale());
         colorizer.setUniform("paletteOffset", Options::palette.offset());
+        colorizer.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
         colorizer.setUniform("dist", map.distMapTex);
         colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold() : 0.0);
         colorizer.setUniform("texture", textureMapTex);
@@ -110,6 +113,8 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
 {
     init();
 
+    auto rgba = RgbColor(Options::palette.bgColor);
+
     // 1. Colorize
     colorizer.setUniform("iter", map1.getIterationMapTex());
     colorizer.setUniform("nitcnt", map1.getNitcntMapTex());
@@ -118,6 +123,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer.setUniform("palette", paletteTex);
     colorizer.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
     colorizer.setUniform("dist", map1.distMapTex);
     colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
     colorizer.setUniform("texture", textureMapTex);
@@ -134,6 +140,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer2.setUniform("palette", paletteTex);
     colorizer2.setUniform("paletteScale", Options::palette.scale(frame));
     colorizer2.setUniform("paletteOffset", Options::palette.offset(frame));
+    colorizer2.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
     colorizer2.setUniform("dist", map2.distMapTex);
     colorizer2.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
     colorizer2.setUniform("texture", textureMapTex);

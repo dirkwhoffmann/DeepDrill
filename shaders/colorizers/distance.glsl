@@ -5,6 +5,9 @@ uniform sampler2D palette;
 uniform float paletteScale;
 uniform float paletteOffset;
 
+// Background color (color of the Mandelbrot set)
+uniform vec4 bgcolor;
+
 // Sampler for the distance estimate
 uniform sampler2D dist;
 
@@ -28,7 +31,7 @@ float decode_float(vec4 v)
 }
 
 // Derives the color for a given coordinate from the color palette
-vec3 deriveColor(vec2 coord, float d)
+vec4 deriveColor(vec2 coord, float d)
 {
     // float dd = 1.0 / (d / 500.0 + 1.0 - distThreshold);
     // float dd = 0.2 * log(1.0 + d);
@@ -37,7 +40,7 @@ vec3 deriveColor(vec2 coord, float d)
     // float dd = 1.0 / (sqrt(d) + 1.0);
     float px = mod(dd * paletteScale + paletteOffset, 1.0);
 
-    return texture2D(palette, vec2(px, 0.0)).rgb;
+    return texture2D(palette, vec2(px, 0.0));
 }
 
 /*
@@ -72,26 +75,18 @@ void main()
     float alpha;
 
     // Compute color
-    vec3 color = deriveColor(coord, d);
+    vec4 color = deriveColor(coord, d);
 
     // Experimental
     if (d < distThreshold) {
-
-        float nrm = d / distThreshold;
-
-        float c = 0.0;
-        color = vec3(0.0,0.0,0.0);
-        alpha = 1.0;
-
+        color = bgcolor;
     } else {
-
-        color = vec3(1.0,1.0,1.0);
-        alpha = 1.0;
+        // color = vec4(1.0,1.0,1.0,1.0);
     }
 
     // Superimpose the overlay image
     vec4 ovl = texture2D(overlay, coord);
-    color = mix(color, ovl.xyz, ovl.a);
+    color.rgb = mix(color.rgb, ovl.xyz, ovl.a);
 
-    gl_FragColor = gl_Color * vec4(color, alpha);
+    gl_FragColor = gl_Color * color;
 }

@@ -103,6 +103,12 @@ Filter::setUniform(const string &key, sf::Vector3f value)
 }
 
 void
+Filter::setUniform(const string &key, sf::Glsl::Vec4 value)
+{
+    if (hasUniform(key)) shader.setUniform(key, value);
+}
+
+void
 Filter::setUniform(const string &key, const sf::Texture &value)
 {
     if (hasUniform(key)) shader.setUniform(key, value);

@@ -12,6 +12,9 @@ uniform sampler2D palette;
 uniform float paletteScale;
 uniform float paletteOffset;
 
+// Background color (color of the Mandelbrot set)
+uniform vec4 bgcolor;
+
 // Sampler for the distance estimate
 uniform sampler2D dist;
 
@@ -107,14 +110,7 @@ vec3 applyBorderEffect(vec2 coord, vec3 color)
     float dist = decode_float(texture2D(dist, coord));
 
     if (dist < distThreshold) {
-
-        // Modulate V channel
-        /*
-        vec3 hsv = rgb2hsv(color);
-        hsv.z = dist / distThreshold;
-        color = hsv2rgb(hsv);
-        */
-        color = vec3(0.0,0.0,0.0);
+        color = bgcolor.rgb;
     }
 
     return color;

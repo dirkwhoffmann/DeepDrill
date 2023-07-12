@@ -72,3 +72,4 @@ enum class Format
 
 #include <vector>
 #include <map>
+#include <optional>
