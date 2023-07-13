@@ -48,6 +48,7 @@ Table of Contents
    Theory/MandelbrotSet
    Theory/Perturbation
    Theory/SeriesApproximation
+   Theory/SmoothColoring
 
 .. toctree::
    :maxdepth: 1
