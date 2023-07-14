@@ -63,7 +63,7 @@ ImageMaker::draw(DrillMap &map)
         colorizer.setUniform("smooth", Options::palette.mode == ColoringMode::Smooth);
         colorizer.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
         colorizer.setUniform("dist", map.distMapTex);
-        colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold() : 0.0);
+        colorizer.setUniform("distThreshold", Options::distance.threshold());
         colorizer.setUniform("texture", textureMapTex);
         colorizer.setUniform("textureOpacity", Options::texture.opacity());
         colorizer.setUniform("textureScale", Options::texture.scale());
@@ -127,7 +127,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer.setUniform("smooth", Options::palette.mode == ColoringMode::Smooth);
     colorizer.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
     colorizer.setUniform("dist", map1.distMapTex);
-    colorizer.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
+    colorizer.setUniform("distThreshold", Options::distance.threshold(frame));
     colorizer.setUniform("texture", textureMapTex);
     colorizer.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
     colorizer.setUniform("textureScale", Options::texture.scale(frame));
@@ -145,7 +145,7 @@ ImageMaker::draw(DrillMap &map1, DrillMap &map2, isize frame, float zoom)
     colorizer2.setUniform("smooth", Options::palette.mode == ColoringMode::Smooth);
     colorizer2.setUniform("bgcolor", sf::Glsl::Vec4(rgba.r, rgba.g, rgba.b, rgba.a));
     colorizer2.setUniform("dist", map2.distMapTex);
-    colorizer2.setUniform("distThreshold", Options::distance.enable ? Options::distance.threshold(frame) : 0.0);
+    colorizer2.setUniform("distThreshold", Options::distance.threshold(frame));
     colorizer2.setUniform("texture", textureMapTex);
     colorizer2.setUniform("textureOpacity", Options::texture.image == "" ? 0.0 : Options::texture.opacity(frame));
     colorizer2.setUniform("textureScale", Options::texture.scale(frame));

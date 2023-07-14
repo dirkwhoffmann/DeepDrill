@@ -155,7 +155,7 @@ struct Options {
     static struct Distance {
 
         // Indicates if distance estimation should be applied
-        bool enable;
+        // bool enable;
 
         // Thickness
         DynamicFloat threshold;

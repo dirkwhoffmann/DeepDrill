@@ -69,8 +69,8 @@ Driller::drill()
         log::cout << Options::perturbation.enable << log::endl;
         log::cout << log::ralign("Series approximation: ");
         log::cout << Options::approximation.enable << log::endl;
-        log::cout << log::ralign("Border detection: ");
-        log::cout << Options::distance.enable << log::endl;
+        // log::cout << log::ralign("Border detection: ");
+        // log::cout << (Options::distance.threshold() > 0.0) << log::endl;
         log::cout << log::ralign("Area checking: ");
         log::cout << Options::areacheck.enable << log::endl;
         log::cout << log::ralign("Period checking: ");
@@ -432,13 +432,13 @@ Driller::drill(const Coord &point, std::vector<Coord> &glitchPoints)
     while (++iteration < limit) {
 
         auto two_xn_plus_dn = ref.xn[iteration - 1].extended2 + dn;
-        auto two_xn_plus_two_two_dn = two_xn_plus_dn + dn;
+        auto two_xn_plus_two_dn = two_xn_plus_dn + dn;
 
-        dercn *= two_xn_plus_two_two_dn;
+        dercn *= two_xn_plus_two_dn;
         dercn += derc0;
         dercn.reduce();
 
-        derzn *= two_xn_plus_two_two_dn;
+        derzn *= two_xn_plus_two_dn;
         derzn.reduce();
 
         dn *= two_xn_plus_dn;

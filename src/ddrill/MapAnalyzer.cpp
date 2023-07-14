@@ -34,7 +34,8 @@ MapAnalyzer::analyze(const DrillMap &map)
                 auto i = y * width + x;
 
                 auto inBorder = [&]() {
-                    return Options::distance.enable && map.distMap[i] < Options::distance.threshold();
+                    // return Options::distance.enable && map.distMap[i] < Options::distance.threshold();
+                    return map.distMap[i] < Options::distance.threshold();
                 };
 
                 bool optspot = !!map.firstIterationMap[i];
