@@ -84,8 +84,7 @@ std::map<string,string> Options::defaults = [](){
     defaults["palette.offset"] = "-0.15";
 
     // Distance estimation keys
-    // defaults["distance.enable"] = "no";
-    defaults["distance.threshold"] = "0.2";
+    defaults["distance.threshold"] = "0.0";
 
     // Texture keys
     defaults["texture.image"] = "";

@@ -54,6 +54,7 @@ Table of Contents
    :maxdepth: 1
    :caption: References
 
+   References/Colorizers
    References/Options
    References/Examples
    References/Links

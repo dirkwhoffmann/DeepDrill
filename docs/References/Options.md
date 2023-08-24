@@ -36,7 +36,9 @@ Each option is briefly explained below:
 |-----|---------|-------------|
 | `width`  | 1920 | The horizontal resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image width.
 | `height`  | 1080 | The vertical resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image height.
-| `depth`  | 1 | Possible values are 0 and 1. If set to 1, a normal map will be written to the `.map` file.
+
+### Section `[mapfile]`
+
 | `compress`  | yes | Indicates whether map files should be saved in compressed format.
 
 
@@ -65,9 +67,17 @@ Each option is briefly explained below:
 | <div style="width:120px">Key</div> | <div style="width:100px">Default value</div> | Description |
 |-----|---------|-------------|
 | `image`  | - | Path to an image file storing the color palette. DeepDrill will derive the color palette from the uppermost horizontal line of the image.
+| `bgcolor`  | black | Background color. This color is used for colorizing pixels belonging to the Mandelbrot set.
+| `mode`  | smooth | Coloring mode. Options are `classic` and `smooth`. 
 | `scale`  | 1.0 | An optional scaling factor that can be used to stretch or shrink the color palette.  
-| `offset`  | 0.0 | An optional offset that can be used to rotate the color palette.  
+| `offset`  | -0.15 | An optional offset that can be used to rotate the color palette.  
 
+### Section `[distance]`
+
+| <div style="width:120px">Key</div> | <div style="width:100px">Default value</div> | Description |
+|-----|---------|-------------|
+| `threshold`  | 0.0 | This value is used by the distance-estimation filter. A pixel is considered to be part of the Mandelbrot 
+set if its distance estimate is below the threshold value. Smaller numbers lead to more fine-grained images. 
 
 ### Section `[texture]`
 | <div style="width:120px">Key</div> | <div style="width:100px">Default value</div> | Description |

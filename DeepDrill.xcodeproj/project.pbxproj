@@ -734,9 +734,9 @@
 		50BEC7562694873C00CCDFA8 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
-				5029516D2A5E906300484F24 /* transparent.png */,
 				5072FD582A2718BD003DE341 /* white.png */,
 				5047B4FC29FD537D00AC38DC /* prism.png */,
+				5029516D2A5E906300484F24 /* transparent.png */,
 				5047B4E729F9623500AC38DC /* candy.png */,
 				5047B4EA29F9625600AC38DC /* default.png */,
 				5047B4E829F9624100AC38DC /* dolomiti.png */,
