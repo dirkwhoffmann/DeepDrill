@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Working with Dynamic Values &#8212; DeepDrill 3.2</title>
+    <title>Colorizing Algorithms &#8212; DeepDrill 3.2</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -13,14 +13,12 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script defer src="../_static/insipid.js"></script>
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Analyzing the Computation Run" href="Analyze.html" />
-    <link rel="prev" title="Adding an Overlay Image" href="Textures.html" />
+    <link rel="next" title="Configuration Options" href="Options.html" />
+    <link rel="prev" title="Smooth coloring" href="../Theory/SmoothColoring.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -62,7 +60,7 @@
           </div>
           <div class="title">
             <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.2</a>
-            <a class="top" href="#">Working with Dynamic Values</a>
+            <a class="top" href="#">Colorizing Algorithms</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -84,31 +82,31 @@
       </div>
     </header>
     <nav>
-      <a href="Textures.html" class="nav-icon previous" title="previous:&#13;Adding an Overlay Image" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="../Theory/SmoothColoring.html" class="nav-icon previous" title="previous:&#13;Smooth coloring" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="Analyze.html" class="nav-icon next" title="next:&#13;Analyzing the Computation Run" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="Options.html" class="nav-icon next" title="next:&#13;Configuration Options" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Textures.html" aria-label="Previous topic" >
+      <a class="previous" href="../Theory/SmoothColoring.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Adding an Overlay Image
+            Smooth coloring
           </span>
         </div>
       </a>
-      <a class="next" href="Analyze.html" aria-label="Next topic" >
+      <a class="next" href="Options.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Analyzing the Computation Run
+            Configuration Options
           </span>
         </div>
         <div class="icon">
@@ -122,32 +120,47 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="working-with-dynamic-values">
-<h1>Working with Dynamic Values<a class="headerlink" href="#working-with-dynamic-values" title="Permalink to this heading">¶</a></h1>
-<p>As you’ve already learned, DeepDrill is configured by defining several key-value pairs. E.g., by setting</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[video]</span>
-<span class="na">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.5</span>
+<section class="tex2jax_ignore mathjax_ignore" id="colorizing-algorithms">
+<h1>Colorizing Algorithms<a class="headerlink" href="#colorizing-algorithms" title="Permalink to this heading">¶</a></h1>
+<p>DeepDrill offers multiple algorithms for colorizing images.</p>
+<section id="classic-escape-time-coloring">
+<h2>Classic Escape-time Coloring<a class="headerlink" href="#classic-escape-time-coloring" title="Permalink to this heading">¶</a></h2>
+<p>The classic escape-time coloring algorithm computes an iteration count for each pixel and uses this value as an index into a color table. To select the classic algorithm in DeepDrill, set the <code class="docutils literal notranslate"><span class="pre">palette.mode</span></code> key to <code class="docutils literal notranslate"><span class="pre">classic</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>top.ini<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>palette.mode<span class="o">=</span>classic
 </pre></div>
 </div>
-<p>we advice DeepZoom to zoom in at a pace of 2 seconds per keyframe. The velocity won’t change throughout the entire video.</p>
-<p>However, <code class="docutils literal notranslate"><span class="pre">velocity</span></code> is a so-called dynamic value which means that it can be varied throughout the video. This is achieved by assigning a split description instead of fixed value. A spline is defined by several <span class="math notranslate nohighlight">\(x/y\)</span> pairs where <span class="math notranslate nohighlight">\(x\)</span> is a time stamp and <span class="math notranslate nohighlight">\(y\)</span> is the value we want to assign at that point in time.</p>
-<p>For the following example, we assume that you’ve worked through the zoom-video tutorial. I.e., we assume that <code class="docutils literal notranslate"><span class="pre">project</span></code> contains all precomputed keyframes for the video. Then, the zoom velocity can be made dynamic like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deepzoom</span> <span class="n">project</span> <span class="n">video</span><span class="o">.</span><span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="o">/-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="o">/-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="o">/-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">14</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">16</span><span class="o">/</span><span class="mi">0</span> <span class="n">video</span><span class="o">.</span><span class="n">startframe</span><span class="o">=</span><span class="mi">30</span> <span class="o">-</span><span class="n">o</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">wobble</span><span class="o">.</span><span class="n">mov</span>
+<p><img alt="Classic escape-time coloring" src="../_images/classic.jpg" /></p>
+<p>The image shows the typical color bands that can be seen in many Mandelbrot images, especially older ones. They stem from the fact that the iteration count is an integer value that can only increase in discrete steps.</p>
+</section>
+<section id="continuous-escape-time-coloring">
+<h2>Continuous Escape-time Coloring<a class="headerlink" href="#continuous-escape-time-coloring" title="Permalink to this heading">¶</a></h2>
+<p>Color bands can be eliminated by using fractional iteration counts. Please refer to the theory section to learn how the iteration count can be made continuous. To use this coloring method in DeepDrill, set the <code class="docutils literal notranslate"><span class="pre">palette.mode</span></code> key to <code class="docutils literal notranslate"><span class="pre">smooth</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>top.ini<span class="w"> </span>-o<span class="w"> </span>top.jpg<span class="w"> </span>palette.mode<span class="o">=</span>smooth
 </pre></div>
 </div>
-<p>This is the result:</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gM5hYQWW9Bk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<p>The following keys refer to dynamic values:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">video.velocity</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">palette.scale</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">palette.offset</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texture.opacity</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texture.scale</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texture.offset</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lighting.alpha</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lighting.beta</span></code></p></li>
-</ul>
+<p><img alt="Continuous escape-time coloring" src="../_images/smooth.jpg" /></p>
+</section>
+<section id="distance-coloring">
+<h2>Distance Coloring<a class="headerlink" href="#distance-coloring" title="Permalink to this heading">¶</a></h2>
+<p>Distance coloring is based on the estimated distance of a pixel from the Mandelbrot set. This colorizing technique is often applied for computing black-and-white images because it can lead to very crisp illustrations of the Mandelbrot set.</p>
+<p>To create such images, DeepDrill offers a special GPU shader called <code class="docutils literal notranslate"><span class="pre">distance.glsl</span></code>. It can be activated as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse2.ini<span class="w"> </span>-o<span class="w"> </span>seahorse2.map<span class="w"> </span>-o<span class="w"> </span>seahorse2.jpg<span class="w"> </span>palette.image<span class="o">=</span>white.png<span class="w"> </span>gpu.colorizer<span class="o">=</span>distance.glsl<span class="w"> </span>distance.threshold<span class="o">=</span><span class="m">0</span>.2
+</pre></div>
+</div>
+<p><img alt="Distance Coloring" src="../_images/distance1.jpg" /></p>
+<p>By using different color options, it is possible to create partially transparent images. E.g., to create the image shown
+above with a transparent background, run DeepDrill with the <code class="docutils literal notranslate"><span class="pre">transparent</span></code> palette:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse2.map<span class="w"> </span>-o<span class="w"> </span>seahorse2b.png<span class="w"> </span>palette.image<span class="o">=</span>transparent.png<span class="w"> </span>gpu.colorizer<span class="o">=</span>distance.glsl<span class="w"> </span>distance.threshold<span class="o">=</span><span class="m">0</span>.2
+</pre></div>
+</div>
+<p><img alt="Distance Coloring" src="../_images/distance2.png" /></p>
+<p>When adding transparency, make sure to export to a png image since the jpg format and bmp format ignore any alpha channel information.</p>
+<p>Alternatively, you may choose to use a transparent color for the Mandelbrot set:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./deepdrill<span class="w"> </span>seahorse2.map<span class="w"> </span>-o<span class="w"> </span>seahorse2c.png<span class="w"> </span>palette.image<span class="o">=</span>white.png<span class="w"> </span>palette.bgcolor<span class="o">=</span>transparent<span class="w"> </span>gpu.colorizer<span class="o">=</span>distance.glsl<span class="w"> </span>distance.threshold<span class="o">=</span><span class="m">0</span>.2
+</pre></div>
+</div>
+<p><img alt="Distance Coloring" src="../_images/distance3.png" /></p>
+</section>
 </section>
 
             <div class="clearer"></div>
@@ -174,13 +187,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the Color Palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing Spatial Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="NormalMap.html">Exporting the Normal Map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding an Overlay Image</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Working with Dynamic Values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
 <ul>
@@ -191,11 +204,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SmoothColoring.html">Smooth coloring</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../References/Colorizers.html">Colorizing Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../References/Options.html">Configuration Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../References/Examples.html">Videos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../References/Links.html">External links</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Colorizing Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Links.html">External links</a></li>
 </ul>
 
 <div><hr class="docutils"></div>
@@ -209,22 +222,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Textures.html" aria-label="Previous topic" >
+      <a class="previous" href="../Theory/SmoothColoring.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Adding an Overlay Image
+            Smooth coloring
           </span>
         </div>
       </a>
-      <a class="next" href="Analyze.html" aria-label="Next topic" >
+      <a class="next" href="Options.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Analyzing the Computation Run
+            Configuration Options
           </span>
         </div>
         <div class="icon">
@@ -237,7 +250,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/HowTo/Dynamic.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/References/Colorizers.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

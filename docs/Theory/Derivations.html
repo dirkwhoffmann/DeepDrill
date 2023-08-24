@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Working with Dynamic Values &#8212; DeepDrill 3.2</title>
+    <title>Derivatives &#8212; DeepDrill 3.2</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -19,8 +19,8 @@
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Analyzing the Computation Run" href="Analyze.html" />
-    <link rel="prev" title="Adding an Overlay Image" href="Textures.html" />
+    <link rel="next" title="Smooth coloring" href="SmoothColoring.html" />
+    <link rel="prev" title="Series Approximation" href="SeriesApproximation.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -62,7 +62,7 @@
           </div>
           <div class="title">
             <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.2</a>
-            <a class="top" href="#">Working with Dynamic Values</a>
+            <a class="top" href="#">Derivatives</a>
           </div>
           <div class="buttons">
             <button id="fullscreen-button" type="button" aria-hidden="true">
@@ -84,31 +84,31 @@
       </div>
     </header>
     <nav>
-      <a href="Textures.html" class="nav-icon previous" title="previous:&#13;Adding an Overlay Image" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="SeriesApproximation.html" class="nav-icon previous" title="previous:&#13;Series Approximation" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
-      <a href="Analyze.html" class="nav-icon next" title="next:&#13;Analyzing the Computation Run" aria-label="Next topic" accesskey="N" tabindex="-1">
+      <a href="SmoothColoring.html" class="nav-icon next" title="next:&#13;Smooth coloring" aria-label="Next topic" accesskey="N" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
       </a>
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="Textures.html" aria-label="Previous topic" >
+      <a class="previous" href="SeriesApproximation.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Adding an Overlay Image
+            Series Approximation
           </span>
         </div>
       </a>
-      <a class="next" href="Analyze.html" aria-label="Next topic" >
+      <a class="next" href="SmoothColoring.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Analyzing the Computation Run
+            Smooth coloring
           </span>
         </div>
         <div class="icon">
@@ -122,32 +122,76 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-<section class="tex2jax_ignore mathjax_ignore" id="working-with-dynamic-values">
-<h1>Working with Dynamic Values<a class="headerlink" href="#working-with-dynamic-values" title="Permalink to this heading">¶</a></h1>
-<p>As you’ve already learned, DeepDrill is configured by defining several key-value pairs. E.g., by setting</p>
-<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[video]</span>
-<span class="na">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.5</span>
-</pre></div>
-</div>
-<p>we advice DeepZoom to zoom in at a pace of 2 seconds per keyframe. The velocity won’t change throughout the entire video.</p>
-<p>However, <code class="docutils literal notranslate"><span class="pre">velocity</span></code> is a so-called dynamic value which means that it can be varied throughout the video. This is achieved by assigning a split description instead of fixed value. A spline is defined by several <span class="math notranslate nohighlight">\(x/y\)</span> pairs where <span class="math notranslate nohighlight">\(x\)</span> is a time stamp and <span class="math notranslate nohighlight">\(y\)</span> is the value we want to assign at that point in time.</p>
-<p>For the following example, we assume that you’ve worked through the zoom-video tutorial. I.e., we assume that <code class="docutils literal notranslate"><span class="pre">project</span></code> contains all precomputed keyframes for the video. Then, the zoom velocity can be made dynamic like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deepzoom</span> <span class="n">project</span> <span class="n">video</span><span class="o">.</span><span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="o">/-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="o">/-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="o">/-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">14</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">16</span><span class="o">/</span><span class="mi">0</span> <span class="n">video</span><span class="o">.</span><span class="n">startframe</span><span class="o">=</span><span class="mi">30</span> <span class="o">-</span><span class="n">o</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">wobble</span><span class="o">.</span><span class="n">mov</span>
-</pre></div>
-</div>
-<p>This is the result:</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gM5hYQWW9Bk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<p>The following keys refer to dynamic values:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">video.velocity</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">palette.scale</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">palette.offset</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texture.opacity</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texture.scale</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texture.offset</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lighting.alpha</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lighting.beta</span></code></p></li>
-</ul>
+<section class="tex2jax_ignore mathjax_ignore" id="derivatives">
+<h1>Derivatives<a class="headerlink" href="#derivatives" title="Permalink to this heading">¶</a></h1>
+<p>Recall that the classical Mandelbrot algorithm is based on the computation of orbits of the form:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+z, z^2 + c, (z^2 + c)^2 + c, ((z^2 + c)^2 + c)^2 + c, \ldots
+\end{align*}\]</div>
+<p>In a more formal way, the computation of this sequence can be expressed recursively as follows:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+f_0(z,c) &amp;= z \\
+f_{n+1}(z,c) &amp;= f_n(z,c)^2 + c
+\end{align*}\]</div>
+<p><span class="math notranslate nohighlight">\(f\)</span> can be treated as a function with parameters <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(c\)</span>. This allows us to compute two partial derivates, namely</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\frac{\partial f}{\partial c}(z,c)
+\end{align*}\]</div>
+<p>and</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\frac{\partial f}{\partial z}(z,c)
+\end{align*}\]</div>
+<p>The first one can be utilized to create nice 3D effects. The latter one is sometimes uses for interior detection which can considerably decrease computation time of some images.</p>
+<p>Both derivates can be computed easily by applying the chain rule:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+f_0(z,c) &amp;= z \\
+f_{n+1}(z,c) &amp;= f_n(z,c)^2 + c
+\end{align*}\]</div>
+<p>The idea of perturbation is to start with the orbit of a reference point, the so called <em>reference orbit</em>, and to express the orbits of all other points in form of deviations to it. More precisely, let</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+(x_n) = x_0, x_1, x_2, \ldots \tag{1}
+\end{align*}\]</div>
+<p>be the orbit of the reference point <span class="math notranslate nohighlight">\(x \in \mathbb{C}\)</span> and <span class="math notranslate nohighlight">\(y\)</span> be a point in the neighborhood of <span class="math notranslate nohighlight">\(x\)</span>. Then we can calculate the orbit of <span class="math notranslate nohighlight">\(y\)</span> in the following form:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+(y_n) = x_0 + \Delta_0, x_1 + \Delta_1, x_2 + \Delta_2, \ldots
+\end{align*}\]</div>
+<p>The sequence</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+(\Delta_n) = \Delta_0, \Delta_1, \Delta_2, \ldots
+\end{align*}\]</div>
+<p>is called the <em>delta orbit</em> of <span class="math notranslate nohighlight">\(y\)</span>. Once the reference orbit <span class="math notranslate nohighlight">\((1)\)</span> has been calculated, it is sufficient to know the delta orbit <span class="math notranslate nohighlight">\((\Delta_n)\)</span> to fully reconstruct <span class="math notranslate nohighlight">\((y_n)\)</span>.</p></p>
+<p>Delta orbits can be computed with a simple iteration formula that can be derived directly from the iteration formula of the Mandelbrot set:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\Delta_0 &amp;= y_0 - x_0 \nonumber \\
+\Delta_{n+1} &amp;= y_{n+1} - x_{n+1} \nonumber \\
+&amp;= (y_n^2 + y_0) - (x_n^2 + x_0) \nonumber \\
+&amp;= (y_n^2 - x_n^2) + (y_0 - x_0)  \nonumber \\
+&amp;= ((x_n + \Delta_n)^2 - x_n^2) + \Delta_0 \nonumber \\
+&amp;= 2 x_n \Delta_n + \Delta_n^2 + \Delta_0 \tag{2}
+\end{align*}\]</div>
+<p>Equation <span class="math notranslate nohighlight">\((2)\)</span> shows that the deltas can be calculated with a sum whose summands are all very small. In fact, the numbers are so small that it is usually sufficient to represent them with low-precision data types. This outlines the core of the algorithm: Instead of slowly calculating all points in high precision, an expensive calculation of this kind is carried out for a single reference point, only. All other orbits are derived from their delta orbits which are calculated in low precision.</p>
+<p>Unfortunately, the outlined approach does not always succeed. A general problem concerns the choice of the reference point <span class="math notranslate nohighlight">\(x\)</span>. If the orbit of <span class="math notranslate nohighlight">\(x\)</span> escapes, i.e., if <span class="math notranslate nohighlight">\(x\)</span> does not belong to the Mandelbrot set itself, equation <span class="math notranslate nohighlight">\((2)\)</span> can only be applied to the elements of the non-escaping initial segment of <span class="math notranslate nohighlight">\((x_n)\)</span>. As a result, <span class="math notranslate nohighlight">\(x\)</span> cannot serve as the reference for any other point <span class="math notranslate nohighlight">\(y\)</span> that either belongs to the Mandelbrot set itself, or diverges later than <span class="math notranslate nohighlight">\(x\)</span>. Even worse, delta calculation can fail  with non-volatile reference points, too. In some cases, rounding errors lead to visible pixel errors in the generated image. Such pixels are referred to as <em>glitches</em>. If a pixel is a glitch, there is an increased probability that this is also true for its neighbors. As a result, affected image often contain areas that look extremely noisy or areas that have no detail at all, thus looking like ill-placed color blobs.</p>
+<p>Fortunately, both problems can be solved by recomputing the affected pixels with a different reference point. Modern Mandelbrot generators thus calculate images in multiple rounds. In each round a new reference point is selected and applied to all pixels for which it turns out to be appropriate. If a glitch a detected, the pixel is set aside and revisited in the next round. This procedure is repeated until the proportion of glitch pixels drops below a predefined acceptance level.</p>
+<p>Besides choosing a suitable reference point, we face a challenging problem. How can we decide for a point whether the currently selected reference point results in a glitch? An answer to this question is provided by the <em>Pauldelbrot criterion</em>, which was formulated in a <a class="reference external" href="http://www.fractalforums.com/announcements-and-news/pertubation-theory-glitches-improvement/msg73027/#msg73027">forum post</a> in 2014. The criterion is based on the hypothesis that pixel errors only occur if the magnitude of <span class="math notranslate nohighlight">\(x_n + \Delta_n\)</span> is way smaller than the magnitude of <span class="math notranslate nohighlight">\(x_n\)</span>. Symbolically, this is is denoted by:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+| x_n + \Delta_n | &lt;&lt; | x_n | \nonumber
+\end{align*}\]</div>
+<p>To apply the criterion in practice, a constant <span class="math notranslate nohighlight">\(\tau\)</span> is chosen and a test added to the delta orbit calculation, which checks the following condition after each iteration:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+| x_n + \Delta_n | &lt; \tau \cdot | x_n |
+\end{align*}\]</div>
+<p>Once the condition hits, calculation is aborted. The affected point is put aside and revisited in the next round. Although the criterion is based on a hypothesis that is still lacking a rigid proof (as far as I know), it has turned out to work extremely well in practice. As of today, the Pauldelbrot criterion is the preferred method for glitch detection in modern Mandelbrot generators.</p>
 </section>
 
             <div class="clearer"></div>
@@ -174,21 +218,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Customizing the Color Palette</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SpatialImages.html">Computing Spatial Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="NormalMap.html">Exporting the Normal Map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Textures.html">Adding an Overlay Image</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Working with Dynamic Values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Analyze.html">Analyzing the Computation Run</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Analyze.html">Analyzing the Computation Run</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Theory/MandelbrotSet.html">The Mandelbrot Set</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Theory/Derivations.html">Derivatives</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Theory/SmoothColoring.html">Smooth coloring</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="MandelbrotSet.html">The Mandelbrot Set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Perturbation.html">Perturbation Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SeriesApproximation.html">Series Approximation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Derivatives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SmoothColoring.html">Smooth coloring</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
@@ -209,22 +253,22 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="Textures.html" aria-label="Previous topic" >
+      <a class="previous" href="SeriesApproximation.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Adding an Overlay Image
+            Series Approximation
           </span>
         </div>
       </a>
-      <a class="next" href="Analyze.html" aria-label="Next topic" >
+      <a class="next" href="SmoothColoring.html" aria-label="Next topic" >
         <div class="title">
           <span class="text">
             <span class="direction">next</span>
-            Analyzing the Computation Run
+            Smooth coloring
           </span>
         </div>
         <div class="icon">
@@ -237,7 +281,7 @@
       &#169; Copyright 2023, Dirk W. Hoffmann.
       Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
-<a class="reference internal" href="../_sources/HowTo/Dynamic.md.txt" rel="nofollow">Show Source</a>.
+<a class="reference internal" href="../_sources/Theory/Derivations.md.txt" rel="nofollow">Show Source</a>.
     </footer>
   </body>
 </html>

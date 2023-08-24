@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Configuration Options &#8212; DeepDrill 3.1</title>
+    <title>Configuration Options &#8212; DeepDrill 3.2</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Videos" href="Examples.html" />
-    <link rel="prev" title="Series Approximation" href="../Theory/SeriesApproximation.html" />
+    <link rel="prev" title="Colorizing Algorithms" href="Colorizers.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -59,7 +59,7 @@
             </button>
           </div>
           <div class="title">
-            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.1</a>
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.2</a>
             <a class="top" href="#">Configuration Options</a>
           </div>
           <div class="buttons">
@@ -82,7 +82,7 @@
       </div>
     </header>
     <nav>
-      <a href="../Theory/SeriesApproximation.html" class="nav-icon previous" title="previous:&#13;Series Approximation" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="Colorizers.html" class="nav-icon previous" title="previous:&#13;Colorizing Algorithms" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
       <a href="Examples.html" class="nav-icon next" title="next:&#13;Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
@@ -91,14 +91,14 @@
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="../Theory/SeriesApproximation.html" aria-label="Previous topic" >
+      <a class="previous" href="Colorizers.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Series Approximation
+            Colorizing Algorithms
           </span>
         </div>
       </a>
@@ -189,16 +189,12 @@
 <td><p>1080</p></td>
 <td><p>The vertical resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image height.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p></td>
-<td><p>1</p></td>
-<td><p>Possible values are 0 and 1. If set to 1, a normal map will be written to the <code class="docutils literal notranslate"><span class="pre">.map</span></code> file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">compress</span></code></p></td>
-<td><p>yes</p></td>
-<td><p>Indicates whether map files should be saved in compressed format.</p></td>
-</tr>
 </tbody>
 </table>
+</section>
+<section id="section-mapfile">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[mapfile]</span></code><a class="headerlink" href="#section-mapfile" title="Permalink to this heading">¶</a></h3>
+<p>| <code class="docutils literal notranslate"><span class="pre">compress</span></code>  | yes | Indicates whether map files should be saved in compressed format.</p>
 </section>
 <section id="section-image">
 <h3>Section <code class="docutils literal notranslate"><span class="pre">[image]</span></code><a class="headerlink" href="#section-image" title="Permalink to this heading">¶</a></h3>
@@ -268,13 +264,42 @@
 <td><p>-</p></td>
 <td><p>Path to an image file storing the color palette. DeepDrill will derive the color palette from the uppermost horizontal line of the image.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bgcolor</span></code></p></td>
+<td><p>black</p></td>
+<td><p>Background color. This color is used for colorizing pixels belonging to the Mandelbrot set.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p>smooth</p></td>
+<td><p>Coloring mode. Options are <code class="docutils literal notranslate"><span class="pre">classic</span></code> and <code class="docutils literal notranslate"><span class="pre">smooth</span></code>.</p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
 <td><p>1.0</p></td>
 <td><p>An optional scaling factor that can be used to stretch or shrink the color palette.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
-<td><p>0.0</p></td>
+<td><p>-0.15</p></td>
 <td><p>An optional offset that can be used to rotate the color palette.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-distance">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[distance]</span></code><a class="headerlink" href="#section-distance" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>This value is used by the distance-estimation filter. A pixel is considered to be part of the Mandelbrot</p></td>
+</tr>
+<tr class="row-odd"><td><p>set if its distance estimate is below the threshold value. Smaller numbers lead to more fine-grained images.</p></td>
+<td><p></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -527,9 +552,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../Theory/MandelbrotSet.html">The Mandelbrot Set</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/Derivations.html">Derivatives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/SmoothColoring.html">Smooth coloring</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Colorizers.html">Colorizing Algorithms</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Links.html">External links</a></li>
@@ -546,14 +574,14 @@
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="../Theory/SeriesApproximation.html" aria-label="Previous topic" >
+      <a class="previous" href="Colorizers.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Series Approximation
+            Colorizing Algorithms
           </span>
         </div>
       </a>
