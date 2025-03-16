@@ -46,7 +46,14 @@ struct StandardComplex {
     //
     
     inline double norm() const { return re * re + im * im; }
-    inline double abs() const { return std::sqrt(re * re + im * im); }
+    inline double abs() const {
+        double absr = std::abs(re);
+        double absi = std::abs(im);
+        if (absr > absi)
+            return absr * std::sqrt(1+(absi/absr)*(absi/absr));
+        else
+            return absi * std::sqrt(1+(absr/absi)*(absr/absi));
+    }
     inline double arg() const { return std::atan2(im, re); }
 
     
