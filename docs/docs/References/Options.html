@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Configuration Options &#8212; DeepDrill 3.2</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Videos" href="Examples.html" />
+    <link rel="prev" title="Colorizing Algorithms" href="Colorizers.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 0)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="../index.html" accesskey="U">DeepDrill 3.2</a>
+            <a class="top" href="#">Configuration Options</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="Colorizers.html" class="nav-icon previous" title="previous:&#13;Colorizing Algorithms" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="Examples.html" class="nav-icon next" title="next:&#13;Videos" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="Colorizers.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Colorizing Algorithms
+          </span>
+        </div>
+      </a>
+      <a class="next" href="Examples.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Videos
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section class="tex2jax_ignore mathjax_ignore" id="configuration-options">
+<h1>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this heading">¶</a></h1>
+<p>DeepDrill is configured by specifying one or more profiles as command line parameters. Each profile contains a certain number of key-value pairs organized in sections. A typical profile looks like this:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="k">[image]</span>
+<span class="na">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">960</span>
+<span class="na">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">540</span>
+
+<span class="k">[perturbation]</span>
+<span class="na">tolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1e-6</span>
+<span class="na">rounds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">50</span>
+
+<span class="k">[approximation]</span>
+<span class="na">coefficients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5</span>
+</pre></div>
+</div>
+<p>Each option is briefly explained below:</p>
+<section id="key-value-pairs">
+<h2>Key-value pairs<a class="headerlink" href="#key-value-pairs" title="Permalink to this heading">¶</a></h2>
+<section id="section-location">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[location]</span></code><a class="headerlink" href="#section-location" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>The real part of the image’s center coordiate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">imag</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>The imaginary part of the image’s center coordiate.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zoom</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>The magnification level of the image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>The Maximum number of iterations.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">escape</span></code></p></td>
+<td><p>1e32</p></td>
+<td><p>Once the iterated value gets bigger than this value, the corresponding coordinate is considered to be part of the Mandelbrot set.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-map">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[map]</span></code><a class="headerlink" href="#section-map" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>1920</p></td>
+<td><p>The horizontal resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image width.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p></td>
+<td><p>1080</p></td>
+<td><p>The vertical resolution of the drill map. If this key is not specified, the width of the drill map is automatically chosen to match the image height.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-mapfile">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[mapfile]</span></code><a class="headerlink" href="#section-mapfile" title="Permalink to this heading">¶</a></h3>
+<p>| <code class="docutils literal notranslate"><span class="pre">compress</span></code>  | yes | Indicates whether map files should be saved in compressed format.</p>
+</section>
+<section id="section-image">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[image]</span></code><a class="headerlink" href="#section-image" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>1920</p></td>
+<td><p>The horizontal resolution of the image in pixels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p></td>
+<td><p>1080</p></td>
+<td><p>The vertical resolution of the image in pixels.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-video">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[video]</span></code><a class="headerlink" href="#section-video" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">framerate</span></code></p></td>
+<td><p>60</p></td>
+<td><p>Frames per second of the computed video. By default, videos with 60 fps are computed to match the frame rate of standard TFTs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">keyframes</span></code></p></td>
+<td><p><em>derived</em></p></td>
+<td><p>Number of keyframes of the final video. If this key is not specified, DeepDrill derives the number from the zoom factor given in the location section.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">startframe</span></code></p></td>
+<td><p>0</p></td>
+<td><p>Number of the keyframe where the video starts.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">velocity</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>Zoom speed. The assigned value defines the time interval between two keyframes in seconds.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bitrate</span></code></p></td>
+<td><p>8000</p></td>
+<td><p>This value is passed directly to the FFmpeg backend. Higher values result in better image quality.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-palette">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[palette]</span></code><a class="headerlink" href="#section-palette" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">image</span></code></p></td>
+<td><p>-</p></td>
+<td><p>Path to an image file storing the color palette. DeepDrill will derive the color palette from the uppermost horizontal line of the image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bgcolor</span></code></p></td>
+<td><p>black</p></td>
+<td><p>Background color. This color is used for colorizing pixels belonging to the Mandelbrot set.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p>smooth</p></td>
+<td><p>Coloring mode. Options are <code class="docutils literal notranslate"><span class="pre">classic</span></code> and <code class="docutils literal notranslate"><span class="pre">smooth</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>An optional scaling factor that can be used to stretch or shrink the color palette.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>-0.15</p></td>
+<td><p>An optional offset that can be used to rotate the color palette.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-distance">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[distance]</span></code><a class="headerlink" href="#section-distance" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>This value is used by the distance-estimation filter. A pixel is considered to be part of the Mandelbrot</p></td>
+</tr>
+<tr class="row-odd"><td><p>set if its distance estimate is below the threshold value. Smaller numbers lead to more fine-grained images.</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-texture">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[texture]</span></code><a class="headerlink" href="#section-texture" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">image</span></code></p></td>
+<td><p>-</p></td>
+<td><p>Path to an overlay image. If an overlay image is specified, the derived color value will be mixed with the pixels from the overlay image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code></p></td>
+<td><p>0.5</p></td>
+<td><p>The weight factor used to mix color pixels and overlay pixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>An optional scaling factor that can be used to stretch or shrink the overlay image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>An optional offset that can be used to rotate the overlay image.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-lighting">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[lighting]</span></code><a class="headerlink" href="#section-lighting" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p></td>
+<td><p>no</p></td>
+<td><p>Indicates whether the normal map should be utilized to create a spatial image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
+<td><p>45</p></td>
+<td><p>The direction of the incoming light on the xy plane.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">beta</span></code></p></td>
+<td><p>45</p></td>
+<td><p>The inclination of the light source.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-gpu">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[gpu]</span></code><a class="headerlink" href="#section-gpu" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">colorizer</span></code></p></td>
+<td><p>gradient.glsl</p></td>
+<td><p>Path to a GLSL shader. The colorizer is the first of three GPU shaders. It utilzes the color palette to derive a RGB value for each pixel.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">illuminator</span></code></p></td>
+<td><p>lambert.glsl</p></td>
+<td><p>Path to a GLSL shader. The illuminator is the second of three GPU shaders. It applies a lighting model to create a spatial images. This shader is skipped if lighting is disabled.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scaler</span></code></p></td>
+<td><p>tricubic.glsl</p></td>
+<td><p>Path to a GLSL shader. The scaler is the third of three GPU shaders. It scales the internal image down to the final image.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-perturbation">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[perturbation]</span></code><a class="headerlink" href="#section-perturbation" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>Indicates if perturbation should be used to calculate the image. If set to false, DeepDrill falls back to the (very slow) standard algorithm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p></td>
+<td><p>1e-6</p></td>
+<td><p>This value is used by the perturbation algorithm. Please refer to the <em>Theory</em> section for details.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">badpixels</span></code></p></td>
+<td><p>0.001</p></td>
+<td><p>Percentage of pixels that are allowed to be miscolored.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rounds</span></code></p></td>
+<td><p>50</p></td>
+<td><p>This value is used by the perturbation algorithm. Please refer to the <em>Theory</em> section for details.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>black</p></td>
+<td><p>Color used for colorizing glitch points.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-approximation">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[approximation]</span></code><a class="headerlink" href="#section-approximation" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:130px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>Indicates if series approximation should be used to calculate the image. If set to false, the iteration always starts at 0. Please refer to the <em>Theory</em> section for details.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">coefficients</span></code></p></td>
+<td><p>5</p></td>
+<td><p>This value is used by the series approximation algorithm. Please refer to the <em>Theory</em> section for details.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p></td>
+<td><p>1e-12</p></td>
+<td><p>This value is used by the series approximation algorithm. Please refer to the <em>Theory</em> section for details.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-areachecking">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[areachecking]</span></code><a class="headerlink" href="#section-areachecking" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>Specifies whether each pixel is to be tested for belonging to the main bulb or the cartioid. If the test is positive, the pixel is known to belong to the Mandelbrot set without further calculations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>black</p></td>
+<td><p>Color used for colorizing pixels with a positive area check.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-attractorcheck">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[attractorcheck]</span></code><a class="headerlink" href="#section-attractorcheck" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>Specifies whether attractor checking should be carried out. If the test is positive, the pixel is known to belong to the Mandelbrot set without further calculations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p></td>
+<td><p>1e-34</p></td>
+<td><p>Tolerance for considering two values as beeing equal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>black</p></td>
+<td><p>Color used for colorizing pixels with a positive attractor check.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-periodcheck">
+<h3>Section <code class="docutils literal notranslate"><span class="pre">[periodcheck]</span></code><a class="headerlink" href="#section-periodcheck" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:120px">Key</div></p></th>
+<th class="head"><p><div style="width:100px">Default value</div></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>Specifies whether period checking should be carried out. If the test is positive, the pixel is known to belong to the Mandelbrot set without further calculations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code></p></td>
+<td><p>1e-74</p></td>
+<td><p>Tolerance for considering two values as beeing equal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>black</p></td>
+<td><p>Color used for colorizing pixels with a positive period check.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/Installation.html">Build instructions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Images.html">Computing Still Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Computing Zoom Videos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-To Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Palettes.html">Customizing the Color Palette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/SpatialImages.html">Computing Spatial Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/NormalMap.html">Exporting the Normal Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Textures.html">Adding an Overlay Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Dynamic.html">Working with Dynamic Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HowTo/Analyze.html">Analyzing the Computation Run</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/MandelbrotSet.html">The Mandelbrot Set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/Perturbation.html">Perturbation Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/SeriesApproximation.html">Series Approximation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory/SmoothColoring.html">Smooth coloring</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Colorizers.html">Colorizing Algorithms</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Links.html">External links</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="Colorizers.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Colorizing Algorithms
+          </span>
+        </div>
+      </a>
+      <a class="next" href="Examples.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Videos
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023, Dirk W. Hoffmann.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/References/Options.md.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>
