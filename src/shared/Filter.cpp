@@ -35,6 +35,15 @@ Filter::init(const string &shaderName, sf::Vector2u resolution)
     rect.setSize(sf::Vector2f(resolution));
     rect.setTexture(&out.getTexture());
 
+    // Don't run the shader on 'rect': after out.display(), SFML flips its texture coordinates
+    auto w = float(resolution.x);
+    auto h = float(resolution.y);
+    quad = sf::VertexArray(sf::TriangleStrip, 4);
+    quad[0] = sf::Vertex(sf::Vector2f(0, 0), sf::Vector2f(0, 0));
+    quad[1] = sf::Vertex(sf::Vector2f(w, 0), sf::Vector2f(1, 0));
+    quad[2] = sf::Vertex(sf::Vector2f(0, h), sf::Vector2f(0, 1));
+    quad[3] = sf::Vertex(sf::Vector2f(w, h), sf::Vector2f(1, 1));
+
     // Load shader
     path = AssetManager::findAsset(shaderName, Format::GLSL);
     
@@ -117,7 +126,7 @@ Filter::setUniform(const string &key, const sf::Texture &value)
 void
 Filter::apply()
 {
-    out.draw(rect, &shader);
+    out.draw(quad, &shader);
     out.display();
 }
 
