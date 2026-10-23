@@ -34,6 +34,7 @@ class Filter {
     // The output texture
     sf::RenderTexture out;
     sf::RectangleShape rect;
+    sf::VertexArray quad;
 
 
     //
